@@ -68,7 +68,7 @@ export default class StoredToSubmitController {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      userCase.tseApplicationStoredCollection,
       req.params.appId
     );
     if (selectedApplication === undefined) {

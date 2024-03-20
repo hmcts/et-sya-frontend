@@ -10,7 +10,11 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
-import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import {
+  getAllResponses,
+  getAllTseApplicationCollection,
+  getTseApplicationDetails,
+} from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
@@ -19,7 +23,6 @@ import {
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getAllTseApplicationCollection } from './helpers/StoredApplicationConfirmationHelpers';
 import { getDecisionContent } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('ApplicationDetailsController');

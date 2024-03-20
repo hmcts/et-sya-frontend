@@ -12,7 +12,6 @@ import {
 } from './helpers/DocumentHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getAllTseApplicationCollection } from './helpers/StoredApplicationConfirmationHelpers';
 
 const logger = getLogger('StoredApplicationConfirmationController');
 
@@ -33,7 +32,7 @@ export default class StoredApplicationConfirmationController {
     }
 
     const selectedApplication = findSelectedGenericTseApplication(
-      getAllTseApplicationCollection(userCase),
+      userCase.tseApplicationStoredCollection,
       req.params.appId
     );
     if (selectedApplication === undefined) {
