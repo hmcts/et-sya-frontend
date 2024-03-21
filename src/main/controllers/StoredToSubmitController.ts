@@ -10,6 +10,7 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { handleUpdateHubLinksStatuses, submitClaimantTse } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -20,7 +21,7 @@ import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { StoredToSubmitContentForm } from './helpers/StoredToSubmitHelpers';
+import { StoredToSubmitContentForm, clearTseFields, putSelectedAppToUserCase } from './helpers/StoredToSubmitHelpers';
 
 const logger = getLogger('StoredToSubmitController');
 
@@ -44,18 +45,28 @@ export default class StoredToSubmitController {
     }
     req.session.errors = [];
 
+    // updateHubLinksStatuses
     try {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+      await handleUpdateHubLinksStatuses(req, logger);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Add item to genericTseApplicationCollection
     try {
-      await getCaseApi(req.session.user?.accessToken).storedToSubmitClaimantTse(req.session.userCase);
-      userCase.selectedGenericTseApplication = undefined;
-      userCase.confirmCopied = undefined;
+      putSelectedAppToUserCase(userCase);
+      await submitClaimantTse(req, logger);
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
+    // Remove item from tseApplicationStoredCollection
+    try {
+      await getCaseApi(req.session.user?.accessToken).removeStoredClaimantTse(req.session.userCase);
+      clearTseFields(userCase);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);

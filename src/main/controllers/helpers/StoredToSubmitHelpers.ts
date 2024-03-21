@@ -1,6 +1,7 @@
 import { atLeastOneFieldIsChecked } from '../../components/form/validator';
-import { YesOrNo } from '../../definitions/case';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { PseResponseType, SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
+import { APP_TYPE_MAP } from '../../definitions/contact-applications';
 import { FormContent } from '../../definitions/form';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
@@ -66,4 +67,34 @@ export const getPseResponseDisplay = async (
   );
   rows.push(addSummaryRow(translations.copyToOtherPartyYesOrNo, response.copyToOtherParty));
   return rows;
+};
+
+export const putSelectedAppToUserCase = (userCase: CaseWithId): void => {
+  const selectedApp = userCase.selectedGenericTseApplication.value;
+  userCase.contactApplicationType = getAppTypeMapByValue(selectedApp.type);
+  userCase.contactApplicationText = selectedApp.copyToOtherPartyText;
+  userCase.contactApplicationFile = selectedApp.documentUpload;
+  userCase.copyToOtherPartyYesOrNo = selectedApp.copyToOtherPartyYesOrNo;
+  userCase.copyToOtherPartyText = selectedApp.copyToOtherPartyText;
+};
+
+const getAppTypeMapByValue = (appKey: string): string => {
+  for (const key in APP_TYPE_MAP) {
+    if (APP_TYPE_MAP.hasOwnProperty(key)) {
+      if (APP_TYPE_MAP[key] === appKey) {
+        return key;
+      }
+    }
+  }
+  return undefined;
+};
+
+export const clearTseFields = (userCase: CaseWithId): void => {
+  userCase.contactApplicationType = undefined;
+  userCase.contactApplicationText = undefined;
+  userCase.contactApplicationFile = undefined;
+  userCase.copyToOtherPartyYesOrNo = undefined;
+  userCase.copyToOtherPartyText = undefined;
+  userCase.selectedGenericTseApplication = undefined;
+  userCase.confirmCopied = undefined;
 };
