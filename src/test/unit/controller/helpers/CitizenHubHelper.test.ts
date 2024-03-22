@@ -7,6 +7,7 @@ import {
   shouldShowClaimantTribunalResponseReceived,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
+  shouldShowSubmittedAlert,
   updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
@@ -144,7 +145,7 @@ describe('checkIfRespondentIsSystemUser', () => {
     expect(checkIfRespondentIsSystemUser(userCase)).toEqual(false);
   });
 
-  it('should return true if all respondents have legal rep assigne AND all the reps have the hasMyHMCTSAccount field set to Yes', () => {
+  it('should return true if all respondents have legal rep assigned AND all the reps have the hasMyHMCTSAccount field set to Yes', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -582,5 +583,25 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],
     ]);
     expect(getHubLinksUrlMap(false, languages.WELSH_URL_PARAMETER)).toEqual(linksMap);
+  });
+});
+
+describe('show submitted alert', () => {
+  const userCase: CaseWithId = {
+    id: '1',
+    state: CaseState.SUBMITTED,
+    createdDate: DATE,
+    lastModified: DATE,
+    respondents: undefined,
+    et3ResponseReceived: true,
+  };
+
+  it('should show submitted alert', () => {
+    expect(shouldShowSubmittedAlert(userCase)).toEqual(true);
+  });
+
+  it('should not submitted alert when case accepted', () => {
+    userCase.state = CaseState.ACCEPTED;
+    expect(shouldShowSubmittedAlert(userCase)).toEqual(false);
   });
 });

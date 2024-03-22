@@ -1,3 +1,4 @@
+import { YesOrNo } from '../../definitions/case';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 
@@ -22,4 +23,6 @@ export default {
   createdDate: 'August 19, 2022',
   lastModified: 'August 19, 2022',
   hubLinksStatuses,
+  multipleFlag: YesOrNo.YES,
+  leadClaimant: YesOrNo.YES,
 };

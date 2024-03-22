@@ -263,4 +263,6 @@ export default {
       respondentId: '123',
     },
   ],
+  multipleFlag: YesOrNo.YES,
+  leadClaimant: YesOrNo.YES,
 };
