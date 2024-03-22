@@ -1,5 +1,5 @@
 import { atLeastOneFieldIsChecked } from '../../components/form/validator';
-import { YesOrNo } from '../../definitions/case';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { PseResponseType, SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { FormContent } from '../../definitions/form';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
@@ -66,4 +66,14 @@ export const getPseResponseDisplay = async (
   );
   rows.push(addSummaryRow(translations.copyToOtherPartyYesOrNo, response.copyToOtherParty));
   return rows;
+};
+
+export const clearTseFields = (userCase: CaseWithId): void => {
+  userCase.contactApplicationType = undefined;
+  userCase.contactApplicationText = undefined;
+  userCase.contactApplicationFile = undefined;
+  userCase.copyToOtherPartyYesOrNo = undefined;
+  userCase.copyToOtherPartyText = undefined;
+  userCase.selectedGenericTseApplication = undefined;
+  userCase.confirmCopied = undefined;
 };

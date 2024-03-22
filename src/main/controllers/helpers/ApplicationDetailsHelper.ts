@@ -1,5 +1,5 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { Document, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
@@ -303,4 +303,15 @@ export const getResponseDisplay = async (
   accessToken: string
 ): Promise<SummaryListRow[]> => {
   return addNonAdminResponse(translations, response, accessToken, response.value.date);
+};
+
+export const getAllTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+  const returnCollection: GenericTseApplicationTypeItem[] = [];
+  if (userCase.genericTseApplicationCollection !== undefined) {
+    returnCollection.push(...userCase.genericTseApplicationCollection);
+  }
+  if (userCase.tseApplicationStoredCollection !== undefined) {
+    returnCollection.push(...userCase.tseApplicationStoredCollection);
+  }
+  return returnCollection;
 };
