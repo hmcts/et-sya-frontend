@@ -186,6 +186,7 @@ export interface Case {
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  tseApplicationStoredCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   selectedTseResponse?: TseRespondTypeItem;
   selectedPseResponse?: TypeItem<PseResponseType>;

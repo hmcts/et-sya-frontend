@@ -26,13 +26,13 @@ describe('Stored application confirmation page', () => {
     await request(
       mockApp({
         userCase: {
-          genericTseApplicationCollection: [
+          tseApplicationStoredCollection: [
             {
               id: 'abc123',
               value: {
                 date: '7 March 2023',
                 type: 'amend',
-                status: 'notStartedYet',
+                status: 'Stored',
                 number: '1',
                 applicant: 'Applicant',
                 details: 'Test text',

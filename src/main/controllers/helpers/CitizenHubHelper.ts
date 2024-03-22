@@ -1,14 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import {
-  Applicant,
-  NotificationSubjects,
-  PageUrls,
-  ResponseStatus,
-  TseStatus,
-  languages,
-} from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, ResponseStatus, languages } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -259,28 +252,36 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
 };
 
 export const getStoredPendingBannerList = (
+  storedApps: GenericTseApplicationTypeItem[],
   apps: GenericTseApplicationTypeItem[],
   notifications: SendNotificationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
-  storeNotifications.push(...getStoredPendingApplication(apps, languageParam));
-  storeNotifications.push(...getStoredPendingNotification(notifications, languageParam));
+  storeNotifications.push(...getStoredApplication(storedApps, languageParam));
+  storeNotifications.push(...getStoredApplicationRespond(apps, languageParam));
+  storeNotifications.push(...getStoredNotificationRespond(notifications, languageParam));
   return storeNotifications;
 };
 
-const getStoredPendingApplication = (
+const getStoredApplication = (apps: GenericTseApplicationTypeItem[], languageParam: string): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  for (const app of apps || []) {
+    const storeNotification: StoreNotification = {
+      viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
+    };
+    storeNotifications.push(storeNotification);
+  }
+  return storeNotifications;
+};
+
+const getStoredApplicationRespond = (
   apps: GenericTseApplicationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
   for (const app of apps || []) {
-    if (app.value.status === TseStatus.STORED_STATE) {
-      const storeNotification: StoreNotification = {
-        viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
-      };
-      storeNotifications.push(storeNotification);
-    } else if (app.value.respondCollection) {
+    if (app.value.respondCollection) {
       app.value.respondCollection
         .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
         .forEach(r =>
@@ -294,7 +295,7 @@ const getStoredPendingApplication = (
   return storeNotifications;
 };
 
-const getStoredPendingNotification = (
+const getStoredNotificationRespond = (
   items: SendNotificationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {

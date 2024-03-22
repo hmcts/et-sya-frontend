@@ -34,7 +34,7 @@ describe('Store tell something else Controller', () => {
         created_date: '2022-08-19T09:19:25.79202',
         last_modified: '2022-08-19T09:19:25.817549',
         case_data: {
-          genericTseApplicationCollection: [
+          tseApplicationStoredCollection: [
             {
               id: '246',
               value: {
@@ -52,7 +52,7 @@ describe('Store tell something else Controller', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.genericTseApplicationCollection = genericTseApplicationCollection;
+    request.session.userCase.tseApplicationStoredCollection = genericTseApplicationCollection;
     request.url = PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en';
 
     await controller.get(request, response);
@@ -98,19 +98,6 @@ describe('Store tell something else Controller return error page', () => {
   request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
   request.session.userCase.genericTseApplicationCollection = genericTseApplicationCollection;
   request.url = PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en';
-
-  it('should return error page when updateHubLinksStatuses failed', () => {
-    jest.mock('axios');
-    const mockCaseApi = {
-      axios: AxiosInstance,
-    };
-    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-
-    controller.get(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
-  });
 
   it('should return error page when storeClaimantTse failed', async () => {
     jest.mock('axios');

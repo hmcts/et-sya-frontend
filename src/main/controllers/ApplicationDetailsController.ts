@@ -10,7 +10,11 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
-import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import {
+  getAllResponses,
+  getAllTseApplicationCollection,
+  getTseApplicationDetails,
+} from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
@@ -35,7 +39,7 @@ export default class ApplicationDetailsController {
 
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      getAllTseApplicationCollection(userCase),
       req.params.appId
     );
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
