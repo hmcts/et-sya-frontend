@@ -206,7 +206,12 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
-      storedPendingApplication: getStoredPendingBannerList(allApplications, notifications, languageParam),
+      storedPendingApplication: getStoredPendingBannerList(
+        userCase.tseApplicationStoredCollection,
+        allApplications,
+        notifications,
+        languageParam
+      ),
       notifications: filterActionableNotifications(ordersRequestsGeneralNotifications),
       eccNotifications: filterActionableNotifications(eccNotifications),
       languageParam: getLanguageParam(req.url),

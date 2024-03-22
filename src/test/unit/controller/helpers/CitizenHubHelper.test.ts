@@ -616,7 +616,7 @@ describe('getStoredPendingApplicationLinks', () => {
       { viewUrl: '/stored-to-submit/123?lng=en' },
       { viewUrl: '/stored-to-submit/567?lng=en' },
     ];
-    const actual = getStoredPendingBannerList(tseCollection, null, languages.ENGLISH_URL_PARAMETER);
+    const actual = getStoredPendingBannerList(null, tseCollection, null, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 
@@ -657,7 +657,7 @@ describe('getStoredPendingApplicationLinks', () => {
       },
     ];
     const expected: StoreNotification[] = [{ viewUrl: '/stored-to-submit-response/111/12345?lng=en' }];
-    const actual = getStoredPendingBannerList(tseCollection, null, languages.ENGLISH_URL_PARAMETER);
+    const actual = getStoredPendingBannerList(null, tseCollection, null, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 
@@ -696,7 +696,7 @@ describe('getStoredPendingApplicationLinks', () => {
       },
     ];
     const expected: StoreNotification[] = [{ viewUrl: '/stored-to-submit-tribunal/111/12345?lng=en' }];
-    const actual = getStoredPendingBannerList(null, sendNotificationTypeItems, languages.ENGLISH_URL_PARAMETER);
+    const actual = getStoredPendingBannerList(null, null, sendNotificationTypeItems, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 });

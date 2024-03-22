@@ -7,7 +7,7 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { clearTseFields } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getLatestApplication } from './helpers/StoredApplicationConfirmationHelpers';
 
@@ -18,14 +18,16 @@ export default class StoreTseController {
     const languageParam = getLanguageParam(req.url);
     let userCase = req.session?.userCase;
 
+    // Update Hub Links Statuses
     try {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.STORED;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+      await handleUpdateHubLinksStatuses(req, logger);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Store application
     try {
       await getCaseApi(req.session.user?.accessToken).storeClaimantTse(req.session.userCase);
     } catch (error) {
@@ -33,14 +35,9 @@ export default class StoreTseController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Clear temporary fields + Update UserCase
     try {
       clearTseFields(userCase);
-    } catch (error) {
-      logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-    }
-
-    try {
       req.session.userCase = fromApiFormat(
         (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
       );
@@ -50,9 +47,10 @@ export default class StoreTseController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Get Latest Stored Application
     let latestApplicationId;
     try {
-      const latestApplication = await getLatestApplication(userCase.genericTseApplicationCollection);
+      const latestApplication = await getLatestApplication(userCase.tseApplicationStoredCollection);
       latestApplicationId = latestApplication.id;
     } catch (err) {
       logger.error(err.message);
