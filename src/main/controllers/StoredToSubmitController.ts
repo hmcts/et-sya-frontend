@@ -21,7 +21,7 @@ import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { StoredToSubmitContentForm, clearTseFields } from './helpers/StoredToSubmitHelpers';
+import { StoredToSubmitContentForm, clearTseFields, putSelectedAppToUserCase } from './helpers/StoredToSubmitHelpers';
 
 const logger = getLogger('StoredToSubmitController');
 
@@ -56,6 +56,7 @@ export default class StoredToSubmitController {
 
     // Submit Stored Application
     try {
+      putSelectedAppToUserCase(userCase);
       await getCaseApi(req.session.user?.accessToken).storedToSubmitClaimantTse(req.session.userCase);
       clearTseFields(userCase);
     } catch (error) {
