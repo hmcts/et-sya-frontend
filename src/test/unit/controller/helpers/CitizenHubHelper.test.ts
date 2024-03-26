@@ -631,7 +631,7 @@ describe('getStoredPendingApplicationLinks', () => {
               value: {
                 from: Applicant.CLAIMANT,
                 copyToOtherParty: YesOrNo.YES,
-                status: 'Stored',
+                storeState: 'Stored',
               },
             },
           ],
@@ -671,7 +671,7 @@ describe('getStoredPendingApplicationLinks', () => {
               value: {
                 from: Applicant.CLAIMANT,
                 copyToOtherParty: YesOrNo.YES,
-                status: 'Stored',
+                storeState: 'Stored',
               },
             },
           ],

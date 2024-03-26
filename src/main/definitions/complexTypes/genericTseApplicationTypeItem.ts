@@ -62,12 +62,12 @@ export interface TseRespondType {
   // Generic
   from?: string;
   date?: string;
-  status?: string;
   // Respondent / Claimant Reply
   response?: string;
   copyToOtherParty?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterial?: TseRespondSupportingMaterialItem[];
+  storeState?: string;
   // Admin Reply
   addDocument?: DocumentTypeItem[];
   additionalInformation?: string;

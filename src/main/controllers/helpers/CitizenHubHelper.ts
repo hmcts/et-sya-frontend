@@ -283,7 +283,7 @@ const getStoredApplicationRespond = (
   for (const app of apps || []) {
     if (app.value.respondCollection) {
       app.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.storeState === ResponseStatus.STORED_STATE)
         .forEach(r =>
           storeNotifications.push({
             viewUrl:
@@ -303,7 +303,7 @@ const getStoredNotificationRespond = (
   for (const item of items || []) {
     if (item.value.respondCollection) {
       item.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.storeState === ResponseStatus.STORED_STATE)
         .forEach(r =>
           storeNotifications.push({
             viewUrl:

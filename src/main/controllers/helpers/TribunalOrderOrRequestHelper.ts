@@ -123,7 +123,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
       const hasStored =
         item.value.respondCollection?.some(
-          r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+          r => r.value.from === Applicant.CLAIMANT && r.value.storeState === ResponseStatus.STORED_STATE
         ) || false;
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
@@ -183,7 +183,7 @@ const getOrdersAndRequestsItemDisplayStatus = (item: SendNotificationTypeItem, t
 
 const isAnyStoredResponded = (item: SendNotificationTypeItem): boolean => {
   return item.value.respondCollection?.some(
-    r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+    r => r.value.from === Applicant.CLAIMANT && r.value.storeState === ResponseStatus.STORED_STATE
   );
 };
 
@@ -208,7 +208,7 @@ const checkAndUpdateRespondCollection = (
   order: SendNotificationTypeItem,
   url: string
 ): void => {
-  if (respond.value.from === Applicant.CLAIMANT && respond.value.status === ResponseStatus.STORED_STATE) {
+  if (respond.value.from === Applicant.CLAIMANT && respond.value.storeState === ResponseStatus.STORED_STATE) {
     order.redirectUrl =
       PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', order.id).replace(':responseId', respond.id) +
       getLanguageParam(url);
@@ -552,7 +552,7 @@ export const getClaimantTribunalResponseBannerContent = (
           response =>
             response.value.from === Applicant.CLAIMANT &&
             response.value.responseState !== HubLinkStatus.VIEWED &&
-            response.value.status !== ResponseStatus.STORED_STATE
+            response.value.storeState !== ResponseStatus.STORED_STATE
         )
         .map(response => ({
           redirectUrl: `/tribunal-order-or-request-details/${notification.id}${languageParam}`,

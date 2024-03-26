@@ -104,7 +104,6 @@ export interface SendNotificationSelectHearingItem {
 
 export interface PseResponseType {
   from?: string;
-  status?: string;
   copyToOtherParty?: string;
   supportingMaterial?: DocumentTypeItem[];
   date?: string;
@@ -112,6 +111,7 @@ export interface PseResponseType {
   hasSupportingMaterial?: string;
   copyNoGiveDetails?: string;
   responseState?: string;
+  storeState?: string;
 }
 
 export interface PseResponseTypeItem {
