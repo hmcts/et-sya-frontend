@@ -228,6 +228,18 @@ export default {
       },
     },
   ],
+  tseApplicationStoredCollection: [
+    {
+      id: '133',
+      value: {
+        type: 'Amend response',
+        applicant: Applicant.CLAIMANT,
+        date: '2 May 2024',
+        copyToOtherPartyYesOrNo: YesOrNo.YES,
+        status: 'Stored',
+      },
+    },
+  ],
   hearingCollection: undefined,
   sendNotificationCollection: [selectedRequestOrOrder],
   documentCollection: [

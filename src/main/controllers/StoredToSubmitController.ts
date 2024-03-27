@@ -10,6 +10,7 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -20,7 +21,7 @@ import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { StoredToSubmitContentForm } from './helpers/StoredToSubmitHelpers';
+import { StoredToSubmitContentForm, clearTseFields, putSelectedAppToUserCase } from './helpers/StoredToSubmitHelpers';
 
 const logger = getLogger('StoredToSubmitController');
 
@@ -44,18 +45,20 @@ export default class StoredToSubmitController {
     }
     req.session.errors = [];
 
+    // Update Hub Links Statuses
     try {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+      await handleUpdateHubLinksStatuses(req, logger);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Submit Stored Application
     try {
+      putSelectedAppToUserCase(userCase);
       await getCaseApi(req.session.user?.accessToken).storedToSubmitClaimantTse(req.session.userCase);
-      userCase.selectedGenericTseApplication = undefined;
-      userCase.confirmCopied = undefined;
+      clearTseFields(userCase);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
@@ -68,7 +71,7 @@ export default class StoredToSubmitController {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      userCase.tseApplicationStoredCollection,
       req.params.appId
     );
     if (selectedApplication === undefined) {

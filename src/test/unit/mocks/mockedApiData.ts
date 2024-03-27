@@ -180,6 +180,18 @@ export const mockedApiData: CaseApiDataResponse = {
         },
       },
     ],
+    tseApplicationStoredCollection: [
+      {
+        id: '133',
+        value: {
+          type: 'Amend response',
+          applicant: Applicant.CLAIMANT,
+          date: '2 May 2024',
+          copyToOtherPartyYesOrNo: YesOrNo.YES,
+          status: 'Stored',
+        },
+      },
+    ],
     receiptDate: '2022-10-03',
     hubLinksStatuses: new HubLinksStatuses(),
     managingOffice: 'Leeds',

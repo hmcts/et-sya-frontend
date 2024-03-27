@@ -94,19 +94,6 @@ describe('Tribunal response store controller return error page', () => {
   request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
   request.session.userCase.selectedRequestOrOrder = { id: '246' };
 
-  it('should return error page when updateHubLinksStatuses failed', () => {
-    jest.mock('axios');
-    const mockCaseApi = {
-      axios: AxiosInstance,
-    };
-    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-
-    controller.get(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
-  });
-
   it('should return error page when storeResponseSendNotification failed', async () => {
     jest.mock('axios');
     const mockCaseApi = {

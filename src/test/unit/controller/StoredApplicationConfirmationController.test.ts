@@ -14,9 +14,7 @@ describe('Store application Complete Controller tests', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
     request.params.appId = '246';
-    request.session.userCase.genericTseApplicationCollection = [
-      { id: '246', value: { applicant: Applicant.CLAIMANT } },
-    ];
+    request.session.userCase.tseApplicationStoredCollection = [{ id: '246', value: { applicant: Applicant.CLAIMANT } }];
 
     await controller.get(request, response);
 

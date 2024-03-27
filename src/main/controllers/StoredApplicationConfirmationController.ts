@@ -32,7 +32,7 @@ export default class StoredApplicationConfirmationController {
     }
 
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      userCase.tseApplicationStoredCollection,
       req.params.appId
     );
     if (selectedApplication === undefined) {
