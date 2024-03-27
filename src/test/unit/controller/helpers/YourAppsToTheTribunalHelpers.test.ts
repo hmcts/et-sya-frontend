@@ -88,7 +88,7 @@ describe('Your Apps To The Tribunal Helper', () => {
       number: '1',
       status: 'Open',
       applicant: Applicant.CLAIMANT,
-      respondCollection: [respondCollection],
+      respondStoredCollection: [respondCollection],
     } as GenericTseApplicationType;
 
     const item = {

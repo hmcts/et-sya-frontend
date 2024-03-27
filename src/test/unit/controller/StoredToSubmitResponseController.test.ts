@@ -23,9 +23,9 @@ const tseAppCollection: GenericTseApplicationTypeItem[] = [
       copyToOtherPartyText: 'Yes',
       details: 'Help',
       number: '1',
-      status: 'Stored',
-      applicationState: 'stored',
-      respondCollection: [
+      status: 'Open',
+      applicationState: 'inProgress',
+      respondStoredCollection: [
         {
           id: '567',
           value: {

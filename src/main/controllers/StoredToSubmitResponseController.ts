@@ -67,7 +67,9 @@ export default class StoredToSubmitResponseController {
     }
     userCase.selectedGenericTseApplication = selectedApplication;
 
-    const selectedResponse = selectedApplication.value.respondCollection?.find(r => r.id === req.params.responseId);
+    const selectedResponse = selectedApplication.value.respondStoredCollection?.find(
+      r => r.id === req.params.responseId
+    );
     userCase.selectedTseResponse = selectedResponse;
 
     const translations: AnyRecord = {
