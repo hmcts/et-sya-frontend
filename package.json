@@ -46,7 +46,7 @@
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.8.0",
     "@hmcts/nodejs-logging": "^4.0.4",
-    "@hmcts/properties-volume": "^0.0.14",
+    "@hmcts/properties-volume": "^1.0.0",
     "@launchdarkly/node-server-sdk": "^9.0.0",
     "@pact-foundation/pact": "12.2.0",
     "@types/config": "^3.3.0",
