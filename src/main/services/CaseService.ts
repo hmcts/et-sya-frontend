@@ -229,8 +229,15 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         application_id: caseItem.selectedGenericTseApplication.id,
-        response_id: caseItem.selectedTseResponse.id,
+        stored_response_id: caseItem.selectedTseResponse.id,
+        supporting_material_file: caseItem.supportingMaterialFile,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
+        response: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
       })
       .catch(function (error) {
         throw new Error('Error submitting stored tse application respond status: ' + error);
