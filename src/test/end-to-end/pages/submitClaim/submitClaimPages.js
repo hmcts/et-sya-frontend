@@ -15,7 +15,8 @@ module.exports = async function (allEqualityPages) {
       testConfig.TestWaitForVisibilityTimeLimit
     );
     I.see('What is your main language?');
-    I.see('English or Welsh');
+    I.see('English');
+    I.see('Welsh');
     I.see('Other');
     I.see('Prefer not to say');
     I.see('Why we are asking this question');
