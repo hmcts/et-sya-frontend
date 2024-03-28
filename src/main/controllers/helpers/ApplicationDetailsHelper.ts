@@ -128,6 +128,30 @@ export const getAllResponses = async (
   return allResponses;
 };
 
+export const getAllStoredClaimantResponses = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord,
+  req: AppRequest
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
+  const respondCollection = selectedApplication.value.respondStoredCollection;
+  if (!respondCollection?.length) {
+    return allResponses;
+  }
+  for (const response of respondCollection) {
+    if (response.value.from === Applicant.CLAIMANT) {
+      const responseToAdd: TseRespondTypeItem = await addNonAdminResponse(
+        translations,
+        response,
+        req.session.user?.accessToken,
+        datesStringToDateInLocale(response.value.date, req.url)
+      );
+      allResponses.push(responseToAdd);
+    }
+  }
+  return allResponses;
+};
+
 export const getSupportingMaterialDownloadLink = async (
   responseDoc: Document,
   accessToken: string

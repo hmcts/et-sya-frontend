@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { TseRespondTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -12,6 +13,7 @@ import { getCaseApi } from '../services/CaseService';
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import {
   getAllResponses,
+  getAllStoredClaimantResponses,
   getAllTseApplicationCollection,
   getTseApplicationDetails,
 } from './helpers/ApplicationDetailsHelper';
@@ -72,9 +74,10 @@ export default class ApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
-    let allResponses;
+    let allResponses: TseRespondTypeItem[];
     try {
       allResponses = await getAllResponses(selectedApplication, translations, req);
+      allResponses.push(...(await getAllStoredClaimantResponses(selectedApplication, translations, req)));
     } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
