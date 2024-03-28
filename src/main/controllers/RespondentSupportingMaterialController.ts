@@ -2,7 +2,14 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import {
+  InterceptPaths,
+  NoticeOfECC,
+  NotificationSubjects,
+  PageUrls,
+  Rule92Types,
+  TranslationKeys,
+} from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -88,6 +95,8 @@ export default class RespondentSupportingMaterialController {
 
     const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId);
     const supportingMaterialUrl = setUrlLanguageFromSessionLanguage(req, baseUrl);
+    const selectedRequestOrOrder = userCase.selectedRequestOrOrder;
+    const notificationSubject = selectedRequestOrOrder?.value?.sendNotificationSubject;
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
@@ -110,9 +119,11 @@ export default class RespondentSupportingMaterialController {
 
     if (
       req.session.contactType === Rule92Types.TRIBUNAL &&
-      userCase.selectedRequestOrOrder &&
-      userCase.selectedRequestOrOrder.value.sendNotificationSubject?.length &&
-      userCase.selectedRequestOrOrder.value.sendNotificationSubject.includes('Employer Contract Claim')
+      selectedRequestOrOrder &&
+      notificationSubject?.length &&
+      (notificationSubject.includes(NotificationSubjects.ECC) ||
+        (notificationSubject.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+          selectedRequestOrOrder.value.sendNotificationEccQuestion.includes(NoticeOfECC)))
     ) {
       return res.redirect(setUrlLanguageFromSessionLanguage(req, PageUrls.TRIBUNAL_RESPONSE_CYA));
     }

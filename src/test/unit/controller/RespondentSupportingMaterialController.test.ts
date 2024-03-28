@@ -1,7 +1,14 @@
 import RespondentSupportingMaterialController from '../../../main/controllers/RespondentSupportingMaterialController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
-import { PageUrls, Rule92Types, TranslationKeys, languages } from '../../../main/definitions/constants';
+import {
+  NoticeOfECC,
+  NotificationSubjects,
+  PageUrls,
+  Rule92Types,
+  TranslationKeys,
+  languages,
+} from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import respondentSupportingMaterial from '../../../main/resources/locales/en/translation/respondent-supporting-material.json';
 import { mockFile } from '../mocks/mockFile';
@@ -67,7 +74,29 @@ describe('Respondent supporting material controller', () => {
     userCase.selectedRequestOrOrder = {
       id: '1',
       value: {
-        sendNotificationSubject: ['Employer Contract Claim'],
+        sendNotificationSubject: [NotificationSubjects.ECC],
+      },
+    };
+
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
+    request.session.contactType = Rule92Types.TRIBUNAL;
+    const res = mockResponse();
+
+    const controller = new RespondentSupportingMaterialController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TRIBUNAL_RESPONSE_CYA + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  it('should render tribunal response CYA page if request type is CMO, ECC and Notice of ECC', async () => {
+    const body = {
+      responseText: 'some Text',
+    };
+    const userCase = mockUserCase;
+    userCase.selectedRequestOrOrder = {
+      id: '1',
+      value: {
+        sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+        sendNotificationEccQuestion: NoticeOfECC,
       },
     };
 
