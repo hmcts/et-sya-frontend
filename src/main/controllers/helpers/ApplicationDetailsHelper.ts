@@ -6,7 +6,7 @@ import {
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { PseResponseTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant } from '../../definitions/constants';
+import { Applicant, TseStatus } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
@@ -24,9 +24,15 @@ export const getTseApplicationDetails = (
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
+  rows.push(addSummaryRow(translations.applicant, translations[application.applicant]));
+
+  if (application.status === TseStatus.STORED_STATE) {
+    rows.push(addSummaryRow(translations.storedDate, applicationDate));
+  } else {
+    rows.push(addSummaryRow(translations.requestDate, applicationDate));
+  }
+
   rows.push(
-    addSummaryRow(translations.applicant, translations[application.applicant]),
-    addSummaryRow(translations.requestDate, applicationDate),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
@@ -84,8 +90,8 @@ export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   req: AppRequest
-): Promise<any> => {
-  const allResponses: any[] = [];
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
   const respondCollection = selectedApplication.value.respondCollection;
   let responseDate;
   if (!respondCollection?.length) {
@@ -289,4 +295,12 @@ export const addNonAdminResponse = async (
       value: { text: translations[response.value.copyToOtherParty] },
     },
   ];
+};
+
+export const getResponseDisplay = async (
+  response: TseRespondTypeItem,
+  translations: AnyRecord,
+  accessToken: string
+): Promise<SummaryListRow[]> => {
+  return addNonAdminResponse(translations, response, accessToken, response.value.date);
 };

@@ -38,6 +38,7 @@
   "submittedAndViewed": "Submitted",
   "updated": "Updated",
   "readyToView": "Ready to view",
+  "stored": "Stored",
   "submittedAlert": "You have submitted your claim to the tribunal",
   "processClaim": "We aim to process your claim by",
   "busyPeriod": ". In busy periods it may take longer.",
@@ -93,6 +94,12 @@
       "headerClaimant": "The tribunal has made a decision on your application to ",
       "headerRespondent": "The tribunal has made a decision on the respondent's application to ",
       "link": "View the decision"
+    },
+    "storedPending": {
+      "header": "You have stored correspondence which you have not submitted to the tribunal",
+      "line1": "You must send a copy of this correspondence and all supporting documents to the other party before you submit it to the tribunal.",
+      "line2": "If the other party does respond to your application, they are expected to copy their response to you.",
+      "link": "View correspondence"
     },
     "claimantResponseToTribunal": {
       "title": {

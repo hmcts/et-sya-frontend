@@ -8,7 +8,10 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { populateAllOrdersItemsWithCorrectStatusTranslations } from './helpers/TribunalOrderOrRequestHelper';
+import {
+  populateAllOrdersItemsWithCorrectStatusTranslations,
+  updateStoredRedirectUrl,
+} from './helpers/TribunalOrderOrRequestHelper';
 
 export class TribunalOrdersAndRequestsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -40,6 +43,7 @@ export class TribunalOrdersAndRequestsController {
       ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
     };
     populateAllOrdersItemsWithCorrectStatusTranslations(notifications, translations, req.url);
+    updateStoredRedirectUrl(notifications, req.url);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,

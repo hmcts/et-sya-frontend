@@ -1,0 +1,46 @@
+{% extends "template.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: getErrors(form.fields)
+    }) if getErrors(form.fields).length > 0
+  }}
+
+  <div class="govuk-!-width-two-thirds">
+    <h1 class="govuk-heading-xl">{{ title }}</h1>
+    <p class="govuk-body">{{ youHaveNotSubmitted }}</p>
+
+      {{ govukSummaryList({
+        rows: appContent
+      }) }}
+
+    <h2 class="govuk-heading-l">{{ confirmYouHaveCopied }}</h2>
+    <p class="govuk-body">{{ toSubmitYourApplication }}</p>
+    <p class="govuk-body"><a href="{{ viewCorrespondenceLink }}" class="govuk-link" target="_blank">{{ viewThisCorrespondence }} ({{ opensInNewTab }})</a></p>
+
+    {% if document %}
+    <p class="govuk-body">
+      {{ viewTheSupportingDocuments }} <br/>
+      <a href="{{ viewCorrespondenceFileLink }}" class="govuk-link" target="_blank">{{ document.document_filename }} ({{ opensInNewTab }})</a>
+    </p>
+    {% endif %}
+
+    <form class="form" id="main-form" method="post" action="" novalidate="true">
+      <input type="hidden" name="_csrf" value={{ csrfToken }}>
+      {% block form_content %}
+        {% include "form/fields.njk" %}
+        {% include "form/saveButtons.njk" %}
+      {% endblock %}
+    </form>
+
+  </div>
+{% endblock %}

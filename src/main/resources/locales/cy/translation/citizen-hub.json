@@ -38,6 +38,7 @@
   "submittedAndViewed": "Wedi'i gyflwyno",
   "updated": "Wedi ei ddiweddaru",
   "readyToView": "Yn barod i’w gweld",
+  "stored": "Wedi’i Storio",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
   "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
@@ -93,6 +94,12 @@
       "headerClaimant": "WMae'r tribiwnlys wedi gwneud penderfyniad ar eich cais i ",
       "headerRespondent": "Mae'r tribiwnlys wedi gwneud penderfyniad ar gais yr atebydd i ",
       "link": "Gweld y penderfyniad"
+    },
+    "storedPending": {
+      "header": "Rydych wedi storio gohebiaeth nad ydych wedi'i chyflwyno i'r tribiwnlys",
+      "line1": "Rhaid i chi anfon copi o'r ohebiaeth hon a'r holl ddogfennau ategol at y parti arall cyn i chi ei chyflwyno i'r tribiwnlys.",
+      "line2": "Os yw'r parti arall yn ymateb i'ch cais, mae disgwyl iddo anfon ei ymateb atoch chi.",
+      "link": "Gweld yr ohebiaeth"
     },
     "claimantResponseToTribunal": {
       "title": {

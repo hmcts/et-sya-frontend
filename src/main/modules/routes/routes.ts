@@ -37,11 +37,13 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
+import ContactTheTribunalCYANotSystemUserController from '../../controllers/ContactTheTribunalCYANotSystemUserController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
 import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
+import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -97,6 +99,15 @@ import SingleOrMultipleController from '../../controllers/SingleOrMultipleContro
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
+import StoreRespondentController from '../../controllers/StoreRespondentController';
+import StoreTseController from '../../controllers/StoreTseController';
+import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
+import StoredResponseAppConfirmationController from '../../controllers/StoredResponseAppConfirmationController';
+import StoredResponseTribunalConfirmationController from '../../controllers/StoredResponseTribunalConfirmationController';
+import StoredToSubmitCompleteController from '../../controllers/StoredToSubmitCompleteController';
+import StoredToSubmitController from '../../controllers/StoredToSubmitController';
+import StoredToSubmitResponseController from '../../controllers/StoredToSubmitResponseController';
+import StoredToSubmitTribunalController from '../../controllers/StoredToSubmitTribunalController';
 import SubmitBundlesHearingDocsCYAController from '../../controllers/SubmitBundlesHearingDocsCYAController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
@@ -108,7 +119,9 @@ import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalO
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
 import TribunalRespondToOrderController from '../../controllers/TribunalRespondToOrderController';
 import TribunalResponseCYAController from '../../controllers/TribunalResponseCYAController';
+import TribunalResponseCYANotSystemUserController from '../../controllers/TribunalResponseCYANotSystemUserController';
 import TribunalResponseCompletedController from '../../controllers/TribunalResponseCompletedController';
+import TribunalResponseStoreController from '../../controllers/TribunalResponseStoreController';
 import TribunalResponseSubmitController from '../../controllers/TribunalResponseSubmitController';
 import TypeOfClaimController from '../../controllers/TypeOfClaimController';
 import UpdatePreferenceController from '../../controllers/UpdatePreferenceController';
@@ -181,6 +194,7 @@ export class Routes {
     app.get(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().get);
     app.post(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().post);
     app.get(PageUrls.CONTACT_ACAS, new ContactAcasController().get);
+
     app.get(PageUrls.DOB_DETAILS, new DobController().get);
     app.post(PageUrls.DOB_DETAILS, new DobController().post);
     app.get(PageUrls.SEX_AND_TITLE, new SexAndTitleController().get);
@@ -330,6 +344,25 @@ export class Routes {
       PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
       new RespondentPostCodeSelectController().post
     );
+
+    // R92 - Non-system user - Store
+    app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().post);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
+    app.get(PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER, new TribunalResponseCYANotSystemUserController().get);
+    app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
+    app.get(InterceptPaths.STORE_RESPONDENT_CYA, new StoreRespondentController().get);
+    app.get(InterceptPaths.TRIBUNAL_RESPONSE_STORE_CYA, new TribunalResponseStoreController().get);
+    app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
+    app.get(PageUrls.STORED_RESPONSE_APPLICATION_CONFIRMATION, new StoredResponseAppConfirmationController().get);
+    app.get(PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION, new StoredResponseTribunalConfirmationController().get);
+    app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
+    app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
+    app.get(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().get);
+    app.post(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().post);
+    app.get(PageUrls.STORED_TO_SUBMIT_TRIBUNAL, new StoredToSubmitTribunalController().get);
+    app.post(PageUrls.STORED_TO_SUBMIT_TRIBUNAL, new StoredToSubmitTribunalController().post);
+    app.get(PageUrls.STORED_TO_SUBMIT_COMPLETE, new StoredToSubmitCompleteController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

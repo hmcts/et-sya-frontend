@@ -13,6 +13,7 @@ import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
@@ -116,7 +117,7 @@ export default class RespondentSupportingMaterialController {
     ) {
       return res.redirect(setUrlLanguageFromSessionLanguage(req, PageUrls.TRIBUNAL_RESPONSE_CYA));
     }
-    return res.redirect(setUrlLanguageFromSessionLanguage(req, PageUrls.COPY_TO_OTHER_PARTY));
+    return res.redirect(setUrlLanguageFromSessionLanguage(req, copyToOtherPartyRedirectUrl(req.session.userCase)));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

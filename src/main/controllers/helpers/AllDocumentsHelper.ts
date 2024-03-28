@@ -174,6 +174,19 @@ export const isDocInDocumentCollection = (req: AppRequest, docId: string): boole
   return false;
 };
 
+export const isDocInPseRespondCollection = (req: AppRequest, docId: string): boolean => {
+  for (const item of req.session.userCase?.sendNotificationCollection || []) {
+    for (const respond of item.value.respondCollection || []) {
+      for (const doc of respond.value.supportingMaterial?.values() || []) {
+        if (doc.value.uploadedDocument && docId === getDocId(doc.value.uploadedDocument.document_url)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+};
+
 export const isBundlesDoc = (req: AppRequest, docId: string): boolean => {
   if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
     const { userCase } = req.session;

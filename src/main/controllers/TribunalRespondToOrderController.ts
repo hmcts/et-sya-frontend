@@ -14,6 +14,7 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 import { getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
@@ -73,7 +74,7 @@ export default class TribunalRespondToOrderController {
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+        : copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 

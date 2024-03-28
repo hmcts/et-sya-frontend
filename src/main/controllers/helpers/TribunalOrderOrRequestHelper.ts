@@ -14,6 +14,7 @@ import {
   PageUrls,
   Parties,
   ResponseRequired,
+  ResponseStatus,
 } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
@@ -120,12 +121,19 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
         item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
       const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
+      const hasStored =
+        item.value.respondCollection?.some(
+          r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+        ) || false;
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
       let hubLinkStatus: HubLinkStatus;
 
       switch (true) {
+        case hasStored:
+          hubLinkStatus = HubLinkStatus.STORED;
+          break;
         case responseRequired && hasResponded:
           hubLinkStatus = HubLinkStatus.SUBMITTED;
           break;
@@ -158,10 +166,52 @@ export const populateAllOrdersItemsWithCorrectStatusTranslations = (
 ): SendNotificationTypeItem[] => {
   if (ordersAndRequests?.length) {
     ordersAndRequests.forEach(item => {
-      item.displayStatus = translations[item.value.notificationState];
+      item.displayStatus = getOrdersAndRequestsItemDisplayStatus(item, translations);
       item.redirectUrl = getRedirectUrlForNotification(item, false, url);
     });
     return ordersAndRequests;
+  }
+};
+
+const getOrdersAndRequestsItemDisplayStatus = (item: SendNotificationTypeItem, translations: AnyRecord): string => {
+  if (isAnyStoredResponded(item)) {
+    return translations[HubLinkStatus.STORED];
+  } else {
+    return translations[item.value.notificationState];
+  }
+};
+
+const isAnyStoredResponded = (item: SendNotificationTypeItem): boolean => {
+  return item.value.respondCollection?.some(
+    r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+  );
+};
+
+export const updateStoredRedirectUrl = (orderList: SendNotificationTypeItem[], url: string): void => {
+  if (orderList) {
+    for (const order of orderList) {
+      checkAndUpdateSendNotification(order, url);
+    }
+  }
+};
+
+const checkAndUpdateSendNotification = (order: SendNotificationTypeItem, url: string): void => {
+  if (order.value.respondCollection) {
+    for (const respond of order.value.respondCollection) {
+      checkAndUpdateRespondCollection(respond, order, url);
+    }
+  }
+};
+
+const checkAndUpdateRespondCollection = (
+  respond: TypeItem<PseResponseType>,
+  order: SendNotificationTypeItem,
+  url: string
+): void => {
+  if (respond.value.from === Applicant.CLAIMANT && respond.value.status === ResponseStatus.STORED_STATE) {
+    order.redirectUrl =
+      PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', order.id).replace(':responseId', respond.id) +
+      getLanguageParam(url);
   }
 };
 
@@ -204,9 +254,16 @@ export const activateTribunalOrdersAndRequestsLink = async (
     return item.value.notificationState === HubLinkStatus.VIEWED;
   });
 
+  const anyStoredResponded = notices.some(item => {
+    return isAnyStoredResponded(item);
+  });
+
   switch (true) {
     case anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
+      break;
+    case anyStoredResponded:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
       break;
     case !allViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
@@ -248,7 +305,7 @@ export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNot
 };
 
 /**
- * Returns a filtered list of notifications where ANY criteria is matched:
+ * Returns a filtered list of notifications where ANY criteria are matched:
  * 1. Notification is not viewed
  * 2. A response on the notification is not viewed
  * 3. A response on the notification is viewed and requires a response where none has been given yet
@@ -274,7 +331,7 @@ export function filterActionableNotifications(notifications: SendNotificationTyp
 /**
  * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
  * needsResponse is true if a notification (or tribunal response on it) requires a response where none has been given.
- * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is unviewed.
+ * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is un-viewed.
  */
 export function setNotificationBannerData(notification: SendNotificationTypeItem): void {
   const actionableNotifications = filterActionableNotifications([notification]);
@@ -493,7 +550,9 @@ export const getClaimantTribunalResponseBannerContent = (
       notification.value.respondCollection
         ?.filter(
           response =>
-            response.value.from === Applicant.CLAIMANT && response.value.responseState !== HubLinkStatus.VIEWED
+            response.value.from === Applicant.CLAIMANT &&
+            response.value.responseState !== HubLinkStatus.VIEWED &&
+            response.value.status !== ResponseStatus.STORED_STATE
         )
         .map(response => ({
           redirectUrl: `/tribunal-order-or-request-details/${notification.id}${languageParam}`,

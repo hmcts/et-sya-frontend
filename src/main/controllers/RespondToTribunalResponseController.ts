@@ -22,6 +22,7 @@ import {
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
@@ -77,7 +78,7 @@ export default class RespondToTribunalResponseController {
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + languageParam
-        : PageUrls.COPY_TO_OTHER_PARTY + languageParam;
+        : copyToOtherPartyRedirectUrl(req.session.userCase) + languageParam;
 
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };

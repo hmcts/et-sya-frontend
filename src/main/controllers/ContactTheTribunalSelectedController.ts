@@ -15,6 +15,7 @@ import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
@@ -112,7 +113,7 @@ export default class ContactTheTribunalSelectedController {
 
     const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
-      : PageUrls.COPY_TO_OTHER_PARTY;
+      : copyToOtherPartyRedirectUrl(req.session.userCase);
 
     const redirectUrl = setUrlLanguageFromSessionLanguage(req, redirectPage);
 
