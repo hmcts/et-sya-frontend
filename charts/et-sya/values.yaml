@@ -23,5 +23,7 @@ nodejs:
     PCQ_HEALTH_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/health'
     PCQ_ENABLED: 'true'
     ET1_BASE_URL: 'https://et-pet-et1.{{ .Values.global.environment }}.platform.hmcts.net'
+    MANAGE_ORG_URL: 'https://manage-org.{{ .Values.global.environment }}.platform.hmcts.net'
+    MANAGE_CASE_URL: 'https://manage-case.{{ .Values.global.environment }}.platform.hmcts.net'
 idam-pr:
   enabled: false

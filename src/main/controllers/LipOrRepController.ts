@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { claimantRepresented } from '../definitions/case';
 import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -26,11 +26,15 @@ export default class LipOrRepController {
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,
-            value: YesOrNo.NO,
+            value: claimantRepresented.NO,
           },
           {
             label: (l: AnyRecord): string => l.radio2,
-            value: YesOrNo.YES,
+            value: claimantRepresented.YES,
+          },
+          {
+            label: (l: AnyRecord): string => l.radio3,
+            value: claimantRepresented.LEGAL_REP,
           },
         ],
         validator: isFieldFilledIn,
@@ -47,10 +51,12 @@ export default class LipOrRepController {
 
   public post = (req: AppRequest, res: Response): void => {
     let redirectUrl;
-    if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
+    if (req.body.claimantRepresentedQuestion === claimantRepresented.NO) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    } else if (req.body.claimantRepresentedQuestion === YesOrNo.YES) {
+    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.YES) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
+    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP) {
+      redirectUrl = PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
     }

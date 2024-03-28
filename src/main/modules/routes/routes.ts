@@ -56,6 +56,7 @@ import JobTitleController from '../../controllers/JobTitleController';
 import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
 import LinkedCasesController from '../../controllers/LinkedCasesController';
 import LipOrRepController from '../../controllers/LipOrRepController';
+import MakingClaimAsLegalRepController from '../../controllers/MakingClaimAsLegalRepController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
 import NewJobPayController from '../../controllers/NewJobPayController';
@@ -154,6 +155,7 @@ export class Routes {
     app.post(PageUrls.PERSONAL_DETAILS_CHECK, new PersonalDetailsCheckController().post);
     app.get(PageUrls.LIP_OR_REPRESENTATIVE, new LipOrRepController().get);
     app.post(PageUrls.LIP_OR_REPRESENTATIVE, new LipOrRepController().post);
+    app.get(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE, new MakingClaimAsLegalRepController().get);
     app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().get);
     app.post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().post);
     app.get(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().get);
