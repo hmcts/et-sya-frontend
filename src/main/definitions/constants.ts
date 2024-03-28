@@ -312,6 +312,7 @@ export const JavaApiUrls = {
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   STORE_CLAIMANT_APPLICATION: 'store/store-claimant-application',
+  STORE_RESPOND_TO_APPLICATION: 'store/store-respond-to-application',
   SUBMIT_STORED_CLAIMANT_APPLICATION: 'store/submit-stored-claimant-application',
   SUBMIT_STORED_RESPOND_TO_APPLICATION: 'store/submit-stored-respond-to-application',
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',

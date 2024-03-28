@@ -205,14 +205,13 @@ export class CaseApi {
 
   storeRespondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {
+      return await this.axios.put(JavaApiUrls.STORE_RESPOND_TO_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         applicationId: caseItem.selectedGenericTseApplication.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
         response: {
-          status: caseItem.responseStatus,
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
@@ -230,8 +229,15 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         application_id: caseItem.selectedGenericTseApplication.id,
-        response_id: caseItem.selectedTseResponse.id,
+        stored_response_id: caseItem.selectedTseResponse.id,
+        supporting_material_file: caseItem.supportingMaterialFile,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
+        response: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
       })
       .catch(function (error) {
         throw new Error('Error submitting stored tse application respond status: ' + error);
@@ -327,7 +333,7 @@ export class CaseApi {
         send_notification_id: caseItem.selectedRequestOrOrder.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
         pseResponseType: {
-          status: caseItem.responseStatus,
+          status: caseItem.storeState,
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
