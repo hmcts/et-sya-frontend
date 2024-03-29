@@ -45,7 +45,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       },
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
-        translations.employmentDetails.no,
+        translations.employmentDetails.didYouWorkForNo,
         createChangeAction(
           PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -65,7 +65,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         },
         addSummaryRow(
           translations.employmentDetails.didYouWorkFor,
-          translations.employmentDetails.yes,
+          translations.employmentDetails.didYouWorkForYes,
           createChangeAction(
             PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
             translations.change,
