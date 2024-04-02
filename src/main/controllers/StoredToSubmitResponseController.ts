@@ -39,11 +39,9 @@ export default class StoredToSubmitResponseController {
     req.session.errors = [];
 
     try {
-      userCase.isRespondingToRequestOrOrder = true;
       await getCaseApi(req.session.user?.accessToken).storedToSubmitRespondToApp(req.session.userCase);
       userCase.selectedGenericTseApplication = undefined;
       userCase.selectedStoredTseResponse = undefined;
-      userCase.isRespondingToRequestOrOrder = undefined;
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
