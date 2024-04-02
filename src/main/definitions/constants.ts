@@ -318,7 +318,8 @@ export const JavaApiUrls = {
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
-  SUBMIT_STORED_RESPOND_TO_TRIBUNAL: '/store/submit-stored-respond-to-tribunal',
+  STORE_RESPOND_TO_TRIBUNAL: 'store/store-respond-to-tribunal',
+  SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
 } as const;

@@ -319,13 +319,12 @@ export class CaseApi {
 
   storeResponseSendNotification = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.ADD_RESPONSE_TO_SEND_NOTIFICATION, {
+      return await this.axios.put(JavaApiUrls.STORE_RESPOND_TO_TRIBUNAL, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         send_notification_id: caseItem.selectedRequestOrOrder.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
         pseResponseType: {
-          status: caseItem.storeState,
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
@@ -343,7 +342,7 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         order_id: caseItem.selectedRequestOrOrder.id,
-        response_id: caseItem.selectedPseResponse.id,
+        stored_response_id: caseItem.selectedStoredPseResponse.id,
       })
       .catch(function (error) {
         throw new Error('Error submitting stored tse application respond status: ' + error);

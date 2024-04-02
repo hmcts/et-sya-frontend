@@ -44,7 +44,7 @@ export default class StoredToSubmitTribunalController {
     try {
       await getCaseApi(req.session.user?.accessToken).storedToSubmitRespondToTribunal(req.session.userCase);
       userCase.selectedRequestOrOrder = undefined;
-      userCase.selectedPseResponse = undefined;
+      userCase.selectedStoredPseResponse = undefined;
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
@@ -70,7 +70,7 @@ export default class StoredToSubmitTribunalController {
       logger.error('Selected response not found');
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
-    userCase.selectedPseResponse = selectedResponse;
+    userCase.selectedStoredPseResponse = selectedResponse;
 
     const headerTranslations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
