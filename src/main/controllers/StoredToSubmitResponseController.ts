@@ -42,7 +42,7 @@ export default class StoredToSubmitResponseController {
       userCase.isRespondingToRequestOrOrder = true;
       await getCaseApi(req.session.user?.accessToken).storedToSubmitRespondToApp(req.session.userCase);
       userCase.selectedGenericTseApplication = undefined;
-      userCase.selectedTseResponse = undefined;
+      userCase.selectedStoredTseResponse = undefined;
       userCase.isRespondingToRequestOrOrder = undefined;
     } catch (error) {
       logger.error(error.message);
@@ -70,7 +70,7 @@ export default class StoredToSubmitResponseController {
     const selectedResponse = selectedApplication.value.respondStoredCollection?.find(
       r => r.id === req.params.responseId
     );
-    userCase.selectedTseResponse = selectedResponse;
+    userCase.selectedStoredTseResponse = selectedResponse;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),

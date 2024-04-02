@@ -188,7 +188,7 @@ export interface Case {
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   tseApplicationStoredCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
-  selectedTseResponse?: TseRespondTypeItem;
+  selectedStoredTseResponse?: TseRespondTypeItem;
   selectedPseResponse?: TypeItem<PseResponseType>;
   storeState?: string;
   responseText?: string;

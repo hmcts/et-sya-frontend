@@ -229,8 +229,8 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         application_id: caseItem.selectedGenericTseApplication.id,
-        stored_response_id: caseItem.selectedTseResponse.id,
-        supporting_material_file: caseItem.supportingMaterialFile,
+        stored_response_id: caseItem.selectedStoredTseResponse.id,
+        supporting_material_file: caseItem.selectedStoredTseResponse.value.supportingMaterial,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
         response: {
           response: caseItem.responseText,
