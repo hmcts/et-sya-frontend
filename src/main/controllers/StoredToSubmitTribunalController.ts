@@ -65,7 +65,10 @@ export default class StoredToSubmitTribunalController {
     }
     userCase.selectedRequestOrOrder = selectedNotification;
 
-    const selectedResponse = findSelectedPseResponse(selectedNotification, req.params.responseId);
+    const selectedResponse = findSelectedPseResponse(
+      selectedNotification.value.respondStoredCollection,
+      req.params.responseId
+    );
     if (selectedResponse === undefined) {
       logger.error('Selected response not found');
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
