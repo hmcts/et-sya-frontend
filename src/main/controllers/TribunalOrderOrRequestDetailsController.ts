@@ -34,6 +34,7 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const respondButton =
       !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
+      !selectedRequestOrOrder.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
       selectedRequestOrOrder.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
       selectedRequestOrOrder.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
 

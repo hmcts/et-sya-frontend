@@ -241,7 +241,11 @@ export const activateTribunalOrdersAndRequestsLink = async (
   const anyRequireResponse = notices.some(responseRequired);
 
   const anyRequireResponseAndNotResponded = notices.some(item => {
-    return responseRequired(item) && !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+    return (
+      responseRequired(item) &&
+      !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
+      !item.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)
+    );
   });
 
   const allViewed = notices.every(item => {
@@ -355,7 +359,10 @@ function requiresResponse(notification: SendNotificationType) {
 }
 
 function hasClaimantResponded(notification: SendNotificationType) {
-  return notification.respondCollection?.filter(o => o.value.from === Applicant.CLAIMANT).length > 0;
+  return (
+    notification.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) ||
+    notification.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)
+  );
 }
 
 const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean => {
@@ -368,6 +375,7 @@ export const getNotificationResponses = async (
   req: AppRequest
 ): Promise<any> => {
   const allResponses: any[] = [];
+
   const respondCollection = sendNotificationType.respondCollection;
   if (respondCollection?.length) {
     await addClaimantRespondentResponses(respondCollection, req, translations, allResponses);
@@ -377,6 +385,12 @@ export const getNotificationResponses = async (
   if (adminResponseCollection?.length) {
     await addTribunalResponses(adminResponseCollection, req, allResponses, translations);
   }
+
+  const respondStoredCollection = sendNotificationType.respondStoredCollection;
+  if (respondStoredCollection?.length) {
+    await addClaimantRespondentResponses(respondStoredCollection, req, translations, allResponses);
+  }
+
   return allResponses;
 };
 
