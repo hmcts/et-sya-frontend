@@ -30,7 +30,7 @@ const tseAppCollection: GenericTseApplicationTypeItem[] = [
 ];
 const userCase: Partial<CaseWithId> = {
   id: '345',
-  genericTseApplicationCollection: tseAppCollection,
+  tseApplicationStoredCollection: tseAppCollection,
 };
 
 describe('Stored to Submit Controller GET', () => {

@@ -8,7 +8,7 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { clearTseFields } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('TribunalResponseStoreController');
@@ -17,14 +17,16 @@ export default class TribunalResponseStoreController {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session?.userCase;
 
+    // Update Hub Links Statuses
     try {
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+      await handleUpdateHubLinksStatuses(req, logger);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Store Response of Send Notification
     try {
       req.session.userCase.responseStatus = ResponseStatus.STORED_STATE;
       await getCaseApi(req.session.user?.accessToken).storeResponseSendNotification(req.session.userCase);
@@ -33,17 +35,12 @@ export default class TribunalResponseStoreController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
+    // Clear temporary fields + Update UserCase
     let orderId;
     try {
       orderId = userCase.selectedRequestOrOrder.id;
       userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
       clearTseFields(userCase);
-    } catch (error) {
-      logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-    }
-
-    try {
       req.session.userCase = fromApiFormat(
         (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
       );

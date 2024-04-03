@@ -28,7 +28,7 @@ describe('Stored to submit page', () => {
     await request(
       mockApp({
         userCase: {
-          genericTseApplicationCollection: [
+          tseApplicationStoredCollection: [
             {
               id: '135',
               value: {
