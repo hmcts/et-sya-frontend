@@ -80,7 +80,6 @@ describe('Your Apps To The Tribunal Helper', () => {
       id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
       value: {
         from: 'Claimant',
-        status: 'Stored',
       },
     } as TseRespondTypeItem;
 
@@ -88,7 +87,7 @@ describe('Your Apps To The Tribunal Helper', () => {
       number: '1',
       status: 'Open',
       applicant: Applicant.CLAIMANT,
-      respondCollection: [respondCollection],
+      respondStoredCollection: [respondCollection],
     } as GenericTseApplicationType;
 
     const item = {

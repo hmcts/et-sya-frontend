@@ -281,15 +281,13 @@ const getStoredApplicationRespond = (
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
   for (const app of apps || []) {
-    if (app.value.respondCollection) {
-      app.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
-        .forEach(r =>
-          storeNotifications.push({
-            viewUrl:
-              PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
-          })
-        );
+    if (app.value.respondStoredCollection) {
+      app.value.respondStoredCollection.forEach(r =>
+        storeNotifications.push({
+          viewUrl:
+            PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
+        })
+      );
     }
   }
   return storeNotifications;

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls, ResponseStatus } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
@@ -16,7 +16,6 @@ export default class StoreRespondentController {
     const languageParam = getLanguageParam(req.url);
 
     try {
-      req.session.userCase.responseStatus = ResponseStatus.STORED_STATE;
       await getCaseApi(req.session.user?.accessToken).storeRespondToApplication(req.session.userCase);
     } catch (error) {
       logger.error(error.message);

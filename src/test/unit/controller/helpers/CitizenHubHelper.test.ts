@@ -625,13 +625,12 @@ describe('getStoredPendingApplicationLinks', () => {
         value: {
           number: '1',
           status: 'Open',
-          respondCollection: [
+          respondStoredCollection: [
             {
               id: '12345',
               value: {
                 from: Applicant.CLAIMANT,
                 copyToOtherParty: YesOrNo.YES,
-                status: 'Stored',
               },
             },
           ],

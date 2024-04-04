@@ -39,11 +39,9 @@ export default class StoredToSubmitResponseController {
     req.session.errors = [];
 
     try {
-      userCase.isRespondingToRequestOrOrder = true;
       await getCaseApi(req.session.user?.accessToken).storedToSubmitRespondToApp(req.session.userCase);
       userCase.selectedGenericTseApplication = undefined;
-      userCase.selectedTseResponse = undefined;
-      userCase.isRespondingToRequestOrOrder = undefined;
+      userCase.selectedStoredTseResponse = undefined;
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
@@ -67,8 +65,10 @@ export default class StoredToSubmitResponseController {
     }
     userCase.selectedGenericTseApplication = selectedApplication;
 
-    const selectedResponse = selectedApplication.value.respondCollection?.find(r => r.id === req.params.responseId);
-    userCase.selectedTseResponse = selectedResponse;
+    const selectedResponse = selectedApplication.value.respondStoredCollection?.find(
+      r => r.id === req.params.responseId
+    );
+    userCase.selectedStoredTseResponse = selectedResponse;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
