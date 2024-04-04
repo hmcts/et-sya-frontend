@@ -543,6 +543,8 @@ export const NotificationSubjects = {
   ECC: 'Employer Contract Claim',
 } as const;
 
+export const NoticeOfECC = 'Notice of Employer Contract Claim';
+
 export const DOCUMENT_CONTENT_TYPES = {
   DOCX: ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
   XLSX: ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
