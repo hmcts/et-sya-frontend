@@ -319,7 +319,7 @@ const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean 
   return response.value.respondNotificationPartyToNotify !== Parties.RESPONDENT_ONLY;
 };
 
-export const getPseStoredResponseDisplay = async (
+export const getSinglePseResponseDisplay = async (
   response: TypeItem<PseResponseType>,
   translations: AnyRecord,
   req: AppRequest

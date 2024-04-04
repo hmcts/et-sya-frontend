@@ -17,7 +17,7 @@ import {
   findSelectedPseResponse,
   findSelectedSendNotification,
 } from './helpers/StoredToSubmitHelpers';
-import { getPseStoredResponseDisplay } from './helpers/TribunalOrderOrRequestHelper';
+import { getSinglePseResponseDisplay } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('StoredToSubmitTribunalController');
 
@@ -84,7 +84,7 @@ export default class StoredToSubmitTribunalController {
         ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
         ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
       };
-      appContent = await getPseStoredResponseDisplay(selectedResponse, detailsTranslations, req);
+      appContent = await getSinglePseResponseDisplay(selectedResponse, detailsTranslations, req);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
