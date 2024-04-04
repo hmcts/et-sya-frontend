@@ -258,7 +258,6 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         send_notification_id: caseItem.selectedRequestOrOrder.id,
-        notification_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
       throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));

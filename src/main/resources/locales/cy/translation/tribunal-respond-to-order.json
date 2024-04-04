@@ -21,6 +21,17 @@
   "radioButtonHint": "A oes gennych unrhyw ddeunydd ategol yr hoffech ei ddarparu?",
   "tribunal": "Tribiwnlys",
   "Yes - view document for details": "Oes - gweler y ddogfen am fanylion",
+  "Caseworker": "Caseworker",
+  "Claimant": "Claimant",
+  "Respondent": "Respondent",
+  "responseItem": "Response",
+  "responseDate": "Response date",
+  "response": "What is your response to the tribunal?",
+  "responder": "Response from",
+  "supportingMaterial": "Supporting material",
+  "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "date": "Date sent",
+  "additionalInfo": "Additional information",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"

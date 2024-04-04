@@ -2,6 +2,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
   PseResponseType,
+  PseResponseTypeItem,
   RespondNotificationType,
   RespondNotificationTypeItem,
   SendNotificationType,
@@ -10,6 +11,7 @@ import {
 import {
   Applicant,
   FEATURE_FLAGS,
+  NoticeOfECC,
   NotificationSubjects,
   PageUrls,
   Parties,
@@ -24,6 +26,7 @@ import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import { addNonAdminResponse, getSupportingMaterialDownloadLink } from './ApplicationDetailsHelper';
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
+import {copyToOtherPartyRedirectUrl} from "./LinkHelpers";
 
 export const getTribunalOrderOrRequestDetails = (
   translations: AnyRecord,
@@ -109,49 +112,72 @@ export const getRedirectUrlForNotification = (
   return pageUrl.replace(':orderId', `${notification.id}${getLanguageParam(url)}`);
 };
 
-export const populateNotificationsWithRedirectLinksAndStatusColors = (
-  notifications: SendNotificationTypeItem[],
-  url: string,
-  translations: AnyRecord
+/**
+ * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
+ */
+export const setNotificationBannerData = (
+  items: SendNotificationTypeItem[],
+  url: string
 ): SendNotificationTypeItem[] => {
+  const notifications = filterSendNotifications(items);
   if (notifications?.length) {
     notifications.forEach(item => {
-      const responseRequired =
-        item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-        item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
-      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
-      const hasStored = item.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
-      const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
-      const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
-
-      let hubLinkStatus: HubLinkStatus;
-
-      switch (true) {
-        case hasStored:
-          hubLinkStatus = HubLinkStatus.STORED;
-          break;
-        case responseRequired && hasResponded:
-          hubLinkStatus = HubLinkStatus.SUBMITTED;
-          break;
-        case responseRequired && !hasResponded:
-          hubLinkStatus = HubLinkStatus.NOT_STARTED_YET;
-          break;
-        case !responseRequired && isNotViewedYet:
-          hubLinkStatus = HubLinkStatus.NOT_VIEWED;
-          break;
-        case !responseRequired && isViewed:
-          hubLinkStatus = HubLinkStatus.VIEWED;
-          break;
-        default:
-          throw new Error(`Illegal order/ request state, title: ${item.value.sendNotificationTitle}, id: ${item.id}`);
+      const actionableNotification = isActionableNotification(item);
+      if (!actionableNotification) {
+        item.showAlert = false;
+        return;
       }
-      item.displayStatus = translations[hubLinkStatus];
-      item.statusColor = displayStatusColorMap.get(hubLinkStatus);
+      const responseRequired = anyResponseRequired(item);
       item.redirectUrl = getRedirectUrlForNotification(item, false, url);
       item.respondUrl = getRedirectUrlForNotification(item, responseRequired, url);
-      setNotificationBannerData(item);
+      item.showAlert = true;
+      item.needsResponse = responseRequired;
     });
     return notifications;
+  }
+};
+
+/**
+ * Returns a filtered list of notifications where ANY criteria is matched:
+ * 1. Notification is not viewed or started yet
+ * 2. A response on the notification is not viewed
+ * 3. A response on the notification requires a response where none has been given yet
+ */
+function isActionableNotification(notification: SendNotificationTypeItem): boolean {
+  if (notification.value.sendNotificationNotify === Parties.RESPONDENT_ONLY) {
+    return false;
+  }
+  if (
+    notification.value.notificationState === HubLinkStatus.NOT_VIEWED ||
+    notification.value.notificationState === HubLinkStatus.NOT_STARTED_YET
+  ) {
+    return true;
+  }
+  if (requiresResponse(notification.value) && !hasClaimantResponded(notification.value)) {
+    return true;
+  }
+  if (
+    notification.value.respondNotificationTypeCollection?.some(
+      r => claimantRelevant(r) && r.value?.isClaimantResponseDue
+    )
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
+  if (sendNotification.value.notificationState === HubLinkStatus.NOT_STARTED_YET) {
+    return true;
+  }
+  if (
+    sendNotification.value?.respondNotificationTypeCollection?.some(
+      response => response.value?.isClaimantResponseDue === YesOrNo.YES
+    )
+  ) {
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -238,46 +264,16 @@ export const activateTribunalOrdersAndRequestsLink = async (
     return;
   }
 
-  const anyRequireResponse = notices.some(responseRequired);
-
-  const anyRequireResponseAndNotResponded = notices.some(item => {
-    return (
-      responseRequired(item) &&
-      !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
-      !item.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)
-    );
-  });
-
-  const allViewed = notices.every(item => {
-    return item.value.notificationState === HubLinkStatus.VIEWED;
-  });
-
-  const anyStoredResponded = notices.some(item => {
-    return isAnyStoredResponded(item);
-  });
-
-  switch (true) {
-    case anyRequireResponseAndNotResponded:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
-      break;
-    case anyStoredResponded:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
-      break;
-    case !allViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      break;
-    case anyRequireResponse && !anyRequireResponseAndNotResponded:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
-      break;
-    case allViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
-      break;
+  if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_VIEWED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.SUBMITTED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.VIEWED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
   }
 };
-
-const responseRequired = (item: SendNotificationTypeItem) =>
-  item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-  item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
 
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(
@@ -302,55 +298,6 @@ export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNot
   return notifications?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
 };
 
-/**
- * Returns a filtered list of notifications where ANY criteria are matched:
- * 1. Notification is not viewed
- * 2. A response on the notification is not viewed
- * 3. A response on the notification is viewed and requires a response where none has been given yet
- */
-export function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
-  return notifications
-    ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
-    .filter(o => {
-      if (o.value.notificationState !== HubLinkStatus.VIEWED) {
-        return true;
-      }
-
-      if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
-        return true;
-      }
-
-      return o.value.respondNotificationTypeCollection?.some(
-        r => claimantRelevant(r) && (r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue)
-      );
-    });
-}
-
-/**
- * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
- * needsResponse is true if a notification (or tribunal response on it) requires a response where none has been given.
- * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is un-viewed.
- */
-export function setNotificationBannerData(notification: SendNotificationTypeItem): void {
-  const actionableNotifications = filterActionableNotifications([notification]);
-  if (!actionableNotifications.length) {
-    notification.showAlert = false;
-    return;
-  }
-
-  notification.showAlert = true;
-  notification.needsResponse = false;
-
-  const value = actionableNotifications[0].value;
-  const responses = value.respondNotificationTypeCollection?.filter(claimantRelevant) || [];
-
-  const hasAnyResponsesDue = responses?.some(r => r.value.isClaimantResponseDue);
-
-  if (hasAnyResponsesDue || (requiresResponse(notification.value) && !hasClaimantResponded(notification.value))) {
-    notification.needsResponse = true;
-  }
-}
-
 function requiresResponse(notification: SendNotificationType) {
   return (
     notification.sendNotificationResponseTribunal === ResponseRequired.YES &&
@@ -374,34 +321,40 @@ export const getNotificationResponses = async (
   translations: AnyRecord,
   req: AppRequest
 ): Promise<any> => {
+  const nonAdminRespondCollection = sendNotificationType?.respondCollection || [];
+  const storedRespondCollection = sendNotificationType?.respondStoredCollection || [];
+  const adminResponseCollection = sendNotificationType?.respondNotificationTypeCollection || [];
   const allResponses: any[] = [];
-
-  const respondCollection = sendNotificationType.respondCollection;
-  if (respondCollection?.length) {
-    await addClaimantRespondentResponses(respondCollection, req, translations, allResponses);
+  const combinedResponses = [...nonAdminRespondCollection, ...adminResponseCollection, ...storedRespondCollection];
+  if (!combinedResponses.length) {
+    return [];
   }
-
-  const adminResponseCollection = sendNotificationType.respondNotificationTypeCollection;
-  if (adminResponseCollection?.length) {
-    await addTribunalResponses(adminResponseCollection, req, allResponses, translations);
-  }
-
-  const respondStoredCollection = sendNotificationType.respondStoredCollection;
-  if (respondStoredCollection?.length) {
-    await addClaimantRespondentResponses(respondStoredCollection, req, translations, allResponses);
+  combinedResponses.sort(sortResponsesByDate);
+  for (const response of combinedResponses) {
+    let responseToAdd;
+    if (instanceOfPseResponse(response)) {
+      responseToAdd = await getNonAdminResponse(response, req, translations);
+    } else {
+      responseToAdd = await populateAdminResponse(response, req, translations);
+    }
+    if (responseToAdd !== undefined) {
+      allResponses.push(responseToAdd);
+    }
   }
 
   return allResponses;
 };
 
-const addAdminResponse = async (
-  allResponses: any[],
-  translations: AnyRecord,
+const populateAdminResponse = async (
   response: RespondNotificationTypeItem,
-  accessToken: string,
-  responseDate: string
+  req: AppRequest<Partial<AnyRecord>>,
+  translations: AnyRecord
 ): Promise<any> => {
-  allResponses.push([
+  if (response.value.respondNotificationPartyToNotify === Parties.RESPONDENT_ONLY) {
+    return;
+  }
+  const responseDate = datesStringToDateInLocale(response.value.respondNotificationDate, req.url);
+  return [
     {
       key: {
         text: translations.responseItem,
@@ -470,7 +423,7 @@ const addAdminResponse = async (
         html: await getSupportingMaterialDownloadLink(
           response.value.respondNotificationUploadDocument?.find(element => element !== undefined).value
             .uploadedDocument,
-          accessToken
+          req.session.user?.accessToken
         ),
       },
     },
@@ -500,48 +453,20 @@ const addAdminResponse = async (
       },
       value: { text: translations[response.value.respondNotificationPartyToNotify] },
     },
-  ]);
+  ];
 };
 
-async function addTribunalResponses(
-  adminResponseCollection: TypeItem<RespondNotificationType>[],
+async function getNonAdminResponse(
+  response: TypeItem<PseResponseType>,
   req: AppRequest<Partial<AnyRecord>>,
-  allResponses: any[],
   translations: AnyRecord
 ) {
-  for (const response of adminResponseCollection) {
-    const responseDate = datesStringToDateInLocale(response.value.respondNotificationDate, req.url);
-    const responseToAdd = await addAdminResponse(
-      allResponses,
-      translations,
-      response,
-      req.session.user?.accessToken,
-      responseDate
-    );
-    if (responseToAdd !== undefined) {
-      allResponses.push(responseToAdd);
-    }
-  }
-}
-
-async function addClaimantRespondentResponses(
-  respondCollection: TypeItem<PseResponseType>[],
-  req: AppRequest<Partial<AnyRecord>>,
-  translations: AnyRecord,
-  allResponses: any[]
-) {
-  for (const response of respondCollection) {
-    const responseDate = datesStringToDateInLocale(response.value.date, req.url);
-    let responseToAdd;
-    if (
-      response.value.from === Applicant.CLAIMANT ||
-      (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
-    ) {
-      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
-    }
-    if (responseToAdd !== undefined) {
-      allResponses.push(responseToAdd);
-    }
+  const responseDate = datesStringToDateInLocale(response.value.date, req.url);
+  if (
+    response.value.from === Applicant.CLAIMANT ||
+    (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
+  ) {
+    return addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
   }
 }
 
@@ -566,3 +491,67 @@ export const getClaimantTribunalResponseBannerContent = (
         })) ?? []
   );
 };
+
+export async function getSendNotifications(
+  sendNotificationCollection: SendNotificationTypeItem[],
+  translations: AnyRecord,
+  languageParam: string
+): Promise<SendNotificationTypeItem[]> {
+  let notifications: SendNotificationTypeItem[];
+  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
+  if (eccFlag) {
+    notifications = sendNotificationCollection?.filter(
+      it =>
+        (it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+          it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
+        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+    );
+  } else {
+    notifications = sendNotificationCollection?.filter(
+      it =>
+        it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+        !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+    );
+  }
+  notifications.forEach(item => {
+    item.redirectUrl = `/tribunal-order-or-request-details/${item.id}${languageParam}`;
+    item.displayStatus = translations[item.value.notificationState];
+    item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
+  });
+  return notifications;
+}
+
+const sortResponsesByDate = (
+  a: PseResponseTypeItem | RespondNotificationTypeItem,
+  b: PseResponseTypeItem | RespondNotificationTypeItem
+): number => {
+  const typeA = instanceOfPseResponse(a);
+  const typeB = instanceOfPseResponse(b);
+  const da = typeA ? new Date(a.value.date) : new Date(a.value.respondNotificationDate);
+  const db = typeB ? new Date(b.value.date) : new Date(b.value.respondNotificationDate);
+
+  return da.valueOf() - db.valueOf();
+};
+
+function instanceOfPseResponse(
+  object: PseResponseTypeItem | RespondNotificationTypeItem
+): object is PseResponseTypeItem {
+  return 'date' in object.value;
+}
+
+export function determineRedirectUrlForECC(req: AppRequest, selectedRequestOrOrder: SendNotificationTypeItem): string {
+  if (req.session.userCase.hasSupportingMaterial === YesOrNo.YES) {
+    return PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url);
+  }
+
+  const isOrderOrRequest = selectedRequestOrOrder?.value?.sendNotificationSubject.includes(
+    NotificationSubjects.ORDER_OR_REQUEST
+  );
+  const isNoticeOfECC = selectedRequestOrOrder?.value?.sendNotificationEccQuestion === NoticeOfECC;
+
+  if (isOrderOrRequest && isNoticeOfECC) {
+    return PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url);
+  }
+  return copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);
+}

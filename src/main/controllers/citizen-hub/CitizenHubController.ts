@@ -52,12 +52,10 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterActionableNotifications,
   filterECCNotifications,
   filterOutEcc,
-  filterSendNotifications,
   getClaimantTribunalResponseBannerContent,
-  populateNotificationsWithRedirectLinksAndStatusColors,
+  setNotificationBannerData,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 
@@ -154,11 +152,9 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
+    const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
     const eccNotifications = await filterECCNotifications(notifications);
-
-    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
 
@@ -212,8 +208,8 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
-      notifications: filterActionableNotifications(ordersRequestsGeneralNotifications),
-      eccNotifications: filterActionableNotifications(eccNotifications),
+      notifications: ordersRequestsGeneralNotifications,
+      eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
     });

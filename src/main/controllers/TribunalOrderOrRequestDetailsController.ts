@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -11,7 +11,11 @@ import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getNotificationResponses, getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import {
+  anyResponseRequired,
+  getNotificationResponses,
+  getTribunalOrderOrRequestDetails,
+} from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {
@@ -32,11 +36,7 @@ export default class TribunalOrderOrRequestDetailsController {
     const redirectUrl =
       PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
 
-    const respondButton =
-      !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
-      !selectedRequestOrOrder.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
-      selectedRequestOrOrder.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-      selectedRequestOrOrder.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+    const respondButton = anyResponseRequired(selectedRequestOrOrder);
 
     try {
       await getDocumentsAdditionalInformation(
