@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { ErrorPages, PageUrls, ResponseStatus } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
@@ -28,7 +28,6 @@ export default class TribunalResponseStoreController {
 
     // Store Response of Send Notification
     try {
-      req.session.userCase.storeState = ResponseStatus.STORED_STATE;
       await getCaseApi(req.session.user?.accessToken).storeResponseSendNotification(req.session.userCase);
     } catch (error) {
       logger.error(error.message);

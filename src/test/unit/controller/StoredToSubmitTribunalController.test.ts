@@ -19,12 +19,11 @@ const sendNotificationTypeItems: SendNotificationTypeItem[] = [
     id: '234',
     value: {
       date: '2022-05-05',
-      respondCollection: [
+      respondStoredCollection: [
         {
           id: '567',
           value: {
             from: 'Claimant',
-            status: 'Stored',
             copyToOtherParty: 'Yes',
             date: '06 Oct 2023',
             response: 'Test response',

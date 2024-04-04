@@ -26,7 +26,7 @@ const sendNotificationTypeItem: SendNotificationTypeItem[] = [
     id: '12345',
     value: {
       number: '1',
-      respondCollection: pseResponseType,
+      respondStoredCollection: pseResponseType,
     },
   },
 ];
@@ -48,7 +48,7 @@ describe('findSelectedPseResponse', () => {
 
   it('should return selected Pse Response', () => {
     const expected = pseResponseType[0];
-    const actual = findSelectedPseResponse(sendNotificationTypeItem[0], '23456');
+    const actual = findSelectedPseResponse(sendNotificationTypeItem[0].value.respondStoredCollection, '23456');
     expect(actual).toEqual(expected);
   });
 });

@@ -71,6 +71,7 @@ export interface SendNotificationType {
   //Indicates the notification status
   notificationState?: string;
   respondCollection?: TypeItem<PseResponseType>[];
+  respondStoredCollection?: TypeItem<PseResponseType>[];
   respondNotificationTypeCollection?: TypeItem<RespondNotificationType>[];
   sendNotificationSubjectString?: string;
 }
@@ -104,7 +105,6 @@ export interface SendNotificationSelectHearingItem {
 
 export interface PseResponseType {
   from?: string;
-  status?: string;
   copyToOtherParty?: string;
   supportingMaterial?: DocumentTypeItem[];
   date?: string;

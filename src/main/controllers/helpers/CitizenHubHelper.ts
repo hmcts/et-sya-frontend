@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, ResponseStatus, languages } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -299,16 +299,14 @@ const getStoredNotificationRespond = (
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
   for (const item of items || []) {
-    if (item.value.respondCollection) {
-      item.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
-        .forEach(r =>
-          storeNotifications.push({
-            viewUrl:
-              PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', r.id) +
-              languageParam,
-          })
-        );
+    if (item.value.respondStoredCollection) {
+      item.value.respondStoredCollection.forEach(r =>
+        storeNotifications.push({
+          viewUrl:
+            PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', r.id) +
+            languageParam,
+        })
+      );
     }
   }
   return storeNotifications;

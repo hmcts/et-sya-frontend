@@ -40,10 +40,10 @@ export const findSelectedSendNotification = (
 };
 
 export const findSelectedPseResponse = (
-  items: SendNotificationTypeItem,
+  response: TypeItem<PseResponseType>[],
   responseId: string
 ): TypeItem<PseResponseType> | undefined => {
-  return items.value.respondCollection?.find(it => it.id === responseId);
+  return response?.find(it => it.id === responseId);
 };
 
 export const getPseResponseDisplay = async (

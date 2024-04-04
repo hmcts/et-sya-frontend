@@ -373,14 +373,13 @@ describe('Tribunal order or request helper', () => {
       id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
       value: {
         from: 'Claimant',
-        status: 'Stored',
       },
     } as PseResponseType;
 
     const item = {
       id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
       value: {
-        respondCollection: [pseResponse],
+        respondStoredCollection: [pseResponse],
       },
       redirectUrl: 'original-url',
     } as SendNotificationTypeItem;
