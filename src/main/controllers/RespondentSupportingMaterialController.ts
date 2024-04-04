@@ -124,6 +124,7 @@ export default class RespondentSupportingMaterialController {
       notificationSubject?.length &&
       (notificationSubject.includes(NotificationSubjects.ECC) ||
         (notificationSubject.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+          selectedRequestOrOrder.value.sendNotificationEccQuestion &&
           selectedRequestOrOrder.value.sendNotificationEccQuestion.includes(NoticeOfECC)))
     ) {
       return res.redirect(setUrlLanguageFromSessionLanguage(req, PageUrls.TRIBUNAL_RESPONSE_CYA));
