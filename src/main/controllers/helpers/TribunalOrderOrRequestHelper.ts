@@ -25,8 +25,8 @@ import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 
 import { addNonAdminResponse, getSupportingMaterialDownloadLink } from './ApplicationDetailsHelper';
 import { createDownloadLink } from './DocumentHelpers';
+import { copyToOtherPartyRedirectUrl } from './LinkHelpers';
 import { getLanguageParam } from './RouterHelpers';
-import {copyToOtherPartyRedirectUrl} from "./LinkHelpers";
 
 export const getTribunalOrderOrRequestDetails = (
   translations: AnyRecord,
@@ -167,6 +167,9 @@ function isActionableNotification(notification: SendNotificationTypeItem): boole
 }
 
 export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
+  if (sendNotification.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)) {
+    return false;
+  }
   if (sendNotification.value.notificationState === HubLinkStatus.NOT_STARTED_YET) {
     return true;
   }
@@ -314,6 +317,14 @@ function hasClaimantResponded(notification: SendNotificationType) {
 
 const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean => {
   return response.value.respondNotificationPartyToNotify !== Parties.RESPONDENT_ONLY;
+};
+
+export const getSinglePseResponseDisplay = async (
+  response: TypeItem<PseResponseType>,
+  translations: AnyRecord,
+  req: AppRequest
+): Promise<SummaryListRow[]> => {
+  return getNonAdminResponse(response, req, translations);
 };
 
 export const getNotificationResponses = async (

@@ -154,7 +154,8 @@ export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean 
     if (
       docId === getDocId(selectedApplication?.value.documentUpload?.document_url) ||
       docId === getDecisionDocId(req, selectedApplication) ||
-      isValidResponseDocId(docId, selectedApplication.value.respondCollection)
+      isValidResponseDocId(docId, selectedApplication.value.respondCollection) ||
+      isValidResponseDocId(docId, selectedApplication.value.respondStoredCollection)
     ) {
       return true;
     }

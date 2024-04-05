@@ -16,8 +16,8 @@ import {
   StoredToSubmitContentForm,
   findSelectedPseResponse,
   findSelectedSendNotification,
-  getPseResponseDisplay,
 } from './helpers/StoredToSubmitHelpers';
+import { getSinglePseResponseDisplay } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('StoredToSubmitTribunalController');
 
@@ -56,7 +56,6 @@ export default class StoredToSubmitTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
-    const accessToken = req.session.user?.accessToken;
 
     const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params.orderId);
     if (selectedNotification === undefined) {
@@ -85,7 +84,7 @@ export default class StoredToSubmitTribunalController {
         ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
         ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
       };
-      appContent = await getPseResponseDisplay(selectedResponse, detailsTranslations, accessToken);
+      appContent = await getSinglePseResponseDisplay(selectedResponse, detailsTranslations, req);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
