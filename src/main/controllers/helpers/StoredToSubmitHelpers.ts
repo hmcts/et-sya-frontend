@@ -46,7 +46,7 @@ export const findSelectedPseResponse = (
 export const putSelectedAppToUserCase = (userCase: CaseWithId): void => {
   const selectedApp = userCase.selectedGenericTseApplication.value;
   userCase.contactApplicationType = getAppTypeMapByValue(selectedApp.type);
-  userCase.contactApplicationText = selectedApp.copyToOtherPartyText;
+  userCase.contactApplicationText = selectedApp.details;
   userCase.contactApplicationFile = selectedApp.documentUpload;
   userCase.copyToOtherPartyYesOrNo = selectedApp.copyToOtherPartyYesOrNo;
   userCase.copyToOtherPartyText = selectedApp.copyToOtherPartyText;
