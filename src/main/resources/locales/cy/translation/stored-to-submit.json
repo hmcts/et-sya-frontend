@@ -11,7 +11,7 @@
   "submitBtn": "Cyflwyno",
   "errors": {
     "confirmCopied": {
-      "required": "Welsh Translation required"
+      "required": "Rhaid i chi gadarnhau eich bod wedi cynnwys y parti arall yn yr ohebiaeth drwy’r post neu drwy e-bost"
     }
   }
 }
