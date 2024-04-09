@@ -31,6 +31,25 @@ export default class StoredToSubmitResponseController {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
 
+    const selectedApplication = findSelectedGenericTseApplication(
+      userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Selected application not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+    userCase.selectedGenericTseApplication = selectedApplication;
+
+    const selectedResponse = selectedApplication.value.respondStoredCollection?.find(
+      r => r.id === req.params.responseId
+    );
+    if (selectedResponse === undefined) {
+      logger.error('Selected response not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+    userCase.selectedStoredTseResponse = selectedResponse;
+
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
@@ -69,6 +88,10 @@ export default class StoredToSubmitResponseController {
     const selectedResponse = selectedApplication.value.respondStoredCollection?.find(
       r => r.id === req.params.responseId
     );
+    if (selectedResponse === undefined) {
+      logger.error('Selected response not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
     userCase.selectedStoredTseResponse = selectedResponse;
 
     const translations: AnyRecord = {

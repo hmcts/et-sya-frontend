@@ -105,7 +105,11 @@ describe('Stored to Submit Tribunal Controller POST', () => {
     const req = mockRequest({ body, session: { userCase } });
     const res = mockResponse();
     req.params.orderId = '234';
+    req.params.responseId = '567';
     req.url = '/stored-to-submit-tribunal/234/567?lng=en';
+    req.session.userCase.sendNotificationCollection = [
+      { id: '234', value: { respondStoredCollection: [{ id: '567', value: {} }] } },
+    ];
     req.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     req.session.userCase.selectedRequestOrOrder = sendNotificationTypeItems[0];
 
@@ -119,7 +123,12 @@ describe('Stored to Submit Tribunal Controller POST', () => {
     const body = { continue: true };
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.orderId = '234';
+    req.params.responseId = '567';
     req.url = '/stored-to-submit-response/234/567?lng=en';
+    req.session.userCase.sendNotificationCollection = [
+      { id: '234', value: { respondStoredCollection: [{ id: '567', value: {} }] } },
+    ];
     req.session.errors = [];
 
     await controller.post(req, res);

@@ -37,6 +37,7 @@ export default class StoredToSubmitController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session?.userCase;
+
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.tseApplicationStoredCollection,
       req.params.appId
