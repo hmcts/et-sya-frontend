@@ -37,6 +37,15 @@ export default class StoredToSubmitController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session?.userCase;
+    const selectedApplication = findSelectedGenericTseApplication(
+      userCase.tseApplicationStoredCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Selected application not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+    userCase.selectedGenericTseApplication = selectedApplication;
 
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
