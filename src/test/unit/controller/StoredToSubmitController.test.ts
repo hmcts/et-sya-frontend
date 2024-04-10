@@ -117,7 +117,9 @@ describe('Stored to Submit Controller POST', () => {
     const body = { continue: true };
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.appId = '1234';
     req.url = PageUrls.STORED_TO_SUBMIT.replace(':appId', '1234') + languages.ENGLISH_URL_PARAMETER;
+    req.session.userCase.tseApplicationStoredCollection = [{ id: '1234' }];
     req.session.errors = [];
 
     await controller.post(req, res);

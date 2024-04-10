@@ -107,6 +107,7 @@ describe('Stored to Submit Controller POST', () => {
     const req = mockRequest({ body, session: { userCase } });
     const res = mockResponse();
     req.params.appId = '234';
+    req.params.responseId = '567';
     req.url = '/stored-to-submit-response/234/567?lng=en';
     req.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     req.session.userCase.selectedGenericTseApplication = tseAppCollection[0];
@@ -121,7 +122,12 @@ describe('Stored to Submit Controller POST', () => {
     const body = { continue: true };
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.appId = '234';
+    req.params.responseId = '567';
     req.url = '/stored-to-submit-response/234/567?lng=en';
+    req.session.userCase.genericTseApplicationCollection = [
+      { id: '234', value: { respondStoredCollection: [{ id: '567' }] } },
+    ];
     req.session.errors = [];
 
     await controller.post(req, res);

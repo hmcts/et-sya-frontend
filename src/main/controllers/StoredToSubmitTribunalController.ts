@@ -34,6 +34,23 @@ export default class StoredToSubmitTribunalController {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
 
+    const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params.orderId);
+    if (selectedNotification === undefined) {
+      logger.error('Selected send notification not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+    userCase.selectedRequestOrOrder = selectedNotification;
+
+    const selectedResponse = findSelectedPseResponse(
+      selectedNotification.value.respondStoredCollection,
+      req.params.responseId
+    );
+    if (selectedResponse === undefined) {
+      logger.error('Selected response not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+    userCase.selectedStoredPseResponse = selectedResponse;
+
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
