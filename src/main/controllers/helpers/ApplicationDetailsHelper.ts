@@ -245,48 +245,21 @@ export const addNonAdminResponse = async (
   accessToken: string,
   responseDate: string
 ): Promise<any> => {
-  return [
-    {
-      key: {
-        text: translations.responder,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: translations[response.value.from],
-      },
-    },
-    {
-      key: {
-        text: translations.responseDate,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: responseDate },
-    },
-    {
-      key: {
-        text: translations.response,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.response },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        html: await getSupportingMaterialDownloadLink(
-          response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken
-        ),
-      },
-    },
-    {
-      key: {
-        text: translations.copyCorrespondence,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: translations[response.value.copyToOtherParty] },
-    },
+  const supportingMaterial = await getSupportingMaterialDownloadLink(
+    response.value.supportingMaterial?.find(e => e).value.uploadedDocument,
+    accessToken
+  );
+
+  const rows = [
+    addSummaryRow(translations.responder, translations[response.value.from]),
+    addSummaryRow(translations.responseDate, responseDate),
+    addSummaryRow(translations.response, response.value.response),
+    addSummaryHtmlRow(translations.supportingMaterial, supportingMaterial),
   ];
+
+  if (response.value.copyToOtherParty) {
+    rows.push(addSummaryRow(translations.copyCorrespondence, translations[response.value.copyToOtherParty]));
+  }
+
+  return rows;
 };
