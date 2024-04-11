@@ -2376,31 +2376,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.3.1":
-  version: 2.3.1
-  resolution: "@launchdarkly/js-sdk-common@npm:2.3.1"
-  checksum: 022559e36e264a033546f49e24c510e47fefcc8be3e44ab8d3c39426b6922d3a8bb760ca161592578731de905d8eee38899180a90669d8bf601baa31ddbf8da3
+"@launchdarkly/js-sdk-common@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@launchdarkly/js-sdk-common@npm:2.4.1"
+  checksum: 5844f2aba20f7a79c43e807b620c7862aac98dd50fba0fc0ebabbce643d8e6405de76efc9f79bd163480a0f10a69ef3fbf03c1b9eb03a69c3f2cf2e6cb6d8a3c
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.2.2":
-  version: 2.2.2
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.2.2"
+"@launchdarkly/js-server-sdk-common@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.2.4"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.3.1
+    "@launchdarkly/js-sdk-common": 2.4.1
     semver: 7.5.4
-  checksum: a3115c2004c24be976f00e73a13a0a674f8ec1e092af675dd20d285cae654d582c8718c8d81cc2c49816e30b0c076f176054929d5b6ce78b046425e7b4098b7c
+  checksum: 6ba4d86c62266a5e44ddc1ed7a2e4efe9bb4fe0fccc3585978b0c3cc289ff28a45b045355cd8f470d5e31a997461689296575e6de46018853185191e9b573585
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.2.2
-  resolution: "@launchdarkly/node-server-sdk@npm:9.2.2"
+  version: 9.2.4
+  resolution: "@launchdarkly/node-server-sdk@npm:9.2.4"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.2.2
+    "@launchdarkly/js-server-sdk-common": 2.2.4
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.1
-  checksum: 71622b0b098461c5396d603c92406ffe5f98d8d11f57e390fea0c8961c021e16c8056ff4ac64e412d09d323924b144b3e9881f90beb643bc26896d763e9b21cd
+  checksum: 5dfad7c9a8256c954509fc6452d8f59f7ff2ab80a38965a2b9848a8871aa1862cf134073e1477f7304f62f530d2139daa25eaf37e6f87b67d356088177cad5bc
   languageName: node
   linkType: hard
 
@@ -3287,20 +3287,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^20.1.0":
-  version: 20.12.5
-  resolution: "@types/node@npm:20.12.5"
+  version: 20.12.6
+  resolution: "@types/node@npm:20.12.6"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 38358c091392bb3def1136772ada4ccd39a9429d459160b5ab728b690d2f15f2212eafd9e65ce716e270f70a4e6927ebffccfefc08dabdf68f4016c1fc8a7938
+  checksum: d16272276349244b1b6f15b0a23ce380efe3dfe46ace1ae37d58e791a8e53d832a2dc72d1afe01d7e5bb0ec1fba70ddd58b1da87921ec913e600331b3b906be9
   languageName: node
   linkType: hard
 
 "@types/node@npm:^18.16.0":
-  version: 18.19.30
-  resolution: "@types/node@npm:18.19.30"
+  version: 18.19.31
+  resolution: "@types/node@npm:18.19.31"
   dependencies:
     undici-types: ~5.26.4
-  checksum: b3daafa3fe23312f493fc2548c5e03801e1e4a5657af1f327ffae76087b64b926b84daf839297348a7e3c90aced10e3d66126270ad8081d32c979418d93c7828
+  checksum: 949bddfd7071bd47300d1f33d380ee34695ccd5f046f1a03e4d2be0d953ace896905144d44a6f483f241b5ef34b86f0e40a0e312201117782eecf89e81a4ff13
   languageName: node
   linkType: hard
 
@@ -9403,11 +9403,11 @@ __metadata:
   linkType: hard
 
 "i18next@npm:^23.0.0":
-  version: 23.11.0
-  resolution: "i18next@npm:23.11.0"
+  version: 23.11.1
+  resolution: "i18next@npm:23.11.1"
   dependencies:
     "@babel/runtime": ^7.23.2
-  checksum: db3af28ede7a1031f86473324f818572a8507d08182cd1dc1c356775a60cd95f5c00037c39370ca44144fb85c32cd18f61e82dfb2c55bcf95402772ccd80c616
+  checksum: f8361eb4a3c5c09e5da53fd74026910a72fc5773291247ffef32cf9a97b0a5687ef29a3bae9a941bc81ac3ad16344122a9ef176cfbc0b825d8f9f73c09730062
   languageName: node
   linkType: hard
 
