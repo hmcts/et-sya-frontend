@@ -8,11 +8,11 @@ import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitio
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
@@ -115,6 +115,7 @@ export default class RespondToTribunalResponseController {
       }
     }
     const downloadLink = createDownloadLink(document);
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -126,12 +127,7 @@ export default class RespondToTribunalResponseController {
 
     res.render(TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE, {
       ...content,
-      appContent: getTseApplicationDetails(
-        selectedApplication,
-        translations,
-        downloadLink,
-        retrieveCurrentLocale(req.url)
-      ),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, applicationDate),
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       hideContactUs: true,
