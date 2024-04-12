@@ -486,7 +486,7 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
   return storedRespond
     ? PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', storedRespond.id) +
         languageParam
-    : `/tribunal-order-or-request-details/${item.id}${languageParam}`;
+    : PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
 const sortResponsesByDate = (
