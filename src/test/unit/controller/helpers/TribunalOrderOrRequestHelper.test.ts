@@ -1,5 +1,3 @@
-import { describe } from 'node:test';
-
 import {
   activateTribunalOrdersAndRequestsLink,
   filterECCNotifications,
@@ -17,20 +15,19 @@ import {
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import {
   Applicant,
-  languages,
   NotificationSubjects,
   Parties,
   ResponseRequired,
   Rule92Types,
   TranslationKeys,
+  languages,
 } from '../../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import commonRaw from '../../../../main/resources/locales/en/translation/common.json';
-import respondentOrderOrRequestRaw
-  from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import mockUserCaseWithCitizenHubLinks from '../../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import {
   mockECCNotification,
@@ -345,12 +342,14 @@ describe('Tribunal order or request helper', () => {
 
     it('should populate notification with stored status and link', async () => {
       notificationItem.value.notificationState = 'stored';
-      notificationItem.value.respondStoredCollection = [{
-        id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
-        value: {
-          from: 'Claimant',
+      notificationItem.value.respondStoredCollection = [
+        {
+          id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
+          value: {
+            from: 'Claimant',
+          },
         },
-      }];
+      ];
       const populatedNotification = await getSendNotifications([notificationItem], translations, '?lng=en');
       expect(populatedNotification[0].redirectUrl).toEqual(
         '/stored-to-submit-tribunal/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28/0173ccd0-e20c-41bf-9a1c-37e97c728efc?lng=en'
@@ -360,7 +359,7 @@ describe('Tribunal order or request helper', () => {
     });
   });
 
-  describe('setNotificationBannerData', () => {
+  describe('setNotificationBannerData - populate', () => {
     it('should populate notification with correct status when not required to respond', () => {
       const populatedNotification = setNotificationBannerData([mockNotificationRespondOnlyReq], 'url')[0];
       expect(populatedNotification.showAlert).toEqual(true);
@@ -669,7 +668,7 @@ describe('Tribunal order or request helper', () => {
     });
   });
 
-  describe('setNotificationBannerData', () => {
+  describe('setNotificationBannerData - show', () => {
     const makeUnviewedNotification = (): SendNotificationType => {
       return { ...selectedRequestOrOrder.value };
     };
