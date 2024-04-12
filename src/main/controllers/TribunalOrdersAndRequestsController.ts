@@ -12,9 +12,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import {
-  updateStoredRedirectUrl,
- getSendNotifications } from './helpers/TribunalOrderOrRequestHelper';
+import { getSendNotifications } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrdersAndRequestsController');
 export class TribunalOrdersAndRequestsController {
@@ -38,7 +36,6 @@ export class TribunalOrdersAndRequestsController {
         translations,
         languageParam
       );
-      updateStoredRedirectUrl(notifications, req.url);
 
       const content = getPageContent(req, <FormContent>{}, [
         TranslationKeys.SIDEBAR_CONTACT_US,

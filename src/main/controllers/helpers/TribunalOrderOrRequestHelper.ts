@@ -184,60 +184,6 @@ export const anyResponseRequired = (sendNotification: SendNotificationTypeItem):
   }
 };
 
-export const populateAllOrdersItemsWithCorrectStatusTranslations = (
-  ordersAndRequests: SendNotificationTypeItem[],
-  translations: AnyRecord,
-  url: string
-): SendNotificationTypeItem[] => {
-  if (ordersAndRequests?.length) {
-    ordersAndRequests.forEach(item => {
-      item.displayStatus = getOrdersAndRequestsItemDisplayStatus(item, translations);
-      item.redirectUrl = getRedirectUrlForNotification(item, false, url);
-    });
-    return ordersAndRequests;
-  }
-};
-
-const getOrdersAndRequestsItemDisplayStatus = (item: SendNotificationTypeItem, translations: AnyRecord): string => {
-  if (isAnyStoredResponded(item)) {
-    return translations[HubLinkStatus.STORED];
-  } else {
-    return translations[item.value.notificationState];
-  }
-};
-
-const isAnyStoredResponded = (item: SendNotificationTypeItem): boolean => {
-  return item.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT);
-};
-
-export const updateStoredRedirectUrl = (orderList: SendNotificationTypeItem[], url: string): void => {
-  if (orderList) {
-    for (const order of orderList) {
-      checkAndUpdateSendNotification(order, url);
-    }
-  }
-};
-
-const checkAndUpdateSendNotification = (order: SendNotificationTypeItem, url: string): void => {
-  if (order.value.respondStoredCollection) {
-    for (const respond of order.value.respondStoredCollection) {
-      checkAndUpdateRespondCollection(respond, order, url);
-    }
-  }
-};
-
-const checkAndUpdateRespondCollection = (
-  respond: TypeItem<PseResponseType>,
-  order: SendNotificationTypeItem,
-  url: string
-): void => {
-  if (respond.value.from === Applicant.CLAIMANT) {
-    order.redirectUrl =
-      PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', order.id).replace(':responseId', respond.id) +
-      getLanguageParam(url);
-  }
-};
-
 export const activateTribunalOrdersAndRequestsLink = async (
   items: SendNotificationTypeItem[],
   userCase: CaseWithId
@@ -271,6 +217,8 @@ export const activateTribunalOrdersAndRequestsLink = async (
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_VIEWED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.STORED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.SUBMITTED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.VIEWED)) {
@@ -526,12 +474,20 @@ export async function getSendNotifications(
     );
   }
   notifications.forEach(item => {
-    item.redirectUrl = `/tribunal-order-or-request-details/${item.id}${languageParam}`;
+    item.redirectUrl = getRedirectUrl(item, languageParam);
     item.displayStatus = translations[item.value.notificationState];
     item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
   });
   return notifications;
 }
+
+const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): string => {
+  const storedRespond = item.value.respondStoredCollection?.find(r => r.value.from === Applicant.CLAIMANT);
+  return storedRespond
+    ? PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', storedRespond.id) +
+        languageParam
+    : PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id) + languageParam;
+};
 
 const sortResponsesByDate = (
   a: PseResponseTypeItem | RespondNotificationTypeItem,
