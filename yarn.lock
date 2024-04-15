@@ -2383,24 +2383,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.2.4":
-  version: 2.2.4
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.2.4"
+"@launchdarkly/js-server-sdk-common@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.3.0"
   dependencies:
     "@launchdarkly/js-sdk-common": 2.4.1
     semver: 7.5.4
-  checksum: 6ba4d86c62266a5e44ddc1ed7a2e4efe9bb4fe0fccc3585978b0c3cc289ff28a45b045355cd8f470d5e31a997461689296575e6de46018853185191e9b573585
+  checksum: 40a1a1ebe689927eba5f56bd5f2727884b5e855d5dd5f7acdf5880e24b06f89a711406c694d14ae021b7926c8b82f640de60d03391d8012b2d3d41f70771487f
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.2.4
-  resolution: "@launchdarkly/node-server-sdk@npm:9.2.4"
+  version: 9.3.0
+  resolution: "@launchdarkly/node-server-sdk@npm:9.3.0"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.2.4
+    "@launchdarkly/js-server-sdk-common": 2.3.0
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.1
-  checksum: 5dfad7c9a8256c954509fc6452d8f59f7ff2ab80a38965a2b9848a8871aa1862cf134073e1477f7304f62f530d2139daa25eaf37e6f87b67d356088177cad5bc
+  checksum: 97455e0bfe873ace6ed937831eae9c36e1275b15f6df7d013fdf569844a9d80a434c190355a0bf3dda827615997c3508737e1cf3bc27acefd03f6e6b26cf9899
   languageName: node
   linkType: hard
 
@@ -13125,27 +13125,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.40.1":
-  version: 1.40.1
-  resolution: "playwright-core@npm:1.40.1"
+"playwright-core@npm:1.43.0":
+  version: 1.43.0
+  resolution: "playwright-core@npm:1.43.0"
   bin:
     playwright-core: cli.js
-  checksum: 84d92fb9b86e3c225b16b6886bf858eb5059b4e60fa1205ff23336e56a06dcb2eac62650992dede72f406c8e70a7b6a5303e511f9b4bc0b85022ede356a01ee0
+  checksum: b35265d356d87eb4114997e6af985ee3cb5a473f15a465d6e02834288a55f0cae4233a18178658389ff443f92405e020815fc165274d2262c3ca1c2b5be948cf
   languageName: node
   linkType: hard
 
 "playwright@npm:^1.32.3":
-  version: 1.40.1
-  resolution: "playwright@npm:1.40.1"
+  version: 1.43.0
+  resolution: "playwright@npm:1.43.0"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.40.1
+    playwright-core: 1.43.0
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 9e36791c1b4a649c104aa365fdd9d049924eeb518c5967c0e921aa38b9b00994aa6ee54784d6c2af194b3b494b6f69772673081ef53c6c4a4b2065af9955c4ba
+  checksum: edd4ef9644398c197d20e957cf2a5e5a95d7e0144f3c971923e709247f5b48551bf6168c74b34909f263ab96fac6e49466b65a9cd1349ad400dabd4b8b364acf
   languageName: node
   linkType: hard
 
@@ -14379,15 +14379,15 @@ __metadata:
   linkType: hard
 
 "sass@npm:^1.65.1":
-  version: 1.65.1
-  resolution: "sass@npm:1.65.1"
+  version: 1.75.0
+  resolution: "sass@npm:1.75.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 33e325fc80cd07489992e0814cd4929496f87493ffe78c423c2dbafa5746a574e6f3bde20c2a3e4ea47b16ee3d6bc5afcf1d36b405227b829d6c4c9ddcc7f8e2
+  checksum: bfb9f5ddb6a2e1fe0c1ba6191cdb17afa7b40c1eb892c7152f6a29ff2b06dc7a510bdb648f8cca0179dcb3965920ebeb8894f0710b0b450a99db563831345033
   languageName: node
   linkType: hard
 
@@ -14438,13 +14438,13 @@ __metadata:
   linkType: hard
 
 "semver@npm:^7.5.2":
-  version: 7.5.4
-  resolution: "semver@npm:7.5.4"
+  version: 7.6.0
+  resolution: "semver@npm:7.6.0"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
+  checksum: 7427f05b70786c696640edc29fdd4bc33b2acf3bbe1740b955029044f80575fc664e1a512e4113c3af21e767154a94b4aa214bf6cd6e42a1f6dba5914e0b208c
   languageName: node
   linkType: hard
 
