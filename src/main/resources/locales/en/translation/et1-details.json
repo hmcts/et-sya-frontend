@@ -25,8 +25,8 @@
     "video": "Video",
     "phone": "Phone",
     "neither": "Neither",
-    "yes": "YES",
-    "no": "NO"
+    "yes": "Yes",
+    "no": "No"
   },
   "contactDetails": {
     "header": "Contact details",
@@ -36,6 +36,8 @@
   "employmentDetails": {
     "header": "Employment details",
     "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
+    "didYouWorkForYes": "Yes",
+    "didYouWorkForNo": "No",
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",
@@ -63,8 +65,8 @@
     "annual": "Annual",
     "months": "Months",
     "weeks": "Weeks",
-    "yes": "YES",
-    "no": "NO"
+    "yes": "Yes",
+    "no": "No"
   },
   "respondentDetails": {
     "header": "Respondent ",

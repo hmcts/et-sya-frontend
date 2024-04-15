@@ -8,7 +8,7 @@
   "languageHint": "Byddwn yn anfon negeseuon e-bost a dogfennau atoch wrth i’ch achos fynd yn ei flaen. Dewiswch ym mha iaith yr hoffech gael y rhain.",
   "english": "Saesneg",
   "welsh": "Cymraeg",
-  "hearingLabel": "Os bydd gwrandawiad, ym mha iaith ydych chi eisiau siarad yn y gwrandawiad?",
+  "hearingLabel": "Os bydd gwrandawiad, pa iaith ydych chi eisiau siarad yn y gwrandawiad?",
   "errors": {
     "claimantContactPreference": {
       "required": "Dywedwch wrthym a ydych am inni gysylltu â chi drwy e-bost neu drwy'r post"
