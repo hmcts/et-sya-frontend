@@ -69,7 +69,8 @@ export const isSentToClaimantByTribunal = (response: TseRespondTypeItem): boolea
   return (
     response.value.from === Applicant.ADMIN &&
     (response.value.selectPartyNotify === Parties.CLAIMANT_ONLY ||
-      response.value.selectPartyNotify === Parties.BOTH_PARTIES)
+      // EW has 'Both parties'. Scottish had 'Both Parties'
+      response.value.selectPartyNotify.toLowerCase() === Parties.BOTH_PARTIES.toLowerCase())
   );
 };
 
