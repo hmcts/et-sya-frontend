@@ -3295,12 +3295,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.16.0":
-  version: 18.19.31
-  resolution: "@types/node@npm:18.19.31"
+"@types/node@npm:^20.0.0":
+  version: 20.12.7
+  resolution: "@types/node@npm:20.12.7"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 949bddfd7071bd47300d1f33d380ee34695ccd5f046f1a03e4d2be0d953ace896905144d44a6f483f241b5ef34b86f0e40a0e312201117782eecf89e81a4ff13
+  checksum: 7cc979f7e2ca9a339ec71318c3901b9978555257929ef3666987f3e447123bc6dc92afcc89f6347e09e07d602fde7d51bcddea626c23aa2bb74aeaacfd1e1686
   languageName: node
   linkType: hard
 
@@ -7645,7 +7645,7 @@ __metadata:
     "@types/jest": ^29.5.1
     "@types/lodash": ^4.14.194
     "@types/multer": ^1.4.7
-    "@types/node": ^18.16.0
+    "@types/node": ^20.0.0
     "@types/nunjucks": ^3.2.2
     "@types/redis-mock": ^0.17.1
     "@types/require-directory": ^2.1.2
