@@ -54,11 +54,43 @@ describe('Tribunal Respond to Order Controller', () => {
     const userCase: Partial<CaseWithId> = mockUserCaseComplete;
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
     selectedRequestOrOrder.value.sendNotificationSubject = [NotificationSubjects.ORDER_OR_REQUEST];
+    userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
+
     const response = mockResponse();
     const request = mockRequest({ t, body, userCase });
     controller.post(request, response);
     expect(response.redirect).toHaveBeenCalledWith(
       PageUrls.COPY_TO_OTHER_PARTY + TranslationKeys.ENGLISH_URL_PARAMETER
+    );
+  });
+
+  it('should post and redirect to the Rule92 with non system user', () => {
+    const body = {
+      responseText: 'some Text',
+      hasSupportingMaterial: YesOrNo.NO,
+    };
+
+    const controller = new TribunalRespondToOrderController();
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+    userCase.respondents = undefined;
+    userCase.representatives = undefined;
+
+    const response = mockResponse();
+    const request = mockRequest({ t, body, userCase });
+    controller.post(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + TranslationKeys.ENGLISH_URL_PARAMETER
     );
   });
 

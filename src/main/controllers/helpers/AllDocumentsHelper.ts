@@ -154,7 +154,8 @@ export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean 
     if (
       docId === getDocId(selectedApplication?.value.documentUpload?.document_url) ||
       docId === getDecisionDocId(req, selectedApplication) ||
-      isValidResponseDocId(docId, selectedApplication.value.respondCollection)
+      isValidResponseDocId(docId, selectedApplication.value.respondCollection) ||
+      isValidResponseDocId(docId, selectedApplication.value.respondStoredCollection)
     ) {
       return true;
     }
@@ -169,6 +170,19 @@ export const isDocInDocumentCollection = (req: AppRequest, docId: string): boole
       .find(it => docId === it);
     if (docId === allDocsSelectedFileId) {
       return true;
+    }
+  }
+  return false;
+};
+
+export const isDocInPseRespondCollection = (req: AppRequest, docId: string): boolean => {
+  for (const item of req.session.userCase?.sendNotificationCollection || []) {
+    for (const respond of item.value.respondCollection || []) {
+      for (const doc of respond.value.supportingMaterial?.values() || []) {
+        if (doc.value.uploadedDocument && docId === getDocId(doc.value.uploadedDocument.document_url)) {
+          return true;
+        }
+      }
     }
   }
   return false;

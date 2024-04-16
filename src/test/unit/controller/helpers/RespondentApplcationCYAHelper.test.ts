@@ -18,6 +18,17 @@ describe('Respondent application CYA controller helper', () => {
     userCase.responseText = 'responseText';
     userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
     userCase.copyToOtherPartyText = 'copyToOtherPartyText';
+    userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
@@ -87,6 +98,40 @@ describe('Respondent application CYA controller helper', () => {
           href: PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER,
           text: common.change,
           visuallyHiddenText: respondentCYARaw.copyToOtherPartyText,
+        },
+      ],
+    });
+  });
+
+  it('should return expected content with non system user', () => {
+    const translationJsons = { ...respondentCYARaw, ...common };
+    const req = mockRequestWithTranslation({}, translationJsons);
+    const userCase = req.session.userCase;
+    userCase.responseText = 'responseText';
+    userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
+    userCase.copyToOtherPartyText = 'copyToOtherPartyText';
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+    };
+
+    const appContent = getRespondentCyaContent(
+      userCase,
+      translations,
+      languages.ENGLISH_URL_PARAMETER,
+      '/supporting-material',
+      'downloadLink',
+      '/respond-to-application'
+    );
+
+    expect(appContent[3].actions).toEqual({
+      items: [
+        {
+          href: '/copy-to-other-party-not-system-user?lng=en',
+          text: common.change,
+          visuallyHiddenText: 'Reason for not informing other party',
         },
       ],
     });

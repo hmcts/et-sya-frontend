@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { TseRespondTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -10,7 +11,12 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
-import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import {
+  getAllResponses,
+  getAllStoredClaimantResponses,
+  getAllTseApplicationCollection,
+  getTseApplicationDetails,
+} from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
@@ -35,7 +41,7 @@ export default class ApplicationDetailsController {
 
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      getAllTseApplicationCollection(userCase),
       req.params.appId
     );
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
@@ -68,9 +74,10 @@ export default class ApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
-    let allResponses;
+    let allResponses: TseRespondTypeItem[];
     try {
       allResponses = await getAllResponses(selectedApplication, translations, req);
+      allResponses.push(...(await getAllStoredClaimantResponses(selectedApplication, translations, req)));
     } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);

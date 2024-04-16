@@ -66,6 +66,7 @@ export interface CaseData {
   et3ResponseContestClaimDocument?: DocumentApiModel[];
   claimServedDate?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  tseApplicationStoredCollection?: GenericTseApplicationTypeItem[];
   sendNotificationCollection?: SendNotificationTypeItem[];
   hearingCollection?: HearingModel[];
   repCollection?: RepresentativeApiModel[];

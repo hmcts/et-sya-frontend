@@ -25,6 +25,7 @@ import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 
 import { addNonAdminResponse, getSupportingMaterialDownloadLink } from './ApplicationDetailsHelper';
 import { createDownloadLink } from './DocumentHelpers';
+import { copyToOtherPartyRedirectUrl } from './LinkHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getTribunalOrderOrRequestDetails = (
@@ -166,6 +167,9 @@ function isActionableNotification(notification: SendNotificationTypeItem): boole
 }
 
 export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
+  if (sendNotification.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)) {
+    return false;
+  }
   if (sendNotification.value.notificationState === HubLinkStatus.NOT_STARTED_YET) {
     return true;
   }
@@ -177,20 +181,6 @@ export const anyResponseRequired = (sendNotification: SendNotificationTypeItem):
     return true;
   } else {
     return false;
-  }
-};
-
-export const populateAllOrdersItemsWithCorrectStatusTranslations = (
-  ordersAndRequests: SendNotificationTypeItem[],
-  translations: AnyRecord,
-  url: string
-): SendNotificationTypeItem[] => {
-  if (ordersAndRequests?.length) {
-    ordersAndRequests.forEach(item => {
-      item.displayStatus = translations[item.value.notificationState];
-      item.redirectUrl = getRedirectUrlForNotification(item, false, url);
-    });
-    return ordersAndRequests;
   }
 };
 
@@ -227,6 +217,8 @@ export const activateTribunalOrdersAndRequestsLink = async (
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_VIEWED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.STORED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.SUBMITTED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.VIEWED)) {
@@ -265,11 +257,22 @@ function requiresResponse(notification: SendNotificationType) {
 }
 
 function hasClaimantResponded(notification: SendNotificationType) {
-  return notification.respondCollection?.filter(o => o.value.from === Applicant.CLAIMANT).length > 0;
+  return (
+    notification.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) ||
+    notification.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)
+  );
 }
 
 const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean => {
   return response.value.respondNotificationPartyToNotify !== Parties.RESPONDENT_ONLY;
+};
+
+export const getSinglePseResponseDisplay = async (
+  response: TypeItem<PseResponseType>,
+  translations: AnyRecord,
+  req: AppRequest
+): Promise<SummaryListRow[]> => {
+  return getNonAdminResponse(response, req, translations);
 };
 
 export const getNotificationResponses = async (
@@ -278,9 +281,10 @@ export const getNotificationResponses = async (
   req: AppRequest
 ): Promise<any> => {
   const nonAdminRespondCollection = sendNotificationType?.respondCollection || [];
+  const storedRespondCollection = sendNotificationType?.respondStoredCollection || [];
   const adminResponseCollection = sendNotificationType?.respondNotificationTypeCollection || [];
   const allResponses: any[] = [];
-  const combinedResponses = [...nonAdminRespondCollection, ...adminResponseCollection];
+  const combinedResponses = [...nonAdminRespondCollection, ...adminResponseCollection, ...storedRespondCollection];
   if (!combinedResponses.length) {
     return [];
   }
@@ -296,6 +300,7 @@ export const getNotificationResponses = async (
       allResponses.push(responseToAdd);
     }
   }
+
   return allResponses;
 };
 
@@ -469,12 +474,20 @@ export async function getSendNotifications(
     );
   }
   notifications.forEach(item => {
-    item.redirectUrl = `/tribunal-order-or-request-details/${item.id}${languageParam}`;
+    item.redirectUrl = getRedirectUrl(item, languageParam);
     item.displayStatus = translations[item.value.notificationState];
     item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
   });
   return notifications;
 }
+
+const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): string => {
+  const storedRespond = item.value.respondStoredCollection?.find(r => r.value.from === Applicant.CLAIMANT);
+  return storedRespond
+    ? PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', storedRespond.id) +
+        languageParam
+    : PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id) + languageParam;
+};
 
 const sortResponsesByDate = (
   a: PseResponseTypeItem | RespondNotificationTypeItem,
@@ -507,5 +520,5 @@ export function determineRedirectUrlForECC(req: AppRequest, selectedRequestOrOrd
   if (isOrderOrRequest && isNoticeOfECC) {
     return PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url);
   }
-  return PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+  return copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);
 }

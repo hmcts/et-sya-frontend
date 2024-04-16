@@ -1,0 +1,17 @@
+{
+  "youHaveNotSubmitted": "Please confirm you have copied this correspondence to the other party by post or email before you submit the application.",
+  "confirmYouHaveCopied": "Confirm you have copied this correspondence to the other party",
+  "toSubmitYourApplication": "Please confirm you have copied this correspondence to the other party by post or email.",
+  "viewThisCorrespondence": "View this correspondence",
+  "opensInNewTab": "opens in new tab",
+  "viewTheSupportingDocuments": "View the supporting documents.",
+  "haveYouCopied": "Have you copied this correspondence to the other party?",
+  "iConfirmThatIHaveCopied": "I confirm that I have copied this correspondence to the other party. I have also notified the other party that any objections to my application should be sent to the tribunal as soon as possible and in any event within 7 days.",
+  "yesIConfirm": "Yes, I confirm that I copied this correspondence to the other party by post or email.",
+  "submitBtn": "Submit",
+  "errors": {
+    "confirmCopied": {
+      "required": "You must confirm you have copied the correspondence to the other party by post or email"
+    }
+  }
+}
