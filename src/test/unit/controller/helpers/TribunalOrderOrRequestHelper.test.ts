@@ -1,5 +1,3 @@
-import { describe } from 'node:test';
-
 import {
   activateTribunalOrdersAndRequestsLink,
   filterECCNotifications,
@@ -8,7 +6,6 @@ import {
   getNotificationResponses,
   getSendNotifications,
   getTribunalOrderOrRequestDetails,
-  populateAllOrdersItemsWithCorrectStatusTranslations,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
@@ -254,18 +251,6 @@ describe('Tribunal order or request helper', () => {
     expect(pageContent[9].value).toEqual({ text: 'Legal officer' });
   });
 
-  it('should populate order/request item with redirect link and status', () => {
-    const populatedOrderOrRequest = populateAllOrdersItemsWithCorrectStatusTranslations(
-      [notificationItem],
-      translations,
-      'url'
-    )[0];
-    expect(populatedOrderOrRequest.redirectUrl).toEqual(
-      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
-    );
-    expect(populatedOrderOrRequest.displayStatus).toEqual('Not viewed yet');
-  });
-
   describe('getClaimantTribunalResponseBannerContent', () => {
     it('should display the correct banner content for claimant response to tribunal request', () => {
       const result = getClaimantTribunalResponseBannerContent(
@@ -341,20 +326,40 @@ describe('Tribunal order or request helper', () => {
 
   describe('getSendNotifications', () => {
     it('should populate notification with status and color', async () => {
-      const populatedNotification = await getSendNotifications([notificationItem], translations, 'en');
-
+      const populatedNotification = await getSendNotifications([notificationItem], translations, '?lng=en');
+      expect(populatedNotification[0].redirectUrl).toEqual(
+        '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+      );
       expect(populatedNotification[0].statusColor).toEqual('--red');
       expect(populatedNotification[0].displayStatus).toEqual('Not viewed yet');
     });
 
     it('should populate notification with correct status when required to respond and no response exists', async () => {
-      const populatedNotification = await getSendNotifications([mockNotificationResponseReq], translations, 'en');
+      const populatedNotification = await getSendNotifications([mockNotificationResponseReq], translations, '?lng=en');
       expect(populatedNotification[0].statusColor).toEqual('--red');
       expect(populatedNotification[0].displayStatus).toEqual('Not started yet');
     });
+
+    it('should populate notification with stored status and link', async () => {
+      notificationItem.value.notificationState = 'stored';
+      notificationItem.value.respondStoredCollection = [
+        {
+          id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
+          value: {
+            from: 'Claimant',
+          },
+        },
+      ];
+      const populatedNotification = await getSendNotifications([notificationItem], translations, '?lng=en');
+      expect(populatedNotification[0].redirectUrl).toEqual(
+        '/stored-to-submit-tribunal/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28/0173ccd0-e20c-41bf-9a1c-37e97c728efc?lng=en'
+      );
+      expect(populatedNotification[0].displayStatus).toEqual('Stored');
+      expect(populatedNotification[0].statusColor).toEqual('--yellow');
+    });
   });
 
-  describe('setNotificationBannerData', () => {
+  describe('setNotificationBannerData - populate', () => {
     it('should populate notification with correct status when not required to respond', () => {
       const populatedNotification = setNotificationBannerData([mockNotificationRespondOnlyReq], 'url')[0];
       expect(populatedNotification.showAlert).toEqual(true);
@@ -663,7 +668,7 @@ describe('Tribunal order or request helper', () => {
     });
   });
 
-  describe('setNotificationBannerData', () => {
+  describe('setNotificationBannerData - show', () => {
     const makeUnviewedNotification = (): SendNotificationType => {
       return { ...selectedRequestOrOrder.value };
     };

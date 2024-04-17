@@ -1,12 +1,12 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { Document, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { PseResponseTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant } from '../../definitions/constants';
+import { Applicant, TseStatus } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
@@ -24,9 +24,15 @@ export const getTseApplicationDetails = (
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
+  rows.push(addSummaryRow(translations.applicant, translations[application.applicant]));
+
+  if (application.status === TseStatus.STORED_STATE) {
+    rows.push(addSummaryRow(translations.storedDate, applicationDate));
+  } else {
+    rows.push(addSummaryRow(translations.requestDate, applicationDate));
+  }
+
   rows.push(
-    addSummaryRow(translations.applicant, translations[application.applicant]),
-    addSummaryRow(translations.requestDate, applicationDate),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
@@ -84,8 +90,8 @@ export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   req: AppRequest
-): Promise<any> => {
-  const allResponses: any[] = [];
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
   const respondCollection = selectedApplication.value.respondCollection;
   let responseDate;
   if (!respondCollection?.length) {
@@ -116,6 +122,30 @@ export const getAllResponses = async (
       }
     }
     if (responseToAdd !== undefined) {
+      allResponses.push(responseToAdd);
+    }
+  }
+  return allResponses;
+};
+
+export const getAllStoredClaimantResponses = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord,
+  req: AppRequest
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
+  const respondCollection = selectedApplication.value.respondStoredCollection;
+  if (!respondCollection?.length) {
+    return allResponses;
+  }
+  for (const response of respondCollection) {
+    if (response.value.from === Applicant.CLAIMANT) {
+      const responseToAdd: TseRespondTypeItem = await addNonAdminResponse(
+        translations,
+        response,
+        req.session.user?.accessToken,
+        datesStringToDateInLocale(response.value.date, req.url)
+      );
       allResponses.push(responseToAdd);
     }
   }
@@ -262,4 +292,23 @@ export const addNonAdminResponse = async (
   }
 
   return rows;
+};
+
+export const getResponseDisplay = async (
+  response: TseRespondTypeItem,
+  translations: AnyRecord,
+  accessToken: string
+): Promise<SummaryListRow[]> => {
+  return addNonAdminResponse(translations, response, accessToken, response.value.date);
+};
+
+export const getAllTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+  const returnCollection: GenericTseApplicationTypeItem[] = [];
+  if (userCase.genericTseApplicationCollection !== undefined) {
+    returnCollection.push(...userCase.genericTseApplicationCollection);
+  }
+  if (userCase.tseApplicationStoredCollection !== undefined) {
+    returnCollection.push(...userCase.tseApplicationStoredCollection);
+  }
+  return returnCollection;
 };

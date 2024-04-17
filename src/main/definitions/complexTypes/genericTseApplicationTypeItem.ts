@@ -23,6 +23,7 @@ export interface GenericTseApplicationType {
   documentUpload?: Document;
   number?: string;
   respondCollection?: TseRespondTypeItem[];
+  respondStoredCollection?: TseRespondTypeItem[];
   responsesCount?: string;
   status?: string;
   dueDate?: string;
@@ -62,6 +63,7 @@ export interface TseRespondType {
   // Generic
   from?: string;
   date?: string;
+  status?: string;
   // Respondent / Claimant Reply
   response?: string;
   copyToOtherParty?: string;

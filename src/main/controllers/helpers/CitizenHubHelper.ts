@@ -3,6 +3,7 @@ import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/ge
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
+import { StoreNotification } from '../../definitions/storeNotification';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -127,6 +128,7 @@ export enum StatusesInOrderOfUrgency {
   inProgress = 3,
   viewed = 4,
   waitingForTheTribunal = 5,
+  stored = 6,
 }
 
 export const activateRespondentApplicationsLink = (
@@ -151,15 +153,11 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
     return false;
   }
 
-  if (
+  return !(
     status === HubLinkStatus.WAITING_FOR_TRIBUNAL &&
     linkName !== HubLinkNames.RespondentApplications &&
     linkName !== HubLinkNames.RequestsAndApplications
-  ) {
-    return false;
-  }
-
-  return true;
+  );
 };
 
 export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -244,21 +242,72 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   return new Map<string, string>([
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
-    [
-      HubLinkNames.ContactTribunal,
-      isRespondentSystemUser
-        ? PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]
-        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
-    ],
+    [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
     [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
     [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + baseUrls[languageParam]],
-    [
-      HubLinkNames.TribunalOrders,
-      isRespondentSystemUser
-        ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]
-        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
-    ],
+    [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]],
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],
   ]);
+};
+
+export const getStoredPendingBannerList = (
+  storedApps: GenericTseApplicationTypeItem[],
+  apps: GenericTseApplicationTypeItem[],
+  notifications: SendNotificationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  storeNotifications.push(...getStoredApplication(storedApps, languageParam));
+  storeNotifications.push(...getStoredApplicationRespond(apps, languageParam));
+  storeNotifications.push(...getStoredNotificationRespond(notifications, languageParam));
+  return storeNotifications;
+};
+
+const getStoredApplication = (apps: GenericTseApplicationTypeItem[], languageParam: string): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  for (const app of apps || []) {
+    const storeNotification: StoreNotification = {
+      viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
+    };
+    storeNotifications.push(storeNotification);
+  }
+  return storeNotifications;
+};
+
+const getStoredApplicationRespond = (
+  apps: GenericTseApplicationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  for (const app of apps || []) {
+    if (app.value.respondStoredCollection) {
+      app.value.respondStoredCollection.forEach(r =>
+        storeNotifications.push({
+          viewUrl:
+            PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
+        })
+      );
+    }
+  }
+  return storeNotifications;
+};
+
+const getStoredNotificationRespond = (
+  items: SendNotificationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  for (const item of items || []) {
+    if (item.value.respondStoredCollection) {
+      item.value.respondStoredCollection.forEach(r =>
+        storeNotifications.push({
+          viewUrl:
+            PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', r.id) +
+            languageParam,
+        })
+      );
+    }
+  }
+  return storeNotifications;
 };

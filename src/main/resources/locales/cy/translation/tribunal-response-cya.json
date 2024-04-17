@@ -5,6 +5,8 @@
   "supportingMaterial": "Deunydd ategol",
   "copyToOtherPartyYesOrNo": "Ydych chi eisiauanfon copi o’r ohebiaeth hon at yParti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
   "copyToOtherPartyText": "Rheswm dros beidio â hysbysu’r parti arall",
+  "youCannotMakeFurtherChanges": "Ni allwch wneud newidiadau pellach i'r ohebiaeth hon ar ôl i chi ei storio",
+  "storeApplication": "Gwneud cais i storio’r wybodaeth",
   "submitBtn": "Cyflwyno",
   "cancelLink": "Canslo",
   "Yes": "Ydw",
