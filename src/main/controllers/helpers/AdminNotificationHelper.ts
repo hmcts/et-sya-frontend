@@ -49,16 +49,15 @@ const getVisibleRequestFromAdmin = (
         appUrl: getAppUrl(app.value.applicant, app.id, languageParam),
       };
       adminNotifications.push(adminNotification);
+      return adminNotifications;
     }
   }
   return adminNotifications;
 };
 
 const isVisibleTribunalResponse = (response: TseRespondTypeItem, claimantResponseRequired: string) => {
-  if (claimantResponseRequired === YesOrNo.YES) {
-    if (response.value.isResponseRequired === YesOrNo.YES) {
-      return isSentToClaimantByTribunal(response);
-    }
+  if (claimantResponseRequired === YesOrNo.YES && response.value.isResponseRequired === YesOrNo.YES) {
+    return isSentToClaimantByTribunal(response);
   }
   if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
     return isSentToClaimantByTribunal(response);
