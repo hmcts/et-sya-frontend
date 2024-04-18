@@ -16,9 +16,7 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   for (const app of apps || []) {
     const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
     if (allRequestsFromAdmin.length) {
-      for (const request of allRequestsFromAdmin) {
-        appsWithTribunalOrderOrRequest.push(request);
-      }
+      appsWithTribunalOrderOrRequest.push(allRequestsFromAdmin[allRequestsFromAdmin.length - 1]);
     }
   }
   return appsWithTribunalOrderOrRequest;
@@ -49,7 +47,6 @@ const getVisibleRequestFromAdmin = (
         appUrl: getAppUrl(app.value.applicant, app.id, languageParam),
       };
       adminNotifications.push(adminNotification);
-      return adminNotifications;
     }
   }
   return adminNotifications;
