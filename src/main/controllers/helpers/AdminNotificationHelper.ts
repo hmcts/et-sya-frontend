@@ -16,9 +16,7 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   for (const app of apps || []) {
     const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
     if (allRequestsFromAdmin.length) {
-      for (const request of allRequestsFromAdmin) {
-        appsWithTribunalOrderOrRequest.push(request);
-      }
+      appsWithTribunalOrderOrRequest.push(allRequestsFromAdmin[allRequestsFromAdmin.length - 1]);
     }
   }
   return appsWithTribunalOrderOrRequest;
@@ -55,10 +53,8 @@ const getVisibleRequestFromAdmin = (
 };
 
 const isVisibleTribunalResponse = (response: TseRespondTypeItem, claimantResponseRequired: string) => {
-  if (claimantResponseRequired === YesOrNo.YES) {
-    if (response.value.isResponseRequired === YesOrNo.YES) {
-      return isSentToClaimantByTribunal(response);
-    }
+  if (claimantResponseRequired === YesOrNo.YES && response.value.isResponseRequired === YesOrNo.YES) {
+    return isSentToClaimantByTribunal(response);
   }
   if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
     return isSentToClaimantByTribunal(response);

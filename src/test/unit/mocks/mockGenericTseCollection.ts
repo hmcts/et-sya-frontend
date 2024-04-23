@@ -210,7 +210,7 @@ export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
     },
   },
   {
-    id: '2',
+    id: '3',
     value: {
       applicant: Applicant.CLAIMANT,
       date: '2022-05-05',
