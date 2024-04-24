@@ -123,7 +123,7 @@
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.7.3",
+    "css-loader": "^7.0.0",
     "debug": "^4.3.4",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
