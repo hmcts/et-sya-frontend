@@ -171,7 +171,8 @@
     "merge": "^2.1.1",
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
-    "es5-ext": "^0.10.63"
+    "es5-ext": "^0.10.63",
+    "formidable": "^3.2.4"
   },
   "packageManager": "yarn@4.1.0"
 }
