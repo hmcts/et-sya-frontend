@@ -5993,10 +5993,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"connect-redis@npm:^6.1.3":
-  version: 6.1.3
-  resolution: "connect-redis@npm:6.1.3"
-  checksum: 1f61616e2ae7ad097b6553e45d683eeb309ac2e601ac49d721c6c0069fd96fbcfb46ee1c0e210b264b720dcd385201d30ff55ccf5deb11ee1529810890561b58
+"connect-redis@npm:^7.0.0":
+  version: 7.1.1
+  resolution: "connect-redis@npm:7.1.1"
+  peerDependencies:
+    express-session: ">=1"
+  checksum: ac91ee818d0f467866b6982f66b3423fee58de9da3562618f6d1df2ddeea426354c1efe70b3f799be1b52e3cc67f2043b9ae203678fd3ff9db5dff44b078f0ca
   languageName: node
   linkType: hard
 
@@ -7697,7 +7699,7 @@ __metadata:
     chai-as-promised: ^7.1.1
     codeceptjs: 3.4.1
     config: ^3.3.9
-    connect-redis: ^6.1.3
+    connect-redis: ^7.0.0
     cookie-parser: ^1.4.6
     copy-webpack-plugin: ^12.0.0
     css-loader: ^7.0.0
