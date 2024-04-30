@@ -2491,31 +2491,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.4.1":
-  version: 2.4.1
-  resolution: "@launchdarkly/js-sdk-common@npm:2.4.1"
-  checksum: 5844f2aba20f7a79c43e807b620c7862aac98dd50fba0fc0ebabbce643d8e6405de76efc9f79bd163480a0f10a69ef3fbf03c1b9eb03a69c3f2cf2e6cb6d8a3c
+"@launchdarkly/js-sdk-common@npm:2.4.2":
+  version: 2.4.2
+  resolution: "@launchdarkly/js-sdk-common@npm:2.4.2"
+  checksum: 23dd85a905ee12e37aa1da5071b2775279cdeefa8fef915f271587626703f0701e58400eb0c4938c818c261db9beb0ee9cb2aa46e317527d3318b62427770ef0
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.4.0"
+"@launchdarkly/js-server-sdk-common@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.4.1"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.4.1
+    "@launchdarkly/js-sdk-common": 2.4.2
     semver: 7.5.4
-  checksum: 28653014f5ef6018732dc3c648b3016b14380f4dd25ea33cbd107dd616a2ef4d64e49302d47ed4219abae46d9d5cec38db5186a3ac146ff53852173831c8bc18
+  checksum: 370b4fb0f968f21c2cab69225f57e251d968e8ccaddfda1e189a2b5ede17d3a60afed7e161877b56637ce21335273f5838a148160c4f4362a812521cf6ac0c17
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.4.0
-  resolution: "@launchdarkly/node-server-sdk@npm:9.4.0"
+  version: 9.4.1
+  resolution: "@launchdarkly/node-server-sdk@npm:9.4.1"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.4.0
+    "@launchdarkly/js-server-sdk-common": 2.4.1
     https-proxy-agent: ^5.0.1
-    launchdarkly-eventsource: 2.0.1
-  checksum: e02893fde00a832bd1e802be91a42401c6f133342b1cd0fb6bee452cfe11e6e3db52409fa1e4c9f6fb15ce424b0aa780e82441708d1bc1137ceca4bf9b94dbc9
+    launchdarkly-eventsource: 2.0.2
+  checksum: 073f8640bd1f6d63112120496ccd9b4751b4f49598f99befeae08357ddc679b014c17b87e26f13923c471d4481d7f0656f2a2eeae5028ba33c8aa1e79588d4ee
   languageName: node
   linkType: hard
 
@@ -11224,10 +11224,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"launchdarkly-eventsource@npm:2.0.1":
-  version: 2.0.1
-  resolution: "launchdarkly-eventsource@npm:2.0.1"
-  checksum: 6eb3d38ef89fb53203e4a1a0af1da5bdce01d28e4127bd2db524d522d9ab3d4f44de174c7ecf20d56f532a1f78caa662e8d5567b309b68e968121e1e2a45d4b8
+"launchdarkly-eventsource@npm:2.0.2":
+  version: 2.0.2
+  resolution: "launchdarkly-eventsource@npm:2.0.2"
+  checksum: 5f867780feef3a00de428a55406f977da7646cea61e20a485251dab624ab8ba10d6f555ca26d445543fac93a945c96e3f3ab7345b66629be7a7ea869d9503ef5
   languageName: node
   linkType: hard
 
