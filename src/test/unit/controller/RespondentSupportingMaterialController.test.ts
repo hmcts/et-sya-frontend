@@ -1,6 +1,7 @@
 import RespondentSupportingMaterialController from '../../../main/controllers/RespondentSupportingMaterialController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
+import { YesOrNo } from '../../../main/definitions/case';
 import {
   NoticeOfECC,
   NotificationSubjects,
@@ -57,13 +58,42 @@ describe('Respondent supporting material controller', () => {
     const body = {
       responseText: 'some Text',
     };
+    const userCase = {
+      contactApplicationType: 'withdraw',
+      respondents: [
+        {
+          ccdId: '1',
+        },
+      ],
+      representatives: [
+        {
+          respondentId: '1',
+          hasMyHMCTSAccount: YesOrNo.YES,
+        },
+      ],
+    };
+
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondentSupportingMaterialController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  it('should render Rule 92 non system user page', async () => {
+    const body = {
+      responseText: 'some Text',
+    };
 
     const request = mockRequestWithTranslation({ t, body }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondentSupportingMaterialController();
     await controller.post(request, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(
+      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should render tribunal response CYA page', async () => {
@@ -167,5 +197,50 @@ describe('Respondent supporting material controller', () => {
         },
       });
     });
+  });
+
+  it('should return TRIBUNAL_RESPONSE_CYA', async () => {
+    const req = mockRequest({
+      body: { responseText: 'test' },
+    });
+    const res = mockResponse();
+    req.session.contactType = Rule92Types.TRIBUNAL;
+    req.session.userCase.selectedRequestOrOrder = {
+      id: '1',
+      value: {
+        sendNotificationSubject: ['Employer Contract Claim'],
+      },
+    };
+    await new RespondentSupportingMaterialController().post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/tribunal-response-cya?lng=en');
+  });
+
+  it('should return COPY_TO_OTHER_PARTY', async () => {
+    const req = mockRequest({
+      body: { responseText: 'test' },
+    });
+    const res = mockResponse();
+    req.session.userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    req.session.userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
+    await new RespondentSupportingMaterialController().post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party?lng=en');
+  });
+
+  it('should return COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER', async () => {
+    const req = mockRequest({
+      body: { responseText: 'test' },
+    });
+    const res = mockResponse();
+    await new RespondentSupportingMaterialController().post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party-not-system-user?lng=en');
   });
 });

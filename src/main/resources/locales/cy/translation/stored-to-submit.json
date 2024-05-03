@@ -1,0 +1,17 @@
+{
+  "youHaveNotSubmitted": "Cadarnhewch eich bod wedi anfon copi o’r ohebiaeth hon at y parti arall drwy'r post neu e-bost cyn i chi gyflwyno'r cais.",
+  "confirmYouHaveCopied": "Cadarnhewch eich bod wedi anfon yr ohebiaeth hon at y parti arall",
+  "toSubmitYourApplication": "Cadarnhewch eich bod wedi anfon copi o’r ohebiaeth hon at y parti arall drwy’r post neu e-bost.",
+  "viewThisCorrespondence": "Gweld yr ohebiaeth hon",
+  "opensInNewTab": "yn agor mewn tab newydd",
+  "viewTheSupportingDocuments": "Gweld y dogfennau ategol",
+  "haveYouCopied": "Ydych chi wedi anfon yr ohebiaeth hon at y parti arall?",
+  "iConfirmThatIHaveCopied": "Rwy'n cadarnhau fy mod wedi anfon yr ohebiaeth hon at y parti arall. Rwyf hefyd wedi hysbysu'r parti arall y dylai unrhyw wrthwynebiadau i'm cais gael eu hanfon i'r tribiwnlys cyn gynted â phosibl a beth bynnag o fewn 7 diwrnod.",
+  "yesIConfirm": "Ydw, rwy'n cadarnhau fy mod wedi anfon yr ohebiaeth hon at y parti arall drwy'r post neu e-bost.",
+  "submitBtn": "Cyflwyno",
+  "errors": {
+    "confirmCopied": {
+      "required": "Rhaid i chi gadarnhau eich bod wedi cynnwys y parti arall yn yr ohebiaeth drwy’r post neu drwy e-bost"
+    }
+  }
+}

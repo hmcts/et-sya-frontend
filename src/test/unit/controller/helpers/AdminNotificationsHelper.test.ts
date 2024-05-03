@@ -5,7 +5,7 @@ import { mockGenericTseCollection } from '../../mocks/mockGenericTseCollection';
 describe('Admin Notification tests', () => {
   it('returns applications with tribunal order or request', () => {
     const result = getApplicationsWithTribunalOrderOrRequest(mockGenericTseCollection, [], 'en');
-    expect(result).toHaveLength(4);
+    expect(result).toHaveLength(3);
   });
 
   it('returns applications with tribunal order or request with claimant response is no', () => {

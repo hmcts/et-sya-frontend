@@ -237,8 +237,12 @@ export function isRequestTribunalResponseDocId(req: AppRequest, docId: string): 
 
 export function isRequestResponseDocId(req: AppRequest, docId: string): boolean {
   if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
-    const responseDocs = req.session?.userCase.selectedRequestOrOrder?.value.respondCollection?.flatMap(
-      notificationType => (notificationType.value.supportingMaterial ? notificationType.value.supportingMaterial : [])
+    const pseResponseList = [
+      ...(req.session?.userCase.selectedRequestOrOrder?.value.respondCollection ?? []),
+      ...(req.session?.userCase.selectedRequestOrOrder?.value.respondStoredCollection ?? []),
+    ];
+    const responseDocs = pseResponseList?.flatMap(notificationType =>
+      notificationType.value.supportingMaterial ? notificationType.value.supportingMaterial : []
     );
     return (
       responseDocs?.some(
@@ -317,4 +321,11 @@ export const findContentTypeByDocument = (document: AxiosResponse): string => {
     contentType = findDocumentMimeTypeByExtension(fileExtension);
   }
   return contentType;
+};
+
+export const getDocumentLink = (file: Document): string => {
+  if (!file) {
+    return '';
+  }
+  return PageUrls.GET_SUPPORTING_MATERIAL.replace(':docId', getDocId(file.document_url));
 };

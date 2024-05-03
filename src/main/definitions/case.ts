@@ -1,7 +1,7 @@
 import { HearingModel } from './api/caseApiResponse';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
-import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
-import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
+import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
+import { PseResponseType, SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -11,7 +11,7 @@ import {
   TellUsWhatYouWant,
 } from './definition';
 import { HubLinksStatuses } from './hub';
-import { UnknownRecord } from './util-types';
+import { TypeItem, UnknownRecord } from './util-types';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -186,7 +186,11 @@ export interface Case {
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  tseApplicationStoredCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  selectedStoredTseResponse?: TseRespondTypeItem;
+  selectedStoredPseResponse?: TypeItem<PseResponseType>;
+  storeState?: string;
   responseText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
@@ -213,6 +217,7 @@ export interface Case {
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
   representatives?: Representative[];
+  confirmCopied?: string;
   // indiciates if responding to a tribunal order/request or not when responding to an application
   isRespondingToRequestOrOrder?: boolean;
   updateDraftCaseError?: string;

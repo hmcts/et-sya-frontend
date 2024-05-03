@@ -122,6 +122,11 @@ export const TranslationKeys = {
   RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
+  COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: 'copy-to-other-party-not-system-user',
+  TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: 'tribunal-response-cya-not-system-user',
+  CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: 'contact-the-tribunal-cya-not-system-user',
+  STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
+  STORED_TO_SUBMIT: 'stored-to-submit',
   BUNDLES_DOCS_FOR_HEARING_CYA: 'bundles-docs-for-hearing-cya',
   AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
@@ -247,6 +252,17 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
+  // Rule 92 non-system user
+  COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: '/copy-to-other-party-not-system-user',
+  CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
+  TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: '/tribunal-response-cya-not-system-user',
+  STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation/:appId',
+  STORED_RESPONSE_APPLICATION_CONFIRMATION: '/stored-response-application-confirmation/:appId',
+  STORED_RESPONSE_TRIBUNAL_CONFIRMATION: '/stored-response-tribunal-confirmation/:orderId',
+  STORED_TO_SUBMIT: '/stored-to-submit/:appId',
+  STORED_TO_SUBMIT_RESPONSE: '/stored-to-submit-response/:appId/:responseId',
+  STORED_TO_SUBMIT_TRIBUNAL: '/stored-to-submit-tribunal/:orderId/:responseId',
+  STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
   BUNDLES_DOCS_FOR_HEARING_CYA: '/documents-for-hearing',
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
@@ -262,6 +278,9 @@ export const InterceptPaths = {
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
+  STORE_TRIBUNAL_CYA: '/storeTribunalCya',
+  TRIBUNAL_RESPONSE_STORE_CYA: '/tribunalResponseStoreCya',
+  STORE_RESPONDENT_CYA: '/storeRespondentCya',
   SUBMIT_BUNDLES_HEARING_DOCS_CYA: '/submitBundlesHearingDocsCya',
 } as const;
 
@@ -294,9 +313,15 @@ export const JavaApiUrls = {
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  STORE_CLAIMANT_APPLICATION: 'store/store-claimant-application',
+  STORE_RESPOND_TO_APPLICATION: 'store/store-respond-to-application',
+  SUBMIT_STORED_CLAIMANT_APPLICATION: 'store/submit-stored-claimant-application',
+  SUBMIT_STORED_RESPOND_TO_APPLICATION: 'store/submit-stored-respond-to-application',
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
+  STORE_RESPOND_TO_TRIBUNAL: 'store/store-respond-to-tribunal',
+  SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
 } as const;
@@ -590,6 +615,19 @@ export const DOCUMENT_CONTENT_TYPES = {
   RTF: ['rtf', 'application/rtf'],
   RTX: ['rtx', 'application/rtf'],
 };
+
+export const YES = 'Yes';
+export const NO = 'No';
+
+export const TseStatus = {
+  OPEN_STATE: 'Open',
+  CLOSED_STATE: 'Closed',
+  STORED_STATE: 'Stored',
+} as const;
+
+export const ResponseStatus = {
+  STORED_STATE: 'Stored',
+} as const;
 
 export const FEATURE_FLAGS = {
   WELSH: 'welsh-language',

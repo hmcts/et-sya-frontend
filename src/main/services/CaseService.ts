@@ -114,6 +114,45 @@ export class CaseApi {
     }
   };
 
+  storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+        },
+      })
+      .catch(function (error) {
+        throw new Error('Error store tse application status: ' + error);
+      });
+  };
+
+  storedToSubmitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+          storedApplicationId: caseItem.selectedGenericTseApplication.id,
+        },
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application status: ' + error);
+      });
+  };
+
   submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     const hearingBundle: HearingBundleType = {
       agreedDocWith: caseItem.bundlesRespondentAgreedDocWith,
@@ -162,6 +201,39 @@ export class CaseApi {
     } catch (error) {
       throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
     }
+  };
+
+  storeRespondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.STORE_RESPOND_TO_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        applicationId: caseItem.selectedGenericTseApplication.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
+        response: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
+  storedToSubmitRespondToApp = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        application_id: caseItem.selectedGenericTseApplication.id,
+        stored_response_id: caseItem.selectedStoredTseResponse.id,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application respond status: ' + error);
+      });
   };
 
   changeApplicationStatus = async (
@@ -242,6 +314,38 @@ export class CaseApi {
     } catch (error) {
       throw new Error('Error adding response to sendNotification: ' + axiosErrorDetails(error));
     }
+  };
+
+  storeResponseSendNotification = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.STORE_RESPOND_TO_TRIBUNAL, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        send_notification_id: caseItem.selectedRequestOrOrder.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        pseResponseType: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error adding store response to sendNotification: ' + axiosErrorDetails(error));
+    }
+  };
+
+  storedToSubmitRespondToTribunal = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_TRIBUNAL, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        order_id: caseItem.selectedRequestOrOrder.id,
+        stored_response_id: caseItem.selectedStoredPseResponse.id,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application respond status: ' + error);
+      });
   };
 
   updateResponseAsViewed = async (

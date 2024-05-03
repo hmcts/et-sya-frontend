@@ -36,6 +36,7 @@ export class TribunalOrdersAndRequestsController {
         translations,
         languageParam
       );
+
       const content = getPageContent(req, <FormContent>{}, [
         TranslationKeys.SIDEBAR_CONTACT_US,
         TranslationKeys.COMMON,
