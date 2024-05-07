@@ -165,6 +165,7 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: 'W3 7NX', expected: true }, // London Central
     { postcode: 'E8 1LW', expected: true }, // London East
     { postcode: 'E2 6NR', expected: true }, // London East
+    { postcode: 'CR0 2RF', expected: true }, // London South
     { postcode: 'LU7 0EU', expected: false }, // Luton
     { postcode: 'LE3 1EP', expected: true }, // Leicester
     { postcode: 'M41 8PX', expected: false }, // Manchester
