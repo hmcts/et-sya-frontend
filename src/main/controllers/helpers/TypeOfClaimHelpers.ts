@@ -3,7 +3,7 @@ import { parse } from 'postcode';
 
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { PageUrls, inScopeLocationsExpansion } from '../../definitions/constants';
+import { PageUrls, inScopeLocations } from '../../definitions/constants';
 import { TypesOfClaim } from '../../definitions/definition';
 
 import { conditionalRedirect } from './RouterHelpers';
@@ -31,7 +31,7 @@ const isPostcodeExpansionInScope = (postCode: string): boolean => {
     area, // => "SW"
     district, // => "SW1"
   } = parse(postCode);
-  for (const location of inScopeLocationsExpansion) {
+  for (const location of inScopeLocations) {
     if (location === outcode || location === area || location === district) {
       return true;
     }

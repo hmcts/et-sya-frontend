@@ -155,16 +155,17 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: '100', expected: false },
     { postcode: '', expected: false },
     { postcode: 'TD15 1AA', expected: false },
-    { postcode: 'ISE2 0YN', expected: false }, // London
-    { postcode: 'W6 9AW', expected: false },
-    { postcode: 'SE12 0LJ', expected: false },
-    { postcode: 'E4 7AJ', expected: false },
-    { postcode: 'E15 1FE', expected: false },
-    { postcode: 'N16 6PH', expected: false },
-    { postcode: 'E2 6GU', expected: false },
-    { postcode: 'W3 7NX', expected: false },
-    { postcode: 'E8 1LW', expected: false },
-    { postcode: 'E2 6NR', expected: false },
+    { postcode: 'ISE2 0YN', expected: false }, // London - wrong postcode - should be SE, not ISE
+    { postcode: 'W6 9AW', expected: true }, // London Central
+    { postcode: 'SE12 0LJ', expected: true }, // London Central
+    { postcode: 'E4 7AJ', expected: true }, // London East
+    { postcode: 'E15 1FE', expected: true }, // London East
+    { postcode: 'N16 6PH', expected: false }, // London - wrong postcode - should be N1, not N16
+    { postcode: 'E2 6GU', expected: true }, // London East
+    { postcode: 'W3 7NX', expected: true }, // London Central
+    { postcode: 'E8 1LW', expected: true }, // London East
+    { postcode: 'E2 6NR', expected: true }, // London East
+    { postcode: 'CR0 2RF', expected: true }, // London South
     { postcode: 'LU7 0EU', expected: false }, // Luton
     { postcode: 'LE3 1EP', expected: true }, // Leicester
     { postcode: 'M41 8PX', expected: false }, // Manchester
