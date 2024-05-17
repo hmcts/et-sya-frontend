@@ -22,4 +22,4 @@ Scenario(
     console.log(submissionReference);
     I.click('Allgofnodi');
   }
-).tag('@RET-WIP-WELSH');
+).tag('@RET-PR');

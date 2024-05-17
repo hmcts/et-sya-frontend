@@ -24,6 +24,7 @@ module.exports = {
     I.fillField('#dobDate-month', '01');
     I.fillField('#dobDate-year', '1989');
     I.click('Save and continue');
+    I.waitForElement('//a[.="Clear selection"]', 10);
   },
   selectSexAndTitle() {
     //select sex and enter title
@@ -31,6 +32,7 @@ module.exports = {
     I.checkOption('#sex');
     I.fillField('#preferredTitle', 'Mr');
     I.click('Save and continue');
+    I.waitForElement('//a[@id="manualAddress"]', 10);
   },
   enterPostcode() {
     //Enter postcode for claimant address
@@ -38,7 +40,7 @@ module.exports = {
     I.refreshPage();
     I.fillField('#addressEnterPostcode', 'LS9 9HE');
     I.click(commonConfig.saveAndContinue);
-    I.waitForVisible('#addressAddressTypes', 30);
+    I.waitForElement('#addressAddressTypes', 30);
     I.see('Select an address');
     I.see('Several addresses found');
     I.selectOption('#addressAddressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
