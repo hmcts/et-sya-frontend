@@ -3,8 +3,8 @@ module.exports = {
   TestShowBrowserWindow: process.env.SHOW_BROWSER_WINDOW || true,
   TestsPathToRun: process.env.E2E_TEST_PATH || './features/**/*js',
   TestReportFolder: process.env.E2E_OUTPUT_DIR || './functional-output/reports',
-  TestEnvETUser: process.env.TEST_CASE_USERNAME || 'et.citizen4UI@testmail.com',
-  TestEnvETPassword: process.env.TEST_CASE_PASSWORD || 'Nagoya0102',
+  TestEnvETUser: process.env.TEST_CASE_USERNAME || '',
+  TestEnvETPassword: process.env.TEST_CASE_PASSWORD || '',
   TestWaitForVisibilityTimeLimit: 60,
 
   saucelabs: {
