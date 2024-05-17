@@ -21,7 +21,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.waitForVisible('#respondentAddressTypes', 30);
   I.see('Select an address');
   I.see('Several addresses found');
-  I.selectOption("#respondentAddressTypes", selectedWorkAddress);
+  I.selectOption('#respondentAddressTypes', '7, Valley Gardens, Leeds, LS7 4QE');
   I.click(commonConfig.saveAndContinue);
   I.see('What is the address of Gabby Greta?');
   I.click(commonConfig.saveAndContinue);
@@ -46,7 +46,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     //I.waitForVisible('#workAddressTypes', 240);
     I.see('Select an address');
     I.see('Several addresses found');
-    I.selectOption("#workAddressTypes", selectedWorkAddress);
+    I.selectOption('#workAddressTypes', '25, Ringwood Drive, Leeds, LS14 1AR');
     I.click(commonConfig.saveAndContinue);
     I.see('What address did you work at?');
     I.click(commonConfig.saveAndContinue);
