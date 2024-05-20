@@ -90,8 +90,13 @@ export default class ContactTheTribunalSelectedController {
       logger
     );
 
-    if (!applications.includes(req.params.selectedOption)) {
-      logger.error('bad request parameter: "' + req.params.selectedOption + '"');
+    const selectedApplication = req.params.selectedOption;
+    if (!applications.includes(selectedApplication)) {
+      logger.error('bad request parameter: "' + selectedApplication + '"');
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
+    if (selectedApplication !== userCase.contactApplicationType) {
+      logger.error('selectedApplication "' + selectedApplication + '" does not match userCase.contactApplicationType');
       return res.redirect(ErrorPages.NOT_FOUND);
     }
     const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
