@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import applications, { applicationTypes } from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -77,8 +77,6 @@ export default class ContactTheTribunalSelectedController {
     const userCase = req.session.userCase;
 
     userCase.contactApplicationText = req.body.contactApplicationText;
-    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
-    const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = [];
@@ -91,6 +89,13 @@ export default class ContactTheTribunalSelectedController {
       'contactApplicationFile',
       logger
     );
+
+    if (!applications.includes(req.params.selectedOption)) {
+      logger.error('bad request parameter: "' + req.params.selectedOption + '"');
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
+    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
+    const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);

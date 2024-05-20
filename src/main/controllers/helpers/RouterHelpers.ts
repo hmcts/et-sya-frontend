@@ -6,6 +6,9 @@ import { LoggerInstance } from 'winston';
 import { AppRequest } from '../../definitions/appRequest';
 import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
+import { getLogger } from '../../logger';
+
+const logger = getLogger('RouterHelpers');
 
 export const handleSaveAsDraft = (res: Response): void => {
   return res.redirect(PageUrls.CLAIM_SAVED);
@@ -26,7 +29,7 @@ export const conditionalRedirect = (
 };
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  return res.redirect(handleReturnUrl(req, redirectUrl));
+  return res.redirect(returnSafeRedirectUrl(req, handleReturnUrl(req, redirectUrl), logger));
 };
 
 const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {

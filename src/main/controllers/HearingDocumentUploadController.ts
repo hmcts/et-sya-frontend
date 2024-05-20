@@ -13,7 +13,7 @@ import { getFileErrorMessage, getPdfUploadError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getFilesRows } from './helpers/HearingDocumentUploadHelper';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('HearingDocumentUploadController');
 
@@ -74,7 +74,7 @@ export default class HearingDocumentUploadController {
 
     if (hearingDocumentError) {
       req.session.errors.push(hearingDocumentError);
-      return res.redirect(pageUrl);
+      return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
     }
     if (req.body.upload) {
       try {
@@ -85,9 +85,9 @@ export default class HearingDocumentUploadController {
       } catch (error) {
         logger.info(error);
         req.session.errors.push({ propertyName: 'hearingDocument', errorType: 'backEndError' });
-        return res.redirect(pageUrl);
+        return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
       }
-      return res.redirect(pageUrl);
+      return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
     }
     if (!userCase.hearingDocument) {
       req.session.errors.push({ propertyName: 'hearingDocument', errorType: 'required' });
