@@ -39,15 +39,18 @@ withNightlyPipeline(type, product, component) {
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
 
-    afterSuccess('crossBrowserTest') {
+    afterAlways('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
         enableSlackNotifications('#et-builds')
+    }
+
+    before('fullFunctionalTest') {
         sh """
            yarn playwright install
         """
     }
 
-    afterSuccess('fullFunctionalTest') {
+    afterAlways('fullFunctionalTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
 
         publishHTML target: [
