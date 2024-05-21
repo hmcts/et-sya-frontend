@@ -2,7 +2,7 @@ import ContactTheTribunalSelectedController from '../../../main/controllers/Cont
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunalSelectedRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal-selected.json';
 import { mockFile } from '../mocks/mockFile';
@@ -75,6 +75,26 @@ describe('Contact Application Controller', () => {
 
       await new ContactTheTribunalSelectedController().get(req, res);
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL + languages.ENGLISH_URL_PARAMETER);
+    });
+  });
+
+  describe('POST - application names', () => {
+    it('allow white-listed application parameters for POST', async () => {
+      const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
+      req.params.selectedOption = 'withdraw';
+      const res = mockResponse();
+      await new ContactTheTribunalSelectedController().post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(
+        PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
+      );
+    });
+
+    it('disallow non-white-listed application parameters for POST', async () => {
+      const req = mockRequest({ body: { contactApplicationText: 'test' } });
+      req.params.selectedOption = 'not-allowed';
+      const res = mockResponse();
+      await new ContactTheTribunalSelectedController().post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
     });
   });
 
