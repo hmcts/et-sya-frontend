@@ -78,7 +78,7 @@ export default class ContactTheTribunalSelectedController {
 
     userCase.contactApplicationText = req.body.contactApplicationText;
     if (!applications.includes(req.params.selectedOption)) {
-      logger.error('bad request parameter: req.params.selectedOption');
+      logger.info('bad request parameter: "' + req.params.selectedOption + '"');
       return res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
     }
     const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
