@@ -15,9 +15,9 @@ def product = "et"
 def component = "sya"
 
 def secrets = [
-    'et-aat': [
-        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
+    'et-${env}': [
+        secret('test-username', 'TEST_CASE_USERNAME'),
+        secret('test-password', 'TEST_CASE_PASSWORD')
     ]
 ]
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -32,7 +32,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-    enableFullFunctionalTest()
+    enableFullFunctionalTest(int timeout=300)
     enableCrossBrowserTest()
     enableFortifyScan('et-aat')
 
