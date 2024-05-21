@@ -37,11 +37,11 @@
   },
   "acceptedFormats": {
     "label": "Fformatau derbyniol",
-    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {
-      "required": "Dywedwch wrthym beth ddigwyddodd i chi",
+      "required": "Defnyddiwch y blwch testun neu’r cyfleuster llwytho ffeil i roi manylion",
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai",
       "textAndFile": "Rhowch grynodeb neu lwytho fel dogfen ar wahân ni allwch wneud y ddau"
     },

@@ -1,12 +1,12 @@
 {
-  "title": "Welsh Translation required",
-  "date": "Welsh Translation required",
-  "description": "Welsh Translation required",
-  "document": "Welsh Translation required",
-  "tribunalDocs": "Welsh Translation required",
-  "generalCorrespondence": "Welsh Translation required",
-  "correspondenceLink": "Welsh Translation required",
-  "acasDocs": "Welsh Translation required",
-  "claimantDocs": "Welsh Translation required",
-  "respondentDocs": "Welsh Translation required"
+  "title": "Pob dogfen",
+  "date": "Dyddiad",
+  "description": "Disgrifiad",
+  "document": "Dogfen",
+  "tribunalDocs": "Dogfennau’r Tribiwnlys",
+  "generalCorrespondence": "Gohebiaeth gyffredinol gan y tribiwnlys",
+  "correspondenceLink": "Gweld pob gohebiaeth gyffredinol",
+  "acasDocs": "Dogfennau ACAS",
+  "claimantDocs": "Dogfennau’r Hawlydd",
+  "respondentDocs": "Dogfennau’r atebydd"
 }

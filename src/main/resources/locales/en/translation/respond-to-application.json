@@ -53,5 +53,8 @@
       "requiredFile": "Provide details of your response &/or upload a file",
       "tooLong": "Response details must be 2500 characters or less"
     }
-  }
+  },
+  "Yes": "Yes",
+  "No": "No",
+  "Respondent": "Respondent"
 }

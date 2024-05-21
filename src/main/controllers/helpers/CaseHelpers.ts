@@ -105,6 +105,17 @@ export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promis
     logger.info(`Submitted claimant tse for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
+  }
+};
+
+export const submitBundlesHearingDocs = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).submitBundlesHearingDoc(req.session.userCase);
+    logger.info(`Submitted bundles hearing doc info for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+    throw error;
   }
 };
 
@@ -114,6 +125,7 @@ export const respondToApplication = async (req: AppRequest, logger: Logger): Pro
     logger.info(`Responded to application for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
   }
 };
 
@@ -168,6 +180,7 @@ export const addResponseSendNotification = async (req: AppRequest, logger: Logge
     logger.info(`Responded to sendNotification: ${req.session.userCase.selectedRequestOrOrder.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
   }
 };
 
@@ -296,11 +309,29 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.contactApplicationFile = undefined;
   userCase.copyToOtherPartyYesOrNo = undefined;
   userCase.copyToOtherPartyText = undefined;
+  userCase.storeState = undefined;
   userCase.responseText = undefined;
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
   userCase.selectedRequestOrOrder = undefined;
   userCase.isRespondingToRequestOrOrder = undefined;
+};
+
+export const clearPrepareDocumentsForHearingFields = (userCase: CaseWithId): void => {
+  userCase.bundlesRespondentAgreedDocWith = undefined;
+  userCase.bundlesRespondentAgreedDocWithBut = undefined;
+  userCase.bundlesRespondentAgreedDocWithNo = undefined;
+};
+
+export const clearBundlesFields = (userCase: CaseWithId): void => {
+  userCase.whatAreTheseDocuments = undefined;
+  userCase.whoseHearingDocumentsAreYouUploading = undefined;
+  userCase.hearingDocumentsAreFor = undefined;
+  userCase.hearingDocument = undefined;
+  userCase.bundlesRespondentAgreedDocWith = undefined;
+  userCase.bundlesRespondentAgreedDocWithBut = undefined;
+  userCase.bundlesRespondentAgreedDocWithNo = undefined;
+  userCase.formattedSelectedHearing = undefined;
 };
 
 function toTitleCase(str: string): string {

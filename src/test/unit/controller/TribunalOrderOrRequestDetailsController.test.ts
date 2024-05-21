@@ -2,15 +2,19 @@ import TribunalOrderOrRequestDetailsController from '../../../main/controllers/T
 import { CaseWithId } from '../../../main/definitions/case';
 import { SendNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, Parties, ResponseRequired, TranslationKeys } from '../../../main/definitions/constants';
+import { HubLinkStatus } from '../../../main/definitions/hub';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import commonRaw from '../../../main/resources/locales/en/translation/common.json';
 import respondentOrderOrRequestDetailsRaw from '../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Respondent order or request details Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   const translationJsons = { ...respondentOrderOrRequestDetailsRaw, ...commonRaw };
 
-  it('should get resondent order or request details page', () => {
+  it('should get resondent order or request details page', async () => {
     const userCase: Partial<CaseWithId> = {
       sendNotificationCollection: [
         {
@@ -31,7 +35,7 @@ describe('Respondent order or request details Controller', () => {
     request.params.orderId = '1';
 
     const controller = new TribunalOrderOrRequestDetailsController();
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toBeDefined();
   });
 
@@ -45,6 +49,7 @@ describe('Respondent order or request details Controller', () => {
             sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
             sendNotificationResponseTribunal: ResponseRequired.YES,
             sendNotificationTitle: 'test',
+            notificationState: HubLinkStatus.NOT_STARTED_YET,
           } as SendNotificationType,
         },
       ],

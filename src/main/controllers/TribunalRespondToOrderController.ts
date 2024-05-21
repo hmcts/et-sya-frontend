@@ -4,17 +4,21 @@ import { getLogger } from '../../main/logger';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
-import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import {
+  determineRedirectUrlForECC,
+  getNotificationResponses,
+  getTribunalOrderOrRequestDetails,
+} from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
@@ -41,16 +45,7 @@ export default class TribunalRespondToOrderController {
         labelSize: 'm',
         hint: l => l.radioButtonHint,
         isPageHeading: true,
-        values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
-        ],
+        values: SupportingMaterialYesNoRadioValues,
         validator: isFieldFilledIn,
       },
     },
@@ -65,6 +60,8 @@ export default class TribunalRespondToOrderController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
+    const userCase = req.session.userCase;
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getResponseErrors(formData);
 
@@ -78,18 +75,18 @@ export default class TribunalRespondToOrderController {
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
-    const redirectUrl =
-      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+
+    const redirectUrl = determineRedirectUrlForECC(req, selectedRequestOrOrder);
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const content = getPageContent(req, this.respondToTribunalOrder, [
@@ -101,6 +98,8 @@ export default class TribunalRespondToOrderController {
     const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
+    const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);
+
     try {
       await updateSendNotificationState(req, logger);
     } catch (error) {
@@ -110,7 +109,9 @@ export default class TribunalRespondToOrderController {
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
+      orderOrRequestContent: getTribunalOrderOrRequestDetails(translations, selectedRequestOrOrder, req.url),
+      welshEnabled,
+      responses,
     });
   };
 }

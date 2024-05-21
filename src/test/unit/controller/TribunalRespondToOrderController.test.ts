@@ -3,7 +3,8 @@ import axios from 'axios';
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { NoticeOfECC, NotificationSubjects, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/tribunal-respond-to-order.json';
 import * as CaseService from '../../../main/services/CaseService';
@@ -20,6 +21,8 @@ mockClient.mockReturnValue(caseApi);
 caseApi.updateSendNotificationState = jest.fn().mockResolvedValue({});
 
 describe('Tribunal Respond to Order Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   const t = {
     respondToTribunalOrder: {},
     common: {},
@@ -50,12 +53,66 @@ describe('Tribunal Respond to Order Controller', () => {
     const controller = new TribunalRespondToOrderController();
     const userCase: Partial<CaseWithId> = mockUserCaseComplete;
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+    selectedRequestOrOrder.value.sendNotificationSubject = [NotificationSubjects.ORDER_OR_REQUEST];
+    userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
 
     const response = mockResponse();
     const request = mockRequest({ t, body, userCase });
     controller.post(request, response);
     expect(response.redirect).toHaveBeenCalledWith(
       PageUrls.COPY_TO_OTHER_PARTY + TranslationKeys.ENGLISH_URL_PARAMETER
+    );
+  });
+
+  it('should post and redirect to the Rule92 with non system user', () => {
+    const body = {
+      responseText: 'some Text',
+      hasSupportingMaterial: YesOrNo.NO,
+    };
+
+    const controller = new TribunalRespondToOrderController();
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+    userCase.respondents = undefined;
+    userCase.representatives = undefined;
+
+    const response = mockResponse();
+    const request = mockRequest({ t, body, userCase });
+    controller.post(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + TranslationKeys.ENGLISH_URL_PARAMETER
+    );
+  });
+
+  it('should post and redirect to CYA page if request type is CMO, ECC and Notice of ECC', () => {
+    const body = {
+      responseText: 'some Text',
+      hasSupportingMaterial: YesOrNo.NO,
+    };
+
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+    selectedRequestOrOrder.id = '1234';
+    selectedRequestOrOrder.value.sendNotificationSubject = [NotificationSubjects.ORDER_OR_REQUEST];
+    selectedRequestOrOrder.value.sendNotificationEccQuestion = NoticeOfECC;
+
+    const controller = new TribunalRespondToOrderController();
+    const response = mockResponse();
+    const request = mockRequest({ t, body, userCase });
+    request.params.orderId = '1234';
+    controller.post(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.TRIBUNAL_RESPONSE_CYA + TranslationKeys.ENGLISH_URL_PARAMETER
     );
   });
 

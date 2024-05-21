@@ -19,6 +19,19 @@
   "textInputHint": "Use this box to respond or you can upload material at the next step.",
   "radioButtonLabel": "Supporting material",
   "radioButtonHint": "Do you have any supporting material you want to provide?",
+  "tribunal": "Tribunal",
+  "Yes - view document for details": "Yes - view document for details",
+  "Caseworker": "Caseworker",
+  "Claimant": "Claimant",
+  "Respondent": "Respondent",
+  "responseItem": "Response",
+  "responseDate": "Response date",
+  "response": "What is your response to the tribunal?",
+  "responder": "Response from",
+  "supportingMaterial": "Supporting material",
+  "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "date": "Date sent",
+  "additionalInfo": "Additional information",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Tell us if you also want to upload supporting material?"
@@ -26,7 +39,7 @@
     "responseText": {
       "required": "Provide details of your response &/or upload supporting material",
       "requiredFile": "Provide details of your response &/or upload a file",
-      "tooLong": "Response details must be 2500 characters or less additional details can be uploaded using the support material option"
+      "tooLong": "Response details must be 2500 characters or less. Additional details can be uploaded using the support material option"
     }
   }
 }

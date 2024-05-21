@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
 import { YesOrNo } from '../../../main/definitions/case';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
@@ -47,9 +48,12 @@ const adminDecisionRowHeader9 = respondentApplicationDetailsJSON.decisionMadeBy;
 const adminDecisionRowHeader10 = respondentApplicationDetailsJSON.name;
 const adminDecisionRowHeader11 = '<br><br>Notification';
 
-const expectedResponseSummaryListHeader = 'Response 1';
+const expectedResponseSummaryListHeader = 'Response';
 
 let htmlRes: Document;
+
+const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+mockLdClient.mockResolvedValue(true);
 
 jest.mock('axios');
 const axiosResponse: AxiosResponse = {
@@ -150,7 +154,7 @@ describe('Respondent Application details page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).toContain(respondentApplicationDetailsJSON.applicationTo + 'amend response');
+    expect(title[0].innerHTML).toContain(respondentApplicationDetailsJSON.applicationTo + 'Amend response');
   });
 
   it('should display respondent application row headers', () => {
@@ -167,7 +171,7 @@ describe('Respondent Application details page', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListValueClass);
     expect(summaryListData[0].innerHTML).toContain('Respondent');
     expect(summaryListData[1].innerHTML).toContain('7 March 2023');
-    expect(summaryListData[2].innerHTML).toContain('amend response');
+    expect(summaryListData[2].innerHTML).toContain('Amend response');
     expect(summaryListData[3].innerHTML).toContain('Test text');
     expect(summaryListData[4].innerHTML).toContain('');
     expect(summaryListData[5].innerHTML).toContain(YesOrNo.YES);

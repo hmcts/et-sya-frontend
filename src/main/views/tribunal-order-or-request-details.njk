@@ -16,6 +16,14 @@
         rows: orderOrRequestContent
       }) }}
 
+      {% for response in responses %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
+        {{ govukSummaryList({
+          rows: response
+          }) 
+        }}
+      {% endfor %}
+
       {% if respondButton %}
           <p class="govuk-body">{{ tips }}</p>
         {{ govukButton({
@@ -25,7 +33,7 @@
       {% endif %}
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-one-third-from-desktop">
       <p class="govuk-body">
         <a href="https://www.gov.uk/find-legal-advice" target="_blank">
           {{ findLegalAdvice }}
@@ -37,7 +45,7 @@
       {% endset %}
 
       {{ govukDetails({
-        summaryText: "Contact",
+        summaryText: contact,
         html: sideBarContent
       }) }}
     </div>

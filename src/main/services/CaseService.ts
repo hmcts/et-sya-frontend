@@ -2,7 +2,7 @@ import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
-import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { UserDetails } from '../definitions/appRequest';
@@ -114,6 +114,75 @@ export class CaseApi {
     }
   };
 
+  storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+        },
+      })
+      .catch(function (error) {
+        throw new Error('Error store tse application status: ' + error);
+      });
+  };
+
+  storedToSubmitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+          storedApplicationId: caseItem.selectedGenericTseApplication.id,
+        },
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application status: ' + error);
+      });
+  };
+
+  submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    const hearingBundle: HearingBundleType = {
+      agreedDocWith: caseItem.bundlesRespondentAgreedDocWith,
+      agreedDocWithBut: caseItem.bundlesRespondentAgreedDocWithBut || '',
+      agreedDocWithNo: caseItem.bundlesRespondentAgreedDocWithNo || '',
+      hearing: caseItem.hearingDocumentsAreFor,
+      formattedSelectedHearing: caseItem.formattedSelectedHearing,
+      whatDocuments: caseItem.whatAreTheseDocuments,
+      whoseDocuments: caseItem.whoseHearingDocumentsAreYouUploading,
+      uploadFile: caseItem.hearingDocument,
+      uploadDateTime: new Intl.DateTimeFormat('en-GB', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+      })
+        .format(new Date())
+        .replace(' at', ''),
+    };
+
+    try {
+      const data = {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        claimant_bundles: hearingBundle,
+      };
+      return await this.axios.put(JavaApiUrls.SUBMIT_BUNDLES, data);
+    } catch (error) {
+      throw new Error('Error submitting bundles: ' + axiosErrorDetails(error));
+    }
+  };
+
   respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {
@@ -132,6 +201,39 @@ export class CaseApi {
     } catch (error) {
       throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
     }
+  };
+
+  storeRespondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.STORE_RESPOND_TO_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        applicationId: caseItem.selectedGenericTseApplication.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
+        response: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
+  storedToSubmitRespondToApp = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        application_id: caseItem.selectedGenericTseApplication.id,
+        stored_response_id: caseItem.selectedStoredTseResponse.id,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application respond status: ' + error);
+      });
   };
 
   changeApplicationStatus = async (
@@ -156,7 +258,6 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         send_notification_id: caseItem.selectedRequestOrOrder.id,
-        notification_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
       throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));
@@ -213,6 +314,38 @@ export class CaseApi {
     } catch (error) {
       throw new Error('Error adding response to sendNotification: ' + axiosErrorDetails(error));
     }
+  };
+
+  storeResponseSendNotification = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.STORE_RESPOND_TO_TRIBUNAL, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        send_notification_id: caseItem.selectedRequestOrOrder.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        pseResponseType: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error adding store response to sendNotification: ' + axiosErrorDetails(error));
+    }
+  };
+
+  storedToSubmitRespondToTribunal = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_TRIBUNAL, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        order_id: caseItem.selectedRequestOrOrder.id,
+        stored_response_id: caseItem.selectedStoredPseResponse.id,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application respond status: ' + error);
+      });
   };
 
   updateResponseAsViewed = async (

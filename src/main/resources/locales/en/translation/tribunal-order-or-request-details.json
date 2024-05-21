@@ -1,5 +1,6 @@
 {
   "title": "Tribunal order or request",
+  "responder": "Response from",
   "hearing": "Hearing",
   "dateSent": "Date sent",
   "sentBy": "Sent by",
@@ -15,5 +16,18 @@
   "sentTo": "Sent to",
   "eccNotification": "What is the ECC notification?",
   "tips": "You must respond to the tribunal",
-  "respond": "Respond"
+  "respond": "Respond",
+  "tribunal": "Tribunal",
+  "Yes - view document for details": "Yes - view document for details",
+  "Caseworker": "Caseworker",
+  "Claimant": "Claimant",
+  "Respondent": "Respondent",
+  "responseItem": "Response",
+  "responseDate": "Response date",
+  "response": "What is your response to the tribunal?",
+  "supportingMaterial": "Supporting material",
+  "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "date": "Date sent",
+  "additionalInfo": "Additional information",
+  "No": "No"
 }

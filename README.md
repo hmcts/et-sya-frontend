@@ -42,7 +42,7 @@ Run Dev Mode With Redis server:
 $ yarn start:dev-red
 ```
 
-The applications's home page will be available at https://localhost:3001
+The applications's home page will be available at https://localhost:3002
 
 ### Running with Docker
 
@@ -59,9 +59,9 @@ Run the application by executing the following command:
 ```
 
 This will start the frontend container exposing the application's port
-(set to `3001` in this template app).
+(set to `3002` in this template app).
 
-In order to test if the application is up, you can visit https://localhost:3001 in your browser.
+In order to test if the application is up, you can visit https://localhost:3002 in your browser.
 You should get a very basic home page (no styles, etc.).
 
 ### Running with CFTLIB
@@ -170,7 +170,7 @@ Make sure you have those values set correctly for your application.
 
 ### Healthcheck
 
-The application exposes a health endpoint (https://localhost:3001/health), created with the use of
+The application exposes a health endpoint (https://localhost:3002/health), created with the use of
 [Nodejs Healthcheck](https://github.com/hmcts/nodejs-healthcheck) library. This endpoint is defined
 in [health.ts](src/main/modules/health/index.ts) file. Make sure you adjust it correctly in your application.
 In particular, remember to replace the sample check with checks specific to your frontend app,
@@ -196,3 +196,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ```bash
 $ yarn test:functional
 ```
+
+### Responsible Team
+
+## Team
+
+Employment Tribunals

@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const respondToApplicationCompleteJsonRaw = fs.readFileSync(
@@ -24,6 +25,8 @@ const expectedRule92NoParagraph = respondToApplicationCompleteJson.p1.rule92No;
 let htmlRes: Document;
 
 describe('Respond to application complete - Rule 92 answer Yes', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({
@@ -65,6 +68,8 @@ describe('Respond to application complete - Rule 92 answer Yes', () => {
 });
 
 describe('Respond to application complete - Rule 92 answer No', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({
@@ -104,5 +109,3 @@ describe('Respond to application complete - Rule 92 answer No', () => {
     expect(button[5].innerHTML).contains(respondToApplicationCompleteJson.button, 'Could not find the button');
   });
 });
-
-

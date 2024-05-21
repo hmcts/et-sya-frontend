@@ -21,7 +21,13 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
 
 const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
   if (languageParam === '?lng=cy') {
-    return translations.respondentDetails.details + translations.respondentDetails.header + index;
+    return (
+      translations.respondentDetails.details[0].toUpperCase() +
+      translations.respondentDetails.details.slice(1) +
+      ' ' +
+      translations.respondentDetails.header +
+      index
+    );
   } else {
     return translations.respondentDetails.header + index + translations.respondentDetails.details;
   }
@@ -270,7 +276,7 @@ export const getRespondentDetailsSection = (
         text: translations.acasNum,
       },
       value: {
-        html: respondent.acasCertNum === undefined ? translations.unProvided : respondent.acasCertNum,
+        html: respondent.acasCertNum ?? translations.unProvided,
       },
       actions: {
         items: [

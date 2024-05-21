@@ -7,7 +7,7 @@
   "details": "Manylion eich gwrandawiad",
   "decision": "Y penderfyniad ar eich hawliad",
   "iWantTo": "Rwyf eisiau...",
-  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
+  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
   "section1": "Eich hawliad",
   "section2": "Yr ymateb",
@@ -21,13 +21,13 @@
   "hearingDetails": "Gweld manylion eich gwrandawiadau",
   "requestsAndApplications": "Eich cais a’ch ceisiadau",
   "respondentApplications": "Ceisiadau’r atebydd",
-  "contactTribunal": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
+  "contactTribunal": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "tribunalOrders": "Pob gorchymyn a phob cais gan y tribiwnlys",
   "tribunalJudgements": "Gweld pob dyfarniad",
   "documents": "Pob dogfen",
   "inProgress": "Yn mynd rhagddo",
   "notViewedYet": "Heb ei weld eto",
-  "notStartedYet": "Heb ddechra u eto",
+  "notStartedYet": "Heb ddechrau eto",
   "notAvailableYet": "Ddim ar gael eto",
   "completed": "Wedi’i gwblhau",
   "submitted": "Wedi'i gyflwyno",
@@ -38,6 +38,7 @@
   "submittedAndViewed": "Wedi'i gyflwyno",
   "updated": "Wedi ei ddiweddaru",
   "readyToView": "Yn barod i’w gweld",
+  "stored": "Wedi’i Storio",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
   "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
@@ -76,11 +77,14 @@
       "p1a": " fan bellaf.",
       "link": "Ymateb i’r cais"
     },
+    "ecc": {
+      "title": "Welsh translation required: "
+    },
     "orderOrRequest": {
-      "responseRequired": "Welsh Translation required ",
+      "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
       "link": "Gweld yr hysbysiad",
-      "respond": "Welsh Translation required"
+      "respond": "Ymateb i’r Tribiwnlys"
     },
     "judgment": {
       "header": "Mae’r tribiwnlys wedi gwneud penderfyniad mewn perthynas â’ch achos.",
@@ -90,18 +94,34 @@
       "headerClaimant": "WMae'r tribiwnlys wedi gwneud penderfyniad ar eich cais i ",
       "headerRespondent": "Mae'r tribiwnlys wedi gwneud penderfyniad ar gais yr atebydd i ",
       "link": "Gweld y penderfyniad"
+    },
+    "storedPending": {
+      "header": "Rydych wedi storio gohebiaeth nad ydych wedi'i chyflwyno i'r tribiwnlys",
+      "line1": "Rhaid i chi anfon copi o'r ohebiaeth hon a'r holl ddogfennau ategol at y parti arall cyn i chi ei chyflwyno i'r tribiwnlys.",
+      "line2": "Os yw'r parti arall yn ymateb i'ch cais, mae disgwyl iddo anfon ei ymateb atoch chi.",
+      "link": "Gweld yr ohebiaeth"
+    },
+    "claimantResponseToTribunal": {
+      "title": {
+        "rule92Yes": "Welsh translation required",
+        "rule92No": {
+          "p1": "Welsh translation required",
+          "p2": "Welsh translation required"
+        }
+      },
+      "link": "Welsh translation required"
     }
   },
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
   "Consider a decision afresh": "ystyried penderfyniad o’r newydd",
-  "Contact the tribunal": "gysylltu â’r tribiwnlys",
+  "Contact the tribunal": "cysylltu â’r tribiwnlys",
   "Order other party": "orchymyn i’r parti arall",
   "Order a witness to attend to give evidence": "orchymyn tyst i fod yn bresennol i roi tystiolaeth",
-  "Postpone a hearing": "ohirio gwrandawiad",
+  "Postpone a hearing": "gohirio gwrandawiad",
   "Reconsider judgement": "ailystyried dyfarniad",
   "Restrict publicity": "gyfyngu ar gyhoeddusrwydd",
-  "Strike out all or part of a claim": "ddileu’r hawliad cyfan neu ran o’r hawliad",
+  "Strike out all or part of a claim": "dileu’r hawliad cyfan neu ran o’r hawliad",
   "Vary or revoke an order": "amrywio neu ddiddymu gorchymyn",
   "Withdraw all/part of claim": "tynnu’r cyfan/rhan o’r hawliad yn ôl",
   "Amend response": "Diwygio ymateb",

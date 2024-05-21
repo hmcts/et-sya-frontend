@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
@@ -19,7 +19,8 @@ export default class TribunalResponseSubmitController {
       userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
       clearTseFields(userCase);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
     return res.redirect(PageUrls.TRIBUNAL_RESPONSE_COMPLETED);
   };

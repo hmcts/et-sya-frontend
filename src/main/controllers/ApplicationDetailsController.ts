@@ -1,14 +1,22 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { TseRespondTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
-import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import {
+  getAllResponses,
+  getAllStoredClaimantResponses,
+  getAllTseApplicationCollection,
+  getTseApplicationDetails,
+} from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
@@ -25,6 +33,7 @@ export default class ApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
@@ -32,7 +41,7 @@ export default class ApplicationDetailsController {
 
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      getAllTseApplicationCollection(userCase),
       req.params.appId
     );
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
@@ -44,6 +53,7 @@ export default class ApplicationDetailsController {
     const languageParam = getLanguageParam(req.url);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
     const accessToken = req.session.user?.accessToken;
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 
     let decisionContent;
     try {
@@ -64,9 +74,10 @@ export default class ApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
-    let allResponses;
+    let allResponses: TseRespondTypeItem[];
     try {
       allResponses = await getAllResponses(selectedApplication, translations, req);
+      allResponses.push(...(await getAllStoredClaimantResponses(selectedApplication, translations, req)));
     } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
@@ -90,15 +101,18 @@ export default class ApplicationDetailsController {
       res.redirect(PageUrls.YOUR_APPLICATIONS);
     }
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.APPLICATION_DETAILS, {
       ...content,
       header,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, applicationDate),
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,
       decisionContent,
+      welshEnabled,
     });
   };
 }

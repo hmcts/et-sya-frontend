@@ -3,6 +3,7 @@ import axios from 'axios';
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { ErrorPages, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -52,6 +53,8 @@ describe('Respondent application details controller', () => {
   });
 
   describe('status changes when viewing applications', () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     it("changes to viewed when viewing an admin's decision", async () => {
       const userCase: Partial<CaseWithId> = {
         genericTseApplicationCollection: [

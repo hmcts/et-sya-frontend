@@ -38,7 +38,7 @@ export const prepareTableRows = (
     .map(docSection => {
       return {
         caption: getTableCaption(docSection[0].value.typeOfDocument, translations),
-        rows: docSection.map(it => mapDocumentToTableRow(it)),
+        rows: docSection.map(it => mapDocumentToTableRow(it, translations)),
       };
     });
 };
@@ -48,18 +48,22 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
     case AllDocumentTypes.ACAS_CERT:
       return translations.acasDocs;
     case AllDocumentTypes.CLAIMANT_CORRESPONDENCE:
+    case AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT:
       return translations.claimantDocs;
     case AllDocumentTypes.RESPONDENT_CORRESPONDENCE:
+    case AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT:
       return translations.respondentDocs;
     default:
       return undefined;
   }
 };
 
-export const mapDocumentToTableRow = (item: DocumentTypeItem): TableRow => {
+export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyRecord): TableRow => {
+  // if there is a short description and a translation exists, use it, otherwise default to short description
+  // bundles will add hearing details as short description caption, we will not have a translation for that
   return {
     date: item.value.uploadedDocument.createdOn,
-    description: item.value.shortDescription,
+    description: translations[item.value.shortDescription] || item.value.shortDescription,
     downloadLink: item.downloadLink,
   };
 };
@@ -76,9 +80,11 @@ export const createSortedDocumentsMap = (docs: DocumentTypeItem[]): Map<string, 
         acasDocs.push(doc);
         break;
       case AllDocumentTypes.CLAIMANT_CORRESPONDENCE:
+      case AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT:
         claimantDocs.push(doc);
         break;
       case AllDocumentTypes.RESPONDENT_CORRESPONDENCE:
+      case AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT:
         respondentDocs.push(doc);
         break;
       default:
@@ -148,7 +154,8 @@ export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean 
     if (
       docId === getDocId(selectedApplication?.value.documentUpload?.document_url) ||
       docId === getDecisionDocId(req, selectedApplication) ||
-      isValidResponseDocId(docId, selectedApplication.value.respondCollection)
+      isValidResponseDocId(docId, selectedApplication.value.respondCollection) ||
+      isValidResponseDocId(docId, selectedApplication.value.respondStoredCollection)
     ) {
       return true;
     }
@@ -168,8 +175,43 @@ export const isDocInDocumentCollection = (req: AppRequest, docId: string): boole
   return false;
 };
 
+export const isDocInPseRespondCollection = (req: AppRequest, docId: string): boolean => {
+  for (const item of req.session.userCase?.sendNotificationCollection || []) {
+    for (const respond of item.value.respondCollection || []) {
+      for (const doc of respond.value.supportingMaterial?.values() || []) {
+        if (doc.value.uploadedDocument && docId === getDocId(doc.value.uploadedDocument.document_url)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+};
+
+export const isBundlesDoc = (req: AppRequest, docId: string): boolean => {
+  if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+    const { userCase } = req.session;
+    const bundleDocuments = userCase.bundleDocuments?.length ? userCase.bundleDocuments : [];
+    return bundleDocuments.some(it => getDocId(it.value.uploadedDocument.document_url) === docId);
+  }
+  return false;
+};
+
 export const isApplicationSummaryPage = (page: string): boolean => {
   return page === PageUrls.RESPONDENT_APPLICATION_DETAILS || page === PageUrls.APPLICATION_DETAILS;
+};
+
+export const compareUploadDates = (a: DocumentTypeItem, b: DocumentTypeItem): number => {
+  if (a?.value?.uploadedDocument?.createdOn === undefined || b?.value?.uploadedDocument?.createdOn === undefined) {
+    return 1;
+  }
+  if (Date.parse(a?.value?.uploadedDocument?.createdOn) < Date.parse(b?.value?.uploadedDocument?.createdOn)) {
+    return -1;
+  }
+  if (Date.parse(a?.value?.uploadedDocument?.createdOn) > Date.parse(b?.value?.uploadedDocument?.createdOn)) {
+    return 1;
+  }
+  return 0;
 };
 
 export interface TableRow {

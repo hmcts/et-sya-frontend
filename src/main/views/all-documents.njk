@@ -15,27 +15,26 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h1>
 
-      {% if tribunalDocuments and tribunalDocuments.length %}
-        {% set tribunalDocsRows = [] %}
-        {% for tribunalDoc in tribunalDocuments %}
-          {% set tribunalDocsRows = (tribunalDocsRows.push(
+      {% if allDocsSorted and allDocsSorted.length %}
+        {% set allDocsRows = [] %}
+        {% for doc in allDocsSorted %}
+          {% set allDocsRows = (allDocsRows.push(
             [
               {
-                text: tribunalDoc.value.uploadedDocument.createdOn
+                text: dateStringToLocale(doc.value.uploadedDocument.createdOn)
               },
               {
-                text: tribunalDoc.value.shortDescription
+                text: doc.value.shortDescription
               },
               {
-                html: tribunalDoc.downloadLink
+                html: doc.downloadLink
               }
             ]
-          ), tribunalDocsRows) %}
+          ), allDocsRows) %}
         {% endfor %}
 
         {{ govukTable({
-          caption: tribunalDocs,
-          captionClasses: "govuk-table__caption--m",
+
           firstCellIsHeader: false,
           head: [
             {
@@ -48,15 +47,15 @@
               text: document
             }
           ],
-          rows: tribunalDocsRows
+          rows: allDocsRows
         }) }}
       {% endif %}
-
+<!--
       <h2 class="app-task-list__section govuk-!-margin-bottom-4">{{ generalCorrespondence }}</h2>
       <ul class="app-task-list__items govuk-!-padding-left-0">
         <li class="app-task-list__item">
           <span class="app-task-list__task-name">
-            <a href="/general-correspondence-list" class="govuk-link">{{ correspondenceLink }}</a>
+            <a href="{{PageUrls.GENERAL_CORRESPONDENCE_LIST + languageParam}}" class="govuk-link">{{ correspondenceLink }}</a>
           </span>
         </li>
       </ul>
@@ -68,7 +67,7 @@
               {% set docsRows = (docsRows.push(
                 [
                   {
-                    text: doc.date
+                    text: dateStringToLocale(doc.date)
                   },
                   {
                     text: doc.description
@@ -99,7 +98,7 @@
             }) }}
           {% endfor %}
       {% endif %}
-
+-->
     </div>
 
     <div class="govuk-grid-column-one-third-from-desktop">
@@ -109,7 +108,7 @@
 
       <div class="govuk-!-margin-top-2">
         {{ govukDetails({
-          summaryText: "Contact",
+          summaryText: contact,
           html: sideBarContent
         }) }}
       </div>

@@ -4,7 +4,9 @@ import { AppRequest } from '../definitions/appRequest';
 import { Applicant, ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
@@ -35,8 +37,8 @@ export default class RespondentApplicationDetailsController {
     const accessToken = req.session.user?.accessToken;
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
     };
 
     let allResponses;
@@ -46,7 +48,6 @@ export default class RespondentApplicationDetailsController {
       logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
     }
-
     let decisionContent;
     try {
       decisionContent = await getDecisionContent(selectedApplication, translations, accessToken);
@@ -59,6 +60,7 @@ export default class RespondentApplicationDetailsController {
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${selectedApplication.id}${languageParam}`;
     const adminRespondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 
     let supportingMaterialDownloadLink;
     try {
@@ -86,17 +88,25 @@ export default class RespondentApplicationDetailsController {
       res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
     }
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,
       selectedApplication,
       redirectUrl,
-      appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink),
+      appContent: getTseApplicationDetails(
+        selectedApplication,
+        translations,
+        supportingMaterialDownloadLink,
+        applicationDate
+      ),
       decisionContent,
       respondButton,
       isAdminRespondButton: responseToTribunalRequired(selectedApplication),
       adminRespondRedirectUrl,
       allResponses,
+      welshEnabled,
     });
   };
 }

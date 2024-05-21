@@ -1,11 +1,13 @@
 import { isDateEmpty } from '../components/form/dateValidators';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import {
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
+  HearingBundleType,
   RepresentativeApiModel,
   RespondentApiModel,
 } from '../definitions/api/caseApiResponse';
@@ -22,8 +24,11 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
+  AllDocumentTypeValue,
+  AllDocumentTypes,
   CcdDataModel,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
@@ -35,6 +40,7 @@ import {
   responseRejectedDocTypes,
 } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
+import { TypeItem } from '../definitions/util-types';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -141,6 +147,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     tribunalRecommendationRequest: fromApiCaseData.case_data?.claimantRequests?.claimant_tribunal_recommendation,
     whistleblowingClaim: fromApiCaseData.case_data?.claimantRequests?.whistleblowing,
     whistleblowingEntityName: fromApiCaseData.case_data?.claimantRequests?.whistleblowing_authority,
+    linkedCases: fromApiCaseData.case_data?.claimantRequests?.linked_cases,
+    linkedCasesDetail: fromApiCaseData.case_data?.claimantRequests?.linked_cases_detail,
     compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
     compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
     otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
@@ -190,9 +198,23 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
       ),
     ],
     genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
+    tseApplicationStoredCollection: fromApiCaseData?.case_data?.tseApplicationStoredCollection,
     sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
+    hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
     representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
+    bundleDocuments: [
+      ...combineDocuments<DocumentTypeItem>(
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesClaimantCollection,
+          AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT
+        ),
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesRespondentCollection,
+          AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT
+        )
+      ),
+    ],
   };
 }
 
@@ -277,6 +299,8 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimant_tribunal_recommendation: caseItem.tribunalRecommendationRequest,
         whistleblowing: caseItem.whistleblowingClaim,
         whistleblowing_authority: caseItem.whistleblowingEntityName,
+        linked_cases: caseItem.linkedCases,
+        linked_cases_detail: caseItem.linkedCasesDetail,
         claim_description_document: caseItem.claimSummaryFile,
         other_claim: caseItem.otherClaim,
       },
@@ -372,11 +396,7 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
-  return new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }
 
 export const getDueDate = (date: string, daysUntilDue: number): string => {
@@ -512,5 +532,23 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
   }
 
   items?.sort(sortByDate);
+
   return items;
+};
+
+export const mapBundlesDocs = (
+  bundles: TypeItem<HearingBundleType>[],
+  bundleType: AllDocumentTypeValue
+): DocumentTypeItem[] | undefined => {
+  return !bundles?.length
+    ? undefined
+    : bundles.map<DocumentTypeItem>(item => ({
+        id: '',
+        value: {
+          shortDescription: item.value.formattedSelectedHearing || bundleType,
+          uploadedDocument: item.value.uploadFile,
+          typeOfDocument: bundleType,
+          creationDate: '',
+        },
+      }));
 };

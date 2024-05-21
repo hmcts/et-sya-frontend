@@ -1,6 +1,7 @@
+import { HearingModel } from './api/caseApiResponse';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
-import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
-import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
+import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
+import { PseResponseType, SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -10,7 +11,7 @@ import {
   TellUsWhatYouWant,
 } from './definition';
 import { HubLinksStatuses } from './hub';
-import { UnknownRecord } from './util-types';
+import { TypeItem, UnknownRecord } from './util-types';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -130,6 +131,8 @@ export interface Case {
   tribunalRecommendationRequest?: string;
   whistleblowingClaim?: YesOrNo;
   whistleblowingEntityName?: string;
+  linkedCases?: YesOrNo;
+  linkedCasesDetail?: string;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
@@ -183,14 +186,28 @@ export interface Case {
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  tseApplicationStoredCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  selectedStoredTseResponse?: TseRespondTypeItem;
+  selectedStoredPseResponse?: TypeItem<PseResponseType>;
+  storeState?: string;
   responseText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
   sendNotificationCollection?: SendNotificationTypeItem[];
-
+  bundlesRespondentAgreedDocWith?: AgreedDocuments;
+  bundlesRespondentAgreedDocWithBut?: string;
+  bundlesRespondentAgreedDocWithNo?: string;
+  // bundleDocuments contains both claimant and respondent uploaded bundles submission pdfs
+  bundleDocuments?: DocumentTypeItem[];
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
+  hearingCollection?: HearingModel[];
+  hearingDocumentsAreFor?: HearingModel['id'];
+  whoseHearingDocumentsAreYouUploading?: WhoseHearingDocument;
+  whatAreTheseDocuments?: WhatAreTheHearingDocuments;
+  hearingDocument?: Document;
+  formattedSelectedHearing?: string;
 
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
@@ -200,10 +217,12 @@ export interface Case {
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
   representatives?: Representative[];
+  confirmCopied?: string;
   // indiciates if responding to a tribunal order/request or not when responding to an application
   isRespondingToRequestOrOrder?: boolean;
   updateDraftCaseError?: string;
 }
+
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',
@@ -300,6 +319,23 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export const enum AgreedDocuments {
+  YES = 'Yes',
+  AGREEDBUT = 'We have agreed but there are some disputed documents',
+  NOTAGREED = 'No, we have not agreed and I want to provide my own documents',
+}
+
+export const enum WhoseHearingDocument {
+  MINE = 'My hearing documents only',
+  BOTH_PARTIES = 'Both parties’ hearing documents combined',
+}
+
+export const enum WhatAreTheHearingDocuments {
+  ALL = 'All hearing documents',
+  SUPPLEMENTARY = 'Supplementary or other documents',
+  WITNESS_STATEMENTS = 'Witness statements only',
 }
 
 export interface Document {

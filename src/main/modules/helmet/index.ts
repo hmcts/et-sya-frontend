@@ -6,6 +6,7 @@ export interface HelmetConfig {
   referrerPolicy: ReferrerPolicy;
 }
 
+const dynatrace = '*.dynatrace.com';
 const googleAnalyticsDomain1 = '*.google-analytics.com';
 const googleAnalyticsDomain2 = '*.analytics.google.com';
 const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
@@ -32,6 +33,7 @@ export class Helmet {
     const scriptSrc = [
       self,
       ...tagManager,
+      dynatrace,
       googleAnalyticsDomain1,
       googleAnalyticsDomain2,
       "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
@@ -45,11 +47,20 @@ export class Helmet {
       idamUrl,
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain1, googleAnalyticsDomain2, idamUrl, 'https://bf24054dsx.bf.dynatrace.com', '*://*.8x8.com'];
+    const connectSrc = [
+      self,
+      dynatrace,
+      googleAnalyticsDomain1,
+      googleAnalyticsDomain2,
+      idamUrl,
+      'https://bf24054dsx.bf.dynatrace.com',
+      '*://*.8x8.com',
+    ];
 
     const imgSrc = [
       self,
       azureBlob,
+      dynatrace,
       googleAnalyticsDomain1,
       googleAnalyticsDomain2,
       ...tagManager,
@@ -57,7 +68,7 @@ export class Helmet {
       'https://ssl.gstatic.com',
       'https://www.gstatic.com',
       'https://fonts.googleapis.com',
-      '*://*.8x8.com'
+      '*://*.8x8.com',
     ];
 
     const frameSrc = [self, webChat];

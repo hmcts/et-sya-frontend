@@ -1,21 +1,39 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Ddiwygio fy hawliad",
+  "applicationType": "Ddiwygio fy hawliad",
+  "applicationTitle": "Gwneud cais i ddiwygio fy hawliad",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i ddiwygio eich hawliad ET1. Bydd y tribiwnlys yn penderfynu os cewch chi wneud y diwygiad drwy feirniadu tegwch y cais. Mae’n bosib y bydd y penderfyniad hwn yn cael ei wneud mewn gwrandawiad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae’r tribiwnlys angen gwybod hefyd os ydych chi’n ystyried y diwygiad yn fân ddiwygiad neu’n ddiwygiad sylweddol."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gallai enghraifft o fân ddiwygiad fod yn cywiro gwall neu fân fanylion yn y ffurflen hawlio."
+    },
+    {
+      "type": "paragraph",
+      "text": "Byddai enghraifft o ddiwygiad sylweddol yn ychwanegu math newydd o hawliad a bod angen i’r tribiwnlys wrando ar fwy o dystiolaeth."
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd darparu manylion ynghylch pam eich bod eisiau diwygio’r hawliad a phwysigrwydd y diwygiad yn helpu'r tribiwnlys i benderfynu ar eich cais yn gyflymach."
+    },
+
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "list",
+      "items": [
+        "beth rydych chi eisiau ei ddiwygio yn eich hawliad. Byddwch yn benodol a chyfeirio at eich ffurflen hawliad os yn bosibl. Er enghraifft, dywedwch wrthym a ydych eisiau ychwanegu, dileu neu newid manylion sy’n gysylltiedig â’r cwestiwn neu rif yr adran",
+        "ydych chi’n ystyried hyn yn fân ddiwygiad neu’n ddiwygiad sylweddol",
+        "pam ydych chi eisiau gwneud y diwygiad hwn",
+        "pam ydych chi’n gofyn am gael gwneud y diwygiad hwn nawr. Er enghraifft, os ydych eisiau ychwanegu rhywbeth at eich hawliad, esboniwch pam na wnaethoch ei gynnwys yn yr hawliad gwreiddiol. Mae hyn yn neilltuol bwysig os ydych yn ychwanegu math newydd o hawliad ac mae’r terfyn amser wedi mynd heibio",
+        "sut bydd y diwygiad hwn o fudd i chi a sut y gallai eich rhoi dan anfantais pe na bai’n cael ei ganiatáu"
+      ]
+    }
   ]
 }

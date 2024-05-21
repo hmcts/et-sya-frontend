@@ -1,11 +1,14 @@
 import { GeneralCorrespondenceListController } from '../../../main/controllers/GeneralCorrespondenceListController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockNotificationItem } from '../mocks/mockNotificationItem';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('General correspondence list controller', () => {
   it('should render Respondent orders and requests page', async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     const notificationItems = [mockNotificationItem];
 
     const generalCorrespondenceListController = new GeneralCorrespondenceListController();

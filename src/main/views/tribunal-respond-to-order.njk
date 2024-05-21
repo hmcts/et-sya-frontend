@@ -19,6 +19,14 @@
         rows: orderOrRequestContent
       }) }}
 
+      {% for response in responses %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
+        {{ govukSummaryList({
+          rows: response
+          }) 
+        }}
+      {% endfor %}
+
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}
@@ -36,7 +44,7 @@
       {% endset %}
 
       {{ govukDetails({
-        summaryText: "Contact",
+        summaryText: contact,
         html: sideBarContent
       }) }}
     </div>

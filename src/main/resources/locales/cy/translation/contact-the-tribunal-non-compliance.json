@@ -1,16 +1,25 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
+  "applicationType": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
+  "applicationTitle": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i ddweud wrthym nad yw’r atebydd wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dylech geisio datrys eich cwyn gyda’r atebydd. Dylech ond defnyddio’r ffurflen hon os nad yw hynny’n bosibl."
+    },
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "list",
+      "items": [
+        "pa orchymyn nas cydymffurfiwyd ag ef",
+        "y dyddiad y cyhoeddodd y tribiwnlys y gorchymyn",
+        "yr hyn nad yw’r atebydd wedi’i wneud",
+        "beth ydych chi eisiau i’r tribiwnlys ei wneud nesaf"
+      ]
+    }
   ]
 }

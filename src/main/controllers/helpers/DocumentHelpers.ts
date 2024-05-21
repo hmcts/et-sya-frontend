@@ -49,12 +49,15 @@ export const getDocumentsAdditionalInformation = async (
   if (documents?.length) {
     for (const doc of documents) {
       await populateDocumentMetadata(doc.value.uploadedDocument, accessToken);
+      if (!doc.value?.shortDescription && doc.value?.typeOfDocument) {
+        doc.value.shortDescription = doc.value.typeOfDocument;
+      }
     }
   }
 };
 
 // merge arrays but make sure they are not undefined
-export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
+export const combineDocuments = <T>(...arrays: T[][]): T[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
@@ -66,6 +69,24 @@ export const createDownloadLink = (file: Document): string => {
   const href = `/getSupportingMaterial/${getDocId(file.document_url)}`;
   const size = formatBytes(file.document_size);
   return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename} (${mimeType}, ${size})</a>`;
+};
+
+export const createDownloadLinkForHearingDoc = (file: Document): string => {
+  const mimeType = getFileExtension(file?.document_filename);
+  let downloadLink = '';
+  if (file?.document_size && file.document_mime_type && file.document_filename) {
+    const href = '/getSupportingMaterial/' + getDocId(file.document_url);
+    downloadLink =
+      `<a href='${href}' target='_blank' class='govuk-link'>` +
+      file.document_filename +
+      '(' +
+      mimeType +
+      ', ' +
+      formatBytes(file.document_size) +
+      ')' +
+      '</a>';
+  }
+  return downloadLink;
 };
 
 export const findSelectedGenericTseApplication = (
@@ -197,6 +218,41 @@ export function isRequestDocId(req: AppRequest, docId: string): boolean {
   return false;
 }
 
+export function isRequestTribunalResponseDocId(req: AppRequest, docId: string): boolean {
+  if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+    const requestResponseDoc =
+      req.session?.userCase.selectedRequestOrOrder?.value.respondNotificationTypeCollection?.flatMap(notificationType =>
+        notificationType.value.respondNotificationUploadDocument
+          ? notificationType.value.respondNotificationUploadDocument
+          : []
+      );
+    return (
+      requestResponseDoc?.some(
+        it => it.value.uploadedDocument && getDocId(it.value.uploadedDocument.document_url) === docId
+      ) ?? false
+    );
+  }
+  return false;
+}
+
+export function isRequestResponseDocId(req: AppRequest, docId: string): boolean {
+  if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+    const pseResponseList = [
+      ...(req.session?.userCase.selectedRequestOrOrder?.value.respondCollection ?? []),
+      ...(req.session?.userCase.selectedRequestOrOrder?.value.respondStoredCollection ?? []),
+    ];
+    const responseDocs = pseResponseList?.flatMap(notificationType =>
+      notificationType.value.supportingMaterial ? notificationType.value.supportingMaterial : []
+    );
+    return (
+      responseDocs?.some(
+        it => it.value.uploadedDocument && getDocId(it.value.uploadedDocument.document_url) === docId
+      ) ?? false
+    );
+  }
+  return false;
+}
+
 export function isJudgmentDocId(userCase: CaseWithId, docId: string): boolean {
   const judgmentDoc = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
   if (judgmentDoc?.length) {
@@ -265,4 +321,11 @@ export const findContentTypeByDocument = (document: AxiosResponse): string => {
     contentType = findDocumentMimeTypeByExtension(fileExtension);
   }
   return contentType;
+};
+
+export const getDocumentLink = (file: Document): string => {
+  if (!file) {
+    return '';
+  }
+  return PageUrls.GET_SUPPORTING_MATERIAL.replace(':docId', getDocId(file.document_url));
 };

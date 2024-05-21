@@ -1,26 +1,26 @@
-import { PageUrls, languages } from '../../../main/definitions/constants';
-import SubmitTseController from '../../../main/controllers/SubmitTribunalCYAController';
+import SubmitRespondentController from '../../../main/controllers/SubmitRespondentController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { YesOrNo } from '../../../main/definitions/case';
+import { ErrorPages, PageUrls, languages } from '../../../main/definitions/constants';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import SubmitRespondentController from '../../../main/controllers/SubmitRespondentController';
-import { YesOrNo } from '../../../main/definitions/case';
 
 describe('Submit respondent controller', () => {
-
   it('should redirect to PageUrls.RESPONDENT_APPLICATION_COMPLETE', async () => {
     const controller = new SubmitRespondentController();
     const response = mockResponse();
     const request = mockRequest({});
     request.url = PageUrls.RESPOND_TO_APPLICATION_COMPLETE;
-  
+
     jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
     jest.spyOn(CaseHelper, 'respondToApplication').mockImplementationOnce(() => Promise.resolve());
-  
+
     await controller.get(request, response);
-  
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPOND_TO_APPLICATION_COMPLETE + languages.ENGLISH_URL_PARAMETER);
+
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.RESPOND_TO_APPLICATION_COMPLETE + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should set rule92state based on Rule 92 answer', async () => {
@@ -28,9 +28,9 @@ describe('Submit respondent controller', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.copyToOtherPartyYesOrNo = YesOrNo.YES;
-  
+
     jest.spyOn(CaseHelper, 'respondToApplication').mockImplementationOnce(() => Promise.resolve());
-  
+
     await controller.get(request, response);
     expect(request.session.userCase.rule92state).toStrictEqual(true);
   });
@@ -48,10 +48,18 @@ describe('Submit respondent controller', () => {
     };
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
-    jest.spyOn(CaseHelper, 'submitClaimantTse').mockImplementationOnce(() => Promise.resolve());
-    await new SubmitTseController().get(request, response);
+    jest.spyOn(CaseHelper, 'respondToApplication').mockImplementationOnce(() => Promise.resolve());
+    await new SubmitRespondentController().get(request, response);
     expect(request.session.userCase.responseText).toStrictEqual(undefined);
     expect(request.session.userCase.supportingMaterialFile).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyYesOrNo).toStrictEqual(undefined);
+  });
+
+  it('should redirect to ErrorPages.NOT_FOUND when respondToApplication error', async () => {
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    await new SubmitRespondentController().get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });

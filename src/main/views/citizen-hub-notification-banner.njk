@@ -9,7 +9,7 @@
 
   <p class="govuk-body">
     {{ processClaim }}
-    {{ processingDueDate }}{{ busyPeriod }}
+    {{ dateToLocale(processingDueDate) }}{{ busyPeriod }}
   </p>
 {% endif %}
 
@@ -170,31 +170,31 @@
 
 {% for app in adminNotifications %}
   {% set adminNotificationHtml %}
-    <h3 class="govuk-notification-banner__heading">
-      {{tribunalRespondedP1 + app.from + tribunalRespondedP2 + app.appName}}
-    </h3>
+  <h3 class="govuk-notification-banner__heading">
+    {{tribunalRespondedP1 + app.from + tribunalRespondedP2 + app.appName}}
+  </h3>
 
   {% if app.isResponseRequired === "Yes" %}
 
     <p class="govuk-body">
-        {{ mustRespond }}
+      {{ mustRespond }}
     </p>
 
-     <h3 class="govuk-notification-banner__heading">
-        <a class="govuk-link" href="{{app.appUrl}}">{{ respondToTribunal }}</a>
-      </h3>
+    <h3 class="govuk-notification-banner__heading">
+      <a class="govuk-link" href="{{app.appUrl}}">{{ respondToTribunal }}</a>
+    </h3>
 
   {% else %}
     <h3 class="govuk-notification-banner__heading">
-        <a class="govuk-link" href="{{app.appUrl}}">{{ notificationBanner.viewResponse }}</a>
-      </h3>
-    {% endif %}  
+      <a class="govuk-link" href="{{app.appUrl}}">{{ notificationBanner.viewResponse }}</a>
+    </h3>
+  {% endif %}
 
   {% endset %}
   {{ govukNotificationBanner({
           html: adminNotificationHtml,
           titleText: important
-      }) 
+      })
   }}
 {% endfor %}
 
@@ -257,3 +257,57 @@
     {% endif %}
   {% endfor %}
 {% endif %}
+
+{% for app in storedPendingApplication %}
+  {% set storedPendingApplicationHtml %}
+    <h3 class="govuk-notification-banner__heading">{{notificationBanner.storedPending.header}}</h3>
+    <p class="govuk-body">{{notificationBanner.storedPending.line1}}</p>
+    <p class="govuk-body">{{notificationBanner.storedPending.line2}}</p>
+    <p class="govuk-body"><a class="govuk-link" href="{{app.viewUrl}}">{{notificationBanner.storedPending.link}}</a></p>
+  {% endset %}
+  {{ govukNotificationBanner({
+        html: storedPendingApplicationHtml,
+        titleText: important
+    })
+  }}
+{% endfor %}
+
+{% for notification in eccNotifications %}
+  {% if notification.showAlert %}
+    {% set htmlForEcc %}
+      <h3 class="govuk-notification-banner__heading">
+        {{ notificationBanner.ecc.title + notification.value.sendNotificationTitle }}
+      </h3>
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ notification.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
+      </p>
+    {% endset %}
+  {{ govukNotificationBanner({
+      html: htmlForEcc,
+      titleText: important
+    }) }}
+  {% endif %}
+{% endfor %}
+
+{% for item in claimantTribunalResponseBannerContent %}
+  {% set claimantTribunalResponseHtml %}
+      {% if item.copyToOtherParty === "Yes" %}
+        <h3 class="govuk-notification-banner__heading">
+          {{notificationBanner.claimantResponseToTribunal.title.rule92Yes}}
+        </h3>
+      {% else %}
+        <h3 class="govuk-notification-banner__heading">
+          {{notificationBanner.claimantResponseToTribunal.title.rule92No.p1}}<br><br>
+          {{notificationBanner.claimantResponseToTribunal.title.rule92No.p2}}
+        </h3>
+      {% endif %}
+    <h3 class="govuk-notification-banner__heading">
+      <a class="govuk-link" href="{{ item.redirectUrl }}">{{ notificationBanner.claimantResponseToTribunal.link }}</a>
+    </h3>
+  {% endset %}
+  {{ govukNotificationBanner({
+          html: claimantTribunalResponseHtml,
+          titleText: important
+      })
+  }}
+{% endfor %}

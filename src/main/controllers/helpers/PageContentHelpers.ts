@@ -85,3 +85,32 @@ export const getApplicationRespondByDate = (
     return dateString;
   }
 };
+
+export const generateAccordionItems = (
+  applications: AnyRecord,
+  translations: AnyRecord,
+  languageParam: string
+): string[] => {
+  return applications.map((application: string) => {
+    const label = translations.sections[application].label;
+    const href =
+      application === 'documents'
+        ? '/tribunal-orders-and-requests>' + label + languageParam + '</a>'
+        : '/contact-the-tribunal/' + application + '>' + label + languageParam + '</a>';
+
+    return {
+      heading: {
+        text: label,
+      },
+      content: {
+        html:
+          "<p class='govuk-body'>" +
+          translations.sections[application].body +
+          '</p> <br>' +
+          "<a class='govuk-link govuk-body'" +
+          'href=' +
+          href,
+      },
+    };
+  });
+};

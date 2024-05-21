@@ -1,13 +1,13 @@
 {
-  "title": "Welsh Translation required",
-  "titleText": "Welsh Translation required",
-  "pHead": "Welsh Translation required",
-  "pNo": "Welsh Translation required",
+  "title": "Cais wedi’i gwblhau",
+  "titleText": "Rydych wedi anfon eich cais i’r tribiwnlys",
+  "pHead": "Beth fydd yn digwydd nesaf ",
+  "pNo": "Bydd y tribiwnlys yn ystyried pob gohebiaeth ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf. ",
   "pYes": {
-    "p1": "Welsh Translation required ",
-    "p1a": " Welsh Translation required",
-    "p2": "Welsh Translation required",
-    "p3": "Welsh Translation required"
+    "p1": "Rydych wedi anfon copi o’ch cais at yr atebydd. Bydd ganddynt tan ",
+    "p1a": " i ymateb.",
+    "p2": "Os byddant yn ymateb, mae disgwyl iddynt anfon yr ymateb atoch chi.",
+    "p3": "Efallai y gofynnir ichi ddarparu rhagor o wybodaeth. Bydd y tribiwnlys yn ystyried pob gohebiaeth ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf."
   },
-  "button": "Welsh Translation required"
+  "button": "Cau a dychwelyd i’r trosolwg o’r achos "
 }

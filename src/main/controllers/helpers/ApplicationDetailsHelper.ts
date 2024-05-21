@@ -1,13 +1,15 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { Document, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant } from '../../definitions/constants';
+import { PseResponseTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
+import { Applicant, TseStatus } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
@@ -16,18 +18,25 @@ import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers'
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  downloadLink: string
+  downloadLink: string,
+  applicationDate: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
+  rows.push(addSummaryRow(translations.applicant, translations[application.applicant]));
+
+  if (application.status === TseStatus.STORED_STATE) {
+    rows.push(addSummaryRow(translations.storedDate, applicationDate));
+  } else {
+    rows.push(addSummaryRow(translations.requestDate, applicationDate));
+  }
+
   rows.push(
-    addSummaryRow(translations.applicant, application.applicant),
-    addSummaryRow(translations.requestDate, application.date),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo)
+    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
   );
 
   if (application.copyToOtherPartyText) {
@@ -81,21 +90,29 @@ export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   req: AppRequest
-): Promise<any> => {
-  const allResponses: any[] = [];
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
   const respondCollection = selectedApplication.value.respondCollection;
+  let responseDate;
   if (!respondCollection?.length) {
     return allResponses;
   }
   for (const response of respondCollection) {
     let responseToAdd;
+    responseDate = datesStringToDateInLocale(response.value.date, req.url);
     if (
       response.value.from === Applicant.CLAIMANT ||
       (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
     ) {
-      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken);
+      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
     } else if (isSentToClaimantByTribunal(response)) {
-      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken);
+      responseToAdd = await addAdminResponse(
+        allResponses,
+        translations,
+        response,
+        req.session.user?.accessToken,
+        responseDate
+      );
       if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
         await getCaseApi(req.session.user?.accessToken).updateResponseAsViewed(
           req.session.userCase,
@@ -111,7 +128,34 @@ export const getAllResponses = async (
   return allResponses;
 };
 
-const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessToken: string): Promise<string> => {
+export const getAllStoredClaimantResponses = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord,
+  req: AppRequest
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
+  const respondCollection = selectedApplication.value.respondStoredCollection;
+  if (!respondCollection?.length) {
+    return allResponses;
+  }
+  for (const response of respondCollection) {
+    if (response.value.from === Applicant.CLAIMANT) {
+      const responseToAdd: TseRespondTypeItem = await addNonAdminResponse(
+        translations,
+        response,
+        req.session.user?.accessToken,
+        datesStringToDateInLocale(response.value.date, req.url)
+      );
+      allResponses.push(responseToAdd);
+    }
+  }
+  return allResponses;
+};
+
+export const getSupportingMaterialDownloadLink = async (
+  responseDoc: Document,
+  accessToken: string
+): Promise<string> => {
   let responseDocDownload;
   if (responseDoc !== undefined) {
     await populateDocumentMetadata(responseDoc, accessToken);
@@ -124,7 +168,8 @@ const addAdminResponse = async (
   allResponses: any[],
   translations: AnyRecord,
   response: TseRespondTypeItem,
-  accessToken: string
+  accessToken: string,
+  responseDate: string
 ): Promise<any> => {
   allResponses.push([
     {
@@ -139,7 +184,7 @@ const addAdminResponse = async (
         text: translations.date,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.date },
+      value: { text: responseDate },
     },
     {
       key: {
@@ -153,21 +198,21 @@ const addAdminResponse = async (
         text: translations.orderOrRequest,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.isCmoOrRequest },
+      value: { text: translations[response.value.isCmoOrRequest] },
     },
     {
       key: {
         text: translations.responseDue,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.isResponseRequired },
+      value: { text: translations[response.value.isResponseRequired] },
     },
     {
       key: {
         text: translations.partyToRespond,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.selectPartyRespond },
+      value: { text: translations[response.value.selectPartyRespond] },
     },
     {
       key: {
@@ -201,7 +246,10 @@ const addAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
+        text:
+          response.value.isCmoOrRequest === 'Request'
+            ? translations[response.value.requestMadeBy]
+            : translations[response.value.cmoMadeBy],
       },
     },
     {
@@ -216,58 +264,51 @@ const addAdminResponse = async (
         text: translations.sentTo,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.selectPartyNotify },
+      value: { text: translations[response.value.selectPartyNotify] },
     },
   ]);
 };
 
-const addNonAdminResponse = async (
+export const addNonAdminResponse = async (
   translations: AnyRecord,
-  response: TseRespondTypeItem,
-  accessToken: string
+  response: TseRespondTypeItem | PseResponseTypeItem,
+  accessToken: string,
+  responseDate: string
 ): Promise<any> => {
-  return [
-    {
-      key: {
-        text: translations.responder,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: response.value.from,
-      },
-    },
-    {
-      key: {
-        text: translations.responseDate,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.date },
-    },
-    {
-      key: {
-        text: translations.response,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.response },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        html: await getSupportingMaterialDownloadLink(
-          response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken
-        ),
-      },
-    },
-    {
-      key: {
-        text: translations.copyCorrespondence,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.copyToOtherParty },
-    },
+  const supportingMaterial = await getSupportingMaterialDownloadLink(
+    response.value.supportingMaterial?.find(e => e).value.uploadedDocument,
+    accessToken
+  );
+
+  const rows = [
+    addSummaryRow(translations.responder, translations[response.value.from]),
+    addSummaryRow(translations.responseDate, responseDate),
+    addSummaryRow(translations.response, response.value.response),
+    addSummaryHtmlRow(translations.supportingMaterial, supportingMaterial),
   ];
+
+  if (response.value.copyToOtherParty) {
+    rows.push(addSummaryRow(translations.copyCorrespondence, translations[response.value.copyToOtherParty]));
+  }
+
+  return rows;
+};
+
+export const getResponseDisplay = async (
+  response: TseRespondTypeItem,
+  translations: AnyRecord,
+  accessToken: string
+): Promise<SummaryListRow[]> => {
+  return addNonAdminResponse(translations, response, accessToken, response.value.date);
+};
+
+export const getAllTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+  const returnCollection: GenericTseApplicationTypeItem[] = [];
+  if (userCase.genericTseApplicationCollection !== undefined) {
+    returnCollection.push(...userCase.genericTseApplicationCollection);
+  }
+  if (userCase.tseApplicationStoredCollection !== undefined) {
+    returnCollection.push(...userCase.tseApplicationStoredCollection);
+  }
+  return returnCollection;
 };

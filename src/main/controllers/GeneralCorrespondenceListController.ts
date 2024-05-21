@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { NotificationSubjects, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { updateGeneralCorrespondenceRedirectLinksAndStatus } from './helpers/GeneralCorrespondenceHelper';
@@ -23,6 +24,7 @@ export class GeneralCorrespondenceListController {
       TranslationKeys.COMMON,
       TranslationKeys.GENERAL_CORRESPONDENCE_LIST,
     ]);
+    const welshEnabled = await getFlagValue('welsh-language', null);
 
     let correspondences;
     if (userCase.sendNotificationCollection?.length) {
@@ -36,6 +38,7 @@ export class GeneralCorrespondenceListController {
       ...content,
       translations,
       correspondences,
+      welshEnabled,
     });
   };
 }

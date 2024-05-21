@@ -17,14 +17,20 @@ import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
-import { clearTseFields, handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
+import {
+  clearPrepareDocumentsForHearingFields,
+  clearTseFields,
+  handleUpdateHubLinksStatuses,
+} from '../helpers/CaseHelpers';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
+  getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
+  shouldShowClaimantTribunalResponseReceived,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknolwedgement,
@@ -46,9 +52,10 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterActionableNotifications,
-  filterSendNotifications,
-  populateNotificationsWithRedirectLinksAndStatusColors,
+  filterECCNotifications,
+  filterOutEcc,
+  getClaimantTribunalResponseBannerContent,
+  setNotificationBannerData,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 
@@ -75,6 +82,7 @@ export default class CitizenHubController {
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
+    clearPrepareDocumentsForHearingFields(userCase);
     req.session.documentDownloadPage = undefined;
     const currentState = currentStateFn(userCase);
 
@@ -87,7 +95,7 @@ export default class CitizenHubController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    if (!userCase.hubLinksStatuses) {
+    if (!userCase.hubLinksStatuses || userCase.hubLinksStatuses['documents'] === HubLinkStatus.NOT_YET_AVAILABLE) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
     }
@@ -100,7 +108,6 @@ export default class CitizenHubController {
       (userCase?.documentCollection && userCase?.documentCollection.length) ||
       userCaseContainsGeneralCorrespondence(userCase.sendNotificationCollection)
     ) {
-      userCase.hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.NOT_YET_AVAILABLE;
       await handleUpdateHubLinksStatuses(req, logger);
     }
 
@@ -123,7 +130,7 @@ export default class CitizenHubController {
 
     activateJudgmentsLink(judgments, decisions, req);
 
-    activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
+    await activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
 
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
@@ -145,8 +152,9 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
-    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
+    const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
+    const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
+    const eccNotifications = await filterECCNotifications(notifications);
 
     let respondentBannerContent = undefined;
 
@@ -157,6 +165,10 @@ export default class CitizenHubController {
 
     let judgmentBannerContent = undefined;
     let decisionBannerContent = undefined;
+    const claimantTribunalResponseBannerContent = getClaimantTribunalResponseBannerContent(
+      notifications,
+      languageParam
+    );
 
     if (userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] !== HubLinkStatus.NOT_YET_AVAILABLE) {
       judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
@@ -174,12 +186,14 @@ export default class CitizenHubController {
       respondentBannerContent,
       judgmentBannerContent,
       decisionBannerContent,
+      claimantTribunalResponseBannerContent,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
       showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),
+      showClaimantTribunalResponseReceived: shouldShowClaimantTribunalResponseReceived(notifications),
       showRespondentApplicationReceived: respAppsReceived,
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
@@ -188,7 +202,14 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
-      notifications: filterActionableNotifications(notifications),
+      storedPendingApplication: getStoredPendingBannerList(
+        userCase.tseApplicationStoredCollection,
+        allApplications,
+        notifications,
+        languageParam
+      ),
+      notifications: ordersRequestsGeneralNotifications,
+      eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
     });

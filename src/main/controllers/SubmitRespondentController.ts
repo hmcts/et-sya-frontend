@@ -1,12 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { YesOrNo } from '../definitions/case';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
 import { clearTseFields, handleUpdateHubLinksStatuses, respondToApplication } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { YesOrNo } from '../definitions/case';
 
 const logger = getLogger('SubmitRespondentController');
 
@@ -19,7 +19,8 @@ export default class SubmitRespondentController {
       userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
       clearTseFields(req.session?.userCase);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
     return res.redirect(PageUrls.RESPOND_TO_APPLICATION_COMPLETE + getLanguageParam(req.url));
   };

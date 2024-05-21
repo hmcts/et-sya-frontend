@@ -6,8 +6,11 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
@@ -42,16 +45,7 @@ export default class RespondToApplicationController {
         labelSize: 'm',
         hint: l => l.radioButtonHint,
         isPageHeading: true,
-        values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
-        ],
+        values: SupportingMaterialYesNoRadioValues,
         validator: isFieldFilledIn,
       },
     },
@@ -83,6 +77,7 @@ export default class RespondToApplicationController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     req.session.contactType = Rule92Types.RESPOND;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
@@ -93,6 +88,8 @@ export default class RespondToApplicationController {
 
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
+    const applicant = translations[selectedApplication.value.applicant];
     const document = selectedApplication.value?.documentUpload;
 
     if (document) {
@@ -119,8 +116,9 @@ export default class RespondToApplicationController {
       applicationType,
       respondByDate,
       selectedApplication,
-      applicantType: selectedApplication.value.applicant,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      applicantType: applicant,
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, applicationDate),
+      welshEnabled,
     });
   };
 }

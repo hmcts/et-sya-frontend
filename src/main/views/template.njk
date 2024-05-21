@@ -55,6 +55,19 @@
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
   {% endif %}
+
+  {% if "aat" in currentHost %}
+    <!-- Dynatrace RUM Script -->
+      <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/1a4a5be3b17a10d3_complete.js" crossorigin="anonymous"></script>
+    <!-- End Dynatrace RUM Script -->
+  {% endif %}
+
+  {% if "claim-employment-tribunals" in currentHost %}
+    <!-- Dynatrace RUM Script -->
+      <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/17177a07246/bf00910jpo/15d45f7c5933b5bc_complete.js"crossorigin="anonymous"></script>
+    <!-- End Dynatrace RUM Script -->
+  {% endif %}
+
   <!-- Hidden session object for user already logged in check -->
   <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="{{isLoggedIn}}">
   <!-- End of hidden session object for user already logged in check-->
@@ -93,11 +106,6 @@ if isLoggedIn %}
 
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
-  {% if "lng=cy" in currentUrl %}
-    {% set phaseBarText = "Lorem" %}
-  {% else %}
-    {% set phaseBarText = "beta" %}
-  {% endif %}
 
   {% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
     {% set queryStringConcat = "" %}
@@ -120,14 +128,14 @@ if isLoggedIn %}
     {% endif %}
 
     {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
-  {% else %}  
+  {% else %}
   {% endif %}
 
   {{ timeoutModal() }}
 
   {{ govukPhaseBanner({
       tag: {
-          text: phaseBarText
+          text: beta
       },
       html: phaseBarHtml
   }) }}
@@ -154,8 +162,6 @@ if isLoggedIn %}
           {{ mainTelephone }}<br/>
           {{ welshTelephone }}<br/>
           {{ scotlandTelephone }}<br/>
-          {{ englandOrWalesTextPhone }}<br/>
-          {{ scotlandTextPhone }}
           {% if i18n.language == "en" %}
             <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
           {% else %}

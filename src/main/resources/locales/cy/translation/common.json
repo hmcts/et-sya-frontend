@@ -32,8 +32,15 @@
     "month": "Mis",
     "year": "Blwyddyn"
   },
+  "invalidDate": "Dyddiad ddim yn ddilys",
   "yes": "Do",
   "no": "Naddo",
+  "Yes": "Do",
+  "No": "Naddo",
+  "supportingMaterialYesNo": {
+    "yes": "Oes",
+    "no": "Nac oes"
+  },
   "notSure": "Ddim yn siŵr",
   "english": "Saesneg",
   "welsh": "Cymraeg",
@@ -70,7 +77,7 @@
   "CookieAccepted": "Rydych wedi derbyn cwcis ychwanegol. Gallwch <a class=\"govuk-link\" href=\"/cookies\">newid gosodiadau eich cwcis ar</a> unrhyw adeg.",
   "CookieRejected": "Rydych chi wedi gwrthod cwcis ychwanegol. Gallwch <a class=\"govuk-link\" href=\"/cookies\">newid gosodiadau eich cwcis ar</a> unrhyw adeg.",
   "enterPostcode": "Rhowch god post yn y DU",
-  "addressPageHeader": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
+  "addressPageHeader": "Beth yw eich cyfeiriad cyswllt neu gyfeiriad cartref",
   "addressPageText": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
   "respondentPageHeader": "Beth yw cyfeiriad ",
   "respondentPageText": "Dylai’r cyfeiriad fod ar eich slipiau cyflog, contract neu ddogfennau swyddogol eraill.",
@@ -115,5 +122,13 @@
   "addressPostcodeSelectTitle": "Cyfeiriad cod post dewis",
   "respondentPostcodeEnterTitle": "Rhowch god post yr ymatebydd",
   "respondentPostcodeSelectTitle": "Dewis cod post yr ymatebydd",
-  "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion."
+  "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
+  "beta": "beta",
+  "Legal officer": "Swyddog Cyfreithiol",
+  "Judge": "Barnwr",
+  "Both parties": "Y ddau barti",
+  "Both Parties": "Y ddau barti",
+  "Claimant only": "Hawlydd yn unig",
+  "Case management order": "Gorchymyn rheoli achos",
+  "Request": "Cais"
 }

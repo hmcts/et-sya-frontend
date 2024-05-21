@@ -122,12 +122,10 @@ describe('Claim Submitted Confirmation page', () => {
     });
 
     it('should contain correct list items', () => {
-      expect(lists[1].children).length(5);
+      expect(lists[1].children).length(3);
       expect(getLiTextFromUl(lists[1], 0)).equals(pageJson.contactPrimary);
       expect(getLiTextFromUl(lists[1], 1)).equals(pageJson.contactWelsh);
       expect(getLiTextFromUl(lists[1], 2)).equals(pageJson.contactScotland);
-      expect(getLiTextFromUl(lists[1], 3)).equals(pageJson.contactEngland);
-      expect(getLiTextFromUl(lists[1], 4)).equals(pageJson.contactScotland2);
     });
 
     it('should display append', () => {

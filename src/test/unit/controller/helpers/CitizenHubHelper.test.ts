@@ -3,7 +3,9 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getHubLinksUrlMap,
+  getStoredPendingBannerList,
   shouldHubLinkBeClickable,
+  shouldShowClaimantTribunalResponseReceived,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
   updateHubLinkStatuses,
@@ -11,9 +13,11 @@ import {
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
+import { StoreNotification } from '../../../../main/definitions/storeNotification';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
 import {
   mockTseAdminClaimantRespondNotViewed,
@@ -394,6 +398,96 @@ describe('shouldShowRespondentResponseReceived', () => {
   });
 });
 
+describe('shouldShowClaimantTribunalResponseReceived', () => {
+  test.each([
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: HubLinkStatus.VIEWED,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      false,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+  ])('for %j should return %s', (applications, expected) => {
+    expect(shouldShowClaimantTribunalResponseReceived(applications as SendNotificationTypeItem[])).toBe(expected);
+  });
+});
+
 describe('shouldShowRespondentApplicationReceived', () => {
   test.each([
     [
@@ -465,10 +559,10 @@ describe('getHubLinksUrlMap', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
-      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE],
+      [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
-      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE],
+      [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
     ]);
@@ -482,13 +576,123 @@ describe('getHubLinksUrlMap', () => {
         HubLinkNames.RespondentResponse,
         PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
       ],
-      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
-      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],
     ]);
     expect(getHubLinksUrlMap(false, languages.WELSH_URL_PARAMETER)).toEqual(linksMap);
+  });
+});
+
+describe('getStoredPendingApplicationLinks', () => {
+  it('should return STORED_TO_SUBMIT with application id', () => {
+    const tseCollection: GenericTseApplicationTypeItem[] = [
+      {
+        id: '123',
+        value: {
+          number: '2345',
+        },
+      },
+      {
+        id: '345',
+        value: {
+          number: '4567',
+        },
+      },
+      {
+        id: '567',
+        value: {
+          number: '6789',
+        },
+      },
+    ];
+    const expected: StoreNotification[] = [
+      { viewUrl: '/stored-to-submit/123?lng=en' },
+      { viewUrl: '/stored-to-submit/345?lng=en' },
+      { viewUrl: '/stored-to-submit/567?lng=en' },
+    ];
+    const actual = getStoredPendingBannerList(tseCollection, null, null, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return STORED_TO_SUBMIT_RESPONSE with application id', () => {
+    const tseCollection: GenericTseApplicationTypeItem[] = [
+      {
+        id: '111',
+        value: {
+          number: '1',
+          status: 'Open',
+          respondStoredCollection: [
+            {
+              id: '12345',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: '222',
+        value: {
+          number: '2',
+          status: 'Open',
+          respondCollection: [
+            {
+              id: '23456',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+              },
+            },
+          ],
+        },
+      },
+    ];
+    const expected: StoreNotification[] = [{ viewUrl: '/stored-to-submit-response/111/12345?lng=en' }];
+    const actual = getStoredPendingBannerList(null, tseCollection, null, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return STORED_TO_SUBMIT_TRIBUNAL with order id', () => {
+    const sendNotificationTypeItems: SendNotificationTypeItem[] = [
+      {
+        id: '111',
+        value: {
+          number: '1',
+          respondStoredCollection: [
+            {
+              id: '12345',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: '222',
+        value: {
+          number: '2',
+          respondCollection: [
+            {
+              id: '23456',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+              },
+            },
+          ],
+        },
+      },
+    ];
+    const expected: StoreNotification[] = [{ viewUrl: '/stored-to-submit-tribunal/111/12345?lng=en' }];
+    const actual = getStoredPendingBannerList(null, null, sendNotificationTypeItems, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
   });
 });

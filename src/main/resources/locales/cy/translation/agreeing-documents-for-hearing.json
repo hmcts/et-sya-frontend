@@ -1,0 +1,24 @@
+{
+  "title": "Welsh Translation required",
+  "caption": "Welsh Translation required",
+  "h2": "Welsh Translation required",
+  "p1": "Welsh Translation required",
+  "agreed": "Welsh Translation required",
+  "notAgreed": "Welsh Translation required",
+  "agreedTextLabel": "<b>Welsh Translation required<b>",
+  "notAgreedTextLabel": "<b>Welsh Translation required<b>",
+  "cancelLink": "Welsh Translation required",
+  "errors": {
+    "bundlesRespondentAgreedDocWith": {
+      "required": "Welsh Translation required"
+    },
+    "bundlesRespondentAgreedDocWithBut": {
+      "required": "Welsh Translation required",
+      "exceeded": "Welsh Translation required"
+    },
+    "bundlesRespondentAgreedDocWithNo": {
+      "required": "Welsh Translation required",
+      "exceeded": "Welsh Translation required"
+    }
+  }
+}

@@ -1,6 +1,10 @@
 {
   "title": "Contact the Tribunal",
   "h1": "Contact the tribunal about your case",
+  "showAllSections": "Show all sections",
+  "hideAllSections": "Hide all sections",
+  "showSection": "Show",
+  "hideSection": "Hide",
   "landing_text": {
     "p1": "Use the appropriate form to communicate with the tribunal.",
     "p2": "These requests and applications will be reviewed by the tribunal and copied to the respondent who will have an opportunity to respond.",
@@ -75,7 +79,8 @@
     },
     "documents": {
       "label": "Submit documents for a hearing",
-      "body": "Use this form if you’ve been ordered by the tribunal to provide documents for a hearing. This could be all documents including witness statements or supplementary documents."
+      "body": "Use this form if you’ve been ordered by the tribunal to provide documents for a hearing. This could be all documents including witness statements or supplementary documents.",
+      "link": "Submit documents for a hearing"
     }
   },
   "call": {
@@ -84,8 +89,7 @@
     "p2": "Use the contact forms to make a request or to provide something for the tribunal.",
     "english": {
       "h1": "England & Wales",
-      "p1": "Telephone: 0300 123 1024",
-      "p2": "Textphone: 18001 0300 123 1024"
+      "p1": "Telephone: 0300 323 0196"
     },
     "welsh": {
       "h1": "Welsh language",
@@ -93,8 +97,7 @@
     },
     "scottish": {
       "h1": "Scotland",
-      "p1": "Telephone: 0300 790 6234",
-      "p2": "Textphone: 18001 0300 790 6234"
+      "p1": "Telephone: 0300 790 6234"
     },
     "p3": "Monday to Thursday, 8.30am to 5pm.",
     "p4": "Friday, 8.30am to 4pm.",

@@ -38,6 +38,7 @@
   "submittedAndViewed": "Submitted",
   "updated": "Updated",
   "readyToView": "Ready to view",
+  "stored": "Stored",
   "submittedAlert": "You have submitted your claim to the tribunal",
   "processClaim": "We aim to process your claim by",
   "busyPeriod": ". In busy periods it may take longer.",
@@ -76,6 +77,9 @@
       "p1a": " at the latest.",
       "link": "Respond to the application"
     },
+    "ecc": {
+      "title": "The tribunal has sent you a notification: "
+    },
     "orderOrRequest": {
       "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",
@@ -90,6 +94,22 @@
       "headerClaimant": "The tribunal has made a decision on your application to ",
       "headerRespondent": "The tribunal has made a decision on the respondent's application to ",
       "link": "View the decision"
+    },
+    "storedPending": {
+      "header": "You have stored correspondence which you have not submitted to the tribunal",
+      "line1": "You must send a copy of this correspondence and all supporting documents to the other party before you submit it to the tribunal.",
+      "line2": "If the other party does respond to your application, they are expected to copy their response to you.",
+      "link": "View correspondence"
+    },
+    "claimantResponseToTribunal": {
+      "title": {
+        "rule92Yes": "You have sent a response to the tribunal and copied it to the respondent.",
+        "rule92No": {
+          "p1": "You have sent a response to the tribunal and given your reasons not to copy it to the respondent.",
+          "p2": "The tribunal will consider your reasons and let you know what happens next."
+        }
+      },
+      "link": "View your response"
     }
   },
   "Change personal details": "change personal details",

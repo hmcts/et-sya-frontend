@@ -20,7 +20,7 @@ import {
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
-import { HubLinksStatuses } from '../../../main/definitions/hub';
+import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 
 export const mockedApiData: CaseApiDataResponse = {
   id: '1234',
@@ -97,6 +97,8 @@ export const mockedApiData: CaseApiDataResponse = {
       claimant_tribunal_recommendation: 'Tribunal recommendation request',
       whistleblowing: YesOrNo.YES,
       whistleblowing_authority: 'Whistleblowing entity name',
+      linked_cases: YesOrNo.YES,
+      linked_cases_detail: 'Linked Cases Detail',
       claim_description: 'Claim summary text',
       claim_description_document: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
@@ -160,21 +162,33 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '124',
         value: {
+          type: 'Amend response',
           applicant: Applicant.CLAIMANT,
-          date: '2019-05-02',
+          date: '2 May 2019',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
-          type: 'Order a witness to attend to give evidence',
         },
       },
       {
         id: '125',
         value: {
+          type: 'Amend response',
           applicant: Applicant.CLAIMANT,
-          date: '2019-05-03',
+          date: '3 May 2019',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
-          type: 'Order a witness to attend to give evidence',
+        },
+      },
+    ],
+    tseApplicationStoredCollection: [
+      {
+        id: '133',
+        value: {
+          type: 'Amend response',
+          applicant: Applicant.CLAIMANT,
+          date: '2 May 2024',
+          copyToOtherPartyYesOrNo: YesOrNo.YES,
+          status: 'Stored',
         },
       },
     ],
@@ -220,6 +234,7 @@ export const mockedApiData: CaseApiDataResponse = {
           },
           date: '2019-05-03',
           sentBy: 'Tribunal',
+          sendNotificationSubjectString: 'Case management orders / requests',
           sendNotificationCaseManagement: 'Order',
           sendNotificationResponseTribunal: 'required',
           sendNotificationSelectParties: 'Both',
@@ -227,6 +242,7 @@ export const mockedApiData: CaseApiDataResponse = {
           sendNotificationWhoCaseOrder: 'Legal officer',
           sendNotificationFullName: 'Judge Dredd',
           sendNotificationNotify: 'Both',
+          notificationState: HubLinkStatus.NOT_VIEWED,
         },
       },
     ],

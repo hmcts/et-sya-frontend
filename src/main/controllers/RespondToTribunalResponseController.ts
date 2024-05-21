@@ -6,8 +6,11 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
@@ -19,6 +22,7 @@ import {
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
@@ -46,16 +50,7 @@ export default class RespondToTribunalResponseController {
         labelSize: 'm',
         hint: l => l.radioButtonHint,
         isPageHeading: true,
-        values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
-        ],
+        values: SupportingMaterialYesNoRadioValues,
         validator: isFieldFilledIn,
       },
     },
@@ -83,7 +78,7 @@ export default class RespondToTribunalResponseController {
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + languageParam
-        : PageUrls.COPY_TO_OTHER_PARTY + languageParam;
+        : copyToOtherPartyRedirectUrl(req.session.userCase) + languageParam;
 
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
@@ -100,6 +95,7 @@ export default class RespondToTribunalResponseController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     let allResponses;
@@ -120,6 +116,7 @@ export default class RespondToTribunalResponseController {
       }
     }
     const downloadLink = createDownloadLink(document);
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -127,12 +124,15 @@ export default class RespondToTribunalResponseController {
       TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE, {
       ...content,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, applicationDate),
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       hideContactUs: true,
+      welshEnabled,
     });
   };
 }

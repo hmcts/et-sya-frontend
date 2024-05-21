@@ -4,6 +4,7 @@ import RespondToTribunalResponseController from '../../../main/controllers/Respo
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
 import * as CaseService from '../../../main/services/CaseService';
@@ -17,6 +18,8 @@ const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
 const documentRejection = Promise.reject(new Error('Mocked failure to get document metadata'));
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
+const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+mockLdClient.mockResolvedValue(true);
 
 describe('Respond to tribunal response Controller', () => {
   const translationJsons = { ...respondJsonRaw, ...common };
@@ -96,10 +99,36 @@ describe('Respond to tribunal response Controller', () => {
 
     const request = mockRequestWithTranslation({ t, body }, translationJsons);
     const res = mockResponse();
+    const userCase = request.session.userCase;
+    userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
 
     const controller = new RespondToTribunalResponseController();
     await controller.post(request, res);
     expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party?lng=en');
+  });
+
+  it('should render the Rule 92 page on continue with non system user', async () => {
+    const body = {
+      responseText: 'some Text',
+      hasSupportingMaterial: YesOrNo.NO,
+    };
+
+    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondToTribunalResponseController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party-not-system-user?lng=en');
   });
 
   it('should render the add supporting material page', async () => {

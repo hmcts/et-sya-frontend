@@ -20,11 +20,9 @@
   "telephone": "Telephone",
   "processQuestions": "For questions about the employment tribunal process",
   "processQuestionsText": "Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.",
-  "contactPrimary": "Telephone: 0300 123 1024",
+  "contactPrimary": "Telephone: 0300 323 0196",
   "contactWelsh": "Telephone: 0300 303 5176 (Welsh language)",
   "contactScotland": "Telephone: 0300 790 6234 (Scotland)",
-  "contactEngland": "Telephone: 18001 0300 123 1024 (England and Wales)",
-  "contactScotland2": "Telephone: 18001 0300 790 6234 (Scotland)",
   "contactAppend": "Monday to Friday, 9am to 5pm <a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out more about call charges</a>",
   "survey": {
     "titleText": "Would you like to help us improve our online services?",

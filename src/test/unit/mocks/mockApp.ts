@@ -8,6 +8,7 @@ import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
 import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 import { mockUserDetails } from './mockUser';
 
@@ -121,6 +122,8 @@ export const mockApp = ({
   });
   mock.use(app);
   app.locals.CSRF_DISABLED = true;
+  const mockClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockClient.mockResolvedValue(true);
 
   return mock;
 };

@@ -2,7 +2,14 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import {
+  InterceptPaths,
+  NoticeOfECC,
+  NotificationSubjects,
+  PageUrls,
+  Rule92Types,
+  TranslationKeys,
+} from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -12,9 +19,10 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageHelper';
+import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
-import { returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -86,8 +94,10 @@ export default class RespondentSupportingMaterialController {
       logger
     );
 
-    const supportingMaterialUrl =
-      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + setChangeAnswersUrlLanguage(req);
+    const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId);
+    const supportingMaterialUrl = setUrlLanguageFromSessionLanguage(req, baseUrl);
+    const selectedRequestOrOrder = userCase.selectedRequestOrOrder;
+    const notificationSubject = selectedRequestOrOrder?.value?.sendNotificationSubject;
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
@@ -110,17 +120,21 @@ export default class RespondentSupportingMaterialController {
 
     if (
       req.session.contactType === Rule92Types.TRIBUNAL &&
-      userCase.selectedRequestOrOrder &&
-      userCase.selectedRequestOrOrder.value.sendNotificationSubject?.length &&
-      userCase.selectedRequestOrOrder.value.sendNotificationSubject.includes('Employer Contract Claim')
+      selectedRequestOrOrder &&
+      notificationSubject?.length &&
+      (notificationSubject.includes(NotificationSubjects.ECC) ||
+        (notificationSubject.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+          selectedRequestOrOrder.value.sendNotificationEccQuestion &&
+          selectedRequestOrOrder.value.sendNotificationEccQuestion.includes(NoticeOfECC)))
     ) {
-      return res.redirect(PageUrls.TRIBUNAL_RESPONSE_CYA);
+      return res.redirect(setUrlLanguageFromSessionLanguage(req, PageUrls.TRIBUNAL_RESPONSE_CYA));
     }
-    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+    return res.redirect(setUrlLanguageFromSessionLanguage(req, copyToOtherPartyRedirectUrl(req.session.userCase)));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
+    const languageParam = getLanguageParam(req.url);
     const content = getPageContent(req, this.supportingMaterialContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -130,9 +144,14 @@ export default class RespondentSupportingMaterialController {
     (this.supportingMaterialContent.fields as any).inset.subFields.upload.disabled =
       userCase?.supportingMaterialFile !== undefined;
 
-    (this.supportingMaterialContent.fields as any).filesUploaded.rows = getFilesRows(userCase, req.params.appId, {
-      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
-    });
+    (this.supportingMaterialContent.fields as any).filesUploaded.rows = getFilesRows(
+      languageParam,
+      userCase,
+      req.params.appId,
+      {
+        ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      }
+    );
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),

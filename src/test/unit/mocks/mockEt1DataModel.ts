@@ -114,6 +114,8 @@ export const mockEt1DataModelUpdate = {
       claimant_tribunal_recommendation: 'Tribunal recommendation request',
       whistleblowing: YesOrNo.YES,
       whistleblowing_authority: 'Whistleblowing entity name',
+      linked_cases: YesOrNo.YES,
+      linked_cases_detail: 'Linked Cases Detail',
       claim_description_document: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
         document_filename: 'document.pdf',
@@ -241,7 +243,7 @@ export const mockHubLinkStatusesRequest = {
   case_type_id: {},
   hub_links_statuses: {
     contactTribunal: HubLinkStatus.OPTIONAL,
-    documents: HubLinkStatus.NOT_YET_AVAILABLE,
+    documents: HubLinkStatus.READY_TO_VIEW,
     et1ClaimForm: HubLinkStatus.SUBMITTED,
     hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,
     requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,

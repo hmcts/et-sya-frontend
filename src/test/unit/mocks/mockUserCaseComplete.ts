@@ -12,8 +12,11 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { RespondNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, Parties, ResponseRequired } from '../../../main/definitions/constants';
+import {
+  RespondNotificationType,
+  SendNotificationTypeItem,
+} from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
+import { Applicant, NotificationSubjects, Parties, ResponseRequired } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -57,11 +60,12 @@ export const getOrderOrRequestTribunalResponse = (): RespondNotificationType => 
   };
 };
 
-export const selectedRequestOrOrder = {
+export const selectedRequestOrOrder: SendNotificationTypeItem = {
   id: '123',
   value: {
     number: '1',
     sendNotificationTitle: 'title',
+    sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
     sendNotificationSelectHearing: {
       selectedLabel: 'Hearing',
     },
@@ -74,6 +78,7 @@ export const selectedRequestOrOrder = {
     sendNotificationWhoCaseOrder: 'Legal officer',
     sendNotificationFullName: 'Judge Dredd',
     sendNotificationNotify: 'Both',
+    notificationState: 'notViewedYet',
   },
 };
 
@@ -145,6 +150,8 @@ export default {
   tribunalRecommendationRequest: 'Tribunal recommendation request',
   whistleblowingClaim: YesOrNo.YES,
   whistleblowingEntityName: 'Whistleblowing entity name',
+  linkedCases: YesOrNo.YES,
+  linkedCasesDetail: 'Linked Cases Detail',
   claimDetailsCheck: YesOrNo.YES,
   claimantWorkAddressQuestion: YesOrNo.YES,
   workAddress1: 'Respondent Address',
@@ -208,24 +215,37 @@ export default {
     {
       id: '124',
       value: {
+        type: 'Amend response',
         applicant: Applicant.CLAIMANT,
-        date: '2019-05-02',
+        date: '2 May 2019',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
-        type: 'Order a witness to attend to give evidence',
       },
     },
     {
       id: '125',
       value: {
+        type: 'Amend response',
         applicant: Applicant.CLAIMANT,
-        date: '2019-05-03',
+        date: '3 May 2019',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
-        type: 'Order a witness to attend to give evidence',
       },
     },
   ],
+  tseApplicationStoredCollection: [
+    {
+      id: '133',
+      value: {
+        type: 'Amend response',
+        applicant: Applicant.CLAIMANT,
+        date: '2 May 2024',
+        copyToOtherPartyYesOrNo: YesOrNo.YES,
+        status: 'Stored',
+      },
+    },
+  ],
+  hearingCollection: undefined,
   sendNotificationCollection: [selectedRequestOrOrder],
   documentCollection: [
     {
@@ -253,6 +273,7 @@ export default {
       },
     },
   ],
+  bundleDocuments: [],
   representatives: [
     {
       hasMyHMCTSAccount: YesOrNo.YES,

@@ -1,11 +1,10 @@
-import config from 'config';
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
-import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { getLogger } from '../logger';
@@ -15,7 +14,8 @@ import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
+import { getRedirectUrl } from './helpers/TypeOfClaimHelpers';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -99,16 +99,7 @@ export default class TypeOfClaimController {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
-      let redirectUrl;
-      if (
-        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
-        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
-      ) {
-        redirectUrl = PageUrls.CLAIM_STEPS;
-      } else {
-        const url: string = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
-        redirectUrl = `${url}`;
-      }
+      let redirectUrl = getRedirectUrl(req, this.form);
       if (req.app?.locals) {
         const redisClient = req.app.locals?.redisClient;
         if (redisClient) {
@@ -137,9 +128,11 @@ export default class TypeOfClaimController {
           throw err;
         }
       }
-      // Only called when returning from CYA page
+      // Only called when returning from CYA page / Back button from CLAIM_STEPS
       if (req.session.userCase.id) {
+        const workPostcode = req.session.userCase?.workPostcode;
         await handleUpdateDraftCase(req, logger);
+        req.session.userCase.workPostcode = workPostcode;
       }
       redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);

@@ -5,6 +5,10 @@
   "supportingMaterial": "Supporting material",
   "copyToOtherPartyYesOrNo": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "copyToOtherPartyText": "Reason for not informing other party",
+  "youCannotMakeFurtherChanges": "You cannot make further changes to this correspondence after you store it",
+  "storeApplication": "Store application",
   "submitBtn": "Submit",
-  "cancelLink": "Cancel"
+  "cancelLink": "Cancel",
+  "Yes": "Yes",
+  "No": "No"
 }
