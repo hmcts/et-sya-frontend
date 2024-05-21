@@ -77,6 +77,12 @@ export default class ContactTheTribunalSelectedController {
     const userCase = req.session.userCase;
 
     userCase.contactApplicationText = req.body.contactApplicationText;
+    if (!applications.includes(req.params.selectedOption)) {
+      logger.error('bad request parameter: req.params.selectedOption');
+      return res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
+    }
+    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
+    const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = [];
@@ -89,15 +95,6 @@ export default class ContactTheTribunalSelectedController {
       'contactApplicationFile',
       logger
     );
-
-    const selectedApplication = req.params.selectedOption;
-    if (!applications.includes(selectedApplication)) {
-      logger.error('bad request parameter: "' + selectedApplication + '"');
-      return res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
-    }
-    userCase.contactApplicationType = selectedApplication;
-    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${selectedApplication}`;
-    const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
@@ -118,7 +115,7 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    const redirectPage = applicationTypes.claimant.c.includes(selectedApplication)
+    const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : copyToOtherPartyRedirectUrl(req.session.userCase);
 
