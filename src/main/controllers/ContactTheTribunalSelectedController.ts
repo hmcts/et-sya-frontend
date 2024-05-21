@@ -95,11 +95,8 @@ export default class ContactTheTribunalSelectedController {
       logger.error('bad request parameter: "' + selectedApplication + '"');
       return res.redirect(ErrorPages.NOT_FOUND);
     }
-    if (selectedApplication !== userCase.contactApplicationType) {
-      logger.error('selectedApplication "' + selectedApplication + '" does not match userCase.contactApplicationType');
-      return res.redirect(ErrorPages.NOT_FOUND);
-    }
-    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
+    userCase.contactApplicationType = selectedApplication;
+    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${selectedApplication}`;
     const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     if (contactApplicationError) {
@@ -121,7 +118,7 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
+    const redirectPage = applicationTypes.claimant.c.includes(selectedApplication)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : copyToOtherPartyRedirectUrl(req.session.userCase);
 
