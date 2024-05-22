@@ -529,4 +529,5 @@ export const FEATURE_FLAGS = {
   WELSH: 'welsh-language',
   BUNDLES: 'bundles',
   ECC: 'ecc',
+  MUL2: 'MUL2',
 } as const;

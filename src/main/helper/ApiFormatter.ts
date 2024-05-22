@@ -215,6 +215,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         )
       ),
     ],
+    multipleFlag: fromApiCaseData?.case_data?.multipleFlag,
+    leadClaimant: fromApiCaseData?.case_data?.leadClaimant,
   };
 }
 

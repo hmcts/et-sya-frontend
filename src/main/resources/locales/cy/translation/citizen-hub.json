@@ -112,6 +112,14 @@
       "link": "Gweld eich ymateb"
     }
   },
+  "multiples": {
+    "leadClaim": "Welsh Translation required",
+    "stayedCase": "Welsh Translation required",
+    "groupClaim": "Welsh Translation required",
+    "designated": "Welsh Translation required",
+    "stayed": "Welsh Translation required",
+    "viewClaim": "Welsh Translation required"
+  },
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
   "Consider a decision afresh": "ystyried penderfyniad o’r newydd",
