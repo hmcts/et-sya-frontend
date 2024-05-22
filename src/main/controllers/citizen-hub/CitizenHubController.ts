@@ -58,7 +58,7 @@ import {
   setNotificationBannerData,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
-import { getMultiplePanelData } from '../helpers/multiples/MultiplePanelHelper';
+import { getMultiplePanelData, showMutipleData } from '../helpers/multiples/MultiplePanelHelper';
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
@@ -106,7 +106,7 @@ export default class CitizenHubController {
     getClaimantAppsAndUpdateStatusTag(userCase);
 
     if (
-      (userCase?.documentCollection && userCase?.documentCollection.length) ||
+      userCase?.documentCollection?.length ||
       userCaseContainsGeneralCorrespondence(userCase.sendNotificationCollection)
     ) {
       await handleUpdateHubLinksStatuses(req, logger);
@@ -176,6 +176,8 @@ export default class CitizenHubController {
       decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
     }
 
+    const showMultipleData = await showMutipleData(userCase);
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -213,7 +215,8 @@ export default class CitizenHubController {
       eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
-      multiplePanelData: await getMultiplePanelData(userCase, translations),
+      showMultipleData,
+      multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
     });
   }
 }

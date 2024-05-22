@@ -4,22 +4,27 @@ import { MultiplePanelData } from '../../../definitions/multiples/multiplePanelD
 import { AnyRecord } from '../../../definitions/util-types';
 import { getFlagValue } from '../../../modules/featureFlag/launchDarkly';
 
+export const showMutipleData = async (userCase: CaseWithId): Promise<boolean> => {
+  return (await getFlagValue(FEATURE_FLAGS.MUL2, null)) && userCase?.multipleFlag === YesOrNo.YES;
+};
+
 export const getMultiplePanelData = async (
   userCase: CaseWithId,
-  translations: AnyRecord
+  translations: AnyRecord,
+  showMultipleData: boolean
 ): Promise<MultiplePanelData> => {
-  const MUL2 = await getFlagValue(FEATURE_FLAGS.MUL2, null);
-  if (MUL2 === false || userCase?.multipleFlag !== YesOrNo.YES) {
+  if (!showMultipleData) {
     return;
   }
   const data = new MultiplePanelData();
   if (userCase?.leadClaimant === YesOrNo.YES) {
     data.banner = translations.multiples?.leadClaim;
     data.text = translations.multiples?.designated;
-  } else {
-    // TODO: Differentiate between stayed and non-lead case
+  } else if (userCase?.caseStayed === YesOrNo.YES) {
     data.banner = translations.multiples?.stayedCase;
     data.text = translations.multiples?.stayed;
+  } else {
+    data.text = translations.multiples?.nonLead;
   }
   return data;
 };
