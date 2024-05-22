@@ -72,6 +72,8 @@ export interface CaseData {
   repCollection?: RepresentativeApiModel[];
   bundlesClaimantCollection?: TypeItem<HearingBundleType>[];
   bundlesRespondentCollection?: TypeItem<HearingBundleType>[];
+  multipleFlag?: YesOrNo;
+  leadClaimant?: YesOrNo;
 }
 
 export type HearingBundleType = {
