@@ -2541,13 +2541,13 @@ __metadata:
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.4.2
-  resolution: "@launchdarkly/node-server-sdk@npm:9.4.2"
+  version: 9.4.3
+  resolution: "@launchdarkly/node-server-sdk@npm:9.4.3"
   dependencies:
     "@launchdarkly/js-server-sdk-common": 2.4.1
     https-proxy-agent: ^5.0.1
-    launchdarkly-eventsource: 2.0.2
-  checksum: e850bfdc5167331da689eb7cfae2842fe78853f1cc11fb2ba343a1ac0211155b0a9e611c3b2e3b3c2e59c72994008171d5973cb2de705e27793e294829c15fb0
+    launchdarkly-eventsource: 2.0.3
+  checksum: 675da08e6bc74ee4904fae15e9002f3e06c027b283b631e24b55e95fb1e5fe027d87f031464222fdfa62dbb816b22187850a7d16c46d49aab48fabcdf72bdc2d
   languageName: node
   linkType: hard
 
@@ -11352,10 +11352,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"launchdarkly-eventsource@npm:2.0.2":
-  version: 2.0.2
-  resolution: "launchdarkly-eventsource@npm:2.0.2"
-  checksum: 5f867780feef3a00de428a55406f977da7646cea61e20a485251dab624ab8ba10d6f555ca26d445543fac93a945c96e3f3ab7345b66629be7a7ea869d9503ef5
+"launchdarkly-eventsource@npm:2.0.3":
+  version: 2.0.3
+  resolution: "launchdarkly-eventsource@npm:2.0.3"
+  checksum: c0e63aef73bf377e3838357e8903800b523a32e882b70df5c6c03bf22ea65d3305e7acb2843d0f9d6b0bb741f7d0d0da562f1f9693e28fbdac2e3851a6ca807e
   languageName: node
   linkType: hard
 
