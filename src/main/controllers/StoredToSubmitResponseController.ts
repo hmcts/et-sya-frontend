@@ -13,7 +13,7 @@ import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 import { StoredToSubmitContentForm } from './helpers/StoredToSubmitHelpers';
 
 const logger = getLogger('StoredToSubmitResponseController');
@@ -53,12 +53,12 @@ export default class StoredToSubmitResponseController {
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
-      return res.redirect(
+      const url =
         PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', req.params.appId).replace(
           ':responseId',
           req.params.responseId
-        ) + languageParam
-      );
+        ) + languageParam;
+      return res.redirect(returnSafeRedirectUrl(req, url, logger));
     }
     req.session.errors = [];
 
