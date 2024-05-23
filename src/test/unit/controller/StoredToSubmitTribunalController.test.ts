@@ -125,7 +125,7 @@ describe('Stored to Submit Tribunal Controller POST', () => {
     const res = mockResponse();
     req.params.orderId = '234';
     req.params.responseId = '567';
-    req.url = '/stored-to-submit-response/234/567?lng=en';
+    req.url = '/stored-to-submit-tribunal/234/567?lng=en';
     req.session.userCase.sendNotificationCollection = [
       { id: '234', value: { respondStoredCollection: [{ id: '567', value: {} }] } },
     ];
@@ -133,7 +133,7 @@ describe('Stored to Submit Tribunal Controller POST', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/stored-to-submit-response/234/567?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/stored-to-submit-tribunal/234/567?lng=en');
     expect(req.session.errors).toEqual(errors);
   });
 });
