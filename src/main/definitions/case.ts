@@ -221,6 +221,9 @@ export interface Case {
   // indiciates if responding to a tribunal order/request or not when responding to an application
   isRespondingToRequestOrOrder?: boolean;
   updateDraftCaseError?: string;
+  // Multiples
+  multipleFlag?: YesOrNo;
+  leadClaimant?: YesOrNo;
 }
 
 export const enum StillWorking {

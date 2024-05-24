@@ -103,14 +103,22 @@
     },
     "claimantResponseToTribunal": {
       "title": {
-        "rule92Yes": "Welsh translation required",
+        "rule92Yes": "Rydych wedi anfon ymateb i’r tribiwnlys a’i gopïo at yr atebydd.",
         "rule92No": {
-          "p1": "Welsh translation required",
-          "p2": "Welsh translation required"
+          "p1": "Rydych wedi anfon ymateb i'r tribiwnlys ac wedi rhoi eich rhesymau dros beidio â'i gopïo i'r atebydd.",
+          "p2": "Bydd y tribiwnlys yn ystyried eich rhesymau ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf."
         }
       },
-      "link": "Welsh translation required"
+      "link": "Gweld eich ymateb"
     }
+  },
+  "multiples": {
+    "leadClaim": "Welsh Translation required",
+    "stayedCase": "Welsh Translation required",
+    "groupClaim": "Welsh Translation required",
+    "designated": "Welsh Translation required",
+    "stayed": "Welsh Translation required",
+    "viewClaim": "Welsh Translation required"
   },
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
