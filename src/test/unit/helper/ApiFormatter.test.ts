@@ -345,6 +345,7 @@ describe('Format Case Data to Frontend Model', () => {
       bundleDocuments: [],
       multipleFlag: undefined,
       leadClaimant: undefined,
+      caseStayed: undefined,
     });
   });
 

@@ -116,8 +116,9 @@
     "leadClaim": "LEAD CLAIM",
     "stayedCase": "CASE STAYED",
     "groupClaim": "Your claim is part of a group claim",
-    "designated": "Your individual case is designated the lead case in a group claim.",
-    "stayed": "Your individual claim is stayed. The group claim will progress and you can view updates on the group claim.",
+    "designated": "Your individual case is designated the lead case in a group claim. You will be notified of the progress of the group claim.",
+    "stayed": "Your individual claim is stayed. The group claim will progress. You will be notified of the progress of the group claim.",
+    "nonLead": "You will be notified of the progress of the group claim.",
     "viewClaim": "View the group claim"
   },
   "Change personal details": "change personal details",

@@ -224,6 +224,7 @@ export interface Case {
   // Multiples
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
+  caseStayed?: YesOrNo;
 }
 
 export const enum StillWorking {

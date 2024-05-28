@@ -74,6 +74,7 @@ export interface CaseData {
   bundlesRespondentCollection?: TypeItem<HearingBundleType>[];
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
+  batchCaseStayed?: YesOrNo;
 }
 
 export type HearingBundleType = {
