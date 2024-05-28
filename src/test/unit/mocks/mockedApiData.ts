@@ -257,5 +257,6 @@ export const mockedApiData: CaseApiDataResponse = {
     ],
     multipleFlag: YesOrNo.YES,
     leadClaimant: YesOrNo.YES,
+    batchCaseStayed: YesOrNo.YES,
   },
 };

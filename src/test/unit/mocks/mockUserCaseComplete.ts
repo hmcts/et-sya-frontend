@@ -282,4 +282,5 @@ export default {
   ],
   multipleFlag: YesOrNo.YES,
   leadClaimant: YesOrNo.YES,
+  caseStayed: YesOrNo.YES,
 };
