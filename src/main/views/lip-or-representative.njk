@@ -45,15 +45,15 @@
         <div class="govuk-details__text">
           <p class="govuk-body">{{ detailsText2.p1 }}</p>
           <ul class="govuk-list govuk-list--bullet">
-          <li>{{ detailsText2.li1 | safe }}</li>
-          <li>{{ detailsText2.li2 | safe }}</li>
-          <li>{{ detailsText2.li3 | safe }}</li>
-          <li>{{ detailsText2.li4 | safe }}</li>
-          <li>{{ detailsText2.li5  }}</li>
+          <li><a href="https://solicitors.lawsociety.org.uk/" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.li1.t1 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.li1.t2 }}</a> – {{ detailsText2.li1.t3 }}</li>
+          <li><a href="https://www.lawscot.org.uk/find-a-solicitor/" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.li2.t1 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.li2.t2 }}</a> – {{ detailsText2.li2.t3 }}</li>
+          <li><a href="https://www.thefru.org.uk/" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.li3.t1 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.li3.t2 }}</a> – {{ detailsText2.li3.t3 }}</li>
+          <li>{{ detailsText2.li4.t1 }}<a href="https://www.abdn.ac.uk/law/research/the-scottish-university-law-clinic-network-546.php" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.li4.t2 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.li4.t3 }}</a></li>
+          <li>{{ detailsText2.li5 }}</li>
           </ul>
-          <p class="govuk-body govuk-!-margin-top-4">{{ detailsText2.p2 | safe }}</p>
-          <p class="govuk-body">{{ detailsText2.p3 | safe }}</p>
-          <p class="govuk-body">{{ detailsText2.p4 | safe }}</p>
+          <p class="govuk-body govuk-!-margin-top-4">{{ detailsText2.p2.t1 }} <a href="https://www.citizensadvice.org.uk/" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.p2.t2 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.p2.t3 }}</a> {{ detailsText2.p2.t4 }} <a href="https://www.cas.org.uk/" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.p2.t5 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.p2.t6 }}</a>.</p>
+          <p class="govuk-body">{{ detailsText2.p3.t1 }} <a href="https://www.equalityadvisoryservice.com/" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText2.p3.t2 }}<span class="govuk-visually-hidden">{{ detailsText2.opensInNewTab }}</span>{{ detailsText2.p3.t3 }}</a> {{ detailsText2.p3.t4 }}</p>
+          <p class="govuk-body">{{ detailsText2.p4 }}</p>
         </div>
       </details>
       {% block form %}

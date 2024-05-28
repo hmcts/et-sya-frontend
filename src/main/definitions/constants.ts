@@ -1,3 +1,13 @@
+import {
+  postcode_Bristol,
+  postcode_Glasgow,
+  postcode_Leeds,
+  postcode_LondonCentral,
+  postcode_LondonEast,
+  postcode_LondonSouth,
+  postcode_MidlandsEast,
+} from './postcode';
+
 export const LegacyUrls = {
   ET1: 'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number',
   ET1_BASE: 'https://et-pet-et1.aat.platform.hmcts.net',
@@ -385,126 +395,14 @@ export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
 export const FILE_SIZE_LIMIT = 83886500;
 
-export const postcode_Glasgow = [
-  'ZE',
-  'TD9',
-  'TD8',
-  'TD7',
-  'TD6',
-  'TD5',
-  'TD4',
-  'TD3',
-  'TD2',
-  'TD14',
-  'TD13',
-  'TD11',
-  'TD10',
-  'TD1',
-  'PH',
-  'PA',
-  'ML',
-  'KY',
-  'KW',
-  'KA',
-  'IV',
-  'HS',
-  'G',
-  'FK',
-  'EH',
-  'DG',
-  'DD',
-  'AB',
-];
-
-export const postcode_Leeds = ['YO', 'WF', 'S', 'OL14', 'LS', 'HX', 'HU', 'HG', 'HD', 'DN', 'BD'];
-
-export const postcode_Bristol = [
-  'TR',
-  'TQ',
-  'TA',
-  'SP',
-  'SO',
-  'SN',
-  'RG28',
-  'RG27',
-  'RG26',
-  'RG25',
-  'RG24',
-  'RG23',
-  'RG22',
-  'RG21',
-  'PO',
-  'PL',
-  'GU35',
-  'GU34',
-  'GU33',
-  'GU32',
-  'GU31',
-  'GU30',
-  'GU29',
-  'GU28',
-  'GU27',
-  'GU26',
-  'GL',
-  'EX',
-  'DT',
-  'BS',
-  'BN45',
-  'BN44',
-  'BN43',
-  'BN18',
-  'BN17',
-  'BN16',
-  'BN15',
-  'BN14',
-  'BN13',
-  'BN12',
-  'BN11',
-  'BH',
-  'BA',
-];
-
-export const postcode_MidlandsEast = [
-  'S81',
-  'S80',
-  'S45',
-  'S44',
-  'S43',
-  'S42',
-  'S41',
-  'S40',
-  'PE25',
-  'PE24',
-  'PE23',
-  'PE22',
-  'PE21',
-  'PE20',
-  'PE12',
-  'PE11',
-  'PE10',
-  'NG',
-  'LN',
-  'LE',
-  'DN41',
-  'DN37',
-  'DN36',
-  'DN35',
-  'DN34',
-  'DN33',
-  'DN32',
-  'DN31',
-  'DN22',
-  'DN21',
-  'DE',
-];
-
-export const inScopeLocations = [].concat(postcode_Glasgow, postcode_Leeds, postcode_Bristol, postcode_MidlandsEast);
-
-export const inScopeLocationsExpansion = [].concat(
+export const inScopeLocations = [].concat(
   postcode_Glasgow,
   postcode_Leeds,
   postcode_Bristol,
-  postcode_MidlandsEast
+  postcode_MidlandsEast,
+  postcode_LondonCentral,
+  postcode_LondonEast,
+  postcode_LondonSouth
 );
 
 export const ET3_FORM = 'ET3';
@@ -631,4 +529,5 @@ export const FEATURE_FLAGS = {
   WELSH: 'welsh-language',
   BUNDLES: 'bundles',
   ECC: 'ecc',
+  MUL2: 'MUL2',
 } as const;
