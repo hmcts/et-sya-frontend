@@ -11,7 +11,7 @@ import { getCaseApi } from '../services/CaseService';
 import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getCancelLink, getSendNotificationDetailsLink } from './helpers/LinkHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 import {
   StoredToSubmitContentForm,
   findSelectedPseResponse,
@@ -54,7 +54,12 @@ export default class StoredToSubmitTribunalController {
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
-      return res.redirect(req.url);
+      const url =
+        PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', req.params.orderId).replace(
+          ':responseId',
+          req.params.responseId
+        ) + languageParam;
+      return res.redirect(returnSafeRedirectUrl(req, url, logger));
     }
     req.session.errors = [];
 
