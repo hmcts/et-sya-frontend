@@ -20,7 +20,7 @@ import {
 import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
-import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { StoredToSubmitContentForm, clearTseFields, putSelectedAppToUserCase } from './helpers/StoredToSubmitHelpers';
 
 const logger = getLogger('StoredToSubmitController');
@@ -51,8 +51,7 @@ export default class StoredToSubmitController {
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
-      const url = PageUrls.STORED_TO_SUBMIT.replace(':appId', selectedApplication.id) + languageParam;
-      return res.redirect(returnSafeRedirectUrl(req, url, logger));
+      return res.redirect(PageUrls.STORED_TO_SUBMIT.replace(':appId', selectedApplication.id) + languageParam);
     }
     req.session.errors = [];
 

@@ -75,9 +75,17 @@ export default class ContactTheTribunalSelectedController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
 
     userCase.contactApplicationText = req.body.contactApplicationText;
-    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
+
+    const selectedApplication = req.params.selectedOption;
+    if (!applications.includes(selectedApplication)) {
+      logger.info('bad request parameter: "' + selectedApplication + '"');
+      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + languageParam);
+      return;
+    }
+    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${selectedApplication}`;
     const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
