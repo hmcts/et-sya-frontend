@@ -54,9 +54,9 @@ export default class StoredToSubmitResponseController {
     if (errors.length > 0) {
       req.session.errors = errors;
       const url =
-        PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', req.params.appId).replace(
+        PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', selectedApplication.id).replace(
           ':responseId',
-          req.params.responseId
+          selectedResponse.id
         ) + languageParam;
       return res.redirect(returnSafeRedirectUrl(req, url, logger));
     }

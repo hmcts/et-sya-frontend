@@ -51,7 +51,7 @@ export default class StoredToSubmitController {
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
-      const url = PageUrls.STORED_TO_SUBMIT.replace(':appId', req.params.appId) + languageParam;
+      const url = PageUrls.STORED_TO_SUBMIT.replace(':appId', selectedApplication.id) + languageParam;
       return res.redirect(returnSafeRedirectUrl(req, url, logger));
     }
     req.session.errors = [];
