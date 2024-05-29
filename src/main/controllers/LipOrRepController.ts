@@ -34,7 +34,11 @@ export default class LipOrRepController {
           },
           {
             label: (l: AnyRecord): string => l.radio3,
-            value: claimantRepresented.LEGAL_REP,
+            value: claimantRepresented.LEGAL_REP_SINGLE_CLAIM,
+          },
+          {
+            label: (l: AnyRecord): string => l.radio4,
+            value: claimantRepresented.LEGAL_REP_GROUP_CLAIM,
           },
         ],
         validator: isFieldFilledIn,
@@ -53,9 +57,12 @@ export default class LipOrRepController {
     let redirectUrl;
     if (req.body.claimantRepresentedQuestion === claimantRepresented.NO) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.YES) {
+    } else if (
+      req.body.claimantRepresentedQuestion === claimantRepresented.YES ||
+      req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP_GROUP_CLAIM
+    ) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
-    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP) {
+    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP_SINGLE_CLAIM) {
       redirectUrl = PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
