@@ -359,5 +359,6 @@ export interface Representative {
 export const enum claimantRepresented {
   YES = 'Yes',
   NO = 'No',
-  LEGAL_REP = 'Legal Representative',
+  LEGAL_REP_SINGLE_CLAIM = 'Legal Representative Single Claim',
+  LEGAL_REP_GROUP_CLAIM = 'Legal Representative Group Claim',
 }

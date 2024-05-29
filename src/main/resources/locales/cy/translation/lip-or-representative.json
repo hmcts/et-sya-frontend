@@ -61,7 +61,8 @@
   },
   "radio1": "Rwy’n fy nghynrychioli fy hun ac yn gwneud fy hawliad fy hun",
   "radio2": "Rwy’n gwneud hawliad ar ran rhywun arall ac rwy’n gweithredu fel eu cynrychiolydd",
-  "radio3": "Rwy’n gynrychiolydd cyfreithiol yn gwneud hawliad ar ran cleient",
+  "radio3": "Rwy'n gynrychiolydd cyfreithiol sy'n gwneud hawliad unigol ar gyfer cleient",
+  "radio4": "Rwy'n gynrychiolydd cyfreithiol sy'n gwneud hawliad grŵp",
   "errors": {
     "claimantRepresentedQuestion": {
       "required": "Dywedwch wrthym a ydych yn eich cynrychioli eich hun neu'n gweithredu fel cynrychiolydd"
