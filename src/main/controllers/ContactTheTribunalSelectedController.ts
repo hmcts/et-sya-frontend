@@ -16,7 +16,7 @@ import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/Er
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
 import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
-import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -79,14 +79,12 @@ export default class ContactTheTribunalSelectedController {
 
     userCase.contactApplicationText = req.body.contactApplicationText;
 
-    const selectedApplication = req.params.selectedOption;
-    if (!applications.includes(selectedApplication)) {
-      logger.info('bad request parameter: "' + selectedApplication + '"');
+    const selectedOption = req.params.selectedOption;
+    if (!applications.includes(selectedOption)) {
+      logger.info('bad request parameter: "' + selectedOption + '"');
       res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + languageParam);
       return;
     }
-    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${selectedApplication}`;
-    const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = [];
@@ -102,7 +100,9 @@ export default class ContactTheTribunalSelectedController {
 
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
-      return res.redirect(returnSafeRedirectUrl(req, redirectUrlWithErrorMessages, logger));
+      return res.redirect(
+        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+      );
     }
 
     if (req.body.upload) {
@@ -115,7 +115,9 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-      return res.redirect(returnSafeRedirectUrl(req, redirectUrlWithErrorMessages, logger));
+      return res.redirect(
+        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+      );
     }
     req.session.errors = [];
 
