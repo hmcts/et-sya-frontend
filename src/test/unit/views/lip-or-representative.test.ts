@@ -60,9 +60,9 @@ describe('LiP or Representative page', () => {
     expect(button[5].innerHTML).contains('Continue', 'Could not find the button');
   });
 
-  it('should display 2 radio buttons', () => {
+  it('should display 4 radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons.length).equal(3, '3 radio buttons not found');
+    expect(radioButtons.length).equal(4, '4 radio buttons not found');
   });
 
   it('should display radio buttons with valid text', () => {
