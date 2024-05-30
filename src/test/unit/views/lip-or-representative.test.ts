@@ -21,6 +21,8 @@ const buttonClass = 'govuk-button';
 const radioClass = 'govuk-radios__item';
 const expectedRadioLabel1 = 'I’m representing myself and making my own claim';
 const expectedRadioLabel2 = 'I’m making a claim for someone else and acting as their representative';
+const expectedRadioLabel3 = lipOrRepJson.radio3;
+const expectedRadioLabel4 = lipOrRepJson.radio4;
 const detailsClass = 'govuk-details';
 const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
@@ -58,9 +60,9 @@ describe('LiP or Representative page', () => {
     expect(button[5].innerHTML).contains('Continue', 'Could not find the button');
   });
 
-  it('should display 2 radio buttons', () => {
+  it('should display 4 radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons.length).equal(2, '2 radio buttons not found');
+    expect(radioButtons.length).equal(4, '4 radio buttons not found');
   });
 
   it('should display radio buttons with valid text', () => {
@@ -72,6 +74,14 @@ describe('LiP or Representative page', () => {
     expect(radioButtons[1].innerHTML).contains(
       expectedRadioLabel2,
       'Could not find the radio button with label ' + expectedRadioLabel2
+    );
+    expect(radioButtons[2].innerHTML).contains(
+      expectedRadioLabel3,
+      'Could not find the radio button with label ' + expectedRadioLabel3
+    );
+    expect(radioButtons[3].innerHTML).contains(
+      expectedRadioLabel4,
+      'Could not find the radio button with label ' + expectedRadioLabel4
     );
   });
 

@@ -355,3 +355,10 @@ export interface Representative {
   hasMyHMCTSAccount?: YesOrNo;
   respondentId?: string;
 }
+
+export const enum claimantRepresented {
+  YES = 'Yes',
+  NO = 'No',
+  LEGAL_REP_SINGLE_CLAIM = 'Legal Representative Single Claim',
+  LEGAL_REP_GROUP_CLAIM = 'Legal Representative Group Claim',
+}
