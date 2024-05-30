@@ -1,5 +1,5 @@
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
-import { YesOrNo } from '../../../main/definitions/case';
+import { YesOrNo, claimantRepresented } from '../../../main/definitions/case';
 import { LegacyUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -33,6 +33,28 @@ describe('Litigation in Person or Representative Controller', () => {
 
   it("should render the legacy ET1 service when - yes - they are 'making a claim for someone else' option is selected", () => {
     const body = { claimantRepresentedQuestion: YesOrNo.YES };
+    const controller = new LipOrRepController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
+  });
+
+  it("should render the 'Making a claim as a legal representative' page - they are 'a legal representative making a single claim' option is selected", () => {
+    const body = { claimantRepresentedQuestion: claimantRepresented.LEGAL_REP_SINGLE_CLAIM };
+    const controller = new LipOrRepController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith('/making-claim-as-legal-representative');
+  });
+
+  it("should render the legacy ET1 service when - they are 'a legal representative making a group claim' option is selected", () => {
+    const body = { claimantRepresentedQuestion: claimantRepresented.LEGAL_REP_GROUP_CLAIM };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
