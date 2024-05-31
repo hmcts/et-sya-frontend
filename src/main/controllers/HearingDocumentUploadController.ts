@@ -2,13 +2,14 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
+import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getFileErrorMessage, getPdfUploadError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getFilesRows } from './helpers/HearingDocumentUploadHelper';
@@ -70,7 +71,17 @@ export default class HearingDocumentUploadController {
       userCase.hearingDocument,
       'hearingDocument'
     );
-    const pageUrl = PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+
+    const selectedApplication = findSelectedGenericTseApplication(
+      userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (!selectedApplication) {
+      logger.error('Selected application not found');
+      return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
+    }
+    const pageUrl =
+      PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':appId', selectedApplication.id) + getLanguageParam(req.url);
 
     if (hearingDocumentError) {
       req.session.errors.push(hearingDocumentError);
