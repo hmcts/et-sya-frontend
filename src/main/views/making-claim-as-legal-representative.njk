@@ -1,0 +1,24 @@
+{% extends "template.njk" %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
+      <p class="govuk-body ">
+        {{ p1.start }}
+        <a href="{{ createLink }}" id="createMyHMCTSAccountLink" class="govuk-link" target="_blank">{{ p1.link }}</a>
+        {{ p1.end }}
+      </p>
+      <p class="govuk-body ">
+        {{ p2.start }}
+        <a href="{{ signInLink }}" id="signInMyHMCTSLink" class="govuk-link" target="_blank">{{ p2.link }}</a>
+        {{ p2.end }}
+      </p>
+    </div>
+  </div>
+{% endblock %}
