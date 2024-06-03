@@ -55,7 +55,7 @@ describe('Type of Claim Helpers Test getRedirectUrl', () => {
   });
 
   it('Postcode not in Expansion, selected BREACH_OF_CONTRACT, returns url', () => {
-    req.session.userCase.workPostcode = 'M2 1AB'; // Manchester
+    req.session.userCase.workPostcode = 'B1 1AA'; // Birmingham
     req.body = {
       typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
     };
