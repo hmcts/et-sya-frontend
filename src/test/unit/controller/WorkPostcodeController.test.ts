@@ -45,7 +45,7 @@ describe('Work Postcode Controller', () => {
     });
 
     it('should render the legacy ET1 service when a non mvp location is given', () => {
-      const notMvpPostCode = 'M3 2JA';
+      const notMvpPostCode = 'B1 1AA';
       const body = { workPostcode: notMvpPostCode };
 
       const req = mockRequest({ body });
