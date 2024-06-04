@@ -54,7 +54,12 @@ export default class StoredToSubmitTribunalController {
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
-      return res.redirect(req.url);
+      return res.redirect(
+        PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', selectedNotification.id).replace(
+          ':responseId',
+          selectedResponse.id
+        ) + languageParam
+      );
     }
     req.session.errors = [];
 
