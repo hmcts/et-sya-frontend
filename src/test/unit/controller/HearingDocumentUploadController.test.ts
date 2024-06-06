@@ -44,6 +44,8 @@ describe('Hearing Document Upload controller', () => {
   describe('Correct validation', () => {
     it('should require a pdf file to be uploaded', async () => {
       const req = mockRequest({ body: {} });
+      req.session.userCase.genericTseApplicationCollection = [{ id: '1', value: {} }];
+      req.params.appId = '1';
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'required' }]);
@@ -53,6 +55,8 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
+      req.session.userCase.genericTseApplicationCollection = [{ id: '1', value: {} }];
+      req.params.appId = '1';
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'invalidFileFormat' }]);
@@ -62,6 +66,8 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockPdf;
       newFile.originalname = 'file.invalidFileSize';
       const req = mockRequest({ body: {}, file: newFile });
+      req.session.userCase.genericTseApplicationCollection = [{ id: '1', value: {} }];
+      req.params.appId = '1';
       req.fileTooLarge = true;
       await new HearingDocumentUploadController().post(req, mockResponse());
 
@@ -72,6 +78,8 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockPdf;
       newFile.originalname = '$%?invalid.pdf';
       const req = mockRequest({ body: {}, file: newFile });
+      req.session.userCase.genericTseApplicationCollection = [{ id: '1', value: {} }];
+      req.params.appId = '1';
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'invalidFileName' }]);
