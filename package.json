@@ -64,7 +64,7 @@
     "@types/session-file-store": "^1.2.2",
     "applicationinsights": "2.5.1",
     "autobind-decorator": "^2.4.0",
-    "axios": "^1.0.0",
+    "axios": "^1.7.2",
     "codeceptjs": "3.4.1",
     "config": "^3.3.9",
     "connect-redis": "^6.1.3",
@@ -161,7 +161,7 @@
     "@faker-js/faker": "^5.5.3 || ^8.0.0"
   },
   "resolutions": {
-    "@opentelemetry/instrumentation": "^0.48.0",
+    "@opentelemetry/instrumentation": "^0.52.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^4.1.3",
     "minimist": "^1.2.6",

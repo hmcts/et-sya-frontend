@@ -1,0 +1,13 @@
+{
+  "title": "Making a claim as a legal representative",
+  "p1": {
+    "start": "You will need to ",
+    "link": "create a My HMCTS account",
+    "end": " first if you do not have one."
+  },
+  "p2": {
+    "start": "If you have one already, ",
+    "link": "sign in to MyHMCTS",
+    "end": " to start a claim."
+  }
+}

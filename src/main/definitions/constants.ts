@@ -5,6 +5,7 @@ import {
   postcode_LondonCentral,
   postcode_LondonEast,
   postcode_LondonSouth,
+  postcode_Manchester,
   postcode_MidlandsEast,
 } from './postcode';
 
@@ -21,6 +22,7 @@ export const TranslationKeys = {
   HOME: 'home',
   CHECKLIST: 'checklist',
   LIP_OR_REPRESENTATIVE: 'lip-or-representative',
+  MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE: 'making-claim-as-legal-representative',
   SINGLE_OR_MULTIPLE_CLAIM: 'single-or-multiple-claim',
   ACAS_MULTIPLE_CLAIM: 'acas-multiple',
   ADDRESS_DETAILS: 'address-details',
@@ -150,6 +152,7 @@ export const PageUrls = {
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
+  MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE: '/making-claim-as-legal-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',
   ACAS_MULTIPLE_CLAIM: '/do-you-have-an-acas-no-many-resps',
   VALID_ACAS_REASON: '/do-you-have-a-valid-no-acas-reason',
@@ -402,7 +405,8 @@ export const inScopeLocations = [].concat(
   postcode_MidlandsEast,
   postcode_LondonCentral,
   postcode_LondonEast,
-  postcode_LondonSouth
+  postcode_LondonSouth,
+  postcode_Manchester
 );
 
 export const ET3_FORM = 'ET3';

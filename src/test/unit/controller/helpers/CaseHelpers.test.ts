@@ -168,11 +168,11 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: 'CR0 2RF', expected: true }, // London South
     { postcode: 'LU7 0EU', expected: false }, // Luton
     { postcode: 'LE3 1EP', expected: true }, // Leicester
-    { postcode: 'M41 8PX', expected: false }, // Manchester
-    { postcode: 'NE289QH', expected: false }, // Newcastle
+    { postcode: 'M41 8PX', expected: true }, // Manchester
+    { postcode: 'NE28 9QH', expected: false }, // Newcastle
     { postcode: 'TD12 4AA', expected: false },
     { postcode: 'TD12 4AH', expected: false },
-    { postcode: 'OL2 5AA', expected: false },
+    { postcode: 'OL2 5AA', expected: true }, // Oldham - Manchester Tribunal
     { postcode: 'BS1 6JQ', expected: true }, // Bristol
     { postcode: 'BA1 2QH', expected: true }, // Bath
     { postcode: 'EX1 1HS', expected: true }, // Exeter
