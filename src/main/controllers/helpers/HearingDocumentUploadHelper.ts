@@ -4,7 +4,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 export const getFilesRows = (
   userCase: CaseWithId | undefined,
-  appId: string,
+  hearingId: string,
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   if (userCase === undefined || userCase.hearingDocument === undefined) {
@@ -35,7 +35,7 @@ export const getFilesRows = (
         actions: {
           items: [
             {
-              href: PageUrls.HEARING_DOCUMENT_REMOVE.replace(':appId', appId),
+              href: PageUrls.HEARING_DOCUMENT_REMOVE.replace(':hearingId', hearingId),
               text: translations.remove,
               visuallyHiddenText: translations.remove,
             },
