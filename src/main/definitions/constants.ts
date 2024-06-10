@@ -7,6 +7,7 @@ import {
   postcode_LondonSouth,
   postcode_Manchester,
   postcode_MidlandsEast,
+  postcode_Newcastle,
 } from './postcode';
 
 export const LegacyUrls = {
@@ -406,7 +407,8 @@ export const inScopeLocations = [].concat(
   postcode_LondonCentral,
   postcode_LondonEast,
   postcode_LondonSouth,
-  postcode_Manchester
+  postcode_Manchester,
+  postcode_Newcastle
 );
 
 export const ET3_FORM = 'ET3';

@@ -214,3 +214,5 @@ export const postcode_Manchester = [
   'BL',
   'BB',
 ];
+
+export const postcode_Newcastle = ['DL', 'DH', 'NE', 'SR', 'TD12', 'TD15', 'TS', 'YO7', 'YO22', 'YO21'];
