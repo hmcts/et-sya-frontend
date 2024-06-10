@@ -4,6 +4,7 @@ import { DocumentUploadResponse } from '../../../main/definitions/api/documentAp
 import { TranslationKeys } from '../../../main/definitions/constants';
 import pageTranslations from '../../../main/resources/locales/en/translation/hearing-document-upload.json';
 import { mockFile, mockPdf } from '../mocks/mockFile';
+import { mockHearingCollection } from '../mocks/mockHearing';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -33,17 +34,19 @@ describe('Hearing Document Upload controller', () => {
 
   it('should render hearing document file upload page', () => {
     const controller = new HearingDocumentUploadController();
-    const response = mockResponse();
-    const request = mockRequestWithTranslation({ t }, translationJsons);
-    request.params.appId = '1';
+    const res = mockResponse();
+    const req = mockRequestWithTranslation({ t }, translationJsons);
+    req.params.hearingId = '12345-abc-12345';
 
-    controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.HEARING_DOCUMENT_UPLOAD, expect.anything());
+    controller.get(req, res);
+    expect(res.render).toHaveBeenCalledWith(TranslationKeys.HEARING_DOCUMENT_UPLOAD, expect.anything());
   });
 
   describe('Correct validation', () => {
     it('should require a pdf file to be uploaded', async () => {
       const req = mockRequest({ body: {} });
+      req.session.userCase.hearingCollection = mockHearingCollection;
+      req.params.hearingId = '12345-abc-12345';
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'required' }]);
@@ -53,6 +56,8 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
+      req.session.userCase.hearingCollection = mockHearingCollection;
+      req.params.hearingId = '12345-abc-12345';
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'invalidFileFormat' }]);
@@ -62,6 +67,8 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockPdf;
       newFile.originalname = 'file.invalidFileSize';
       const req = mockRequest({ body: {}, file: newFile });
+      req.session.userCase.hearingCollection = mockHearingCollection;
+      req.params.hearingId = '12345-abc-12345';
       req.fileTooLarge = true;
       await new HearingDocumentUploadController().post(req, mockResponse());
 
@@ -72,6 +79,8 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockPdf;
       newFile.originalname = '$%?invalid.pdf';
       const req = mockRequest({ body: {}, file: newFile });
+      req.session.userCase.hearingCollection = mockHearingCollection;
+      req.params.hearingId = '12345-abc-12345';
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'invalidFileName' }]);

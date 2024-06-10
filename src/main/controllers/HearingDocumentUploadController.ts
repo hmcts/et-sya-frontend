@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -70,7 +70,13 @@ export default class HearingDocumentUploadController {
       userCase.hearingDocument,
       'hearingDocument'
     );
-    const pageUrl = PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+
+    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.params.hearingId);
+    if (!foundHearing) {
+      logger.error('Hearing not found');
+      return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
+    }
+    const pageUrl = PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':hearingId', foundHearing.id) + getLanguageParam(req.url);
 
     if (hearingDocumentError) {
       req.session.errors.push(hearingDocumentError);
@@ -109,7 +115,7 @@ export default class HearingDocumentUploadController {
 
     (this.hearingDocumentUploadFormContent.fields as any).filesUploaded.rows = getFilesRows(
       userCase,
-      req.params.appId,
+      req.params.hearingId,
       {
         ...req.t(TranslationKeys.HEARING_DOCUMENT_UPLOAD, { returnObjects: true }),
       }
