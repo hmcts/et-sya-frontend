@@ -113,6 +113,7 @@ export const postcode_MidlandsEast = [
 
 export const postcode_LondonCentral = [
   'W',
+  'WC',
   'SW7',
   'SW6',
   'SW5',
