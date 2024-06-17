@@ -154,7 +154,7 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: '2', expected: false },
     { postcode: '100', expected: false },
     { postcode: '', expected: false },
-    { postcode: 'TD15 1AA', expected: false },
+    { postcode: 'TD15 1AA', expected: true }, // Newcastle
     { postcode: 'ISE2 0YN', expected: false }, // London - wrong postcode - should be SE, not ISE
     { postcode: 'W6 9AW', expected: true }, // London Central
     { postcode: 'SE12 0LJ', expected: true }, // London Central
@@ -169,9 +169,9 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: 'LU7 0EU', expected: false }, // Luton
     { postcode: 'LE3 1EP', expected: true }, // Leicester
     { postcode: 'M41 8PX', expected: true }, // Manchester
-    { postcode: 'NE28 9QH', expected: false }, // Newcastle
-    { postcode: 'TD12 4AA', expected: false },
-    { postcode: 'TD12 4AH', expected: false },
+    { postcode: 'NE28 9QH', expected: true }, // Newcastle
+    { postcode: 'TD12 4AA', expected: true }, // Newcastle
+    { postcode: 'TD12 4AH', expected: true }, // Newcastle
     { postcode: 'OL2 5AA', expected: true }, // Oldham - Manchester Tribunal
     { postcode: 'BS1 6JQ', expected: true }, // Bristol
     { postcode: 'BA1 2QH', expected: true }, // Bath
