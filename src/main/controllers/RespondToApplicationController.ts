@@ -64,8 +64,6 @@ export default class RespondToApplicationController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const error = getApplicationResponseError(formData);
     const languageParam = getLanguageParam(req.url);
 
     const selectedApplication = findSelectedGenericTseApplication(
@@ -74,9 +72,11 @@ export default class RespondToApplicationController {
     );
     if (selectedApplication === undefined) {
       logger.error('Selected application not found');
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
     }
 
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const error = getApplicationResponseError(formData);
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
