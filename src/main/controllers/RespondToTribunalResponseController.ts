@@ -68,16 +68,25 @@ export default class RespondToTribunalResponseController {
     const error = getApplicationResponseError(formData);
     const languageParam = getLanguageParam(req.url);
 
+    const selectedApplication = findSelectedGenericTseApplication(
+      req.session.userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Selected application not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      const pageUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${languageParam}`;
+      const pageUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
       return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
     }
     req.session.errors = [];
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + languageParam
+        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', selectedApplication.id) + languageParam
         : copyToOtherPartyRedirectUrl(req.session.userCase) + languageParam;
 
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
