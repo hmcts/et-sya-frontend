@@ -2,7 +2,7 @@ import ContactTheTribunalSelectedController from '../../../main/controllers/Cont
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import {PageUrls, TranslationKeys, languages, ErrorPages} from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunalSelectedRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal-selected.json';
 import { mockFile } from '../mocks/mockFile';
@@ -81,6 +81,7 @@ describe('Contact Application Controller', () => {
   describe('Correct validation', () => {
     it('should require either summary text or summary file', async () => {
       const req = mockRequest({ body: { contactApplicationText: '' } });
+      req.params.selectedOption = 'withdraw';
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'required' }]);
@@ -88,6 +89,7 @@ describe('Contact Application Controller', () => {
 
     it('should not allow invalid free text size', async () => {
       const req = mockRequest({ body: { contactApplicationText: '1'.repeat(2501) } });
+      req.params.selectedOption = 'withdraw';
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'tooLong' }]);
@@ -97,6 +99,7 @@ describe('Contact Application Controller', () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
+      req.params.selectedOption = 'withdraw';
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileFormat' }]);
@@ -107,6 +110,7 @@ describe('Contact Application Controller', () => {
       newFile.originalname = 'file.invalidFileSize';
       const req = mockRequest({ body: {}, file: newFile });
       req.fileTooLarge = true;
+      req.params.selectedOption = 'withdraw';
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
@@ -116,6 +120,7 @@ describe('Contact Application Controller', () => {
       const newFile = mockFile;
       newFile.originalname = '$%?invalid.txt';
       const req = mockRequest({ body: {}, file: newFile });
+      req.params.selectedOption = 'withdraw';
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
@@ -125,6 +130,7 @@ describe('Contact Application Controller', () => {
       const req = mockRequest({
         body: { upload: true, contactApplicationText: 'test', contactApplicationFile: mockFile },
       });
+      req.params.selectedOption = 'withdraw';
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
@@ -160,6 +166,7 @@ describe('Contact Application Controller', () => {
         },
       });
       req.session.lang = languages.ENGLISH;
+      req.params.selectedOption = 'withdraw';
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
@@ -190,6 +197,7 @@ describe('Contact Application Controller', () => {
         },
       });
       req.session.lang = languages.WELSH;
+      req.params.selectedOption = 'withdraw';
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
@@ -208,6 +216,7 @@ describe('Contact Application Controller', () => {
           contactApplicationType: 'withdraw',
         },
       });
+      req.params.selectedOption = 'withdraw';
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
@@ -229,6 +238,7 @@ describe('Contact Application Controller', () => {
         },
       });
       req.session.lang = languages.ENGLISH;
+      req.params.selectedOption = 'witness';
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
@@ -249,10 +259,20 @@ describe('Contact Application Controller', () => {
       },
     });
     req.session.lang = languages.WELSH;
+    req.params.selectedOption = 'witness';
     const res = mockResponse();
 
     await new ContactTheTribunalSelectedController().post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.WELSH_URL_PARAMETER);
+  });
+
+  it('should return error page when Selected application not found', async () => {
+    const req = mockRequest({ body: { contactApplicationText: 'test' } });
+    req.params.selectedOption = 'test';
+    const res = mockResponse();
+    await new ContactTheTribunalSelectedController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 });

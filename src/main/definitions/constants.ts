@@ -7,6 +7,7 @@ import {
   postcode_LondonSouth,
   postcode_Manchester,
   postcode_MidlandsEast,
+  postcode_Newcastle,
 } from './postcode';
 
 export const LegacyUrls = {
@@ -247,8 +248,8 @@ export const PageUrls = {
   JUDGMENT_DETAILS: '/judgment-details/:appId',
   GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
   ABOUT_HEARING_DOCUMENTS: '/about-hearing-documents',
-  HEARING_DOCUMENT_UPLOAD: '/hearing-document-upload/:appId',
-  HEARING_DOCUMENT_REMOVE: '/hearing-document-remove/:appId',
+  HEARING_DOCUMENT_UPLOAD: '/hearing-document-upload/:hearingId',
+  HEARING_DOCUMENT_REMOVE: '/hearing-document-remove/:hearingId',
   TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
@@ -406,7 +407,8 @@ export const inScopeLocations = [].concat(
   postcode_LondonCentral,
   postcode_LondonEast,
   postcode_LondonSouth,
-  postcode_Manchester
+  postcode_Manchester,
+  postcode_Newcastle
 );
 
 export const ET3_FORM = 'ET3';
