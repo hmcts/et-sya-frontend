@@ -48,7 +48,7 @@
     "@hmcts/nodejs-logging": "^4.0.4",
     "@hmcts/properties-volume": "^0.0.14",
     "@launchdarkly/node-server-sdk": "^9.0.0",
-    "@pact-foundation/pact": "9.18.1",
+    "@pact-foundation/pact": "11.0.2",
     "@types/config": "^3.3.0",
     "@types/connect-redis": "^0.0.23",
     "@types/cookie-parser": "^1.4.3",
@@ -65,7 +65,7 @@
     "applicationinsights": "2.5.1",
     "autobind-decorator": "^2.4.0",
     "axios": "^1.7.2",
-    "codeceptjs": "3.4.1",
+    "codeceptjs": "3.6.3",
     "config": "^3.3.9",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
@@ -172,7 +172,9 @@
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
     "es5-ext": "^0.10.63",
-    "formidable": "^3.2.4"
+    "formidable": "^3.2.4",
+    "ws": "^8.17.1",
+    "ip": "^2.0.1"
   },
   "packageManager": "yarn@4.1.0"
 }
