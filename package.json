@@ -172,7 +172,9 @@
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
     "es5-ext": "^0.10.63",
-    "formidable": "^3.2.4"
+    "formidable": "^3.2.4",
+    "ws": "^8.17.1",
+    "ip": "^2.0.1"
   },
   "packageManager": "yarn@4.1.0"
 }
