@@ -507,17 +507,15 @@ function instanceOfPseResponse(
   return 'date' in object.value;
 }
 
-export function determineRedirectUrlForECC(req: AppRequest, selectedRequestOrOrder: SendNotificationTypeItem): string {
+export function determineRedirectUrl(req: AppRequest, selectedRequestOrOrder: SendNotificationTypeItem): string {
   if (req.session.userCase.hasSupportingMaterial === YesOrNo.YES) {
     return PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url);
   }
 
-  const isOrderOrRequest = selectedRequestOrOrder?.value?.sendNotificationSubject.includes(
-    NotificationSubjects.ORDER_OR_REQUEST
-  );
-  const isNoticeOfECC = selectedRequestOrOrder?.value?.sendNotificationEccQuestion === NoticeOfECC;
-
-  if (isOrderOrRequest && isNoticeOfECC) {
+  if (
+    selectedRequestOrOrder?.value?.sendNotificationSubject.includes(NotificationSubjects.ECC) &&
+    selectedRequestOrOrder?.value?.sendNotificationEccQuestion === NoticeOfECC
+  ) {
     return PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url);
   }
   return copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);

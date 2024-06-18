@@ -103,7 +103,10 @@ describe('Tribunal Respond to Order Controller', () => {
     const userCase: Partial<CaseWithId> = mockUserCaseComplete;
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
     selectedRequestOrOrder.id = '1234';
-    selectedRequestOrOrder.value.sendNotificationSubject = [NotificationSubjects.ORDER_OR_REQUEST];
+    selectedRequestOrOrder.value.sendNotificationSubject = [
+      NotificationSubjects.ORDER_OR_REQUEST,
+      NotificationSubjects.ECC,
+    ];
     selectedRequestOrOrder.value.sendNotificationEccQuestion = NoticeOfECC;
 
     const controller = new TribunalRespondToOrderController();
