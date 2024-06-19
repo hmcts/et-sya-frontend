@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -14,7 +14,11 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
+import {
+  createDownloadLink,
+  findSelectedGenericTseApplication,
+  populateDocumentMetadata,
+} from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
@@ -57,22 +61,34 @@ export default class RespondToApplicationController {
   constructor() {
     this.form = new Form(<FormFields>this.respondToApplicationContent.fields);
   }
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
+    const languageParam = getLanguageParam(req.url);
+    const selectedApplication = findSelectedGenericTseApplication(
+      req.session.userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Selected application not found');
+      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
+    }
+
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getApplicationResponseError(formData);
 
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`;
+      const redirectUrl =
+        PageUrls.RESPOND_TO_APPLICATION_SELECTED.replace(':appId', selectedApplication.id) + languageParam;
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', selectedApplication.id) + languageParam
+        : PageUrls.COPY_TO_OTHER_PARTY + languageParam;
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
