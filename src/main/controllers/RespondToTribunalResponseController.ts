@@ -22,7 +22,7 @@ import {
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
+import { copyToOtherPartyRedirectUrl, redirectErrorPageIfAppUndefined } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
@@ -69,10 +69,7 @@ export default class RespondToTribunalResponseController {
       req.session.userCase.genericTseApplicationCollection,
       req.params.appId
     );
-    if (selectedApplication === undefined) {
-      logger.error('Selected application not found');
-      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
-    }
+    redirectErrorPageIfAppUndefined(selectedApplication, req, res, logger);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getApplicationResponseError(formData);
