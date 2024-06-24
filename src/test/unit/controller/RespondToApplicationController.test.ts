@@ -60,6 +60,17 @@ describe('Respond to application Controller', () => {
     };
     const userCase: Partial<CaseWithId> = {
       genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+      respondents: [
+        {
+          ccdId: '1',
+        },
+      ],
+      representatives: [
+        {
+          respondentId: '1',
+          hasMyHMCTSAccount: YesOrNo.YES,
+        },
+      ],
     };
 
     const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
