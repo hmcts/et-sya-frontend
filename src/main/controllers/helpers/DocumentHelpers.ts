@@ -49,9 +49,6 @@ export const getDocumentsAdditionalInformation = async (
   if (documents?.length) {
     for (const doc of documents) {
       await populateDocumentMetadata(doc.value.uploadedDocument, accessToken);
-      if (!doc.value?.shortDescription && doc.value?.typeOfDocument) {
-        doc.value.shortDescription = doc.value.typeOfDocument;
-      }
     }
   }
 };
