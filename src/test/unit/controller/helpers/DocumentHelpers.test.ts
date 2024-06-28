@@ -975,7 +975,7 @@ describe('get documents additional information tests', () => {
   it('should return additional information of the document for the given document type item', async () => {
     const docList: DocumentTypeItem[] = [documentTypeItem1, documentTypeItem2];
     await getDocumentsAdditionalInformation(docList, 'accToken');
-    expect(docList[0].value.shortDescription).toStrictEqual('testShortDescription');
-    expect(docList[1].value.shortDescription).toStrictEqual('testType');
+    expect(docList[0].value.typeOfDocument).toStrictEqual('testType');
+    expect(docList[1].value.typeOfDocument).toStrictEqual('testType');
   });
 });
