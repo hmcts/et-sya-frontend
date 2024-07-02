@@ -2332,13 +2332,13 @@ __metadata:
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.4.6
-  resolution: "@launchdarkly/node-server-sdk@npm:9.4.6"
+  version: 9.4.7
+  resolution: "@launchdarkly/node-server-sdk@npm:9.4.7"
   dependencies:
     "@launchdarkly/js-server-sdk-common": 2.4.4
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.3
-  checksum: 92789df2a159545ad5697a4ed05226d7a3e01f82261236c56e22220614978d475ab4a61182187b1fe53740ba89aef2b58f5858ad5e0897cb2096fecef5abf16f
+  checksum: 3594e2a491903ab0b65cf30b5fa36fbef9c5643f8ac7789405ca7baa7affec96c68102ccd3f730ff1a3d5154a7871eab3ce9ab5317dcbdbf7a78964231be32f2
   languageName: node
   linkType: hard
 
