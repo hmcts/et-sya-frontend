@@ -3,7 +3,6 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
@@ -13,12 +12,11 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { setUserCase } from './helpers/CaseHelpers';
 import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
-import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
-import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { handlePost } from './helpers/RespondToApplicationHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToApplicationController');
 
@@ -57,23 +55,9 @@ export default class RespondToApplicationController {
   constructor() {
     this.form = new Form(<FormFields>this.respondToApplicationContent.fields);
   }
-  public post = async (req: AppRequest, res: Response): Promise<void> => {
-    setUserCase(req, this.form);
-    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const error = getApplicationResponseError(formData);
 
-    if (error) {
-      req.session.errors = [];
-      req.session.errors.push(error);
-      const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`;
-      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
-    }
-    req.session.errors = [];
-    const redirectUrl =
-      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
-    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePost(req, res, this.form, PageUrls.RESPOND_TO_APPLICATION_SELECTED, logger);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

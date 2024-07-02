@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import {
+  ErrorPages,
   InterceptPaths,
   NoticeOfECC,
   NotificationSubjects,
@@ -17,6 +18,7 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
+import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -80,6 +82,15 @@ export default class RespondentSupportingMaterialController {
     const userCase = req.session.userCase;
     userCase.responseText = req.body.responseText;
 
+    const selectedApplication = findSelectedGenericTseApplication(
+      req.session.userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Selected application not found');
+      return res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
+    }
+
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
 
     req.session.errors = [];
@@ -94,7 +105,7 @@ export default class RespondentSupportingMaterialController {
       logger
     );
 
-    const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId);
+    const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', selectedApplication.id);
     const supportingMaterialUrl = setUrlLanguageFromSessionLanguage(req, baseUrl);
     const selectedRequestOrOrder = userCase.selectedRequestOrOrder;
     const notificationSubject = selectedRequestOrOrder?.value?.sendNotificationSubject;

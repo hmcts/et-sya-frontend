@@ -28,8 +28,7 @@ describe('Respond to tribunal response Controller', () => {
     common: {},
   };
 
-  const urlMock = safeUrlMock;
-  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(safeUrlMock);
 
   it('should render the Respond to Tribunal response page for respondent application', async () => {
     const controller = new RespondToTribunalResponseController();
@@ -100,6 +99,7 @@ describe('Respond to tribunal response Controller', () => {
     const request = mockRequestWithTranslation({ t, body }, translationJsons);
     const res = mockResponse();
     const userCase = request.session.userCase;
+    userCase.genericTseApplicationCollection = mockGenericTseCollection.slice(0, 1);
     userCase.respondents = [
       {
         ccdId: '1',
@@ -122,8 +122,11 @@ describe('Respond to tribunal response Controller', () => {
       responseText: 'some Text',
       hasSupportingMaterial: YesOrNo.NO,
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
 
-    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondToTribunalResponseController();
@@ -136,8 +139,11 @@ describe('Respond to tribunal response Controller', () => {
       responseText: 'some Text',
       hasSupportingMaterial: YesOrNo.YES,
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
 
-    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondToTribunalResponseController();
@@ -149,13 +155,29 @@ describe('Respond to tribunal response Controller', () => {
     const body = {
       responseText: 'some Text',
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
+
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondToTribunalResponseController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith('/respond-to-tribunal-response/1?lng=en');
+  });
+
+  it('should redirect error page when genericTseApplicationCollection not found', async () => {
+    const body = {
+      responseText: 'some Text',
+    };
 
     const request = mockRequestWithTranslation({ t, body }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondToTribunalResponseController();
     await controller.post(request, res);
-    expect(res.redirect).toHaveBeenCalledWith('/respond-to-tribunal-response/1?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 
   it('should redirect to not found page when response document cannot be resolved', async () => {

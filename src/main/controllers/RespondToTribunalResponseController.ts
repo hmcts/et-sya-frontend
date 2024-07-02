@@ -3,7 +3,6 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
@@ -13,17 +12,14 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
   populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
-import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
-import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { handlePost } from './helpers/RespondToApplicationHelper';
 
 const logger = getLogger('RespondToTribunalResponseController');
 
@@ -63,24 +59,7 @@ export default class RespondToTribunalResponseController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    setUserCase(req, this.form);
-    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const error = getApplicationResponseError(formData);
-    const languageParam = getLanguageParam(req.url);
-
-    if (error) {
-      req.session.errors = [];
-      req.session.errors.push(error);
-      const pageUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${languageParam}`;
-      return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
-    }
-    req.session.errors = [];
-    const redirectUrl =
-      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + languageParam
-        : copyToOtherPartyRedirectUrl(req.session.userCase) + languageParam;
-
-    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
+    await handlePost(req, res, this.form, PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, logger);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
