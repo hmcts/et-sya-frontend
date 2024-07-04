@@ -7,6 +7,7 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './helpers/CaseHelpers';
+import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StoreRespondentController');
@@ -22,14 +23,16 @@ export default class StoreRespondentController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
-    let appId;
-    try {
-      appId = req.session.userCase.selectedGenericTseApplication.id;
-      clearTseFields(req.session?.userCase);
-    } catch (error) {
-      logger.error(error.message);
+    const selectedApplication = findSelectedGenericTseApplication(
+      req.session.userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Selected application not found');
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
+
+    clearTseFields(req.session?.userCase);
 
     try {
       req.session.userCase = fromApiFormat(
@@ -41,7 +44,8 @@ export default class StoreRespondentController {
     }
 
     return res.redirect(
-      PageUrls.STORED_RESPONSE_APPLICATION_CONFIRMATION.replace(':appId', appId) + getLanguageParam(req.url)
+      PageUrls.STORED_RESPONSE_APPLICATION_CONFIRMATION.replace(':appId', selectedApplication.id) +
+        getLanguageParam(req.url)
     );
   };
 }

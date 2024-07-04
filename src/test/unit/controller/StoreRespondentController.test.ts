@@ -44,7 +44,8 @@ describe('Store respondent controller', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.selectedGenericTseApplication = { id: '246' };
+    request.session.userCase.genericTseApplicationCollection = [{ id: '246' }];
+    request.params.appId = '246';
 
     await new StoreRespondentController().get(request, response);
 
