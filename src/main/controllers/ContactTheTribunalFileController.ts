@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { getLogger } from '../logger';
 
@@ -17,7 +17,7 @@ export default class ContactTheTribunalFileController {
     const selectedOption = req.params.application;
     if (!applications.includes(selectedOption)) {
       logger.info('bad request parameter: "' + selectedOption + '"');
-      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + languageParam);
+      res.redirect(ErrorPages.NOT_FOUND + languageParam);
       return;
     }
 

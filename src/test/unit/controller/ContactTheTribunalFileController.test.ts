@@ -5,8 +5,7 @@ import { mockResponse } from '../mocks/mockResponse';
 import { safeUrlMock } from '../mocks/mockUrl';
 
 describe('Contact the tribunal file controller', () => {
-  const urlMock = safeUrlMock;
-  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(safeUrlMock);
 
   it('should remove uploaded file and refresh the page', () => {
     const controller = new ContactTheTribunalFileController();
@@ -27,5 +26,17 @@ describe('Contact the tribunal file controller', () => {
 
     expect(req.session.userCase.contactApplicationFile).toEqual(undefined);
     expect(res.redirect).toHaveBeenCalledWith(redirectUrl);
+  });
+
+  it('should redirect to error page when req.params.application not found', () => {
+    const controller = new ContactTheTribunalFileController();
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.params.application = 'test';
+
+    controller.get(req, res);
+    const expected = '/not-found?lng=en';
+
+    expect(res.redirect).toHaveBeenCalledWith(expected);
   });
 });
