@@ -13,6 +13,7 @@ describe('Respondent supporting material file controller', () => {
 
     const controller = new RespondentSupportingMaterialFileController();
     const req = mockRequest({});
+    req.session.userCase.genericTseApplicationCollection = [{ id: '1' }];
     req.params.appId = '1';
     const res = mockResponse();
     const userCase = req.session.userCase;
