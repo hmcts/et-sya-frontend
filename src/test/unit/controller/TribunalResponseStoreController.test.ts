@@ -47,6 +47,7 @@ describe('Tribunal response store controller', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
     request.session.userCase.selectedRequestOrOrder = { id: '246' };
     request.url = PageUrls.TRIBUNAL_RESPONSE_COMPLETED;
 
