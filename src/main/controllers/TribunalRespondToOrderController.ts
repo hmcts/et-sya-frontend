@@ -1,13 +1,13 @@
 import { Response } from 'express';
 
-import { getLogger } from '../../main/logger';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
@@ -61,7 +61,13 @@ export default class TribunalRespondToOrderController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const userCase = req.session.userCase;
+
     const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    if (selectedRequestOrOrder === undefined) {
+      logger.error('Selected order not found');
+      return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
+    }
+
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getResponseErrors(formData);
 
@@ -70,7 +76,7 @@ export default class TribunalRespondToOrderController {
       req.session.errors.push(error);
       const redirectUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(
         ':orderId',
-        req.params.orderId + getLanguageParam(req.url)
+        selectedRequestOrOrder.id + getLanguageParam(req.url)
       );
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }

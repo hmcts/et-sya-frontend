@@ -28,8 +28,7 @@ describe('Tribunal Respond to Order Controller', () => {
     common: {},
   };
 
-  const urlMock = safeUrlMock;
-  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(safeUrlMock);
 
   it('should render the Respond to Order page', async () => {
     const translationJsons = { ...respondJsonRaw, ...common };
@@ -147,8 +146,11 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const response = mockResponse();
     const request = mockRequest({ t, body, userCase });
+    request.session.userCase.sendNotificationCollection = [{ id: '1' }];
     request.params.orderId = '1';
+
     controller.post(request, response);
+
     expect(response.redirect).toHaveBeenCalledWith('/tribunal-respond-to-order/1?lng=en');
   });
 });
