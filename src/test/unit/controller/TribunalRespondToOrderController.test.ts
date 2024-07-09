@@ -67,6 +67,9 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const response = mockResponse();
     const request = mockRequest({ t, body, userCase });
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
+    request.params.orderId = '246';
+
     controller.post(request, response);
     expect(response.redirect).toHaveBeenCalledWith(
       PageUrls.COPY_TO_OTHER_PARTY + TranslationKeys.ENGLISH_URL_PARAMETER
@@ -87,6 +90,9 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const response = mockResponse();
     const request = mockRequest({ t, body, userCase });
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
+    request.params.orderId = '246';
+
     controller.post(request, response);
     expect(response.redirect).toHaveBeenCalledWith(
       PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + TranslationKeys.ENGLISH_URL_PARAMETER
@@ -130,9 +136,11 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const response = mockResponse();
     const request = mockRequest({ t, body, userCase });
-    request.params.orderId = '1';
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
+    request.params.orderId = '246';
+
     controller.post(request, response);
-    expect(response.redirect).toHaveBeenCalledWith('/respondent-supporting-material/1?lng=en');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent-supporting-material/246?lng=en');
   });
 
   it('should post and redirect to the same page when there are errors', () => {
@@ -152,5 +160,23 @@ describe('Tribunal Respond to Order Controller', () => {
     controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/tribunal-respond-to-order/1?lng=en');
+  });
+
+  it('should redirect to error page when not found', () => {
+    const body = {
+      hasSupportingMaterial: YesOrNo.NO,
+    };
+
+    const controller = new TribunalRespondToOrderController();
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+
+    const response = mockResponse();
+    const request = mockRequest({ t, body, userCase });
+    request.params.orderId = '1';
+
+    controller.post(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 });
