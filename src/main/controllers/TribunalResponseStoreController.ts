@@ -35,9 +35,16 @@ export default class TribunalResponseStoreController {
     }
 
     // Clear temporary fields + Update UserCase
-    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(
-      it => it.id === userCase.selectedRequestOrOrder.id
-    );
+    let selectedRequestOrOrder;
+    try {
+      selectedRequestOrOrder = userCase.sendNotificationCollection.find(
+        it => it.id === userCase.selectedRequestOrOrder.id
+      );
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
     if (selectedRequestOrOrder === undefined) {
       logger.error('Selected order not found');
       return res.redirect(ErrorPages.NOT_FOUND + languageParam);
