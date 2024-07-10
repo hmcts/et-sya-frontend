@@ -41,7 +41,7 @@ export default class AboutHearingDocumentsController {
       return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
     }
 
-    return res.redirect('/hearing-document-upload/' + foundHearing.id);
+    return res.redirect(PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':hearingId', foundHearing.id));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

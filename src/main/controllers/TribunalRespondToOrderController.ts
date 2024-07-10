@@ -15,7 +15,7 @@ import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 import {
-  determineRedirectUrlForECC,
+  determineRedirectUrl,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
 } from './helpers/TribunalOrderOrRequestHelper';
@@ -76,7 +76,7 @@ export default class TribunalRespondToOrderController {
     }
     req.session.errors = [];
 
-    const redirectUrl = determineRedirectUrlForECC(req, selectedRequestOrOrder);
+    const redirectUrl = determineRedirectUrl(req, selectedRequestOrOrder);
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 

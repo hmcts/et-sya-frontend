@@ -9,7 +9,6 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
-import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getFileErrorMessage, getPdfUploadError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getFilesRows } from './helpers/HearingDocumentUploadHelper';
@@ -72,16 +71,12 @@ export default class HearingDocumentUploadController {
       'hearingDocument'
     );
 
-    const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
-      req.params.appId
-    );
-    if (!selectedApplication) {
-      logger.error('Selected application not found');
+    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.params.hearingId);
+    if (!foundHearing) {
+      logger.error('Hearing not found');
       return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
     }
-    const pageUrl =
-      PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':appId', selectedApplication.id) + getLanguageParam(req.url);
+    const pageUrl = PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':hearingId', foundHearing.id) + getLanguageParam(req.url);
 
     if (hearingDocumentError) {
       req.session.errors.push(hearingDocumentError);
@@ -120,7 +115,7 @@ export default class HearingDocumentUploadController {
 
     (this.hearingDocumentUploadFormContent.fields as any).filesUploaded.rows = getFilesRows(
       userCase,
-      req.params.appId,
+      req.params.hearingId,
       {
         ...req.t(TranslationKeys.HEARING_DOCUMENT_UPLOAD, { returnObjects: true }),
       }

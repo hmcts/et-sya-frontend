@@ -125,7 +125,7 @@ describe('Respondent supporting material controller', () => {
     userCase.selectedRequestOrOrder = {
       id: '1',
       value: {
-        sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+        sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST, NotificationSubjects.ECC],
         sendNotificationEccQuestion: NoticeOfECC,
       },
     };
