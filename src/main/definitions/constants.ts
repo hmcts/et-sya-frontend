@@ -7,7 +7,9 @@ import {
   postcode_LondonSouth,
   postcode_Manchester,
   postcode_MidlandsEast,
+  postcode_MidlandsWest,
   postcode_Newcastle,
+  postcode_Wales,
   postcode_Watford,
 } from './postcode';
 
@@ -410,7 +412,9 @@ export const inScopeLocations = [].concat(
   postcode_LondonSouth,
   postcode_Manchester,
   postcode_Newcastle,
-  postcode_Watford
+  postcode_Watford,
+  postcode_Wales,
+  postcode_MidlandsWest
 );
 
 export const ET3_FORM = 'ET3';
