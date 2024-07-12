@@ -1,3 +1,4 @@
+import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
@@ -5,6 +6,8 @@ import { Applicant, NotificationSubjects, PageUrls, languages } from '../../defi
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
+
+import { formatDate, getEarliestFutureHearingDateCollection } from './HearingHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -315,4 +318,12 @@ const getStoredNotificationRespond = (
     }
   }
   return storeNotifications;
+};
+
+export const getHearingNotificationBanner = (hearingCollection: HearingModel[]): string => {
+  if (!hearingCollection) {
+    return;
+  }
+  const earliestDate = getEarliestFutureHearingDateCollection(hearingCollection);
+  return earliestDate ? formatDate(earliestDate.value.listedDate) : undefined;
 };
