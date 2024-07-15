@@ -7,7 +7,7 @@ import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
-import { formatDate, getEarliestFutureHearingDateCollection } from './HearingHelpers';
+import { setNextListedDate } from './HearingHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -320,10 +320,6 @@ const getStoredNotificationRespond = (
   return storeNotifications;
 };
 
-export const getHearingNotificationBanner = (hearingCollection: HearingModel[]): string => {
-  if (!hearingCollection) {
-    return;
-  }
-  const earliestDate = getEarliestFutureHearingDateCollection(hearingCollection);
-  return earliestDate ? formatDate(earliestDate.value.listedDate) : undefined;
+export const getHearingNotificationBanner = (hearingCollection: HearingModel[]): Date => {
+  return setNextListedDate(hearingCollection);
 };

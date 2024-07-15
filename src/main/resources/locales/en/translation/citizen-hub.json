@@ -67,6 +67,11 @@
       "header": "The tribunal has rejected the respondent's response.",
       "link": "View the rejection letter"
     },
+    "noticeOfHearing": {
+      "header": "The tribunal has your case for a hearing on",
+      "date": "Date of hearing:",
+      "note": "Please refer to your Notice of Hearing document"
+    },
     "respondentAcknowledgement": {
       "header": "The tribunal has acknowledged the respondent's response."
     },

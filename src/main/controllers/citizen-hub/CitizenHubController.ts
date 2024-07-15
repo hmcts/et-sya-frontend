@@ -212,7 +212,7 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
-      showHearingNotificationBanner: getHearingNotificationBanner(userCase.hearingCollection),
+      showHearingNotificationDate: getHearingNotificationBanner(userCase.hearingCollection),
       notifications: ordersRequestsGeneralNotifications,
       eccNotifications,
       languageParam: getLanguageParam(req.url),

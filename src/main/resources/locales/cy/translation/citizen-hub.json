@@ -67,6 +67,11 @@
       "header": "Mae'r tribiwnlys wedi gwrthod ymateb yr atebydd.",
       "link": "Gweld y llythyr gwrthod"
     },
+    "noticeOfHearing": {
+      "header": "The tribunal has your case for a hearing on",
+      "date": "Date of hearing:",
+      "note": "Please refer to your Notice of Hearing document"
+    },
     "respondentAcknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod ymateb yr atebydd."
     },
