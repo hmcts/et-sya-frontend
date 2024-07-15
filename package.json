@@ -176,5 +176,5 @@
     "ws": "^8.17.1",
     "ip": "^2.0.1"
   },
-  "packageManager": "yarn@3.8.0"
+  "packageManager": "yarn@3.8.3"
 }
