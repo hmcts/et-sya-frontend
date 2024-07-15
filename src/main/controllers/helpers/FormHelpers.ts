@@ -5,7 +5,6 @@ import { PageUrls } from '../../definitions/constants';
 import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
-import {formatDate, getFutureHearingDateCollection} from './HearingHelpers';
 import { mapSelectedRespondentValuesToCase } from './RespondentHelpers';
 
 export const getPageContent = (
@@ -103,8 +102,27 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
   }
 };
 
+const formatDate = (rawDate: Date): string =>
+  new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(rawDate));
+
 export const createLabelForHearing = (hearing: HearingModel): string => {
-  const earliestDate = getFutureHearingDateCollection(hearing);
+  // filter out hearings with dates in the past
+  // hearings can have multiple dates set so
+  // reduce to find the earliest date set for that particular hearing
+  const hearingsInFuture = hearing.value.hearingDateCollection.filter(
+    item => new Date(item.value.listedDate) > new Date()
+  );
+
+  if (!hearingsInFuture.length) {
+    return;
+  }
+  const earliestDate = hearingsInFuture.reduce((a, b) =>
+    new Date(a.value.listedDate) > new Date(b.value.listedDate) ? b : a
+  );
   const venue = hearing.value?.Hearing_venue_Scotland || hearing.value?.Hearing_venue?.value?.label;
   return `${hearing.value.hearingNumber ?? ''} ${hearing.value.Hearing_type ?? ''} - ${venue ?? ''} - ${formatDate(
     earliestDate.value.listedDate
