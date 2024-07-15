@@ -5700,16 +5700,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromium-bidi@npm:0.5.24":
-  version: 0.5.24
-  resolution: "chromium-bidi@npm:0.5.24"
+"chromium-bidi@npm:0.6.0":
+  version: 0.6.0
+  resolution: "chromium-bidi@npm:0.6.0"
   dependencies:
     mitt: 3.0.1
     urlpattern-polyfill: 10.0.0
     zod: 3.23.8
   peerDependencies:
     devtools-protocol: "*"
-  checksum: 26c283e3740201c880eb7dbbf0854ffe53ce6c4890e0f1039ddf703b7a68cfea9d5d30e8069b93b95333d852c4028ec6b365f13759dd9763ad1399aae8d47a16
+  checksum: 818cceb9737a46aea5d58be9068de5708f3b9f03517c433808624cd5f25c7dad1b5c60187e3eef4c96258f43a9b56342b76f92757d947a1a84ca7b16baddcc3f
   languageName: node
   linkType: hard
 
@@ -13753,16 +13753,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:22.12.1":
-  version: 22.12.1
-  resolution: "puppeteer-core@npm:22.12.1"
+"puppeteer-core@npm:22.13.0":
+  version: 22.13.0
+  resolution: "puppeteer-core@npm:22.13.0"
   dependencies:
     "@puppeteer/browsers": 2.2.3
-    chromium-bidi: 0.5.24
+    chromium-bidi: 0.6.0
     debug: ^4.3.5
     devtools-protocol: 0.0.1299070
-    ws: ^8.17.1
-  checksum: 22678bba55cfc84aad3994ed653e1bc7ded0b0b933db15dae93415fe7cc6a188561ec7ddcd7bc36fc7c86f4e261cd742328a8d323b0e5ac74f9db8a73baa7d13
+    ws: ^8.18.0
+  checksum: 36fb0c9563968e2b0b4b232c93a7ccf58a322d59b6e96b213d2454ab06172578e4c6fd79e77d7494eca07bd57bed103c0cd4329e63ac54c751923e13605a7e3a
   languageName: node
   linkType: hard
 
@@ -13786,16 +13786,16 @@ __metadata:
   linkType: hard
 
 "puppeteer@npm:^22.0.0, puppeteer@npm:^22.3.0":
-  version: 22.12.1
-  resolution: "puppeteer@npm:22.12.1"
+  version: 22.13.0
+  resolution: "puppeteer@npm:22.13.0"
   dependencies:
     "@puppeteer/browsers": 2.2.3
     cosmiconfig: ^9.0.0
     devtools-protocol: 0.0.1299070
-    puppeteer-core: 22.12.1
+    puppeteer-core: 22.13.0
   bin:
     puppeteer: lib/esm/puppeteer/node/cli.js
-  checksum: 07e899d987857c00c7124f282007c413c79a2e98068a5d44dbd85dbcf869602e4a5528603349750007b108e36bb9e4af4442621279083e3030eeec093ef34b87
+  checksum: 5a14e538a9ed287ccab8a2874480680c4a826feae2c9b0f3b3054fc715062eba85f60779fd8d204ae79d14d879c2ca2d69590d5715bcda8667b59143184e930d
   languageName: node
   linkType: hard
 
