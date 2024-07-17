@@ -9766,14 +9766,14 @@ __metadata:
   linkType: hard
 
 "import-in-the-middle@npm:^1.4.2":
-  version: 1.9.0
-  resolution: "import-in-the-middle@npm:1.9.0"
+  version: 1.9.1
+  resolution: "import-in-the-middle@npm:1.9.1"
   dependencies:
     acorn: ^8.8.2
     acorn-import-attributes: ^1.9.5
     cjs-module-lexer: ^1.2.2
     module-details-from-path: ^1.0.3
-  checksum: 33f1a8eeaf602d6493d4c2b94d7c88bfe83ef297921340559c37da8999731292e8f59bff5fa96d9cf7298a851de5daa02ec6e89dbb8f3f4f47fec211587dfa78
+  checksum: 5f2778091aea3e4b450594c1520e3e6ad3298dbbb1613e8a0e856b67c595097ec9ad0944190619a0792ea5836fd6bd6ddce5a18a6b2dc7ae07127668b62ac693
   languageName: node
   linkType: hard
 
