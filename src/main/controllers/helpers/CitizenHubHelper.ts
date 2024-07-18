@@ -4,7 +4,6 @@ import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/ge
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
-import { HearingNotification } from '../../definitions/hearingNotification';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -321,6 +320,6 @@ const getStoredNotificationRespond = (
   return storeNotifications;
 };
 
-export const getHearingNotificationBanner = (hearingCollection: HearingModel[]): HearingNotification => {
+export const getHearingNotificationBanner = (hearingCollection: HearingModel[]): Date => {
   return setNextListedDate(hearingCollection);
 };

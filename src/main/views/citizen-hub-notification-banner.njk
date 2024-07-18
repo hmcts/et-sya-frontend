@@ -88,10 +88,10 @@
 {% set htmlForHearingNotification %}
 {% if showHearingNotificationDate %}
     <h3 class="govuk-notification-banner__heading">
-      {{ notificationBanner.noticeOfHearing.header }} {{ dateToLocale(showHearingNotificationDate.nextHearingDate) }}
+      {{ notificationBanner.noticeOfHearing.header }} {{ dateToLocale(showHearingNotificationDate) }}
     </h3>
     <p class="govuk-body">
-      {{ notificationBanner.noticeOfHearing.date }} {{ dateToLocale(showHearingNotificationDate.nextHearingDate) }}
+      {{ notificationBanner.noticeOfHearing.date }} {{ dateToLocale(showHearingNotificationDate) }}
     </p>
     <p class="govuk-body">
       <a class="govuk-link" href="/hearing-details">{{ notificationBanner.noticeOfHearing.link }}</a>

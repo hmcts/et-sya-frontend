@@ -1,11 +1,6 @@
 {
-  "hearingType": "Hearing Type",
-  "hearingVenue": "Hearing Venue",
-  "hearingFormat": "Hearing Format",
-  "hearingPublicPrivate": "Public or Private?",
-  "hearingNumber": "Hearing Number",
-  "hearingEstLengthNum": "Estimated hearing length",
-  "hearingEstLengthNumType": "Days, Hours or Minutes",
-  "hearingSitAlone": "Sit Alone or Full Panel",
-  "judge": "Employment Judge"
+  "header": "Hearings",
+  "hearingDate": "Hearing Date",
+  "hearingStatus": "Hearing Status",
+  "hearingVenue": "Hearing Venue"
 }
