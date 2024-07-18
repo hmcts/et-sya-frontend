@@ -11,9 +11,33 @@
         <div class="govuk-grid-column-two-thirds">
             {% include "back-link.njk" %}
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
-            {{ govukSummaryList({
-                rows: hearingContent
-            }) }}
+
+          {% for hearing in hearingCollection %}
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col"> Hearing Date </th>
+              <th class="govuk-table__header" scope="col"> Hearing Status </th>
+              <th class="govuk-table__header" scope="col"> Hearing Venue </th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            {% for hearingDate in hearing.value.hearingDateCollection %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    {{ dateToLocale(hearingDate.value.listedDate) }}
+                </td>
+                <td class="govuk-table__cell">
+                    {{ hearingDate.value.Hearing_status }}
+                </td>
+                <td class="govuk-table__cell">
+                    {{ hearingDate.value.hearingVenueDay.value.label }}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          {% endfor %}
         </div>
 
         <div class="govuk-grid-column-one-third-from-desktop">
