@@ -70,7 +70,7 @@
     "noticeOfHearing": {
       "header": "The tribunal has listed your case for a hearing on",
       "date": "Date of hearing:",
-      "note": "Please refer to your Notice of Hearing document"
+      "link": "View the Notice of Hearing"
     },
     "respondentAcknowledgement": {
       "header": "The tribunal has acknowledged the respondent's response."
