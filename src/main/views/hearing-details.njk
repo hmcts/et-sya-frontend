@@ -14,28 +14,23 @@
 
             {% for hearing in hearingCollection %}
             <table class="govuk-table">
-              <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">{{ hearingDate }}</th>
-                <th class="govuk-table__header" scope="col">{{ hearingStatus }}</th>
-                <th class="govuk-table__header" scope="col">{{ hearingVenue }}</th>
-              </tr>
-              </thead>
-              <tbody class="govuk-table__body">
-              {% for hearingDate in hearing.value.hearingDateCollection %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
-                      {{ dateTimeInLocale(hearingDate.value.listedDate) }}
-                  </td>
-                  <td class="govuk-table__cell">
-                      {{ hearingDate.value.Hearing_status }}
-                  </td>
-                  <td class="govuk-table__cell">
-                      {{ hearingDate.value.hearingVenueDay.value.label }}
-                  </td>
-                </tr>
-              {% endfor %}
-              </tbody>
+                <caption class="govuk-table__caption govuk-table__caption--m">{{ hearing.value.hearingNumber }}</caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingDate }}</th>
+                        <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingStatus }}</th>
+                        <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingVenue }}</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    {% for hearingDate in hearing.value.hearingDateCollection %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">{{ dateTimeInLocale(hearingDate.value.listedDate) }}</td>
+                        <td class="govuk-table__cell">{{ hearingDate.value.Hearing_status }}</td>
+                        <td class="govuk-table__cell">{{ hearingDate.value.hearingVenueDay.value.label }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             {% endfor %}
 
