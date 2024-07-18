@@ -2737,21 +2737,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@puppeteer/browsers@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@puppeteer/browsers@npm:2.2.3"
+"@puppeteer/browsers@npm:2.2.4":
+  version: 2.2.4
+  resolution: "@puppeteer/browsers@npm:2.2.4"
   dependencies:
-    debug: 4.3.4
-    extract-zip: 2.0.1
-    progress: 2.0.3
-    proxy-agent: 6.4.0
-    semver: 7.6.0
-    tar-fs: 3.0.5
-    unbzip2-stream: 1.4.3
-    yargs: 17.7.2
+    debug: ^4.3.5
+    extract-zip: ^2.0.1
+    progress: ^2.0.3
+    proxy-agent: ^6.4.0
+    semver: ^7.6.2
+    tar-fs: ^3.0.6
+    unbzip2-stream: ^1.4.3
+    yargs: ^17.7.2
   bin:
     browsers: lib/cjs/main-cli.js
-  checksum: 44d496e2c4d717e472b40473fd916b1aa3b1a6024b9e4f571ca1521172ae38d090b5f331ccc6694593f41eb0b667865d72e4c9bc29d6a705a369ade53dacbd5c
+  checksum: 54351b1d81c7bdad314e1039e7efd5f00e4244831880e2275f97051534fcac8d6f626b02f42dbc7f3ccce8996e712b2cec162303d1d3408c59351d3fd35e3290
   languageName: node
   linkType: hard
 
@@ -5738,16 +5738,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromium-bidi@npm:0.6.0":
-  version: 0.6.0
-  resolution: "chromium-bidi@npm:0.6.0"
+"chromium-bidi@npm:0.6.1":
+  version: 0.6.1
+  resolution: "chromium-bidi@npm:0.6.1"
   dependencies:
     mitt: 3.0.1
     urlpattern-polyfill: 10.0.0
     zod: 3.23.8
   peerDependencies:
     devtools-protocol: "*"
-  checksum: 818cceb9737a46aea5d58be9068de5708f3b9f03517c433808624cd5f25c7dad1b5c60187e3eef4c96258f43a9b56342b76f92757d947a1a84ca7b16baddcc3f
+  checksum: 6ba37f59482427cdf7b07cb93738fedc272cc8283b491b3c326ab24202d325d3116a350a27358260498dfbfe264468c484c1dd1ab552f786f6c8d421e3f23bf1
   languageName: node
   linkType: hard
 
@@ -8189,7 +8189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extract-zip@npm:2.0.1":
+"extract-zip@npm:2.0.1, extract-zip@npm:^2.0.1":
   version: 2.0.1
   resolution: "extract-zip@npm:2.0.1"
   dependencies:
@@ -13635,7 +13635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"progress@npm:2.0.3":
+"progress@npm:2.0.3, progress@npm:^2.0.3":
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
   checksum: f67403fe7b34912148d9252cb7481266a354bd99ce82c835f79070643bb3c6583d10dbcfda4d41e04bbc1d8437e9af0fb1e1f2135727878f5308682a579429b7
@@ -13730,7 +13730,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-agent@npm:6.4.0":
+"proxy-agent@npm:^6.4.0":
   version: 6.4.0
   resolution: "proxy-agent@npm:6.4.0"
   dependencies:
@@ -13791,16 +13791,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:22.13.0":
-  version: 22.13.0
-  resolution: "puppeteer-core@npm:22.13.0"
+"puppeteer-core@npm:22.13.1":
+  version: 22.13.1
+  resolution: "puppeteer-core@npm:22.13.1"
   dependencies:
-    "@puppeteer/browsers": 2.2.3
-    chromium-bidi: 0.6.0
+    "@puppeteer/browsers": 2.2.4
+    chromium-bidi: 0.6.1
     debug: ^4.3.5
     devtools-protocol: 0.0.1299070
     ws: ^8.18.0
-  checksum: 36fb0c9563968e2b0b4b232c93a7ccf58a322d59b6e96b213d2454ab06172578e4c6fd79e77d7494eca07bd57bed103c0cd4329e63ac54c751923e13605a7e3a
+  checksum: 557f5f1539b0fc7990f1286d925de5dd009e27034e65a2be511e8714f00c09f9c01727f1600190bcf7e9997095dec6463df2d92391cd741aef6ac34a1e50e041
   languageName: node
   linkType: hard
 
@@ -13824,16 +13824,16 @@ __metadata:
   linkType: hard
 
 "puppeteer@npm:^22.0.0, puppeteer@npm:^22.3.0":
-  version: 22.13.0
-  resolution: "puppeteer@npm:22.13.0"
+  version: 22.13.1
+  resolution: "puppeteer@npm:22.13.1"
   dependencies:
-    "@puppeteer/browsers": 2.2.3
+    "@puppeteer/browsers": 2.2.4
     cosmiconfig: ^9.0.0
     devtools-protocol: 0.0.1299070
-    puppeteer-core: 22.13.0
+    puppeteer-core: 22.13.1
   bin:
     puppeteer: lib/esm/puppeteer/node/cli.js
-  checksum: 5a14e538a9ed287ccab8a2874480680c4a826feae2c9b0f3b3054fc715062eba85f60779fd8d204ae79d14d879c2ca2d69590d5715bcda8667b59143184e930d
+  checksum: e84300d7dd08b98622b429fff6399dcd81aea7e42b63527db1d691faa603620f15fb8d25d931ee78bfa7789a51a21f1e4a89441b496845c82dc82562c1f362d6
   languageName: node
   linkType: hard
 
@@ -15690,9 +15690,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar-fs@npm:3.0.5":
-  version: 3.0.5
-  resolution: "tar-fs@npm:3.0.5"
+"tar-fs@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "tar-fs@npm:3.0.6"
   dependencies:
     bare-fs: ^2.1.1
     bare-path: ^2.1.0
@@ -15703,7 +15703,7 @@ __metadata:
       optional: true
     bare-path:
       optional: true
-  checksum: e31c7e3e525fec0afecdec1cac58071809e396187725f2eba442f08a4c5649c8cd6b7ce25982f9a91bb0f055628df47c08177dd2ea4f5dafd3c22f42f8da8f00
+  checksum: b4fa09c70f75caf05bf5cf87369cd2862f1ac5fb75c4ddf9d25d55999f7736a94b58ad679d384196cba837c5f5ff14086e060fafccef5474a16e2d3058ffa488
   languageName: node
   linkType: hard
 
@@ -16270,7 +16270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unbzip2-stream@npm:1.4.3":
+"unbzip2-stream@npm:1.4.3, unbzip2-stream@npm:^1.4.3":
   version: 1.4.3
   resolution: "unbzip2-stream@npm:1.4.3"
   dependencies:
@@ -17231,7 +17231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.7.2, yargs@npm:^17.2.1, yargs@npm:^17.3.1":
+"yargs@npm:^17.2.1, yargs@npm:^17.3.1, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
