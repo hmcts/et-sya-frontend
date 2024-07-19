@@ -1,3 +1,4 @@
+import { isHearingExist } from '../controllers/helpers/HearingHelpers';
 import { CaseWithId } from '../definitions/case';
 import { CaseState, HubCaseState } from '../definitions/definition';
 
@@ -24,7 +25,9 @@ export class StateSequence {
   }
 
   public toHubState(userCase: Partial<CaseWithId>): HubCaseState {
-    if (userCase.et3ResponseReceived) {
+    if (isHearingExist(userCase.hearingCollection)) {
+      return HubCaseState.HEARING_DETAILS;
+    } else if (userCase.et3ResponseReceived) {
       return HubCaseState.RESPONSE_RECEIVED;
     } else if (userCase.state === CaseState.ACCEPTED) {
       return HubCaseState.ACCEPTED;
