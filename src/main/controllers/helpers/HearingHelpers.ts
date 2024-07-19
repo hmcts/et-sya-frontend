@@ -1,5 +1,9 @@
 import { HearingModel } from '../../definitions/api/caseApiResponse';
 
+export const isHearingExist = (hearingCollection: HearingModel[]): boolean => {
+  return hearingCollection && hearingCollection.length > 0;
+};
+
 export const setNextListedDate = (hearingCollection: HearingModel[]): Date => {
   // Check if hearingCollection is not empty
   if (!hearingCollection || hearingCollection.length === 0) {

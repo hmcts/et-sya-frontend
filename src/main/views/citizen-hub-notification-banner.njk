@@ -86,12 +86,12 @@
 {% endset %}
 
 {% set htmlForHearingNotification %}
-{% if showHearingNotificationDate %}
+{% if hearingNotificationBanner %}
     <h3 class="govuk-notification-banner__heading">
-      {{ notificationBanner.noticeOfHearing.header }} {{ dateToLocale(showHearingNotificationDate) }}
+      {{ notificationBanner.noticeOfHearing.header }} {{ dateToLocale(hearingNotificationBanner) }}
     </h3>
     <p class="govuk-body">
-      {{ notificationBanner.noticeOfHearing.date }} {{ dateToLocale(showHearingNotificationDate) }}
+      {{ notificationBanner.noticeOfHearing.date }} {{ dateToLocale(hearingNotificationBanner) }}
     </p>
     <p class="govuk-body">
       <a class="govuk-link" href="/hearing-details">{{ notificationBanner.noticeOfHearing.link }}</a>
@@ -148,7 +148,7 @@
   }) }}
 {% endif %}
 
-{% if showHearingNotificationDate %}
+{% if hearingNotificationBanner %}
     {{ govukNotificationBanner({
         html: htmlForHearingNotification,
         titleText: important
