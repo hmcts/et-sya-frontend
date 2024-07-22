@@ -1,5 +1,5 @@
 import WorkPostcodeController from '../../../main/controllers/WorkPostcodeController';
-import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -44,14 +44,14 @@ describe('Work Postcode Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
     });
 
-    it('should render the legacy ET1 service when a non mvp location is given', () => {
-      const notMvpPostCode = 'LA1 1YN'; // Lancaster
-      const body = { workPostcode: notMvpPostCode };
+    it('should render the next page when a valid postcode is given', () => {
+      const postcode = 'LA1 1YN'; // Lancaster
+      const body = { workPostcode: postcode };
 
       const req = mockRequest({ body });
       const res = mockResponse();
       new WorkPostcodeController().post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
     });
   });
 });
