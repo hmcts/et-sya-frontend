@@ -1,5 +1,3 @@
-import config from 'config';
-
 import { getRedirectUrl } from '../../../../main/controllers/helpers/TypeOfClaimHelpers';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../../main/definitions/definition';
@@ -54,13 +52,12 @@ describe('Type of Claim Helpers Test getRedirectUrl', () => {
     expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
   });
 
-  it('Postcode not in Expansion, selected BREACH_OF_CONTRACT, returns url', () => {
+  it('Postcode is valid, selected BREACH_OF_CONTRACT, returns url', () => {
     req.session.userCase.workPostcode = 'LA1 1YN'; // Lancaster
     req.body = {
       typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
     };
     const actual = getRedirectUrl(req, form);
-    const expected = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
-    expect(actual).toStrictEqual(expected);
+    expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
   });
 });
