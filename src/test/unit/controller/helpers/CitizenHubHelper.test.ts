@@ -9,6 +9,7 @@ import {
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
   shouldShowSubmittedAlert,
+  updateHearingHubLinkStatuses,
   updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
@@ -715,5 +716,45 @@ describe('show submitted alert', () => {
   it('should not submitted alert when case accepted', () => {
     userCase.state = CaseState.ACCEPTED;
     expect(shouldShowSubmittedAlert(userCase)).toEqual(false);
+  });
+});
+
+describe('updateHearingHubLinkStatuses', () => {
+  it('should update HearingDetails to READY_TO_VIEW', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      hearingCollection: [
+        {
+          id: '123',
+          value: {
+            hearingFormat: ['In person', 'Telephone', 'Video'],
+            hearingNumber: '3333',
+            hearingSitAlone: 'Sit Alone',
+            judicialMediation: 'Yes',
+            hearingEstLengthNum: 22,
+            hearingPublicPrivate: 'Public',
+            hearingDateCollection: [],
+          },
+        },
+      ],
+    };
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+    updateHearingHubLinkStatuses(userCase, hubLinksStatuses);
+    expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
+  });
+
+  it('should not update HearingDetails', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+    };
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+    updateHearingHubLinkStatuses(userCase, hubLinksStatuses);
+    expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
 });
