@@ -85,17 +85,6 @@
 
 {% endset %}
 
-{% set htmlForHearingNotification %}
-{% if hearingNotificationBanner %}
-    <h3 class="govuk-notification-banner__heading">
-      {{ notificationBanner.noticeOfHearing.header }}
-    </h3>
-    <p class="govuk-body">
-      <a class="govuk-link" href="/hearing-details">{{ notificationBanner.noticeOfHearing.link }}</a>
-    </p>
-{% endif %}
-{% endset %}
-
 {% set htmlForRespondentAcknowledgement %}
 
 {% if showRespondentAcknowledgement %}
@@ -145,11 +134,15 @@
   }) }}
 {% endif %}
 
-{% if hearingNotificationBanner %}
-    {{ govukNotificationBanner({
-        html: htmlForHearingNotification,
-        titleText: important
-    }) }}
+{% if showHearingNotification %}
+  {% set htmlForHearingNotification %}
+    <h3 class="govuk-notification-banner__heading">{{ notificationBanner.noticeOfHearing.header }}</h3>
+    <p class="govuk-body"><a class="govuk-link" href="/hearing-details">{{ notificationBanner.noticeOfHearing.link }}</a></p>
+  {% endset %}
+  {{ govukNotificationBanner({
+      html: htmlForHearingNotification,
+      titleText: important
+  }) }}
 {% endif %}
 
 {% if showRespondentAcknowledgement %}

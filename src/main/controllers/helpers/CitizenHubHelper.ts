@@ -1,4 +1,3 @@
-import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
@@ -7,7 +6,7 @@ import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
-import { isHearingExist, setNextListedDate } from './HearingHelpers';
+import { isHearingExist } from './HearingHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -325,8 +324,4 @@ export const updateHearingHubLinkStatuses = (userCase: CaseWithId, hubLinksStatu
   if (isHearingExist(userCase.hearingCollection)) {
     hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.READY_TO_VIEW;
   }
-};
-
-export const getHearingNotificationBanner = (hearingCollection: HearingModel[]): Date => {
-  return setNextListedDate(hearingCollection);
 };

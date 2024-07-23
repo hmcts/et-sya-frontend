@@ -1,28 +1,19 @@
-import { HearingModel } from '../../definitions/api/caseApiResponse';
+import { HearingDateCollection, HearingModel } from '../../definitions/api/caseApiResponse';
 
 export const isHearingExist = (hearingCollection: HearingModel[]): boolean => {
   return hearingCollection && hearingCollection.length > 0;
 };
 
-export const setNextListedDate = (hearingCollection: HearingModel[]): Date => {
-  // Check if hearingCollection is not empty
-  if (!hearingCollection || hearingCollection.length === 0) {
-    return undefined;
-  }
-  const now = new Date();
-  let nextListedDate: Date | undefined = undefined;
-  // Extract all listed dates from the hearing collection
-  hearingCollection.forEach(hearing => {
-    if (hearing.value.hearingDateCollection) {
-      hearing.value.hearingDateCollection.forEach(dateCollection => {
-        const listedDate = new Date(dateCollection.value.listedDate);
-        // Check if the listedDate is in the future
-        if (listedDate && listedDate > now && (nextListedDate === undefined || listedDate < nextListedDate)) {
-          nextListedDate = listedDate;
-        }
-      });
-    }
-  });
+export const shouldShowHearingInFuture = (hearingCollection: HearingModel[]): boolean => {
+  return hearingCollection?.some(hearing => isHearingCollectionInFuture(hearing)) || false;
+};
 
-  return nextListedDate;
+const isHearingCollectionInFuture = (hearing: HearingModel): boolean => {
+  return hearing.value.hearingDateCollection?.some(dateItem => isListedDateInFuture(dateItem)) || false;
+};
+
+const isListedDateInFuture = (dateItem: HearingDateCollection): boolean => {
+  const now = new Date();
+  const listedDate = new Date(dateItem.value.listedDate);
+  return listedDate && listedDate > now;
 };
