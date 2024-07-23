@@ -14,7 +14,7 @@
 
             {% for hearing in hearingCollection %}
             <table class="govuk-table">
-                <caption class="govuk-table__caption govuk-table__caption--m">{{ hearing.value.hearingNumber }}</caption>
+                <caption class="govuk-table__caption govuk-table__caption--m">{{ hearing.value.hearingNumber }} - {{ hearing.value.Hearing_type }}</caption>
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingDate }}</th>
