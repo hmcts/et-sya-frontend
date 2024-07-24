@@ -1,4 +1,5 @@
 import { HearingDateCollection, HearingModel } from '../../definitions/api/caseApiResponse';
+import { HearingStatus } from '../../definitions/hearing';
 
 export const isHearingExist = (hearingCollection: HearingModel[]): boolean => {
   return hearingCollection && hearingCollection.length > 0;
@@ -13,7 +14,5 @@ const isHearingCollectionInFuture = (hearing: HearingModel): boolean => {
 };
 
 const isListedDateInFuture = (dateItem: HearingDateCollection): boolean => {
-  const now = new Date();
-  const listedDate = new Date(dateItem.value.listedDate);
-  return listedDate && listedDate > now;
+  return dateItem.value.Hearing_status === HearingStatus.LISTED && new Date(dateItem.value.listedDate) > new Date();
 };
