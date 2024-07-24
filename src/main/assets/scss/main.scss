@@ -136,3 +136,8 @@ $lightgrey-panel: #d3d3d3;
 .no-text-transform {
   text-transform: none;
 }
+
+.scrollableTable .govuk-table {
+  display: block;
+  overflow-x: auto;
+}
