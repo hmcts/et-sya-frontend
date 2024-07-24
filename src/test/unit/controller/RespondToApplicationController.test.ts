@@ -5,6 +5,7 @@ import { TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
+import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { safeUrlMock } from '../mocks/mockUrl';
@@ -18,8 +19,7 @@ describe('Respond to application Controller', () => {
     common: {},
   };
 
-  const urlMock = safeUrlMock;
-  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(safeUrlMock);
 
   it('should render the Respond to application page', async () => {
     const mockClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
@@ -58,8 +58,22 @@ describe('Respond to application Controller', () => {
       responseText: 'some Text',
       hasSupportingMaterial: YesOrNo.NO,
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+      respondents: [
+        {
+          ccdId: '1',
+        },
+      ],
+      representatives: [
+        {
+          respondentId: '1',
+          hasMyHMCTSAccount: YesOrNo.YES,
+        },
+      ],
+    };
 
-    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondToApplicationController();
@@ -72,8 +86,11 @@ describe('Respond to application Controller', () => {
       responseText: 'some Text',
       hasSupportingMaterial: YesOrNo.YES,
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
 
-    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondToApplicationController();
@@ -85,12 +102,28 @@ describe('Respond to application Controller', () => {
     const body = {
       responseText: 'some Text',
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
+
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondToApplicationController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith('/respond-to-application/1?lng=en');
+  });
+
+  it('should redirect error page when genericTseApplicationCollection not found', async () => {
+    const body = {
+      responseText: 'some Text',
+    };
 
     const request = mockRequestWithTranslation({ t, body }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondToApplicationController();
     await controller.post(request, res);
-    expect(res.redirect).toHaveBeenCalledWith('/respond-to-application/1?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 });
