@@ -137,7 +137,9 @@ $lightgrey-panel: #d3d3d3;
   text-transform: none;
 }
 
-.scrollableTable .govuk-table {
-  display: block;
-  overflow-x: auto;
+.scrollableTable {
+  .govuk-table {
+    display: block;
+    overflow-x: auto;
+  }
 }
