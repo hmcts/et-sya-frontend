@@ -115,6 +115,18 @@ describe('Hearing Helpers - isHearingInFuture', () => {
     expect(expected).toEqual(false);
   });
 
+  it('should return false with not Listed status', () => {
+    collection[0].value.hearingDateCollection.push({
+      id: '123abc',
+      value: {
+        listedDate: new Date('2099-07-04T14:00:00.000'),
+        Hearing_status: 'Postponed',
+      },
+    });
+    const expected = shouldShowHearingInFuture(collection);
+    expect(expected).toEqual(false);
+  });
+
   it('should return undefined if no hearing', () => {
     const expected = shouldShowHearingInFuture(undefined);
     expect(expected).toEqual(false);
