@@ -1,7 +1,7 @@
 import RespondentSupportingMaterialController from '../../../main/controllers/RespondentSupportingMaterialController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
-import { YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import {
   NoticeOfECC,
   NotificationSubjects,
@@ -13,6 +13,7 @@ import {
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import respondentSupportingMaterial from '../../../main/resources/locales/en/translation/respondent-supporting-material.json';
 import { mockFile } from '../mocks/mockFile';
+import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import mockUserCase from '../mocks/mockUserCase';
@@ -71,6 +72,7 @@ describe('Respondent supporting material controller', () => {
           hasMyHMCTSAccount: YesOrNo.YES,
         },
       ],
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
     };
 
     const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
@@ -85,8 +87,11 @@ describe('Respondent supporting material controller', () => {
     const body = {
       responseText: 'some Text',
     };
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
 
-    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondentSupportingMaterialController();
@@ -107,6 +112,7 @@ describe('Respondent supporting material controller', () => {
         sendNotificationSubject: [NotificationSubjects.ECC],
       },
     };
+    userCase.genericTseApplicationCollection = mockGenericTseCollection.slice(0, 1);
 
     const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
     request.session.contactType = Rule92Types.TRIBUNAL;
@@ -140,15 +146,21 @@ describe('Respondent supporting material controller', () => {
   });
 
   describe('Correct validation', () => {
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
+
     it('should require either summary text or summary file', async () => {
-      const req = mockRequest({ body: { responseText: '' } });
+      const req = mockRequest({ body: { responseText: '' }, userCase });
+      req.params.appId = '1';
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'responseText', errorType: 'required' }]);
     });
 
     it('should not allow invalid free text size', async () => {
-      const req = mockRequest({ body: { responseText: '1'.repeat(2501) } });
+      const req = mockRequest({ body: { responseText: '1'.repeat(2501) }, userCase });
+      req.params.appId = '1';
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'responseText', errorType: 'tooLong' }]);
@@ -157,7 +169,8 @@ describe('Respondent supporting material controller', () => {
     it('should only allow valid file formats', async () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
-      const req = mockRequest({ body: {}, file: newFile });
+      const req = mockRequest({ body: {}, userCase, file: newFile });
+      req.params.appId = '1';
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'supportingMaterialFile', errorType: 'invalidFileFormat' }]);
@@ -166,8 +179,9 @@ describe('Respondent supporting material controller', () => {
     it('should only allow valid file sizes', async () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileSize';
-      const req = mockRequest({ body: {}, file: newFile });
+      const req = mockRequest({ body: {}, userCase, file: newFile });
       req.fileTooLarge = true;
+      req.params.appId = '1';
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'supportingMaterialFile', errorType: 'invalidFileSize' }]);
@@ -176,7 +190,8 @@ describe('Respondent supporting material controller', () => {
     it('should only allow valid file names', async () => {
       const newFile = mockFile;
       newFile.originalname = '$%?invalid.txt';
-      const req = mockRequest({ body: {}, file: newFile });
+      const req = mockRequest({ body: {}, userCase, file: newFile });
+      req.params.appId = '1';
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'supportingMaterialFile', errorType: 'invalidFileName' }]);
@@ -185,7 +200,9 @@ describe('Respondent supporting material controller', () => {
     it('should assign values when clicking upload file for appropriate values', async () => {
       const req = mockRequest({
         body: { upload: true, responseText: 'test', supportingMaterialFile: mockFile },
+        userCase,
       });
+      req.params.appId = '1';
       const res = mockResponse();
 
       await new RespondentSupportingMaterialController().post(req, res);
@@ -211,6 +228,9 @@ describe('Respondent supporting material controller', () => {
         sendNotificationSubject: ['Employer Contract Claim'],
       },
     };
+    req.session.userCase.genericTseApplicationCollection = mockGenericTseCollection.slice(0, 1);
+    req.params.appId = '1';
+
     await new RespondentSupportingMaterialController().post(req, res);
     expect(res.redirect).toHaveBeenCalledWith('/tribunal-response-cya?lng=en');
   });
@@ -231,6 +251,9 @@ describe('Respondent supporting material controller', () => {
         hasMyHMCTSAccount: YesOrNo.YES,
       },
     ];
+    req.session.userCase.genericTseApplicationCollection = mockGenericTseCollection.slice(0, 1);
+    req.params.appId = '1';
+
     await new RespondentSupportingMaterialController().post(req, res);
     expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party?lng=en');
   });
@@ -240,6 +263,9 @@ describe('Respondent supporting material controller', () => {
       body: { responseText: 'test' },
     });
     const res = mockResponse();
+    req.session.userCase.genericTseApplicationCollection = mockGenericTseCollection.slice(0, 1);
+    req.params.appId = '1';
+
     await new RespondentSupportingMaterialController().post(req, res);
     expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party-not-system-user?lng=en');
   });
