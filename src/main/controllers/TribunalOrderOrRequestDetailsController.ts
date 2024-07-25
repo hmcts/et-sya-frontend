@@ -11,6 +11,7 @@ import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { findSelectedSendNotification } from './helpers/StoredToSubmitHelpers';
 import {
   anyResponseRequired,
   getNotificationResponses,
@@ -22,7 +23,10 @@ export default class TribunalOrderOrRequestDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
-    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    const selectedRequestOrOrder = findSelectedSendNotification(
+      userCase.sendNotificationCollection,
+      req.params.orderId
+    );
     req.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;

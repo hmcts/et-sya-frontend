@@ -14,6 +14,7 @@ import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers'
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { findSelectedSendNotification } from './helpers/StoredToSubmitHelpers';
 import {
   determineRedirectUrl,
   getNotificationResponses,
@@ -62,7 +63,10 @@ export default class TribunalRespondToOrderController {
     setUserCase(req, this.form);
     const userCase = req.session.userCase;
 
-    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    const selectedRequestOrOrder = findSelectedSendNotification(
+      userCase.sendNotificationCollection,
+      req.params.orderId
+    );
     if (selectedRequestOrOrder === undefined) {
       logger.error('Selected order not found');
       return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
@@ -101,7 +105,10 @@ export default class TribunalRespondToOrderController {
       TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER,
     ]);
 
-    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    const selectedRequestOrOrder = findSelectedSendNotification(
+      userCase.sendNotificationCollection,
+      req.params.orderId
+    );
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
     const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);
