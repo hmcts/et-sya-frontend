@@ -142,4 +142,8 @@ $lightgrey-panel: #d3d3d3;
     display: block;
     overflow-x: auto;
   }
+
+  .govuk-visually-hidden {
+    position: fixed !important;
+  }
 }

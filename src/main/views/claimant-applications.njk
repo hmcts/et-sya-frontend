@@ -21,7 +21,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + ">" + continue + "</a>"
+        html: "<a href=" + app.url + ">" + continue + "<span class=\"govuk-visually-hidden\">" + col2 + ": " + app.userCase.id + "</span> </a>"
       }
     ]), draftApplications) %}
   {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -39,7 +39,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + ">" + continue + "</a>"
+        html: "<a href=" + app.url + ">" + continue + "<span class=\"govuk-visually-hidden\">" + col2 + ": " + app.userCase.id + "</span> </a>"
       }
     ]), draftApplications) %}
   {% else %}
@@ -55,7 +55,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + ">" + view + "</a>"
+        html: "<a href=" + app.url + ">" + view + "<span class=\"govuk-visually-hidden\">" + col2 + ": " + app.userCase.id + "</span> </a>"
       }
     ]), submittedApplications) %}
   {% endif %}
