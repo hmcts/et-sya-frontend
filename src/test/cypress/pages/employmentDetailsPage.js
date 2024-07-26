@@ -10,140 +10,139 @@ const newJobMonth = today.getMonth() - 2;
 const employmentEndYear = today.getFullYear() - 1;
 
 class EmploymentDetailsPage {
-
   // eslint-disable-next-line prettier/prettier
-    workingForEmployer(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#still-working');
-    }
-    workingNotice(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#notice-type');
-    }
-    noLongerWorkingForEmployer(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#still-working-3');
-    }
-    continueToNextPageButton(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#main-form-submit');
-    }
-    jobTitleTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#jobTitle');
-    }
-    enterEmploymentStartDateDay(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#startDate-day');
-    }
-    enterEmploymentStartDateMonth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#startDate-month');
-    }
-    enterEmploymentStartDateYear(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#startDate-year');
-    }
-    weeklyNoticeOption(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=notice-type]');
-    }
-    monthlyNoticeOption(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=notice-type-2]');
-    }
-    enterEmploymentEndDateDay(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#endDate-day');
-    }
-    enterEmploymentEndDateMonth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#endDate-month');
-    }
-    enterEmploymentEndDateYear(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#endDate-year');
-    }
-    enterEmploymentNoticePeriodDay(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#notice-dates-day');
-    }
-    enterEmploymentNoticePeriodMonth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#notice-dates-month');
-    }
-    enterEmploymentNoticePeriodYear(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#notice-dates-year');
-    }
-    noticePeriod_Yes(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=notice-period]');
-    }
-    noticePeriod_No(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=notice-period-2]');
-    }
-    noticePeriodTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#notice-length');
-    }
-    weeklyHoursTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#avg-weekly-hrs');
-    }
-    payPackageBeforeTaxTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#pay-before-tax');
-    }
-    payPacKageAfterTaxTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#pay-after-tax');
-    }
-    payFrequency(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=pay-interval]');
-    }
-    employmentStatusLink(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('[href="/employment-status?lng=en"]');
-    }
-    didYouWorkForOrg_Yes(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=past-employer]');
-    }
-    didYouWorkForOrg_No(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=past-employer-2]');
-    }
-    pensionCheckBox(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=pension]');
-    }
-    pensionTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#pension-contributions');
-    }
-    newJobOptions(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=new-job]');
-    }
-    newJobStartDateDay(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#new-job-start-date-day');
-    }
-    newJobStartDateMonth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#new-job-start-date-month');
-    }
-    newJobStartDateYear(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#new-job-start-date-year');
-    }
-    newJobPayDetailsTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#new-pay-before-tax');
-    }
-    newJobPayInterval(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#new-job-pay-interval-3');
-    }
-    respondentName(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#respondent-name');
-    }
-    respondentPostcode(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#respondentEnterPostcode');
-    }
-    respondentAddressDropdown(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#respondentAddressTypes');
-    }
-    populatedWorkAddress(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#work-address');
-    }
-    acasNoOption(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#acasCert-2');
-    }
-    reasonForNotHavingAcas(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#no-acas-reason');
-    }
-    acasYesOption(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#acasCert');
-    }
-    acasNumberTextField(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#acasCertNum');
-    }
-    taskListCheck(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#tasklist-check');
-    }
-    claimantEmploymentBenefit(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('input[id=employee-benefits]');
-    }
+    workingForEmployer() {
+    return cy.get('#still-working');
+  }
+  workingNotice() {
+    return cy.get('#notice-type');
+  }
+  noLongerWorkingForEmployer() {
+    return cy.get('#still-working-3');
+  }
+  continueToNextPageButton() {
+    return cy.get('#main-form-submit');
+  }
+  jobTitleTextField() {
+    return cy.get('#jobTitle');
+  }
+  enterEmploymentStartDateDay() {
+    return cy.get('#startDate-day');
+  }
+  enterEmploymentStartDateMonth() {
+    return cy.get('#startDate-month');
+  }
+  enterEmploymentStartDateYear() {
+    return cy.get('#startDate-year');
+  }
+  weeklyNoticeOption() {
+    return cy.get('input[id=notice-type]');
+  }
+  monthlyNoticeOption() {
+    return cy.get('input[id=notice-type-2]');
+  }
+  enterEmploymentEndDateDay() {
+    return cy.get('#endDate-day');
+  }
+  enterEmploymentEndDateMonth() {
+    return cy.get('#endDate-month');
+  }
+  enterEmploymentEndDateYear() {
+    return cy.get('#endDate-year');
+  }
+  enterEmploymentNoticePeriodDay() {
+    return cy.get('#notice-dates-day');
+  }
+  enterEmploymentNoticePeriodMonth() {
+    return cy.get('#notice-dates-month');
+  }
+  enterEmploymentNoticePeriodYear() {
+    return cy.get('#notice-dates-year');
+  }
+  noticePeriod_Yes() {
+    return cy.get('input[id=notice-period]');
+  }
+  noticePeriod_No() {
+    return cy.get('input[id=notice-period-2]');
+  }
+  noticePeriodTextField() {
+    return cy.get('#notice-length');
+  }
+  weeklyHoursTextField() {
+    return cy.get('#avg-weekly-hrs');
+  }
+  payPackageBeforeTaxTextField() {
+    return cy.get('#pay-before-tax');
+  }
+  payPacKageAfterTaxTextField() {
+    return cy.get('#pay-after-tax');
+  }
+  payFrequency() {
+    return cy.get('input[id=pay-interval]');
+  }
+  employmentStatusLink() {
+    return cy.get('[href="/employment-status?lng=en"]');
+  }
+  didYouWorkForOrg_Yes() {
+    return cy.get('input[id=past-employer]');
+  }
+  didYouWorkForOrg_No() {
+    return cy.get('input[id=past-employer-2]');
+  }
+  pensionCheckBox() {
+    return cy.get('input[id=pension]');
+  }
+  pensionTextField() {
+    return cy.get('#pension-contributions');
+  }
+  newJobOptions() {
+    return cy.get('input[id=new-job]');
+  }
+  newJobStartDateDay() {
+    return cy.get('#new-job-start-date-day');
+  }
+  newJobStartDateMonth() {
+    return cy.get('#new-job-start-date-month');
+  }
+  newJobStartDateYear() {
+    return cy.get('#new-job-start-date-year');
+  }
+  newJobPayDetailsTextField() {
+    return cy.get('#new-pay-before-tax');
+  }
+  newJobPayInterval() {
+    return cy.get('#new-job-pay-interval-3');
+  }
+  respondentName() {
+    return cy.get('#respondent-name');
+  }
+  respondentPostcode() {
+    return cy.get('#respondentEnterPostcode');
+  }
+  respondentAddressDropdown() {
+    return cy.get('#respondentAddressTypes');
+  }
+  populatedWorkAddress() {
+    return cy.get('#work-address');
+  }
+  acasNoOption() {
+    return cy.get('#acasCert-2');
+  }
+  reasonForNotHavingAcas() {
+    return cy.get('#no-acas-reason');
+  }
+  acasYesOption() {
+    return cy.get('#acasCert');
+  }
+  acasNumberTextField() {
+    return cy.get('#acasCertNum');
+  }
+  taskListCheck() {
+    return cy.get('#tasklist-check');
+  }
+  claimantEmploymentBenefit() {
+    return cy.get('input[id=employee-benefits]');
+  }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
   async completeEmploymentDetailsSection(workForOrgOption) {
@@ -205,7 +204,7 @@ class EmploymentDetailsPage {
     await this.continueToNextPageButton().click();
   }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
   async employmentJobTitle() {
     await this.jobTitleTextField().should('be.visible');
     await this.jobTitleTextField().type('QA Engineer');
@@ -418,7 +417,7 @@ class EmploymentDetailsPage {
     await this.selectYesToAcas();
     await this.completeEmploymentAndRespondentDetails();
   }
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
   async completeStillWorkingNoticePeriodJourney(
     workForOrgOption,
     workStatus,

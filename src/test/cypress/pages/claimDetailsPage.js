@@ -1,22 +1,48 @@
-
 class ClaimDetailsPage {
-
   // eslint-disable-next-line prettier/prettier
-    clickClaimDetailsLink(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('[href="/claim-type-discrimination?lng=en"]'); }
-    discriminationAge(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#age'); }
-    discriminationDisability(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#disability');}
-    claimSummaryTextField(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#claim-summary-text');}
-    compensationOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#compensationOnly');}
-    tribunalRecommendationOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#tribunalRecommendation');}
-    oldJobOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#oldJob');}
-    compensationOutputOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#compensationOutcome');}
-    compensationAmountOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#compensation-amount');}
-    tribunalRecommendationRequestOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#tribunalRecommendationRequest');}
-    whistleblowingClaimOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#whistleblowing-claim');}
-    whistleblowingEntityNameOption(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#whistleblowing-entity-name');}
-    checkedLinkedCases(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#linkedCases');}
-    claimDetailsCheck(): Cypress.Chainable<JQuery<HTMLElement>>{ return cy.get('#claim-details-check');}
-    continueToNextPageButton(): Cypress.Chainable<JQuery<HTMLElement>> {return cy.get('#main-form-submit');}
+    clickClaimDetailsLink(){ return cy.get('[href="/claim-type-discrimination?lng=en"]'); }
+  discriminationAge() {
+    return cy.get('#age');
+  }
+  discriminationDisability() {
+    return cy.get('#disability');
+  }
+  claimSummaryTextField() {
+    return cy.get('#claim-summary-text');
+  }
+  compensationOption() {
+    return cy.get('#compensationOnly');
+  }
+  tribunalRecommendationOption() {
+    return cy.get('#tribunalRecommendation');
+  }
+  oldJobOption() {
+    return cy.get('#oldJob');
+  }
+  compensationOutputOption() {
+    return cy.get('#compensationOutcome');
+  }
+  compensationAmountOption() {
+    return cy.get('#compensation-amount');
+  }
+  tribunalRecommendationRequestOption() {
+    return cy.get('#tribunalRecommendationRequest');
+  }
+  whistleblowingClaimOption() {
+    return cy.get('#whistleblowing-claim');
+  }
+  whistleblowingEntityNameOption() {
+    return cy.get('#whistleblowing-entity-name');
+  }
+  checkedLinkedCases() {
+    return cy.get('#linkedCases');
+  }
+  claimDetailsCheck() {
+    return cy.get('#claim-details-check');
+  }
+  continueToNextPageButton() {
+    return cy.get('#main-form-submit');
+  }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
   async processClaimDetails() {

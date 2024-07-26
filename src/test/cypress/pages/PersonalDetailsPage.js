@@ -1,81 +1,79 @@
 /* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 
 class PersonalDetailsPage {
-
   // eslint-disable-next-line prettier/prettier
-    preliminaryText(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('.govuk-panel__title');
-    }
-    dayofBirth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#dobDate-day').first();
-    }
-    monthofBirth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#dobDate-month').first();
-    }
-    yearofBirth(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#dobDate-year').first();
-    }
-    saveAndContinue(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('#main-form-submit');
-    }
-    continueToSteps(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('//a[contains(.,"Continue")]');
-    }
-    sexOptionMale(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get('sex');
-    }
-    sexOptionFemale(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('sex-2');
-    }
-    sexOptionPreferNotToSay():  Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('sex-3');
-    }
-    titlePrefrenceTextFeild(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#preferredTitle');
-    }
-    claimantPostCode(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#addressEnterPostcode');
-    }
-    addressTypeDropDown(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#addressAddressTypes');
-    }
-    claimantAddressLineTwo(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#address2');
-    }
-    claimantAddressLineOne(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#address1');
-    }
-    addressTown(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#addressTown');
-    }
-    addressCountry(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#addressCountry');
-    }
-    addressPostcode(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#addressPostcode');
-    }
-    updatePreferencesOption2(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#update-preference-2');
-    }
-    languagePreferenceOption2(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#update-preference-language-2');
-    }
-    hearingPreferenceLanguageOption2(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#update-hearing-language-2');
-    }
-    hearingPreference(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#hearingPreferences');
-    }
-    contactUSText(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('//span[contains(text(),"Contact us")]');
-    }
-    noToReasonableAdjustment(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#reasonableAdjustments-2');
-    }
-    taskListCheck(): Cypress.Chainable<JQuery<HTMLElement>> {
-      return cy.get('#tasklist-check');
-    }
-
+    preliminaryText() {
+    return cy.get('.govuk-panel__title');
+  }
+  dayofBirth() {
+    return cy.get('#dobDate-day').first();
+  }
+  monthofBirth() {
+    return cy.get('#dobDate-month').first();
+  }
+  yearofBirth() {
+    return cy.get('#dobDate-year').first();
+  }
+  saveAndContinue() {
+    return cy.get('#main-form-submit');
+  }
+  continueToSteps() {
+    return cy.get('//a[contains(.,"Continue")]');
+  }
+  sexOptionMale() {
+    return cy.get('sex');
+  }
+  sexOptionFemale() {
+    return cy.get('sex-2');
+  }
+  sexOptionPreferNotToSay() {
+    return cy.get('sex-3');
+  }
+  titlePrefrenceTextFeild() {
+    return cy.get('#preferredTitle');
+  }
+  claimantPostCode() {
+    return cy.get('#addressEnterPostcode');
+  }
+  addressTypeDropDown() {
+    return cy.get('#addressAddressTypes');
+  }
+  claimantAddressLineTwo() {
+    return cy.get('#address2');
+  }
+  claimantAddressLineOne() {
+    return cy.get('#address1');
+  }
+  addressTown() {
+    return cy.get('#addressTown');
+  }
+  addressCountry() {
+    return cy.get('#addressCountry');
+  }
+  addressPostcode() {
+    return cy.get('#addressPostcode');
+  }
+  updatePreferencesOption2() {
+    return cy.get('#update-preference-2');
+  }
+  languagePreferenceOption2() {
+    return cy.get('#update-preference-language-2');
+  }
+  hearingPreferenceLanguageOption2() {
+    return cy.get('#update-hearing-language-2');
+  }
+  hearingPreference() {
+    return cy.get('#hearingPreferences');
+  }
+  contactUSText() {
+    return cy.get('//span[contains(text(),"Contact us")]');
+  }
+  noToReasonableAdjustment() {
+    return cy.get('#reasonableAdjustments-2');
+  }
+  taskListCheck() {
+    return cy.get('#tasklist-check');
+  }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
   async prePersonalDetailsFlow() {
@@ -88,6 +86,7 @@ class PersonalDetailsPage {
   async completePersonalDetail() {
     await this.preliminaryText().should('be.visible');
     await this.preliminaryText().should('contain.text', 'You do not have to complete your claim in one go');
+    await this.saveAndContinue().click();
     await this.dayofBirth().type('01');
     await this.monthofBirth().type('01');
     await this.yearofBirth().type('2000');

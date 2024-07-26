@@ -2,6 +2,6 @@
   "name": "Using fixtures to represent data",
   "email": "hello@cypress.io",
   "body": "Fixtures are a great way to mock data for responses to routes",
-  "create_api_account_url": "",
-  "submit_your_et1_application_url": ""
+  "create_api_account_url": "https://idam-api.aat.platform.hmcts.net/testing-support/accounts",
+  "submit_your_et1_application_url": "https://et-sya.aat.platform.hmcts.net"
 }
