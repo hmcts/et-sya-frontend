@@ -475,6 +475,7 @@ export const AllDocumentTypes = {
 export type AllDocumentTypeValue = (typeof AllDocumentTypes)[keyof typeof AllDocumentTypes];
 
 export const NotificationSubjects = {
+  HEARING: 'Hearing',
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
   ECC: 'Employer Contract Claim',

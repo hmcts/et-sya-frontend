@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, Parties, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
@@ -324,4 +324,12 @@ export const updateHearingHubLinkStatuses = (userCase: CaseWithId, hubLinksStatu
   if (isHearingExist(userCase.hearingCollection)) {
     hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.READY_TO_VIEW;
   }
+};
+
+export const shouldShowHearingNotification = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(
+    it =>
+      it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+      it.value.sendNotificationSubject.includes(NotificationSubjects.HEARING)
+  );
 };

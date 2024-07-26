@@ -31,6 +31,7 @@ import {
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowHearingNotification,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknolwedgement,
@@ -42,7 +43,6 @@ import {
   updateHubLinkStatuses,
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
-import { shouldShowHearingInFuture } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
   getAllAppsWithDecisions,
@@ -215,7 +215,7 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
-      showHearingNotification: shouldShowHearingInFuture(userCase.hearingCollection),
+      showHearingNotification: shouldShowHearingNotification(userCase?.sendNotificationCollection),
       notifications: ordersRequestsGeneralNotifications,
       eccNotifications,
       languageParam: getLanguageParam(req.url),
