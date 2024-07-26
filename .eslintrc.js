@@ -1,8 +1,8 @@
 module.exports = {
   root: true,
-  env: { browser: true, es6: true, node: true, 'codeceptjs/codeceptjs': true },
+  env: { browser: true, es6: true, node: true },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'import', 'jest', 'codeceptjs'],
+  plugins: ['@typescript-eslint', 'prettier', 'import', 'jest', 'cypress'],
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
@@ -10,9 +10,9 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:jest/recommended',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:codeceptjs/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -24,7 +24,6 @@ module.exports = {
     Before: true,
     BeforeSuite: true,
     AfterSuite: true,
-    codecept_helper: true,
     pause: true,
     inject: true,
   },
@@ -54,6 +53,15 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'prettier/prettier': ['error', { singleQuote: true, trailingComma: 'es5' }],
+    '@typescript-eslint/explicit-function-return-type': [
+      'warn',
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
+      },
+    ],
+    'no-undef': 'off',
     'jest/prefer-to-have-length': 'error',
     'linebreak-style': ['error', 'unix'],
     'no-console': 'warn',
