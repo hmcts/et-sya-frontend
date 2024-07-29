@@ -3,6 +3,9 @@ import { PageUrls } from '../../definitions/constants';
 import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
+import { findSelectedGenericTseApplication } from './DocumentHelpers';
+import { findSelectedSendNotification } from './StoredToSubmitHelpers';
+
 export const getFilesRows = (
   languageParam: string,
   userCase: CaseWithId | undefined,
@@ -31,4 +34,17 @@ export const getFilesRows = (
       ),
     ];
   }
+};
+export const findSelectedParamId = (userCase: CaseWithId, param: string): string => {
+  const selectedApplication = findSelectedGenericTseApplication(userCase.genericTseApplicationCollection, param);
+  if (selectedApplication !== undefined) {
+    return selectedApplication.id;
+  }
+
+  const selectedRequestOrOrder = findSelectedSendNotification(userCase.sendNotificationCollection, param);
+  if (selectedRequestOrOrder !== undefined) {
+    return selectedRequestOrOrder.id;
+  }
+
+  return undefined;
 };

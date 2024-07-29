@@ -1,14 +1,11 @@
 import ContactTheTribunalFileController from '../../../main/controllers/ContactTheTribunalFileController';
-import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { safeUrlMock } from '../mocks/mockUrl';
 
 describe('Contact the tribunal file controller', () => {
-  const urlMock = safeUrlMock;
-  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(safeUrlMock);
 
   it('should remove uploaded file and refresh the page', () => {
     const controller = new ContactTheTribunalFileController();
@@ -25,10 +22,21 @@ describe('Contact the tribunal file controller', () => {
     };
 
     controller.get(req, res);
-    const redirectUrl =
-      PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', req.params.application) + getLanguageParam(req.url);
+    const redirectUrl = '/contact-the-tribunal/withdraw?lng=en';
 
     expect(req.session.userCase.contactApplicationFile).toEqual(undefined);
     expect(res.redirect).toHaveBeenCalledWith(redirectUrl);
+  });
+
+  it('should redirect to error page when req.params.application not found', () => {
+    const controller = new ContactTheTribunalFileController();
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.params.application = 'test';
+
+    controller.get(req, res);
+    const expected = '/not-found?lng=en';
+
+    expect(res.redirect).toHaveBeenCalledWith(expected);
   });
 });

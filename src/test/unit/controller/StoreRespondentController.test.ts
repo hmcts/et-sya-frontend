@@ -44,6 +44,7 @@ describe('Store respondent controller', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.genericTseApplicationCollection = [{ id: '246' }];
     request.session.userCase.selectedGenericTseApplication = { id: '246' };
 
     await new StoreRespondentController().get(request, response);
@@ -63,6 +64,8 @@ describe('Store respondent controller', () => {
       document_mime_type: 'pdf',
     };
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.genericTseApplicationCollection = [{ id: '246' }];
+    request.session.userCase.selectedGenericTseApplication = { id: '246' };
 
     await new StoreRespondentController().get(request, response);
 
