@@ -10,8 +10,8 @@ export const isHearingExist = (hearingCollection: HearingModel[]): boolean => {
  * Return true when sendNotificationNotify:
  * - Notify is not Respondent only
  * - Subject includes Hearing
- * - Able to find Hearing by selectedCode
- * - Date of Hearing is in the future
+ * - Found Hearing by selectedCode
+ * - Listed Date of Hearing Date Collection is in the future
  * @param notification Send Notification Type Item
  * @param hearingModels Hearing Collection
  */
@@ -22,22 +22,23 @@ export const isNotificationWithFutureHearing = (
   return (
     notification &&
     notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-    notification.value.sendNotificationSubject.includes(NotificationSubjects.HEARING) &&
-    isSelectHearingInFuture(notification, hearingModels)
+    notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
+    isSendNotificationSelectHearingInFuture(notification, hearingModels)
   );
 };
 
-const isSelectHearingInFuture = (notification: SendNotificationTypeItem, hearingModels: HearingModel[]): boolean => {
-  const selectHearing = notification.value.sendNotificationSelectHearing;
-  const hearingDateCollectionId = selectHearing.selectedCode;
+const isSendNotificationSelectHearingInFuture = (
+  notification: SendNotificationTypeItem,
+  hearingModels: HearingModel[]
+): boolean => {
+  const selectedCode = notification?.value.sendNotificationSelectHearing?.selectedCode;
+  return selectedCode && isHearingDateCollectionInFuture(hearingModels, selectedCode);
+};
 
-  for (const hearingModel of hearingModels) {
-    const hearingDateCollection = hearingModel.value.hearingDateCollection.find(
-      collection => collection.id === hearingDateCollectionId
-    );
-
-    if (hearingDateCollection) {
-      return new Date(hearingDateCollection.value.listedDate) > new Date();
-    }
-  }
+const isHearingDateCollectionInFuture = (hearingModels: HearingModel[], id: string): boolean => {
+  return hearingModels.some(hearingModel =>
+    hearingModel.value.hearingDateCollection.some(
+      collection => collection.id === id && new Date(collection.value.listedDate) > new Date()
+    )
+  );
 };
