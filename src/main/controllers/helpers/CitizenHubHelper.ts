@@ -1,12 +1,13 @@
+import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, Parties, languages } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
-import { isHearingExist } from './HearingHelpers';
+import { isHearingExist, isNotificationWithFutureHearing } from './HearingHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -326,10 +327,9 @@ export const updateHearingHubLinkStatuses = (userCase: CaseWithId, hubLinksStatu
   }
 };
 
-export const shouldShowHearingNotification = (notifications: SendNotificationTypeItem[]): boolean => {
-  return notifications?.some(
-    it =>
-      it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-      it.value.sendNotificationSubject.includes(NotificationSubjects.HEARING)
-  );
+export const shouldShowHearingNotification = (
+  notifications: SendNotificationTypeItem[],
+  hearingCollection: HearingModel[]
+): boolean => {
+  return notifications?.some(it => isNotificationWithFutureHearing(it, hearingCollection));
 };

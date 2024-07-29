@@ -215,7 +215,10 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
-      showHearingNotification: shouldShowHearingNotification(userCase?.sendNotificationCollection),
+      showHearingNotification: shouldShowHearingNotification(
+        userCase?.sendNotificationCollection,
+        userCase?.hearingCollection
+      ),
       notifications: ordersRequestsGeneralNotifications,
       eccNotifications,
       languageParam: getLanguageParam(req.url),
