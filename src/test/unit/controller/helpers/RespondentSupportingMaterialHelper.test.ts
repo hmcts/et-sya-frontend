@@ -1,8 +1,12 @@
-import { getFilesRows } from '../../../../main/controllers/helpers/RespondentSupportingMaterialHelper';
+import {
+  findSelectedParamId,
+  getFilesRows,
+} from '../../../../main/controllers/helpers/RespondentSupportingMaterialHelper';
 import { Document } from '../../../../main/definitions/case';
 import { languages } from '../../../../main/definitions/constants';
 import responseSupportingMaterialRaw from '../../../../main/resources/locales/en/translation/respondent-supporting-material.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import mockUserCase from '../../mocks/mockUserCase';
 
 describe('getFilesRows', () => {
   it('should return file row with no file uploaded message', () => {
@@ -41,5 +45,55 @@ describe('getFilesRows', () => {
         },
       ],
     });
+  });
+});
+
+describe('findSelectedParamId', () => {
+  it('should return application id', () => {
+    const userCase = mockUserCase;
+    userCase.genericTseApplicationCollection = [
+      {
+        id: '123',
+        value: {},
+      },
+    ];
+    const actual = findSelectedParamId(userCase, '123');
+    expect('123').toEqual(actual);
+  });
+
+  it('should return notification id', () => {
+    const userCase = mockUserCase;
+    userCase.sendNotificationCollection = [
+      {
+        id: '456',
+        value: {},
+      },
+    ];
+    const actual = findSelectedParamId(userCase, '456');
+    expect('456').toEqual(actual);
+  });
+
+  it('should return undefined string with wrong id', () => {
+    const userCase = mockUserCase;
+    userCase.genericTseApplicationCollection = [
+      {
+        id: '123',
+        value: {},
+      },
+    ];
+    userCase.sendNotificationCollection = [
+      {
+        id: '456',
+        value: {},
+      },
+    ];
+    const actual = findSelectedParamId(userCase, '789');
+    expect(undefined).toEqual(actual);
+  });
+
+  it('should return undefined string if no application or notification', () => {
+    const userCase = mockUserCase;
+    const actual = findSelectedParamId(userCase, '789');
+    expect(undefined).toEqual(actual);
   });
 });

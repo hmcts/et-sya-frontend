@@ -1,6 +1,6 @@
 import RespondentSupportingMaterialFileController from '../../../main/controllers/RespondentSupportingMaterialFileController';
-import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
+import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -8,11 +8,11 @@ import { safeUrlMock } from '../mocks/mockUrl';
 
 describe('Respondent supporting material file controller', () => {
   it('should remove uploaded file and refresh the page', () => {
-    const urlMock = safeUrlMock;
-    jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+    jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(safeUrlMock);
 
     const controller = new RespondentSupportingMaterialFileController();
     const req = mockRequest({});
+    req.session.userCase.genericTseApplicationCollection = [{ id: '1' }];
     req.params.appId = '1';
     const res = mockResponse();
     const userCase = req.session.userCase;
@@ -30,5 +30,18 @@ describe('Respondent supporting material file controller', () => {
 
     expect(req.session.userCase.supportingMaterialFile).toEqual(undefined);
     expect(res.redirect).toHaveBeenCalledWith(redirectUrl);
+  });
+
+  it('should redirect error page when req.params.appId not found', () => {
+    const controller = new RespondentSupportingMaterialFileController();
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.session.userCase.genericTseApplicationCollection = [{ id: '1' }];
+    req.params.appId = 'test';
+
+    controller.get(req, res);
+    const expected = '/not-found?lng=en';
+
+    expect(res.redirect).toHaveBeenCalledWith(expected);
   });
 });
