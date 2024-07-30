@@ -1,9 +1,8 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% block beforeContent %}
     {{ super() }}
@@ -12,26 +11,74 @@
             {% include "back-link.njk" %}
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
-            {% for hearing in hearingCollection %}
-            <table class="govuk-table">
-                <caption class="govuk-table__caption govuk-table__caption--m">{{ hearing.value.hearingNumber }} - {{ hearing.value.Hearing_type }}</caption>
-                <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingDate }}</th>
-                        <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingStatus }}</th>
-                        <th class="govuk-table__header govuk-!-width-one-third" scope="col">{{ hearingVenue }}</th>
-                    </tr>
-                </thead>
-                <tbody class="govuk-table__body">
-                    {% for hearingDate in hearing.value.hearingDateCollection %}
-                    <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">{{ dateTimeInLocale(hearingDate.value.listedDate) }}</td>
-                        <td class="govuk-table__cell">{{ hearingDate.value.Hearing_status }}</td>
-                        <td class="govuk-table__cell">{{ hearingDate.value.hearingVenueDay.value.label }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% for hearing in hearingDetails %}
+              <h2 class="govuk-heading-m">{{ hearing.hearingNumber }} - {{ hearing.Hearing_type }}</h2>
+
+                {% set allNotificationRows = [] %}
+                {% for notification in hearing.notifications %}
+                    {% set allNotificationRows = (allNotificationRows.push(
+                        [
+                            {
+                                text: notification.value.date
+                            },
+                            {
+                                text: notification.value.sendNotificationTitle
+                            }
+                        ]
+                    ), allNotificationRows) %}
+                {% endfor %}
+
+                {% if allNotificationRows != 0 %}
+                {{ govukTable({
+                    firstCellIsHeader: false,
+                    head: [
+                        {
+                            text: "Notification Date",
+                            classes: "govuk-!-width-one-quarter"
+                        },
+                        {
+                            text: "Notification Title"
+                        }
+                    ],
+                    rows: allNotificationRows
+                }) }}
+                {% endif %}
+
+                {% set allHearingRows = [] %}
+                {% for hearingDate in hearing.hearingDateRows %}
+                    {% set allHearingRows = (allHearingRows.push(
+                        [
+                            {
+                                text: dateTimeInLocale(hearingDate.date)
+                            },
+                            {
+                                text: hearingDate.status
+                            },
+                            {
+                                text: hearingDate.venue
+                            }
+                        ]
+                    ), allHearingRows) %}
+                {% endfor %}
+
+                {{ govukTable({
+                    firstCellIsHeader: false,
+                    head: [
+                        {
+                            text: hearingDate,
+                            classes: "govuk-!-width-one-third"
+                        },
+                        {
+                            text: hearingStatus,
+                            classes: "govuk-!-width-one-third"
+                        },
+                        {
+                            text: hearingVenue,
+                            classes: "govuk-!-width-one-third"
+                        }
+                    ],
+                    rows: allHearingRows
+                }) }}
             {% endfor %}
 
             {% set contactContent %}

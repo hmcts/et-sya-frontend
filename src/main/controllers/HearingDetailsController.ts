@@ -4,6 +4,8 @@ import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
+import { getHearingCollection } from './helpers/HearingHelpers';
+
 export default class HearingDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
@@ -14,7 +16,7 @@ export default class HearingDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       ...req.t(TranslationKeys.HEARING_DETAILS, { returnObjects: true }),
-      hearingCollection: userCase.hearingCollection,
+      hearingDetails: getHearingCollection(userCase.hearingCollection, userCase.sendNotificationCollection),
       welshEnabled,
     });
   };
