@@ -2,8 +2,12 @@ import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, Parties } from '../../definitions/constants';
 
-export const isHearingExist = (hearingCollection: HearingModel[]): boolean => {
-  return hearingCollection && hearingCollection.length > 0;
+/**
+ * Check if any Hearing exist in hearingCollection
+ * @param hearingModel Hearing Collection for the case
+ */
+export const isHearingExist = (hearingModel: HearingModel[]): boolean => {
+  return hearingModel && hearingModel.length > 0;
 };
 
 /**
