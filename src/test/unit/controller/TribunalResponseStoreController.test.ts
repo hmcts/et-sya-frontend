@@ -47,6 +47,7 @@ describe('Tribunal response store controller', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
     request.session.userCase.selectedRequestOrOrder = { id: '246' };
     request.url = PageUrls.TRIBUNAL_RESPONSE_COMPLETED;
 
@@ -92,7 +93,6 @@ describe('Tribunal response store controller return error page', () => {
   const response = mockResponse();
   const request = mockRequest({});
   request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-  request.session.userCase.selectedRequestOrOrder = { id: '246' };
 
   it('should return error page when storeResponseSendNotification failed', async () => {
     jest.mock('axios');
@@ -102,6 +102,39 @@ describe('Tribunal response store controller return error page', () => {
     };
     const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
     jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should return error page when sendNotificationCollection not found', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+      updateHubLinksStatuses: jest.fn(),
+      storeResponseSendNotification: jest.fn(),
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should return error page when selectedRequestOrOrder not found', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+      updateHubLinksStatuses: jest.fn(),
+      storeResponseSendNotification: jest.fn(),
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
+    request.session.userCase.selectedRequestOrOrder = { id: '357' };
 
     await controller.get(request, response);
 
@@ -118,22 +151,8 @@ describe('Tribunal response store controller return error page', () => {
     const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
     jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
-    await controller.get(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
-  });
-
-  it('should return error page when orderId not found', async () => {
-    jest.mock('axios');
-    const mockCaseApi = {
-      axios: AxiosInstance,
-      updateHubLinksStatuses: jest.fn(),
-      storeResponseSendNotification: jest.fn(),
-    };
-    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-
-    request.session.userCase.selectedRequestOrOrder = undefined;
+    request.session.userCase.sendNotificationCollection = [{ id: '246' }];
+    request.session.userCase.selectedRequestOrOrder = { id: '246' };
 
     await controller.get(request, response);
 

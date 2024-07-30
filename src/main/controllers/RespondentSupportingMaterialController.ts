@@ -18,15 +18,14 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
-import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
 import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
-import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
+import { findSelectedParamId, getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
-const logger = getLogger('ContactTheTribunalSelectedController');
+const logger = getLogger('RespondentSupportingMaterialController');
 
 export default class RespondentSupportingMaterialController {
   private readonly form: Form;
@@ -82,12 +81,9 @@ export default class RespondentSupportingMaterialController {
     const userCase = req.session.userCase;
     userCase.responseText = req.body.responseText;
 
-    const selectedApplication = findSelectedGenericTseApplication(
-      req.session.userCase.genericTseApplicationCollection,
-      req.params.appId
-    );
-    if (selectedApplication === undefined) {
-      logger.error('Selected application not found');
+    const selectedParamId = findSelectedParamId(req.session.userCase, req.params.appId);
+    if (selectedParamId === undefined) {
+      logger.error('Selected param id not found');
       return res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
     }
 
@@ -105,7 +101,7 @@ export default class RespondentSupportingMaterialController {
       logger
     );
 
-    const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', selectedApplication.id);
+    const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', selectedParamId);
     const supportingMaterialUrl = setUrlLanguageFromSessionLanguage(req, baseUrl);
     const selectedRequestOrOrder = userCase.selectedRequestOrOrder;
     const notificationSubject = selectedRequestOrOrder?.value?.sendNotificationSubject;

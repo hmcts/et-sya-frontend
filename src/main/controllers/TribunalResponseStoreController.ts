@@ -35,11 +35,25 @@ export default class TribunalResponseStoreController {
     }
 
     // Clear temporary fields + Update UserCase
-    let orderId;
+    let selectedRequestOrOrder;
     try {
-      orderId = userCase.selectedRequestOrOrder.id;
-      userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
-      clearTseFields(userCase);
+      selectedRequestOrOrder = userCase.sendNotificationCollection.find(
+        it => it.id === userCase.selectedRequestOrOrder.id
+      );
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
+    if (selectedRequestOrOrder === undefined) {
+      logger.error('Selected order not found');
+      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
+    }
+
+    userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
+    clearTseFields(userCase);
+
+    try {
       req.session.userCase = fromApiFormat(
         (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
       );
@@ -48,6 +62,8 @@ export default class TribunalResponseStoreController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
-    return res.redirect(PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION.replace(':orderId', orderId) + languageParam);
+    return res.redirect(
+      PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION.replace(':orderId', selectedRequestOrOrder.id) + languageParam
+    );
   };
 }
