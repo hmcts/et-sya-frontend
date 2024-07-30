@@ -21,7 +21,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + ">" + continue + "</a>"
+        html: "<a href=\"" + app.url + "\" aria-label=\"" + continue + " " + col2 + ": " + app.userCase.id + "\">" + continue + "</a>"
       }
     ]), draftApplications) %}
   {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -39,7 +39,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + ">" + continue + "</a>"
+        html: "<a href=\"" + app.url + "\" aria-label=\"" + continue + " " + col2 + ": " + app.userCase.id + "\">" + continue + "</a>"
       }
     ]), draftApplications) %}
   {% else %}
@@ -55,7 +55,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + ">" + view + "</a>"
+        html: "<a href=\"" + app.url + "\" aria-label=\"" + view + " " + col2 + ": " + app.userCase.id + "\">" + view + "</a>"
       }
     ]), submittedApplications) %}
   {% endif %}
@@ -73,6 +73,7 @@
       <h2 class="govuk-heading-l">{{ h1 }}</h2>
       <p class="govuk-body">{{ p2 }}</p>
 
+      <div class="scrollableTable">
       {{ govukTable({
           caption: h1,
           captionClasses: "govuk-visually-hidden",
@@ -102,11 +103,13 @@
           ],
           rows: draftApplications
         }) }}
+      </div>
     {% endif %}
 
     {% if submittedApplications.length != 0 %}
       <h2 class="govuk-heading-l">{{ h2 }}</h2>
 
+      <div class="scrollableTable">
       {{ govukTable({
           caption: h2,
           captionClasses: "govuk-visually-hidden",
@@ -133,6 +136,7 @@
           ],
           rows: submittedApplications
         }) }}
+      </div>
     {% endif %}
   </div>
 </div>
