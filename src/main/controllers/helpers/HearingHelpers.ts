@@ -21,12 +21,13 @@ export const getHearingCollection = (
   sendNotificationTypeItem: SendNotificationTypeItem[]
 ): HearingDetails[] => {
   const list: HearingDetails[] = [];
+  const filteredNotifications = getFilteredNotifications(sendNotificationTypeItem);
   for (const hearing of hearingModel || []) {
     const details: HearingDetails = {
       hearingNumber: hearing.value.hearingNumber,
       Hearing_type: hearing.value.Hearing_type,
       hearingDateRows: getHearingDateRows(hearing),
-      notifications: getNotifications(sendNotificationTypeItem, hearing),
+      notifications: getMatchedNotifications(filteredNotifications, hearing),
     };
     list.push(details);
   }
@@ -41,16 +42,22 @@ const getHearingDateRows = (hearing: HearingModel): HearingDateRow[] => {
   }));
 };
 
-const getNotifications = (
-  sendNotificationTypeItem: SendNotificationTypeItem[],
-  hearing: HearingModel
-): SendNotificationTypeItem[] => {
+const getFilteredNotifications = (sendNotificationTypeItem: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
+  if (!sendNotificationTypeItem) {
+    return [];
+  }
   return sendNotificationTypeItem.filter(
     notification =>
       notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-      notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
-      isNotificationsWithIdMatch(notification, hearing)
+      notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING)
   );
+};
+
+const getMatchedNotifications = (
+  sendNotificationTypeItem: SendNotificationTypeItem[],
+  hearing: HearingModel
+): SendNotificationTypeItem[] => {
+  return sendNotificationTypeItem.filter(notification => isNotificationsWithIdMatch(notification, hearing));
 };
 
 const isNotificationsWithIdMatch = (item: SendNotificationTypeItem, hearing: HearingModel): boolean => {
