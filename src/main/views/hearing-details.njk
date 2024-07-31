@@ -2,6 +2,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% block beforeContent %}
     {{ super() }}
@@ -11,45 +12,57 @@
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
             {% for hearing in hearingDetails %}
-              <h2 class="govuk-heading-m">{{ hearing.hearingNumber }} - {{ hearing.Hearing_type }}</h2>
+               <h2 class="govuk-heading-l">{{ hearing.hearingNumber }} - {{ hearing.Hearing_type }}</h2>
 
-                {% if hearing.notifications != 0 %}
-                <table class="govuk-table">
-                    <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Notification Date</th>
-                        <th scope="col" class="govuk-table__header">Notification Title</th>
-                    </tr>
-                    </thead>
-                    <tbody class="govuk-table__body">
-                    {% for notification in hearing.notifications %}
-                    <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">{{ notification.value.date }}</td>
-                        <td class="govuk-table__cell">{{ notification.value.sendNotificationTitle }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                {% endif %}
+              {% if hearing.notifications != 0 %}
+              <table class="govuk-table govuk-!-width-three-quarters">
+                <caption class="govuk-table__caption govuk-table__caption--m">Notification</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Notification Date</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-half">Notification Title</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for notification in hearing.notifications %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ dateStringToLocale(notification.value.date) }}</td>
+                    <td class="govuk-table__cell">
+                      <a href="#" class="govuk-link">{{ notification.value.sendNotificationTitle }}</a>
+                    </td>
+                    <td class="govuk-table__cell">{{ govukTag({
+                        text: "Test"
+                      }) }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
 
-                <table class="govuk-table">
-                    <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                        <th scope="col" class="govuk-table__header govuk-!-width-one-third">hearingDate</th>
-                        <th scope="col" class="govuk-table__header govuk-!-width-one-third">hearingStatus</th>
-                        <th scope="col" class="govuk-table__header govuk-!-width-one-third">hearingVenue</th>
-                    </tr>
-                    </thead>
-                    <tbody class="govuk-table__body">
-                    {% for hearingDate in hearing.hearingDateRows %}
-                    <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">{{ dateTimeInLocale(hearingDate.date) }}</td>
-                        <td class="govuk-table__cell">{{ hearingDate.status }}</td>
-                        <td class="govuk-table__cell">{{ hearingDate.status }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+              <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">Hearing Details</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingDate }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingStatus }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingVenue }}</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for hearingDate in hearing.hearingDateRows %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ dateTimeInLocale(hearingDate.date) }}</td>
+                    <td class="govuk-table__cell">{{ hearingDate.status }}</td>
+                    <td class="govuk-table__cell">{{ hearingDate.venue }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <hr class="govuk-section-break govuk-section-break--l">
+
             {% endfor %}
 
             {% set contactContent %}
