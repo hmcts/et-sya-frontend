@@ -1,4 +1,3 @@
-import { TypeItem } from '../../definitions/util-types';
 import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
@@ -14,6 +13,7 @@ import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { CaseState } from '../definition';
 import { HubLinksStatuses } from '../hub';
+import { TypeItem } from '../util-types';
 
 export interface CreateCaseResponse {
   data: CaseApiDataResponse;
@@ -115,28 +115,32 @@ export interface HearingModel {
       selectedCode: string;
       selectedLabel: string;
     };
-    hearingDateCollection: {
-      id: string;
-      value: {
-        listedDate: Date;
-        Hearing_status: string;
-        hearingVenueDay?: {
-          value: {
-            code: string;
-            label: string;
-          };
-          list_items: {
-            code: string;
-            label: string;
-          }[];
-          selectedCode: string;
-          selectedLabel: string;
-        };
-        hearingTimingStart?: Date;
-        hearingTimingFinish?: Date;
-      };
-    }[];
+    hearingDateCollection: HearingDateCollection[];
   };
+}
+
+export interface HearingDateCollection {
+  id: string;
+  value: HearingDateCollectionItem;
+}
+
+export interface HearingDateCollectionItem {
+  listedDate: Date;
+  Hearing_status: string;
+  hearingVenueDay?: {
+    value: {
+      code: string;
+      label: string;
+    };
+    list_items: {
+      code: string;
+      label: string;
+    }[];
+    selectedCode: string;
+    selectedLabel: string;
+  };
+  hearingTimingStart?: Date;
+  hearingTimingFinish?: Date;
 }
 
 export interface HearingVenueItem {
