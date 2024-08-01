@@ -11,17 +11,17 @@
             {% include "back-link.njk" %}
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
-            {% for hearing in hearingDetails %}
+            {% for hearing in hearingDetailsCollection %}
                <h2 class="govuk-heading-l">{{ hearing.hearingNumber }} - {{ hearing.Hearing_type }}</h2>
 
               {% if hearing.notifications != 0 %}
               <table class="govuk-table govuk-!-width-three-quarters">
-                <caption class="govuk-table__caption govuk-table__caption--m">Notification</caption>
+                <caption class="govuk-table__caption govuk-table__caption--m">{{ notification }}</caption>
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Notification Date</th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-half">Notification Title</th>
-                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Status</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">{{ notificationDate }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-half">{{ notificationTitle }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">{{ status }}</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -29,10 +29,11 @@
                   <tr class="govuk-table__row">
                     <td class="govuk-table__cell">{{ dateStringToLocale(notification.value.date) }}</td>
                     <td class="govuk-table__cell">
-                      <a href="#" class="govuk-link">{{ notification.value.sendNotificationTitle }}</a>
+                      <a href="{{ notification.redirectUrl }}" class="govuk-link">{{ notification.value.sendNotificationTitle }}</a>
                     </td>
                     <td class="govuk-table__cell">{{ govukTag({
-                        text: notification.value.notificationState
+                        text: notification.displayStatus,
+                        classes: "no-text-transform govuk-tag" + notification.statusColor
                       }) }}
                     </td>
                   </tr>
@@ -42,7 +43,7 @@
               {% endif %}
 
               <table class="govuk-table">
-                <caption class="govuk-table__caption govuk-table__caption--m">Hearing Details</caption>
+                <caption class="govuk-table__caption govuk-table__caption--m">{{ hearingDetails }}</caption>
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
                     <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingDate }}</th>

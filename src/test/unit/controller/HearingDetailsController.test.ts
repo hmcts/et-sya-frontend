@@ -1,20 +1,23 @@
 import HearingDetailsController from '../../../main/controllers/HearingDetailsController';
 import { Parties, TranslationKeys } from '../../../main/definitions/constants';
+import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
+import citizenHubTranslation from '../../../main/resources/locales/en/translation/citizen-hub.json';
 import { mockHearingCollection } from '../mocks/mockHearing';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Hearing Document File controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
+  const translations = { ...citizenHubTranslation };
   const t = {
     common: {},
   };
 
   it('should render the hearing details page', async () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequestWithTranslation({ t }, translations);
     request.session.userCase.hearingCollection = mockHearingCollection;
     request.session.userCase.sendNotificationCollection = [
       {
@@ -25,6 +28,7 @@ describe('Hearing Document File controller', () => {
           sendNotificationSelectHearing: {
             selectedCode: '123abc',
           },
+          notificationState: HubLinkStatus.VIEWED,
         },
       },
     ];
@@ -35,7 +39,7 @@ describe('Hearing Document File controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.HEARING_DETAILS,
       expect.objectContaining({
-        hearingDetails: [
+        hearingDetailsCollection: [
           {
             hearingNumber: '3333',
             Hearing_type: 'Hearing',
@@ -48,9 +52,13 @@ describe('Hearing Document File controller', () => {
             ],
             notifications: [
               {
+                displayStatus: 'Viewed',
                 id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+                redirectUrl: '/tribunal-order-or-request-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+                statusColor: '--green',
                 value: {
-                  sendNotificationNotify: 'Both parties',
+                  notificationState: HubLinkStatus.VIEWED,
+                  sendNotificationNotify: Parties.BOTH_PARTIES,
                   sendNotificationSelectHearing: { selectedCode: '123abc' },
                   sendNotificationSubject: ['Hearing'],
                 },
@@ -64,7 +72,7 @@ describe('Hearing Document File controller', () => {
 
   it('should render the hearing details page without notification', async () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequestWithTranslation({ t }, translations);
     request.session.userCase.hearingCollection = mockHearingCollection;
 
     const controller = new HearingDetailsController();
@@ -73,7 +81,7 @@ describe('Hearing Document File controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.HEARING_DETAILS,
       expect.objectContaining({
-        hearingDetails: [
+        hearingDetailsCollection: [
           {
             hearingNumber: '3333',
             Hearing_type: 'Hearing',
@@ -93,7 +101,7 @@ describe('Hearing Document File controller', () => {
 
   it('should render the hearing details page without hearing', async () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequestWithTranslation({ t }, translations);
 
     const controller = new HearingDetailsController();
     await controller.get(request, response);
@@ -101,7 +109,7 @@ describe('Hearing Document File controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.HEARING_DETAILS,
       expect.objectContaining({
-        hearingDetails: [],
+        hearingDetailsCollection: [],
       })
     );
   });
