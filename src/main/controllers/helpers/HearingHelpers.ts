@@ -1,7 +1,8 @@
 import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { NotificationSubjects, Parties } from '../../definitions/constants';
+import { NotificationSubjects, PageUrls, Parties } from '../../definitions/constants';
 import { HearingDateRow, HearingDetails } from '../../definitions/hearingDetails';
+import { HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 
 /**
  * Check if any Hearing exist in hearingCollection
@@ -57,7 +58,14 @@ const getMatchedNotifications = (
   sendNotificationTypeItem: SendNotificationTypeItem[],
   hearing: HearingModel
 ): SendNotificationTypeItem[] => {
-  return sendNotificationTypeItem.filter(notification => isNotificationsWithIdMatch(notification, hearing));
+  const notifications = sendNotificationTypeItem.filter(notification =>
+    isNotificationsWithIdMatch(notification, hearing)
+  );
+  notifications.forEach(item => {
+    item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id);
+    item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
+  });
+  return notifications;
 };
 
 const isNotificationsWithIdMatch = (item: SendNotificationTypeItem, hearing: HearingModel): boolean => {
@@ -70,35 +78,14 @@ const isNotificationsWithIdMatch = (item: SendNotificationTypeItem, hearing: Hea
  * Return true when sendNotificationNotify:
  * - Notify is not Respondent only
  * - Subject includes Hearing
- * - Found Hearing by selectedCode
- * - Listed Date of Hearing Date Collection is in the future
+ * - Notification is not viewed
  * @param notification Send Notification Type Item
- * @param hearingModels Hearing Collection
  */
-export const isNotificationWithFutureHearing = (
-  notification: SendNotificationTypeItem,
-  hearingModels: HearingModel[]
-): boolean => {
+export const isNotificationWithFutureHearing = (notification: SendNotificationTypeItem): boolean => {
   return (
     notification &&
     notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
     notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
-    isSendNotificationSelectHearingInFuture(notification, hearingModels)
-  );
-};
-
-const isSendNotificationSelectHearingInFuture = (
-  notification: SendNotificationTypeItem,
-  hearingModels: HearingModel[]
-): boolean => {
-  const selectedCode = notification?.value.sendNotificationSelectHearing?.selectedCode;
-  return selectedCode && isHearingDateCollectionInFuture(hearingModels, selectedCode);
-};
-
-const isHearingDateCollectionInFuture = (hearingModels: HearingModel[], id: string): boolean => {
-  return hearingModels.some(hearingModel =>
-    hearingModel.value.hearingDateCollection.some(
-      collection => collection.id === id && new Date(collection.value.listedDate) > new Date()
-    )
+    notification.value.notificationState !== HubLinkStatus.VIEWED
   );
 };

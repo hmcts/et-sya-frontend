@@ -15,6 +15,7 @@ export default class HearingDetailsController {
     res.render(TranslationKeys.HEARING_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.HEARING_DETAILS, { returnObjects: true }),
       hearingDetails: getHearingCollection(userCase.hearingCollection, userCase.sendNotificationCollection),
       welshEnabled,

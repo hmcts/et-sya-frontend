@@ -45,53 +45,53 @@ describe('Hearing Helpers - isNotificationWithFutureHearing', () => {
   ] as HearingModel[];
 
   it('should return true with future hearing', () => {
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(true);
   });
 
   it('should return false if selectedCode is invalid', () => {
     notification.value.sendNotificationSelectHearing.selectedCode = '204730f4-fa71-4952-a71d-d794a31c2553';
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(false);
   });
 
   it('should return undefined if sendNotificationSelectHearing is undefined', () => {
     notification.value.sendNotificationSelectHearing = undefined;
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(undefined);
   });
 
   it('should return false if sendNotificationSubject is not Hearing', () => {
     notification.value.sendNotificationSubject = ['Judgment'];
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(false);
   });
 
   it('should return undefined if sendNotificationSubject is undefined', () => {
     notification.value.sendNotificationSubject = undefined;
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(undefined);
   });
 
   it('should return false if sendNotificationNotify is Respondent only', () => {
     notification.value.sendNotificationNotify = 'Respondent only';
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(false);
   });
 
   it('should return undefined if undefined is undefined', () => {
-    const expected = isNotificationWithFutureHearing(undefined, hearings);
+    const expected = isNotificationWithFutureHearing(undefined);
     expect(expected).toEqual(undefined);
   });
 
   it('should return false if hearingDateCollection is undefined', () => {
     hearings[0].value.hearingDateCollection = undefined;
-    const expected = isNotificationWithFutureHearing(notification, hearings);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(false);
   });
 
   it('should return false if hearings is undefined', () => {
-    const expected = isNotificationWithFutureHearing(notification, undefined);
+    const expected = isNotificationWithFutureHearing(notification);
     expect(expected).toEqual(false);
   });
 });

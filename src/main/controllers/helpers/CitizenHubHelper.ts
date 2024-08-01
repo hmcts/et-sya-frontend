@@ -331,5 +331,5 @@ export const shouldShowHearingNotification = (
   notifications: SendNotificationTypeItem[],
   hearingCollection: HearingModel[]
 ): boolean => {
-  return notifications?.some(it => isNotificationWithFutureHearing(it, hearingCollection));
+  return notifications?.some(it => isNotificationWithFutureHearing(it));
 };
