@@ -3,7 +3,6 @@ import {
   isHearingExist,
   isNotificationWithFutureHearing,
 } from '../../../../main/controllers/helpers/HearingHelpers';
-import { HearingModel } from '../../../../main/definitions/api/caseApiResponse';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties } from '../../../../main/definitions/constants';
 import { HearingDetails } from '../../../../main/definitions/hearingDetails';
@@ -98,37 +97,32 @@ describe('Hearing Helpers - getHearingCollection', () => {
 });
 
 describe('Hearing Helpers - isNotificationWithFutureHearing', () => {
-  const notification = {
-    id: '72fde617-8ced-46e6-adbf-03cee33cd391',
-    value: {
-      number: '1',
-      sendNotificationNotify: 'Both parties',
-      sendNotificationSubject: ['Hearing'],
-      sendNotificationSelectHearing: {
-        selectedCode: 'ab76e211-cc08-45f8-b86e-61e775a09253',
-      },
-    },
-  } as SendNotificationTypeItem;
+  let notification: SendNotificationTypeItem;
 
-  const hearings = [
-    {
-      id: '8217a109-f4e0-46d3-b073-7a4a4b88df89',
+  beforeEach(() => {
+    notification = {
+      id: '72fde617-8ced-46e6-adbf-03cee33cd391',
       value: {
-        hearingDateCollection: [
-          {
-            id: 'ab76e211-cc08-45f8-b86e-61e775a09253',
-            value: {
-              listedDate: new Date('2099-07-04T14:00:00.000'),
-            },
-          },
-        ],
+        number: '1',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationSubject: ['Hearing'],
+        sendNotificationSelectHearing: {
+          selectedCode: 'ab76e211-cc08-45f8-b86e-61e775a09253',
+        },
       },
-    },
-  ] as HearingModel[];
+    };
+  });
 
-  it('should return true with future hearing', () => {
+  it('should return true with NOT_VIEWED hearing', () => {
+    notification.value.notificationState = HubLinkStatus.NOT_VIEWED;
     const actual = isNotificationWithFutureHearing(notification);
-    expect(true).toEqual(actual);
+    expect(actual).toEqual(true);
+  });
+
+  it('should return true with VIEWED hearing', () => {
+    notification.value.notificationState = HubLinkStatus.VIEWED;
+    const actual = isNotificationWithFutureHearing(notification);
+    expect(actual).toEqual(false);
   });
 
   it('should return false if sendNotificationSubject is not Hearing', () => {
@@ -149,19 +143,8 @@ describe('Hearing Helpers - isNotificationWithFutureHearing', () => {
     expect(actual).toEqual(false);
   });
 
-  it('should return undefined if undefined is undefined', () => {
+  it('should return undefined if notification is undefined', () => {
     const actual = isNotificationWithFutureHearing(undefined);
     expect(actual).toEqual(undefined);
-  });
-
-  it('should return false if hearingDateCollection is undefined', () => {
-    hearings[0].value.hearingDateCollection = undefined;
-    const actual = isNotificationWithFutureHearing(notification);
-    expect(actual).toEqual(false);
-  });
-
-  it('should return false if hearings is undefined', () => {
-    const actual = isNotificationWithFutureHearing(notification);
-    expect(actual).toEqual(false);
   });
 });
