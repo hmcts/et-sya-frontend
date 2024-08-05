@@ -208,6 +208,7 @@ export interface Case {
   whatAreTheseDocuments?: WhatAreTheHearingDocuments;
   hearingDocument?: Document;
   formattedSelectedHearing?: string;
+  hearingClaimantViewState?: string;
 
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/

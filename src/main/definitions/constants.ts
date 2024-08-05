@@ -146,6 +146,7 @@ export const TranslationKeys = {
   AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
+  HEARING_DETAILS: 'hearing-details',
 } as const;
 
 export const PageUrls = {
@@ -282,6 +283,7 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  HEARING_DETAILS: '/hearing-details',
 } as const;
 
 export const InterceptPaths = {
@@ -335,6 +337,7 @@ export const JavaApiUrls = {
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
+  UPDATE_HEARING_NOTIFICATION_STATE: '/sendNotification/update-hearing-notification-state',
   STORE_RESPOND_TO_TRIBUNAL: 'store/store-respond-to-tribunal',
   SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
@@ -473,6 +476,7 @@ export const AllDocumentTypes = {
 export type AllDocumentTypeValue = (typeof AllDocumentTypes)[keyof typeof AllDocumentTypes];
 
 export const NotificationSubjects = {
+  HEARING: 'Hearing',
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
   ECC: 'Employer Contract Claim',
