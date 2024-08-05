@@ -264,6 +264,17 @@ export class CaseApi {
     }
   };
 
+  updateHearingNotificationState = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.UPDATE_HEARING_NOTIFICATION_STATE, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+      });
+    } catch (error) {
+      throw new Error('Error updating Hearing view state: ' + axiosErrorDetails(error));
+    }
+  };
+
   updateJudgmentNotificationState = async (
     selectedJudgment: SendNotificationTypeItem,
     caseItem: CaseWithId
