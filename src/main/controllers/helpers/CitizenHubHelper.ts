@@ -1,4 +1,3 @@
-import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
@@ -7,7 +6,7 @@ import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
-import { isHearingExist, isNotificationWithFutureHearing } from './HearingHelpers';
+import { isHearingExist, isHearingClaimantStateViewed } from './HearingHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -327,9 +326,6 @@ export const updateHearingHubLinkStatuses = (userCase: CaseWithId, hubLinksStatu
   }
 };
 
-export const shouldShowHearingNotification = (
-  notifications: SendNotificationTypeItem[],
-  hearingCollection: HearingModel[]
-): boolean => {
-  return notifications?.some(it => isNotificationWithFutureHearing(it));
+export const shouldShowHearingNotification = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(it => isHearingClaimantStateViewed(it));
 };

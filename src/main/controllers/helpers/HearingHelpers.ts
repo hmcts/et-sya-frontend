@@ -86,11 +86,11 @@ const isNotificationsWithIdMatch = (item: SendNotificationTypeItem, hearing: Hea
  * - Notification is not viewed
  * @param notification Send Notification Type Item
  */
-export const isNotificationWithFutureHearing = (notification: SendNotificationTypeItem): boolean => {
+export const isHearingClaimantStateViewed = (notification: SendNotificationTypeItem): boolean => {
   return (
     notification &&
     notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
     notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
-    notification.value.notificationState !== HubLinkStatus.VIEWED
+    notification.value.hearingClaimantViewState !== HubLinkStatus.VIEWED
   );
 };

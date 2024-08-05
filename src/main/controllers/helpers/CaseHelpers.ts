@@ -138,6 +138,15 @@ export const updateSendNotificationState = async (req: AppRequest, logger: Logge
   }
 };
 
+export const updateHearingNotificationState = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateHearingNotificationState(req.session.userCase);
+    logger.info(`Updated Hearing view state: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 export const updateJudgmentNotificationState = async (
   selectedJudgment: SendNotificationTypeItem,
   req: AppRequest,

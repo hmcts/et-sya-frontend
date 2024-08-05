@@ -3,13 +3,23 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
+import { updateHearingNotificationState } from './helpers/CaseHelpers';
 import { getHearingCollection } from './helpers/HearingHelpers';
+
+const logger = getLogger('HearingDetailsController');
 
 export default class HearingDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+
+    try {
+      await updateHearingNotificationState(req, logger);
+    } catch (error) {
+      logger.info(error.message);
+    }
 
     const welshEnabled = await getFlagValue('welsh-language', null);
 

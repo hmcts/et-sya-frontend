@@ -1,7 +1,7 @@
 import {
   getHearingCollection,
   isHearingExist,
-  isNotificationWithFutureHearing,
+  isHearingClaimantStateViewed,
 } from '../../../../main/controllers/helpers/HearingHelpers';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties } from '../../../../main/definitions/constants';
@@ -114,37 +114,37 @@ describe('Hearing Helpers - isNotificationWithFutureHearing', () => {
   });
 
   it('should return true with NOT_VIEWED hearing', () => {
-    notification.value.notificationState = HubLinkStatus.NOT_VIEWED;
-    const actual = isNotificationWithFutureHearing(notification);
+    notification.value.hearingClaimantViewState = HubLinkStatus.NOT_VIEWED;
+    const actual = isHearingClaimantStateViewed(notification);
     expect(actual).toEqual(true);
   });
 
   it('should return true with VIEWED hearing', () => {
-    notification.value.notificationState = HubLinkStatus.VIEWED;
-    const actual = isNotificationWithFutureHearing(notification);
+    notification.value.hearingClaimantViewState = HubLinkStatus.VIEWED;
+    const actual = isHearingClaimantStateViewed(notification);
     expect(actual).toEqual(false);
   });
 
   it('should return false if sendNotificationSubject is not Hearing', () => {
     notification.value.sendNotificationSubject = ['Judgment'];
-    const actual = isNotificationWithFutureHearing(notification);
+    const actual = isHearingClaimantStateViewed(notification);
     expect(actual).toEqual(false);
   });
 
   it('should return undefined if sendNotificationSubject is undefined', () => {
     notification.value.sendNotificationSubject = undefined;
-    const actual = isNotificationWithFutureHearing(notification);
+    const actual = isHearingClaimantStateViewed(notification);
     expect(actual).toEqual(undefined);
   });
 
   it('should return false if sendNotificationNotify is Respondent only', () => {
     notification.value.sendNotificationNotify = 'Respondent only';
-    const actual = isNotificationWithFutureHearing(notification);
+    const actual = isHearingClaimantStateViewed(notification);
     expect(actual).toEqual(false);
   });
 
   it('should return undefined if notification is undefined', () => {
-    const actual = isNotificationWithFutureHearing(undefined);
+    const actual = isHearingClaimantStateViewed(undefined);
     expect(actual).toEqual(undefined);
   });
 });
