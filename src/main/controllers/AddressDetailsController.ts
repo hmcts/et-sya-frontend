@@ -9,7 +9,7 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
@@ -86,12 +86,8 @@ export default class AddressDetailsController {
         },
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
