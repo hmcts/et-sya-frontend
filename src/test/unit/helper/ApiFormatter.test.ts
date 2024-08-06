@@ -339,6 +339,7 @@ describe('Format Case Data to Frontend Model', () => {
       responseEt3FormDocumentDetail: [],
       otherClaim: undefined,
       sendNotificationCollection: undefined,
+      hearingClaimantViewState: undefined,
       hearingCollection: undefined,
       documentCollection: undefined,
       representatives: undefined,
