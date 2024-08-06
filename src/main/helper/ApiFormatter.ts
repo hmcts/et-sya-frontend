@@ -218,6 +218,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     multipleFlag: fromApiCaseData?.case_data?.multipleFlag,
     leadClaimant: fromApiCaseData?.case_data?.leadClaimant,
     caseStayed: fromApiCaseData?.case_data?.batchCaseStayed,
+    hearingClaimantViewState: fromApiCaseData?.case_data?.hearingClaimantViewState,
   };
 }
 

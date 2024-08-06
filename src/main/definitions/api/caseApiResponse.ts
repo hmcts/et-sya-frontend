@@ -75,6 +75,7 @@ export interface CaseData {
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   batchCaseStayed?: YesOrNo;
+  hearingClaimantViewState?: string;
 }
 
 export type HearingBundleType = {
