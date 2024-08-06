@@ -5,6 +5,8 @@
 {% from "components/timeout-modal.njk" import timeoutModal with context %}
 {% from "components/web-chat.njk" import webChatModal %}
 
+{% set htmlLang = i18n.language %}
+
 {% block head %}
   {% include "webpack/css.njk" %}
   <script>
