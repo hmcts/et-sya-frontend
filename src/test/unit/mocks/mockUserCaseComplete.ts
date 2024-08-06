@@ -245,6 +245,7 @@ export default {
       },
     },
   ],
+  hearingClaimantViewState: undefined,
   hearingCollection: undefined,
   sendNotificationCollection: [selectedRequestOrOrder],
   documentCollection: [
