@@ -70,6 +70,7 @@ export interface SendNotificationType {
 
   //Indicates the notification status
   notificationState?: string;
+  hearingClaimantViewState?: string;
   respondCollection?: TypeItem<PseResponseType>[];
   respondStoredCollection?: TypeItem<PseResponseType>[];
   respondNotificationTypeCollection?: TypeItem<RespondNotificationType>[];

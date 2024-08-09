@@ -31,6 +31,7 @@ import {
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowHearingNotification,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknolwedgement,
@@ -38,6 +39,7 @@ import {
   shouldShowRespondentRejection,
   shouldShowRespondentResponseReceived,
   shouldShowSubmittedAlert,
+  updateHearingHubLinkStatuses,
   updateHubLinkStatuses,
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
@@ -135,6 +137,8 @@ export default class CitizenHubController {
 
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
+    updateHearingHubLinkStatuses(userCase, hubLinksStatuses);
+
     const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
 
     const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
@@ -210,6 +214,10 @@ export default class CitizenHubController {
         allApplications,
         notifications,
         languageParam
+      ),
+      showHearingNotification: shouldShowHearingNotification(
+        userCase?.sendNotificationCollection,
+        userCase?.hearingCollection
       ),
       notifications: ordersRequestsGeneralNotifications,
       eccNotifications,
