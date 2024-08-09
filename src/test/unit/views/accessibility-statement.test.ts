@@ -17,7 +17,6 @@ const pClass = 'govuk-body';
 const listClass = 'govuk-list govuk-list--bullet';
 const h1Class = 'govuk-heading-l';
 const h2Class = 'govuk-heading-m';
-const h3Class = 'govuk-heading-s';
 const expectedTitle = accessibilityStatementJson.title;
 // PARAGRAPHS
 const expectedParagraph_s1_1_1 = accessibilityStatementJson.paragraph_s1_1.part_1;
@@ -41,22 +40,6 @@ const expectedParagraph_s8_1_1 = accessibilityStatementJson.paragraph_s8_1.part_
 const expectedParagraph_s8_1_2 = accessibilityStatementJson.paragraph_s8_1.part_2;
 const expectedParagraph_s8_1_3 = accessibilityStatementJson.paragraph_s8_1.part_3;
 const expectedParagraph_s9_1 = accessibilityStatementJson.paragraph_s9_1;
-const expectedParagraph_s9_2 = accessibilityStatementJson.paragraph_s9_2;
-const expectedParagraph_s9_3 = accessibilityStatementJson.paragraph_s9_3;
-const expectedParagraph_s9_4_1 = accessibilityStatementJson.paragraph_s9_4.part_1;
-const expectedParagraph_s9_4_2 = accessibilityStatementJson.paragraph_s9_4.part_1;
-const expectedParagraph_s9_4_3 = accessibilityStatementJson.paragraph_s9_4.part_1;
-const expectedParagraph_s9_5 = accessibilityStatementJson.paragraph_s9_5;
-const expectedParagraph_s10_1 = accessibilityStatementJson.paragraph_s10_1;
-const expectedParagraph_s11_1 = accessibilityStatementJson.paragraph_s11_1;
-const expectedParagraph_s11_2 = accessibilityStatementJson.paragraph_s11_2;
-const expectedParagraph_s11_3 = accessibilityStatementJson.paragraph_s11_3;
-const expectedParagraph_s11_4 = accessibilityStatementJson.paragraph_s11_4;
-const expectedParagraph_s11_5 = accessibilityStatementJson.paragraph_s11_5;
-const expectedParagraph_s11_6 = accessibilityStatementJson.paragraph_s11_6;
-const expectedParagraph_s11_7 = accessibilityStatementJson.paragraph_s11_7;
-const expectedParagraph_s11_8 = accessibilityStatementJson.paragraph_s11_8;
-const expectedParagraph_s11_9 = accessibilityStatementJson.paragraph_s11_9;
 const expectedHeader1 = accessibilityStatementJson.header1;
 const expectedHeader2_1 = accessibilityStatementJson.header2;
 const expectedHeader2_2 = accessibilityStatementJson.header3;
@@ -67,15 +50,31 @@ const expectedHeader2_6 = accessibilityStatementJson.header7;
 const expectedHeader2_7 = accessibilityStatementJson.header8;
 const expectedHeader2_8 = accessibilityStatementJson.header9;
 const expectedHeader2_9 = accessibilityStatementJson.nonComplianceReason1;
-const expectedHeader2_10 = accessibilityStatementJson.nonComplianceReason2;
 const expectedHeader2_11 = accessibilityStatementJson.header10;
 const expectedHeader2_12 = accessibilityStatementJson.header11;
-const expectedHeader3_1 = accessibilityStatementJson.nonComplianceReason2_PDF_DOCS;
+const expectedNotAccessibile1 = accessibilityStatementJson.notAccessible1;
+const expectedNotAccessibile2 = accessibilityStatementJson.notAccessible2;
+const expectedNotAccessibile3 = accessibilityStatementJson.notAccessible3;
+const expectedNotAccessibile4 = accessibilityStatementJson.notAccessible4;
+const expectedNotAccessibile5 = accessibilityStatementJson.notAccessible5;
+const expectedNotAccessibile6 = accessibilityStatementJson.notAccessible6;
+const expectedAbleTo1 = accessibilityStatementJson.ableTo1;
+const expectedAbleTo2 = accessibilityStatementJson.ableTo2;
+const expectedAbleTo3 = accessibilityStatementJson.ableTo3;
+const expectedAbleTo4 = accessibilityStatementJson.ableTo4;
+const expectedAbleTo5 = accessibilityStatementJson.ableTo5;
+const expectedContactType1 = accessibilityStatementJson.contactType1;
+const expectedNonCompliance_1_1 = accessibilityStatementJson.nonCompliance_1_1;
+const expectedNonCompliance_1_2 = accessibilityStatementJson.nonCompliance_1_2;
+const expectedNonCompliance_1_3 = accessibilityStatementJson.nonCompliance_1_3;
+const expectedNonCompliance_1_4 = accessibilityStatementJson.nonCompliance_1_4;
+const expectedNonCompliance_1_5 = accessibilityStatementJson.nonCompliance_1_5;
+const expectedNonCompliance_1_6 = accessibilityStatementJson.nonCompliance_1_6;
+const expectedNonCompliance_1_7 = accessibilityStatementJson.nonCompliance_1_7;
 const paragraphDoesNotExist = 'Paragraph does not exist';
 const h1DoesNotExist = 'Heading 1 does not exist';
 const h2DoesNotExist = 'Heading 2 does not exist';
-const h3DoesNotExist = 'Heading 3 does not exist';
-
+const bulletPointDoesNotExist = 'Bullet point does not exist';
 let htmlRes: Document;
 describe('Accessibility statement page', () => {
   beforeAll(async () => {
@@ -91,9 +90,9 @@ describe('Accessibility statement page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display 31 paragraphs', () => {
+  it('should 23 display paragraphs', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(37, `${p.length} paragraphs found - expected 37`);
+    expect(p.length).equal(23, `${p.length} paragraphs found - expected 23`);
     expect(p[6].innerHTML).contains(expectedParagraph_s1_1_1, paragraphDoesNotExist);
     expect(p[6].innerHTML).contains(expectedParagraph_s1_1_2, paragraphDoesNotExist);
     expect(p[7].innerHTML).contains(expectedParagraph_s1_2, paragraphDoesNotExist);
@@ -115,27 +114,30 @@ describe('Accessibility statement page', () => {
     expect(p[21].innerHTML).contains(expectedParagraph_s8_1_2, paragraphDoesNotExist);
     expect(p[21].innerHTML).contains(expectedParagraph_s8_1_3, paragraphDoesNotExist);
     expect(p[22].innerHTML).contains(expectedParagraph_s9_1, paragraphDoesNotExist);
-    expect(p[23].innerHTML).contains(expectedParagraph_s9_2, paragraphDoesNotExist);
-    expect(p[24].innerHTML).contains(expectedParagraph_s9_3, paragraphDoesNotExist);
-    expect(p[25].innerHTML).contains(expectedParagraph_s9_4_1, paragraphDoesNotExist);
-    expect(p[25].innerHTML).contains(expectedParagraph_s9_4_2, paragraphDoesNotExist);
-    expect(p[25].innerHTML).contains(expectedParagraph_s9_4_3, paragraphDoesNotExist);
-    expect(p[26].innerHTML).contains(expectedParagraph_s9_5, paragraphDoesNotExist);
-    expect(p[27].innerHTML).contains(expectedParagraph_s10_1, paragraphDoesNotExist);
-    expect(p[28].innerHTML).contains(expectedParagraph_s11_1, paragraphDoesNotExist);
-    expect(p[29].innerHTML).contains(expectedParagraph_s11_2, paragraphDoesNotExist);
-    expect(p[30].innerHTML).contains(expectedParagraph_s11_3, paragraphDoesNotExist);
-    expect(p[31].innerHTML).contains(expectedParagraph_s11_4, paragraphDoesNotExist);
-    expect(p[32].innerHTML).contains(expectedParagraph_s11_5, paragraphDoesNotExist);
-    expect(p[33].innerHTML).contains(expectedParagraph_s11_6, paragraphDoesNotExist);
-    expect(p[34].innerHTML).contains(expectedParagraph_s11_7, paragraphDoesNotExist);
-    expect(p[35].innerHTML).contains(expectedParagraph_s11_8, paragraphDoesNotExist);
-    expect(p[36].innerHTML).contains(expectedParagraph_s11_9, paragraphDoesNotExist);
   });
 
-  it('should display 5 bullet lists', () => {
+  it('should display 7 bullet lists', () => {
     const listItems = htmlRes.getElementsByClassName(listClass);
-    expect(listItems.length).equal(5, `${listItems.length} lists found - expected 5`);
+    expect(listItems.length).equal(7, `${listItems.length} lists found - expected 7`);
+    expect(listItems[0].innerHTML).contains(expectedAbleTo1, bulletPointDoesNotExist);
+    expect(listItems[0].innerHTML).contains(expectedAbleTo2, bulletPointDoesNotExist);
+    expect(listItems[0].innerHTML).contains(expectedAbleTo3, bulletPointDoesNotExist);
+    expect(listItems[0].innerHTML).contains(expectedAbleTo4, bulletPointDoesNotExist);
+    expect(listItems[0].innerHTML).contains(expectedAbleTo5, bulletPointDoesNotExist);
+    expect(listItems[1].innerHTML).contains(expectedNotAccessibile1, bulletPointDoesNotExist);
+    expect(listItems[1].innerHTML).contains(expectedNotAccessibile2, bulletPointDoesNotExist);
+    expect(listItems[1].innerHTML).contains(expectedNotAccessibile3, bulletPointDoesNotExist);
+    expect(listItems[1].innerHTML).contains(expectedNotAccessibile4, bulletPointDoesNotExist);
+    expect(listItems[1].innerHTML).contains(expectedNotAccessibile5, bulletPointDoesNotExist);
+    expect(listItems[1].innerHTML).contains(expectedNotAccessibile6, bulletPointDoesNotExist);
+    expect(listItems[2].innerHTML).contains(expectedContactType1, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_1, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_2, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_3, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_4, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_5, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_6, bulletPointDoesNotExist);
+    expect(listItems[4].innerHTML).contains(expectedNonCompliance_1_7, bulletPointDoesNotExist);
   });
 
   it('should display 1 h1 heading', () => {
@@ -146,7 +148,7 @@ describe('Accessibility statement page', () => {
 
   it('should display 12 h2 heading', () => {
     const h2 = htmlRes.getElementsByClassName(h2Class);
-    expect(h2.length).equal(14, `${h2.length} h2 headings found - expected 1`);
+    expect(h2.length).equal(13, `${h2.length} h2 headings found - expected 1`);
     expect(h2[2].innerHTML).contains(expectedHeader2_1, h2DoesNotExist);
     expect(h2[3].innerHTML).contains(expectedHeader2_2, h2DoesNotExist);
     expect(h2[4].innerHTML).contains(expectedHeader2_3, h2DoesNotExist);
@@ -156,14 +158,7 @@ describe('Accessibility statement page', () => {
     expect(h2[8].innerHTML).contains(expectedHeader2_7, h2DoesNotExist);
     expect(h2[9].innerHTML).contains(expectedHeader2_8, h2DoesNotExist);
     expect(h2[10].innerHTML).contains(expectedHeader2_9, h2DoesNotExist);
-    expect(h2[11].innerHTML).contains(expectedHeader2_10, h2DoesNotExist);
-    expect(h2[12].innerHTML).contains(expectedHeader2_11, h2DoesNotExist);
-    expect(h2[13].innerHTML).contains(expectedHeader2_12, h2DoesNotExist);
-  });
-
-  it('should display 1 h3 headings', () => {
-    const h3 = htmlRes.getElementsByClassName(h3Class);
-    expect(h3.length).equal(1, `${h3.length} h3 headings found - expected 6`);
-    expect(h3[0].innerHTML).contains(expectedHeader3_1, h3DoesNotExist);
+    expect(h2[11].innerHTML).contains(expectedHeader2_11, h2DoesNotExist);
+    expect(h2[12].innerHTML).contains(expectedHeader2_12, h2DoesNotExist);
   });
 });
