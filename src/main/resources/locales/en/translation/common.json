@@ -83,7 +83,7 @@
   "respondentPageText": "You should be able to find the address on your payslips, contract or other official documents.",
   "respondentInsetText": "This should be the same respondent address given to Acas.",
   "workAddressPageHeader": "What’s the postcode where you worked or work?",
-  "workAddressPageText1": "This will decide which Employment Tribunal office deals with your claim. If you worked at home, enter your home postcode.",
+  "workAddressPageText1": "This will usually decide which Employment Tribunal office deals with your claim.  If you worked at home, enter the home postcode at which you work or worked.",
   "workAddressPageText2": "If you’re claiming against someone you did not work for, enter the postcode of where they are based.",
   "manualAddress": "I live outside the UK",
   "respondentManualAddress": "The respondent address is outside the UK",
