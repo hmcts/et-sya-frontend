@@ -9828,11 +9828,11 @@ __metadata:
   linkType: hard
 
 "i18next@npm:^23.0.0":
-  version: 23.12.2
-  resolution: "i18next@npm:23.12.2"
+  version: 23.12.3
+  resolution: "i18next@npm:23.12.3"
   dependencies:
     "@babel/runtime": ^7.23.2
-  checksum: 283d1ebb3d645bc3ea134f2e8e882b87e36ecd2389ddba5c165c322eed564a38bb3035e53ccd3b80b553f7a300f8acc5d107c89e6ecbb294ebbb5d9a4619ec22
+  checksum: 5a776a9c5254a4249550457941b2be7a05d436e87e216941c9e0196a55f3d421de1de43c27f8028176acc172f3af190a3cf4266ab8db8b7d051d95b028fd156a
   languageName: node
   linkType: hard
 
