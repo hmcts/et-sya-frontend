@@ -47,35 +47,57 @@ export default class AboutHearingDocumentsController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    let userCaseId;
     try {
-      const userCase = fromApiFormat(
-        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
-      );
-      if (userCase) {
-        userCaseId = userCase.id;
+      const userCaseId = await this.getUserCaseId(req);
+      if (!userCaseId) {
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
+
+      if (!req.session?.userCase?.hearingCollection?.length) {
+        logger.info('no hearing collection found, redirecting to citizen hub');
+        return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
+      }
+
+      const radioBtns = createRadioBtnsForHearings(req.session?.userCase?.hearingCollection);
+      if (!radioBtns?.length) {
+        logger.info('no hearing collection with future dates, redirecting to citizen hub');
+        return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
+      }
+
+      this.aboutHearingDocumentsContent = this.getAboutHearingDocumentsContent(radioBtns);
+      this.form = new Form(<FormFields>this.aboutHearingDocumentsContent.fields);
+      const content = getPageContent(req, this.aboutHearingDocumentsContent, [TranslationKeys.COMMON]);
+
+      assignFormData(req.session.userCase, this.form.getFormFields());
+      res.render(TranslationKeys.ABOUT_HEARING_DOCUMENTS, {
+        ...content,
+        ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+        ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
+        ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
+        hideContactUs: true,
+        cancelLink: `/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`,
+      });
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${getLanguageParam(req.url)}`);
     }
+  };
 
-    if (!userCaseId) {
-      return res.redirect(ErrorPages.NOT_FOUND);
-    }
+  private async getUserCaseId(req: AppRequest): Promise<string | undefined> {
+    const userCase = fromApiFormat(
+      (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
+    );
+    return userCase?.id;
+  }
 
-    if (!req.session?.userCase?.hearingCollection?.length) {
-      logger.info('no hearing collection found, redirecting to citizen hub');
-      return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
-    }
-
-    const radioBtns = createRadioBtnsForHearings(req.session?.userCase?.hearingCollection);
-    if (!radioBtns?.length) {
-      logger.info('no hearing collection with future dates, redirecting to citizen hub');
-      return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
-    }
-
-    this.aboutHearingDocumentsContent = {
+  private getAboutHearingDocumentsContent(
+    radioBtns: {
+      name: string;
+      label: string;
+      value: string;
+    }[]
+  ) {
+    return {
       fields: {
         hearingDocumentsAreFor: {
           classes: 'govuk-radios',
@@ -139,17 +161,5 @@ export default class AboutHearingDocumentsController {
         text: (l: AnyRecord): string => l.continue,
       },
     };
-    this.form = new Form(<FormFields>this.aboutHearingDocumentsContent.fields);
-    const content = getPageContent(req, this.aboutHearingDocumentsContent, [TranslationKeys.COMMON]);
-
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.ABOUT_HEARING_DOCUMENTS, {
-      ...content,
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
-      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
-      hideContactUs: true,
-      cancelLink: `/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`,
-    });
-  };
+  }
 }
