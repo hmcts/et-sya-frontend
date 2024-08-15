@@ -21,68 +21,6 @@ export default class AboutHearingDocumentsController {
   private form: Form;
   private aboutHearingDocumentsContent: FormContent;
 
-  constructor() {
-    // intentionally empty
-  }
-
-  public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const { userCase } = req.session;
-    req.session.errors = [];
-    userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
-    userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
-
-    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.body.hearingDocumentsAreFor);
-    if (!foundHearing) {
-      req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
-    } else {
-      userCase.hearingDocumentsAreFor = foundHearing.id;
-    }
-
-    req.session.errors = [...req.session.errors, ...aboutHearingDocumentsErrors(req)];
-    if (req.session?.errors?.length) {
-      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
-    }
-
-    return res.redirect(PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':hearingId', foundHearing.id));
-  };
-
-  public get = async (req: AppRequest, res: Response): Promise<void> => {
-    try {
-      const userCaseId = await this.getUserCaseId(req);
-      if (!userCaseId) {
-        return res.redirect(ErrorPages.NOT_FOUND);
-      }
-
-      if (!req.session?.userCase?.hearingCollection?.length) {
-        logger.info('no hearing collection found, redirecting to citizen hub');
-        return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
-      }
-
-      const radioBtns = createRadioBtnsForHearings(req.session?.userCase?.hearingCollection);
-      if (!radioBtns?.length) {
-        logger.info('no hearing collection with future dates, redirecting to citizen hub');
-        return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
-      }
-
-      this.aboutHearingDocumentsContent = this.getAboutHearingDocumentsContent(radioBtns);
-      this.form = new Form(<FormFields>this.aboutHearingDocumentsContent.fields);
-      const content = getPageContent(req, this.aboutHearingDocumentsContent, [TranslationKeys.COMMON]);
-
-      assignFormData(req.session.userCase, this.form.getFormFields());
-      res.render(TranslationKeys.ABOUT_HEARING_DOCUMENTS, {
-        ...content,
-        ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-        ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
-        ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
-        hideContactUs: true,
-        cancelLink: `/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`,
-      });
-    } catch (error) {
-      logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${getLanguageParam(req.url)}`);
-    }
-  };
-
   private async getUserCaseId(req: AppRequest): Promise<string | undefined> {
     const userCase = fromApiFormat(
       (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
@@ -96,7 +34,7 @@ export default class AboutHearingDocumentsController {
       label: string;
       value: string;
     }[]
-  ) {
+  ): FormContent {
     return {
       fields: {
         hearingDocumentsAreFor: {
@@ -162,4 +100,66 @@ export default class AboutHearingDocumentsController {
       },
     };
   }
+
+  constructor() {
+    // intentionally empty
+  }
+
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const { userCase } = req.session;
+    req.session.errors = [];
+    userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
+    userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
+
+    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.body.hearingDocumentsAreFor);
+    if (!foundHearing) {
+      req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
+    } else {
+      userCase.hearingDocumentsAreFor = foundHearing.id;
+    }
+
+    req.session.errors = [...req.session.errors, ...aboutHearingDocumentsErrors(req)];
+    if (req.session?.errors?.length) {
+      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
+    }
+
+    return res.redirect(PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':hearingId', foundHearing.id));
+  };
+
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    try {
+      const userCaseId = await this.getUserCaseId(req);
+      if (!userCaseId) {
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
+
+      if (!req.session?.userCase?.hearingCollection?.length) {
+        logger.info('no hearing collection found, redirecting to citizen hub');
+        return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
+      }
+
+      const radioBtns = createRadioBtnsForHearings(req.session?.userCase?.hearingCollection);
+      if (!radioBtns?.length) {
+        logger.info('no hearing collection with future dates, redirecting to citizen hub');
+        return res.redirect(`/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`);
+      }
+
+      this.aboutHearingDocumentsContent = this.getAboutHearingDocumentsContent(radioBtns);
+      this.form = new Form(<FormFields>this.aboutHearingDocumentsContent.fields);
+      const content = getPageContent(req, this.aboutHearingDocumentsContent, [TranslationKeys.COMMON]);
+
+      assignFormData(req.session.userCase, this.form.getFormFields());
+      res.render(TranslationKeys.ABOUT_HEARING_DOCUMENTS, {
+        ...content,
+        ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+        ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
+        ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
+        hideContactUs: true,
+        cancelLink: `/citizen-hub/${userCaseId}${getLanguageParam(req.url)}`,
+      });
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${getLanguageParam(req.url)}`);
+    }
+  };
 }
