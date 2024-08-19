@@ -1,6 +1,6 @@
 {
   "title": "Work address",
-  "legend": "Did you work at?",
+  "legend": "Did you work at",
   "hintText": "Select 'Yes' if this is the address where you were based. Select 'No' if you were based at a different address or worked from home.",
   "h1": "Did you work at",
   "errors": {
