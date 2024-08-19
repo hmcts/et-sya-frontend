@@ -17,13 +17,13 @@
       <h1 class="govuk-heading-xl">
         {{ legend | safe }}
       </h1>
-      <h2 class="govuk-heading-m">
+      <p class="govuk-body">
         {{ addressLine1 }}<br>
         {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
         {{ addressTown }}<br>
         {{ addressCountry }}<br>
         {{ addressPostcode }}
-      </h2>
+      </p>
       <p class="govuk-hint">{{ hintText }}</p>
       {% block form %}
         {% include "form/form.njk" %}
