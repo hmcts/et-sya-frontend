@@ -2610,31 +2610,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.5.0":
-  version: 2.5.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.5.0"
-  checksum: 509909ee951925c27bafa584e762a36f8be186522cde05fde5e9a61de5d0d21e71f171f91ed246872a2096b05534f53289181889fb9bfce5eef182881b01511e
+"@launchdarkly/js-sdk-common@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.6.0"
+  checksum: 6e1458b188324a2a7adfb9dd11935d5962df974216c06c07a894f8053c572e1820ffec57f8259eec68b3702423abf206790e489553bfcc65c235ea7275f5e0cd
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.4.4":
-  version: 2.4.4
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.4.4"
+"@launchdarkly/js-server-sdk-common@npm:2.4.5":
+  version: 2.4.5
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.4.5"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.5.0
+    "@launchdarkly/js-sdk-common": 2.6.0
     semver: 7.5.4
-  checksum: e327a7edce2f7537f1039c707a934652e8533073256b2c99413e6f4adab4929f06d0548c573784d699b40b48045bdb3e85f53a83337513bcda29ede4ba067d5f
+  checksum: 0f139350d948a8eb7743cd7d7e64a1e3c611624a1f28926fafbdc957044e17d660979f84fce57f8d1582f8b5617c593345a33fd12febbbf2cc3f7f0119877ecf
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.5.0
-  resolution: "@launchdarkly/node-server-sdk@npm:9.5.0"
+  version: 9.5.1
+  resolution: "@launchdarkly/node-server-sdk@npm:9.5.1"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.4.4
+    "@launchdarkly/js-server-sdk-common": 2.4.5
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.3
-  checksum: 5161a99b41b797f9d86dc8d5ab18e4068f55c4df8edd3289ddb6e9290c894df7c5e5f487c2b04c5421bc4441dfdb52f6588ee9fb05857b0caf3f523d60ab7216
+  checksum: 1d7a1f18bbeee1e1a28bc47f41d3e4df06de0690894c8b545c9e90e6774a6bb32a3890e0bcc35979be1e535453bb1b3c25e745b451cb8024e13eaefe96e55e4b
   languageName: node
   linkType: hard
 
@@ -5047,14 +5047,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.2":
-  version: 1.7.2
-  resolution: "axios@npm:1.7.2"
+"axios@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "axios@npm:1.7.4"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: e457e2b0ab748504621f6fa6609074ac08c824bf0881592209dfa15098ece7e88495300e02cd22ba50b3468fd712fe687e629dcb03d6a3f6a51989727405aedf
+  checksum: 0c17039a9acfe6a566fca8431ba5c1b455c83d30ea6157fec68a6722878fcd30f3bd32d172f6bee0c51fe75ca98e6414ddcd968a87b5606b573731629440bfaf
   languageName: node
   linkType: hard
 
@@ -8032,7 +8032,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.0.0
     applicationinsights: 2.5.1
     autobind-decorator: ^2.4.0
-    axios: ^1.7.2
+    axios: ^1.7.4
     babel-loader: ^9.1.2
     chai: ^4.3.7
     chai-as-promised: ^8.0.0
@@ -11574,8 +11574,8 @@ __metadata:
   linkType: hard
 
 "lint-staged@npm:^15.0.0":
-  version: 15.2.8
-  resolution: "lint-staged@npm:15.2.8"
+  version: 15.2.9
+  resolution: "lint-staged@npm:15.2.9"
   dependencies:
     chalk: ~5.3.0
     commander: ~12.1.0
@@ -11589,7 +11589,7 @@ __metadata:
     yaml: ~2.5.0
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 7077c1ec963022d51913abfad8231799c3c9536633e65d5916e4c432bd9108a2dbc4614891c529638807f08b0de73b8ffb9e357eb98b0721363526124daea75b
+  checksum: 7f804c24d0374b48d26f11a051342141b84c9954f77225bab5ae221b1e4d47a72f722f39b13169267592c28b2614ad39f9722fd86bc4cdfdf93e8601ff66b0e1
   languageName: node
   linkType: hard
 
