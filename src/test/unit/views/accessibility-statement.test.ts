@@ -148,7 +148,7 @@ describe('Accessibility statement page', () => {
 
   it('should display 12 h2 heading', () => {
     const h2 = htmlRes.getElementsByClassName(h2Class);
-    expect(h2.length).equal(13, `${h2.length} h2 headings found - expected 13`);
+    expect(h2.length).equal(12, `${h2.length} h2 headings found - expected 12`);
     expect(h2[2].innerHTML).contains(expectedHeader2_1, h2DoesNotExist);
     expect(h2[3].innerHTML).contains(expectedHeader2_2, h2DoesNotExist);
     expect(h2[4].innerHTML).contains(expectedHeader2_3, h2DoesNotExist);
