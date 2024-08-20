@@ -75,6 +75,7 @@ const expectedNonCompliance_1_7 = accessibilityStatementJson.nonCompliance_1_7;
 const paragraphDoesNotExist = 'Paragraph does not exist';
 const h1DoesNotExist = 'Heading 1 does not exist';
 const h2DoesNotExist = 'Heading 2 does not exist';
+const h3DoesNotExist = 'Heading 3 does not exist';
 const bulletPointDoesNotExist = 'Bullet point does not exist';
 let htmlRes: Document;
 describe('Accessibility statement page', () => {
@@ -165,6 +166,6 @@ describe('Accessibility statement page', () => {
   it('should display 1 h3 heading', () => {
     const h3 = htmlRes.getElementsByClassName(h3Class);
     expect(h3.length).equal(1, `${h3.length} h3 headings found - expected 1`);
-    expect(h3[0].innerHTML).contains(expectedHeader2_9, h2DoesNotExist);
+    expect(h3[0].innerHTML).contains(expectedHeader2_9, h3DoesNotExist);
   });
 });
