@@ -183,7 +183,7 @@ export default class CitizenHubController {
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       PageUrls,
       userCase,
-      progressBarItems: getProgressBarItems(userCase, translations),
+      progressBarItems: getProgressBarItems(userCase, translations, req.url),
       sections,
       respondentBannerContent,
       judgmentBannerContent,

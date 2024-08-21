@@ -8,6 +8,7 @@ describe('getProgressBarItems', () => {
   const translations = {
     accepted: 'Claim accepted',
     received: 'Response received',
+    responseDue: 'Response due',
     details: 'Your hearing details',
     decision: 'Your claim decision',
   };
@@ -16,21 +17,22 @@ describe('getProgressBarItems', () => {
     const userCase: Partial<CaseWithId> = {
       state: CaseState.ACCEPTED,
       et3ResponseReceived: false,
+      et3DueDate: '2022-08-19',
       hearingCollection: [],
     };
 
-    const result = getProgressBarItems(userCase, translations);
+    const result = getProgressBarItems(userCase, translations, '?lng=en');
 
     const expected: ProgressBarItem[] = [
       {
         label: { text: 'Claim accepted' },
         complete: true,
-        active: true,
+        active: false,
       },
       {
-        label: { text: 'Response received' },
+        label: { text: 'Response due 19 August 2022' },
         complete: false,
-        active: false,
+        active: true,
       },
       {
         label: { text: 'Your hearing details' },
@@ -54,7 +56,7 @@ describe('getProgressBarItems', () => {
       hearingCollection: [],
     };
 
-    const result = getProgressBarItems(userCase, translations);
+    const result = getProgressBarItems(userCase, translations, '?lng=en');
 
     const expected: ProgressBarItem[] = [
       {
@@ -65,12 +67,12 @@ describe('getProgressBarItems', () => {
       {
         label: { text: 'Response received' },
         complete: true,
-        active: true,
+        active: false,
       },
       {
         label: { text: 'Your hearing details' },
         complete: false,
-        active: false,
+        active: true,
       },
       {
         label: { text: 'Your claim decision' },
@@ -89,7 +91,7 @@ describe('getProgressBarItems', () => {
       hearingCollection: mockHearingCollection,
     };
 
-    const result = getProgressBarItems(userCase, translations);
+    const result = getProgressBarItems(userCase, translations, '?lng=en');
 
     const expected: ProgressBarItem[] = [
       {
@@ -105,12 +107,12 @@ describe('getProgressBarItems', () => {
       {
         label: { text: 'Your hearing details' },
         complete: true,
-        active: true,
+        active: false,
       },
       {
         label: { text: 'Your claim decision' },
         complete: false,
-        active: false,
+        active: true,
       },
     ];
 
@@ -124,7 +126,7 @@ describe('getProgressBarItems', () => {
       hearingCollection: mockHearingCollection,
     };
 
-    const result = getProgressBarItems(userCase, translations);
+    const result = getProgressBarItems(userCase, translations, '?lng=en');
 
     const expected: ProgressBarItem[] = [
       {
@@ -133,14 +135,14 @@ describe('getProgressBarItems', () => {
         active: false,
       },
       {
-        label: { text: 'Response received' },
+        label: { text: 'Response due' },
         complete: false,
-        active: false,
+        active: true,
       },
       {
         label: { text: 'Your hearing details' },
         complete: true,
-        active: true,
+        active: false,
       },
       {
         label: { text: 'Your claim decision' },
