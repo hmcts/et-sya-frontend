@@ -1,6 +1,10 @@
+import AxiosInstance, { AxiosResponse } from 'axios';
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/about-hearing-documents';
@@ -11,6 +15,23 @@ const radioButtonQuestion = 'govuk-radios govuk-radios';
 const inputs = 'govuk-label govuk-radios__label';
 const expectedRadioButton = '3333 Hearing - RCJ - 4 July 2223';
 let htmlRes: Document;
+
+jest.mock('axios');
+const mockCaseApi = {
+  axios: AxiosInstance,
+  getUserCase: jest.fn(),
+};
+const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+caseApi.getUserCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      id: '1234',
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
 
 describe('About hearing documents page', () => {
   beforeAll(async () => {
