@@ -14,10 +14,10 @@
 !webpack.config.js
 !.yarn/patches
 !.yarn/plugins
-!.yarn/releases
+!.yarn/releases/*.cjs
 !.yarn/sdks
 !.yarn/versions
 !.eslintrc.js
 !.eslintignore
 !.yarnrc.yml
-!node_modules
+!node_modules/govuk-frontend
