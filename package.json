@@ -169,6 +169,7 @@
     "jsdom": "^24.0.0",
     "shelljs": "^0.8.5",
     "merge": "^2.1.1",
+    "micromatch": "^4.0.8",
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
     "es5-ext": "^0.10.63",
