@@ -11332,8 +11332,8 @@ __metadata:
   linkType: hard
 
 "jsdom@npm:^24.0.0":
-  version: 24.1.1
-  resolution: "jsdom@npm:24.1.1"
+  version: 24.1.3
+  resolution: "jsdom@npm:24.1.3"
   dependencies:
     cssstyle: ^4.0.1
     data-urls: ^5.0.0
@@ -11361,7 +11361,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: c3f3c9c8f6ac4ce308de6f005980d0f3da4d504686a0fc20c59760f1e3be714d48adf3d31f8d3a352d8adb4961e6cfebfc6b6c3c9841408cf6e7f8c0cd4dcdc4
+  checksum: c71e2e6b5304c95a230feaef0c21fb7c353b7e785ba49ed9544d309f8faab1fc167146e0f1d00e2fb5346a11a27c60ae021a9688382f6b2d78e2c169769b4bfc
   languageName: node
   linkType: hard
 
