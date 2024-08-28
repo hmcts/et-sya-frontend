@@ -8,6 +8,7 @@ export default class AccessibilityStatementController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.ACCESSIBILITY_STATEMENT, { returnObjects: true }),
       PageUrls,
+      hideContactUs: true,
     });
   }
 }

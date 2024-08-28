@@ -1,16 +1,40 @@
+import AxiosInstance, { AxiosResponse } from 'axios';
+
 import AboutHearingDocumentsController from '../../../main/controllers/AboutHearingDocumentsController';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import aboutHearingDocumentsJson from '../../../main/resources/locales/en/translation/about-hearing-documents.json';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockHearingCollectionFutureDates } from '../mocks/mockHearing';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.mock('axios');
+const mockCaseApi = {
+  axios: AxiosInstance,
+  getUserCase: jest.fn(),
+};
+const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+caseApi.getUserCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      id: '1234',
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
+
 describe('About Hearing Documents Controller', () => {
-  it('should render the About Hearing Documents page', () => {
+  it('should render the About Hearing Documents page', async () => {
     const controller = new AboutHearingDocumentsController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, aboutHearingDocumentsJson);
     request.session.userCase.hearingCollection = mockHearingCollectionFutureDates;
-    controller.get(request, response);
+    request.url = PageUrls.ABOUT_HEARING_DOCUMENTS + languages.ENGLISH_URL_PARAMETER;
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('about-hearing-documents', expect.anything());
   });
 
@@ -62,15 +86,15 @@ describe('About Hearing Documents Controller', () => {
     controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
   });
-  it('should redirect to the citizen hub if no hearings are present', () => {
+  it('should redirect to the citizen hub if no hearings are present', async () => {
     const controller = new AboutHearingDocumentsController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, aboutHearingDocumentsJson);
-
-    controller.get(request, response);
+    request.url = PageUrls.ABOUT_HEARING_DOCUMENTS + languages.ENGLISH_URL_PARAMETER;
+    await controller.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1234?lng=en');
   });
-  it('should redirect back to the citizen hub if there are no hearings for future dates', () => {
+  it('should redirect back to the citizen hub if there are no hearings for future dates', async () => {
     const controller = new AboutHearingDocumentsController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, aboutHearingDocumentsJson);
@@ -153,8 +177,8 @@ describe('About Hearing Documents Controller', () => {
         },
       },
     ];
-
-    controller.get(request, response);
+    request.url = PageUrls.ABOUT_HEARING_DOCUMENTS + languages.ENGLISH_URL_PARAMETER;
+    await controller.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1234?lng=en');
   });
 });

@@ -17,6 +17,7 @@ const pClass = 'govuk-body';
 const listClass = 'govuk-list govuk-list--bullet';
 const h1Class = 'govuk-heading-l';
 const h2Class = 'govuk-heading-m';
+const h3Class = 'govuk-heading-s';
 const expectedTitle = accessibilityStatementJson.title;
 // PARAGRAPHS
 const expectedParagraph_s1_1_1 = accessibilityStatementJson.paragraph_s1_1.part_1;
@@ -74,6 +75,7 @@ const expectedNonCompliance_1_7 = accessibilityStatementJson.nonCompliance_1_7;
 const paragraphDoesNotExist = 'Paragraph does not exist';
 const h1DoesNotExist = 'Heading 1 does not exist';
 const h2DoesNotExist = 'Heading 2 does not exist';
+const h3DoesNotExist = 'Heading 3 does not exist';
 const bulletPointDoesNotExist = 'Bullet point does not exist';
 let htmlRes: Document;
 describe('Accessibility statement page', () => {
@@ -148,7 +150,7 @@ describe('Accessibility statement page', () => {
 
   it('should display 12 h2 heading', () => {
     const h2 = htmlRes.getElementsByClassName(h2Class);
-    expect(h2.length).equal(13, `${h2.length} h2 headings found - expected 13`);
+    expect(h2.length).equal(12, `${h2.length} h2 headings found - expected 12`);
     expect(h2[2].innerHTML).contains(expectedHeader2_1, h2DoesNotExist);
     expect(h2[3].innerHTML).contains(expectedHeader2_2, h2DoesNotExist);
     expect(h2[4].innerHTML).contains(expectedHeader2_3, h2DoesNotExist);
@@ -157,8 +159,13 @@ describe('Accessibility statement page', () => {
     expect(h2[7].innerHTML).contains(expectedHeader2_6, h2DoesNotExist);
     expect(h2[8].innerHTML).contains(expectedHeader2_7, h2DoesNotExist);
     expect(h2[9].innerHTML).contains(expectedHeader2_8, h2DoesNotExist);
-    expect(h2[10].innerHTML).contains(expectedHeader2_9, h2DoesNotExist);
-    expect(h2[11].innerHTML).contains(expectedHeader2_11, h2DoesNotExist);
-    expect(h2[12].innerHTML).contains(expectedHeader2_12, h2DoesNotExist);
+    expect(h2[10].innerHTML).contains(expectedHeader2_11, h2DoesNotExist);
+    expect(h2[11].innerHTML).contains(expectedHeader2_12, h2DoesNotExist);
+  });
+
+  it('should display 1 h3 heading', () => {
+    const h3 = htmlRes.getElementsByClassName(h3Class);
+    expect(h3.length).equal(1, `${h3.length} h3 headings found - expected 1`);
+    expect(h3[0].innerHTML).contains(expectedHeader2_9, h3DoesNotExist);
   });
 });
