@@ -14,7 +14,7 @@
 !webpack.config.js
 !.yarn/patches
 !.yarn/plugins
-!.yarn/releases/*.cjs
+!.yarn/releases
 !.yarn/sdks
 !.yarn/versions
 !.eslintrc.js
