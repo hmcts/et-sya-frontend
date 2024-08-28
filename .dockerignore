@@ -20,4 +20,3 @@
 !.eslintrc.js
 !.eslintignore
 !.yarnrc.yml
-!node_modules/govuk-frontend

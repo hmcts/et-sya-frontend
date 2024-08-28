@@ -7,14 +7,9 @@ USER hmcts
 
 WORKDIR /opt/app
 # Copy necessary files
-COPY --chown=hmcts:hmcts package.json yarn.lock webpack.config.js tsconfig.json .eslintrc.js .eslintignore .yarnrc.yml ./
+COPY --chown=hmcts:hmcts . .
 
 # Install dependencies
-# Copy .yarn directory
-COPY --chown=hmcts:hmcts .yarn/ .yarn/
-COPY --chown=hmcts:hmcts config/ ./config/
-# Verify contents
-RUN ls -l /opt/app/.yarn
 RUN PUPPETEER_SKIP_DOWNLOAD=true yarn install
 
 # Copy application files
