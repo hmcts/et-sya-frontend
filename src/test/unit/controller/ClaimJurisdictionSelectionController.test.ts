@@ -1,4 +1,5 @@
 import ClaimJurisdictionSelectionController from '../../../main/controllers/ClaimJurisdictionSelectionController';
+import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -9,7 +10,7 @@ describe('Claim Jurisdiction Selection Controller', () => {
     common: {},
   };
 
-  it('should render the Work Postcode page', () => {
+  it('should render the Claim Jurisdiction Selection page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -19,11 +20,11 @@ describe('Claim Jurisdiction Selection Controller', () => {
   });
 
   describe('post()', () => {
-    it("should return a 'required' error when the postcode field is empty", () => {
+    it("should return a 'required' error when the claimJurisdiction field is empty", () => {
       const body = {
-        workPostcode: '',
+        claimJurisdiction: '',
       };
-      const errors = [{ propertyName: 'workPostcode', errorType: 'required' }];
+      const errors = [{ propertyName: 'claimJurisdiction', errorType: 'required' }];
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -33,25 +34,13 @@ describe('Claim Jurisdiction Selection Controller', () => {
       expect(req.session.errors).toEqual(errors);
     });
 
-    it('should render the next page when a mvp postcode is given', () => {
-      const mvpPostCode = 'G44 5TY';
-      const body = { workPostcode: mvpPostCode };
+    it('should render the next page when claimJurisdiction is given', () => {
+      const body = { claimJurisdiction: CaseTypeId.ENGLAND_WALES };
 
       const req = mockRequest({ body });
       const res = mockResponse();
       new ClaimJurisdictionSelectionController().post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
-    });
-
-    it('should render the next page when a valid postcode is given', () => {
-      const postcode = 'LA1 1YN'; // Lancaster
-      const body = { workPostcode: postcode };
-
-      const req = mockRequest({ body });
-      const res = mockResponse();
-      new ClaimJurisdictionSelectionController().post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.ACAS_MULTIPLE_CLAIM);
     });
   });
 });
