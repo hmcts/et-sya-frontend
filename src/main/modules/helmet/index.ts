@@ -12,6 +12,7 @@ const googleAnalyticsDomain2 = '*.analytics.google.com';
 const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
 const azureBlob = '*.blob.core.windows.net';
 const webChat = 'https://vcc-eu4.8x8.com';
+const webChat_cf = 'https://vcc-eu4-cf.8x8.com';
 const self = "'self'";
 
 /**
@@ -45,6 +46,8 @@ export class Helmet {
       "'sha256-A7Uu54feRuB88PgtD97QX8ZfJfCfC4LuAP3rCwwhnbE='",
       "'sha256-TrZe7TNXf5jal9UL8qSy3pDcRFvZ3IbumaN7m05kuqY='",
       idamUrl,
+      webChat,
+      webChat_cf,
     ];
 
     const connectSrc = [
@@ -54,7 +57,7 @@ export class Helmet {
       googleAnalyticsDomain2,
       idamUrl,
       'https://bf24054dsx.bf.dynatrace.com',
-      '*://*.8x8.com',
+      '*.8x8.com',
     ];
 
     const imgSrc = [
@@ -68,10 +71,10 @@ export class Helmet {
       'https://ssl.gstatic.com',
       'https://www.gstatic.com',
       'https://fonts.googleapis.com',
-      '*://*.8x8.com',
+      '*.8x8.com',
     ];
 
-    const frameSrc = [self, webChat];
+    const frameSrc = [self, webChat, webChat_cf];
 
     const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'", '*.fonts.googleapis.com', '*.tagmanager.google.com'];
 
