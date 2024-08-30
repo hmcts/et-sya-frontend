@@ -1,0 +1,24 @@
+{
+  "title": "Where you can make your claim",
+  "p1": "You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in Scotland. They are separate jurisdiction.",
+  "p2": "You can make your claim in England and Wales if any of the following conditions apply:",
+  "p2li1": "The issues you’re claiming about happened in England or Wales.",
+  "p2li2": "The respondent you’re claiming against lives or does business in England or Wales.",
+  "p2li3": "The work contract related to the claim was partly carried out in England or Wales.",
+  "p2li4": "The claim has some connection with Great Britain and that connection is at least partly with England and Wales.",
+  "p3": "You can make your claim in Scotland if any of the following conditions apply:",
+  "p3li1": "The issues you’re claiming about happened in Scotland.",
+  "p3li2": "The respondent you’re claiming against lives or does business in Scotland.",
+  "p3li3": "The work contract related to the claim was partly carried out in Scotland.",
+  "p3li4": "The claim has some connection with Great Britain and that connection is at least partly with Scotland.",
+  "warning": "The tribunal will reject your claim if you choose a jurisdiction where none of the conditions apply.",
+  "legend": "Which jurisdiction are you making your claim in?",
+  "hintText": "You must consider the jurisdiction at the time when the issues happened.",
+  "radio1": "England and Wales",
+  "radio2": "Scotland",
+  "errors": {
+    "claimJurisdiction": {
+      "required": "Tell us which jurisdiction are you making your claim in"
+    }
+  }
+}

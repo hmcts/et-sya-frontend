@@ -1,11 +1,11 @@
-import WorkPostcodeController from '../../../main/controllers/WorkPostcodeController';
+import ClaimJurisdictionSelectionController from '../../../main/controllers/ClaimJurisdictionSelectionController';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Work Postcode Controller', () => {
+describe('Claim Jurisdiction Selection Controller', () => {
   const t = {
-    'work-postcode': {},
+    'claim-jurisdiction-selection': {},
     common: {},
   };
 
@@ -13,7 +13,7 @@ describe('Work Postcode Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    new WorkPostcodeController().get(request, response);
+    new ClaimJurisdictionSelectionController().get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('job-title', expect.anything());
   });
@@ -27,7 +27,7 @@ describe('Work Postcode Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new WorkPostcodeController().post(req, res);
+      new ClaimJurisdictionSelectionController().post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
@@ -39,7 +39,7 @@ describe('Work Postcode Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new WorkPostcodeController().post(req, res);
+      new ClaimJurisdictionSelectionController().post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
     });
@@ -50,7 +50,7 @@ describe('Work Postcode Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new WorkPostcodeController().post(req, res);
+      new ClaimJurisdictionSelectionController().post(req, res);
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
     });
   });
