@@ -15,7 +15,7 @@ describe('Claim Jurisdiction Selection Controller', () => {
 
     new ClaimJurisdictionSelectionController().get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith('job-title', expect.anything());
+    expect(response.render).toHaveBeenCalledWith('claim-jurisdiction-selection', expect.anything());
   });
 
   describe('post()', () => {
