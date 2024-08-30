@@ -18,7 +18,7 @@
   "signOut": "Sign out",
   "logIn": "Login",
   "phaseBanner": {
-    "feedback": "Your feedback",
+    "feedback": "Your feedback (opens in new tab)",
     "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
     "additionalText": "helps us to improve this service.",
     "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">Cymraeg</a>"
