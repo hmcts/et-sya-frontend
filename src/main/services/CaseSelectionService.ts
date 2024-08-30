@@ -107,8 +107,8 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
   if (caseId === 'newClaim') {
     req.session.userCase = undefined;
     const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-      ? PageUrls.WORK_POSTCODE + languages.WELSH_URL_PARAMETER
-      : PageUrls.WORK_POSTCODE + languages.ENGLISH_URL_PARAMETER;
+      ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
+      : PageUrls.CHECKLIST + languages.ENGLISH_URL_PARAMETER;
     return res.redirect(redirectUrl);
   }
   try {
