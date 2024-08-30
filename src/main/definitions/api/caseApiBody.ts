@@ -34,7 +34,7 @@ interface CaseDataApiBody {
 }
 
 export interface CreateCaseBody {
-  post_code: string;
+  case_type_id: string;
   case_data: CaseDataApiBody;
 }
 

@@ -7,7 +7,7 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { CaseDataCacheKey, CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import {CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo} from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
 import { mockAppWithRedisClient, mockRedisClient, mockSession, mockSessionWithUserCase } from '../mocks/mockApp';
@@ -205,7 +205,7 @@ describe('Steps to making your claim page', () => {
         session: mockSession([], [], []),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -255,7 +255,7 @@ describe('Steps to making your claim page tags', () => {
         session: mockSessionWithUserCase(userCase),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -300,7 +300,7 @@ describe('Steps to making your claim page tags', () => {
         session: mockSessionWithUserCase(userCase),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -344,7 +344,7 @@ describe('Steps to making your claim page tags', () => {
         session: mockSessionWithUserCase(userCase),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -389,7 +389,7 @@ describe('Steps to making your claim page tags', () => {
         session: mockSessionWithUserCase(userCase),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -434,7 +434,7 @@ describe('Steps to making your claim page tags', () => {
         session: mockSessionWithUserCase(userCase),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
