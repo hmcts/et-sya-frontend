@@ -18,7 +18,7 @@
   "radio2": "Yr Alban",
   "errors": {
     "claimJurisdiction": {
-      "required": "Tell us which jurisdiction are you making your claim in"
+      "required": "Dywedwch wrthym ym mha awdurdodaeth ydych chi'n gwneud eich hawliad."
     }
   }
 }

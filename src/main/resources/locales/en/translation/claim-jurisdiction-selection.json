@@ -18,7 +18,7 @@
   "radio2": "Scotland",
   "errors": {
     "claimJurisdiction": {
-      "required": "Tell us which jurisdiction are you making your claim in"
+      "required": "Tell us which jurisdiction are you making your claim in."
     }
   }
 }
