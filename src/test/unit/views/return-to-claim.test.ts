@@ -20,6 +20,12 @@ const commonJsonRawJson = JSON.parse(commonJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const radioClass = 'govuk-radios__item';
 const expectedTitle = returnToClaimJson.h1;
+const pClass = 'govuk-body';
+const expectedP1 =
+  'You’ll need to use either a <span class="govuk-!-font-weight-bold">‘save and return number’</span> or your new <span class="govuk-!-font-weight-bold">‘Employment Tribunal account’</span> to return to an existing claim.';
+const expectedP2 = returnToClaimJson.p2;
+const expectedP3 =
+  'Don\'t have these details <a href="/work-postcode?lng=en" class="govuk-link">Start a new claim.</a>';
 const buttonClass = 'govuk-button';
 const expectedRadioLabel1 = returnToClaimJson.optionText1;
 const expectedRadioLabel2 = returnToClaimJson.optionText2;
@@ -38,6 +44,13 @@ describe('Return to existing claim page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display paragraphs with valid text', () => {
+    const p = htmlRes.getElementsByClassName(pClass);
+    expect(p[6].innerHTML).contains(expectedP1, 'Paragraph does not exist');
+    expect(p[7].innerHTML).contains(expectedP2, 'Paragraph does not exist');
+    expect(p[8].innerHTML).contains(expectedP3, 'Paragraph does not exist');
   });
 
   it('should display save and continue button', () => {
