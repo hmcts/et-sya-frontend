@@ -2727,31 +2727,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.6.0":
-  version: 2.6.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.6.0"
-  checksum: 6e1458b188324a2a7adfb9dd11935d5962df974216c06c07a894f8053c572e1820ffec57f8259eec68b3702423abf206790e489553bfcc65c235ea7275f5e0cd
+"@launchdarkly/js-sdk-common@npm:2.7.0":
+  version: 2.7.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.7.0"
+  checksum: 919dac9e55e5e029d3d03d47526c5b3aa3a46ec54bf63dc6f54af833e48d7c0841035c972a1bce03649b7f32a833fc7c2ecc5fdd61581b57d0a51e6e3040b8a0
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.4.5":
-  version: 2.4.5
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.4.5"
+"@launchdarkly/js-server-sdk-common@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.5.0"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.6.0
+    "@launchdarkly/js-sdk-common": 2.7.0
     semver: 7.5.4
-  checksum: 0f139350d948a8eb7743cd7d7e64a1e3c611624a1f28926fafbdc957044e17d660979f84fce57f8d1582f8b5617c593345a33fd12febbbf2cc3f7f0119877ecf
+  checksum: 5f09aee607b62df9999be72e475e94a0678fd2dadfe28a2cad583bf763de3b492d0174e283bbf35e7ee299c63ec7ed62c251aeb160d0076ad98a5b92dc041c24
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.5.1
-  resolution: "@launchdarkly/node-server-sdk@npm:9.5.1"
+  version: 9.5.2
+  resolution: "@launchdarkly/node-server-sdk@npm:9.5.2"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.4.5
+    "@launchdarkly/js-server-sdk-common": 2.5.0
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.3
-  checksum: 1d7a1f18bbeee1e1a28bc47f41d3e4df06de0690894c8b545c9e90e6774a6bb32a3890e0bcc35979be1e535453bb1b3c25e745b451cb8024e13eaefe96e55e4b
+  checksum: 380742c79f4632a587f512de6b9be37fb8dcd532cd2867e9733e6c0f3cdd0f6fb1a7abdc89aecb12d8b98fc895f165fc37273bafb69e89dd1848a31509da1c52
   languageName: node
   linkType: hard
 
@@ -2814,12 +2814,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.52.1":
-  version: 0.52.1
-  resolution: "@opentelemetry/api-logs@npm:0.52.1"
+"@opentelemetry/api-logs@npm:0.53.0":
+  version: 0.53.0
+  resolution: "@opentelemetry/api-logs@npm:0.53.0"
   dependencies:
     "@opentelemetry/api": ^1.0.0
-  checksum: 500cd35527580732921d198bd7007224402cb89fef791f0b64bea839c9f2ad796d54486ee9aee0ee6422ded3963cba793408086eda0adfec2bd1d66f9114d96c
+  checksum: 3383ff75f94a77402370a655f8edf049f9864ad60140f70821a1b775ce43bdb9ca6fade533a1faf46dbca19f3189bcbf1f8805062f5a68bfe2a00281b1712d1f
   languageName: node
   linkType: hard
 
@@ -2841,19 +2841,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation@npm:^0.52.0":
-  version: 0.52.1
-  resolution: "@opentelemetry/instrumentation@npm:0.52.1"
+"@opentelemetry/instrumentation@npm:^0.53.0":
+  version: 0.53.0
+  resolution: "@opentelemetry/instrumentation@npm:0.53.0"
   dependencies:
-    "@opentelemetry/api-logs": 0.52.1
-    "@types/shimmer": ^1.0.2
+    "@opentelemetry/api-logs": 0.53.0
+    "@types/shimmer": ^1.2.0
     import-in-the-middle: ^1.8.1
     require-in-the-middle: ^7.1.1
     semver: ^7.5.2
     shimmer: ^1.2.1
   peerDependencies:
     "@opentelemetry/api": ^1.3.0
-  checksum: e8b4f202dc9355ca46714349a5e1663346e162f79706eed38015edf38fc536330fde4cc19ed7d3d6b03258c890c1dc0ba6d658d7aac3f41f1803bd03699d2701
+  checksum: a386fe066eab71129a6edbc883ab407b1022850e8acc4750029a12e8730588a8b81442d0b008aaddb46f7614af40d19d331e7348790ca2d08ba8eed6d23ffdae
   languageName: node
   linkType: hard
 
@@ -3385,12 +3385,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai-as-promised@npm:^7.1.5":
-  version: 7.1.8
-  resolution: "@types/chai-as-promised@npm:7.1.8"
+"@types/chai-as-promised@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@types/chai-as-promised@npm:8.0.0"
   dependencies:
     "@types/chai": "*"
-  checksum: f0e5eab451b91bc1e289ed89519faf6591932e8a28d2ec9bbe95826eb73d28fe43713633e0c18706f3baa560a7d97e7c7c20dc53ce639e5d75bac46b2a50bf21
+  checksum: 9d837b314c7ad7d8d67676905d20b9f293295aa58e3250b5fc7fe9e5598b547b9bbc40396744c2db0bd943ee6eb67dcdbf953baed9e2dc1904438208334fab2a
   languageName: node
   linkType: hard
 
@@ -3648,20 +3648,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.5.1
-  resolution: "@types/node@npm:22.5.1"
+  version: 22.5.2
+  resolution: "@types/node@npm:22.5.2"
   dependencies:
     undici-types: ~6.19.2
-  checksum: 366990347c12e08e9ffe113e493253ac454d5337828e23cb02c790d5abe1f2ab0148da37b728eb886d858c4c5f29f4341a29987e89555d482ea236691d9d2648
+  checksum: 5e47839dd1919b39927a5552137ded5d3f18d9ff7729083ba851d640a6a0997ee747b9e2cf4c8a1f8418ad92ef7f0ada4fdc2d005dad2efb39fa80a5c7f6d23d
   languageName: node
   linkType: hard
 
 "@types/node@npm:^20.0.0, @types/node@npm:^20.1.0":
-  version: 20.16.2
-  resolution: "@types/node@npm:20.16.2"
+  version: 20.16.3
+  resolution: "@types/node@npm:20.16.3"
   dependencies:
     undici-types: ~6.19.2
-  checksum: 69d03cf607197b40775e10c57f26a30e2a7f4f108a29ef147db145227686021c26f696efbb5ff077831a7febe647c3374f725eed8e33442fc11230da9e895dda
+  checksum: 14c1be053fe8b5993614ef4f493f359b1035cca1c821c66df88d361ca4045c7fb278ef692d8c7dc82331d1e9f8c21b5afc0b863c3e10b12754b6be41e16f6f6e
   languageName: node
   linkType: hard
 
@@ -3772,10 +3772,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/shimmer@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@types/shimmer@npm:1.0.2"
-  checksum: 952b5555e914f632f3312a7b54e2b720b12ddce7373e1da58d25f25f32c07e5513afeb53bfce4256035a1205bbe81223fe8e47c160163de3e56fb93a3e0da42b
+"@types/shimmer@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@types/shimmer@npm:1.2.0"
+  checksum: f081a31d826ce7bfe8cc7ba8129d2b1dffae44fd580eba4fcf741237646c4c2494ae6de2cada4b7713d138f35f4bc512dbf01311d813dee82020f97d7d8c491c
   languageName: node
   linkType: hard
 
@@ -7850,8 +7850,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^28.0.0":
-  version: 28.8.0
-  resolution: "eslint-plugin-jest@npm:28.8.0"
+  version: 28.8.2
+  resolution: "eslint-plugin-jest@npm:28.8.2"
   dependencies:
     "@typescript-eslint/utils": ^6.0.0 || ^7.0.0 || ^8.0.0
   peerDependencies:
@@ -7863,7 +7863,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: c3b39fbb8a1f3843bd6a5d05215e3c896d439fcb1a9959a1e892184c95da33ad2edd37b1c3a76199803ef78b5e6a9cdc0e67f1ac90405461619fe2d3b8d5a278
+  checksum: ffb7cf1a537b91447a5914704018d0018456d83240b3982cd81d1c8e351bcacd5d71a36e3a92c50da7399b1b3b38370fb16c095bbdf6a282d6c232f665b7ea0e
   languageName: node
   linkType: hard
 
@@ -8120,7 +8120,7 @@ __metadata:
     "@swc/core": ^1.3.76
     "@swc/helpers": ^0.5.1
     "@swc/jest": ^0.2.29
-    "@types/chai-as-promised": ^7.1.5
+    "@types/chai-as-promised": ^8.0.0
     "@types/config": ^3.3.0
     "@types/connect-redis": ^0.0.23
     "@types/cookie-parser": ^1.4.3
@@ -11331,9 +11331,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^24.0.0":
-  version: 24.1.3
-  resolution: "jsdom@npm:24.1.3"
+"jsdom@npm:^25.0.0":
+  version: 25.0.0
+  resolution: "jsdom@npm:25.0.0"
   dependencies:
     cssstyle: ^4.0.1
     data-urls: ^5.0.0
@@ -11361,7 +11361,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: c71e2e6b5304c95a230feaef0c21fb7c353b7e785ba49ed9544d309f8faab1fc167146e0f1d00e2fb5346a11a27c60ae021a9688382f6b2d78e2c169769b4bfc
+  checksum: aa7dc92333f7694c3ddd61685b640f743a61e5e638fcc9c24156e63dc432ab36dbe90137d608c82a3f84d9e05f70c903a38f9e34d6cca1a74469fad4c93f76c2
   languageName: node
   linkType: hard
 
@@ -11685,8 +11685,8 @@ __metadata:
   linkType: hard
 
 "lint-staged@npm:^15.0.0":
-  version: 15.2.9
-  resolution: "lint-staged@npm:15.2.9"
+  version: 15.2.10
+  resolution: "lint-staged@npm:15.2.10"
   dependencies:
     chalk: ~5.3.0
     commander: ~12.1.0
@@ -11694,13 +11694,13 @@ __metadata:
     execa: ~8.0.1
     lilconfig: ~3.1.2
     listr2: ~8.2.4
-    micromatch: ~4.0.7
+    micromatch: ~4.0.8
     pidtree: ~0.6.0
     string-argv: ~0.3.2
     yaml: ~2.5.0
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 7f804c24d0374b48d26f11a051342141b84c9954f77225bab5ae221b1e4d47a72f722f39b13169267592c28b2614ad39f9722fd86bc4cdfdf93e8601ff66b0e1
+  checksum: 7ab255b848478ca47c6b94aad0e7a3cfe5ba48ae1fb353cfa86635741333b83b1fd793d7cac6d44bf0388ad087d7e0250c7ec0a8ebece63fbcf7a8d175279809
   languageName: node
   linkType: hard
 
@@ -14065,9 +14065,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:23.2.0":
-  version: 23.2.0
-  resolution: "puppeteer-core@npm:23.2.0"
+"puppeteer-core@npm:23.2.1":
+  version: 23.2.1
+  resolution: "puppeteer-core@npm:23.2.1"
   dependencies:
     "@puppeteer/browsers": 2.3.1
     chromium-bidi: 0.6.4
@@ -14075,7 +14075,7 @@ __metadata:
     devtools-protocol: 0.0.1330662
     typed-query-selector: ^2.12.0
     ws: ^8.18.0
-  checksum: 891263cb26ad1988bcb18b72bebe06a24a33d1a0616c0b2e55eca5d49d39769483870ee4f1916155416235a1eb336008ccb8a8707c7dcd1f973eeaf9a93ce4d0
+  checksum: 3e79598883a052da4ff2d4dae33b1fcb7b457986d675f11a02cc59aa65baa2314bfd5cfd7650e028fdd91ea510f9111c4473d28ae9c7b4c9d9dbd7d9e0a4ae4b
   languageName: node
   linkType: hard
 
@@ -14099,18 +14099,18 @@ __metadata:
   linkType: hard
 
 "puppeteer@npm:^23.2.0":
-  version: 23.2.0
-  resolution: "puppeteer@npm:23.2.0"
+  version: 23.2.1
+  resolution: "puppeteer@npm:23.2.1"
   dependencies:
     "@puppeteer/browsers": 2.3.1
     chromium-bidi: 0.6.4
     cosmiconfig: ^9.0.0
     devtools-protocol: 0.0.1330662
-    puppeteer-core: 23.2.0
+    puppeteer-core: 23.2.1
     typed-query-selector: ^2.12.0
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: abe7e34c3f5f64aa49b03ca8f434e78607d2936f5506bdc39a19d1b307162d08deea76a77b39cdb5d6dda8bca2449482740a65c4a6027e716355f2bba40b3a87
+  checksum: 8a95bdf555d2eb1a54c03d2564a5a584cafb907b9964937d23c67a184c05ae5f6f02801bd6ddcc90c4e0a1a9239cf4c57d5092f73ebba080f17f1fdb8e1ad0ff
   languageName: node
   linkType: hard
 
