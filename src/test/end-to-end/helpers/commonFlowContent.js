@@ -41,11 +41,9 @@ async function verifyBeforeYouContinueGuidanceText() {
   I.see('at any time before submitting.');
 }
 
-async function verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText() {
-  I.see('This will decide which Employment Tribunal office deals with your claim.');
-  I.see('If you worked at home, enter your home postcode.');
-  I.see('If you’re claiming against someone you did not work for,');
-  I.see('enter the postcode of where they are based.');
+async function verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText() {
+  I.see('You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in ');
+  I.see('Scotland. They are separate jurisdiction.');
 }
 
 async function verifyARepresentativeGuidanceText() {
@@ -114,7 +112,7 @@ async function verifyACASConciliationGuidanceText() {
 module.exports = {
   verifyMakeAClaimToAnEmploymentTribunal,
   verifyBeforeYouContinueGuidanceText,
-  verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText,
+  verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText,
   verifyARepresentativeGuidanceText,
   verifyWhoCanActAsARepresentativeGuidanceText,
   verifyHowToFindARepresentativeGuidanceText,

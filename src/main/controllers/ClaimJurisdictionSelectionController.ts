@@ -22,7 +22,7 @@ export default class ClaimJurisdictionSelectionController {
         labelHidden: false,
         classes: 'govuk-radios',
         hint: (l: AnyRecord): string => l.hintText,
-        id: 'claimJurisdiction',
+        id: 'claim-jurisdiction',
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,
