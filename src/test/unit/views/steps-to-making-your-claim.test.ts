@@ -7,7 +7,7 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import {CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo} from '../../../main/definitions/case';
+import { CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
 import { mockAppWithRedisClient, mockRedisClient, mockSession, mockSessionWithUserCase } from '../mocks/mockApp';
