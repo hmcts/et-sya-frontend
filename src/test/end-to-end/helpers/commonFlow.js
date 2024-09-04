@@ -21,19 +21,6 @@ async function initialPageFlow() {
   I.click(commonFlowLocators.contact_us);
   await contactUs.verifyContactUs();
   await I.click('Continue');
-
-  //What is the postcode where you have worked for Page....
-  await I.scrollPageToBottom();
-  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  I.see('What’s the postcode');
-  I.see('where you worked or');
-  I.see('work?');
-  await commonFlowContentHelper.verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText();
-  I.see('Postcode');
-  I.click(commonFlowLocators.contact_us);
-  await contactUs.verifyContactUs();
-  await I.fillField('#workPostcode', 'LS9 6EP');
-  await I.click('Continue');
 }
 
 async function createSingleMyselfCase() {
@@ -74,6 +61,18 @@ async function createSingleMyselfCase() {
   await contactUs.verifyContactUs();
   I.checkOption('input[id=single-or-multiple-claim]');
   I.click('Continue');
+
+  //Where you can make your claim Page....
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.see('Where you can make your claim');
+  await commonFlowContentHelper.verifyWhereYouCanMakeYourClaimGuidanceText();
+  I.see('England and Wales');
+  I.see('Scotland');
+  I.click(commonFlowLocators.contact_us);
+  await contactUs.verifyContactUs();
+  I.checkOption('input[id=claim-jurisdiction]');
+  await I.click('Continue');
 
   //Do you have an ACAS Early Conciliation certificate
   await I.scrollPageToBottom();
