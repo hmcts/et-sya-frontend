@@ -46,7 +46,15 @@ async function verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText() {
   I.see('Scotland. They are separate jurisdiction.');
   I.see('You can make your claim in England and Wales if any of the following conditions apply:');
   I.see('The issues you’re claiming about happened in England or Wales.');
+  I.see('The respondent you’re claiming against lives or does business in England or Wales.');
+  I.see('The work contract related to the claim was partly carried out in England or Wales.');
+  I.see('The claim has some connection with Great Britain and that connection is at least partly with England and');
+  I.see('Wales.');
   I.see('You can make your claim in Scotland if any of the following conditions apply:');
+  I.see('The issues you’re claiming about happened in Scotland.');
+  I.see('The respondent you’re claiming against lives or does business in Scotland.');
+  I.see('The work contract related to the claim was partly carried out in Scotland.');
+  I.see('The claim has some connection with Great Britain and that connection is at least partly with Scotland.');
   I.see('The tribunal will reject your claim if you choose a jurisdiction where none of the conditions apply.');
   I.see('Which jurisdiction are you making your claim in?');
   I.see('You must consider the jurisdiction at the time when the issues happened.');
