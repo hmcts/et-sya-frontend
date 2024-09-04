@@ -44,6 +44,12 @@ async function verifyBeforeYouContinueGuidanceText() {
 async function verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText() {
   I.see('You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in ');
   I.see('Scotland. They are separate jurisdiction.');
+  I.see('You can make your claim in England and Wales if any of the following conditions apply:');
+  I.see('The issues you’re claiming about happened in England or Wales.');
+  I.see('You can make your claim in Scotland if any of the following conditions apply:');
+  I.see('The tribunal will reject your claim if you choose a jurisdiction where none of the conditions apply.');
+  I.see('Which jurisdiction are you making your claim in?');
+  I.see('You must consider the jurisdiction at the time when the issues happened.');
 }
 
 async function verifyARepresentativeGuidanceText() {
