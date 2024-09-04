@@ -41,7 +41,7 @@ async function verifyBeforeYouContinueGuidanceText() {
   I.see('at any time before submitting.');
 }
 
-async function verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText() {
+async function verifyWhereYouCanMakeYourClaimGuidanceText() {
   I.see('You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in ');
   I.see('Scotland. They are separate jurisdiction.');
   I.see('You can make your claim in England and Wales if any of the following conditions apply:');
@@ -126,7 +126,7 @@ async function verifyACASConciliationGuidanceText() {
 module.exports = {
   verifyMakeAClaimToAnEmploymentTribunal,
   verifyBeforeYouContinueGuidanceText,
-  verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText,
+  verifyWhereYouCanMakeYourClaimGuidanceText,
   verifyARepresentativeGuidanceText,
   verifyWhoCanActAsARepresentativeGuidanceText,
   verifyHowToFindARepresentativeGuidanceText,

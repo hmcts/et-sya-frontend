@@ -66,7 +66,7 @@ async function createSingleMyselfCase() {
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Where you can make your claim');
-  await commonFlowContentHelper.verifyWhichJurisdictionAreYouMakingYourClaimInForGuidanceText();
+  await commonFlowContentHelper.verifyWhereYouCanMakeYourClaimGuidanceText();
   I.see('England and Wales');
   I.see('Scotland');
   I.click(commonFlowLocators.contact_us);
