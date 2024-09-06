@@ -2168,10 +2168,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^8.0.0":
-  version: 8.4.1
-  resolution: "@faker-js/faker@npm:8.4.1"
-  checksum: d802d531f8929562715adc279cfec763c9a4bc596ec67b0ce43fd0ae61b285d2b0eec6f1f4aa852452a63721a842fe7e81926dce7bd92acca94b01e2a1f55f5a
+"@faker-js/faker@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@faker-js/faker@npm:9.0.0"
+  checksum: 25db3813f1afe99335a76d59a403fca4c4613c34b4c120601093d4aab4c6d0aa306f4610a37aeab098c01b5aabfc796b6fafdfd669022b741831f183bb3c5135
   languageName: node
   linkType: hard
 
@@ -2727,31 +2727,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.7.0"
-  checksum: 919dac9e55e5e029d3d03d47526c5b3aa3a46ec54bf63dc6f54af833e48d7c0841035c972a1bce03649b7f32a833fc7c2ecc5fdd61581b57d0a51e6e3040b8a0
+"@launchdarkly/js-sdk-common@npm:2.8.0":
+  version: 2.8.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.8.0"
+  checksum: 94b4221e70ddfd15a724126758557acf50a190a1faf679cab6b666d49d958225d2ace8d1c6ef8f9a25651b6e41bfda30f1c00d32f94d3246541c9715d4638289
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.5.0":
-  version: 2.5.0
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.5.0"
+"@launchdarkly/js-server-sdk-common@npm:2.6.1":
+  version: 2.6.1
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.6.1"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.7.0
+    "@launchdarkly/js-sdk-common": 2.8.0
     semver: 7.5.4
-  checksum: 5f09aee607b62df9999be72e475e94a0678fd2dadfe28a2cad583bf763de3b492d0174e283bbf35e7ee299c63ec7ed62c251aeb160d0076ad98a5b92dc041c24
+  checksum: 305b3fdcad2e0b862e38761487ec5aba9b7469b94eb4405e695576aebcbce3529a90ee0cd91d33f72472512e730a71e7baa454f58ca33095b6eef4e275327068
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.5.2
-  resolution: "@launchdarkly/node-server-sdk@npm:9.5.2"
+  version: 9.5.4
+  resolution: "@launchdarkly/node-server-sdk@npm:9.5.4"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.5.0
+    "@launchdarkly/js-server-sdk-common": 2.6.1
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.3
-  checksum: 380742c79f4632a587f512de6b9be37fb8dcd532cd2867e9733e6c0f3cdd0f6fb1a7abdc89aecb12d8b98fc895f165fc37273bafb69e89dd1848a31509da1c52
+  checksum: 7ea0417cad81480e6844d8cd64f87cd889d591bcc38f5d91ad6068f48680c7181f8834b97cdf89b56e31ce8b6b2e53df33bac5a3e4c176f9f4468b08a9955737
   languageName: node
   linkType: hard
 
@@ -3648,20 +3648,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.5.2
-  resolution: "@types/node@npm:22.5.2"
+  version: 22.5.4
+  resolution: "@types/node@npm:22.5.4"
   dependencies:
     undici-types: ~6.19.2
-  checksum: 5e47839dd1919b39927a5552137ded5d3f18d9ff7729083ba851d640a6a0997ee747b9e2cf4c8a1f8418ad92ef7f0ada4fdc2d005dad2efb39fa80a5c7f6d23d
+  checksum: 77ac225c38c428200036780036da0bc6764e2721cfa8f528c7e7da7cfefe01a32a5791e28a54efbeedbc977949058d7db902b2e00139298225d4686cee4ae6db
   languageName: node
   linkType: hard
 
 "@types/node@npm:^20.0.0, @types/node@npm:^20.1.0":
-  version: 20.16.3
-  resolution: "@types/node@npm:20.16.3"
+  version: 20.16.5
+  resolution: "@types/node@npm:20.16.5"
   dependencies:
     undici-types: ~6.19.2
-  checksum: 14c1be053fe8b5993614ef4f493f359b1035cca1c821c66df88d361ca4045c7fb278ef692d8c7dc82331d1e9f8c21b5afc0b863c3e10b12754b6be41e16f6f6e
+  checksum: f38b7bd8c4993dcf38943afa2ffdd7dfd18fc94f8f3f28d0c1045a10d39871a6cc1b8f8d3bf0c7ed848457d0e1d283482f6ca125579c13fed1b7575d23e8e8f5
   languageName: node
   linkType: hard
 
@@ -5110,13 +5110,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.7.4":
-  version: 1.7.4
-  resolution: "axios@npm:1.7.4"
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 0c17039a9acfe6a566fca8431ba5c1b455c83d30ea6157fec68a6722878fcd30f3bd32d172f6bee0c51fe75ca98e6414ddcd968a87b5606b573731629440bfaf
+  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
   languageName: node
   linkType: hard
 
@@ -6786,14 +6786,14 @@ __metadata:
   linkType: hard
 
 "debug@npm:4, debug@npm:^4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:~4.3.6":
-  version: 4.3.6
-  resolution: "debug@npm:4.3.6"
+  version: 4.3.7
+  resolution: "debug@npm:4.3.7"
   dependencies:
-    ms: 2.1.2
+    ms: ^2.1.3
   peerDependenciesMeta:
     supports-color:
       optional: true
-  checksum: 1630b748dea3c581295e02137a9f5cbe2c1d85fea35c1e6597a65ca2b16a6fce68cec61b299d480787ef310ba927dc8c92d3061faba0ad06c6a724672f66be7f
+  checksum: 822d74e209cd910ef0802d261b150314bbcf36c582ccdbb3e70f0894823c17e49a50d3e66d96b633524263975ca16b6a833f3e3b7e030c157169a5fabac63160
   languageName: node
   linkType: hard
 
@@ -7829,8 +7829,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^28.0.0":
-  version: 28.8.2
-  resolution: "eslint-plugin-jest@npm:28.8.2"
+  version: 28.8.3
+  resolution: "eslint-plugin-jest@npm:28.8.3"
   dependencies:
     "@typescript-eslint/utils": ^6.0.0 || ^7.0.0 || ^8.0.0
   peerDependencies:
@@ -7842,7 +7842,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: ffb7cf1a537b91447a5914704018d0018456d83240b3982cd81d1c8e351bcacd5d71a36e3a92c50da7399b1b3b38370fb16c095bbdf6a282d6c232f665b7ea0e
+  checksum: e371fcbe2127a403824b6c23b66f6b2e2cc54074c3c70a9965d48bdcdfb461670965a7d7cdddab68f09e703d3a09a281d05591b1cb4315f5246d27fd8baa84ac
   languageName: node
   linkType: hard
 
@@ -8086,7 +8086,7 @@ __metadata:
     "@babel/eslint-parser": ^7.21.3
     "@babel/preset-env": ^7.21.4
     "@codeceptjs/allure-legacy": ^1.0.2
-    "@faker-js/faker": ^8.0.0
+    "@faker-js/faker": ^9.0.0
     "@hmcts/cookie-manager": ^1.0.0
     "@hmcts/frontend": ^0.0.50-alpha
     "@hmcts/info-provider": ^1.0.0
@@ -8196,7 +8196,7 @@ __metadata:
     webpack-dev-middleware: ^7.0.0
     webpack-node-externals: ^3.0.0
   peerDependencies:
-    "@faker-js/faker": ^5.5.3 || ^8.0.0
+    "@faker-js/faker": ^5.5.3 || ^8.0.0 || ^9.0.0
   languageName: unknown
   linkType: soft
 
@@ -8783,12 +8783,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.15.4":
-  version: 1.15.6
-  resolution: "follow-redirects@npm:1.15.6"
+  version: 1.15.9
+  resolution: "follow-redirects@npm:1.15.9"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: a62c378dfc8c00f60b9c80cab158ba54e99ba0239a5dd7c81245e5a5b39d10f0c35e249c3379eae719ff0285fff88c365dd446fab19dee771f1d76252df1bbf5
+  checksum: 859e2bacc7a54506f2bf9aacb10d165df78c8c1b0ceb8023f966621b233717dab56e8d08baadc3ad3b9db58af290413d585c999694b7c146aaf2616340c3d2a6
   languageName: node
   linkType: hard
 
@@ -13685,27 +13685,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.46.1":
-  version: 1.46.1
-  resolution: "playwright-core@npm:1.46.1"
+"playwright-core@npm:1.47.0":
+  version: 1.47.0
+  resolution: "playwright-core@npm:1.47.0"
   bin:
     playwright-core: cli.js
-  checksum: 99a03f97d76af02b0565aa09758eb03427e13497ef7e9e9044fd1184a5f050e7545a517dd7ad8988a68b3ea76e2ba0d411f81e410b1cb29f5ac9161c49689822
+  checksum: 64c6adae3ba76cd9f05e6569b1350a6e6990fd8236bb17d1f241b49bea68592a4f4390adb38863d2ee8ef5124e9cb77ff50b9076f8ef3a0890b2a37f87fb842a
   languageName: node
   linkType: hard
 
 "playwright@npm:^1.32.3":
-  version: 1.46.1
-  resolution: "playwright@npm:1.46.1"
+  version: 1.47.0
+  resolution: "playwright@npm:1.47.0"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.46.1
+    playwright-core: 1.47.0
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 9e721cb27f919cd92ea8c7461f4a8e97e32eade9da036baa4747f483549e33a8d77585f51e228d6639a1e28a76b0c1d59ca0a05dbd07aa3cfe427be7aaeb9ec8
+  checksum: e055fee751035f306a636267d0e080f08d4a523a6c1e3ebb01c91c18838c29bb9165ec3e63eb706798886fa2715f272dec908a7e2e1abcd7a55984688dbac2db
   languageName: node
   linkType: hard
 
