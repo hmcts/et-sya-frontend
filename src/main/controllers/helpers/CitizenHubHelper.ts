@@ -1,12 +1,18 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, Parties, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
+import { isHearingExist } from './HearingHelpers';
+
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
+  if (isHearingExist(userCase.hearingCollection)) {
+    hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.READY_TO_VIEW;
+  }
+
   if (
     hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
     userCase.et3ResponseReceived
@@ -246,6 +252,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   };
   return new Map<string, string>([
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
+    [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
     [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
     [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
@@ -315,4 +322,24 @@ const getStoredNotificationRespond = (
     }
   }
   return storeNotifications;
+};
+
+/**
+ * Return true when any sendNotificationNotify:
+ * - Notify is not Respondent only
+ * - Subject includes Hearing
+ * - Notification is not viewed
+ * @param notifications
+ */
+export const shouldShowHearingNotification = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(it => isHearingClaimantStateViewed(it));
+};
+
+const isHearingClaimantStateViewed = (notification: SendNotificationTypeItem): boolean => {
+  return (
+    notification &&
+    notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+    notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
+    notification.value.notificationState !== HubLinkStatus.VIEWED
+  );
 };

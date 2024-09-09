@@ -30,6 +30,7 @@ import {
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowHearingNotification,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknolwedgement,
@@ -210,6 +211,7 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
+      showHearingNotification: shouldShowHearingNotification(userCase?.sendNotificationCollection),
       notifications: ordersRequestsGeneralNotifications,
       eccNotifications,
       languageParam: getLanguageParam(req.url),
