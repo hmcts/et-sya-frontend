@@ -1,9 +1,19 @@
 {
   "title": "Return to an existing claim",
   "h1": "Return to an existing claim",
-  "p1": "You’ll need to use either a <span class=\"govuk-!-font-weight-bold\">‘save and return number’</span> or your new <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span> to return to an existing claim.",
+  "p1": {
+    "t1": "You’ll need to use either a",
+    "t2": "‘save and return number’",
+    "t3": "or your new",
+    "t4": "‘Employment Tribunal account’",
+    "t5": "to return to an existing claim."
+  },
   "p2": "Have you got a ‘save and return number’ or a new ‘Employment Tribunal account’? ",
-  "p3": "Don't have these details <a href='/work-postcode?lng=en' class=\"govuk-link\">Start a new claim.</a>",
+  "p3": {
+    "t1": "Don't have these details",
+    "t2": "Start a new claim.",
+    "t3": ""
+  },
   "optionText1": "I’ve got a <span class=\"govuk-!-font-weight-bold\">‘save and return number’</span>",
   "optionText2": "I’ve got a new <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
   "errors": {

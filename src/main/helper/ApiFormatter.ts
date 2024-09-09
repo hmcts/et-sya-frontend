@@ -165,6 +165,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     workEnterPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3ResponseReceived: hasResponseFromRespondentList(fromApiCaseData.case_data),
+    et3DueDate: fromApiCaseData.case_data?.et3DueDate,
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
     et1SubmittedForm: returnSubmittedEt1Form(

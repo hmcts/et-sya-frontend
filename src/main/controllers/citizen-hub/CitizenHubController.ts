@@ -11,7 +11,6 @@ import {
 } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../../helper/ApiFormatter';
-import { currentStateFn } from '../../helper/state-sequence';
 import { getLogger } from '../../logger';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
@@ -43,6 +42,7 @@ import {
   updateHubLinkStatuses,
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
+import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
 import {
   activateJudgmentsLink,
   getAllAppsWithDecisions,
@@ -87,7 +87,6 @@ export default class CitizenHubController {
     clearTseFields(userCase);
     clearPrepareDocumentsForHearingFields(userCase);
     req.session.documentDownloadPage = undefined;
-    const currentState = currentStateFn(userCase);
 
     const sendNotificationCollection = userCase?.sendNotificationCollection;
 
@@ -188,7 +187,7 @@ export default class CitizenHubController {
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       PageUrls,
       userCase,
-      currentState,
+      progressBarItems: getProgressBarItems(userCase, translations, req.url),
       sections,
       respondentBannerContent,
       judgmentBannerContent,

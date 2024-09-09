@@ -12,7 +12,7 @@
 
   <section>
     <h1 class="govuk-heading-l">{{ header1 }}</h1>
-    <p class="govuk-body">{{ paragraph_s1_1.part_1 }} <a href="https://www.claim-employment-tribunals.service.gov.uk">https://www.claim-employment-tribunals.service.gov.uk</a> {{ paragraph_s1_1.part_2 }}</p>
+    <p class="govuk-body">{{ paragraph_s1_1.part_1 }} <a target="_blank" href="https://www.claim-employment-tribunals.service.gov.uk">https://www.claim-employment-tribunals.service.gov.uk {{ opens_new_tab }}</a> {{ paragraph_s1_1.part_2 }}</p>
     <p class="govuk-body">{{ paragraph_s1_2 }}</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>{{ ableTo1 }}</li>
@@ -22,7 +22,7 @@
       <li>{{ ableTo5 }}</li>
     </ul>
     <p class="govuk-body">{{ paragraph_s1_3 }}</p>
-    <p class="govuk-body">{{ paragraph_s1_4.part_1 }} <a href="https://mcmw.abilitynet.org.uk/">AbilityNet</a> {{ paragraph_s1_4.part_2 }} <a href="https://mcmw.abilitynet.org.uk">https://mcmw.abilitynet.org.uk/</a>.</p>
+    <p class="govuk-body"><a target="_blank" href="https://mcmw.abilitynet.org.uk/">{{ paragraph_s1_4.part_1 }}</a> {{ paragraph_s1_4.part_2 }}.</p>
   </section>
   <section>
     <h2 class="govuk-heading-m">{{ header2 }}</h2>
@@ -33,6 +33,7 @@
       <li>{{ notAccessible3 }}</li>
       <li>{{ notAccessible4 }}</li>
       <li>{{ notAccessible5 }}</li>
+      <li>{{ notAccessible6 }}</li>
     </ul>
   </section>
 
@@ -45,7 +46,7 @@
       <li>{{ contactType3 }}</li>
       <li>{{ contactType4 }}</li>
     </ul>
-    <p class="govuk-body">{{ paragraph_s3_2 }}</p>
+    <p class="govuk-body">{{ paragraph_s3_2 }}<a target="_blank" href="https://www.gov.uk/call-charges"> {{ paragraph_s3_2_call_charges }}</a></p>
     <p class="govuk-body">{{ paragraph_s3_3 }}</p>
   </section>
 
@@ -53,24 +54,24 @@
     <h2 class="govuk-heading-m">{{ header4 }}</h2>
     <p class="govuk-body">{{ paragraph_s4_1 }}</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>{{ contactInfo1 }} <a href="mailto:ETReform@justice.gov.uk">ETReform@justice.gov.uk</a></li>
+      <li>{{ contactInfo1 }} <a href="mailto:employmentjurisdictionalsupportteaminbox@justice.gov.uk ">employmentjurisdictionalsupportteaminbox@justice.gov.uk </a></li>
       <li>{{ contactInfo2 }}</li>
       <li>{{ contactInfo3 }}</li>
       <li>{{ contactInfo4 }}</li>
     </ul>
-    <p class="govuk-body">{{ paragraph_s4_2 }}</p>
+    <p class="govuk-body">{{ paragraph_s4_2 }}<a target="_blank" href="https://www.gov.uk/call-charges"> {{ paragraph_s3_2_call_charges }}</a></p>
   </section>
 
   <section>
     <h2 class="govuk-heading-m">{{ header5 }}</h2>
-    <p class="govuk-body">{{ paragraph_s5_1 }} <a href="https://www.equalityadvisoryservice.com/">https://www.equalityadvisoryservice.com/</a>.</p>
+    <p class="govuk-body">{{ paragraph_s5_1 }} <a target="_blank" href="https://www.equalityadvisoryservice.com/">{{ paragraph_s5_2 }}</a>.</p>
   </section>
 
   <section>
     <h2 class="govuk-heading-m">{{ header6 }}</h2>
     <p class="govuk-body">{{ paragraph_s6_1 }}</p>
     <p class="govuk-body">{{ paragraph_s6_2 }}</p>
-    <p class="govuk-body">{{ paragraph_s6_3 }} <a href="https://www.gov.uk/guidance/employment-tribunal-offices-and-venues">https://www.gov.uk/guidance/employment-tribunal-offices-and-venues</a>.</p>
+    <p class="govuk-body">{{ paragraph_s6_3 }} <a target="_blank" href="https://www.gov.uk/guidance/employment-tribunal-offices-and-venues">{{ paragraph_s6_4 }}</a>.</p>
   </section>
 
   <section>
@@ -80,13 +81,13 @@
 
   <section>
     <h2 class="govuk-heading-m">{{ header8 }}</h2>
-    <p class="govuk-body">{{ paragraph_s8_1.part_1 }} <a href="https://www.w3.org/TR/WCAG21/">{{ paragraph_s8_1.part_2 }}</a> {{ paragraph_s8_1.part_3 }}</p>
+    <p class="govuk-body">{{ paragraph_s8_1.part_1 }} <a target="_blank" href="http://www.w3.org/TR/WCAG22/">{{ paragraph_s8_1.part_2 }}</a> {{ paragraph_s8_1.part_3 }}</p>
   </section>
 
   <section>
     <h2 class="govuk-heading-m">{{ header9 }}</h2>
     <p class="govuk-body">{{ paragraph_s9_1 }}</p>
-    <h2 class="govuk-heading-m">{{ nonComplianceReason1 }}</h2>
+    <h3 class="govuk-heading-s">{{ nonComplianceReason1 }}</h3>
     <ul class="govuk-list govuk-list--bullet">
       <li> {{ nonCompliance_1_1 }} </li>
       <li> {{ nonCompliance_1_2 }} </li>
@@ -94,31 +95,24 @@
       <li> {{ nonCompliance_1_4 }} </li>
       <li> {{ nonCompliance_1_5 }} </li>
       <li> {{ nonCompliance_1_6 }} </li>
+      <li> {{ nonCompliance_1_7 }} </li>
     </ul>
-    <p class="govuk-body">{{ paragraph_s9_2 }}</p>
-    <h2 class="govuk-heading-m">{{ nonComplianceReason2 }}</h2>
-    <h3 class="govuk-heading-s">{{ nonComplianceReason2_PDF_DOCS }}</h3>
-    <p class="govuk-body">{{ paragraph_s9_3 }}</p>
-    <p class="govuk-body">{{ paragraph_s9_4.part_1 }} <a href="https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made">{{ paragraph_s9_4.part_2 }}</a> {{ paragraph_s9_4.part_3 }}</p>
-    <p class="govuk-body">{{ paragraph_s9_5 }}</p>
   </section>
 
   <section>
     <h2 class="govuk-heading-m">{{ header10 }}</h2>
-    <p class="govuk-body">{{ paragraph_s10_1 }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li> {{ paragraph_s10_1 }} </li>
+      <li> {{ paragraph_s10_2 }} </li>
+    </ul>
   </section>
 
   <section>
     <h2 class="govuk-heading-m">{{ header11 }}</h2>
-    <p class="govuk-body">{{ paragraph_s11_1 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_2 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_3 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_4 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_5 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_6 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_7 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_8 }}</p>
-    <p class="govuk-body">{{ paragraph_s11_9 }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li> {{ paragraph_s11_1 }} </li>
+      <li> {{ paragraph_s11_2 }} </li>
+    </ul>
   </section>
 
 

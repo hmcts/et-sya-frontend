@@ -139,7 +139,7 @@ describe('Citizen hub page', () => {
         caseApiDataResponse: caseApiDataResponses[0],
       },
       {
-        expectedCurrStep: hubJson.received,
+        expectedCurrStep: hubJson.responseDue,
         caseApiDataResponse: caseApiDataResponses[1],
       },
       {
