@@ -3,6 +3,7 @@ import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/ge
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, Parties, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
+import { HearingNotification } from '../../definitions/hearingDetails';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -325,21 +326,26 @@ const getStoredNotificationRespond = (
 };
 
 /**
- * Return true when any sendNotificationNotify:
- * - Notify is not Respondent only
- * - Subject includes Hearing
- * - Notification is not viewed
- * @param notifications
+ * Return list of link for sendNotificationNotify
+ * @param notifications Notifications
+ * @param languageParam Language Url
  */
-export const shouldShowHearingNotification = (notifications: SendNotificationTypeItem[]): boolean => {
-  return notifications?.some(it => isHearingClaimantStateViewed(it));
-};
-
-const isHearingClaimantStateViewed = (notification: SendNotificationTypeItem): boolean => {
-  return (
-    notification &&
-    notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-    notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
-    notification.value.notificationState !== HubLinkStatus.VIEWED
-  );
+export const getHearingNotificationBannerList = (
+  notifications: SendNotificationTypeItem[],
+  languageParam: string
+): HearingNotification[] => {
+  return (notifications || [])
+    .filter(
+      notification =>
+        notification &&
+        notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
+        notification.value.notificationState !== HubLinkStatus.VIEWED
+    )
+    .map(notification => ({
+      viewUrl:
+        notification.value.sendNotificationSubject.length > 1
+          ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languageParam
+          : PageUrls.HEARING_DETAILS + languageParam,
+    }));
 };
