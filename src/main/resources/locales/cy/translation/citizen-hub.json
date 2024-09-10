@@ -81,6 +81,15 @@
     "ecc": {
       "title": "Welsh translation required: "
     },
+    "sendNotification": {
+      "claimantRespondentDetails": "The tribunal has sent you a notification about the claimant and respondent details.",
+      "claimET1": "The tribunal has sent you a notification about the claim (ET1).",
+      "responseET3": "The tribunal has sent you a notification about the response (ET3).",
+      "hearing": "The tribunal has sent you a notification about your hearing.",
+      "orderOrRequest": "The tribunal has sent you a case management orders or requests.",
+      "judgment": "The tribunal has sent you a notification about your judgment.",
+      "link": "Gweld yr hysbysiad"
+    },
     "orderOrRequest": {
       "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",

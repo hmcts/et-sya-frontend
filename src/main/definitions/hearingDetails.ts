@@ -12,3 +12,7 @@ export interface HearingDateRow {
   status: string;
   venue: string;
 }
+
+export interface HearingNotification {
+  viewUrl?: string;
+}

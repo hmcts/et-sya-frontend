@@ -25,6 +25,7 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getClaimantAppsAndUpdateStatusTag,
+  getHearingNotificationBannerList,
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
@@ -208,6 +209,10 @@ export default class CitizenHubController {
         userCase.tseApplicationStoredCollection,
         allApplications,
         notifications,
+        languageParam
+      ),
+      hearingNotificationBannerList: getHearingNotificationBannerList(
+        userCase?.sendNotificationCollection,
         languageParam
       ),
       notifications: ordersRequestsGeneralNotifications,
