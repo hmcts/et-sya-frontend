@@ -134,6 +134,18 @@
   }) }}
 {% endif %}
 
+{% for noti in hearingNotificationBannerList %}
+    {% set htmlForHearingNotification %}
+        <h3 class="govuk-notification-banner__heading">{{ notificationBanner.noticeOfHearing.header }}</h3>
+        <p class="govuk-body"><a class="govuk-link" href="{{ noti.viewUrl }}">{{ notificationBanner.noticeOfHearing.link }}</a></p>
+    {% endset %}
+    {{ govukNotificationBanner({
+        html: htmlForHearingNotification,
+        titleText: important
+        })
+    }}
+{% endfor %}
+
 {% if showRespondentAcknowledgement %}
   {{ govukNotificationBanner({
    html: htmlForRespondentAcknowledgement,

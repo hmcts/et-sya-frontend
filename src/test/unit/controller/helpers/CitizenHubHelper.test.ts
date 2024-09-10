@@ -2,6 +2,7 @@ import {
   StatusesInOrderOfUrgency,
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getHearingNotificationBannerList,
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
@@ -17,6 +18,7 @@ import { GenericTseApplicationTypeItem } from '../../../../main/definitions/comp
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
+import { HearingNotification } from '../../../../main/definitions/hearingDetails';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { StoreNotification } from '../../../../main/definitions/storeNotification';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
@@ -759,5 +761,98 @@ describe('updateHubLinkStatuses for HearingDetails', () => {
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
     updateHubLinkStatuses(userCase, hubLinksStatuses);
     expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
+  });
+});
+
+describe('getHearingNotificationBannerList', () => {
+  let notifications: SendNotificationTypeItem[];
+
+  beforeEach(() => {
+    const notification = {
+      id: '72fde617-8ced-46e6-adbf-03cee33cd391',
+      value: {
+        number: '1',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationSubject: ['Hearing'],
+        sendNotificationSelectHearing: {
+          selectedCode: 'ab76e211-cc08-45f8-b86e-61e775a09253',
+        },
+      },
+    };
+    notifications = [notification];
+  });
+
+  it('should return true with NOT_VIEWED hearing only notification', () => {
+    const expected: HearingNotification[] = [{ viewUrl: PageUrls.HEARING_DETAILS + languages.ENGLISH_URL_PARAMETER }];
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(1);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return true with NOT_VIEWED cover more than one subject', () => {
+    notifications[0].value.sendNotificationSubject.push('Judgment');
+    const expected: HearingNotification[] = [
+      { viewUrl: PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languages.ENGLISH_URL_PARAMETER },
+    ];
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(1);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return true with more than one notifications', () => {
+    notifications.push(
+      {
+        id: '8e53cf95-22f9-46d7-a43f-acc2a53639b8',
+        value: {
+          number: '3',
+          sendNotificationNotify: 'Claimant only',
+          sendNotificationSubject: ['Judgment'],
+        },
+      },
+      {
+        id: '8e53cf95-22f9-46d7-a43f-acc2a53639b8',
+        value: {
+          number: '3',
+          sendNotificationNotify: 'Claimant only',
+          sendNotificationSubject: ['Hearing', 'Judgment'],
+        },
+      }
+    );
+    const expected: HearingNotification[] = [
+      { viewUrl: PageUrls.HEARING_DETAILS + languages.ENGLISH_URL_PARAMETER },
+      { viewUrl: PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languages.ENGLISH_URL_PARAMETER },
+    ];
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(2);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return false if sendNotificationNotify is Respondent only', () => {
+    notifications[0].value.sendNotificationNotify = 'Respondent only';
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(0);
+  });
+
+  it('should return false if sendNotificationSubject is not Hearing', () => {
+    notifications[0].value.sendNotificationSubject = ['Judgment'];
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(0);
+  });
+
+  it('should return false if sendNotificationSubject is undefined', () => {
+    notifications[0].value.sendNotificationSubject = undefined;
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(0);
+  });
+
+  it('should return false with VIEWED hearing', () => {
+    notifications[0].value.notificationState = HubLinkStatus.VIEWED;
+    const actual = getHearingNotificationBannerList(notifications, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(0);
+  });
+
+  it('should return undefined if notification is undefined', () => {
+    const actual = getHearingNotificationBannerList(undefined, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toHaveLength(0);
   });
 });

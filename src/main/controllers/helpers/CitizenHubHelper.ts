@@ -1,8 +1,9 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, Parties, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
+import { HearingNotification } from '../../definitions/hearingDetails';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -322,4 +323,29 @@ const getStoredNotificationRespond = (
     }
   }
   return storeNotifications;
+};
+
+/**
+ * Return list of link for sendNotificationNotify
+ * @param notifications Notifications
+ * @param languageParam Language Url
+ */
+export const getHearingNotificationBannerList = (
+  notifications: SendNotificationTypeItem[],
+  languageParam: string
+): HearingNotification[] => {
+  return (notifications || [])
+    .filter(
+      notification =>
+        notification &&
+        notification.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        notification.value.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
+        notification.value.notificationState !== HubLinkStatus.VIEWED
+    )
+    .map(notification => ({
+      viewUrl:
+        notification.value.sendNotificationSubject.length > 1
+          ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languageParam
+          : PageUrls.HEARING_DETAILS + languageParam,
+    }));
 };
