@@ -2986,9 +2986,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@puppeteer/browsers@npm:2.3.1":
-  version: 2.3.1
-  resolution: "@puppeteer/browsers@npm:2.3.1"
+"@puppeteer/browsers@npm:2.4.0":
+  version: 2.4.0
+  resolution: "@puppeteer/browsers@npm:2.4.0"
   dependencies:
     debug: ^4.3.6
     extract-zip: ^2.0.1
@@ -3000,7 +3000,7 @@ __metadata:
     yargs: ^17.7.2
   bin:
     browsers: lib/cjs/main-cli.js
-  checksum: 06381d9566f4f5fcb15244afdc7ca5b96c4187a2738d22d2aa0b18e14e3dacf25665768e511390f461d875314c2af0dec51f71aeca5b78c84801485a15c8c3c3
+  checksum: c5f9890f1bf355783574c00b42e8a9bf9e4788d0dce76cc4cd50fcf80b5e5f99ae2b4325edd5350d4fb289f7dfa89f67edf8bc2da9abd53eba1f815caae97beb
   languageName: node
   linkType: hard
 
@@ -14032,13 +14032,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"psl@npm:^1.1.33":
-  version: 1.9.0
-  resolution: "psl@npm:1.9.0"
-  checksum: 20c4277f640c93d393130673f392618e9a8044c6c7bf61c53917a0fddb4952790f5f362c6c730a9c32b124813e173733f9895add8d26f566ed0ea0654b2e711d
-  languageName: node
-  linkType: hard
-
 "pstree.remy@npm:^1.1.8":
   version: 1.1.8
   resolution: "pstree.remy@npm:1.1.8"
@@ -14056,7 +14049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"punycode@npm:^2.1.0, punycode@npm:^2.1.1":
+"punycode@npm:^2.1.0":
   version: 2.3.0
   resolution: "punycode@npm:2.3.0"
   checksum: 39f760e09a2a3bbfe8f5287cf733ecdad69d6af2fe6f97ca95f24b8921858b91e9ea3c9eeec6e08cede96181b3bb33f95c6ffd8c77e63986508aa2e8159fa200
@@ -14070,17 +14063,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:23.2.2":
-  version: 23.2.2
-  resolution: "puppeteer-core@npm:23.2.2"
+"puppeteer-core@npm:23.3.0":
+  version: 23.3.0
+  resolution: "puppeteer-core@npm:23.3.0"
   dependencies:
-    "@puppeteer/browsers": 2.3.1
+    "@puppeteer/browsers": 2.4.0
     chromium-bidi: 0.6.5
     debug: ^4.3.6
     devtools-protocol: 0.0.1330662
     typed-query-selector: ^2.12.0
     ws: ^8.18.0
-  checksum: ea1802cbc9079522a54480ed3935ebf1e4946a4da5509cd06ea9935c54833e67c42843f7985c00d6723c32885a2c44b5e30e185d17169dbe99fe43626ced1ad8
+  checksum: e8c9cb505dbe2211aa708a22478c44f4d1ad04fc805ebd44a60679d5461b8619d710d3e125da3eb7ebe959daa36844368871a1487be8c6cb5fb9ff83df10e160
   languageName: node
   linkType: hard
 
@@ -14104,18 +14097,18 @@ __metadata:
   linkType: hard
 
 "puppeteer@npm:^23.2.0":
-  version: 23.2.2
-  resolution: "puppeteer@npm:23.2.2"
+  version: 23.3.0
+  resolution: "puppeteer@npm:23.3.0"
   dependencies:
-    "@puppeteer/browsers": 2.3.1
+    "@puppeteer/browsers": 2.4.0
     chromium-bidi: 0.6.5
     cosmiconfig: ^9.0.0
     devtools-protocol: 0.0.1330662
-    puppeteer-core: 23.2.2
+    puppeteer-core: 23.3.0
     typed-query-selector: ^2.12.0
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 8306a2125105d06e8b487b26f2ea28f0826355ecfbb9bea5cb9e7492be74faad17375ec56c0ddd3b1719c0dc736ec473699b31367c569189963533b4190f30ce
+  checksum: a7b4b47507748a171b9d64b2ee4a2ba3eb888c755b35dd6ac573e3c9a82d4763029654b0f3cf619788a7310218af5d31d348c5ce9c7ff269c1e0d3421f72db40
   languageName: node
   linkType: hard
 
@@ -14171,13 +14164,6 @@ __metadata:
   version: 1.0.1
   resolution: "query-selector-shadow-dom@npm:1.0.1"
   checksum: 8ab1cdd5e1927b583503b590165d66770fb91c87ac28b50a43596b755db3792c0e506250f46d0af97f0064a5cc12a1de449fd5c2cfcadf18b0880a4d8aecebbd
-  languageName: node
-  linkType: hard
-
-"querystringify@npm:^2.1.1":
-  version: 2.2.0
-  resolution: "querystringify@npm:2.2.0"
-  checksum: 5641ea231bad7ef6d64d9998faca95611ed4b11c2591a8cae741e178a974f6a8e0ebde008475259abe1621cb15e692404e6b6626e927f7b849d5c09392604b15
   languageName: node
   linkType: hard
 
@@ -16175,6 +16161,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tldts-core@npm:^6.1.43":
+  version: 6.1.43
+  resolution: "tldts-core@npm:6.1.43"
+  checksum: 6228d6f329ab515136b40f926cbc81fa73385aa8dfaab7b14ff942f5b88b27205a5bc9b1c7415951069120de48245fdab4c32893e98a39d1a6a18e2f0485b763
+  languageName: node
+  linkType: hard
+
+"tldts@npm:^6.1.32":
+  version: 6.1.43
+  resolution: "tldts@npm:6.1.43"
+  dependencies:
+    tldts-core: ^6.1.43
+  bin:
+    tldts: bin/cli.js
+  checksum: 8e09d295ccc5d9c1fd0a0edff978163b9bda0c93a60cb5f7abff8c58403b64653989ea1f7f5583e24bfadf1037ee2b4394836096c554aa08488fa6ce21522599
+  languageName: node
+  linkType: hard
+
 "tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
@@ -16232,15 +16236,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tough-cookie@npm:^4.1.3":
-  version: 4.1.4
-  resolution: "tough-cookie@npm:4.1.4"
+"tough-cookie@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "tough-cookie@npm:5.0.0"
   dependencies:
-    psl: ^1.1.33
-    punycode: ^2.1.1
-    universalify: ^0.2.0
-    url-parse: ^1.5.3
-  checksum: 5815059f014c31179a303c673f753f7899a6fce94ac93712c88ea5f3c26e0c042b5f0c7a599a00f8e0feeca4615dba75c3dffc54f3c1a489978aa8205e09307c
+    tldts: ^6.1.32
+  checksum: 774f6c939c96f74b5847361f7e11e0d69383681d21a35a2d37a20956638e614ec521782d2d20bcb32b58638ff337bba87cc72fb72c987bd02ea0fdfc93994cdb
   languageName: node
   linkType: hard
 
@@ -16716,13 +16717,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"universalify@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "universalify@npm:0.2.0"
-  checksum: e86134cb12919d177c2353196a4cc09981524ee87abf621f7bc8d249dbbbebaec5e7d1314b96061497981350df786e4c5128dbf442eba104d6e765bc260678b5
-  languageName: node
-  linkType: hard
-
 "universalify@npm:^2.0.0":
   version: 2.0.0
   resolution: "universalify@npm:2.0.0"
@@ -16819,16 +16813,6 @@ __metadata:
   version: 4.0.1
   resolution: "url-join@npm:4.0.1"
   checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5
-  languageName: node
-  linkType: hard
-
-"url-parse@npm:^1.5.3":
-  version: 1.5.10
-  resolution: "url-parse@npm:1.5.10"
-  dependencies:
-    querystringify: ^2.1.1
-    requires-port: ^1.0.0
-  checksum: fbdba6b1d83336aca2216bbdc38ba658d9cfb8fc7f665eb8b17852de638ff7d1a162c198a8e4ed66001ddbf6c9888d41e4798912c62b4fd777a31657989f7bdf
   languageName: node
   linkType: hard
 
