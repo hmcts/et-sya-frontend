@@ -57,7 +57,7 @@ describe('Return To Existing Controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       'return-to-claim',
       expect.objectContaining({
-        startNewClaimUrl: PageUrls.WORK_POSTCODE + getLanguageParam(request.url),
+        startNewClaimUrl: PageUrls.CHECKLIST + getLanguageParam(request.url),
       })
     );
   });

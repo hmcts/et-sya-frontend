@@ -29,6 +29,7 @@ import CheckYourAnswersController from '../../controllers/CheckYourAnswersContro
 import ChecklistController from '../../controllers/ChecklistController';
 import ClaimDetailsCheckController from '../../controllers/ClaimDetailsCheckController';
 import ClaimDetailsController from '../../controllers/ClaimDetailsController';
+import ClaimJurisdictionSelectionController from '../../controllers/ClaimJurisdictionSelectionController';
 import ClaimSavedController from '../../controllers/ClaimSavedController';
 import ClaimSubmittedController from '../../controllers/ClaimSubmittedController';
 import ClaimTypeDiscriminationController from '../../controllers/ClaimTypeDiscriminationController';
@@ -132,7 +133,6 @@ import WhistleblowingClaimsController from '../../controllers/WhistleblowingClai
 import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
-import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
@@ -276,8 +276,8 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
-    app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
-    app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);
+    app.get(PageUrls.CLAIM_JURISDICTION_SELECTION, new ClaimJurisdictionSelectionController().get);
+    app.post(PageUrls.CLAIM_JURISDICTION_SELECTION, new ClaimJurisdictionSelectionController().post);
     app.get(InterceptPaths.CHANGE_DETAILS, new ChangeDetailsController().get);
     app.get(Urls.EXTEND_SESSION, new SessionTimeoutController().getExtendSession);
     app.get(InterceptPaths.SUBMIT_CASE, new SubmitClaimController().get);

@@ -41,11 +41,23 @@ async function verifyBeforeYouContinueGuidanceText() {
   I.see('at any time before submitting.');
 }
 
-async function verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText() {
-  I.see('This will decide which Employment Tribunal office deals with your claim.');
-  I.see('If you worked at home, enter your home postcode.');
-  I.see('If you’re claiming against someone you did not work for,');
-  I.see('enter the postcode of where they are based.');
+async function verifyWhereYouCanMakeYourClaimGuidanceText() {
+  I.see('You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in ');
+  I.see('Scotland. They are separate jurisdiction.');
+  I.see('You can make your claim in England and Wales if any of the following conditions apply:');
+  I.see('The issues you’re claiming about happened in England or Wales.');
+  I.see('The respondent you’re claiming against lives or does business in England or Wales.');
+  I.see('The work contract related to the claim was partly carried out in England or Wales.');
+  I.see('The claim has some connection with Great Britain and that connection is at least partly with England and');
+  I.see('Wales.');
+  I.see('You can make your claim in Scotland if any of the following conditions apply:');
+  I.see('The issues you’re claiming about happened in Scotland.');
+  I.see('The respondent you’re claiming against lives or does business in Scotland.');
+  I.see('The work contract related to the claim was partly carried out in Scotland.');
+  I.see('The claim has some connection with Great Britain and that connection is at least partly with Scotland.');
+  I.see('The tribunal will reject your claim if you choose a jurisdiction where none of the conditions apply.');
+  I.see('Which jurisdiction are you making your claim in?');
+  I.see('You must consider the jurisdiction at the time when the issues happened.');
 }
 
 async function verifyARepresentativeGuidanceText() {
@@ -114,7 +126,7 @@ async function verifyACASConciliationGuidanceText() {
 module.exports = {
   verifyMakeAClaimToAnEmploymentTribunal,
   verifyBeforeYouContinueGuidanceText,
-  verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText,
+  verifyWhereYouCanMakeYourClaimGuidanceText,
   verifyARepresentativeGuidanceText,
   verifyWhoCanActAsARepresentativeGuidanceText,
   verifyHowToFindARepresentativeGuidanceText,

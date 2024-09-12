@@ -66,7 +66,7 @@ export default class ReturnToExistingController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('return-to-claim', {
       ...content,
-      startNewClaimUrl: PageUrls.WORK_POSTCODE + getLanguageParam(req.url),
+      startNewClaimUrl: PageUrls.CHECKLIST + getLanguageParam(req.url),
     });
   };
 }

@@ -5,7 +5,7 @@ import redis from 'redis-mock';
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
-import { LegacyUrls, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData } from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
@@ -84,7 +84,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
       expect(req.session.userCase).toStrictEqual({
         typeOfClaim: [
           TypesOfClaim.BREACH_OF_CONTRACT,
@@ -126,7 +126,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
 
       const cacheMap = new Map<CaseDataCacheKey, string>([
-        [CaseDataCacheKey.POSTCODE, undefined],
+        [CaseDataCacheKey.CLAIM_JURISDICTION, undefined],
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
@@ -153,7 +153,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
 
       const cacheMap = new Map<CaseDataCacheKey, string>([
-        [CaseDataCacheKey.POSTCODE, undefined],
+        [CaseDataCacheKey.CLAIM_JURISDICTION, undefined],
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
@@ -167,20 +167,6 @@ describe('Type Of Claim Controller', () => {
       };
       controller.post(req, res);
       expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
-    });
-
-    it('should redirect to ET1_BASE page if Breach of Contract is selected', async () => {
-      const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
-      const controller = new TypeOfClaimController();
-      const req = mockRequest({ body });
-      const res = mockResponse();
-
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
-
-      jest.spyOn(res, 'redirect');
-
-      await controller.post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
     });
 
     it('should redirect to LOGIN page if Discrimination is selected', async () => {
