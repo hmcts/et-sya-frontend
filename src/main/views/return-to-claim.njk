@@ -17,14 +17,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-      <p class="govuk-body">{{ p1 | safe}}</p>
+      <p class="govuk-body">{{ p1.t1 }} <span class="govuk-!-font-weight-bold">{{ p1.t2 }}</span> {{ p1.t3 }} <span class="govuk-!-font-weight-bold">{{ p1.t4 }}</span> {{ p1.t5 }}</p>
       <p class="govuk-body govuk-!-font-weight-bold">{{ p2 }}</p>
 
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
 
-      <p class="govuk-body">{{ p3 | safe }}</p>
+      <p class="govuk-body">{{ p3.t1 }} <a href="{{ startNewClaimUrl }}" class="govuk-link">{{ p3.t2 }}</a> {{ p3.t3 }}</p>
     </div>
   </div>
 {% endblock %}
