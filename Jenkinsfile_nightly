@@ -36,7 +36,7 @@ withNightlyPipeline(type, product, component) {
     enableSecurityScan(
        urlExclusions: urlExclusions
     )
-    enableFullFunctionalTest()
+    enableFullFunctionalTest(int timeout=300)
     enableCrossBrowserTest()
     enableFortifyScan('et-aat')
 

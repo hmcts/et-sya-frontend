@@ -47,7 +47,7 @@ export function toApiFormatCreate(
   userDetails: UserDetails
 ): CreateCaseBody {
   const caseBody: CreateCaseBody = {
-    post_code: userDataMap.get(CaseDataCacheKey.POSTCODE),
+    case_type_id: userDataMap.get(CaseDataCacheKey.CLAIM_JURISDICTION),
     case_data: {
       caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
@@ -65,7 +65,7 @@ export function toApiFormatCreate(
         other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
       },
       triageQuestions: {
-        postcode: userDataMap.get(CaseDataCacheKey.POSTCODE),
+        claimJurisdiction: userDataMap.get(CaseDataCacheKey.CLAIM_JURISDICTION),
         claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
         caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
         acasMultiple: userDataMap.get(CaseDataCacheKey.ACAS_MULTIPLE),
@@ -165,6 +165,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     workEnterPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3ResponseReceived: hasResponseFromRespondentList(fromApiCaseData.case_data),
+    et3DueDate: fromApiCaseData.case_data?.et3DueDate,
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
     et1SubmittedForm: returnSubmittedEt1Form(

@@ -19,7 +19,7 @@ describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
       .send({ caseType: CaseType.SINGLE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.ACAS_MULTIPLE_CLAIM);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_JURISDICTION_SELECTION);
       });
   });
 

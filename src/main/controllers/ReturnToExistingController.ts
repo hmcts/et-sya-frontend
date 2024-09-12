@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ReturnToExistingController {
   private readonly form: Form;
@@ -66,6 +66,7 @@ export default class ReturnToExistingController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('return-to-claim', {
       ...content,
+      startNewClaimUrl: PageUrls.CHECKLIST + getLanguageParam(req.url),
     });
   };
 }

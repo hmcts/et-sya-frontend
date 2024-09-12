@@ -17,32 +17,7 @@
         <div class="govuk-grid-column-two-thirds-from-desktop">
           <div class="top-border-blue">
             {{ hmctsProgressBar({
-            items: [{
-              label:
-              {
-                text: accepted
-              },
-              complete: currentState.isAfter('SUBMITTED'),
-              active: currentState.isRightAfter('ACCEPTED')
-            }, {
-              label: {
-                text: received
-              },
-              complete: currentState.isAfter('ACCEPTED'),
-              active: currentState.isRightAfter('RESPONSE_RECEIVED')
-            }, {
-              label: {
-                text: details
-              },
-              complete: currentState.isAfter('RESPONSE_RECEIVED'),
-              active: currentState.isRightAfter('HEARING_DETAILS')
-            }, {
-              label: {
-                text: decision
-              },
-              complete: currentState.isAfter('HEARING_DETAILS'),
-              active: currentState.isRightAfter('CLAIM_DECISION')
-             }],
+              items: progressBarItems,
               classes: ''
             }) }}
 

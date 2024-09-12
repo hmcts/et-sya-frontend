@@ -18,7 +18,7 @@
   "signOut": "Allgofnodi",
   "logIn": "Mewngofnodi",
   "phaseBanner": {
-    "feedback": "Bydd eich adborth",
+    "feedback": "Bydd eich adborth (yn agor mewn tab newydd)",
     "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
     "additionalText": "yn ein helpu i wella’r gwasanaeth.",
     "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"

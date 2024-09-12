@@ -151,7 +151,7 @@ export interface Case {
   reasonableAdjustmentsDetail?: string;
   hearingPreferences?: HearingPreference[];
   hearingAssistance?: string;
-  workPostcode?: string;
+  claimJurisdiction?: string;
   respondentName?: string;
   claimantSex?: Sex;
   preferredTitle?: string;
@@ -169,6 +169,7 @@ export interface Case {
   et1SubmittedForm?: DocumentDetail;
   submittedDate?: CaseDate;
   et3ResponseReceived?: boolean;
+  et3DueDate?: string;
   hubLinksStatuses?: HubLinksStatuses;
   allEt1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
@@ -310,7 +311,7 @@ export const enum PayInterval {
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
 
 export const enum CaseDataCacheKey {
-  POSTCODE = 'workPostcode',
+  CLAIM_JURISDICTION = 'claimJurisdiction',
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
   CASE_TYPE = 'caseType',
   TYPES_OF_CLAIM = 'typeOfClaim',

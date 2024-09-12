@@ -8,7 +8,7 @@ USER hmcts
 # ---- Build image ----
 
 FROM base as build
-RUN PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && yarn build:prod
+RUN PUPPETEER_SKIP_DOWNLOAD=true yarn install && yarn build:prod
 
 # ---- Runtime image ----
 FROM base as runtime

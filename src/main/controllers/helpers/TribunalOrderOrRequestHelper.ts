@@ -509,7 +509,9 @@ function instanceOfPseResponse(
 
 export function determineRedirectUrl(req: AppRequest, selectedRequestOrOrder: SendNotificationTypeItem): string {
   if (req.session.userCase.hasSupportingMaterial === YesOrNo.YES) {
-    return PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url);
+    return (
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', selectedRequestOrOrder.id) + getLanguageParam(req.url)
+    );
   }
 
   if (
