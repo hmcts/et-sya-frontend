@@ -9,7 +9,7 @@ const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
 const expectedTitle = 'Where you can make your claim';
 const expectedP1 =
-  'You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in Scotland. They are separate jurisdiction.';
+  'You can make a claim in the Employment Tribunals in England and Wales or the Employment Tribunals in Scotland. They are separate jurisdictions.';
 const expectedP2 = 'You can make your claim in England and Wales if any of the following conditions apply:';
 const expectedP3 = 'You can make your claim in Scotland if any of the following conditions apply:';
 const listClass = 'govuk-list govuk-list--bullet';
