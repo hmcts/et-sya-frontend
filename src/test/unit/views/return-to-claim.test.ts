@@ -24,8 +24,7 @@ const pClass = 'govuk-body';
 const expectedP1 =
   'You’ll need to use either a <span class="govuk-!-font-weight-bold">‘save and return number’</span> or your new <span class="govuk-!-font-weight-bold">‘Employment Tribunal account’</span> to return to an existing claim.';
 const expectedP2 = returnToClaimJson.p2;
-const expectedP3 =
-  'Don\'t have these details <a href="/work-postcode?lng=en" class="govuk-link">Start a new claim.</a>';
+const expectedP3 = 'Don\'t have these details <a href="/checklist?lng=en" class="govuk-link">Start a new claim.</a>';
 const buttonClass = 'govuk-button';
 const expectedRadioLabel1 = returnToClaimJson.optionText1;
 const expectedRadioLabel2 = returnToClaimJson.optionText2;

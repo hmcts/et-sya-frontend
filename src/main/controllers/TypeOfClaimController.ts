@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
-import { RedisErrors, TranslationKeys } from '../definitions/constants';
+import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { getLogger } from '../logger';
@@ -15,7 +15,6 @@ import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { returnNextPage } from './helpers/RouterHelpers';
-import { getRedirectUrl } from './helpers/TypeOfClaimHelpers';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -99,12 +98,11 @@ export default class TypeOfClaimController {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
-      let redirectUrl = getRedirectUrl(req, this.form);
       if (req.app?.locals) {
         const redisClient = req.app.locals?.redisClient;
         if (redisClient) {
           const cacheMap = new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.POSTCODE, req.session.userCase?.workPostcode],
+            [CaseDataCacheKey.CLAIM_JURISDICTION, req.session.userCase?.claimJurisdiction],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
             [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
             [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
@@ -130,11 +128,9 @@ export default class TypeOfClaimController {
       }
       // Only called when returning from CYA page / Back button from CLAIM_STEPS
       if (req.session.userCase.id) {
-        const workPostcode = req.session.userCase?.workPostcode;
         await handleUpdateDraftCase(req, logger);
-        req.session.userCase.workPostcode = workPostcode;
       }
-      redirectUrl = setUrlLanguage(req, redirectUrl);
+      const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_STEPS);
       returnNextPage(req, res, redirectUrl);
     } else {
       handleErrors(req, res, errors);

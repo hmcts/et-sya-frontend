@@ -8,7 +8,6 @@ import {
   handleUpdateDraftCase,
   handleUpdateHubLinksStatuses,
   handleUploadDocument,
-  isPostcodeInScope,
   respondToApplication,
   setUserCaseWithRedisData,
   submitClaimantTse,
@@ -126,64 +125,6 @@ describe('getSectionStatusForEmployment()', () => {
       expect(providedStatus).toStrictEqual(expected);
     }
   );
-});
-
-describe('isPostcodeMVPLocation()', () => {
-  it.each([
-    { postcode: 'G22 6LZ', expected: true }, // Glasgow
-    { postcode: 'G32 7RH', expected: true }, // Glasgow
-    { postcode: 'G20 9TA', expected: true }, // Glasgow
-    { postcode: 'LS9 8FF', expected: true }, // Leeds
-    { postcode: 'LS146AD', expected: true }, // Leeds
-    { postcode: 'LS124AT', expected: true }, // Leeds
-    { postcode: 'EH12 9FZ', expected: true }, // Edinburgh
-    { postcode: 'EH12 8XL', expected: true },
-    { postcode: 'TD1 1AA', expected: true },
-    { postcode: 'TD1 1AB', expected: true },
-    { postcode: 'TD1 1AD', expected: true },
-    { postcode: 'TD14 5AA', expected: true },
-    { postcode: 'ZE1 0AA', expected: true }, //  Lerwick
-    { postcode: 'AB1 0AA', expected: true }, // Aberdeen
-    { postcode: 'ML1 1AJ', expected: true }, // Motherwell
-    { postcode: 'HS1 2AA', expected: true }, // Outer Hebrides
-    { postcode: 'HS5 3TT', expected: true },
-    { postcode: 'KA1 1AA', expected: true }, // Kilmarnock
-    { postcode: 'IV32 7HN', expected: true }, // Inverness
-    { postcode: 'OL14 5AA', expected: true }, // Oldham
-    { postcode: '1', expected: false },
-    { postcode: '2', expected: false },
-    { postcode: '100', expected: false },
-    { postcode: '', expected: false },
-    { postcode: 'TD15 1AA', expected: true }, // Newcastle
-    { postcode: 'ISE2 0YN', expected: false }, // London - wrong postcode - should be SE, not ISE
-    { postcode: 'W6 9AW', expected: true }, // London Central
-    { postcode: 'SE12 0LJ', expected: true }, // London Central
-    { postcode: 'E4 7AJ', expected: true }, // London East
-    { postcode: 'E15 1FE', expected: true }, // London East
-    { postcode: 'N16 6PH', expected: true }, // Watford
-    { postcode: 'E2 6GU', expected: true }, // London East
-    { postcode: 'W3 7NX', expected: true }, // London Central
-    { postcode: 'E8 1LW', expected: true }, // London East
-    { postcode: 'E2 6NR', expected: true }, // London East
-    { postcode: 'CR0 2RF', expected: true }, // London South
-    { postcode: 'LU7 0EU', expected: true }, // Watford
-    { postcode: 'LE3 1EP', expected: true }, // Leicester
-    { postcode: 'M41 8PX', expected: true }, // Manchester
-    { postcode: 'NE28 9QH', expected: true }, // Newcastle
-    { postcode: 'TD12 4AA', expected: true }, // Newcastle
-    { postcode: 'TD12 4AH', expected: true }, // Newcastle
-    { postcode: 'OL2 5AA', expected: true }, // Oldham - Manchester Tribunal
-    { postcode: 'BS1 6JQ', expected: true }, // Bristol
-    { postcode: 'BA1 2QH', expected: true }, // Bath
-    { postcode: 'EX1 1HS', expected: true }, // Exeter
-    { postcode: 'GU35 0PB', expected: true }, // Bordon
-    { postcode: 'SO23 8UJ', expected: true }, // Winchester
-    { postcode: 'S81 0JG', expected: true }, // Worksop
-    { postcode: 'LN6 7QL', expected: true }, // Lincoln
-    { postcode: 'PE25 1BJ', expected: true }, // Skegness
-  ])('Check if postcode is in scope %o', ({ postcode, expected }) => {
-    expect(isPostcodeInScope(postcode)).toEqual(expected);
-  });
 });
 
 describe('setUserCaseWithRedisData', () => {

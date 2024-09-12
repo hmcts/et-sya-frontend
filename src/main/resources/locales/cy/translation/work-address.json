@@ -1,7 +1,7 @@
 {
   "title": "Cyfeiriad gwaith",
-  "legend": "A wnaethoch weithio yn ",
-  "hintText": "Dewiswch ‘Do’ os oeddech yn gweithio o adref weithiau neu yn barhaol yn y cyfeiriad a roddwyd ar gyfer yr atebydd.",
+  "legend": "A wnaethoch chi weithio yn y cyfeiriad hwn?",
+  "hintText": "Dewiswch ‘Do’ os mai hwn oedd y cyfeiriad lle’r oeddech wedi’ch lleoli. Dewiswch ‘Naddo’ os oeddech wedi’ch lleoli mewn cyfeiriad arall neu’n gweithio o adref.",
   "h1": "A wnaethoch weithio yn",
   "errors": {
     "claimantWorkAddressQuestion": {

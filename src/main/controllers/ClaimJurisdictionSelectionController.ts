@@ -3,67 +3,65 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseType } from '../definitions/case';
-import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
+import { CaseTypeId } from '../definitions/case';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
-export default class SingleOrMultipleController {
+export default class ClaimJurisdictionSelectionController {
   private readonly form: Form;
-  private readonly singleOrMultipleContent: FormContent = {
+  private readonly jurisdictionContent: FormContent = {
     fields: {
-      caseType: {
+      claimJurisdiction: {
         type: 'radios',
         label: (l: AnyRecord): string => l.legend,
         labelSize: 'l',
         labelHidden: false,
         classes: 'govuk-radios',
-        id: 'single-or-multiple-claim',
+        hint: (l: AnyRecord): string => l.hintText,
+        id: 'claim-jurisdiction',
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,
-            value: CaseType.SINGLE,
+            value: CaseTypeId.ENGLAND_WALES,
           },
           {
             label: (l: AnyRecord): string => l.radio2,
-            value: CaseType.MULTIPLE,
+            value: CaseTypeId.SCOTLAND,
           },
         ],
         validator: isFieldFilledIn,
       },
     },
     submit: {
-      text: (l: AnyRecord): string => l.continue,
+      text: (l): string => l.continue,
     },
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.singleOrMultipleContent.fields);
+    this.form = new Form(<FormFields>this.jurisdictionContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    let redirectUrl = '';
-    if (req.body.caseType === CaseType.SINGLE) {
-      redirectUrl = PageUrls.CLAIM_JURISDICTION_SELECTION;
-    } else if (req.body.caseType === CaseType.MULTIPLE) {
-      redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
+    let redirectUrl: string;
+    if (req.body.claimJurisdiction) {
+      redirectUrl = PageUrls.ACAS_MULTIPLE_CLAIM;
     } else {
-      redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
+      redirectUrl = PageUrls.CLAIM_JURISDICTION_SELECTION;
     }
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.singleOrMultipleContent, [
+    const content = getPageContent(req, this.jurisdictionContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.SINGLE_OR_MULTIPLE_CLAIM,
+      TranslationKeys.CLAIM_JURISDICTION_SELECTION,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.SINGLE_OR_MULTIPLE_CLAIM, {
+    res.render(TranslationKeys.CLAIM_JURISDICTION_SELECTION, {
       ...content,
     });
   };

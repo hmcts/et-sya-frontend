@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { Response } from 'express';
 import { cloneDeep } from 'lodash';
-import { parse } from 'postcode';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../../components/form/form';
@@ -10,7 +9,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, inScopeLocations } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -214,21 +213,6 @@ export const getSectionStatusForEmployment = (
   } else {
     return sectionStatus.notStarted;
   }
-};
-
-export const isPostcodeInScope = (postCode: string): boolean => {
-  const excludedPostCodes = ['YO7', 'YO21', 'YO22'];
-  const {
-    outcode, // => "SW1A"
-    area, // => "SW"
-    district, // => "SW1"
-  } = parse(postCode);
-  for (const location of inScopeLocations) {
-    if ((location === outcode || location === area || location === district) && !excludedPostCodes.includes(outcode)) {
-      return true;
-    }
-  }
-  return false;
 };
 
 export const handleUploadDocument = async (
