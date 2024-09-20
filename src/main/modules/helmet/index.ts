@@ -45,6 +45,8 @@ export class Helmet {
       "'sha256-FiZUeT/V4X81LXdIxje1wtfEjtxsNS8gTc9lEdDKSd8='",
       "'sha256-A7Uu54feRuB88PgtD97QX8ZfJfCfC4LuAP3rCwwhnbE='",
       "'sha256-TrZe7TNXf5jal9UL8qSy3pDcRFvZ3IbumaN7m05kuqY='",
+      "'sha256-aXmvy0r4VTfGzDelklEkOYupLUj3qI9Gwx8DXWQb4YE='",
+      "'sha256-BxZiXSZ/Vto7GjFKGm4Sdu3xoxmzp1Xjm7HSW3lLUvQ='",
       idamUrl,
       webChat,
       webChat_cf,
