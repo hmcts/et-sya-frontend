@@ -3779,13 +3779,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon-chai@npm:^3.2.9":
-  version: 3.2.12
-  resolution: "@types/sinon-chai@npm:3.2.12"
+"@types/sinon-chai@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@types/sinon-chai@npm:4.0.0"
   dependencies:
     "@types/chai": "*"
     "@types/sinon": "*"
-  checksum: d906f2f766613534c5e9fe1437ec740fb6a9a550f02d1a0abe180c5f18fe73a99f0c12935195404d42f079f5f72a371e16b81e2aef963a6ef0ee0ed9d5d7f391
+  checksum: b93f81dbb73e6f7319f3077dece80bbfca4fdd2b512b07f81fb3ee2e1a2e517fc497c6f91880118b7dcce1a281d53bca1e75cb53a5dcef9188df92c3a6405475
   languageName: node
   linkType: hard
 
@@ -8152,7 +8152,7 @@ __metadata:
     "@types/require-directory": ^2.1.2
     "@types/serve-favicon": ^2.5.4
     "@types/session-file-store": ^1.2.2
-    "@types/sinon-chai": ^3.2.9
+    "@types/sinon-chai": ^4.0.0
     "@types/supertest": ^6.0.0
     "@typescript-eslint/eslint-plugin": ^7.0.0
     "@typescript-eslint/parser": ^7.0.0
