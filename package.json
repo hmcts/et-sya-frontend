@@ -53,7 +53,7 @@
     "@types/connect-redis": "^0.0.23",
     "@types/cookie-parser": "^1.4.3",
     "@types/csurf": "^1.11.2",
-    "@types/express": "^4.17.17",
+    "@types/express": "^5.0.0",
     "@types/express-session": "^1.17.7",
     "@types/lodash": "^4.14.194",
     "@types/multer": "^1.4.7",
