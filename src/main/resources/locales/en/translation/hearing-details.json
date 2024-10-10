@@ -1,0 +1,13 @@
+{
+  "header": "Hearings",
+  "hearingDetails": "Hearing Details",
+  "hearingDate": "Hearing Date",
+  "hearingStatus": "Hearing Status",
+  "hearingVenue": "Hearing Venue",
+  "viewed": "Viewed",
+  "notViewedYet": "Not viewed yet",
+  "notification": "Notification",
+  "notificationDate": "Notification Date",
+  "notificationTitle": "Notification Title",
+  "status": "Status"
+}
