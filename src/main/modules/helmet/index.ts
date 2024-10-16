@@ -9,7 +9,7 @@ export interface HelmetConfig {
 const dynatrace = '*.dynatrace.com';
 const googleAnalyticsDomain1 = '*.google-analytics.com';
 const googleAnalyticsDomain2 = '*.analytics.google.com';
-const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
+const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com'];
 const azureBlob = '*.blob.core.windows.net';
 const webChat = 'https://vcc-eu4.8x8.com';
 const webChat_cf = 'https://vcc-eu4-cf.8x8.com';
