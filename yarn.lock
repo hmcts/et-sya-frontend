@@ -2310,31 +2310,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.10.0":
-  version: 2.10.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.10.0"
-  checksum: 9ad375410287cfc4da4c84772738ea817e54bbd4e7a9b04c9d6aed23896d224146cbeffa0a7df97304239526d0fab155db0c1a00b6bccdb185382f7d3253be3e
+"@launchdarkly/js-sdk-common@npm:2.11.0":
+  version: 2.11.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.11.0"
+  checksum: 825063ca312a6c0d16ea0dd60ab67aea2cbb6e55580f07ebcb79c5b9f892277033b5000f38de8cd730e00bfcc7eecf74e522e3764788807dda9f4622c044d10f
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.8.0"
+"@launchdarkly/js-server-sdk-common@npm:2.9.0":
+  version: 2.9.0
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.9.0"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.10.0
+    "@launchdarkly/js-sdk-common": 2.11.0
     semver: 7.5.4
-  checksum: 86728b7c13a3fe7285eb19c2966abaa517fdf02a2c28f1a5b322128e46612e6bd709fa1d31f9df5ff75bb30c54fd7618aecc2f4623f11d599f105d8d8ce31440
+  checksum: 7b4a75e31ebbbb332270d4e8157ecdb7551b4a76f824bb8707e64020f759812f6a6e72f2bd31be7b42c3d17c543222b849986a9b8db66349f6da908a94967a32
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.6.1
-  resolution: "@launchdarkly/node-server-sdk@npm:9.6.1"
+  version: 9.7.0
+  resolution: "@launchdarkly/node-server-sdk@npm:9.7.0"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.8.0
+    "@launchdarkly/js-server-sdk-common": 2.9.0
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.3
-  checksum: 1403a4feb8d290af351237f112601b1994dd71aef1ded81012ef5cb42fc2009ab54b6dcbe7148cc6ceecc20358b6daaccb85ba3d13404fa498982c6da542110c
+  checksum: b73542a2f8e36dfc1fcb8420c2adc7fe25d6cfe8493e8c735bfce8ec3f2fecb1d1ce0921025a0ecf9e3181c0673a4d0084d32c1e155f90741d26b6906ccbc610
   languageName: node
   linkType: hard
 
@@ -9423,8 +9423,8 @@ __metadata:
   linkType: hard
 
 "html-webpack-plugin@npm:^5.5.1":
-  version: 5.6.0
-  resolution: "html-webpack-plugin@npm:5.6.0"
+  version: 5.6.2
+  resolution: "html-webpack-plugin@npm:5.6.2"
   dependencies:
     "@types/html-minifier-terser": ^6.0.0
     html-minifier-terser: ^6.0.2
@@ -9439,7 +9439,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 32a6e41da538e798fd0be476637d7611a5e8a98a3508f031996e9eb27804dcdc282cb01f847cf5d066f21b49cfb8e21627fcf977ffd0c9bea81cf80e5a65070d
+  checksum: c579ce8b34ef1cd903829402aa6a62a6c92fe1cdfcd81d17ebc87f39eaab1381438b9d805a63457b255238db8f2865d71f48cd382375aa28718881e3ab2d2f9a
   languageName: node
   linkType: hard
 
