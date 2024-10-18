@@ -145,6 +145,7 @@ export const handleErrors = (req: AppRequest, res: Response, sessionErrors: Form
         if (err) {
           throw err;
         }
+
         const ValidRedirects = Object.values(PageUrls);
         return res.redirect(returnValidUrl(req.url, ValidRedirects));
       });
