@@ -20,6 +20,8 @@ import { FormError } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { Logger } from '../../logger';
 
+import { returnValidUrl } from './RouterHelpers';
+
 export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
   return getSessionErrors(req, form, formData);
@@ -143,7 +145,8 @@ export const handleErrors = (req: AppRequest, res: Response, sessionErrors: Form
         if (err) {
           throw err;
         }
-        return res.redirect(req.url);
+        const ValidRedirects = Object.values(PageUrls);
+        return res.redirect(returnValidUrl(req.url, ValidRedirects));
       });
     }
   }

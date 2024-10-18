@@ -26,7 +26,8 @@ export const conditionalRedirect = (
 };
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  return res.redirect(handleReturnUrl(req, redirectUrl));
+  const ValidRedirects = Object.values(PageUrls);
+  return res.redirect(returnValidUrl(handleReturnUrl(req, redirectUrl), ValidRedirects));
 };
 
 const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
