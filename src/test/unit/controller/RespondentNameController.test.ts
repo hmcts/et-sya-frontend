@@ -1,6 +1,7 @@
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -121,7 +122,7 @@ describe('Respondent Name Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(undefined, Object.values(PageUrls)));
   });
 
   it('should add respondent name to the session userCase', async () => {

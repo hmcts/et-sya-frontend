@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { setUrlLanguage } from '../controllers/helpers/LanguageHelper';
+import { returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { Applicant, PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
@@ -69,7 +70,8 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
       req.session.save();
       await handleUpdateDraftCase(req, logger);
 
-      res.redirect(`${pcqUrl}?${qs}`);
+      const ValidRedirects = Object.values(PageUrls);
+      res.redirect(returnValidUrl(`${pcqUrl}?${qs}`, ValidRedirects));
     } else {
       //skip pcq
       logger.info(`PCQ status is ${healthResp} and PCQ ID is ${pcqId}`);

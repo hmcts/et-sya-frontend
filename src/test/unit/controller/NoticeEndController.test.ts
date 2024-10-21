@@ -1,5 +1,6 @@
 import NoticeEndController from '../../../main/controllers/NoticeEndController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -54,7 +55,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -72,7 +73,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     await controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -88,7 +89,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     await controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -104,7 +105,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     await controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 });
