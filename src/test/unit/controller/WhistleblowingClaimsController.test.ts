@@ -1,7 +1,8 @@
 import WhistleblowingClaimsController from '../../../main/controllers/WhistleblowingClaimsController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -39,7 +40,7 @@ describe('Whistleblowing Claims Controller', () => {
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'required' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -55,7 +56,7 @@ describe('Whistleblowing Claims Controller', () => {
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
-      expect(Res.redirect).toHaveBeenCalledWith(Req.path);
+      expect(Res.redirect).toHaveBeenCalledWith(returnValidUrl(Req.path, Object.values(PageUrls)));
 
       expect(Req.session.errors).toEqual(expectedErrors);
     });
@@ -72,8 +73,7 @@ describe('Whistleblowing Claims Controller', () => {
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
-      expect(Res.redirect).toHaveBeenCalledWith(Req.path);
-
+      expect(Res.redirect).toHaveBeenCalledWith(returnValidUrl(Req.path, Object.values(PageUrls)));
       expect(Req.session.errors).toEqual(expectedErrors);
     });
 

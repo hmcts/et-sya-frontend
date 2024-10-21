@@ -1,5 +1,6 @@
 import StartDateController from '../../../main/controllers/StartDateController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
@@ -50,7 +51,7 @@ describe('Start date Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 

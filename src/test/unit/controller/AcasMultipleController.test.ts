@@ -1,4 +1,5 @@
 import AcasMultipleController from '../../../main/controllers/AcasMultipleController';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
@@ -29,7 +30,7 @@ describe('Acas Multiple Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 

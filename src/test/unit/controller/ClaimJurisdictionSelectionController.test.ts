@@ -1,4 +1,5 @@
 import ClaimJurisdictionSelectionController from '../../../main/controllers/ClaimJurisdictionSelectionController';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -30,7 +31,7 @@ describe('Claim Jurisdiction Selection Controller', () => {
       const res = mockResponse();
       new ClaimJurisdictionSelectionController().post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(errors);
     });
 

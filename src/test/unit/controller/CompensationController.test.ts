@@ -1,5 +1,6 @@
 import CompensationController from '../../../main/controllers/CompensationController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -39,7 +40,7 @@ describe('Compensation Controller', () => {
 
       const expectedErrors = [{ propertyName: 'compensationOutcome', errorType: 'tooLong' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -55,7 +56,7 @@ describe('Compensation Controller', () => {
 
       const expectedErrors = [{ propertyName: 'compensationAmount', errorType: 'invalidCurrency' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
 

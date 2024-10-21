@@ -1,5 +1,6 @@
 import EndDateController from '../../../main/controllers/EndDateController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -32,7 +33,7 @@ describe('End date Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -50,7 +51,7 @@ describe('End date Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -68,7 +69,7 @@ describe('End date Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -86,7 +87,7 @@ describe('End date Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 });

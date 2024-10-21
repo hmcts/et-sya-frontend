@@ -1,5 +1,6 @@
 import TribunalRecommendationController from '../../../main/controllers/TribunalRecommendationController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -36,7 +37,7 @@ describe('Tribunal Recommendation Controller', () => {
 
       const expectedErrors = [{ propertyName: 'tribunalRecommendationRequest', errorType: 'tooLong' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
 

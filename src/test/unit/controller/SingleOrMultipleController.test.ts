@@ -1,4 +1,5 @@
 import SingleOrMultipleController from '../../../main/controllers/SingleOrMultipleController';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseType } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -52,7 +53,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 });

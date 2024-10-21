@@ -1,5 +1,6 @@
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { NoAcasNumberReason } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -74,7 +75,7 @@ describe('No Acas number Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(undefined, Object.values(PageUrls)));
   });
   it('should redirect to undefined when save as draft not selected and no acas reason selected', async () => {
     const body = {};
@@ -86,7 +87,7 @@ describe('No Acas number Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(undefined, Object.values(PageUrls)));
   });
 
   // it('should throw error, when session errors exists and unable to save session', () => {

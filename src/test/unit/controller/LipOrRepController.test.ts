@@ -1,6 +1,7 @@
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { YesOrNo, claimantRepresented } from '../../../main/definitions/case';
-import { LegacyUrls } from '../../../main/definitions/constants';
+import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -73,7 +74,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 });

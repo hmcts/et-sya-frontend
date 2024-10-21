@@ -282,6 +282,15 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  //Valid URLs for unit tests
+  TEST_RESPONDENT_1_WORK_POSTCODE_ENTER: '/respondent/1/work-postcode-enter',
+  TEST_RESPONDENT_1_WORK_ADDRESS: '/respondent/1/work-address',
+  TEST_RESPONDENT_1_RESPONDENT_POSTCODE_ENTER: '/respondent/1/respondent-postcode-enter',
+  TEST_RESPONDENT_1_NO_ACAS_REASON: '/respondent/1/no-acas-reason',
+  TEST_RESPONDENT_1_ACAS_CERT_NUM: '/respondent/1/acas-cert-num',
+  TEST_ET_PET_ET1_AAT: 'https://et-pet-et1.aat.platform.hmcts.net',
+  TEST_ET_PET_ET1_AAT_APP_NUM: 'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number',
+  TEST_SERVICE_ENDPOINT: '/service-endpoint',
 } as const;
 
 export const InterceptPaths = {

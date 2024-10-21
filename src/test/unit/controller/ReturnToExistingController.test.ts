@@ -1,5 +1,5 @@
 import ReturnToExistingController from '../../../main/controllers/ReturnToExistingController';
-import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
+import { getLanguageParam, returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -30,7 +30,7 @@ describe('Return To Existing Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
