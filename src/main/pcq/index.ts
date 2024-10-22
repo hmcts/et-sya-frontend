@@ -71,7 +71,8 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
       await handleUpdateDraftCase(req, logger);
 
       const ValidRedirects = Object.values(PageUrls);
-      res.redirect(returnValidUrl(`${pcqUrl}?${qs}`, ValidRedirects));
+      const reurl = returnValidUrl(pcqUrl, ValidRedirects);
+      res.redirect(`${reurl}?${qs}`);
     } else {
       //skip pcq
       logger.info(`PCQ status is ${healthResp} and PCQ ID is ${pcqId}`);

@@ -23,7 +23,7 @@ describe('PCQGetController', () => {
   test('Should redirect to PCQ if PCQ status is UP and ClaimantPcqId does not exist', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
-    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('/service-endpoint');
     mockedConfig.get.mockReturnValueOnce('SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP');
 
     const userCase = {};
@@ -45,6 +45,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
     await new Promise(process.nextTick);
+    console.log('Redirect calls:', redirectMock.mock.calls);
     expect(redirectMock.mock.calls[0][0]).toContain('/service-endpoint');
   });
 
