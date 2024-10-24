@@ -1,4 +1,6 @@
 import WorkPostCodeEnterController from '../../../main/controllers/WorkPostCodeEnterController';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -28,7 +30,7 @@ describe('Work Postcode Enter Controller', () => {
       const res = mockResponse();
       new WorkPostCodeEnterController().post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -52,7 +54,7 @@ describe('Work Postcode Enter Controller', () => {
       const res = mockResponse();
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -66,7 +68,7 @@ describe('Work Postcode Enter Controller', () => {
       const res = mockResponse();
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -80,7 +82,7 @@ describe('Work Postcode Enter Controller', () => {
       const res = mockResponse();
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(errors);
     });
   });
