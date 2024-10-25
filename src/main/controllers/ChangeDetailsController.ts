@@ -11,6 +11,13 @@ export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
     let redirectUrl;
     const languageParam = setChangeAnswersUrlLanguage(req);
+
+    // Set the i18next cookie with HttpOnly flag
+    res.cookie('i18next', languageParam, {
+      httpOnly: true, // Ensures the cookie is not accessible via JavaScript
+      secure: true, // Ensures the cookie is only sent over HTTPS
+      sameSite: 'strict', // Helps prevent CSRF attacks
+    });
     if (req.query.redirect === 'answers') {
       redirectUrl = req.url.replace(InterceptPaths.ANSWERS_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CHECK_ANSWERS);
