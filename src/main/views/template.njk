@@ -60,7 +60,12 @@
 
   {% if "aat" in currentHost %}
     <!-- Dynatrace RUM Script -->
-      <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/1a4a5be3b17a10d3_complete.js" crossorigin="anonymous"></script>
+      <script
+        type="text/javascript"
+        src="https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/1a4a5be3b17a10d3_complete.js"
+        crossorigin="anonymous"
+        integrity="sha384-aUT3/SyKozbxn10l4zUb60qhHEHkSXypspWXUCM+Eflbwz2Ks54bB6DrYR2YDsCy"
+      > </script>
     <!-- End Dynatrace RUM Script -->
   {% endif %}
 
