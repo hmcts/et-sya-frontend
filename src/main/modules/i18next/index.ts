@@ -14,7 +14,15 @@ export class I18Next {
       resources,
       fallbackLng: 'en',
       supportedLngs: ['en', 'cy'],
-      detection: { order: ['querystring', 'cookie'], caches: ['cookie'] },
+      detection: {
+        order: ['querystring', 'cookie'],
+        caches: ['cookie'],
+        cookieOptions: {
+          httpOnly: true, // Prevents JavaScript access
+          secure: true, // Ensures the cookie is only sent over HTTPS
+          sameSite: 'lax', // Helps protect against CSRF (use 'strict' or 'lax' based on needs)
+        },
+      },
     };
     use(i18nextMiddleware.LanguageDetector).init(options);
   }
