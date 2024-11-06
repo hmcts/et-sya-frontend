@@ -288,8 +288,8 @@ export const PageUrls = {
   TEST_RESPONDENT_1_RESPONDENT_POSTCODE_ENTER: '/respondent/1/respondent-postcode-enter',
   TEST_RESPONDENT_1_NO_ACAS_REASON: '/respondent/1/no-acas-reason',
   TEST_RESPONDENT_1_ACAS_CERT_NUM: '/respondent/1/acas-cert-num',
-  // TEST_ET_PET_ET1_AAT: 'https://et-pet-et1.aat.platform.hmcts.net',
-  TEST_ET_PET_ET1_AAT_APP_NUM: '/application-number',
+  TEST_ET_PET_ET1_AAT: 'https://et-pet-et1.aat.platform.hmcts.net',
+  TEST_ET_PET_ET1_AAT_APP_NUM: 'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number',
   TEST_SERVICE_ENDPOINT: '/service-endpoint',
 } as const;
 

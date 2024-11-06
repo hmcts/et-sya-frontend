@@ -17,7 +17,6 @@ describe('Return To Existing Controller', () => {
     const request = mockRequest({ t });
 
     controller.get(request, response);
-
     expect(response.render).toHaveBeenCalledWith('return-to-claim', expect.anything());
   });
 
@@ -42,8 +41,7 @@ describe('Return To Existing Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(LegacyUrls.ET1_BASE, Object.values(LegacyUrls)));
     expect(req.session.errors).toHaveLength(0);
   });
 

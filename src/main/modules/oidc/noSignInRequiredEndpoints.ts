@@ -15,6 +15,8 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.RETURN_TO_EXISTING,
   PageUrls.ACCESSIBILITY_STATEMENT,
   Urls.INFO,
+  // LegacyUrls.ET1,
+  // LegacyUrls.ET1_BASE,
 ];
 
 export const validateNoSignInEndpoints = (url: string): boolean => {

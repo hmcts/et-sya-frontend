@@ -62,7 +62,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(LegacyUrls.ET1, Object.values(LegacyUrls)));
   });
 
   it('should render same page if errors are present when nothing is selected', () => {
