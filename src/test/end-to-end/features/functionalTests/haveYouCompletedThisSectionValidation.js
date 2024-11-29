@@ -18,7 +18,7 @@ Scenario('No selection is made when completing your details section', async ({ I
   const error_message_actual = (await I.grabTextFrom('#tasklist-check-error')).trim();
   assert.equal(error_message_actual, error_message_expected, 'error message not matching expected');
   authPage.logout();
-}).tag('@RET-BAT');
+}).tag('@RET-wip');
 
 Scenario('No selection is made when completing employment and respondent section', async ({ I }) => {
   I.amOnPage(emp_respondent_test_url);
@@ -31,7 +31,7 @@ Scenario('No selection is made when completing employment and respondent section
   const error_message_actual = (await I.grabTextFrom('#tasklist-check-error')).trim();
   assert.equal(error_message_actual, error_message_expected, 'error message not matching expected');
   authPage.logout();
-}).tag('@RET-BAT');
+}).tag('@RET-wip');
 
 Scenario('No selection is made when completing claim details section', async ({ I }) => {
   I.amOnPage(claim_details_test_url);
@@ -45,4 +45,4 @@ Scenario('No selection is made when completing claim details section', async ({ 
   const error_message_actual = (await I.grabTextFrom('#claim-details-check-error')).trim();
   assert.equal(error_message_actual, error_message_expected, 'error message not matching expected');
   authPage.logout();
-}).tag('@RET-BAT');
+}).tag('@RET-wip');
