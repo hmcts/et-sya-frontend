@@ -14,7 +14,16 @@ export class I18Next {
       resources,
       fallbackLng: 'en',
       supportedLngs: ['en', 'cy'],
-      detection: { order: ['querystring', 'cookie'], caches: ['cookie'] },
+      detection: {
+        order: ['querystring', 'cookie'],
+        caches: ['cookie'],
+        cookieOptions: {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'strict',
+          path: '/',
+        },
+      },
     };
     use(i18nextMiddleware.LanguageDetector).init(options);
   }
