@@ -26,6 +26,10 @@ export class Oidc {
       const languageParam = req.cookies.i18next === languages.WELSH ? languages.WELSH : languages.ENGLISH;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       stateParam = stateParam + '-' + languageParam;
+      res.cookie('i18next', languageParam, {
+        secure: true,
+        sameSite: 'strict',
+      });
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
