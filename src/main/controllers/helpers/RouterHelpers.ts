@@ -54,7 +54,7 @@ export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string
 };
 
 export const validateLanguageParam = (lng: string): boolean => {
-  const validLanguages = [languages.WELSH_URL_PARAMETER, languages.ENGLISH_URL_PARAMETER];
+  const validLanguages = [languages.WELSH, languages.ENGLISH];
   return validLanguages.includes(lng);
 };
 
