@@ -29,6 +29,7 @@ export class Oidc {
       res.cookie('i18next', languageParam, {
         secure: true,
         sameSite: 'strict',
+        httpOnly: true,
       });
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
