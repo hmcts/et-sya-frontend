@@ -59,7 +59,7 @@ export const validateLanguageParam = (lng: string): boolean => {
 };
 
 export const getLanguageParam = (url: string): string => {
-  if (!url || !url.includes('?')) {
+  if (!url?.includes('?')) {
     return languages.ENGLISH_URL_PARAMETER;
   }
   const urlParams = new URLSearchParams(url.split('?')[1]);
@@ -71,7 +71,7 @@ export const getLanguageParam = (url: string): string => {
 };
 
 export const getLanguage = (url: string): string => {
-  if (!url || !url.includes('?')) {
+  if (!url?.includes('?')) {
     return languages.ENGLISH;
   }
   const urlParams = new URLSearchParams(url.split('?')[1]);
