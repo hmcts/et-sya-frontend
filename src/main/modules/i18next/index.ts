@@ -28,9 +28,9 @@ export class I18Next {
       const originalCookie = res.cookie.bind(res);
       res.cookie = (name: string, value: string, options: any = {}) => {
         // Apply default cookie options
-        options.secure = options.secure ?? true; // Secure by default
-        options.httpOnly = options.httpOnly ?? true; // HttpOnly by default
-        options.sameSite = options.sameSite ?? 'strict'; // SameSite=Strict by default
+        options.secure = true; // Secure by default
+        options.httpOnly = true; // HttpOnly by default
+        options.sameSite = 'strict'; // SameSite=Strict by default
         return originalCookie(name, value, options);
       };
       next();
