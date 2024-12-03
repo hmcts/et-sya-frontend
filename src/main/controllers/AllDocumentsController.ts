@@ -47,11 +47,6 @@ export default class AllDocumentsController {
       allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     }
     const allDocsSorted: DocumentTypeItem[] = Array.from(allDocs).sort(compareUploadDates);
-    res.cookie('i18next', languageParam, {
-      secure: true,
-      sameSite: 'strict',
-      httpOnly: true,
-    });
     res.render(TranslationKeys.ALL_DOCUMENTS, {
       ...content,
       translations,

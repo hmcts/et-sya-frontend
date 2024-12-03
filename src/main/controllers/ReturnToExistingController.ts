@@ -65,11 +65,6 @@ export default class ReturnToExistingController {
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     const languageParam = getLanguageParam(req.url);
-    res.cookie('i18next', languageParam, {
-      secure: true,
-      sameSite: 'strict',
-      httpOnly: true,
-    });
     res.render('return-to-claim', {
       ...content,
       startNewClaimUrl: PageUrls.CHECKLIST + languageParam,

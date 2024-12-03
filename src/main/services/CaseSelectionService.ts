@@ -109,11 +109,6 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     req.session.userCase = undefined;
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = PageUrls.CHECKLIST + languageParam;
-    res.cookie('i18next', languageParam, {
-      secure: true,
-      sameSite: 'strict',
-      httpOnly: true,
-    });
     return res.redirect(redirectUrl);
   }
   try {

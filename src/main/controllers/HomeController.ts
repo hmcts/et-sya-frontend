@@ -9,12 +9,6 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 export default class HomeController {
   public get(req: AppRequest, res: Response): void {
     const redirectUrl = setUrlLanguage(req, PageUrls.CHECKLIST);
-    const languageParam = getLanguageParam(req.url);
-    res.cookie('i18next', languageParam, {
-      secure: true,
-      sameSite: 'strict',
-      httpOnly: true,
-    });
     res.render(TranslationKeys.HOME, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.HOME, { returnObjects: true }),
