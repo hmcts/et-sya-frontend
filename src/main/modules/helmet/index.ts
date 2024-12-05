@@ -78,7 +78,7 @@ export class Helmet {
 
     const frameSrc = [self, webChat, webChat_cf];
 
-    const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'", '*.fonts.googleapis.com', '*.tagmanager.google.com'];
+    const styleSrc = [self, '*.fonts.googleapis.com', '*.tagmanager.google.com'];
 
     if (app.locals.developmentMode) {
       connectSrc.push('https://localhost:5000/login');
