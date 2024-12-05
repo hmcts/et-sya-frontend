@@ -1,5 +1,6 @@
 import ClaimTypeDiscriminationController from '../../../main/controllers/ClaimTypeDiscriminationController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -25,7 +26,7 @@ describe('Claim Type Discrimination Controller', () => {
 
       const expectedErrors = [{ propertyName: 'claimTypeDiscrimination', errorType: 'required' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
 

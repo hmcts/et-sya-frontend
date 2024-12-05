@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.RETURN_TO_EXISTING}`, () => {
@@ -20,7 +20,7 @@ describe(`on POST ${PageUrls.RETURN_TO_EXISTING}`, () => {
       .send({ returnToExisting: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('https://et-pet-et1.aat.platform.hmcts.net');
+        expect(res.header['location']).toStrictEqual(LegacyUrls.ET1_BASE);
       });
   });
 

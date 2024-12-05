@@ -1,5 +1,6 @@
 import SexAndTitleController from '../../../main/controllers/SexAndTitleController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { Sex } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
@@ -30,7 +31,7 @@ describe('Sex and Title Controller', () => {
 
       const expectedErrors = [{ propertyName: 'preferredTitle', errorType: 'numberError' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -46,7 +47,7 @@ describe('Sex and Title Controller', () => {
 
       const expectedErrors = [{ propertyName: 'preferredTitle', errorType: 'lengthError' }];
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
       expect(req.session.errors).toEqual(expectedErrors);
     });
   });

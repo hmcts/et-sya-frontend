@@ -1,5 +1,5 @@
 import ReturnToExistingController from '../../../main/controllers/ReturnToExistingController';
-import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
+import { getLanguageParam, returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -17,7 +17,6 @@ describe('Return To Existing Controller', () => {
     const request = mockRequest({ t });
 
     controller.get(request, response);
-
     expect(response.render).toHaveBeenCalledWith('return-to-claim', expect.anything());
   });
 
@@ -30,7 +29,7 @@ describe('Return To Existing Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(req.path, Object.values(PageUrls)));
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -42,8 +41,7 @@ describe('Return To Existing Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(LegacyUrls.ET1_BASE, Object.values(LegacyUrls)));
     expect(req.session.errors).toHaveLength(0);
   });
 

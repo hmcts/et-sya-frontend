@@ -1,4 +1,5 @@
 import WorkAddressController from '../../../main/controllers/WorkAddressController';
+import { returnValidUrl } from '../../../main/controllers/helpers/RouterHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -95,7 +96,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(undefined, Object.values(PageUrls)));
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
   it('should redirect to undefined when save as draft not selected and no answer', () => {
@@ -109,7 +110,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(returnValidUrl(undefined, Object.values(PageUrls)));
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
   it('should throw error, when session errors exists and unable to save session', () => {

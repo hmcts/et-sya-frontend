@@ -1,6 +1,7 @@
 import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
+import { returnValidUrl } from '../../main/controllers/helpers/RouterHelpers';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -20,7 +21,7 @@ describe(`GET ${PageUrls.ACAS_CERT_NUM}`, () => {
           ],
         },
       })
-    ).get(pageUrl);
+    ).get(returnValidUrl(pageUrl, Object.values(PageUrls)));
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
