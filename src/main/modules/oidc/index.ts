@@ -26,6 +26,12 @@ export class Oidc {
       const languageParam = req.cookies.i18next === languages.WELSH ? languages.WELSH : languages.ENGLISH;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       stateParam = stateParam + '-' + languageParam;
+
+      // Set the i18next cookie with HttpOnly flag
+      res.cookie('i18next', languageParam, {
+        secure: true, // Ensures the cookie is only sent over HTTPS
+        sameSite: 'strict', // Helps prevent CSRF attacks
+      });
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
