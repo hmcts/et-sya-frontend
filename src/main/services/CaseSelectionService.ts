@@ -5,6 +5,7 @@ import {
   translateOverallStatus,
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
@@ -106,9 +107,8 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
     req.session.userCase = undefined;
-    const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-      ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
-      : PageUrls.CHECKLIST + languages.ENGLISH_URL_PARAMETER;
+    const languageParam = getLanguageParam(req.url);
+    const redirectUrl = PageUrls.CHECKLIST + languageParam;
     return res.redirect(redirectUrl);
   }
   try {
