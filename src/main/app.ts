@@ -40,6 +40,20 @@ new Helmet(config.get('security'), [
 ]).enableFor(app);
 
 new I18Next().enableFor(app);
+
+// Define and apply the middleware to set default cookie options
+app.use((req, res, next) => {
+  const originalCookie = res.cookie.bind(res);
+  res.cookie = (name: string, value: string, options: any = {}) => {
+    // Apply default cookie options
+    options.secure = true; // Secure by default
+    options.httpOnly = true; // HttpOnly by default
+    options.sameSite = 'strict'; // SameSite=Strict by default
+    return originalCookie(name, value, options);
+  };
+  next();
+});
+
 new Session().enableFor(app);
 new HealthCheck().enableFor(app);
 app.enable('trust proxy');

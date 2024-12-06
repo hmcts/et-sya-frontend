@@ -25,17 +25,6 @@ export class I18Next {
   public enableFor(app: express.Express): void {
     app.use(i18nextMiddleware.handle(i18next));
     app.use((req: Request, res: Response, next: NextFunction) => {
-      const originalCookie = res.cookie.bind(res);
-      res.cookie = (name: string, value: string, options: any = {}) => {
-        // Apply default cookie options
-        options.secure = true; // Secure by default
-        options.httpOnly = true; // HttpOnly by default
-        options.sameSite = 'strict'; // SameSite=Strict by default
-        return originalCookie(name, value, options);
-      };
-      next();
-    });
-    app.use((req: Request, res: Response, next: NextFunction) => {
       Object.assign(res.locals, req.t('template', { returnObjects: true }));
       next();
     });
