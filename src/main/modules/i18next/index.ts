@@ -17,6 +17,8 @@ export class I18Next {
       detection: {
         order: ['querystring', 'cookie'],
         caches: ['cookie'],
+        httpOnly: true,
+        secure: true,
       },
     };
     use(i18nextMiddleware.LanguageDetector).init(options);
