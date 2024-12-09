@@ -70,18 +70,6 @@ export const getLanguageParam = (url: string): string => {
   return languages.ENGLISH_URL_PARAMETER;
 };
 
-export const getLanguage = (url: string): string => {
-  if (!url?.includes('?')) {
-    return languages.ENGLISH;
-  }
-  const urlParams = new URLSearchParams(url.split('?')[1]);
-  const lng = urlParams.get('lng');
-  if (lng && validateLanguageParam(lng)) {
-    return lng === 'cy' ? languages.WELSH : languages.ENGLISH;
-  }
-  return languages.ENGLISH;
-};
-
 export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger: LoggerInstance): string => {
   const parsedUrl = getParsedUrl(redirectUrl);
   if (parsedUrl.host === null) {
