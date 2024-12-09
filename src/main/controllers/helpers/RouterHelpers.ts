@@ -53,9 +53,19 @@ export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string
   return ErrorPages.NOT_FOUND;
 };
 
+export const validateLanguageParam = (lng: string): boolean => {
+  const validLanguages = [languages.WELSH, languages.ENGLISH];
+  return validLanguages.includes(lng);
+};
+
 export const getLanguageParam = (url: string): string => {
-  if (url?.includes('lng=cy')) {
-    return languages.WELSH_URL_PARAMETER;
+  if (!url?.includes('?')) {
+    return languages.ENGLISH_URL_PARAMETER;
+  }
+  const urlParams = new URLSearchParams(url.split('?')[1]);
+  const lng = urlParams.get('lng');
+  if (lng && validateLanguageParam(lng)) {
+    return lng === 'cy' ? languages.WELSH_URL_PARAMETER : languages.ENGLISH_URL_PARAMETER;
   }
   return languages.ENGLISH_URL_PARAMETER;
 };
