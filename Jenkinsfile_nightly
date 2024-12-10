@@ -5,7 +5,7 @@ properties([
 pipelineTriggers([cron('H 8 * * 1-5')]),
 parameters([
         string(name: 'TEST_URL', defaultValue: 'https://et-sya.aat.platform.hmcts.net', description: 'The URL you want to run tests against'),
-        string(name: 'ZAP_URL_EXCLUSIONS', defaultValue: "-config globalexcludeurl.url_list.url\\(1\\).regex=\\'.*/assets.*\\' -config globalexcludeurl.url_list.url\\(2\\).regex=\\'.*/robots\\.txt${'$'}\\' -config globalexcludeurl.url_list.url\\(3\\).regex=\\'.*/sitemap\\.xml${'$'}\\' -config globalexcludeurl.url_list.url\\(4\\).regex=\\'https://et-sya-pr-1806\\.preview\\.platform\\.hmcts\\.net/assets\\'")
+        string(name: 'ZAP_URL_EXCLUSIONS', defaultValue: "-config globalexcludeurl.url_list.url\\(1\\).regex=\\'.*/assets.*\\' -config globalexcludeurl.url_list.url\\(2\\).regex=\\'.*/robots\\.txt${'$'}\\' -config globalexcludeurl.url_list.url\\(3\\).regex=\\'.*/sitemap\\.xml${'$'}\\'")
     ])
 ])
 
