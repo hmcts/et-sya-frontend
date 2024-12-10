@@ -74,7 +74,7 @@
     "express": "^4.20.0",
     "express-rate-limit": "^7.0.0",
     "express-session": "^1.17.3",
-    "govuk-frontend": "^5.7.1",
+    "govuk-frontend": "^4.6.0",
     "helmet": "^8.0.0",
     "i18next": "^24.0.5",
     "i18next-http-middleware": "^3.3.0",
@@ -178,7 +178,8 @@
     "ws": "^8.17.1",
     "ip": "^2.0.1",
     "send": "^0.19.0",
-    "cookie": "^1.0.0"
+    "cookie": "^1.0.0",
+    "lodash": "^4.17.21"
   },
   "packageManager": "yarn@3.8.7"
 }
