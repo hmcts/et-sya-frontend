@@ -17,11 +17,7 @@ export class I18Next {
       detection: {
         order: ['querystring', 'cookie'],
         caches: ['cookie'],
-        cookieOptions: {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'strict',
-        },
+        cookieSecure: true,
       },
     };
     use(i18nextMiddleware.LanguageDetector).init(options);
