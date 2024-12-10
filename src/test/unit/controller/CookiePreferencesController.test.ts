@@ -18,4 +18,13 @@ describe('Cookie preferences controller', () => {
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COOKIE_PREFERENCES, expect.anything());
   });
+
+  it('should render the cookie preferences page cy', () => {
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.url = '/testPageUrl?lng=cy';
+    cookiePreferencesController.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.COOKIE_PREFERENCES, expect.anything());
+  });
 });
