@@ -30,6 +30,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
+echo "Starting the nightly pipeline for ${product} - ${component}. These are the urlExclusions: ${urlExclusions}"
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
