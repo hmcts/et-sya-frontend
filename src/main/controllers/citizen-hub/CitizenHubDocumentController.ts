@@ -59,10 +59,10 @@ export default class CitizenHubDocumentController {
     }
 
     const translations: { [key: string]: string } = {
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(req?.params?.documentType, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
+      ...(req.t(TranslationKeys.COMMON, { returnObjects: true }) as { [key: string]: string }),
+      ...(req.t(req?.params?.documentType, { returnObjects: true }) as { [key: string]: string }),
+      ...(req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }) as { [key: string]: string }),
+      ...(req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }) as { [key: string]: string }),
     };
 
     await handleUpdateHubLinksStatuses(req, logger);

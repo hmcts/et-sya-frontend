@@ -9,7 +9,7 @@ export interface HelmetConfig {
 const dynatrace = '*.dynatrace.com';
 const googleAnalyticsDomain1 = '*.google-analytics.com';
 const googleAnalyticsDomain2 = '*.analytics.google.com';
-const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
+const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com'];
 const azureBlob = '*.blob.core.windows.net';
 const webChat = 'https://vcc-eu4.8x8.com';
 const webChat_cf = 'https://vcc-eu4-cf.8x8.com';
@@ -78,7 +78,7 @@ export class Helmet {
 
     const frameSrc = [self, webChat, webChat_cf];
 
-    const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'", '*.fonts.googleapis.com', '*.tagmanager.google.com'];
+    const styleSrc = [self, '*.fonts.googleapis.com', '*.tagmanager.google.com'];
 
     if (app.locals.developmentMode) {
       connectSrc.push('https://localhost:5000/login');
