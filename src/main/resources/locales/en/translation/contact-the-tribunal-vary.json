@@ -21,11 +21,11 @@
         "the date the tribunal issued the order",
         "explain which part of the order you want to vary or revoke",
         "how to vary the order. For example, you might say that a case management order asked for an impact statement but you need more time to submit it",
-        "why it is in the interests of justice to vary or revoke this order. Tell us any relevant changes of circumstance since the order was made and consider the requirements of the ‘overriding objective’ in Rule 2 of the Employment Tribunal Rules of Procedure"
+        "why it is in the interests of justice to vary or revoke this order. Tell us any relevant changes of circumstance since the order was made and consider the requirements of the ‘overriding objective’ in Rule 3 of the Employment Tribunal Rules of Procedure"
       ]
     },
 
-    { "type": "bold-paragraph", "text": "Rule 2 of the Employment Tribunal Rules of Procedure" },
+    { "type": "bold-paragraph", "text": "Rule 3 of the Employment Tribunal Rules of Procedure" },
     {
       "type": "paragraph",
       "text": "The overriding objective of the Rules is to enable employment tribunals to deal with cases fairly and justly."
