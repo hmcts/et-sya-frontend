@@ -4,7 +4,7 @@ module.exports = {
   processPreLoginPagesForTheDraftApplication() {
     this.startDraftApplication();
     this.processBeforeYourContinuePage();
-    this.processWhatsThePostCodeYouHaveWorkedForPage();
+    this.processWhereYouCanMakeYourClaimPage();
     this.processAreYouMakingTheClaimForYourselfPage();
     this.processAreYouMakingTheClaimOnYourOwnPage();
     this.processDoYouHaveAnACASEarlyConciliation();
@@ -25,12 +25,6 @@ module.exports = {
     I.click('Parhau');
   },
 
-  processWhatsThePostCodeYouHaveWorkedForPage() {
-    I.waitForText('Beth yw cod post', 30);
-    I.fillField('#workPostcode', 'LS9 6EP');
-    I.click('Parhau');
-  },
-
   processAreYouMakingTheClaimForYourselfPage() {
     I.waitForText('Cynrychiolydd yw rhywun sy’n gallu gweithredu ar eich rhan i gwblhau’r', 30);
     I.checkOption('input[id=lip-or-representative]');
@@ -40,6 +34,12 @@ module.exports = {
   processAreYouMakingTheClaimOnYourOwnPage() {
     I.waitForText('Gallwch wneud hawliad i dribiwnlys cyflogaeth ar eich pen eich hun os mai', 30);
     I.checkOption('input[id=single-or-multiple-claim]');
+    I.click('Parhau');
+  },
+
+  processWhereYouCanMakeYourClaimPage() {
+    I.waitForText('Ble gallwch wneud eich hawliad', 30);
+    I.checkOption('input[id=claim-jurisdiction]');
     I.click('Parhau');
   },
 

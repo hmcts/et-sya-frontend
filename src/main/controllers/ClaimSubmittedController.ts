@@ -16,6 +16,11 @@ export default class ClaimSubmittedController {
     const pageTranslations: AnyRecord = {
       ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
     };
+
+    // Set the i18next cookie with HttpOnly flag
+    res.cookie('i18next', lang, {
+      secure: true, // Ensures the cookie is only sent over HTTPS
+    });
     res.render(TranslationKeys.CLAIM_SUBMITTED, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),

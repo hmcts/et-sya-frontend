@@ -1,6 +1,7 @@
 import ReturnToExistingController from '../../../main/controllers/ReturnToExistingController';
+import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
-import { LegacyUrls } from '../../../main/definitions/constants';
+import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -44,5 +45,20 @@ describe('Return To Existing Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
     expect(req.session.errors).toHaveLength(0);
+  });
+
+  it('should pass startNewClaimUrl to the view', () => {
+    const controller = new ReturnToExistingController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+
+    controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(
+      'return-to-claim',
+      expect.objectContaining({
+        startNewClaimUrl: PageUrls.CHECKLIST + getLanguageParam(request.url),
+      })
+    );
   });
 });

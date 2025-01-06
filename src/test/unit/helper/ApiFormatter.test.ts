@@ -52,7 +52,7 @@ import { mockedApiData } from '../mocks/mockedApiData';
 describe('Should return data in api format', () => {
   it('should transform triage and Idam credentials to api format', () => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map<CaseDataCacheKey, string>([
-      [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+      [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
       [CaseDataCacheKey.CLAIMANT_REPRESENTED, 'Yes'],
       [CaseDataCacheKey.CASE_TYPE, 'Single'],
       [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(['discrimination', 'payRelated'])],
@@ -329,6 +329,7 @@ describe('Format Case Data to Frontend Model', () => {
       hubLinksStatuses: undefined,
       managingOffice: undefined,
       et1SubmittedForm: undefined,
+      et3DueDate: undefined,
       tribunalCorrespondenceEmail: undefined,
       tribunalCorrespondenceTelephone: undefined,
       acknowledgementOfClaimLetterDetail: undefined,

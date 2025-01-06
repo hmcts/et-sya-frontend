@@ -12,7 +12,7 @@ import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../
 import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
-  post_code: 'SW1A 1AA',
+  case_type_id: 'ET_EnglandWales',
   case_data: {
     caseType: 'Single',
     typesOfClaim: ['discrimination', 'payRelated'],
@@ -23,7 +23,7 @@ export const mockEt1DataModel = {
       validNoAcasReason: 'Reason',
       caseType: 'Single',
       claimantRepresentedQuestion: 'Yes',
-      postcode: 'SW1A 1AA',
+      claimJurisdiction: 'ET_EnglandWales',
       typesOfClaim: ['discrimination', 'payRelated'],
     },
     caseSource: 'ET1 Online',
