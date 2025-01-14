@@ -161,7 +161,7 @@
   },
   "resolutions": {
     "axios": "^1.7.4",
-    "@opentelemetry/instrumentation": "^0.54.0",
+    "@opentelemetry/instrumentation": "^0.57.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",
@@ -179,7 +179,8 @@
     "ip": "^2.0.1",
     "send": "^0.19.0",
     "cookie": "^1.0.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "nanoid": "^3.3.8"
   },
   "packageManager": "yarn@3.8.7"
 }
