@@ -27,6 +27,7 @@ export const getUserApplications = (
   const apps: ApplicationTableRecord[] = [];
 
   for (const uCase of userCases) {
+    logger.info('CaseSelectionService: getUserApplications: processing case id: ' + uCase.id);
     const rec: ApplicationTableRecord = {
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
@@ -35,6 +36,7 @@ export const getUserApplications = (
     };
     translateTypesOfClaims(rec, translations);
     apps.push(rec);
+    logger.info('ApplicationTableRecord: ' + JSON.stringify(rec));
   }
   return apps;
 };
@@ -92,6 +94,7 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
   try {
     const cases = await getCaseApi(req.session.user?.accessToken).getUserCases();
     if (cases.data.length === 0) {
+      logger.info(`No cases found for ${req.session.user?.id}`);
       return [];
     } else {
       logger.info(`Retrieving cases for ${req.session.user?.id}`);

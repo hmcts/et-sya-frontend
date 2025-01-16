@@ -1,3 +1,5 @@
+import logger from '@pact-foundation/pact/src/common/logger';
+
 import { isDateEmpty } from '../components/form/dateValidators';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
@@ -80,6 +82,7 @@ export function toApiFormatCreate(
 }
 
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
+  logger.info('Formatting case id ' + fromApiCaseData.id);
   return {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
