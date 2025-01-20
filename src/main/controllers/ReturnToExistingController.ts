@@ -64,9 +64,10 @@ export default class ReturnToExistingController {
       TranslationKeys.RETURN_TO_EXISTING,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
+    const languageParam = getLanguageParam(req.url);
     res.render('return-to-claim', {
       ...content,
-      startNewClaimUrl: PageUrls.CHECKLIST + getLanguageParam(req.url),
+      startNewClaimUrl: PageUrls.CHECKLIST + languageParam,
     });
   };
 }

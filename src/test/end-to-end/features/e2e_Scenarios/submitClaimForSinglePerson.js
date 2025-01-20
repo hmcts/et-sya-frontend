@@ -64,5 +64,5 @@ Scenario('Return to Existing Claim Route', async ({ I }) => {
   await I.claimantApplications();
   await I.citizenHub();
 })
-  .tag('@RET-BAT')
+  .tag('@RET-wip')
   .retry(2);
