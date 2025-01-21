@@ -7911,7 +7911,7 @@ __metadata:
     helmet: ^8.0.0
     html-webpack-plugin: ^5.5.1
     husky: ^9.0.0
-    i18next: ^24.1.0
+    i18next: ^24.1.2
     i18next-http-middleware: ^3.3.0
     jest: ^29.6.2
     jest-environment-jsdom: ^29.5.0
@@ -9679,9 +9679,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^24.1.0":
-  version: 24.1.2
-  resolution: "i18next@npm:24.1.2"
+"i18next@npm:^24.1.2":
+  version: 24.2.1
+  resolution: "i18next@npm:24.2.1"
   dependencies:
     "@babel/runtime": ^7.23.2
   peerDependencies:
@@ -9689,7 +9689,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 3ab5a2498196c50503d06d2c9772a40f6152057bddcc3d51a478e4c6b28fff32f2a7f61740557b44a178e907a67210f0f0b476727e0d15c25a144c6ef49146f2
+  checksum: 6c4b0e5829381fb66f360ec1827db4181335ecb87529710cca3175eaebbbc037f919eb230f07d09a62a00d7bd8b9912c32123fb8a168ca275b8ca916048c763f
   languageName: node
   linkType: hard
 
