@@ -6,6 +6,8 @@ pipelineTriggers([cron('H 8 * * 1-5')]),
 parameters([
         string(name: 'TEST_URL', defaultValue: 'https://et-sya.aat.platform.hmcts.net', description: 'The URL you want to run tests against'),
         string(name: 'ZAP_URL_EXCLUSIONS', defaultValue: "-config globalexcludeurl.url_list.url\\(1\\).regex='.*/assets.*' -config globalexcludeurl.url_list.url\\(2\\).regex='.*/cookies.*' -config globalexcludeurl.url_list.url\\(3\\).regex='.*/main.[a-fA-F0-9]{20}.js' -config globalexcludeurl.url_list.url\\(4\\).regex='.*/main.[a-fA-F0-9]{20}.css' -config globalexcludeurl.url_list.url\\(5\\).regex='.*/sitemap.xml(\\?lng=en)?' -config globalexcludeurl.url_list.url\\(6\\).regex='.*/robots.txt' -config globalexcludeurl.url_list.url\\(7\\).regex='.*/accessibility.*' -config rules.cookie.ignorelist=_ga,_gid,_gat,dtCookie,dtLatC,dtPC,dtSa,rxVisitor,rxvt,i18next,et-sya-session")
+        string(name: 'ALERT_FILTERS', defaultValue: "-config alertfilter.filters.alertFilter(0).ruleId=90027 -config alertfilter.filters.alertFilter(0).newLevel=IGNORE")
+        string(name: 'CUSTOM_COOKIES')
     ])
 ])
 
@@ -15,6 +17,8 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 def urlExclusions = params.ZAP_URL_EXCLUSIONS
+def alertFilters = params.ALERT_FILTERS
+def customCookies = params.CUSTOM_COOKIES
 def secrets = [
     'et-aat': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
