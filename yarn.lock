@@ -2368,31 +2368,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.12.0":
-  version: 2.12.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.12.0"
-  checksum: 5e5a2d23ff53ab854e2d9ce07ff80e8668e6d7f38b7849fb6e38fb8ad1b43ea65ade00a124e81ade78261687e5ff249937415216eb5958cb036d0b034bc49a8d
+"@launchdarkly/js-sdk-common@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.13.0"
+  checksum: e1d2275085063c0cc81f5e7b68c1450067d1cdb1b3de9ca5b03d6f8683e6be67061fe544cd26fac1603d5abcacd0362a41562c3a37b66eb7fd16aa64d66b7f42
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.10.0":
-  version: 2.10.0
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.10.0"
+"@launchdarkly/js-server-sdk-common@npm:2.11.0":
+  version: 2.11.0
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.11.0"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.12.0
+    "@launchdarkly/js-sdk-common": 2.13.0
     semver: 7.5.4
-  checksum: 6819eb8fb2ed95c6618ff03ae14fc8038e24ec2d306c71d04c23b50fceb00cc208df0eb0de27bd0ea6dbb1707caf912424a33ce43b5e3092d7ed472ad2114ab3
+  checksum: 4941fd2cf52fce31eb7bfdc6df67e54e12657db43fb14bbe48e6891796cd2a2354da00352c9e109b7966be2b84b699744fceea1790d6b0e59aad039dcfd1db4d
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.7.2
-  resolution: "@launchdarkly/node-server-sdk@npm:9.7.2"
+  version: 9.7.3
+  resolution: "@launchdarkly/node-server-sdk@npm:9.7.3"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.10.0
+    "@launchdarkly/js-server-sdk-common": 2.11.0
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.0.3
-  checksum: 87fb796aea4846942675feaf8fdd6d4bbd4459b05a0354e09331ae8578fcd8e914ec138dac430f87903a572d2373f3b7ba01229edc116e72468bff1b478c6bec
+  checksum: 7f46e0e748c71b14154333530f1e7f8a43c3db2fd8208fc3d4fed5dec2efef2bdb69ec33a3969912488e84d7dcf12243f8a7796d9e4052052620b8dbb9c4da08
   languageName: node
   linkType: hard
 
