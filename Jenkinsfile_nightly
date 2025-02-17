@@ -11,7 +11,7 @@ parameters([
     ])
 ])
 
-@Library("Infrastructure")
+@Library("Infrastructure@DTSPO-23006-add-alert-filters")
 
 def type = "nodejs"
 def product = "et"
@@ -37,9 +37,9 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-    //enableSecurityScan(
-       //urlExclusions: urlExclusions
-    //)
+    enableSecurityScan(
+       urlExclusions: urlExclusions
+    )
     enableFullFunctionalTest(int timeout=300)
     enableCrossBrowserTest()
     enableFortifyScan('et-aat')
