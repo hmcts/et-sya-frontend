@@ -11,7 +11,7 @@ parameters([
     ])
 ])
 
-@Library("Infrastructure@DTSPO-23006-add-alert-filters")
+@Library("Infrastructure")
 
 def type = "nodejs"
 def product = "et"
