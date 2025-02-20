@@ -1,0 +1,35 @@
+{
+  "title": "[W]Preference for judge or panel",
+  "caseNumber": "[W]Case Number",
+  "p1": "[W]You can have your case heard by:",
+  "hearingPanelBullet1": "[W]A judge; or",
+  "hearingPanelBullet2": "[W]A judge with two non-legal members, known as a 'panel'.",
+  "whatIsAPanel": {
+    "summary": "[W]What is a panel?",
+    "p1": "[W]Non-legal members are lay people appointed because of their particular experience in the workplace as either workers or managers. A panel will consist of a judge, a member with worker or union experience, and a member with management experience. Each has an equal say in the decision.",
+    "p2": "[W]A judge will decide whether your case is heard by a judge or by a panel. When making this decision, the judge will consider whether the case involves the sort of legal or factual problem where the experience of the non-legal members may help the tribunal reach its decision."
+  },
+  "presidentialGuidance": {
+    "summary": "[W]Presidential Guidance explains the types of cases where this experience may help.",
+    "link1": "[W]Practice Directions and Guidance for Employment Tribunals(England and Wales).",
+    "link2": "[W]Directions and Guidance for Employment Tribunal(Scotland)."
+  },
+  "p2": "[W]You have an opportunity to say if you would like your case heard by a judge or a panel. The judge will then consider your preference.",
+  "p3": "[W]If you express a preference, you will be asked to give reasons.",
+  "hearingPanelPreference": {
+    "question": "[W]How do you prefer to have your case heard? (Optional)",
+    "noPreference": "[W]I have no preference",
+    "judge": "[W]I prefer my case to be heard by a judge",
+    "panel": "[W]I prefer my case to be heard by a panel including non-legal members",
+    "judgeReason": "[W]Give reason",
+    "panelReason": "[W]Give reason"
+  },
+  "errors": {
+    "hearingPanelPreferenceReasonJudge": {
+      "required": "[W]Give a reason for selecting judge"
+    },
+    "hearingPanelPreferenceReasonPanel": {
+      "required": "[W]Give a reason for selecting panel"
+    }
+  }
+}

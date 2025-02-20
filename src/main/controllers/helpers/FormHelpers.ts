@@ -1,6 +1,6 @@
 import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
+import { CaseWithId, HearingPanelPreference, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
@@ -99,6 +99,14 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
   }
   if (formData.linkedCases === YesOrNo.NO) {
     formData.linkedCasesDetail = undefined;
+  }
+  if (formData.hearingPanelPreference === HearingPanelPreference.JUDGE) {
+    formData.hearingPanelPreferenceReasonPanel = undefined;
+  } else if (formData.hearingPanelPreference === HearingPanelPreference.PANEL) {
+    formData.hearingPanelPreferenceReasonJudge = undefined;
+  } else if (formData.hearingPanelPreference === HearingPanelPreference.NO_PREFERENCE) {
+    formData.hearingPanelPreferenceReasonJudge = undefined;
+    formData.hearingPanelPreferenceReasonPanel = undefined;
   }
 };
 

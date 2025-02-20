@@ -3,6 +3,7 @@ import {
   CaseWithId,
   EmailOrPost,
   EnglishOrWelsh,
+  HearingPanelPreference,
   HearingPreference,
   Sex,
   YesOrNo,
@@ -155,6 +156,40 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         translations.personalDetails.takePartInHearing
       )
     ),
+    addSummaryRow(
+      translations.personalDetails.hearingPanelPreference,
+      userCase.hearingPanelPreference === HearingPanelPreference.NO_PREFERENCE
+        ? translations.personalDetails.noPreference
+        : userCase.hearingPanelPreference === HearingPanelPreference.JUDGE
+        ? translations.personalDetails.judge
+        : userCase.hearingPanelPreference === HearingPanelPreference.PANEL
+        ? translations.personalDetails.panel
+        : '',
+      createChangeAction(
+        PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.hearingPanelPreference
+      )
+    )
+  );
+
+  if (userCase.hearingPanelPreference && userCase.hearingPanelPreference !== HearingPanelPreference.NO_PREFERENCE) {
+    rows.push(
+      addSummaryRow(
+        translations.personalDetails.hearingPanelPreferenceReason,
+        userCase.hearingPanelPreference === HearingPanelPreference.JUDGE
+          ? userCase.hearingPanelPreferenceReasonJudge
+          : userCase.hearingPanelPreferenceReasonPanel,
+        createChangeAction(
+          PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.hearingPanelPreferenceReason
+        )
+      )
+    );
+  }
+
+  rows.push(
     addSummaryRow(
       translations.personalDetails.disability,
       userCase.reasonableAdjustments === YesOrNo.YES
