@@ -31,6 +31,23 @@ describe('Hearing Panel Preference Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
+  it('should clear session data if clearSelection is triggered', () => {
+    const controller = new HearingPanelPreferenceController();
+    const body = {
+      hearingPanelPreference: HearingPanelPreference.JUDGE,
+      hearingPanelPreferenceReasonJudge: 'Test comment',
+    };
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.hearingPanelPreference).toStrictEqual(undefined);
+    expect(request.session.userCase.hearingPanelPreferenceReasonJudge).toStrictEqual(undefined);
+    expect(request.session.userCase.hearingPanelPreferenceReasonPanel).toStrictEqual(undefined);
+  });
+
   it('should add the hearing panel preference form value to the userCase', async () => {
     const body = {
       hearingPanelPreference: HearingPanelPreference.JUDGE,
@@ -47,6 +64,27 @@ describe('Hearing Panel Preference Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       hearingPanelPreference: 'Judge',
+      hearingPanelPreferenceReasonPanel: undefined,
+    });
+  });
+
+  it('should add the hearing panel preference form value to the userCase and have both reasons set to undefined', async () => {
+    const body = {
+      hearingPanelPreference: HearingPanelPreference.NO_PREFERENCE,
+    };
+
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
+    const controller = new HearingPanelPreferenceController();
+
+    const req = mockRequestEmpty({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({
+      hearingPanelPreference: 'No preference',
+      hearingPanelPreferenceReasonJudge: undefined,
       hearingPanelPreferenceReasonPanel: undefined,
     });
   });
