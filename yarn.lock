@@ -4343,6 +4343,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn@npm:^8.14.0":
+  version: 8.14.0
+  resolution: "acorn@npm:8.14.0"
+  bin:
+    acorn: bin/acorn
+  checksum: 8755074ba55fff94e84e81c72f1013c2d9c78e973c31231c8ae505a5f966859baf654bddd75046bffd73ce816b149298977fff5077a3033dedba0ae2aad152d4
+  languageName: node
+  linkType: hard
+
 "acorn@npm:^8.4.1, acorn@npm:^8.7.1, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.10.0
   resolution: "acorn@npm:8.10.0"
@@ -9781,9 +9790,9 @@ __metadata:
   linkType: hard
 
 "i18next-http-middleware@npm:^3.3.0":
-  version: 3.6.0
-  resolution: "i18next-http-middleware@npm:3.6.0"
-  checksum: d11e0ca42a250d85abc834be6ecb8f0396756b6cb5a002084a2b657eb1d704976f5f6d4758d6bfbcf66840c1e351f07f6f22935bbf96fc0781f3b43f51953ac5
+  version: 3.7.1
+  resolution: "i18next-http-middleware@npm:3.7.1"
+  checksum: 2927abbfc34404c6eba45e76afa76905288bcb5ce4d585df75067703d027fab63dc75f9d6b7500ed339bba579fb8c19cec5e13e9aac02d1f033dcc2b4aa56266
   languageName: node
   linkType: hard
 
@@ -9881,14 +9890,14 @@ __metadata:
   linkType: hard
 
 "import-in-the-middle@npm:^1.4.2":
-  version: 1.12.0
-  resolution: "import-in-the-middle@npm:1.12.0"
+  version: 1.13.0
+  resolution: "import-in-the-middle@npm:1.13.0"
   dependencies:
-    acorn: ^8.8.2
+    acorn: ^8.14.0
     acorn-import-attributes: ^1.9.5
     cjs-module-lexer: ^1.2.2
     module-details-from-path: ^1.0.3
-  checksum: 68ac204fceba98e318977623391ef1ee9925f123e2f381266206859f91f9337da5bd4b421857c88ca1b406643f93ef68cdce8d02ef6202077124bc2f4841eae4
+  checksum: f7a62d6fa145ebd92bb3e5ff8ad3492ddab62d4f7bc27f8139bd2d6e229e4ed7bc354352bac642a4ee26e9aebb062b7126aacd880a9a0d2ef02d7d965a75c551
   languageName: node
   linkType: hard
 
