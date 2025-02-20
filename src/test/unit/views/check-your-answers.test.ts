@@ -318,8 +318,8 @@ describe('Check your answers confirmation page - New Job with start date', () =>
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[25].innerHTML).contains('New job start date', '21-04-2020');
+    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[26].innerHTML).contains('New job start date', '21-04-2020');
   });
 });
 
@@ -359,7 +359,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[25].innerHTML).contains('New job start date', '');
+    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[26].innerHTML).contains('New job start date', '');
   });
 });
