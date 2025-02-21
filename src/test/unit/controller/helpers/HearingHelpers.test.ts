@@ -1,4 +1,8 @@
-import { isHearingExist } from '../../../../main/controllers/helpers/HearingHelpers';
+import { getHearingCollection, isHearingExist } from '../../../../main/controllers/helpers/HearingHelpers';
+import { Parties } from '../../../../main/definitions/constants';
+import { HearingDetails } from '../../../../main/definitions/hearingDetails';
+import { HubLinkStatus } from '../../../../main/definitions/hub';
+import citizenHubTranslation from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import { mockHearingCollection } from '../../mocks/mockHearing';
 
 describe('Hearing Helpers - isHearingExist', () => {
@@ -10,5 +14,79 @@ describe('Hearing Helpers - isHearingExist', () => {
   it('should return undefined if no hearing', () => {
     const expected = isHearingExist(undefined);
     expect(expected).toEqual(undefined);
+  });
+});
+
+describe('Hearing Helpers - getHearingCollection', () => {
+  const translations = { ...citizenHubTranslation };
+
+  it('should render the hearing details page', () => {
+    const sendNotificationCollection = [
+      {
+        id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+        value: {
+          sendNotificationNotify: Parties.BOTH_PARTIES,
+          sendNotificationSubject: ['Hearing'],
+          sendNotificationSelectHearing: {
+            selectedCode: '123abc',
+          },
+          notificationState: HubLinkStatus.VIEWED,
+        },
+      },
+    ];
+    const actual = getHearingCollection(mockHearingCollection, sendNotificationCollection, translations);
+    const expected: HearingDetails[] = [
+      {
+        hearingNumber: '3333',
+        Hearing_type: 'Hearing',
+        hearingDateRows: [
+          {
+            date: new Date('2028-07-04T14:00:00.000'),
+            status: 'Listed',
+            venue: 'Field House',
+          },
+        ],
+        notifications: [
+          {
+            displayStatus: 'Viewed',
+            id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+            redirectUrl: '/tribunal-order-or-request-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+            statusColor: '--green',
+            value: {
+              notificationState: HubLinkStatus.VIEWED,
+              sendNotificationNotify: Parties.BOTH_PARTIES,
+              sendNotificationSelectHearing: { selectedCode: '123abc' },
+              sendNotificationSubject: ['Hearing'],
+            },
+          },
+        ],
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
+
+  it('should render the hearing details page without notification', () => {
+    const actual = getHearingCollection(mockHearingCollection, undefined, translations);
+    const expected: HearingDetails[] = [
+      {
+        hearingNumber: '3333',
+        Hearing_type: 'Hearing',
+        hearingDateRows: [
+          {
+            date: new Date('2028-07-04T14:00:00.000'),
+            status: 'Listed',
+            venue: 'Field House',
+          },
+        ],
+        notifications: [],
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
+
+  it('should render the hearing details page without hearing', () => {
+    const actual = getHearingCollection(undefined, undefined, translations);
+    const expected: HearingDetails[] = [];
+    expect(actual).toEqual(expected);
   });
 });
