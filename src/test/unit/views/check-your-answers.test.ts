@@ -84,10 +84,10 @@ describe('Check your answers confirmation page', () => {
     expect(typeOfClaimList.length).equals(1, 'Incorrect number of rows found');
   });
 
-  it('should display 10 rows in Your Details summary list', () => {
+  it('should display 11 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(11, 'Incorrect number of rows found');
   });
 
   it('should display 13 rows in Employment Details summary list', () => {
@@ -127,7 +127,8 @@ describe('Check your answers confirmation page', () => {
     const contactLanguageLink = yourDetailsList[6].getAttribute('href');
     const contactHearingLink = yourDetailsList[7].getAttribute('href');
     const hearingsLink = yourDetailsList[8].getAttribute('href');
-    const disabilityLink = yourDetailsList[9].getAttribute('href');
+    const hearingPanelLink = yourDetailsList[9].getAttribute('href');
+    const disabilityLink = yourDetailsList[10].getAttribute('href');
 
     expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
@@ -147,6 +148,10 @@ describe('Check your answers confirmation page', () => {
       'Incorrect href found'
     );
     expect(hearingsLink).equals(PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(hearingPanelLink).equals(
+      PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
     expect(disabilityLink).equals(
       PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
       'Incorrect href found'
@@ -270,10 +275,10 @@ describe('CYA for Scottish cases', () => {
       });
   });
 
-  it('should display 8 rows in Your Details summary list', () => {
+  it('should display 9 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(9, 'Incorrect number of rows found');
   });
 });
 
@@ -313,8 +318,8 @@ describe('Check your answers confirmation page - New Job with start date', () =>
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[25].innerHTML).contains('New job start date', '21-04-2020');
+    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[26].innerHTML).contains('New job start date', '21-04-2020');
   });
 });
 
@@ -354,7 +359,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[25].innerHTML).contains('New job start date', '');
+    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[26].innerHTML).contains('New job start date', '');
   });
 });
