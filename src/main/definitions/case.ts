@@ -150,6 +150,9 @@ export interface Case {
   reasonableAdjustments?: YesOrNo;
   reasonableAdjustmentsDetail?: string;
   hearingPreferences?: HearingPreference[];
+  hearingPanelPreference?: HearingPanelPreference;
+  hearingPanelPreferenceReasonJudge?: string;
+  hearingPanelPreferenceReasonPanel?: string;
   hearingAssistance?: string;
   claimJurisdiction?: string;
   respondentName?: string;
@@ -324,6 +327,12 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export const enum HearingPanelPreference {
+  NO_PREFERENCE = 'No preference',
+  JUDGE = 'Judge',
+  PANEL = 'Panel',
 }
 
 export const enum AgreedDocuments {
