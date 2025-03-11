@@ -1888,9 +1888,9 @@ __metadata:
   linkType: hard
 
 "@faker-js/faker@npm:^9.0.0":
-  version: 9.5.0
-  resolution: "@faker-js/faker@npm:9.5.0"
-  checksum: bb211063631c52600e62a6a5014801d6309b028b6eff22c11e222f4bf28b80c0ef7216b28635fff18d86434e64cf41bad1e187ddf9a07066bbc9346770e8f5d3
+  version: 9.5.1
+  resolution: "@faker-js/faker@npm:9.5.1"
+  checksum: 11fd03314403c152dbd5c869bac0ca8f5887d86b45382be14b7ee620c436b091557dc826d5585520c939f71ff1908f2aa7eccfb72a2c0dead3df6fd0b56ab7b7
   languageName: node
   linkType: hard
 
@@ -1932,12 +1932,12 @@ __metadata:
   linkType: hard
 
 "@hmcts/info-provider@npm:^1.0.0":
-  version: 1.2.2
-  resolution: "@hmcts/info-provider@npm:1.2.2"
+  version: 1.2.3
+  resolution: "@hmcts/info-provider@npm:1.2.3"
   dependencies:
-    express: ^4.19.2
+    express: ^4.21.2
     js-yaml: ^4.1.0
-  checksum: 2d9dc7bb58ff4c078307c3267ce5ac6ca7b174b97667bcb3a841cbca64d35fe39ec821b1a11f4e4d7bd42d802af112df979528d5ec17aa49810ce15c8a0a797e
+  checksum: cc712b89bb7021e2d30e885dd303609b74bcf5f98463651b9078d634e3ca5a0bf94fbf913eab7f9a8002b919e22a989c80dbd542a3d4578d3b154b4b2fc0ba07
   languageName: node
   linkType: hard
 
@@ -3239,11 +3239,11 @@ __metadata:
   linkType: hard
 
 "@types/chai-as-promised@npm:^8.0.0":
-  version: 8.0.1
-  resolution: "@types/chai-as-promised@npm:8.0.1"
+  version: 8.0.2
+  resolution: "@types/chai-as-promised@npm:8.0.2"
   dependencies:
     "@types/chai": "*"
-  checksum: 7b298bab0cc16e244f9402de25eed8d626e803d328b67241487e3296bf68e95792f572491a2995ba409288263344fdc0da380064c5b6562a2a4d69bf78624d74
+  checksum: a65d360915471d5d2ea3471e8afc69884151b19c7b92494a4faabf95fcd7bb1059f32f5518f17115e2c9835afb7c0b933f9944bbb60d2ebe0a6fd3b61b1e031c
   languageName: node
   linkType: hard
 
@@ -3506,9 +3506,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.194":
-  version: 4.17.15
-  resolution: "@types/lodash@npm:4.17.15"
-  checksum: 5037564154411f4ac0b187b914031c150520a7ca037dea007f774b7123c97c0da55b2e41ae81dc1bc80ff09e8d6a236455ea676d5062af12c592b8e81baec7bf
+  version: 4.17.16
+  resolution: "@types/lodash@npm:4.17.16"
+  checksum: 915618c5735b10007e0ed7d06fdce6b344f88fc721d492b189a69064bfd046d2382e1ba61d683eeb61cad60ca0286cd110e6fe0fa4ab2e99066a40478376831d
   languageName: node
   linkType: hard
 
@@ -3551,21 +3551,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 22.13.4
-  resolution: "@types/node@npm:22.13.4"
+"@types/node@npm:*, @types/node@npm:^22.0.0":
+  version: 22.13.10
+  resolution: "@types/node@npm:22.13.10"
   dependencies:
     undici-types: ~6.20.0
-  checksum: 39ecbd84fc2c6268c57f0479bc095cd304d2e97fee0b4ed7e6a77508aaadb28dc21be0ec91bf866ab2be822bf6c9749945795dbd6ba60e0851b50a967fd784b5
+  checksum: 1cd6b899df728732c60c0defad63e26ca18d87a3b81bd75666fe9aed6cdf9e488433976b22ffcabfdeef9d351cf8ff94853b0686e6708ef62065482ccf5b0a6e
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.0.0, @types/node@npm:^20.1.0":
-  version: 20.17.19
-  resolution: "@types/node@npm:20.17.19"
+"@types/node@npm:^20.1.0":
+  version: 20.17.24
+  resolution: "@types/node@npm:20.17.24"
   dependencies:
     undici-types: ~6.19.2
-  checksum: 4eb29628e293d47494c1fe8eaacbaf9f1317cc2ada176a74753d0ea6e3ff6cb5f3e97ba3baa1435d9934950f0fec5693272f2805387f2e70c119038ee7608c20
+  checksum: 05d3ca5d8741d10368edeff01318e4e615a7654b0c6bd05415f8cd0a2f851ac8e04c2cac319442c20fe372d1bdba9dd1f40dda014e97902516f82058b68ef6c4
   languageName: node
   linkType: hard
 
@@ -5012,13 +5012,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.7.4":
-  version: 1.8.1
-  resolution: "axios@npm:1.8.1"
+  version: 1.8.2
+  resolution: "axios@npm:1.8.2"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 3c434b86bb690046b5861134e9cee9b273467f0d82b64b9074f7da5004855826833736a1c6a9c05bf9af225ddd52b3da857a99d59e6736490b18e2cbc1ccb67e
+  checksum: c47a43b79a058aa9e53a65bec9ade35c9f6e76a3999c795a79a2d205fb5f803fd4245497a0209a9727cbbe4f558791dd852ad2c168c5fc030259c11598ed8fd7
   languageName: node
   linkType: hard
 
@@ -7984,7 +7984,7 @@ __metadata:
     "@types/jest": ^29.5.1
     "@types/lodash": ^4.14.194
     "@types/multer": ^1.4.7
-    "@types/node": ^20.0.0
+    "@types/node": ^22.0.0
     "@types/nunjucks": ^3.2.2
     "@types/redis-mock": ^0.17.1
     "@types/require-directory": ^2.1.2
@@ -8226,7 +8226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.17.1, express@npm:^4.19.2, express@npm:^4.20.0":
+"express@npm:^4.17.1, express@npm:^4.20.0, express@npm:^4.21.2":
   version: 4.21.2
   resolution: "express@npm:4.21.2"
   dependencies:
@@ -9884,14 +9884,14 @@ __metadata:
   linkType: hard
 
 "import-in-the-middle@npm:^1.4.2":
-  version: 1.13.0
-  resolution: "import-in-the-middle@npm:1.13.0"
+  version: 1.13.1
+  resolution: "import-in-the-middle@npm:1.13.1"
   dependencies:
     acorn: ^8.14.0
     acorn-import-attributes: ^1.9.5
     cjs-module-lexer: ^1.2.2
     module-details-from-path: ^1.0.3
-  checksum: f7a62d6fa145ebd92bb3e5ff8ad3492ddab62d4f7bc27f8139bd2d6e229e4ed7bc354352bac642a4ee26e9aebb062b7126aacd880a9a0d2ef02d7d965a75c551
+  checksum: 9cff1da9fc6ec6e2224ac9f60f7818baa7b238ba3350da7f4f213220e40893f254f3674a2b517fc663de1672215aff5c6cce1ef6c8cff91281772393fb50b0fa
   languageName: node
   linkType: hard
 
@@ -16149,11 +16149,11 @@ __metadata:
   linkType: hard
 
 "tough-cookie@npm:^5.0.0":
-  version: 5.1.1
-  resolution: "tough-cookie@npm:5.1.1"
+  version: 5.1.2
+  resolution: "tough-cookie@npm:5.1.2"
   dependencies:
     tldts: ^6.1.32
-  checksum: 051d2d09df12448642928de9e1da7c296ae1019c6531e87f45f51fd29e8f235efbe94ef6502b37e874df72047c13a34da8816f2c05c7c358ead27ef4fbbd8117
+  checksum: 31c626a77ac247b881665851035773afe7eeac283b91ed8da3c297ed55480ea1dd1ba3f5bb1f94b653ac2d5b184f17ce4bf1cf6ca7c58ee7c321b4323c4f8024
   languageName: node
   linkType: hard
 
