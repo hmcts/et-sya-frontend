@@ -1,12 +1,12 @@
-import { BasePage } from "./basePage";
 import { params } from '../utils/config';
 
-export class LoginPage  extends BasePage {
+import { BasePage } from './basePage';
 
-    async signIn() {
-        await this.webAction.verifyTextIsVisible('Sign in');
-        await this.webAction.fillField('#username', params.TestEnvETClaimantEmailAddress);
-        await this.webAction.fillField('#password', params.TestEnvETClaimantPassword);
-        await this.clickSignIn();
-    }
+export class LoginPage extends BasePage {
+  async signIn(): Promise<void> {
+    await this.webAction.verifyTextIsVisible('Sign in');
+    await this.webAction.fillField('#username', params.TestEnvETClaimantEmailAddress);
+    await this.webAction.fillField('#password', params.TestEnvETClaimantPassword);
+    await this.clickSignIn();
+  }
 }
