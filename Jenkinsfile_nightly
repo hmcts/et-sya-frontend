@@ -16,6 +16,7 @@ parameters([
 def type = "nodejs"
 def product = "et"
 def component = "sya"
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def urlExclusions = params.ZAP_URL_EXCLUSIONS
 def alertFilters = params.ALERT_FILTERS
 def customCookies = params.CUSTOM_COOKIES
