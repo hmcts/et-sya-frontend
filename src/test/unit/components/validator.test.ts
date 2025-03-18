@@ -226,7 +226,8 @@ describe('Validation', () => {
 
   describe('isPayIntervalNull()', () => {
     it('Should check if value exists', () => {
-      const isValid = isPayIntervalNull('Weekly' || 'Monthly' || 'Annual');
+      const value = 'Weekly'
+      const isValid = isPayIntervalNull(value);
       expect(isValid).toStrictEqual(undefined);
     });
 
