@@ -1,5 +1,6 @@
 // const { Warning } = require('applicationinsights/out/Declarations/Contracts/Generated/SeverityLevel');
 const path = require('path');
+const { transpile } = require('typescript');
 
 const sourcePath = path.resolve(__dirname, 'src/main/assets/js');
 const govukFrontend = require(path.resolve(__dirname, 'webpack/govukFrontend'));
@@ -21,7 +22,12 @@ module.exports = {
       ...scss.rules,
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: [{
+          loader: "ts-loader",
+          options: {
+            transpileOnly: true
+          }
+        }],
         exclude: /node_modules/,
       },
     ],
@@ -33,8 +39,5 @@ module.exports = {
     path: path.resolve(__dirname, 'src/main/public/'),
     publicPath: '',
     filename,
-  },
-  stats: {
-    errors: false
-  },
+  }
 };
