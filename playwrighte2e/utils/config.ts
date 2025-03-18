@@ -1,5 +1,4 @@
 export const params = {
-
   TestUrlCitizenUi: process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net',
   TestIdamUrl: process.env.IDAM_URL || 'https://idam-api.aat.platform.hmcts.net/testing-support/accounts',
   IdamAcccountUrl: process.env.IDAM_ACCOUNT_URL || 'https://idam-api.aat.platform.hmcts.net/testing-support/accounts',
@@ -10,5 +9,5 @@ export const params = {
   TestEnvETClaimantPassword: process.env.ET_CITIZEN_PASSWORD || '',
   TestEnvETNewClaimantEmailAddress: process.env.ET_NEW_CITIZEN_USER_NAME || '',
   TestApiKey: process.env.API_KEY || '',
-  TestEnv: process.env.RUNNING_ENV || ''
-}
+  TestEnv: process.env.RUNNING_ENV || '',
+};
