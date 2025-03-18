@@ -110,13 +110,9 @@ export const areBenefitsValid: Validator = value => {
 };
 
 export const isPayIntervalNull: Validator = (value: string) => {
-  const validIntervals = ['Weekly', 'Monthly', 'Annual'];
-  if (!value || !validIntervals.includes(value)) {
+  if (!value) {
     return 'required';
   }
-  // if (!value) {
-  //   return 'required';
-  // }
 };
 
 export const arePayValuesNull: Validator = (value: string[]) => {
