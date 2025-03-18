@@ -3,7 +3,7 @@
 import { AxeBuilder } from '@axe-core/playwright';
 import { Page, expect, test } from '@playwright/test';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls } from '../../src/main/definitions/constants';
 
 const envUrl = process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net';
 const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB];
