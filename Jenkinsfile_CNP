@@ -76,7 +76,7 @@ withPipeline(type, product, component) {
                     keepAll              : true,
                     reportDir            : 'playwright-report',
                     reportFiles          : 'index.html',
-                    reportName           : 'ET Accessibility Test Report'
+                    reportName           : 'ET Functional UI Test Report'
             ])
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
@@ -105,7 +105,7 @@ withPipeline(type, product, component) {
                     keepAll              : true,
                     reportDir            : 'playwright-report',
                     reportFiles          : 'index.html',
-                    reportName           : 'ET Accessibility Test Report'
+                    reportName           : 'ET Functional UI Test Report'
             ])
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
