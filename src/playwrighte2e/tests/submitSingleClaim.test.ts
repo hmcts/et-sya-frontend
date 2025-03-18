@@ -1,18 +1,10 @@
 import { test } from '../fixtures/common.fixture';
 
 test.describe('Submit a single claim for myself without the Complete PCQ/Equality', () => {
-
-  test(
-    'SYA-Smoke test', 
-    { tag: '@Smoke' }, 
-    async ({
-      claimStartPage,
-      loginPage,
-      saveCardPage
-    }) => {
-      await claimStartPage.createSingleMyselfCase();
-      await loginPage.signIn();
-      await saveCardPage.doNotHaveToCompleteCard();
+  test('SYA-Smoke test', { tag: '@Smoke' }, async ({ claimStartPage, loginPage, saveCardPage }) => {
+    await claimStartPage.createSingleMyselfCase();
+    await loginPage.signIn();
+    await saveCardPage.doNotHaveToCompleteCard();
   });
 
   test(

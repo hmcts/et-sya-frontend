@@ -1,23 +1,17 @@
 /* eslint-disable jest/no-done-callback,jest/expect-expect */
 
+import { AxeBuilder } from '@axe-core/playwright';
+import { Page, expect, test } from '@playwright/test';
+
 import { PageUrls } from '../../main/definitions/constants';
-import { Page, test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
 
 const envUrl = process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net';
 const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB];
 
-async function expectNoErrors(page:Page): Promise<void> {
+async function expectNoErrors(page: Page): Promise<void> {
   const accessibilityScanResults = await new AxeBuilder({ page })
-  .withTags([
-    'wcag2a',
-    'wcag2aa',
-    'wcag21a',
-    'wcag21aa',
-    'wcag22a',
-    'wcag22aa'
-  ])
-  .analyze();
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22a', 'wcag22aa'])
+    .analyze();
   const errors = accessibilityScanResults.violations;
 
   if (errors.length > 0) {
@@ -38,7 +32,7 @@ function testAccessibility(url: string): void {
   });
 }
 
-test.describe('SYA Accessibility',{tag: '@Accessibility'}, () => {
+test.describe('SYA Accessibility', { tag: '@Accessibility' }, () => {
   Object.values({ ...PageUrls, CITIZEN_HUB: '/citizen-hub/a11y' }).forEach(url => {
     testAccessibility(url);
   });
