@@ -39,7 +39,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
 
-    enableFullFunctionalTest(int timeout=300)
+    // enableFullFunctionalTest(int timeout=300)
     // enableCrossBrowserTest()
     enableFortifyScan('et-aat')
 
@@ -51,15 +51,14 @@ withNightlyPipeline(type, product, component) {
     //     enableSlackNotifications('#et-builds')
     // }
 
-    before('fullFunctionalTest') {
+    before('fortifyScan') {
         sh """
            yarn playwright install
         """
     }
     
-    afterAlways('fullFunctionalTest') {
-
-        stage('Functional UI tests chromium') {
+    afterAlways('fortifyScan') {
+        stage('Functional SYA UI tests chromium') {
             try {
                 yarnBuilder.yarn('test:functional-chromium')
             } catch (Error) {
@@ -71,12 +70,12 @@ withNightlyPipeline(type, product, component) {
                         keepAll: true,
                         reportDir: 'playwright-report',
                         reportFiles: 'index.html',
-                        reportName: 'UITestChromiumReport'
+                        reportName: 'SYA-UITestChromiumReport'
                 ])
                 steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
             }
         }
-        stage('Functional UI tests firefox') {
+        stage('Functional SYA UI tests firefox') {
             try {
                 yarnBuilder.yarn('test:functional-firefox')
             } catch (Error) {
@@ -88,12 +87,12 @@ withNightlyPipeline(type, product, component) {
                         keepAll: true,
                         reportDir: 'playwright-report',
                         reportFiles: 'index.html',
-                        reportName: 'UITestFirefoxReport'
+                        reportName: 'SYA-UITestFirefoxReport'
                 ])
                 steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
             }
         }
-        stage('Functional UI tests webkit ') {
+        stage('Functional SYA UI tests webkit ') {
             try {
                 yarnBuilder.yarn('test:functional-webkit')
             } catch (Error) {
@@ -105,7 +104,7 @@ withNightlyPipeline(type, product, component) {
                         keepAll: true,
                         reportDir: 'playwright-report',
                         reportFiles: 'index.html',
-                        reportName: 'UITestWebkitReport'
+                        reportName: 'SYA-UITestWebkitReport'
                 ])
                 steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
             }
