@@ -35,7 +35,7 @@
     "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
     "test:functional-webkit": "yarn playwright install webkit && yarn playwright test --project=webkit --grep @RET-BAT",
     "test:functional-firefox": "yarn playwright install firefox && yarn playwright test --project=firefox --grep @RET-BAT",
-    "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/smoke/codecept.smoke.conf.js run-workers 2 parallel",
+    "test:smoke": "yarn playwright install chromium && yarn playwright test --project=chromium --grep @Smoke",
     "cichecks": "yarn && yarn build && yarn lint && yarn test && yarn tests:a11y",
     "prepare": "husky install"
   },
