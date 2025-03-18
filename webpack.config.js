@@ -6,14 +6,13 @@ const govukFrontend = require(path.resolve(__dirname, 'webpack/govukFrontend'));
 const hmctsFrontend = require(path.resolve(__dirname, 'webpack/hmctsFrontend'));
 const scss = require(path.resolve(__dirname, 'webpack/scss'));
 const HtmlWebpack = require(path.resolve(__dirname, 'webpack/htmlWebpack'));
-const IgnoreWebpackErrorsPlugin = require(path.resolve(__dirname, 'webpack/errorPlugin'));
 
 const devMode = process.env.NODE_ENV !== 'production';
 const fileNameSuffix = devMode ? '-dev' : '.[contenthash]';
 const filename = `[name]${fileNameSuffix}.js`;
 
 module.exports = {
-  plugins: [...govukFrontend.plugins, ...scss.plugins, ...HtmlWebpack.plugins, ...hmctsFrontend.plugins, new IgnoreWebpackErrorsPlugin()],
+  plugins: [...govukFrontend.plugins, ...scss.plugins, ...HtmlWebpack.plugins, ...hmctsFrontend.plugins],
   entry: path.resolve(sourcePath, 'index.js'),
   mode: devMode ? 'development' : 'production',
   devtool: 'cheap-module-source-map',
