@@ -38,18 +38,10 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-
-    // enableFullFunctionalTest(int timeout=300)
-    // enableCrossBrowserTest()
     enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
-
-    // afterAlways('crossBrowserTest') {
-    //     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-    //     enableSlackNotifications('#et-builds')
-    // }
 
     before('fortify-scan') {
         sh """
