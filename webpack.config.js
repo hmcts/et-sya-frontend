@@ -1,4 +1,4 @@
-const { Warning } = require('applicationinsights/out/Declarations/Contracts/Generated/SeverityLevel');
+// const { Warning } = require('applicationinsights/out/Declarations/Contracts/Generated/SeverityLevel');
 const path = require('path');
 
 const sourcePath = path.resolve(__dirname, 'src/main/assets/js');
@@ -35,7 +35,6 @@ module.exports = {
     filename,
   },
   stats: {
-    errors: false,
-    Warnings: true
-  }
+    errors: false
+  },
 };
