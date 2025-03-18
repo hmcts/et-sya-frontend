@@ -47,9 +47,6 @@ withPipeline(type, product, component) {
 
   afterAlways('build') {
     yarnBuilder.yarn('build')
-    sh """
-       yarn playwright install
-    """
   }
 
   afterAlways('smoketest:aat') {
