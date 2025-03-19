@@ -1,5 +1,3 @@
-/* eslint-disable jest/no-done-callback,jest/expect-expect */
-
 import { AxeBuilder } from '@axe-core/playwright';
 import { Page, expect, test } from '@playwright/test';
 
