@@ -47,9 +47,9 @@ withPipeline(type, product, component) {
   syncBranchesWithMaster(branchesToSync)
   enableSlackNotifications('#et-builds')
 
-  // afterAlways('build') {
-  //   yarnBuilder.yarn('build')
-  // }
+  afterAlways('build') {
+    yarnBuilder.yarn('build')
+  }
 
   afterAlways('smoketest:aat') {
     loadVaultSecrets(inTestTrue)
@@ -66,6 +66,9 @@ withPipeline(type, product, component) {
           steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       }
     loadVaultSecrets(inTestFalse)
+    sh """
+       yarn playwright install
+    """
   }
 
   afterAlways('functionaltest:aat') {
