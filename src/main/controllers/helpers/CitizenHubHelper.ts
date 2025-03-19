@@ -124,7 +124,7 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
     if (assignedRep) {
       return assignedRep.hasMyHMCTSAccount === YesOrNo.YES;
     } else {
-      return res.idamId === undefined;
+      return res.idamId !== undefined;
     }
   });
 };
