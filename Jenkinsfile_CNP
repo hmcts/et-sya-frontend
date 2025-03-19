@@ -13,8 +13,10 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 def secrets = [
     'et-${env}': [
-        secret('test-username', 'TEST_CASE_USERNAME'),
-        secret('test-password', 'TEST_CASE_PASSWORD')
+        // secret('test-username', 'TEST_CASE_USERNAME'),
+        // secret('test-password', 'TEST_CASE_PASSWORD'),
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
     ]
 ]
 
@@ -45,9 +47,9 @@ withPipeline(type, product, component) {
   syncBranchesWithMaster(branchesToSync)
   enableSlackNotifications('#et-builds')
 
-  afterAlways('build') {
-    yarnBuilder.yarn('build')
-  }
+  // afterAlways('build') {
+  //   yarnBuilder.yarn('build')
+  // }
 
   afterAlways('smoketest:aat') {
     loadVaultSecrets(inTestTrue)
@@ -63,7 +65,7 @@ withPipeline(type, product, component) {
           ])
           steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       }
-      loadVaultSecrets(inTestFalse)
+    loadVaultSecrets(inTestFalse)
   }
 
   afterAlways('functionaltest:aat') {
@@ -80,7 +82,7 @@ withPipeline(type, product, component) {
 
   afterAlways('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
-       stage('Accessibility') {
+      stage('Accessibility') {
           yarnBuilder.yarn('test:accessibility')
           publishHTML([
               allowMissing         : true,
@@ -92,7 +94,7 @@ withPipeline(type, product, component) {
           ])
           steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       }
-      loadVaultSecrets(inTestFalse)
+    loadVaultSecrets(inTestFalse)
   }
 
   afterAlways('functionaltest:preview') {
