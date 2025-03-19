@@ -1,3 +1,4 @@
+// const { Warning } = require('applicationinsights/out/Declarations/Contracts/Generated/SeverityLevel');
 const path = require('path');
 
 const sourcePath = path.resolve(__dirname, 'src/main/assets/js');
@@ -20,7 +21,14 @@ module.exports = {
       ...scss.rules,
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
     ],

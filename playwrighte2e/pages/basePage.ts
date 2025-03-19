@@ -1,27 +1,26 @@
+import { Locator, Page } from '@playwright/test';
 
-import { Page, Locator } from "@playwright/test";
-import { WebAction } from "../common/web.actions";
+import { WebAction } from '../common/web.actions';
 
 export abstract class BasePage {
   readonly page: Page;
   readonly continueButton: Locator;
-  readonly signInButton:Locator;
-  readonly saveAsDraftButton:Locator;
-  readonly closeAndReturnButton:Locator;
-  readonly submit:Locator;
-  readonly postcode:Locator;
+  readonly signInButton: Locator;
+  readonly saveAsDraftButton: Locator;
+  readonly closeAndReturnButton: Locator;
+  readonly submit: Locator;
+  readonly postcode: Locator;
   readonly findAddress: Locator;
-  readonly signout:Locator;
-  readonly startNow:Locator;
-  readonly saveAndContinue:Locator;
-  readonly nextButton:Locator;
-  readonly applyFilterButton:Locator;
+  readonly signout: Locator;
+  readonly startNow: Locator;
+  readonly saveAndContinue: Locator;
+  readonly nextButton: Locator;
+  readonly applyFilterButton: Locator;
   readonly addNewBtn: Locator;
   readonly newhearingBtn: Locator;
   readonly newUploadDocBtn: Locator;
   readonly skipQuestionBtn: Locator;
   readonly webAction: WebAction;
-
 
   constructor(page: Page) {
     this.page = page;
@@ -38,49 +37,51 @@ export abstract class BasePage {
     this.saveAndContinue = page.getByRole('button', { name: 'Save and continue' });
     this.nextButton = page.getByRole('button', { name: 'Next' });
     this.addNewBtn = page.getByRole('button', { name: 'Add new' });
-    this.newhearingBtn = page.locator('#hearingCollection > div > button.button.write-collection-add-item__bottom.ng-star-inserted');
+    this.newhearingBtn = page.locator(
+      '#hearingCollection > div > button.button.write-collection-add-item__bottom.ng-star-inserted'
+    );
     this.newUploadDocBtn = page.locator('//*[@id="documentCollection"]/div/button[2]');
     this.skipQuestionBtn = page.locator('[name="opt-out-button"]');
     this.webAction = new WebAction(this.page);
   }
 
-  async wait(time: number) {
-    await this.page.waitForTimeout(time)
+  async wait(time: number): Promise<void> {
+    await this.page.waitForTimeout(time);
   }
 
-  async clickContinue() {
+  async clickContinue(): Promise<void> {
     await this.continueButton.click();
   }
 
-  async clickSignIn() {
+  async clickSignIn(): Promise<void> {
     await this.signInButton.click();
   }
 
-  async clickSaveAndContinue() {
+  async clickSaveAndContinue(): Promise<void> {
     await this.saveAndContinue.click();
   }
 
-  async saveAsDraft() {
+  async saveAsDraft(): Promise<void> {
     await this.saveAsDraftButton.click();
   }
 
-  async closeAndReturn() {
+  async closeAndReturn(): Promise<void> {
     await this.closeAndReturnButton.click();
   }
 
-  async skipQuestion() {
+  async skipQuestion(): Promise<void> {
     await this.skipQuestionBtn.click();
   }
 
-  async submitButton(){
+  async submitButton(): Promise<void> {
     await this.submit.click();
   }
 
-  async delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+  async delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async clickNextButton(){
+  async clickNextButton(): Promise<void> {
     await this.nextButton.click();
   }
 
@@ -96,28 +97,27 @@ export abstract class BasePage {
   //   await this.page.getByLabel('Select an address').selectOption('1: Object');
   // }
 
-  async signoutButton(){
+  async signoutButton(): Promise<void> {
     await this.signout.click();
   }
 
-  async clickStartNow(){
+  async clickStartNow(): Promise<void> {
     await this.startNow.click();
   }
 
-  async saveAndContinueButton(){
+  async saveAndContinueButton(): Promise<void> {
     await this.saveAndContinue.click();
   }
 
-  async addNewButtonClick(){
+  async addNewButtonClick(): Promise<void> {
     await this.addNewBtn.click();
   }
 
-  async addNewHearingButtonClick(){
+  async addNewHearingButtonClick(): Promise<void> {
     await this.newhearingBtn.click();
   }
 
-  async addNewUploadDocButtonClick(){
+  async addNewUploadDocButtonClick(): Promise<void> {
     await this.newUploadDocBtn.click();
   }
-
 }

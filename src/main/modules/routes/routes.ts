@@ -2,7 +2,7 @@ import os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
-import rateLimit from 'express-rate-limit';
+import { rateLimit } from 'express-rate-limit';
 import multer, { FileFilterCallback } from 'multer';
 
 import AboutHearingDocumentsController from '../../controllers/AboutHearingDocumentsController';
