@@ -41,6 +41,3 @@ src/test/end-to-end/functional-output/*
 !.yarn/versions
 
 .swc/*
-
-/playwright-report/
-/test-results/
