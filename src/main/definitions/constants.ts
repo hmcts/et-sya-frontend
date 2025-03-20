@@ -237,7 +237,6 @@ export const PageUrls = {
   ACCESSIBILITY_STATEMENT: '/accessibility',
   APPLICATION_DETAILS: '/application-details/:appId',
   RESPOND_TO_APPLICATION_SELECTED: '/respond-to-application/:appId',
-  RESPOND_TO_APPLICATION: '/respond-to-application',
   YOUR_APPLICATIONS: '/your-applications',
   RESPONDENT_APPLICATIONS: '/respondent-applications',
   RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',

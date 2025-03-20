@@ -45,30 +45,59 @@ describe('getCaptionTextWithRequest', () => {
 });
 
 describe('getRedirectPageUrlNotSystemUser', () => {
-  it('should return CONTACT_THE_TRIBUNAL_CYA', () => {
+  it('should return CONTACT_THE_TRIBUNAL_CYA when copyToOtherPartyYesOrNo is NO and contactType is CONTACT', () => {
     const body = { copyToOtherPartyYesOrNo: YesOrNo.NO };
     const req = mockRequest({ body });
     req.session.contactType = Rule92Types.CONTACT;
-    const expected = PageUrls.CONTACT_THE_TRIBUNAL_CYA;
-    const actual = getRedirectPageUrlNotSystemUser(req);
-    expect(actual).toEqual(expected);
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
   });
 
-  it('should return TRIBUNAL_RESPONSE_CYA', () => {
+  it('should return RESPONDENT_APPLICATION_CYA when copyToOtherPartyYesOrNo is NO and contactType is RESPOND', () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.NO };
+    const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.RESPOND;
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.RESPONDENT_APPLICATION_CYA);
+  });
+
+  it('should return TRIBUNAL_RESPONSE_CYA when copyToOtherPartyYesOrNo is NO and contactType is TRIBUNAL', () => {
     const body = { copyToOtherPartyYesOrNo: YesOrNo.NO };
     const req = mockRequest({ body });
     req.session.contactType = Rule92Types.TRIBUNAL;
-    const expected = PageUrls.TRIBUNAL_RESPONSE_CYA;
-    const actual = getRedirectPageUrlNotSystemUser(req);
-    expect(actual).toEqual(expected);
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.TRIBUNAL_RESPONSE_CYA);
   });
 
-  it('should return CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER', () => {
+  it('should return COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER when copyToOtherPartyYesOrNo is NO and contactType is unknown', () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.NO };
+    const req = mockRequest({ body });
+    req.session.contactType = 'UNKNOWN_TYPE';
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER);
+  });
+
+  it('should return CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER when copyToOtherPartyYesOrNo is YES and contactType is CONTACT', () => {
     const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
     const req = mockRequest({ body });
     req.session.contactType = Rule92Types.CONTACT;
-    const expected = PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER;
-    const actual = getRedirectPageUrlNotSystemUser(req);
-    expect(actual).toEqual(expected);
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER);
+  });
+
+  it('should return TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER when copyToOtherPartyYesOrNo is YES and contactType is RESPOND', () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
+    const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.RESPOND;
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER);
+  });
+
+  it('should return TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER when copyToOtherPartyYesOrNo is YES and contactType is TRIBUNAL', () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
+    const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.TRIBUNAL;
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER);
+  });
+
+  it('should return COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER when copyToOtherPartyYesOrNo is YES and contactType is unknown', () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
+    const req = mockRequest({ body });
+    req.session.contactType = 'UNKNOWN_TYPE';
+    expect(getRedirectPageUrlNotSystemUser(req)).toEqual(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER);
   });
 });
