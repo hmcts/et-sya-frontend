@@ -21,14 +21,7 @@ module.exports = {
       ...scss.rules,
       {
         test: /\.ts$/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-            },
-          },
-        ],
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],

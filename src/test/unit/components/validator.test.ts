@@ -226,6 +226,8 @@ describe('Validation', () => {
 
   describe('isPayIntervalNull()', () => {
     it('Should check if value exists', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       const isValid = isPayIntervalNull('Weekly' || 'Monthly' || 'Annual');
       expect(isValid).toStrictEqual(undefined);
     });
