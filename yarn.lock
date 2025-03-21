@@ -22,6 +22,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@axe-core/playwright@npm:4.10.0":
+  version: 4.10.0
+  resolution: "@axe-core/playwright@npm:4.10.0"
+  dependencies:
+    axe-core: ~4.10.0
+  peerDependencies:
+    playwright-core: ">= 1.0.0"
+  checksum: cba9b7f625c8ed510e661d8d014f7e924fb85175b918b818cb808eec848c3e8a2cbbe2960ccf8dd4b9f84a4a4ea33eeeace48de2560a4a5777dd0ee6281d0c81
+  languageName: node
+  linkType: hard
+
 "@azure/abort-controller@npm:^1.0.0":
   version: 1.1.0
   resolution: "@azure/abort-controller@npm:1.1.0"
@@ -2829,6 +2840,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.51.0":
+  version: 1.51.1
+  resolution: "@playwright/test@npm:1.51.1"
+  dependencies:
+    playwright: 1.51.1
+  bin:
+    playwright: cli.js
+  checksum: c3c14f37451cc0323234e37fa559a075e5aee9f5e6ca06fa3b4a132ec6c809909b22877daca1fa48c95a1112d859346c10111e7003f44582a05100dd5385bbef
+  languageName: node
+  linkType: hard
+
 "@puppeteer/browsers@npm:1.4.6":
   version: 1.4.6
   resolution: "@puppeteer/browsers@npm:1.4.6"
@@ -2993,90 +3015,99 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-darwin-arm64@npm:1.3.100"
+"@swc/core-darwin-arm64@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-darwin-arm64@npm:1.3.82"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-darwin-x64@npm:1.3.100"
+"@swc/core-darwin-x64@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-darwin-x64@npm:1.3.82"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.100"
+"@swc/core-linux-arm-gnueabihf@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.82"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-gnu@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.82"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-linux-arm64-musl@npm:1.3.100"
+"@swc/core-linux-arm64-musl@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-linux-arm64-musl@npm:1.3.82"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-linux-x64-gnu@npm:1.3.100"
+"@swc/core-linux-x64-gnu@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-linux-x64-gnu@npm:1.3.82"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-linux-x64-musl@npm:1.3.100"
+"@swc/core-linux-x64-musl@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-linux-x64-musl@npm:1.3.82"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.100"
+"@swc/core-win32-arm64-msvc@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.82"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.100"
+"@swc/core-win32-ia32-msvc@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.82"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.3.100":
-  version: 1.3.100
-  resolution: "@swc/core-win32-x64-msvc@npm:1.3.100"
+"@swc/core-win32-x64-msvc@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core-win32-x64-msvc@npm:1.3.82"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.3.76":
-  version: 1.3.100
-  resolution: "@swc/core@npm:1.3.100"
+"@swc/core@npm:1.3.82":
+  version: 1.3.82
+  resolution: "@swc/core@npm:1.3.82"
   dependencies:
-    "@swc/core-darwin-arm64": 1.3.100
-    "@swc/core-darwin-x64": 1.3.100
-    "@swc/core-linux-arm64-gnu": 1.3.100
-    "@swc/core-linux-arm64-musl": 1.3.100
-    "@swc/core-linux-x64-gnu": 1.3.100
-    "@swc/core-linux-x64-musl": 1.3.100
-    "@swc/core-win32-arm64-msvc": 1.3.100
-    "@swc/core-win32-ia32-msvc": 1.3.100
-    "@swc/core-win32-x64-msvc": 1.3.100
-    "@swc/counter": ^0.1.1
-    "@swc/types": ^0.1.5
+    "@swc/core-darwin-arm64": 1.3.82
+    "@swc/core-darwin-x64": 1.3.82
+    "@swc/core-linux-arm-gnueabihf": 1.3.82
+    "@swc/core-linux-arm64-gnu": 1.3.82
+    "@swc/core-linux-arm64-musl": 1.3.82
+    "@swc/core-linux-x64-gnu": 1.3.82
+    "@swc/core-linux-x64-musl": 1.3.82
+    "@swc/core-win32-arm64-msvc": 1.3.82
+    "@swc/core-win32-ia32-msvc": 1.3.82
+    "@swc/core-win32-x64-msvc": 1.3.82
+    "@swc/types": ^0.1.4
   peerDependencies:
     "@swc/helpers": ^0.5.0
   dependenciesMeta:
     "@swc/core-darwin-arm64":
       optional: true
     "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
       optional: true
     "@swc/core-linux-arm64-gnu":
       optional: true
@@ -3095,14 +3126,14 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: b68553db388c36b1859f0e8b5231a608277e17ae7fd7a928ea8b448432532176914f84675426d40aa9710617b2e7fb626aaa8358b6b2506b3c43f82db725c41e
+  checksum: 4c4adbed22071c0af935129a6fe7cc35d1688a5c1a069efdd8c97740930fa7eaf324e75dc88634a4ea0520330f6c88101d5aa5cf7ed6e02d336cc46ee7131ea3
   languageName: node
   linkType: hard
 
-"@swc/counter@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@swc/counter@npm:0.1.1"
-  checksum: bb974babd493ba01c0d4a95ab610c3fc15fbf609c08cb0342798e485f57ecc0950abbf84e07124e63c5fe610b492d9a8dd03701d3b9ef7329d9e8bf3cc44980f
+"@swc/counter@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@swc/counter@npm:0.1.3"
+  checksum: df8f9cfba9904d3d60f511664c70d23bb323b3a0803ec9890f60133954173047ba9bdeabce28cd70ba89ccd3fd6c71c7b0bd58be85f611e1ffbe5d5c18616598
   languageName: node
   linkType: hard
 
@@ -3127,10 +3158,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/types@npm:^0.1.5":
-  version: 0.1.5
-  resolution: "@swc/types@npm:0.1.5"
-  checksum: 6aee11f62d3d805a64848e0bd5f0e0e615f958e327a9e1260056c368d7d28764d89e38bd8005a536c9bf18afbcd303edd84099d60df34a2975d62540f61df13b
+"@swc/types@npm:^0.1.4":
+  version: 0.1.19
+  resolution: "@swc/types@npm:0.1.19"
+  dependencies:
+    "@swc/counter": ^0.1.3
+  checksum: 167c64b6f7e0c595ba78e3d451215f1ed18eae11681703d3ae75e5b92a2198bbb1bf46824b6be2fe60a66d064316ab5d1e3487f8ef47db97362d96871962bf31
   languageName: node
   linkType: hard
 
@@ -5012,6 +5045,13 @@ __metadata:
   version: 1.12.0
   resolution: "aws4@npm:1.12.0"
   checksum: 68f79708ac7c335992730bf638286a3ee0a645cf12575d557860100767c500c08b30e24726b9f03265d74116417f628af78509e1333575e9f8d52a80edfe8cbc
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:~4.10.0":
+  version: 4.10.3
+  resolution: "axe-core@npm:4.10.3"
+  checksum: e89fa5bcad9216f2de29bbdf95d6211d8c5b1025cbdcf56b6695c18b2e9a1eebd0b997a0141334169f6f062fc68fd39a5b97f86348d9f5be05958eade5c1ec78
   languageName: node
   linkType: hard
 
@@ -7967,6 +8007,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "et-sya@workspace:."
   dependencies:
+    "@axe-core/playwright": 4.10.0
     "@babel/core": ^7.21.4
     "@babel/eslint-parser": ^7.21.3
     "@babel/preset-env": ^7.21.4
@@ -7981,6 +8022,7 @@ __metadata:
     "@jest/globals": ^29.5.0
     "@launchdarkly/node-server-sdk": ^9.0.0
     "@pact-foundation/pact": 9.18.1
+    "@playwright/test": ^1.51.0
     "@swc/core": ^1.3.76
     "@swc/helpers": ^0.5.1
     "@swc/jest": ^0.2.29
@@ -13617,6 +13659,30 @@ __metadata:
   bin:
     playwright-core: cli.js
   checksum: 9c9c3115e8c39c9a2f4e0dc5b2bc1d76925fb0244051ace2bcffc7b2b66cf6fe1b96d9162f81bc7d9b7811b8c6f9df5aa93052d1284bfd6d30203bf4f7b58868
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright-core@npm:1.51.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 1eb37e22e97435a5ed6389b4caa666fbe618348861cae97e67586e20c8fed9ac3d3dc899ff3b9237d0ddfcf087d5b552b80be247e246fc45b75282f96be714bb
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright@npm:1.51.1"
+  dependencies:
+    fsevents: 2.3.2
+    playwright-core: 1.51.1
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 2d78f53eed438d26df9743f98227d2e33bb5a378c8d0144a4ed75b4010c9c517d5a6ee6c1c9245ad61dc615054c5e19d2ded5a6e285e35d2bca39b05bc9c4a35
   languageName: node
   linkType: hard
 

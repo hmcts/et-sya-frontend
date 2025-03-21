@@ -25,6 +25,7 @@ export default class JobTitleController {
         label: (l: AnyRecord): string => l.jobTitle,
         hint: (l: AnyRecord): string => l.hint,
         attributes: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           autocomplete: 'organization-title',
         },
         validator: isJobTitleValid,
