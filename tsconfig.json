@@ -19,6 +19,5 @@
       "routes/*": ["routes/*"]
     },
     "typeRoots": ["./node_modules/@types"]
-  },
-  "include": ["./src/**/*.ts", "./playwrighte2e/**/*.ts", "./playwright.config.ts"]
+  }
 }
