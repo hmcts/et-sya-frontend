@@ -1,8 +1,8 @@
 /* eslint-disable jest/no-done-callback,jest/expect-expect */
 
 import { AxeBuilder } from '@axe-core/playwright';
-import { Page, expect, test } from '@playwright/test';
-
+import { Page, expect } from '@playwright/test';
+import { test } from '../fixtures/common.fixture';
 import { PageUrls } from '../../src/main/definitions/constants';
 
 const envUrl = process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net';
