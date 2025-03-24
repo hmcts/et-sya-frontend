@@ -98,18 +98,18 @@ withPipeline(type, product, component) {
                     reportName           : 'SYA Smoke Test Report'
             ])
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-    // stage('Accessibility') {
-    //       yarnBuilder.yarn('test:accessibility')
-    //       publishHTML([
-    //           allowMissing         : true,
-    //           alwaysLinkToLastBuild: true,
-    //           keepAll              : true,
-    //           reportDir            : 'playwright-report',
-    //           reportFiles          : 'index.html',
-    //           reportName           : 'Accessibility results'
-    //       ])
-    //     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-    // }
+    stage('Accessibility') {
+          yarnBuilder.yarn('test:accessibility')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : 'playwright-report',
+              reportFiles          : 'index.html',
+              reportName           : 'Accessibility results'
+          ])
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    }
     loadVaultSecrets(inTestFalse)
   }
 
