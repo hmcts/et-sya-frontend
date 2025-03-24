@@ -435,6 +435,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,
       ccdId: respondent?.id,
+      idamId: respondent.value?.idamId,
     };
   });
 };
