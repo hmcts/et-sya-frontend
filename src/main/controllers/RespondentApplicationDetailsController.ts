@@ -58,7 +58,8 @@ export default class RespondentApplicationDetailsController {
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const languageParam = getLanguageParam(req.url);
-    const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${selectedApplication.id}${languageParam}`;
+    const redirectUrl =
+      PageUrls.RESPOND_TO_APPLICATION_SELECTED.replace(':appId', selectedApplication.id) + languageParam;
     const adminRespondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
     const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 

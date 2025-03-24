@@ -174,6 +174,23 @@ describe('checkIfRespondentIsSystemUser', () => {
     };
     expect(checkIfRespondentIsSystemUser(userCase)).toEqual(true);
   });
+
+  it('should return true if no representative and respondent user is a system user', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: [
+        {
+          ccdId: '1',
+          idamId: 'idam',
+        },
+      ],
+      representatives: undefined,
+    };
+    expect(checkIfRespondentIsSystemUser(userCase)).toEqual(true);
+  });
 });
 
 describe('activateRespondentApplicationsLink', () => {
