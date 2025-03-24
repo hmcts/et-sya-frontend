@@ -27,7 +27,7 @@ import { AnyRecord } from '../../../../main/definitions/util-types';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import commonRaw from '../../../../main/resources/locales/en/translation/common.json';
-import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/notification-details.json';
 import mockUserCaseWithCitizenHubLinks from '../../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import {
   mockECCNotification,
@@ -56,7 +56,7 @@ describe('Tribunal order or request helper', () => {
   const summaryListClass = 'govuk-!-font-weight-regular-m';
 
   const translations: AnyRecord = {
-    ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
+    ...req.t(TranslationKeys.NOTIFICATION_DETAILS, { returnObjects: true }),
     ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
   };
@@ -261,7 +261,7 @@ describe('Tribunal order or request helper', () => {
       expect(result).toEqual([
         {
           copyToOtherParty: YesOrNo.YES,
-          redirectUrl: '/tribunal-order-or-request-details/6423be5b-0b82-462a-af1d-5f1df39686ab?lng=en',
+          redirectUrl: '/notification-details/6423be5b-0b82-462a-af1d-5f1df39686ab?lng=en',
         },
       ]);
     });
@@ -328,7 +328,7 @@ describe('Tribunal order or request helper', () => {
     it('should populate notification with status and color', async () => {
       const populatedNotification = await getSendNotifications([notificationItem], translations, '?lng=en');
       expect(populatedNotification[0].redirectUrl).toEqual(
-        '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+        '/notification-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
       );
       expect(populatedNotification[0].statusColor).toEqual('--red');
       expect(populatedNotification[0].displayStatus).toEqual('Not viewed yet');
@@ -356,6 +356,13 @@ describe('Tribunal order or request helper', () => {
       );
       expect(populatedNotification[0].displayStatus).toEqual('Stored');
       expect(populatedNotification[0].statusColor).toEqual('--yellow');
+    });
+
+    it('should filter and show ECC notifications when eccFlag is true', async () => {
+      mockLdClient.mockResolvedValue(true);
+      const populatedNotification = await getSendNotifications([mockECCNotification], translations, '?lng=en');
+
+      expect(populatedNotification).toHaveLength(1);
     });
   });
 

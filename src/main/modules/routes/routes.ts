@@ -409,8 +409,8 @@ export class Routes {
     app.get(PageUrls.HEARING_DOCUMENT_REMOVE, new HearingDocumentFileController().get);
 
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
-    app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
-    app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
+    app.get(PageUrls.NOTIFICATIONS, new TribunalOrdersAndRequestsController().get);
+    app.get(PageUrls.NOTIFICATION_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.ALL_JUDGMENTS, new AllJudgmentsController().get);
     app.get(PageUrls.JUDGMENT_DETAILS, new JudgmentDetailsController().get);
     app.get(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().get);

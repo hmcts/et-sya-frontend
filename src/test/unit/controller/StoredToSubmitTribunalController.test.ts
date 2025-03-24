@@ -60,7 +60,7 @@ describe('Stored to Submit Tribunal Controller GET', () => {
       TranslationKeys.STORED_TO_SUBMIT,
       expect.objectContaining({
         title: 'Respond to the tribunal',
-        viewCorrespondenceLink: '/tribunal-order-or-request-details/234?lng=en',
+        viewCorrespondenceLink: '/notification-details/234?lng=en',
         cancelLink: '/citizen-hub/123?lng=en',
       })
     );

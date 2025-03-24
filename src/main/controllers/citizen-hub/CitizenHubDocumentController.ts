@@ -136,10 +136,9 @@ function getEccNotificationRows(notifications: SendNotificationTypeItem[]) {
       time: new Date(n.value.date),
       date: n.value.date,
       subject: n.subject,
-      link: `<a href="${PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(
-        ':orderId',
-        n.id
-      )}" target="_blank" class="govuk-link">${n.value.sendNotificationTitle}</a>`,
+      link: `<a href="${PageUrls.NOTIFICATION_DETAILS.replace(':orderId', n.id)}" target="_blank" class="govuk-link">${
+        n.value.sendNotificationTitle
+      }</a>`,
     };
   });
 }
