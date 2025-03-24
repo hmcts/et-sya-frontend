@@ -24,7 +24,7 @@
     "test:coverage": "jest --coverage",
     "test:routes": "jest -c jest.routes.config.js",
     "test:translations": "jest ./src/test/unit/translations.spec.ts",
-    "test:accessibility": "yarn playwright install chromium && yarn playwright test --project=chromium --grep @Accessibility",
+    "test:accessibility": "yarn playwright install && yarn playwright test --project=chromium --grep @Accessibility",
     "publish-pact": "NODE_PATH=. NODE_CONFIG_DIR=./config LOG_LEVEL=error node -r ts-node/register src/test/api/pact/publish/publish.ts",
     "fortifyScan": "./src/test/java/gradlew -p src/test/java fortifyScan",
     "test:pact:run-and-publish": "yarn test:pact && yarn publish-pact",

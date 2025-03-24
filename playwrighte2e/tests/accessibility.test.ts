@@ -22,18 +22,15 @@ async function expectNoErrors(page: Page): Promise<void> {
   expect(errors.length).toBe(0);
 }
 
-function testAccessibility(url: string): void {
-  test(`Page ${url} should have no accessibility errors`, async ({ page }) => {
-    if (!ignoredPages.includes(url)) {
-      const pageUrl = envUrl + url;
-      await page.goto(pageUrl);
-      await expectNoErrors(page);
-    }
-  });
-}
-
-test.describe('SYA Accessibility', { tag: '@Accessibility' }, () => {
-  Object.values({ ...PageUrls, CITIZEN_HUB: '/citizen-hub/a11y' }).forEach(url => {
-    testAccessibility(url);
-  });
+test.describe('SYA Accessibility', () => {
+    Object.values({ ...PageUrls, CITIZEN_HUB: '/citizen-hub/a11y' }).forEach(url => {
+      // testAccessibility(url);
+      test(`Page ${url} should have no accessibility errors`, {tag: '@Accessibility'}, async ({ page }) => {
+        if (!ignoredPages.includes(url)) {
+          const pageUrl = envUrl + url;
+          await page.goto(pageUrl);
+          await expectNoErrors(page);
+        }
+      });
+    });
 });
