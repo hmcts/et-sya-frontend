@@ -50,7 +50,16 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('smoketest:aat') {
-    loadVaultSecrets(inTestTrue)
+     loadVaultSecrets(inTestTrue)
+     publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'SYA Smoke Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       stage('Accessibility') {
           yarnBuilder.yarn('test:accessibility')
           publishHTML([
@@ -80,19 +89,28 @@ withPipeline(type, product, component) {
 
   afterAlways('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
-       stage('Accessibility') {
-          yarnBuilder.yarn('test:accessibility')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : 'playwright-report',
-              reportFiles          : 'index.html',
-              reportName           : 'Accessibility results'
-          ])
-          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-      }
-      loadVaultSecrets(inTestFalse)
+    publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'SYA Smoke Test Report'
+            ])
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    // stage('Accessibility') {
+    //       yarnBuilder.yarn('test:accessibility')
+    //       publishHTML([
+    //           allowMissing         : true,
+    //           alwaysLinkToLastBuild: true,
+    //           keepAll              : true,
+    //           reportDir            : 'playwright-report',
+    //           reportFiles          : 'index.html',
+    //           reportName           : 'Accessibility results'
+    //       ])
+    //     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    // }
+    loadVaultSecrets(inTestFalse)
   }
 
   afterAlways('functionaltest:preview') {
