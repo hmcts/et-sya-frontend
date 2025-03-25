@@ -13,8 +13,8 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 def secrets = [
     'et-${env}': [
-        secret('test-username', 'TEST_CASE_USERNAME'),
-        secret('test-password', 'TEST_CASE_PASSWORD')
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
     ]
 ]
 
@@ -50,40 +50,85 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('smoketest:aat') {
-    loadVaultSecrets(inTestTrue)
+     loadVaultSecrets(inTestTrue)
+     publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'SYA Smoke Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       stage('Accessibility') {
-          yarnBuilder.yarn('tests:a11y')
+          yarnBuilder.yarn('test:accessibility')
           publishHTML([
               allowMissing         : true,
               alwaysLinkToLastBuild: true,
               keepAll              : true,
-              reportDir            : "functional-output/accessibility-report",
-              reportFiles          : 'a11y.html',
+              reportDir            : 'playwright-report',
+              reportFiles          : 'index.html',
               reportName           : 'Accessibility results'
-      ])
+          ])
+          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       }
-      loadVaultSecrets(inTestFalse)
+    loadVaultSecrets(inTestFalse)
     sh """
        yarn playwright install
     """
   }
+
+  afterAlways('functionalTest:aat') {
+      publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'ET Functional UI Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+  }
+
   afterAlways('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
-      stage('Accessibility') {
-          yarnBuilder.yarn('tests:a11y')
+    publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'SYA Smoke Test Report'
+            ])
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    stage('Accessibility') {
+          yarnBuilder.yarn('test:accessibility')
           publishHTML([
               allowMissing         : true,
               alwaysLinkToLastBuild: true,
               keepAll              : true,
-              reportDir            : "functional-output/accessibility-report",
-              reportFiles          : 'a11y.html',
+              reportDir            : 'playwright-report',
+              reportFiles          : 'index.html',
               reportName           : 'Accessibility results'
-        ])
-      }
-      loadVaultSecrets(inTestFalse)
+          ])
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    }
+    loadVaultSecrets(inTestFalse)
     sh """
        yarn playwright install
     """
+  }
+
+  afterAlways('functionalTest:preview') {
+      publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'ET Functional UI Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
   enablePactAs([

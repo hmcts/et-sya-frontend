@@ -2,7 +2,7 @@ import ContactTheTribunalSelectedController from '../../../main/controllers/Cont
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { YesOrNo } from '../../../main/definitions/case';
-import {PageUrls, TranslationKeys, languages, ErrorPages} from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunalSelectedRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal-selected.json';
 import { mockFile } from '../mocks/mockFile';

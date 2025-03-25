@@ -16,6 +16,7 @@ parameters([
 def type = "nodejs"
 def product = "et"
 def component = "sya"
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def urlExclusions = params.ZAP_URL_EXCLUSIONS
 def alertFilters = params.ALERT_FILTERS
 def customCookies = params.CUSTOM_COOKIES
@@ -37,37 +38,70 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-
-    enableFullFunctionalTest(int timeout=300)
-    enableCrossBrowserTest()
     enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
 
-    afterAlways('crossBrowserTest') {
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-        enableSlackNotifications('#et-builds')
-    }
-
-    before('fullFunctionalTest') {
+    before('fortify-scan') {
         sh """
            yarn playwright install
         """
     }
+    
+    afterAlways('fortify-scan') {
+        stage('Functional SYA UI tests chromium') {
+            try {
+                yarnBuilder.yarn('test:functional-chromium')
+            } catch (Error) {
+                unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+                publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'SYA-UITestChromiumReport'
+                ])
+                steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+            }
+        }
+        stage('Functional SYA UI tests firefox') {
+            try {
+                yarnBuilder.yarn('test:functional-firefox')
+            } catch (Error) {
+                unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+                publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'SYA-UITestFirefoxReport'
+                ])
+                steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+            }
+        }
+        stage('Functional SYA UI tests webkit ') {
+            try {
+                yarnBuilder.yarn('test:functional-webkit')
+            } catch (Error) {
+                unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+                publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'SYA-UITestWebkitReport'
+                ])
+                steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+            }
+        }
 
-    afterAlways('fullFunctionalTest') {
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-
-        publishHTML target: [
-                allowMissing : true,
-                alwaysLinkToLastBuild: true,
-                keepAll : true,
-                reportDir : "functional-output/reports/",
-                reportFiles : "ET-sya-functional-tests.html",
-                reportName : "ET SYA Functional Tests Report"
-        ]
-        //enableSlackNotification('#et-builds')
     }
 
     afterSuccess('fortify-scan') {

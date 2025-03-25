@@ -1,3 +1,5 @@
+/* eslint import/no-named-as-default: "off" */
+
 import os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
