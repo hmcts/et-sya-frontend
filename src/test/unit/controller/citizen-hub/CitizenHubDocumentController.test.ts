@@ -214,17 +214,17 @@ describe('Citizen Hub Document Controller', () => {
       [
         { text: '3 December 2023' },
         { text: 'Response (ET3), Employer Contract Claim' },
-        { html: '<a href="/tribunal-order-or-request-details/3" target="_blank" class="govuk-link">Show</a>' },
+        { html: '<a href="/notification-details/3" target="_blank" class="govuk-link">Show</a>' },
       ],
       [
         { text: '2 December 2023' },
         { text: 'Employer Contract Claim' },
-        { html: '<a href="/tribunal-order-or-request-details/2" target="_blank" class="govuk-link">Show</a>' },
+        { html: '<a href="/notification-details/2" target="_blank" class="govuk-link">Show</a>' },
       ],
       [
         { text: '1 December 2023' },
         { text: 'Response (ET3)' },
-        { html: '<a href="/tribunal-order-or-request-details/1" target="_blank" class="govuk-link">Show</a>' },
+        { html: '<a href="/notification-details/1" target="_blank" class="govuk-link">Show</a>' },
       ],
       [
         { text: '6 November 2023' },

@@ -18,8 +18,8 @@ module.exports = async function () {
   I.see('Your request and applications');
   I.see("Respondent's applications");
   I.see('Contact the tribunal about your case');
-  I.see('Orders and requests from the tribunal');
-  I.see('All orders and requests issued by the tribunal');
+  I.see('Notifications from the tribunal');
+  I.see('All notifications from the tribunal');
   I.see('Judgments from the tribunal');
   I.see('View all judgments');
   I.see('Case documents');

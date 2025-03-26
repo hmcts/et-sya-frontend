@@ -581,7 +581,7 @@ describe('getRequestDocId', () => {
   it('should return the correct request document ID for Tribunal page', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -627,7 +627,7 @@ describe('getRequestDocId', () => {
   it('should return undefined when no request document matches the docId', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -651,7 +651,7 @@ describe('getRequestDocId', () => {
   it('should return undefined when sendNotificationUploadDocument is empty', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -750,7 +750,7 @@ describe('getRequestTribunalResponseDocId', () => {
   it('should return the correct tribunal response document ID for Tribunal page', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -780,7 +780,7 @@ describe('getRequestTribunalResponseDocId', () => {
   it('should return undefined when no document matches the docId', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -811,7 +811,7 @@ describe('getRequestTribunalResponseDocId', () => {
   it('should return undefined when respondNotificationUploadDocument is empty', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -845,7 +845,7 @@ describe('getRequestResponseDocId', () => {
   it('should return the correct response document ID for Tribunal page', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -875,7 +875,7 @@ describe('getRequestResponseDocId', () => {
   it('should return undefined when no document matches the docId', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -906,7 +906,7 @@ describe('getRequestResponseDocId', () => {
   it('should return undefined when supportingMaterial is empty', () => {
     const req = mockRequest({
       session: {
-        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        documentDownloadPage: PageUrls.NOTIFICATION_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {

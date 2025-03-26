@@ -76,7 +76,7 @@ export default class StoredToSubmitTribunalController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    req.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+    req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
 
