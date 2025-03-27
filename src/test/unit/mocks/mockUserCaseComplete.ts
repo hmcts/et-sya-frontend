@@ -178,6 +178,7 @@ export default {
       respondentAddressPostcode: 'SW1H 9AQ',
       respondentEnterPostcode: 'SW1H 9AQ',
       ccdId: '3453xaa',
+      idamId: undefined,
     },
     {
       respondentName: 'Version1',
@@ -191,6 +192,7 @@ export default {
       respondentAddressPostcode: 'SW1A 1AA',
       respondentEnterPostcode: 'SW1A 1AA',
       ccdId: '3454xaa',
+      idamId: undefined,
     },
   ],
   et3DueDate: undefined,

@@ -47,6 +47,7 @@ export interface Respondent {
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
   ccdId?: string;
+  idamId?: string;
 }
 
 export interface RespondentApiModel {
