@@ -130,7 +130,7 @@ describe('getSectionStatusForEmployment()', () => {
 describe('setUserCaseWithRedisData', () => {
   it(
     'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
-      'req, and caseData parameters',
+      'req, and caseData parameters with caseType of Multiple',
     () => {
       const req = mockRequest({ session: mockSession([], [], []) });
       const caseData =
@@ -143,7 +143,21 @@ describe('setUserCaseWithRedisData', () => {
       );
     }
   );
+  it(
+    'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
+      'req, and caseData parameters with caseType of null, meaning it defaults to Single',
+    () => {
+      const req = mockRequest({ session: mockSession([], [], []) });
+      const caseData =
+        '[["claimantRepresentedQuestion","No"],["caseType",""],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
+      setUserCaseWithRedisData(req, caseData);
+
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"id":"testUserCaseId","state":"AWAITING_SUBMISSION_TO_HMCTS","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"createdDate":"August 19, 2022","lastModified":"August 19, 2022","claimantRepresentedQuestion":"No","caseType":"Single"}'
+      );
+    }
+  );
   it(
     'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
       'req, and caseData, session.usercase is undefined',
@@ -151,12 +165,12 @@ describe('setUserCaseWithRedisData', () => {
       const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
       req.session.userCase = undefined;
       const caseData =
-        '[["claimantRepresentedQuestion","No"],["caseType","Multiple"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+        '[["claimantRepresentedQuestion","No"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
       setUserCaseWithRedisData(req, caseData);
 
       expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"claimantRepresentedQuestion":"No","caseType":"Multiple","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"]}'
+        '{"claimantRepresentedQuestion":"No","caseType":"Single","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"]}'
       );
     }
   );
