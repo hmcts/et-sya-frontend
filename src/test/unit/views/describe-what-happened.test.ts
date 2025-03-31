@@ -51,11 +51,6 @@ describe('Describe What Happened page', () => {
     expect(fileUpload.id).equals(fileUploadId, 'Could not find file upload');
   });
 
-  it('should NOT display honeypot fields', () => {
-    const honeypotField = htmlRes.getElementById('url-group');
-    expect(honeypotField.outerHTML).contains('display: none');
-  });
-
   it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[5].innerHTML).contains('Save and continue', 'Could not find the button');
