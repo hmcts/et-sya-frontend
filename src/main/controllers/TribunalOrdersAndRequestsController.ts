@@ -23,7 +23,7 @@ export class TribunalOrdersAndRequestsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-      ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
+      ...req.t(TranslationKeys.NOTIFICATIONS, { returnObjects: true }),
     };
 
     try {
@@ -40,9 +40,9 @@ export class TribunalOrdersAndRequestsController {
       const content = getPageContent(req, <FormContent>{}, [
         TranslationKeys.SIDEBAR_CONTACT_US,
         TranslationKeys.COMMON,
-        TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS,
+        TranslationKeys.NOTIFICATIONS,
       ]);
-      res.render(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, {
+      res.render(TranslationKeys.NOTIFICATIONS, {
         ...content,
         notifications,
         translations,

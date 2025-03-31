@@ -95,7 +95,7 @@ export const generateAccordionItems = (
     const label = translations.sections[application].label;
     const href =
       application === 'documents'
-        ? '/tribunal-orders-and-requests>' + label + languageParam + '</a>'
+        ? '/notifications>' + label + languageParam + '</a>'
         : '/contact-the-tribunal/' + application + '>' + label + languageParam + '</a>';
 
     return {

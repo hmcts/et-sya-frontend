@@ -35,7 +35,7 @@ describe('getAppDetailsLink', () => {
 
 describe('getSendNotificationDetailsLink', () => {
   it('should return /application-details with application id', () => {
-    const expected = '/tribunal-order-or-request-details/1234?lng=en';
+    const expected = '/notification-details/1234?lng=en';
     const actual = getSendNotificationDetailsLink('1234', languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
