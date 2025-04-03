@@ -42,7 +42,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.claimantRepresentedQuestion =
     userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED) === YesOrNo.YES.toString() ? YesOrNo.YES : YesOrNo.NO;
   req.session.userCase.caseType =
-    userDataMap.get(CaseDataCacheKey.CASE_TYPE) === CaseType.SINGLE.toString() ? CaseType.SINGLE : CaseType.MULTIPLE;
+    userDataMap.get(CaseDataCacheKey.CASE_TYPE) === CaseType.MULTIPLE.toString() ? CaseType.MULTIPLE : CaseType.SINGLE;
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
