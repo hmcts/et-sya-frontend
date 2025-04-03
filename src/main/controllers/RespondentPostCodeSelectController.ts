@@ -34,11 +34,12 @@ export default class RespondentPostCodeSelectController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const respondentEnterPostcode = req.session.userCase.respondentAddressTypes.filter(
+    const respondentEnterPostcode = req.session.userCase.respondentAddressTypes?.filter(
       r => r.label.toString().localeCompare('No addresses found') === 0
     );
+
     let targetUrl;
-    if (respondentEnterPostcode.length === 1) {
+    if (respondentEnterPostcode?.length === 1) {
       targetUrl = PageUrls.RESPONDENT_ADDRESS_MANUAL;
     } else {
       targetUrl = PageUrls.RESPONDENT_ADDRESS;
