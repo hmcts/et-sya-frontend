@@ -1,0 +1,41 @@
+{
+  "title": "Address details",
+  "h1": "What is the address of ",
+  "change": "Change",
+  "selectAddress": "Select an address",
+  "selectDefault": "Several addresses found...",
+  "cannotFindAddress": "I cannot find the address in the list",
+  "postcodeErrorText": "Enter a postcode. For example, SW1 1AA",
+  "findAddress": "Find address",
+  "pageText": "You should be able to find the address on your payslips, contract or other official documents.",
+  "insetText": "This should be the same respondent address given to Acas.",
+  "town": "Town or city",
+  "manualAddress": "The respondent address is outside the UK",
+  "errors": {
+    "addressPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "notSelected": "Select an address"
+    },
+    "respondentAddress1": {
+      "required": "Enter the first line of the respondent address - up to 100 characters",
+      "invalid": "Enter a valid first line of the respondent address - up to 100 characters"
+    },
+    "respondentAddress2": {
+      "required": "Enter the second line of the respondent address - up to 50 characters",
+      "invalid": "Enter a valid second line of the respondent address - up to 50 characters"
+    },
+    "respondentAddressTown": {
+      "required": "Enter a town or city for the respondent address - up to 50 characters",
+      "invalid": "Enter a valid town or city for the respondent address - up to 50 characters"
+    },
+    "respondentAddressCountry": {
+      "required": "Enter a country for the respondent address - up to 50 characters",
+      "invalid": "Enter a valid country for the respondent address - up to 50 characters"
+    },
+    "respondentAddressPostcode": {
+      "required": "Postcode is required. Enter a postcode. For example, SW1 1AA",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA"
+    }
+  }
+}
