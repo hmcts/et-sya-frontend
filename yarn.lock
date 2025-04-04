@@ -14301,8 +14301,8 @@ __metadata:
   linkType: hard
 
 "sass@npm:^1.65.1":
-  version: 1.86.2
-  resolution: "sass@npm:1.86.2"
+  version: 1.86.3
+  resolution: "sass@npm:1.86.3"
   dependencies:
     "@parcel/watcher": ^2.4.1
     chokidar: ^4.0.0
@@ -14313,7 +14313,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: e021ca64cf1b90c7f8c8dff2a5c6757a61ef7a808c263f332d2404d2fc4fb21180e7ef053300fdfd883736d857181de6d8e8e008dd69c541f2968d9eda259a6d
+  checksum: 743091217d4f72d261177409d2aa592ca6be49e95c84c8bd06c3ff06ee0113b8532ad6b30c95d923cc1b3470241989983bdeb3b0710b1570ffed0768aa4e5227
   languageName: node
   linkType: hard
 
