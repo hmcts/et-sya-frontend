@@ -7,7 +7,7 @@ import {
 import { FormContent } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 
-export const respondentAddressContent: FormContent = {
+export const createRespondentAddressContent = (postcodeLabel: string): FormContent => ({
   fields: {
     respondentAddress1: {
       id: 'address1',
@@ -65,7 +65,7 @@ export const respondentAddressContent: FormContent = {
       name: 'address-postcode',
       type: 'text',
       classes: 'govuk-label govuk-input--width-10',
-      label: l => l.postcodeRequired,
+      label: postcodeLabel,
       labelSize: null,
       attributes: {
         autocomplete: 'postal-code',
@@ -76,4 +76,4 @@ export const respondentAddressContent: FormContent = {
   },
   submit: submitButton,
   saveForLater: saveForLaterButton,
-};
+});

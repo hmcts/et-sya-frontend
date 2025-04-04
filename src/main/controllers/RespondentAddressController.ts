@@ -1,90 +1,19 @@
 import { Response } from 'express';
 
-import {
-  isValidAddressFirstLine,
-  isValidAddressSecondLine,
-  isValidCountryTownOrCity,
-} from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { FormFields } from '../definitions/form';
+import enterAddressTranslations from '../resources/locales/en/translation/enter-address.json';
 
 import { RespondentAddressHelper } from './helpers/RespondentAddressHelper';
+import { createRespondentAddressContent } from './helpers/SharedFormContent';
 
 export default class RespondentAddressController {
   private readonly form: Form;
-  private readonly respondentAddressContent: FormContent = {
-    fields: {
-      respondentAddress1: {
-        id: 'address1',
-        name: 'address-line1',
-        type: 'text',
-        classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.addressLine1,
-        labelSize: null,
-        attributes: {
-          autocomplete: 'address-line1',
-          maxLength: 150,
-        },
-        validator: isValidAddressFirstLine,
-      },
-      respondentAddress2: {
-        id: 'address2',
-        name: 'address-line2',
-        type: 'text',
-        classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.addressLine2,
-        labelSize: null,
-        attributes: {
-          autocomplete: 'address-line2',
-          maxLength: 50,
-        },
-        validator: isValidAddressSecondLine,
-      },
-      respondentAddressTown: {
-        id: 'addressTown',
-        name: 'address-town',
-        type: 'text',
-        classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.town,
-        labelSize: null,
-        attributes: {
-          autocomplete: 'address-level2',
-          maxLength: 50,
-        },
-        validator: isValidCountryTownOrCity,
-      },
-      respondentAddressCountry: {
-        id: 'addressCountry',
-        name: 'address-country',
-        type: 'text',
-        classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.country,
-        labelSize: null,
-        attributes: {
-          maxLength: 50,
-        },
-        validator: isValidCountryTownOrCity,
-      },
-      respondentAddressPostcode: {
-        id: 'addressPostcode',
-        name: 'address-postcode',
-        type: 'text',
-        classes: 'govuk-label govuk-input--width-10',
-        label: l => l.postcode,
-        labelSize: null,
-        attributes: {
-          autocomplete: 'postal-code',
-          maxLength: 14,
-        },
-      },
-    },
-    submit: submitButton,
-    saveForLater: saveForLaterButton,
-  };
+
+  respondentAddressContent = createRespondentAddressContent(enterAddressTranslations.postcode);
 
   constructor() {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
