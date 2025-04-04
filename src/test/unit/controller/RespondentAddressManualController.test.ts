@@ -28,7 +28,7 @@ describe('Respondent Address Manual Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_ADDRESS_MANUAL, expect.anything());
   });
 
-  it('should render the Work Address page on post', async () => {
+  it('should render the Work Address page on post when only one respondent', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
@@ -40,11 +40,15 @@ describe('Respondent Address Manual Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ body });
 
-    request.session.userCase = userCaseWithRespondent;
+    request.session.userCase = {
+      ...userCaseWithRespondent,
+      respondents: [{ respondentNumber: 1, respondentName: 'Globo Gym' }],
+      pastEmployer: YesOrNo.YES,
+    };
 
     await controller.post(request, response);
 
-    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/work-address');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1' + PageUrls.WORK_ADDRESS);
   });
 
   it('should render the Acas Cert Num page on post when more than one respondent', async () => {

@@ -11,13 +11,8 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { getLogger } from '../logger';
 
-import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
-
-const logger = getLogger('RespondentAddressController');
+import { RespondentAddressHelper } from './helpers/RespondentAddressHelper';
 
 export default class RespondentAddressController {
   private readonly form: Form;
@@ -101,29 +96,14 @@ export default class RespondentAddressController {
       userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
         ? PageUrls.ACAS_CERT_NUM
         : PageUrls.WORK_ADDRESS;
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await RespondentAddressHelper.handlePost(req, res, this.form, nextPage);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const respondents = req.session.userCase.respondents;
-    const x = req.session.userCase.respondentAddressTypes;
-    const respondentIndex = getRespondentIndex(req);
-    const selectedRespondent = respondents[respondentIndex];
-    const content = getPageContent(
-      req,
-      this.respondentAddressContent,
-      [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
-      respondentIndex
-    );
-    if (x !== undefined) {
-      fillRespondentAddressFields(x, req.session.userCase);
-    }
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.RESPONDENT_ADDRESS, {
-      ...content,
-      respondentName: selectedRespondent.respondentName,
-      previousPostcode: selectedRespondent.respondentAddressPostcode,
-    });
+    RespondentAddressHelper.handleGet(req, res, this.form, this.respondentAddressContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.RESPONDENT_ADDRESS,
+      TranslationKeys.ENTER_ADDRESS,
+    ]);
   };
 }
