@@ -33,9 +33,8 @@ export const isValidCountryTownOrCity: AddressValidator = value => {
 };
 
 export const isValidUKPostcode: AddressValidator = value => {
-  const fieldNotFilledIn = isFieldFilledIn(value);
-  if (fieldNotFilledIn) {
-    return fieldNotFilledIn;
+  if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
+    return ValidationErrors.REQUIRED;
   }
 
   if (!(value as string).match(/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i)) {

@@ -10,10 +10,10 @@ import enterAddressTranslations from '../resources/locales/en/translation/enter-
 import { RespondentAddressHelper } from './helpers/RespondentAddressHelper';
 import { createRespondentAddressContent } from './helpers/SharedFormContent';
 
-export default class RespondentAddressController {
+export default class RespondentAddressManualController {
   private readonly form: Form;
 
-  respondentAddressContent = createRespondentAddressContent(enterAddressTranslations.postcode);
+  respondentAddressContent = createRespondentAddressContent(enterAddressTranslations.postcodeRequired);
 
   constructor() {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
@@ -31,7 +31,7 @@ export default class RespondentAddressController {
   public get = (req: AppRequest, res: Response): void => {
     RespondentAddressHelper.handleGet(req, res, this.form, this.respondentAddressContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_ADDRESS,
+      TranslationKeys.RESPONDENT_ADDRESS_MANUAL,
       TranslationKeys.ENTER_ADDRESS,
     ]);
   };
