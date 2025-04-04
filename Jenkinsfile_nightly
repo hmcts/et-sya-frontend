@@ -39,6 +39,9 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableFortifyScan('et-aat')
+    enableSecurityScan(
+           urlExclusions: urlExclusions
+    )
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
@@ -48,7 +51,7 @@ withNightlyPipeline(type, product, component) {
            yarn playwright install
         """
     }
-    
+
     afterAlways('fortify-scan') {
         stage('Functional SYA UI tests chromium') {
             try {
