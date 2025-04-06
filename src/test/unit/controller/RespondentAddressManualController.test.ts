@@ -28,29 +28,6 @@ describe('Respondent Address Manual Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_ADDRESS_MANUAL, expect.anything());
   });
 
-  it('should render the Work Address page on post when only one respondent', async () => {
-    const body = {
-      respondentAddress1: '10 test street',
-      respondentAddressTown: 'test',
-      respondentAddressPostcode: 'AB1 2CD',
-      respondentAddressCountry: 'Test Country',
-    };
-    const controller = new RespondentAddressManualController();
-
-    const response = mockResponse();
-    const request = mockRequest({ body });
-
-    request.session.userCase = {
-      ...userCaseWithRespondent,
-      respondents: [{ respondentNumber: 1, respondentName: 'Globo Gym' }],
-      pastEmployer: YesOrNo.YES,
-    };
-
-    await controller.post(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/respondent/1' + PageUrls.WORK_ADDRESS);
-  });
-
   it('should render the Acas Cert Num page on post when more than one respondent', async () => {
     const body = {
       respondentAddress1: '10 test street',
@@ -145,7 +122,7 @@ describe('Respondent Address Manual Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it('should add respondent address to the session userCase', async () => {
+  it('should handle post request and should add respondent address to the session userCase', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
@@ -180,5 +157,28 @@ describe('Respondent Address Manual Controller', () => {
     expect(req.session.userCase.respondents[0].respondentAddressPostcode).toStrictEqual('AB1 2CD');
 
     expect(req.session.userCase.respondents[0].respondentNumber).toStrictEqual(1);
+  });
+
+  it('should handle post request and redirect to Work Address page when only one respondent and past employer is YES', async () => {
+    const body = {
+      respondentAddress1: '10 test street',
+      respondentAddressTown: 'test',
+      respondentAddressPostcode: 'AB1 2CD',
+      respondentAddressCountry: 'UpCountry',
+    };
+    const respondentAddressManualController = new RespondentAddressManualController();
+
+    const response = mockResponse();
+    const request = mockRequest({ body });
+
+    request.session.userCase = {
+      ...userCaseWithRespondent,
+      respondents: [{ respondentNumber: 1, respondentName: 'Globo Gym' }],
+      pastEmployer: YesOrNo.YES,
+    };
+
+    await respondentAddressManualController.post(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1' + PageUrls.WORK_ADDRESS);
   });
 });
