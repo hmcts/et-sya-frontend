@@ -55,15 +55,15 @@ export default class RespondentPostCodeSelectController {
     req.session.userCase.respondentAddresses = response;
     req.session.userCase.respondentAddressTypes = [];
 
-    if (response.length > 0) {
-      req.session.userCase.respondentAddressTypes.push({
-        selected: true,
-        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSeveral : locales.selectDefaultSeveral,
-      });
-    } else if (response.length === 1) {
+    if (response.length === 1) {
       req.session.userCase.respondentAddressTypes.push({
         selected: true,
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSingle : locales.selectDefaultSingle,
+      });
+    } else if (response.length > 0) {
+      req.session.userCase.respondentAddressTypes.push({
+        selected: true,
+        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSeveral : locales.selectDefaultSeveral,
       });
     } else {
       //if no matching address found
@@ -72,6 +72,7 @@ export default class RespondentPostCodeSelectController {
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultNone : locales.selectDefaultNone,
       });
     }
+
     for (const address of response) {
       req.session.userCase.respondentAddressTypes.push({
         value: response.indexOf(address),
