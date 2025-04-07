@@ -41,5 +41,3 @@ src/test/end-to-end/functional-output/*
 !.yarn/versions
 
 .swc/*
-src/main/auth/index.ts
-config/development.json
