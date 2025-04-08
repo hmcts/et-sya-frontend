@@ -6,6 +6,7 @@ import {
 } from '../../components/form/address_validator';
 import { FormContent } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
+const POSTCODE_OR_AREA_CODE_REQUIRED = 'Postcode or area code (required)';
 
 export const createRespondentAddressContent = (postcodeLabel: string): FormContent => ({
   fields: {
@@ -71,7 +72,7 @@ export const createRespondentAddressContent = (postcodeLabel: string): FormConte
         autocomplete: 'postal-code',
         maxLength: 14,
       },
-      validator: isValidUKPostcode,
+      validator: postcodeLabel === POSTCODE_OR_AREA_CODE_REQUIRED ? isValidUKPostcode : null,
     },
   },
   submit: submitButton,

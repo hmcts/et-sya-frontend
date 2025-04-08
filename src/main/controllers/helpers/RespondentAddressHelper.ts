@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
+import { FormContent } from '../../definitions/form';
 import { getLogger } from '../../logger';
 
 import { handlePostLogicForRespondent } from './CaseHelpers';
@@ -16,8 +17,7 @@ export class RespondentAddressHelper {
     await handlePostLogicForRespondent(req, res, form, logger, redirectUrl);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static handleGet(req: AppRequest, res: Response, form: Form, content: any, translationKeys: string[]): void {
+  static handleGet(req: AppRequest, res: Response, form: Form, content: FormContent, translationKeys: string[]): void {
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = respondents[respondentIndex];
