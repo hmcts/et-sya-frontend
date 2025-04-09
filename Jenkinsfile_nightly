@@ -5,7 +5,9 @@ properties([
 pipelineTriggers([cron('H 8 * * 1-5')]),
 parameters([
         string(name: 'TEST_URL', defaultValue: 'https://et-sya.aat.platform.hmcts.net', description: 'The URL you want to run tests against'),
-        string(name: 'ZAP_URL_EXCLUSIONS', defaultValue: "-config globalexcludeurl.url_list.url\\(1\\).regex=\\'.*jquery-3.5.1.min.js${'$'}\\' -config globalexcludeurl.url_list.url\\(2\\).regex=\\'.*/assets/images.*\\' -config globalexcludeurl.url_list.url\\(3\\).regex=\\'.*/assets/stylesheets.*\\' -config globalexcludeurl.url_list.url\\(4\\).regex=\\'.*/assets/javascripts.*\\' -config globalexcludeurl.url_list.url\\(5\\).regex=\\'.*/ruxitagentjs_.*\\' -config globalexcludeurl.url_list.url\\(6\\).regex=\\'.*/terms-and-conditions.*\\' -config globalexcludeurl.url_list.url\\(7\\).regex=\\'.*/privacy-policy.*\\' -config globalexcludeurl.url_list.url\\(8\\).regex=\\'.*/contact-us.*\\' -config globalexcludeurl.url_list.url\\(9\\).regex=\\'.*/login.*\\' -config globalexcludeurl.url_list.url\\(10\\).regex=\\'.*/cookies.*\\' -config globalexcludeurl.url_list.url\\(11\\).regex=\\'.*/cookie-preferences.*\\' -config globalexcludeurl.url_list.url\\(12\\).regex=\\'.*jquery-3.4.1.min.js${'$'}\\'")
+        string(name: 'ZAP_URL_EXCLUSIONS', defaultValue: "-config globalexcludeurl.url_list.url\\(1\\).regex='.*/assets.*' -config globalexcludeurl.url_list.url\\(2\\).regex='.*/cookies.*' -config globalexcludeurl.url_list.url\\(3\\).regex='.*/main.[a-fA-F0-9]{20}.js' -config globalexcludeurl.url_list.url\\(4\\).regex='.*/main.[a-fA-F0-9]{20}.css' -config globalexcludeurl.url_list.url\\(5\\).regex='.*/sitemap.xml(\\?lng=en)?' -config globalexcludeurl.url_list.url\\(6\\).regex='.*/robots.txt' -config globalexcludeurl.url_list.url\\(7\\).regex='.*/accessibility.*' -config rules.cookie.ignorelist=_ga,_gid,_gat,dtCookie,dtLatC,dtPC,dtSa,rxVisitor,rxvt,i18next,et-sya-session"),
+        string(name: 'ALERT_FILTERS', defaultValue: "-config alertfilter.filters.alertFilter(0).ruleId=90027 -config alertfilter.filters.alertFilter(0).newLevel=IGNORE"),
+        string(name: 'CUSTOM_COOKIES')
     ])
 ])
 
@@ -14,7 +16,10 @@ parameters([
 def type = "nodejs"
 def product = "et"
 def component = "sya"
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def urlExclusions = params.ZAP_URL_EXCLUSIONS
+def alertFilters = params.ALERT_FILTERS
+def customCookies = params.CUSTOM_COOKIES
 def secrets = [
     'et-aat': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
@@ -33,39 +38,70 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-    enableSecurityScan(
-       urlExclusions: urlExclusions
-    )
-    enableFullFunctionalTest(int timeout=300)
-    enableCrossBrowserTest()
     enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
 
-    afterAlways('crossBrowserTest') {
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-        enableSlackNotifications('#et-builds')
-    }
-
-    before('fullFunctionalTest') {
+    before('fortify-scan') {
         sh """
            yarn playwright install
         """
     }
+    
+    afterAlways('fortify-scan') {
+        stage('Functional SYA UI tests chromium') {
+            try {
+                yarnBuilder.yarn('test:functional-chromium')
+            } catch (Error) {
+                unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+                publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'SYA-UITestChromiumReport'
+                ])
+                steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+            }
+        }
+        stage('Functional SYA UI tests firefox') {
+            try {
+                yarnBuilder.yarn('test:functional-firefox')
+            } catch (Error) {
+                unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+                publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'SYA-UITestFirefoxReport'
+                ])
+                steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+            }
+        }
+        stage('Functional SYA UI tests webkit ') {
+            try {
+                yarnBuilder.yarn('test:functional-webkit')
+            } catch (Error) {
+                unstable(message: "${STAGE_NAME} is unstable: " + Error.toString())
+            } finally {
+                publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'SYA-UITestWebkitReport'
+                ])
+                steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+            }
+        }
 
-    afterAlways('fullFunctionalTest') {
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-
-        publishHTML target: [
-                allowMissing : true,
-                alwaysLinkToLastBuild: true,
-                keepAll : true,
-                reportDir : "functional-output/reports/",
-                reportFiles : "ET-sya-functional-tests.html",
-                reportName : "ET SYA Functional Tests Report"
-        ]
-        //enableSlackNotification('#et-builds')
     }
 
     afterSuccess('fortify-scan') {

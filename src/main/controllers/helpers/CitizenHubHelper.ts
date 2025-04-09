@@ -122,14 +122,17 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
   const repCollection = userCase.representatives;
   const respondentCollection = userCase.respondents;
 
-  if (!respondentCollection || !repCollection) {
+  if (!respondentCollection) {
     return false;
   }
-
-  return (
-    respondentCollection.every(res => repCollection.some(rep => res.ccdId === rep.respondentId)) &&
-    !repCollection.some(r => r.hasMyHMCTSAccount === YesOrNo.NO || r.hasMyHMCTSAccount === undefined)
-  );
+  return respondentCollection.every(res => {
+    const assignedRep = repCollection?.find(rep => rep.respondentId === res.ccdId);
+    if (assignedRep) {
+      return assignedRep.hasMyHMCTSAccount === YesOrNo.YES;
+    } else {
+      return res.idamId !== undefined;
+    }
+  });
 };
 
 export enum StatusesInOrderOfUrgency {

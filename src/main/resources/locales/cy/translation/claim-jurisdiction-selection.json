@@ -1,0 +1,24 @@
+{
+  "title": "Ble gallwch wneud eich hawliad",
+  "p1": "Gallwch wneud hawliad yn y Tribiwnlysoedd Cyflogaeth yng Nghymru a Lloegr neu’r Tribiwnlysoedd Cyflogaeth yn Yr Alban. Maent yn awdurdodaethau ar wahân.",
+  "p2": "Gallwch wneud eich hawliad yng Nghymru a Lloegr os yw unrhyw un o’r amodau canlynol yn berthnasol:",
+  "p2li1": "Digwyddodd y materion yr ydych yn gwneud hawliad amdanynt yng Nghymru neu Loegr.",
+  "p2li2": "Mae’r atebydd rydych yn gwneud hawliad yn ei erbyn yn byw neu’n cynnal busnes yng Nghymru neu Loegr.",
+  "p2li3": "Roedd y contract gwaith sy’n ymwneud â’r hawliad wedi’i gyflawni’n rhannol yng Nghymru neu Loegr.",
+  "p2li4": "Mae gan yr hawliad rywfaint o gysylltiad â Phrydain Fawr ac mae’r cysylltiad hwnnw’n rhannol o leiaf â Chymru a Lloegr.",
+  "p3": "Gallwch wneud eich hawliad yn Yr Alban os yw unrhyw un o’r amodau canlynol yn berthnasol:",
+  "p3li1": "Digwyddodd y materion yr ydych yn gwneud hawliad amdanynt yn Yr Alban.",
+  "p3li2": "Mae’r atebydd rydych yn gwneud hawliad yn ei erbyn yn byw neu’n cynnal busnes yn Yr Alban.",
+  "p3li3": "Roedd y contract gwaith sy’n ymwneud â’r hawliad wedi’i gyflawni’n rhannol yn yr Alban.",
+  "p3li4": "Mae gan yr hawliad rywfaint o gysylltiad â Phrydain Fawr ac mae’r cysylltiad hwnnw’n rhannol o leiaf â’r Alban.",
+  "warning": "Bydd y tribiwnlys yn gwrthod eich hawliad os byddwch yn dewis awdurdodaeth lle nad oes unrhyw un o’r amodau’n berthnasol.",
+  "legend": "Ym mha awdurdodaeth ydych chi’n gwneud eich hawliad?",
+  "hintText": "Rhaid i chi ystyried yr awdurdodaeth ar yr adeg pan ddigwyddodd y materion.",
+  "radio1": "Cymru a Lloegr",
+  "radio2": "Yr Alban",
+  "errors": {
+    "claimJurisdiction": {
+      "required": "Dywedwch wrthym ym mha awdurdodaeth ydych chi'n gwneud eich hawliad."
+    }
+  }
+}

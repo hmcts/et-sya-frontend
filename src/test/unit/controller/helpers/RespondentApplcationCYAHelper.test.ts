@@ -42,7 +42,7 @@ describe('Respondent application CYA controller helper', () => {
       languages.ENGLISH_URL_PARAMETER,
       '/supporting-material',
       'downloadLink',
-      '/respond-to-application'
+      '/respond-to-application/9ced468b-000d-4b1a-8843-9faaa7bbd2e6'
     );
 
     expect(appContent[0].key).toEqual({
@@ -53,7 +53,7 @@ describe('Respondent application CYA controller helper', () => {
     expect(appContent[0].actions).toEqual({
       items: [
         {
-          href: PageUrls.RESPOND_TO_APPLICATION + languages.ENGLISH_URL_PARAMETER,
+          href: '/respond-to-application/9ced468b-000d-4b1a-8843-9faaa7bbd2e6' + languages.ENGLISH_URL_PARAMETER,
           text: common.change,
           visuallyHiddenText: respondentCYARaw.legend,
         },

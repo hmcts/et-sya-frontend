@@ -48,7 +48,7 @@ export default class SingleOrMultipleController {
   public post = (req: AppRequest, res: Response): void => {
     let redirectUrl = '';
     if (req.body.caseType === CaseType.SINGLE) {
-      redirectUrl = PageUrls.ACAS_MULTIPLE_CLAIM;
+      redirectUrl = PageUrls.CLAIM_JURISDICTION_SELECTION;
     } else if (req.body.caseType === CaseType.MULTIPLE) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {

@@ -15,7 +15,7 @@ describe('Checklist Controller', () => {
   it('should render the checklist page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-    const redirectUrl = setUrlLanguage(request, PageUrls.WORK_POSTCODE);
+    const redirectUrl = setUrlLanguage(request, PageUrls.LIP_OR_REPRESENTATIVE);
     checklistController.get(request, response);
     expect(response.render).toHaveBeenCalledWith('checklist', {
       ...(<AnyRecord>request.t('checklist', { returnObjects: true })),

@@ -41,7 +41,7 @@ const mockFile = { buffer: Buffer.alloc(10, 1), originalname: 'a-new-file.txt' }
 const mockType = 'ET_EnglandWales';
 
 const caseData =
-  '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+  '[["claimJurisdiction", "ET_EnglandWales"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 const mockUserDetails: UserDetails = {
   id: '1234',
   givenName: 'Bobby',
@@ -60,7 +60,7 @@ describe('createCase', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.INITIATE_CASE_DRAFT,
       expect.objectContaining({
-        post_code: 'SW1A 1AA',
+        case_type_id: 'ET_EnglandWales',
         case_data: {
           typesOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
           caseSource: CcdDataModel.CASE_SOURCE,
@@ -71,7 +71,7 @@ describe('createCase', () => {
             acasMultiple: undefined,
             caseType: 'Single',
             claimantRepresentedQuestion: 'Yes',
-            postcode: 'SW1A 1AA',
+            claimJurisdiction: 'ET_EnglandWales',
             typesOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
           },
           claimantIndType: {

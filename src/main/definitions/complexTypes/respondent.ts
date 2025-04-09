@@ -10,4 +10,5 @@ export interface RespondentType {
   respondent_ACAS_no?: NoAcasNumberReason;
   claimant_work_address?: Et1Address;
   responseReceived?: YesOrNo;
+  idamId?: string;
 }
