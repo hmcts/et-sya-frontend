@@ -26,9 +26,17 @@ describe('Test task List check controller', () => {
 
   it('should render the claim steps page', async () => {
     const body = { employmentAndRespondentCheck: YesOrNo.YES };
+    const userCase: Record<string, any> = {
+      pastEmployer: 'Yes', // Required field
+      startDate: { year: '2022', month: '01', day: '01' }, // Required if pastEmployer is 'Yes'
+      isStillWorking: 'Notice', // Required field
+      noticeEnds: { year: '2023', month: '12', day: '31' }, // Required if isStillWorking is 'Notice'
+      claimantWorkAddressQuestion: '123 Work Street, London', // Required field
+      respondentEnterPostcode: 'SW1A 1AA', // Required field
+    };
     const controller = new EmploymentAndRespondentCheckController();
 
-    const req = mockRequest({ body });
+    const req = mockRequest({ body, userCase });
     const res = mockResponse();
     await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);

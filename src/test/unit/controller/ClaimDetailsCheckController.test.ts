@@ -1,7 +1,8 @@
 import ClaimDetailsCheckController from '../../../main/controllers/ClaimDetailsCheckController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { ClaimTypePay } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -23,8 +24,9 @@ describe('Test claim details check controller', () => {
 
   it('should render the claim steps page', async () => {
     const body = { claimDetailsCheck: YesOrNo.YES };
+    const userCase: Partial<CaseWithId> = { claimTypePay: [ClaimTypePay.NOTICE_PAY], claimSummaryText: 'test' };
     const controller = new ClaimDetailsCheckController();
-    const req = mockRequest({ body });
+    const req = mockRequest({ body, userCase });
     const res = mockResponse();
     await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
