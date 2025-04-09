@@ -3,7 +3,6 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
     return false;
   }
 
-  // Validate required fields
   const {
     typeOfClaim,
     reasonableAdjustments,
@@ -29,11 +28,10 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
     !addressTown ||
     !addressPostcode
   ) {
-    return false; // Return false if any required field is missing
+    return false;
   }
 
-  // Additional validation logic can be added here if needed
-  return true; // Return true if all validations pass
+  return true;
 };
 
 export const validateEmploymentAndRespondentDetails = (userCase: Record<string, any>): boolean => {
@@ -41,7 +39,6 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
     return false;
   }
 
-  // Validate required fields
   const { startDate, pastEmployer, isStillWorking, claimantWorkAddressQuestion, respondentEnterPostcode, noticeEnds } =
     userCase;
 
@@ -63,11 +60,10 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
     !claimantWorkAddressQuestion ||
     !respondentEnterPostcode
   ) {
-    return false; // Return false if any required field is missing
+    return false;
   }
 
-  // Additional validation logic can be added here if needed
-  return true; // Return true if all validations pass
+  return true;
 };
 
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
@@ -83,9 +79,5 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
   }
 
   // Validate claimSummaryText is present and not empty
-  if (!claimSummaryText || claimSummaryText.trim() === '') {
-    return false;
-  }
-
-  return true; // Return true if all validations pass
+  return !(!claimSummaryText || claimSummaryText.trim() === '');
 };

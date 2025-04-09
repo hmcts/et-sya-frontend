@@ -57,4 +57,19 @@ describe('Test task List check controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
+
+  it('should render the task list check page with errors when userCase is invalid', async () => {
+    const body = { personalDetailsCheck: YesOrNo.YES };
+    const userCase = {}; // Invalid userCase
+    const errors = [{ propertyName: 'personalDetailsCheck', errorType: 'invalid' }];
+    const controller = new PersonalDetailsCheckController();
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(req.session.errors).toEqual(errors);
+    expect(res.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
+  });
 });
