@@ -1,5 +1,6 @@
 import { Form } from '../../../../main/components/form/form';
 import { RespondentAddressHelper } from '../../../../main/controllers/helpers/RespondentAddressHelper';
+import { FormContent } from '../../../../main/definitions/form';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 import { userCaseWithRespondent } from '../../mocks/mockUserCaseWithRespondent';
@@ -44,7 +45,7 @@ it('should handle GET request and render the correct page with respondent detail
   });
   const res = mockResponse();
   const form = new Form({});
-  const content = {};
+  const content = {} as FormContent;
   const translationKeys = ['common', 'respondentAddressManual'];
 
   RespondentAddressHelper.handleGet(req, res, form, content, translationKeys);
@@ -71,7 +72,7 @@ it('should handle GET request and fill respondent address fields if respondentAd
   });
   const res = mockResponse();
   const form = new Form({});
-  const content = {};
+  const content = {} as FormContent;
   const translationKeys = ['common', 'respondentAddressManual'];
 
   RespondentAddressHelper.handleGet(req, res, form, content, translationKeys);
