@@ -31,4 +31,20 @@ describe('Test claim details check controller', () => {
     await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
+
+  it('should render the claim details check page with errors when isValid is false', async () => {
+    const body = { claimDetailsCheck: YesOrNo.YES };
+    const controller = new ClaimDetailsCheckController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    jest
+      .spyOn(require('../../../main/components/form/claimDetailsValidator'), 'validateClaimCheckDetails')
+      .mockReturnValue(false);
+
+    await controller.post(req, res);
+
+    expect(req.session.errors).toEqual([{ propertyName: 'claimDetailsCheck', errorType: 'invalid' }]);
+    expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_DETAILS_CHECK, expect.anything());
+  });
 });

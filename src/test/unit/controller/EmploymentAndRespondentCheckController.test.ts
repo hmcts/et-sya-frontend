@@ -54,4 +54,22 @@ describe('Test task List check controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
+
+  it('should render the task list check page with errors when isValid is false', async () => {
+    const body = { employmentAndRespondentCheck: YesOrNo.YES };
+    const errors = [{ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' }];
+    const controller = new EmploymentAndRespondentCheckController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    jest
+      .spyOn(require('../../../main/components/form/claimDetailsValidator'), 'validateEmploymentAndRespondentDetails')
+      .mockReturnValue(false);
+
+    await controller.post(req, res);
+
+    expect(req.session.errors).toEqual(errors);
+    expect(res.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
+  });
 });
