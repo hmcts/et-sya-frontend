@@ -41,6 +41,7 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
+import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
   getAllAppsWithDecisions,
@@ -210,6 +211,7 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
+      showHearingBanner: shouldShowHearingBanner(userCase?.sendNotificationCollection),
       notifications: ordersRequestsGeneralNotifications,
       eccNotifications,
       languageParam: getLanguageParam(req.url),

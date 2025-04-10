@@ -1,13 +1,13 @@
 {
-  "header": "Hearings",
-  "hearingDetails": "Hearing Details",
-  "hearingDate": "Hearing Date",
-  "hearingStatus": "Hearing Status",
-  "hearingVenue": "Hearing Venue",
-  "viewed": "Viewed",
-  "notViewedYet": "Not viewed yet",
-  "notification": "Notification",
-  "notificationDate": "Notification Date",
-  "notificationTitle": "Notification Title",
-  "status": "Status"
+  "header": "[W]Hearings",
+  "hearingDetails": "[W]Hearing Details",
+  "hearingDate": "[W]Hearing Date",
+  "hearingStatus": "[W]Hearing Status",
+  "hearingVenue": "[W]Hearing Venue",
+  "viewed": "[W]Viewed",
+  "notViewedYet": "[W]Not viewed yet",
+  "notification": "[W]Notification",
+  "notificationDate": "[W]Notification Date",
+  "notificationTitle": "[W]Notification Title",
+  "status": "[W]Status"
 }

@@ -1,92 +1,188 @@
-import { getHearingCollection, isHearingExist } from '../../../../main/controllers/helpers/HearingHelpers';
-import { Parties } from '../../../../main/definitions/constants';
+import {
+  getHearingCollection,
+  isHearingExist,
+  shouldShowHearingBanner,
+} from '../../../../main/controllers/helpers/HearingHelpers';
+import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
+import { NotificationSubjects, Parties } from '../../../../main/definitions/constants';
 import { HearingDetails } from '../../../../main/definitions/hearingDetails';
 import { HubLinkStatus } from '../../../../main/definitions/hub';
 import citizenHubTranslation from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import { mockHearingCollection } from '../../mocks/mockHearing';
 
-describe('Hearing Helpers - isHearingExist', () => {
-  it('should return true with future date', () => {
-    const expected = isHearingExist(mockHearingCollection);
-    expect(expected).toEqual(true);
+describe('Hearing Helpers', () => {
+  describe('isHearingExist', () => {
+    it('should return true with future date', () => {
+      const expected = isHearingExist(mockHearingCollection);
+      expect(expected).toEqual(true);
+    });
+
+    it('should return undefined if no hearing', () => {
+      const expected = isHearingExist(undefined);
+      expect(expected).toEqual(undefined);
+    });
   });
 
-  it('should return undefined if no hearing', () => {
-    const expected = isHearingExist(undefined);
-    expect(expected).toEqual(undefined);
-  });
-});
+  describe('getHearingCollection', () => {
+    const translations = { ...citizenHubTranslation };
 
-describe('Hearing Helpers - getHearingCollection', () => {
-  const translations = { ...citizenHubTranslation };
-
-  it('should render the hearing details page', () => {
-    const sendNotificationCollection = [
-      {
-        id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
-        value: {
-          sendNotificationNotify: Parties.BOTH_PARTIES,
-          sendNotificationSubject: ['Hearing'],
-          sendNotificationSelectHearing: {
-            selectedCode: '123abc',
-          },
-          notificationState: HubLinkStatus.VIEWED,
-        },
-      },
-    ];
-    const actual = getHearingCollection(mockHearingCollection, sendNotificationCollection, translations);
-    const expected: HearingDetails[] = [
-      {
-        hearingNumber: '3333',
-        Hearing_type: 'Hearing',
-        hearingDateRows: [
-          {
-            date: new Date('2028-07-04T14:00:00.000'),
-            status: 'Listed',
-            venue: 'Field House',
-          },
-        ],
-        notifications: [
-          {
-            displayStatus: 'Viewed',
-            id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
-            redirectUrl: '/tribunal-order-or-request-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
-            statusColor: '--green',
-            value: {
-              notificationState: HubLinkStatus.VIEWED,
-              sendNotificationNotify: Parties.BOTH_PARTIES,
-              sendNotificationSelectHearing: { selectedCode: '123abc' },
-              sendNotificationSubject: ['Hearing'],
+    it('should render the hearing details page', () => {
+      const sendNotificationCollection = [
+        {
+          id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+          value: {
+            sendNotificationNotify: Parties.BOTH_PARTIES,
+            sendNotificationSubject: ['Hearing'],
+            sendNotificationSelectHearing: {
+              selectedCode: '123abc',
             },
+            notificationState: HubLinkStatus.VIEWED,
           },
-        ],
-      },
-    ];
-    expect(actual).toEqual(expected);
+        },
+      ];
+      const actual = getHearingCollection(mockHearingCollection, sendNotificationCollection, translations);
+      const expected: HearingDetails[] = [
+        {
+          hearingNumber: '3333',
+          Hearing_type: 'Hearing',
+          hearingDateRows: [
+            {
+              date: new Date('2028-07-04T14:00:00.000'),
+              status: 'Listed',
+              venue: 'Field House',
+            },
+          ],
+          notifications: [
+            {
+              displayStatus: 'Viewed',
+              id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+              redirectUrl: '/tribunal-order-or-request-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+              statusColor: '--green',
+              value: {
+                notificationState: HubLinkStatus.VIEWED,
+                sendNotificationNotify: Parties.BOTH_PARTIES,
+                sendNotificationSelectHearing: { selectedCode: '123abc' },
+                sendNotificationSubject: ['Hearing'],
+              },
+            },
+          ],
+        },
+      ];
+      expect(actual).toEqual(expected);
+    });
+
+    it('should render the hearing details page without notification', () => {
+      const actual = getHearingCollection(mockHearingCollection, undefined, translations);
+      const expected: HearingDetails[] = [
+        {
+          hearingNumber: '3333',
+          Hearing_type: 'Hearing',
+          hearingDateRows: [
+            {
+              date: new Date('2028-07-04T14:00:00.000'),
+              status: 'Listed',
+              venue: 'Field House',
+            },
+          ],
+          notifications: [],
+        },
+      ];
+      expect(actual).toEqual(expected);
+    });
+
+    it('should render the hearing details page without hearing', () => {
+      const actual = getHearingCollection(undefined, undefined, translations);
+      const expected: HearingDetails[] = [];
+      expect(actual).toEqual(expected);
+    });
   });
 
-  it('should render the hearing details page without notification', () => {
-    const actual = getHearingCollection(mockHearingCollection, undefined, translations);
-    const expected: HearingDetails[] = [
-      {
-        hearingNumber: '3333',
-        Hearing_type: 'Hearing',
-        hearingDateRows: [
-          {
-            date: new Date('2028-07-04T14:00:00.000'),
-            status: 'Listed',
-            venue: 'Field House',
-          },
-        ],
-        notifications: [],
-      },
-    ];
-    expect(actual).toEqual(expected);
-  });
+  describe('shouldShowHearingBanner', () => {
+    it('should return false for empty notifications', () => {
+      const result = shouldShowHearingBanner([]);
+      expect(result).toEqual(false);
+    });
 
-  it('should render the hearing details page without hearing', () => {
-    const actual = getHearingCollection(undefined, undefined, translations);
-    const expected: HearingDetails[] = [];
-    expect(actual).toEqual(expected);
+    it('should return false for undefined notifications', () => {
+      const result = shouldShowHearingBanner(undefined);
+      expect(result).toEqual(false);
+    });
+
+    it('should return true for valid hearing notification not viewed and not RESPONDENT_ONLY', () => {
+      const notifications: SendNotificationTypeItem[] = [
+        {
+          value: {
+            sendNotificationNotify: Parties.BOTH_PARTIES,
+            sendNotificationSubject: [NotificationSubjects.HEARING],
+            notificationState: HubLinkStatus.NOT_VIEWED,
+          },
+        },
+      ];
+      const result = shouldShowHearingBanner(notifications);
+      expect(result).toEqual(true);
+    });
+
+    it('should return false if notification is for RESPONDENT_ONLY', () => {
+      const notifications: SendNotificationTypeItem[] = [
+        {
+          value: {
+            sendNotificationNotify: Parties.RESPONDENT_ONLY,
+            sendNotificationSubject: [NotificationSubjects.HEARING],
+            notificationState: HubLinkStatus.NOT_VIEWED,
+          },
+        },
+      ];
+      const result = shouldShowHearingBanner(notifications);
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if notification is already viewed', () => {
+      const notifications: SendNotificationTypeItem[] = [
+        {
+          value: {
+            sendNotificationNotify: Parties.BOTH_PARTIES,
+            sendNotificationSubject: [NotificationSubjects.HEARING],
+            notificationState: HubLinkStatus.VIEWED,
+          },
+        },
+      ];
+      const result = shouldShowHearingBanner(notifications);
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if subject does not include HEARING', () => {
+      const notifications: SendNotificationTypeItem[] = [
+        {
+          value: {
+            sendNotificationNotify: Parties.BOTH_PARTIES,
+            sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+            notificationState: HubLinkStatus.NOT_VIEWED,
+          },
+        },
+      ];
+      const result = shouldShowHearingBanner(notifications);
+      expect(result).toEqual(false);
+    });
+
+    it('should return true if at least one notification meets all conditions', () => {
+      const notifications: SendNotificationTypeItem[] = [
+        {
+          value: {
+            sendNotificationNotify: Parties.RESPONDENT_ONLY,
+            sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+            notificationState: HubLinkStatus.NOT_VIEWED,
+          },
+        },
+        {
+          value: {
+            sendNotificationNotify: Parties.BOTH_PARTIES,
+            sendNotificationSubject: [NotificationSubjects.HEARING],
+            notificationState: HubLinkStatus.NOT_VIEWED,
+          },
+        },
+      ];
+      const result = shouldShowHearingBanner(notifications);
+      expect(result).toEqual(true);
+    });
   });
 });

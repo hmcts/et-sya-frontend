@@ -231,6 +231,19 @@
   {% endfor %}
 {% endif %}
 
+{% if showHearingBanner %}
+  {% set htmlForHearingBanner %}
+    <h3 class="govuk-notification-banner__heading">{{ notificationBanner.hearingBanner.hearing }}</h3>
+    <h3 class="govuk-notification-banner__heading">
+      <a class="govuk-link" href="{{ PageUrls.HEARING_DETAILS + languageParam }}">{{ notificationBanner.hearingBanner.link }}</a>
+    </h3>
+  {% endset %}
+  {{ govukNotificationBanner({
+    html: htmlForHearingBanner,
+    titleText: important
+  }) }}
+{% endif %}
+
 {% if showOrderOrRequestReceived %}
   {% for order in notifications %}
     {% if order.showAlert %}
