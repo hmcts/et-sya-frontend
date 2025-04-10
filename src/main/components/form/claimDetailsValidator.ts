@@ -43,27 +43,16 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
     userCase;
 
   if (pastEmployer === 'Yes') {
-    // If pastEmployer is 'Yes', validate additional fields
     if (!startDate) {
-      return false; // Return false if any required field is missing
+      return false;
     }
   }
   if (isStillWorking === 'Notice') {
-    // If isStillWorking is 'Notice', validate additional fields
     if (!startDate || !noticeEnds) {
-      return false; // Return false if any required field is missing
+      return false;
     }
   }
-  if (
-    !pastEmployer ||
-    isStillWorking === undefined || // Explicitly check for undefined
-    !claimantWorkAddressQuestion ||
-    !respondentEnterPostcode
-  ) {
-    return false;
-  }
-
-  return true;
+  return !(!pastEmployer || isStillWorking === undefined || !claimantWorkAddressQuestion || !respondentEnterPostcode);
 };
 
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
@@ -73,11 +62,9 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
 
   const { claimTypePay, claimSummaryText } = userCase;
 
-  // Validate claimTypePay is a non-empty array
   if (!Array.isArray(claimTypePay) || claimTypePay.length === 0) {
     return false;
   }
 
-  // Validate claimSummaryText is present and not empty
   return !(!claimSummaryText || claimSummaryText.trim() === '');
 };
