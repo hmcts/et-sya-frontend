@@ -83,7 +83,7 @@ const getNotificationRow = (
   return {
     date: notification.value?.date,
     redirectUrl: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', notification.id),
-    sendNotificationTitle: notification.value?.sendNotificationTitle,
+    notificationTitle: notification.value?.sendNotificationTitle,
     displayStatus: translations[notification.value?.notificationState],
     statusColor: displayStatusColorMap.get(notification.value?.notificationState as HubLinkStatus),
   };

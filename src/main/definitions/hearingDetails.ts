@@ -14,7 +14,7 @@ export interface HearingDateRow {
 export interface HearingNotificationRow {
   date?: string;
   redirectUrl: string;
-  sendNotificationTitle?: string;
+  notificationTitle?: string;
   displayStatus?: string;
   statusColor?: string;
 }

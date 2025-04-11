@@ -29,7 +29,7 @@
                   <tr class="govuk-table__row">
                     <td class="govuk-table__cell">{{ dateStringToLocale(notification.date) }}</td>
                     <td class="govuk-table__cell">
-                      <a href="{{ notification.redirectUrl }}" class="govuk-link">{{ notification.sendNotificationTitle }}</a>
+                      <a href="{{ notification.redirectUrl }}" class="govuk-link">{{ notification.notificationTitle }}</a>
                     </td>
                     <td class="govuk-table__cell">{{ govukTag({
                         text: notification.displayStatus,
