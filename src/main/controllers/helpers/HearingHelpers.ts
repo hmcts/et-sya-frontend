@@ -1,7 +1,6 @@
 import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import {
-  SendNotificationType,
   SendNotificationTypeItem,
 } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, PageUrls, Parties, TranslationKeys } from '../../definitions/constants';
@@ -94,17 +93,13 @@ const getItems = (item: SendNotificationTypeItem, translations: AnyRecord): Hear
  * @param notifications Send Notification Collection
  */
 export const shouldShowHearingBanner = (notifications: SendNotificationTypeItem[]): boolean => {
-  return notifications?.some(notification => isHearingNotificationNotViewed(notification.value)) || false;
-};
-
-const isHearingNotificationNotViewed = (notification: SendNotificationType): boolean => {
-  if (!notification) {
-    return false;
-  }
-  const isToClaimant = notification.sendNotificationNotify !== Parties.RESPONDENT_ONLY;
-  const isHearingSubject = notification.sendNotificationSubject?.includes(NotificationSubjects.HEARING);
-  const isNotViewed =
-    notification.notificationState === HubLinkStatus.NOT_VIEWED ||
-    notification.notificationState === HubLinkStatus.NOT_STARTED_YET;
-  return isToClaimant && isHearingSubject && isNotViewed;
+  return (
+    notifications?.some(
+      notification =>
+        notification.value?.sendNotificationSubject?.includes(NotificationSubjects.HEARING) &&
+        notification.value?.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        (notification.value?.notificationState === HubLinkStatus.NOT_VIEWED ||
+          notification.value?.notificationState === HubLinkStatus.NOT_STARTED_YET)
+    ) || false
+  );
 };
