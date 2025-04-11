@@ -30,7 +30,7 @@ export class PersonDetailsPage extends BasePage {
     await this.webAction.verifyTextIsVisible('text=What is your telephone number?');
     await this.clickContinue();
 
-    await this.webAction.verifyTextIsVisible('text=Communication preference');
+    await this.webAction.verifyTextIsVisible('text=Communication preference (Optional)');
     await this.webAction.verifyTextIsVisible('text=What format would you like to be contacted in?');
     await this.webAction.verifyTextIsVisible('text=Email');
     await this.webAction.verifyTextIsVisible('text=Post');

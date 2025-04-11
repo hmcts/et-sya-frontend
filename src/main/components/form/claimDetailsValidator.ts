@@ -2,36 +2,9 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
   if (!userCase) {
     return false;
   }
+  const { typeOfClaim, address1, addressTown, addressPostcode, addressCountry } = userCase;
 
-  const {
-    typeOfClaim,
-    reasonableAdjustments,
-    personalDetailsCheck,
-    hearingPreferences,
-    claimantContactPreference,
-    claimantContactLanguagePreference,
-    claimantHearingLanguagePreference,
-    address1,
-    addressTown,
-    addressPostcode,
-  } = userCase;
-
-  if (
-    !typeOfClaim ||
-    !reasonableAdjustments ||
-    !personalDetailsCheck ||
-    !hearingPreferences ||
-    !claimantContactPreference ||
-    !claimantContactLanguagePreference ||
-    !claimantHearingLanguagePreference ||
-    !address1 ||
-    !addressTown ||
-    !addressPostcode
-  ) {
-    return false;
-  }
-
-  return true;
+  return !(!typeOfClaim || !address1 || !addressTown || !addressPostcode || !addressCountry);
 };
 
 export const validateEmploymentAndRespondentDetails = (userCase: Record<string, any>): boolean => {
@@ -39,20 +12,24 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
     return false;
   }
 
-  const { startDate, pastEmployer, isStillWorking, claimantWorkAddressQuestion, respondentEnterPostcode, noticeEnds } =
-    userCase;
+  const { respondents } = userCase;
 
-  if (pastEmployer === 'Yes') {
-    if (!startDate) {
+  for (const respondent of respondents) {
+    if (
+      !respondent.respondentAddress1 ||
+      !respondent.respondentAddressTown ||
+      !respondent.respondentAddressCountry ||
+      !respondent.acasCert
+    ) {
+      return false;
+    }
+
+    if (respondent.acasCert === 'No' && !respondent.noAcasReason) {
       return false;
     }
   }
-  if (isStillWorking === 'Notice') {
-    if (!startDate || !noticeEnds) {
-      return false;
-    }
-  }
-  return !(!pastEmployer || isStillWorking === undefined || !claimantWorkAddressQuestion || !respondentEnterPostcode);
+
+  return true;
 };
 
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
@@ -60,11 +37,18 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
     return false;
   }
 
-  const { claimTypePay, claimSummaryText } = userCase;
+  const { typeOfClaim, claimSummaryFile, claimSummaryText } = userCase;
 
-  if (!Array.isArray(claimTypePay) || claimTypePay.length === 0) {
+  if (!typeOfClaim || !Array.isArray(typeOfClaim) || typeOfClaim.length === 0) {
     return false;
   }
 
-  return !(!claimSummaryText || claimSummaryText.trim() === '');
+  if (
+    (!claimSummaryFile || typeof claimSummaryFile !== 'string' || claimSummaryFile.trim() === '') &&
+    (!claimSummaryText || typeof claimSummaryText !== 'string' || claimSummaryText.trim() === '')
+  ) {
+    return false;
+  }
+
+  return true;
 };
