@@ -7,8 +7,11 @@ import { SendNotificationTypeItem } from '../../../../main/definitions/complexTy
 import { NotificationSubjects, Parties } from '../../../../main/definitions/constants';
 import { HearingDetails } from '../../../../main/definitions/hearingDetails';
 import { HubLinkStatus } from '../../../../main/definitions/hub';
+import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubTranslation from '../../../../main/resources/locales/en/translation/citizen-hub.json';
+import hearingDetailsTranslation from '../../../../main/resources/locales/en/translation/hearing-details.json';
 import { mockHearingCollection } from '../../mocks/mockHearing';
+import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Hearing Helpers', () => {
   describe('isHearingExist', () => {
@@ -24,7 +27,8 @@ describe('Hearing Helpers', () => {
   });
 
   describe('getHearingCollection', () => {
-    const translations = { ...citizenHubTranslation };
+    const translations: AnyRecord = { ...citizenHubTranslation, ...hearingDetailsTranslation };
+    const request = mockRequestWithTranslation({}, translations);
 
     it('should render the hearing details page', () => {
       const sendNotificationCollection = [
@@ -40,7 +44,7 @@ describe('Hearing Helpers', () => {
           },
         },
       ];
-      const actual = getHearingCollection(mockHearingCollection, sendNotificationCollection, translations);
+      const actual = getHearingCollection(mockHearingCollection, sendNotificationCollection, request);
       const expected: HearingDetails[] = [
         {
           hearingNumber: '3333',
@@ -72,7 +76,7 @@ describe('Hearing Helpers', () => {
     });
 
     it('should render the hearing details page without notification', () => {
-      const actual = getHearingCollection(mockHearingCollection, undefined, translations);
+      const actual = getHearingCollection(mockHearingCollection, undefined, request);
       const expected: HearingDetails[] = [
         {
           hearingNumber: '3333',
@@ -91,7 +95,7 @@ describe('Hearing Helpers', () => {
     });
 
     it('should render the hearing details page without hearing', () => {
-      const actual = getHearingCollection(undefined, undefined, translations);
+      const actual = getHearingCollection(undefined, undefined, request);
       const expected: HearingDetails[] = [];
       expect(actual).toEqual(expected);
     });

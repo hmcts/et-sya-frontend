@@ -55,7 +55,7 @@
                   {% for hearingDate in hearing.hearingDateRows %}
                   <tr class="govuk-table__row">
                     <td class="govuk-table__cell">{{ dateTimeInLocale(hearingDate.date) }}</td>
-                    <td class="govuk-table__cell">{{ getContent(hearingDate.status) }}</td>
+                    <td class="govuk-table__cell">{{ hearingDate.status }}</td>
                     <td class="govuk-table__cell">{{ hearingDate.venue }}</td>
                   </tr>
                   {% endfor %}

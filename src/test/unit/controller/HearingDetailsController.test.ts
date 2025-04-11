@@ -3,21 +3,19 @@ import { Parties, TranslationKeys } from '../../../main/definitions/constants';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import citizenHubTranslation from '../../../main/resources/locales/en/translation/citizen-hub.json';
+import hearingDetailsTranslation from '../../../main/resources/locales/en/translation/hearing-details.json';
 import { mockHearingCollection } from '../mocks/mockHearing';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Hearing Document File controller', () => {
+describe('Hearing details controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
-  const translations = { ...citizenHubTranslation };
-  const t = {
-    common: {},
-  };
+  const translations = { ...citizenHubTranslation, ...hearingDetailsTranslation };
 
   it('should render the hearing details page', async () => {
     const response = mockResponse();
-    const request = mockRequestWithTranslation({ t }, translations);
+    const request = mockRequestWithTranslation({}, translations);
     request.session.userCase.hearingCollection = mockHearingCollection;
     request.session.userCase.sendNotificationCollection = [
       {
@@ -72,7 +70,7 @@ describe('Hearing Document File controller', () => {
 
   it('should render the hearing details page without notification', async () => {
     const response = mockResponse();
-    const request = mockRequestWithTranslation({ t }, translations);
+    const request = mockRequestWithTranslation({}, translations);
     request.session.userCase.hearingCollection = mockHearingCollection;
 
     const controller = new HearingDetailsController();
@@ -101,7 +99,7 @@ describe('Hearing Document File controller', () => {
 
   it('should render the hearing details page without hearing', async () => {
     const response = mockResponse();
-    const request = mockRequestWithTranslation({ t }, translations);
+    const request = mockRequestWithTranslation({}, translations);
 
     const controller = new HearingDetailsController();
     await controller.get(request, response);

@@ -1,6 +1,7 @@
 import { HearingModel } from '../../definitions/api/caseApiResponse';
+import { AppRequest } from '../../definitions/appRequest';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { NotificationSubjects, PageUrls, Parties } from '../../definitions/constants';
+import { NotificationSubjects, PageUrls, Parties, TranslationKeys } from '../../definitions/constants';
 import { HearingDateRow, HearingDetails } from '../../definitions/hearingDetails';
 import { HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
@@ -15,22 +16,26 @@ export const isHearingExist = (hearingModel: HearingModel[]): boolean => {
 
 /**
  * Get hearing data to display in Hearing Details page
- * @param hearingModel Hearing Collections
- * @param sendNotificationTypeItem Notification Collections to map with Hearings
- * @param translations Translation for status tag
+ * @param hearingModel hearing collections
+ * @param sendNotificationTypeItem notification collections to map with hearings
+ * @param req request
  */
 export const getHearingCollection = (
   hearingModel: HearingModel[],
   sendNotificationTypeItem: SendNotificationTypeItem[],
-  translations: AnyRecord
+  req: AppRequest
 ): HearingDetails[] => {
   const list: HearingDetails[] = [];
+  const translations: AnyRecord = {
+    ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    ...req.t(TranslationKeys.HEARING_DETAILS, { returnObjects: true }),
+  };
   const filteredNotifications = getFilteredNotifications(sendNotificationTypeItem);
   for (const hearing of hearingModel || []) {
     const details: HearingDetails = {
       hearingNumber: hearing.value?.hearingNumber,
       Hearing_type: hearing.value?.Hearing_type,
-      hearingDateRows: getHearingDateRows(hearing),
+      hearingDateRows: getHearingDateRows(hearing, translations),
       notifications: getMatchedNotifications(filteredNotifications, hearing, translations),
     };
     list.push(details);
@@ -39,21 +44,20 @@ export const getHearingCollection = (
 };
 
 const getFilteredNotifications = (sendNotificationTypeItem: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  if (!sendNotificationTypeItem) {
-    return [];
-  }
-  return sendNotificationTypeItem.filter(
-    notification =>
-      notification.value?.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-      notification.value?.sendNotificationSubject?.includes(NotificationSubjects.HEARING)
+  return (
+    sendNotificationTypeItem?.filter(
+      notification =>
+        notification.value?.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        notification.value?.sendNotificationSubject?.includes(NotificationSubjects.HEARING)
+    ) || []
   );
 };
 
-const getHearingDateRows = (hearing: HearingModel): HearingDateRow[] => {
+const getHearingDateRows = (hearing: HearingModel, translations: AnyRecord): HearingDateRow[] => {
   return hearing.value?.hearingDateCollection.map(hearingDate => ({
-    date: hearingDate.value.listedDate,
-    status: hearingDate.value.Hearing_status,
-    venue: hearingDate.value.hearingVenueDay?.value.label || '',
+    date: hearingDate.value?.listedDate,
+    status: translations[hearingDate.value?.Hearing_status],
+    venue: hearingDate.value?.hearingVenueDay?.value.label || '',
   }));
 };
 
@@ -74,9 +78,11 @@ const getMatchedNotifications = (
 };
 
 const isNotificationsWithIdMatch = (notification: SendNotificationTypeItem, hearing: HearingModel): boolean => {
-  return hearing.value?.hearingDateCollection.some(hearingDate => {
-    return notification.value?.sendNotificationSelectHearing?.selectedCode === hearingDate.id;
-  });
+  return (
+    hearing?.value?.hearingDateCollection?.some(hearingDate => {
+      return notification.value?.sendNotificationSelectHearing?.selectedCode === hearingDate.id;
+    }) || false
+  );
 };
 
 /**

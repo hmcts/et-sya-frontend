@@ -15,9 +15,11 @@ export default class HearingDetailsController {
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.HEARING_DETAILS, { returnObjects: true }),
-      hearingDetailsCollection: getHearingCollection(userCase.hearingCollection, userCase.sendNotificationCollection, {
-        ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-      }),
+      hearingDetailsCollection: getHearingCollection(
+        userCase.hearingCollection,
+        userCase.sendNotificationCollection,
+        req
+      ),
       welshEnabled,
     });
   };
