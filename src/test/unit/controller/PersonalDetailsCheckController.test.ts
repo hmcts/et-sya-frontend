@@ -1,6 +1,6 @@
 import PersonalDetailsCheckController from '../../../main/controllers/PersonalDetailsCheckController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { CaseWithId, EmailOrPost, EnglishOrWelsh, HearingPreference, YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -28,15 +28,10 @@ describe('Test task List check controller', () => {
     const body = { personalDetailsCheck: YesOrNo.YES };
     const userCase: Partial<CaseWithId> = {
       typeOfClaim: ['Unfair Dismissal'],
-      reasonableAdjustments: YesOrNo.NO,
-      personalDetailsCheck: YesOrNo.YES,
-      hearingPreferences: [HearingPreference.VIDEO],
-      claimantContactPreference: EmailOrPost.POST,
-      claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
-      claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
       address1: '123 Main Street',
       addressTown: 'London',
       addressPostcode: 'SW1A 1AA',
+      addressCountry: 'UK',
     };
     const controller = new PersonalDetailsCheckController();
     const req = mockRequest({ body, userCase });

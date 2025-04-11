@@ -24,21 +24,26 @@ describe('Test task List check controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
   });
 
-  it('should render the claim steps page', async () => {
+  it('should render the claim steps page when employmentAndRespondentCheck is Yes and userCase is valid', async () => {
     const body = { employmentAndRespondentCheck: YesOrNo.YES };
     const userCase: Record<string, any> = {
-      pastEmployer: 'Yes', // Required field
-      startDate: { year: '2022', month: '01', day: '01' }, // Required if pastEmployer is 'Yes'
-      isStillWorking: 'Notice', // Required field
-      noticeEnds: { year: '2023', month: '12', day: '31' }, // Required if isStillWorking is 'Notice'
-      claimantWorkAddressQuestion: '123 Work Street, London', // Required field
-      respondentEnterPostcode: 'SW1A 1AA', // Required field
+      respondents: [
+        {
+          respondentAddress1: '123 Street',
+          respondentAddressTown: 'Town',
+          respondentAddressCountry: 'Country',
+          respondentAddressPostcode: 'AB12 3CD',
+          acasCert: 'Yes',
+        },
+      ],
     };
     const controller = new EmploymentAndRespondentCheckController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
+
     await controller.post(req, res);
+
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 

@@ -22,8 +22,7 @@ describe('Update Past Employer Controller', () => {
     expect(response.render).toHaveBeenCalledWith('past-employer', expect.anything());
   });
 
-  it('should redirect to the same screen when errors are present', async () => {
-    const errors = [{ propertyName: 'pastEmployer', errorType: 'required' }];
+  it('should go to the next screen when errors are present', async () => {
     const body = { pastEmployer: '' };
 
     const controller = new PastEmployerController();
@@ -32,8 +31,7 @@ describe('Update Past Employer Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
-    expect(req.session.errors).toEqual(errors);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render are you still working page when the page submitted', async () => {
