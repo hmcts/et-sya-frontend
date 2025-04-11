@@ -9,5 +9,11 @@
   "notification": "Notification",
   "notificationDate": "Notification Date",
   "notificationTitle": "Notification Title",
-  "status": "Status"
+  "status": "Status",
+  "Postponed": "Postponed",
+  "Heard": "Heard",
+  "Listed": "Listed",
+  "Settled": "Settled",
+  "Vacated": "Vacated",
+  "Withdrawn": "Withdrawn"
 }
