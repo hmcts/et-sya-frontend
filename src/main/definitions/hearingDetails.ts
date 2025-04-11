@@ -1,6 +1,6 @@
 export interface HearingDetails {
   hearingNumber: string;
-  Hearing_type?: string;
+  hearingType?: string;
   hearingDateRows?: HearingDateRow[];
   notifications?: HearingNotificationRow[];
 }

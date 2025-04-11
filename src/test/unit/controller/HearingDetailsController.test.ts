@@ -41,7 +41,7 @@ describe('Hearing details controller', () => {
         hearingDetailsCollection: [
           {
             hearingNumber: '3333',
-            Hearing_type: 'Hearing',
+            hearingType: 'Hearing',
             hearingDateRows: [
               {
                 date: new Date('2028-07-04T14:00:00.000'),
@@ -78,7 +78,7 @@ describe('Hearing details controller', () => {
         hearingDetailsCollection: [
           {
             hearingNumber: '3333',
-            Hearing_type: 'Hearing',
+            hearingType: 'Hearing',
             hearingDateRows: [
               {
                 date: new Date('2028-07-04T14:00:00.000'),

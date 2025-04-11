@@ -12,7 +12,7 @@
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
             {% for hearing in hearingDetailsCollection %}
-               <h2 class="govuk-heading-l">{{ hearing.hearingNumber }} - {{ hearing.Hearing_type }}</h2>
+               <h2 class="govuk-heading-l">{{ hearing.hearingNumber }} - {{ hearing.hearingType }}</h2>
 
               {% if hearing.notifications.length > 0 %}
               <table class="govuk-table govuk-!-width-three-quarters">

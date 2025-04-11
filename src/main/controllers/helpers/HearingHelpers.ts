@@ -33,7 +33,7 @@ export const getHearingCollection = (
   for (const hearing of hearings || []) {
     const details: HearingDetails = {
       hearingNumber: hearing.value?.hearingNumber,
-      Hearing_type: hearing.value?.Hearing_type,
+      hearingType: hearing.value?.Hearing_type,
       hearingDateRows: getHearingDateRows(hearing, translations),
       notifications: getMatchedNotifications(hearingNotifications, hearing, translations),
     };
