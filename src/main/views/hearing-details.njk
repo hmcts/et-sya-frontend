@@ -14,7 +14,7 @@
             {% for hearing in hearingDetailsCollection %}
                <h2 class="govuk-heading-l">{{ hearing.hearingNumber }} - {{ hearing.Hearing_type }}</h2>
 
-              {% if hearing.notifications != 0 %}
+              {% if hearing.notifications > 0 %}
               <table class="govuk-table govuk-!-width-three-quarters">
                 <caption class="govuk-table__caption govuk-table__caption--m">{{ notification }}</caption>
                 <thead class="govuk-table__head">
