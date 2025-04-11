@@ -69,7 +69,7 @@ const getMatchedNotifications = (
 ): HearingNotificationRow[] => {
   return notifications
     .filter(notification => isNotificationsWithIdMatch(notification, hearing))
-    .map(notification => getItems(notification, translations));
+    .map(notification => getNotificationRow(notification, translations));
 };
 
 const isNotificationsWithIdMatch = (notification: SendNotificationTypeItem, hearing: HearingModel): boolean => {
@@ -78,7 +78,7 @@ const isNotificationsWithIdMatch = (notification: SendNotificationTypeItem, hear
   });
 };
 
-const getItems = (item: SendNotificationTypeItem, translations: AnyRecord): HearingNotificationRow => {
+const getNotificationRow = (item: SendNotificationTypeItem, translations: AnyRecord): HearingNotificationRow => {
   return {
     date: item.value?.date,
     redirectUrl: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id),
