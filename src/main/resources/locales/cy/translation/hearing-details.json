@@ -1,19 +1,21 @@
 {
   "header": "[W]Hearings",
+  "notification": "Hysbysiad",
+  "notificationDate": "[W]Notification Date",
+  "notificationTitle": "[W]Notification Title",
+  "status": "Statws",
   "hearingDetails": "[W]Hearing Details",
   "hearingDate": "[W]Hearing Date",
   "hearingStatus": "[W]Hearing Status",
   "hearingVenue": "[W]Hearing Venue",
-  "viewed": "[W]Viewed",
-  "notViewedYet": "[W]Not viewed yet",
-  "notification": "[W]Notification",
-  "notificationDate": "[W]Notification Date",
-  "notificationTitle": "[W]Notification Title",
-  "status": "[W]Status",
   "Postponed": "[W]Postponed",
   "Heard": "[W]Heard",
   "Listed": "[W]Listed",
   "Settled": "[W]Settled",
   "Vacated": "[W]Vacated",
-  "Withdrawn": "[W]Withdrawn"
+  "Withdrawn": "[W]Withdrawn",
+  "notStartedYet": "Heb ddechrau eto",
+  "notViewedYet": "Heb ei weld eto",
+  "viewed": "Wedi’i weld",
+  "submitted": "Wedi'i gyflwyno"
 }

@@ -2,7 +2,6 @@ import HearingDetailsController from '../../../main/controllers/HearingDetailsCo
 import { Parties, TranslationKeys } from '../../../main/definitions/constants';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
-import citizenHubTranslation from '../../../main/resources/locales/en/translation/citizen-hub.json';
 import hearingDetailsTranslation from '../../../main/resources/locales/en/translation/hearing-details.json';
 import { mockHearingCollection } from '../mocks/mockHearing';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -11,7 +10,7 @@ import { mockResponse } from '../mocks/mockResponse';
 describe('Hearing details controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
-  const translations = { ...citizenHubTranslation, ...hearingDetailsTranslation };
+  const translations = { ...hearingDetailsTranslation };
 
   it('should render the hearing details page', async () => {
     const response = mockResponse();

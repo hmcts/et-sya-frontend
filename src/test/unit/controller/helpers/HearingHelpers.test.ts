@@ -8,7 +8,6 @@ import { NotificationSubjects, Parties } from '../../../../main/definitions/cons
 import { HearingDetails } from '../../../../main/definitions/hearingDetails';
 import { HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
-import citizenHubTranslation from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import hearingDetailsTranslation from '../../../../main/resources/locales/en/translation/hearing-details.json';
 import { mockHearingCollection } from '../../mocks/mockHearing';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -27,7 +26,7 @@ describe('Hearing Helpers', () => {
   });
 
   describe('getHearingCollection', () => {
-    const translations: AnyRecord = { ...citizenHubTranslation, ...hearingDetailsTranslation };
+    const translations: AnyRecord = { ...hearingDetailsTranslation };
     const request = mockRequestWithTranslation({}, translations);
 
     it('should render the hearing details page', () => {

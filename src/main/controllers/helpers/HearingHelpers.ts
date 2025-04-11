@@ -27,7 +27,6 @@ export const getHearingCollection = (
 ): HearingDetails[] => {
   const list: HearingDetails[] = [];
   const translations: AnyRecord = {
-    ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     ...req.t(TranslationKeys.HEARING_DETAILS, { returnObjects: true }),
   };
   const filteredNotifications = getFilteredNotifications(sendNotificationTypeItem);
