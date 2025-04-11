@@ -35,6 +35,8 @@ describe('Hearing Helpers', () => {
         {
           id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
           value: {
+            date: '11 April 2025',
+            sendNotificationTitle: 'Hearing-1',
             sendNotificationNotify: Parties.BOTH_PARTIES,
             sendNotificationSubject: ['Hearing'],
             sendNotificationSelectHearing: {
@@ -58,16 +60,11 @@ describe('Hearing Helpers', () => {
           ],
           notifications: [
             {
+              date: '11 April 2025',
               displayStatus: 'Viewed',
-              id: 'daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+              sendNotificationTitle: 'Hearing-1',
               redirectUrl: '/tribunal-order-or-request-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
               statusColor: '--green',
-              value: {
-                notificationState: HubLinkStatus.VIEWED,
-                sendNotificationNotify: Parties.BOTH_PARTIES,
-                sendNotificationSelectHearing: { selectedCode: '123abc' },
-                sendNotificationSubject: ['Hearing'],
-              },
             },
           ],
         },

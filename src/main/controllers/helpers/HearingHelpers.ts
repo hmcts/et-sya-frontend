@@ -2,7 +2,7 @@ import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, PageUrls, Parties, TranslationKeys } from '../../definitions/constants';
-import { HearingDateRow, HearingDetails } from '../../definitions/hearingDetails';
+import { HearingDateRow, HearingDetails, HearingNotificationRow } from '../../definitions/hearingDetails';
 import { HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -62,27 +62,29 @@ const getHearingDateRows = (hearing: HearingModel, translations: AnyRecord): Hea
 };
 
 const getMatchedNotifications = (
-  sendNotificationTypeItem: SendNotificationTypeItem[],
+  notifications: SendNotificationTypeItem[],
   hearing: HearingModel,
   translations: AnyRecord
-): SendNotificationTypeItem[] => {
-  const notifications = sendNotificationTypeItem.filter(notification =>
-    isNotificationsWithIdMatch(notification, hearing)
-  );
-  notifications.forEach(item => {
-    item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id);
-    item.displayStatus = translations[item.value?.notificationState];
-    item.statusColor = displayStatusColorMap.get(item.value?.notificationState as HubLinkStatus);
-  });
-  return notifications;
+): HearingNotificationRow[] => {
+  return notifications
+    .filter(notification => isNotificationsWithIdMatch(notification, hearing))
+    .map(notification => getItems(notification, translations));
 };
 
 const isNotificationsWithIdMatch = (notification: SendNotificationTypeItem, hearing: HearingModel): boolean => {
-  return (
-    hearing?.value?.hearingDateCollection?.some(hearingDate => {
-      return notification.value?.sendNotificationSelectHearing?.selectedCode === hearingDate.id;
-    }) || false
-  );
+  return hearing.value?.hearingDateCollection?.some(hearingDate => {
+    return notification.value?.sendNotificationSelectHearing?.selectedCode === hearingDate.id;
+  });
+};
+
+const getItems = (item: SendNotificationTypeItem, translations: AnyRecord): HearingNotificationRow => {
+  return {
+    date: item.value?.date,
+    redirectUrl: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id),
+    sendNotificationTitle: item.value?.sendNotificationTitle,
+    displayStatus: translations[item.value?.notificationState],
+    statusColor: displayStatusColorMap.get(item.value?.notificationState as HubLinkStatus),
+  };
 };
 
 /**
