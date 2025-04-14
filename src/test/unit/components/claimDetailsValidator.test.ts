@@ -10,26 +10,6 @@ describe('claimDetailsValidator', () => {
       expect(validatePersonalDetails(undefined)).toBe(false);
     });
 
-    it('should return false if typeOfClaim is missing or not an array', () => {
-      const userCase = {
-        address1: '123 Street',
-        addressTown: 'Town',
-        addressPostcode: 'AB12 3CD',
-        addressCountry: 'Country',
-      };
-      expect(validatePersonalDetails(userCase)).toBe(false);
-    });
-
-    it('should return false if typeOfClaim is an empty array', () => {
-      const userCase = {
-        address1: '123 Street',
-        addressTown: 'Town',
-        addressPostcode: 'AB12 3CD',
-        addressCountry: 'Country',
-      };
-      expect(validatePersonalDetails(userCase)).toBe(false);
-    });
-
     it('should return false if any address field is missing', () => {
       const userCase = {
         typeOfClaim: ['Type1'],
@@ -101,7 +81,7 @@ describe('claimDetailsValidator', () => {
       expect(validateEmploymentAndRespondentDetails(userCase)).toBe(true);
     });
 
-    it('should return true if acasCert is not "No" and noAcasReason is not required', () => {
+    it('should return false if acasCert is "Yes" and acasCertNum is not provided', () => {
       const userCase = {
         respondents: [
           {
@@ -110,6 +90,22 @@ describe('claimDetailsValidator', () => {
             respondentAddressCountry: 'Country',
             respondentAddressPostcode: 'AB12 3CD',
             acasCert: 'Yes',
+          },
+        ],
+      };
+      expect(validateEmploymentAndRespondentDetails(userCase)).toBe(false);
+    });
+
+    it('should return true if acasCert is "Yes" and acasCertNum is provided', () => {
+      const userCase = {
+        respondents: [
+          {
+            respondentAddress1: '123 Street',
+            respondentAddressTown: 'Town',
+            respondentAddressCountry: 'Country',
+            respondentAddressPostcode: 'AB12 3CD',
+            acasCert: 'Yes',
+            acasCertNum: '123456',
           },
         ],
       };

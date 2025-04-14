@@ -34,6 +34,7 @@ describe('Test task List check controller', () => {
           respondentAddressCountry: 'Country',
           respondentAddressPostcode: 'AB12 3CD',
           acasCert: 'Yes',
+          acasCertNum: '123456',
         },
       ],
     };

@@ -2,7 +2,7 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
   if (!userCase) {
     return false;
   }
-  const {address1, addressTown, addressPostcode, addressCountry } = userCase;
+  const { address1, addressTown, addressPostcode, addressCountry } = userCase;
 
   return !(!address1 || !addressTown || !addressPostcode || !addressCountry);
 };
@@ -25,6 +25,10 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
     }
 
     if (respondent.acasCert === 'No' && !respondent.noAcasReason) {
+      return false;
+    }
+
+    if (respondent.acasCert === 'Yes' && !respondent.acasCertNum) {
       return false;
     }
   }
