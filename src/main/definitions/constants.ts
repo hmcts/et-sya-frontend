@@ -206,6 +206,7 @@ export const PageUrls = {
   CLAIM_DETAILS_CHECK: '/claim-details-check',
   RESPONDENT_NAME: '/respondent-name',
   RESPONDENT_ADDRESS: '/respondent-address',
+  RESPONDENT_ADDRESS_NON_UK: '/respondent-address-non-uk',
   WORK_ADDRESS: '/work-address',
   ACAS_CERT_NUM: '/acas-cert-num',
   RESPONDENT_DETAILS_CHECK: '/respondent-details-check',
