@@ -4,12 +4,14 @@ import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
+  isValidUKPostcode,
 } from '../../components/form/address_validator';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import { FormContent, FormField } from '../../definitions/form';
+import { FormContent } from '../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 
 import { handlePostLogicForRespondent } from './CaseHelpers';
@@ -18,60 +20,76 @@ import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectU
 
 const logger = getLogger('RespondentAddressHelper');
 
-export const address1: FormField = {
-  id: 'address1',
-  name: 'address-line1',
-  type: 'text',
-  classes: 'govuk-label govuk-!-width-one-half',
-  label: l => l.addressLine1,
-  labelSize: null,
-  attributes: {
-    autocomplete: 'address-line1',
-    maxLength: 150,
+export const getRespondentAddressContent = (isRequired: boolean): FormContent => ({
+  fields: {
+    respondentAddress1: {
+      id: 'address1',
+      name: 'address-line1',
+      type: 'text',
+      classes: 'govuk-label govuk-!-width-one-half',
+      label: l => l.addressLine1,
+      labelSize: null,
+      attributes: {
+        autocomplete: 'address-line1',
+        maxLength: 150,
+      },
+      validator: isValidAddressFirstLine,
+    },
+    respondentAddress2: {
+      id: 'address2',
+      name: 'address-line2',
+      type: 'text',
+      classes: 'govuk-label govuk-!-width-one-half',
+      label: l => l.addressLine2,
+      labelSize: null,
+      attributes: {
+        autocomplete: 'address-line2',
+        maxLength: 50,
+      },
+      validator: isValidAddressSecondLine,
+    },
+    respondentAddressTown: {
+      id: 'addressTown',
+      name: 'address-town',
+      type: 'text',
+      classes: 'govuk-label govuk-!-width-one-half',
+      label: l => l.town,
+      labelSize: null,
+      attributes: {
+        autocomplete: 'address-level2',
+        maxLength: 50,
+      },
+      validator: isValidCountryTownOrCity,
+    },
+    respondentAddressCountry: {
+      id: 'addressCountry',
+      name: 'address-country',
+      type: 'text',
+      classes: 'govuk-label govuk-!-width-one-half',
+      label: l => l.country,
+      labelSize: null,
+      attributes: {
+        maxLength: 50,
+      },
+      validator: isValidCountryTownOrCity,
+    },
+    respondentAddressPostcode: {
+      id: 'addressPostcode',
+      name: 'address-postcode',
+      type: 'text',
+      classes: 'govuk-label govuk-input--width-10',
+      label: l => (isRequired ? l.postcodeRequired : l.postcode),
+      labelSize: null,
+      attributes: {
+        autocomplete: 'postal-code',
+        maxLength: 14,
+      },
+      validator: isRequired ? isValidUKPostcode : null,
+    },
   },
-  validator: isValidAddressFirstLine,
-};
-
-export const address2: FormField = {
-  id: 'address2',
-  name: 'address-line2',
-  type: 'text',
-  classes: 'govuk-label govuk-!-width-one-half',
-  label: l => l.addressLine2,
-  labelSize: null,
-  attributes: {
-    autocomplete: 'address-line2',
-    maxLength: 50,
-  },
-  validator: isValidAddressSecondLine,
-};
-
-export const addressTown: FormField = {
-  id: 'addressTown',
-  name: 'address-town',
-  type: 'text',
-  classes: 'govuk-label govuk-!-width-one-half',
-  label: l => l.town,
-  labelSize: null,
-  attributes: {
-    autocomplete: 'address-level2',
-    maxLength: 50,
-  },
-  validator: isValidCountryTownOrCity,
-};
-
-export const addressCountry: FormField = {
-  id: 'addressCountry',
-  name: 'address-country',
-  type: 'text',
-  classes: 'govuk-label govuk-!-width-one-half',
-  label: l => l.country,
-  labelSize: null,
-  attributes: {
-    maxLength: 50,
-  },
-  validator: isValidCountryTownOrCity,
-};
+  submit: submitButton,
+  saveForLater: saveForLaterButton,
+});
 
 export const handlePost = async (req: AppRequest, res: Response, form: Form): Promise<void> => {
   const { userCase } = req.session;
@@ -83,13 +101,13 @@ export const handlePost = async (req: AppRequest, res: Response, form: Form): Pr
   await handlePostLogicForRespondent(req, res, form, logger, redirectUrl);
 };
 
-export const handleGet = (req: AppRequest, res: Response, form: Form, respondentAddressContent: FormContent): void => {
+export const handleGet = (req: AppRequest, res: Response, form: Form, formContent: FormContent): void => {
   const respondents = req.session.userCase.respondents;
   const respondentIndex = getRespondentIndex(req);
   const selectedRespondent = respondents[respondentIndex];
   const content = getPageContent(
     req,
-    respondentAddressContent,
+    formContent,
     [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
     respondentIndex
   );

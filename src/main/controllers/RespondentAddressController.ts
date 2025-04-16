@@ -1,45 +1,14 @@
 import { Response } from 'express';
 
-import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { FormContent, FormFields } from '../definitions/form';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
 
-import {
-  address1,
-  address2,
-  addressCountry,
-  addressTown,
-  handleGet,
-  handlePost,
-} from './helpers/RespondentAddressHelper';
+import { getRespondentAddressContent, handleGet, handlePost } from './helpers/RespondentAddressHelper';
 
 export default class RespondentAddressController {
   private readonly form: Form;
-  private readonly respondentAddressContent: FormContent = {
-    fields: {
-      respondentAddress1: address1,
-      respondentAddress2: address2,
-      respondentAddressTown: addressTown,
-      respondentAddressCountry: addressCountry,
-      respondentAddressPostcode: {
-        id: 'addressPostcode',
-        name: 'address-postcode',
-        type: 'text',
-        classes: 'govuk-label govuk-input--width-10',
-        label: l => l.postcodeRequired,
-        labelSize: null,
-        attributes: {
-          autocomplete: 'postal-code',
-          maxLength: 14,
-        },
-        validator: isValidUKPostcode,
-      },
-    },
-    submit: submitButton,
-    saveForLater: saveForLaterButton,
-  };
+  private readonly respondentAddressContent: FormContent = getRespondentAddressContent(true);
 
   constructor() {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
