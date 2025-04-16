@@ -1,15 +1,13 @@
 import RespondentAddressNonUkController from '../../../main/controllers/RespondentAddressNonUkController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
-describe('Respondent Address Controller', () => {
+describe('Respondent Address Non UK Controller', () => {
   const t = {
     respondentAddress: {},
     common: {},
@@ -17,14 +15,10 @@ describe('Respondent Address Controller', () => {
 
   it('should render the Respondent Address controller page', () => {
     const controller = new RespondentAddressNonUkController();
-
     const response = mockResponse();
     const request = mockRequest({ t });
-
     request.session.userCase = userCaseWithRespondent;
-
     controller.get(request, response);
-
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_ADDRESS, expect.anything());
   });
 
@@ -36,79 +30,24 @@ describe('Respondent Address Controller', () => {
       respondentAddressCountry: 'Test Country',
     };
     const controller = new RespondentAddressNonUkController();
-
     const response = mockResponse();
     const request = mockRequest({ body });
-
     request.session.userCase = userCaseWithRespondent;
-
     await controller.post(request, response);
-
     expect(response.redirect).toHaveBeenCalledWith('/respondent/1/work-address');
   });
 
-  it('should render the Acas Cert Num page on post when more than one respondent', async () => {
+  it('should render the Work Address page on post when Postcode not exist', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
-      respondentAddressPostcode: 'AB1 2CD',
       respondentAddressCountry: 'Test Country',
     };
     const controller = new RespondentAddressNonUkController();
-
     const response = mockResponse();
     const request = mockRequest({ body });
-
-    request.session.userCase = {
-      id: '12354',
-      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      respondents: [
-        {
-          respondentNumber: 1,
-          respondentName: 'Globo Gym',
-        },
-        {
-          respondentNumber: 2,
-          respondentName: 'Enron',
-        },
-      ],
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
-    };
-
+    request.session.userCase = userCaseWithRespondent;
     await controller.post(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
-  });
-
-  it('should render the Acas Cert Num page when claimant did not work for the respondent', async () => {
-    const body = {
-      respondentAddress1: '10 test street',
-      respondentAddressTown: 'test',
-      respondentAddressPostcode: 'AB1 2CD',
-      respondentAddressCountry: 'Test Country',
-    };
-    const controller = new RespondentAddressNonUkController();
-
-    const response = mockResponse();
-    const request = mockRequest({ body });
-
-    request.session.userCase = {
-      id: '12354',
-      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      respondents: [
-        {
-          respondentNumber: 1,
-          respondentName: 'Globo Gym',
-        },
-      ],
-      pastEmployer: YesOrNo.NO,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
-    };
-
-    await controller.post(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/work-address');
   });
 });
