@@ -1583,9 +1583,9 @@ __metadata:
   linkType: hard
 
 "@faker-js/faker@npm:^9.0.0":
-  version: 9.6.0
-  resolution: "@faker-js/faker@npm:9.6.0"
-  checksum: 7fac049bae4efb7a5c923d7054f1407d9df63cb4bc871c322b2d5ba05d0a9fb91c71fefa8f9d1d69d1001d97e3ba833b377c31de48a049e2fcd54cf39e588574
+  version: 9.7.0
+  resolution: "@faker-js/faker@npm:9.7.0"
+  checksum: 3b452be4cc3227728947ca9b1d733a2b0b971ab68e7e92275aea6906ac2d3826bac2494b334ee65a19751ee9f0c0d210f8cbfb310d4cd586c3b5c5f327c3207c
   languageName: node
   linkType: hard
 
@@ -9213,9 +9213,9 @@ __metadata:
   linkType: hard
 
 "i18next-http-middleware@npm:^3.3.0":
-  version: 3.7.1
-  resolution: "i18next-http-middleware@npm:3.7.1"
-  checksum: 2927abbfc34404c6eba45e76afa76905288bcb5ce4d585df75067703d027fab63dc75f9d6b7500ed339bba579fb8c19cec5e13e9aac02d1f033dcc2b4aa56266
+  version: 3.7.2
+  resolution: "i18next-http-middleware@npm:3.7.2"
+  checksum: 149404114fd175bd12f66527cc0d3318740a8d01faf1dafcef8d634cfb8130114ede72ee8608a819f788c44af83205e177efbca4221cbd7f3b2fe55fc4f42b4e
   languageName: node
   linkType: hard
 
@@ -11011,8 +11011,8 @@ __metadata:
   linkType: hard
 
 "lint-staged@npm:^15.0.0":
-  version: 15.5.0
-  resolution: "lint-staged@npm:15.5.0"
+  version: 15.5.1
+  resolution: "lint-staged@npm:15.5.1"
   dependencies:
     chalk: ^5.4.1
     commander: ^13.1.0
@@ -11026,7 +11026,7 @@ __metadata:
     yaml: ^2.7.0
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 9d5854d1bef3b0b604b3c10e56f73ee49026ff700e5f9497522c852356b25a0a43f9897e9e336ed99bf91e6bde978279f6a6d59b9b94716c1dd6d46b6ddad462
+  checksum: aa285bf6c55459030254536661e2cf4a69d8084ff945a088b1a60a94b96e3593c866b2804e7a5b6168f65ea675b785657e70ade9248e9c6f3023d3bd35b497b5
   languageName: node
   linkType: hard
 
