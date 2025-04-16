@@ -1,6 +1,5 @@
 import { Response } from 'express';
 
-import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { FormContent, FormFields } from '../definitions/form';
@@ -15,7 +14,7 @@ import {
   handlePost,
 } from './helpers/RespondentAddressHelper';
 
-export default class RespondentAddressController {
+export default class RespondentAddressNonUkController {
   private readonly form: Form;
   private readonly respondentAddressContent: FormContent = {
     fields: {
@@ -28,13 +27,12 @@ export default class RespondentAddressController {
         name: 'address-postcode',
         type: 'text',
         classes: 'govuk-label govuk-input--width-10',
-        label: l => l.postcodeRequired,
+        label: l => l.postcode,
         labelSize: null,
         attributes: {
           autocomplete: 'postal-code',
           maxLength: 14,
         },
-        validator: isValidUKPostcode,
       },
     },
     submit: submitButton,

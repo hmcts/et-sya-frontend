@@ -52,14 +52,13 @@ export default class RespondentPostCodeEnterController {
     const respondents = req.session.userCase.respondents;
     const selectedRespondent = respondents[respondentIndex];
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
     const title = req.url?.includes('lng=cy')
       ? localesCy.respondentPostcodeEnterTitle
       : locales.respondentPostcodeEnterTitle;
     res.render(TranslationKeys.RESPONDENT_POSTCODE_ENTER, {
       ...content,
       respondentName: selectedRespondent.respondentName,
-      link,
+      nonUkAddressLink: getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS_NON_UK),
       title,
     });
   };
