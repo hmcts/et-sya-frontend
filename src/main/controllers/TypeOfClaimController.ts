@@ -33,12 +33,6 @@ export default class TypeOfClaimController {
         validator: atLeastOneFieldIsChecked,
         values: [
           {
-            id: 'breachOfContract',
-            name: 'typeOfClaim',
-            label: l => l.breachOfContract.checkbox,
-            value: TypesOfClaim.BREACH_OF_CONTRACT,
-          },
-          {
             id: 'discrimination',
             name: 'typeOfClaim',
             label: l => l.discrimination.checkbox,

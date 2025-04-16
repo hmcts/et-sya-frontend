@@ -237,7 +237,6 @@ export class ClaimStartPage extends BasePage {
       'text=You can choose all that apply to you. Further information will be asked for later in the claim.'
     );
     await this.webAction.verifyTextPresentOnPage('text=Select all that apply');
-    await this.webAction.verifyTextPresentOnPage('text=Breach of contract - including notice pay');
     await this.webAction.verifyTextPresentOnPage('text=Discrimination of any type');
     await this.webAction.verifyTextPresentOnPage(
       'text=for example because of your sex, ethnicity, disability or other characteristic'
