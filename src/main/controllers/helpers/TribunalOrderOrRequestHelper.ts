@@ -222,12 +222,7 @@ export const activateTribunalOrdersAndRequestsLink = async (
 };
 
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  return items?.filter(
-    it =>
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) ||
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE) ||
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
-  );
+  return items?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
 };
 
 export const filterECCNotifications = async (

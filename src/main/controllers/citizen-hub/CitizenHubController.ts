@@ -153,6 +153,12 @@ export default class CitizenHubController {
     });
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
+    const showNotificationsBanner = notifications.some(
+      notification =>
+        notification.showAlert &&
+        (notification.value.notificationState === HubLinkStatus.NOT_VIEWED ||
+          notification.value.notificationState === HubLinkStatus.NOT_STARTED_YET)
+    );
     const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
     const eccNotifications = await filterECCNotifications(notifications);
 
@@ -202,6 +208,7 @@ export default class CitizenHubController {
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
+      showNotificationsBanner,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
       storedPendingApplication: getStoredPendingBannerList(
