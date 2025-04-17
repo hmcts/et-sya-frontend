@@ -425,6 +425,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
+      respondentEmail: respondent.value?.respondent_email,
       respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
       respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
       respondentAddressTown: respondent.value?.respondent_address?.PostTown,
@@ -443,8 +444,12 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
 export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
   return representatives?.map(rep => {
     return {
-      hasMyHMCTSAccount: rep.value.myHmctsYesNo,
       respondentId: rep.value.respondentId,
+      nameOfRepresentative: rep.value.name_of_representative,
+      nameOfOrganisation: rep.value.name_of_organisation,
+      representativeAddress: rep.value.representative_address,
+      representativeEmailAddress: rep.value.representative_email_address,
+      hasMyHMCTSAccount: rep.value.myHmctsYesNo,
     };
   });
 };

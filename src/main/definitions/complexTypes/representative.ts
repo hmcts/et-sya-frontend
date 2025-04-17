@@ -1,6 +1,12 @@
-import { YesOrNo } from '../../definitions/case';
+import { YesOrNo } from '../case';
+
+import { Et1Address } from './et1Address';
 
 export interface RepresentativeType {
-  myHmctsYesNo?: YesOrNo;
   respondentId?: string;
+  name_of_representative?: string;
+  name_of_organisation?: string;
+  representative_address?: Et1Address;
+  representative_email_address?: string;
+  myHmctsYesNo?: YesOrNo;
 }

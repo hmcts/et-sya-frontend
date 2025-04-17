@@ -173,6 +173,7 @@ export default {
       respondentAddressCountry: 'England',
       respondentAddressPostcode: 'SW1H 9AQ',
       respondentEnterPostcode: 'SW1H 9AQ',
+      respondentEmail: undefined,
       ccdId: '3453xaa',
       idamId: undefined,
     },
@@ -187,6 +188,7 @@ export default {
       respondentAddressCountry: 'Country2',
       respondentAddressPostcode: 'SW1A 1AA',
       respondentEnterPostcode: 'SW1A 1AA',
+      respondentEmail: undefined,
       ccdId: '3454xaa',
       idamId: undefined,
     },
@@ -280,6 +282,10 @@ export default {
   representatives: [
     {
       hasMyHMCTSAccount: YesOrNo.YES,
+      nameOfOrganisation: undefined,
+      nameOfRepresentative: undefined,
+      representativeAddress: undefined,
+      representativeEmailAddress: undefined,
       respondentId: '123',
     },
   ],
