@@ -40,7 +40,8 @@ withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableFortifyScan('et-aat')
     enableSecurityScan(
-           urlExclusions: urlExclusions
+           urlExclusions: urlExclusions,
+           alertFilters: alertFilters
     )
 
     env.TEST_URL = params.TEST_URL
