@@ -285,9 +285,12 @@ describe('Tribunal order or request helper', () => {
 
   describe('should filter notifications', () => {
     it('should filter only orders, requests or Other (General correspondence)', () => {
+      // create a test subject as the only one which should be filtered OUT is ECC
+      const TEST_NOTIFICATION_SUBJECT = 'TEST SUBJECT';
       const notificationWithoutOrderOrRequest = {
         value: {
           sendNotificationCaseManagement: undefined,
+          sendNotificationSubjectString: TEST_NOTIFICATION_SUBJECT,
         } as SendNotificationType,
       } as SendNotificationTypeItem;
 
@@ -295,12 +298,14 @@ describe('Tribunal order or request helper', () => {
         notificationWithoutOrderOrRequest,
         notificationItem,
         notificationItemOther,
+        mockECCNotification,
       ]);
-      expect(filteredNotifications).toHaveLength(2);
-      expect(filteredNotifications[0].value.sendNotificationSubjectString).toStrictEqual(
+      expect(filteredNotifications).toHaveLength(3);
+      expect(filteredNotifications[0].value.sendNotificationSubjectString).toStrictEqual(TEST_NOTIFICATION_SUBJECT);
+      expect(filteredNotifications[1].value.sendNotificationSubjectString).toStrictEqual(
         NotificationSubjects.ORDER_OR_REQUEST
       );
-      expect(filteredNotifications[1].value.sendNotificationSubjectString).toStrictEqual(
+      expect(filteredNotifications[2].value.sendNotificationSubjectString).toStrictEqual(
         NotificationSubjects.GENERAL_CORRESPONDENCE
       );
     });
