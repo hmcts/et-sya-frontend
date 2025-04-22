@@ -2077,31 +2077,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.14.0"
-  checksum: 10740d0b0a5a87cd7741f42428f479d398866e7974010cc9ae4f10f1a933c807261d2b27a36a3d5b30374d2a041ee184373b74a433995d031446aa05cdd4a02b
+"@launchdarkly/js-sdk-common@npm:2.16.0":
+  version: 2.16.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.16.0"
+  checksum: 9a7dfc365473cb737534ccefc5ceaa2132b8e3d95936b751bcf792e27da87d4bc07abfe59ad7544d1cf78bde94afa397c99de8ba4584a109ad15204f601f8626
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.13.0":
-  version: 2.13.0
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.13.0"
+"@launchdarkly/js-server-sdk-common@npm:2.15.0":
+  version: 2.15.0
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.15.0"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.14.0
+    "@launchdarkly/js-sdk-common": 2.16.0
     semver: 7.5.4
-  checksum: a299ccd9b5979b69c7d266ff373bb56fda1fabc744c1d21fd2fb8e4c55d89ed9db7407601ad0d31b47f51cf1fb8bc982601dfede10f1b1ca36ad9271cdcf27fe
+  checksum: 78471283109fe1440a4faab5bb35536959a10276043463c417cb7b275a959e96b8cdf40612f0bb72a445e2f4f7ebcd16fc1a961643ab200f05324ac8d55cc0e6
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.7.7
-  resolution: "@launchdarkly/node-server-sdk@npm:9.7.7"
+  version: 9.9.0
+  resolution: "@launchdarkly/node-server-sdk@npm:9.9.0"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.13.0
+    "@launchdarkly/js-server-sdk-common": 2.15.0
     https-proxy-agent: ^5.0.1
-    launchdarkly-eventsource: 2.0.3
-  checksum: 0fd36972b044ae4c7a2b3d8e98034a35a0bd64a32d8791c5e860e97b640f70f3c08f7e6d41381a2f48f3704f59ba54878cbdad3451de6edc1a12d24e3b7b6e7c
+    launchdarkly-eventsource: 2.1.0
+  checksum: 277a94072207b6fa41f1df94e8e8156140bde0a32b9116e2d5aca9eeb37cc08b12def98c2022ba636cebcd6a35852a763cd496c327623b41de5d73ad7e325250
   languageName: node
   linkType: hard
 
@@ -3198,11 +3198,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^22.0.0, @types/node@npm:^22.2.0":
-  version: 22.13.17
-  resolution: "@types/node@npm:22.13.17"
+  version: 22.14.1
+  resolution: "@types/node@npm:22.14.1"
   dependencies:
-    undici-types: ~6.20.0
-  checksum: 671e5120fa7f8ce82e7bc2652c3283be14e28a4c9558705553991902961cf0f1cba8789f9940c64063112b27010a5cd5e8d9bdd154564e68ca05c7cbce181280
+    undici-types: ~6.21.0
+  checksum: e22363f40ac8290da2bb5261c2b348241fd93b000908cefd3c56575df9d4f6b8d102fc8631275eac7ec4a9e0ac4f38f01c9d8104ebbda76c936aef96fd1e55f3
   languageName: node
   linkType: hard
 
@@ -3649,10 +3649,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/protocols@npm:8.40.3":
-  version: 8.40.3
-  resolution: "@wdio/protocols@npm:8.40.3"
-  checksum: 3ad3abdc83c14c708248f4af34d5705bc32a27ffa820912896ef09855950c5f5263186ea8b8daaf4d30f04176c7d0539c7443fb3c6e66b3a01b0a516caece0ae
+"@wdio/protocols@npm:8.44.0":
+  version: 8.44.0
+  resolution: "@wdio/protocols@npm:8.44.0"
+  checksum: 9b783b3da728b9299c118e02de9241e2bcffa28323c3becb8cdf05a1e7d78a0f8d4c7199f9f52ede788f73bbb2e6de6148e10fcd646136f16406401760295f63
   languageName: node
   linkType: hard
 
@@ -10926,10 +10926,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"launchdarkly-eventsource@npm:2.0.3":
-  version: 2.0.3
-  resolution: "launchdarkly-eventsource@npm:2.0.3"
-  checksum: c0e63aef73bf377e3838357e8903800b523a32e882b70df5c6c03bf22ea65d3305e7acb2843d0f9d6b0bb741f7d0d0da562f1f9693e28fbdac2e3851a6ca807e
+"launchdarkly-eventsource@npm:2.1.0":
+  version: 2.1.0
+  resolution: "launchdarkly-eventsource@npm:2.1.0"
+  checksum: b7d85f9149640b8230ff75531162360bc33470ed6688bcd8c6423a18962026e0f143cbde0ce6e845b4a4dd53c24f8bd5f709aa48c71ba4e6e25db51ba8544462
   languageName: node
   linkType: hard
 
@@ -15936,10 +15936,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.20.0":
-  version: 6.20.0
-  resolution: "undici-types@npm:6.20.0"
-  checksum: b7bc50f012dc6afbcce56c9fd62d7e86b20a62ff21f12b7b5cbf1973b9578d90f22a9c7fe50e638e96905d33893bf2f9f16d98929c4673c2480de05c6c96ea8b
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 46331c7d6016bf85b3e8f20c159d62f5ae471aba1eb3dc52fff35a0259d58dcc7d592d4cc4f00c5f9243fa738a11cfa48bd20203040d4a9e6bc25e807fab7ab3
   languageName: node
   linkType: hard
 
@@ -16266,33 +16266,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webdriver@npm:8.43.0":
-  version: 8.43.0
-  resolution: "webdriver@npm:8.43.0"
+"webdriver@npm:8.44.0":
+  version: 8.44.0
+  resolution: "webdriver@npm:8.44.0"
   dependencies:
     "@types/node": ^22.2.0
     "@types/ws": ^8.5.3
     "@wdio/config": 8.43.0
     "@wdio/logger": 8.38.0
-    "@wdio/protocols": 8.40.3
+    "@wdio/protocols": 8.44.0
     "@wdio/types": 8.41.0
     "@wdio/utils": 8.41.0
     deepmerge-ts: ^5.1.0
     got: ^12.6.1
     ky: ^0.33.0
     ws: ^8.8.0
-  checksum: 6802e879efb68176d624a43f52a214ddcd3d904e036fc3ab4efbffe62baf3b72684e7bc3068a1a816731a38c5d4115e99aca9f38a021be0c7d4a2cb6ed7bc939
+  checksum: b962ec16e117b4d92deeccddd025c1dbb052065a190b0daf98e732d6bd770a4d7add1e2a6aa91c18a97c30bda157473130ae8a7a605af73e6f029a3d55583617
   languageName: node
   linkType: hard
 
 "webdriverio@npm:^8.8.6":
-  version: 8.43.0
-  resolution: "webdriverio@npm:8.43.0"
+  version: 8.44.1
+  resolution: "webdriverio@npm:8.44.1"
   dependencies:
     "@types/node": ^22.2.0
     "@wdio/config": 8.43.0
     "@wdio/logger": 8.38.0
-    "@wdio/protocols": 8.40.3
+    "@wdio/protocols": 8.44.0
     "@wdio/repl": 8.40.3
     "@wdio/types": 8.41.0
     "@wdio/utils": 8.41.0
@@ -16313,13 +16313,13 @@ __metadata:
     resq: ^1.9.1
     rgb2hex: 0.2.5
     serialize-error: ^11.0.1
-    webdriver: 8.43.0
+    webdriver: 8.44.0
   peerDependencies:
     devtools: ^8.14.0
   peerDependenciesMeta:
     devtools:
       optional: true
-  checksum: aec59eb3b2afd28bd35beade88cad1cb274b702f792c8f16ae0a1e36a4353b198aecc1fda73973d37ef5b4e721a018c8462b9fc80505190e463cf2fe4eb9abf6
+  checksum: e716a67e20cea5cb8e451713e6da0f96a4ea6d16a7bc93e49005d50d63436c4597b0ec149e295eb170db55ba7b787736b7f0e45e2803b494fe880b08fc3c58c2
   languageName: node
   linkType: hard
 
