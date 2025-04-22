@@ -8,5 +8,6 @@ export interface RepresentativeType {
   name_of_organisation?: string;
   representative_address?: Et1Address;
   representative_email_address?: string;
+  representative_preference?: string;
   myHmctsYesNo?: YesOrNo;
 }

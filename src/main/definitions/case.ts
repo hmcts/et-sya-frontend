@@ -34,12 +34,16 @@ export interface AddressType {
 export interface Respondent {
   respondentNumber?: number;
   respondentName?: string;
-  respondentEmail?: string;
+  respondentOrganisation?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
   respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
+  responseRespondentName?: string;
+  responseRespondentAddress?: Et1Address;
+  responseRespondentEmail?: string;
+  responseRespondentContactPreference?: string;
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
@@ -336,6 +340,7 @@ export interface Representative {
   nameOfOrganisation?: string;
   representativeAddress?: Et1Address;
   representativeEmailAddress?: string;
+  representativePreference?: string;
 }
 
 export const enum claimantRepresented {

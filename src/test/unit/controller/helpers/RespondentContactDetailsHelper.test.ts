@@ -15,13 +15,17 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            respondentName: 'John Doe',
-            respondentAddress1: '123 High St',
-            respondentAddress2: '',
-            respondentAddressTown: 'Oxford',
-            respondentAddressPostcode: 'OX1 1AA',
-            respondentAddressCountry: 'UK',
-            respondentEmail: 'john@example.com',
+            respondentOrganisation: 'Organisation Test',
+            responseRespondentName: 'John Doe',
+            responseRespondentAddress: {
+              AddressLine1: '123 High St',
+              AddressLine2: '',
+              PostTown: 'Oxford',
+              PostCode: 'OX1 1AA',
+              Country: 'UK',
+            },
+            responseRespondentEmail: 'john@example.com',
+            responseRespondentContactPreference: 'Email',
           },
         ],
         representatives: [],
@@ -31,13 +35,17 @@ describe('Respondent Contact Details Helper', () => {
 
       const result = getRespondentContactDetails(req);
       expect(result).toHaveLength(1);
-      expect(result[0]).toHaveLength(3);
+      expect(result[0]).toHaveLength(5);
       expect(result[0][0].key.text).toBe('Name');
       expect(result[0][0].value.text).toBe('John Doe');
-      expect(result[0][1].key.text).toBe('Address');
-      expect(result[0][1].value.text).toBe('123 High St, Oxford, OX1 1AA, UK');
-      expect(result[0][2].key.text).toBe('Email');
-      expect(result[0][2].value.text).toBe('john@example.com');
+      expect(result[0][1].key.text).toBe('Organisation name');
+      expect(result[0][1].value.text).toBe('Organisation Test');
+      expect(result[0][2].key.text).toBe('Address');
+      expect(result[0][2].value.text).toBe('123 High St, Oxford, OX1 1AA, UK');
+      expect(result[0][3].key.text).toBe('Email');
+      expect(result[0][3].value.text).toBe('john@example.com');
+      expect(result[0][4].key.text).toBe('Preferred method of contact');
+      expect(result[0][4].value.text).toBe('Email');
     });
 
     it('should return representative details if one is assigned', () => {
@@ -45,13 +53,15 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            respondentName: 'Acme Corp',
-            respondentAddress1: '100 Industrial Rd',
-            respondentAddress2: '',
-            respondentAddressTown: 'Birmingham',
-            respondentAddressPostcode: 'B1 1BB',
-            respondentAddressCountry: 'UK',
-            respondentEmail: 'contact@acme.com',
+            responseRespondentName: 'Acme Corp',
+            responseRespondentAddress: {
+              AddressLine1: '100 Industrial Rd',
+              AddressLine2: '',
+              PostTown: 'Birmingham',
+              PostCode: 'B1 1BB',
+              Country: 'UK',
+            },
+            responseRespondentEmail: 'contact@acme.com',
           },
         ],
         representatives: [
@@ -67,6 +77,7 @@ describe('Respondent Contact Details Helper', () => {
               Country: 'UK',
             },
             representativeEmailAddress: 'jane@repco.com',
+            representativePreference: 'Email',
           },
         ],
       } as CaseWithId;
@@ -75,7 +86,7 @@ describe('Respondent Contact Details Helper', () => {
 
       const result = getRespondentContactDetails(req);
       expect(result).toHaveLength(1);
-      expect(result[0]).toHaveLength(4);
+      expect(result[0]).toHaveLength(5);
       expect(result[0][0].key.text).toBe('Legal representative’s name');
       expect(result[0][0].value.text).toBe('Jane Rep');
       expect(result[0][1].key.text).toBe('Legal rep’s organisation');
@@ -91,23 +102,27 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            respondentName: 'Company One',
-            respondentAddress1: '1 Corp Way',
-            respondentAddress2: '',
-            respondentAddressTown: 'Townsville',
-            respondentAddressPostcode: 'T1 1ZZ',
-            respondentAddressCountry: 'UK',
-            respondentEmail: 'one@company.com',
+            responseRespondentName: 'Company One',
+            responseRespondentAddress: {
+              AddressLine1: '1 Corp Way',
+              AddressLine2: '',
+              PostTown: 'Townsville',
+              PostCode: 'T1 1ZZ',
+              Country: 'UK',
+            },
+            responseRespondentEmail: 'one@company.com',
           },
           {
             ccdId: '2',
-            respondentName: 'Company Two',
-            respondentAddress1: '2 Biz Rd',
-            respondentAddress2: '',
-            respondentAddressTown: 'Cityplace',
-            respondentAddressPostcode: 'C2 2YY',
-            respondentAddressCountry: 'UK',
-            respondentEmail: 'two@company.com',
+            responseRespondentName: 'Company Two',
+            responseRespondentAddress: {
+              AddressLine1: '2 Biz Rd',
+              AddressLine2: '',
+              PostTown: 'Cityplace',
+              PostCode: 'C2 2YY',
+              Country: 'UK',
+            },
+            responseRespondentEmail: 'two@company.com',
           },
         ],
         representatives: [
@@ -131,7 +146,9 @@ describe('Respondent Contact Details Helper', () => {
 
       const result = getRespondentContactDetails(req);
       expect(result).toHaveLength(2);
+      expect(result[0]).toHaveLength(4);
       expect(result[0][0].value.text).toBe('Legal Rep 1');
+      expect(result[1]).toHaveLength(4);
       expect(result[1][0].value.text).toBe('Company Two');
     });
   });

@@ -40,7 +40,11 @@ const getRespondentLegalRepInfo = (rep: Representative, translations: AnyRecord)
   );
   details.push(addSummaryRow(translations.address, addressString));
 
-  details.push(addSummaryRow(translations.email, rep.representativeEmailAddress || ''));
+  details.push(addSummaryRow(translations.email, rep.representativeEmailAddress));
+
+  if (rep.representativePreference) {
+    details.push(addSummaryRow(translations.preferredMethod, rep.representativePreference));
+  }
 
   return details;
 };
@@ -48,18 +52,25 @@ const getRespondentLegalRepInfo = (rep: Representative, translations: AnyRecord)
 const getRespondentInfo = (respondent: Respondent, translations: AnyRecord): SummaryListRow[] => {
   const details: SummaryListRow[] = [];
 
-  details.push(addSummaryRow(translations.name, respondent.respondentName));
+  details.push(addSummaryRow(translations.name, respondent.responseRespondentName));
 
+  details.push(addSummaryRow(translations.organisationName, respondent.respondentOrganisation || ''));
+
+  const address = respondent.responseRespondentAddress;
   const addressString = answersAddressFormatter(
-    respondent.respondentAddress1,
-    respondent.respondentAddress2,
-    respondent.respondentAddressTown,
-    respondent.respondentAddressPostcode,
-    respondent.respondentAddressCountry
+    address?.AddressLine1,
+    address?.AddressLine2,
+    address?.PostTown,
+    address?.PostCode,
+    address?.Country
   );
   details.push(addSummaryRow(translations.address, addressString));
 
-  details.push(addSummaryRow(translations.email, respondent.respondentEmail || ''));
+  details.push(addSummaryRow(translations.email, respondent.responseRespondentEmail));
+
+  if (respondent.responseRespondentContactPreference) {
+    details.push(addSummaryRow(translations.preferredMethod, respondent.responseRespondentContactPreference));
+  }
 
   return details;
 };

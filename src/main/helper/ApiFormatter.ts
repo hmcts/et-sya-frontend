@@ -425,13 +425,17 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
-      respondentEmail: respondent.value?.respondent_email,
+      respondentOrganisation: respondent.value?.respondentOrganisation,
       respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
       respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
       respondentAddressTown: respondent.value?.respondent_address?.PostTown,
       respondentAddressCountry: respondent.value?.respondent_address?.Country,
       respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
       respondentEnterPostcode: respondent.value?.respondent_address?.PostCode,
+      responseRespondentName: respondent.value?.responseRespondentName,
+      responseRespondentAddress: respondent.value?.responseRespondentAddress,
+      responseRespondentEmail: respondent.value?.responseRespondentEmail,
+      responseRespondentContactPreference: respondent.value?.responseRespondentContactPreference,
       acasCert: respondent.value?.respondent_ACAS_question,
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,
@@ -449,6 +453,7 @@ export const mapRepresentatives = (representatives: RepresentativeApiModel[]): R
       nameOfOrganisation: rep.value.name_of_organisation,
       representativeAddress: rep.value.representative_address,
       representativeEmailAddress: rep.value.representative_email_address,
+      representativePreference: rep.value.representative_preference,
       hasMyHMCTSAccount: rep.value.myHmctsYesNo,
     };
   });

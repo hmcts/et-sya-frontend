@@ -4,6 +4,9 @@
   "legalRepresentativesName": "Enw’r cynrychiolydd cyfreithiol",
   "legalRepsOrganisation": "Sefydliad y cynrychiolydd cyfreithiol",
   "name": "Enw",
+  "organisationName": "[W]Organisation name",
   "address": "Cyfeiriad",
-  "email": "E-bost"
+  "email": "E-bost",
+  "preferredMethod": "[W]Preferred method of contact",
+  "post": "Trwy’r post"
 }
