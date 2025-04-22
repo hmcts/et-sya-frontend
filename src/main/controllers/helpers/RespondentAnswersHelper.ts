@@ -109,7 +109,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
+            href: '/respondent/' + index + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.respondentAddress,
           },
