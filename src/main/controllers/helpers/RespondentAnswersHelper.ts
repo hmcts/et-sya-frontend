@@ -239,64 +239,59 @@ export const getRespondentDetailsSection = (
   translations: AnyRecord
 ): unknown => {
   const respondentSections = [];
-
-  respondentSections.push({
-    key: {
-      text: translations.name,
+  respondentSections.push(
+    {
+      key: {
+        text: translations.name,
+      },
+      value: {
+        text: respondent.respondentName,
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
+            text: translations.change,
+            visuallyHiddenText: translations.name,
+          },
+        ],
+      },
     },
-    value: {
-      text: respondent.respondentName,
+    {
+      key: {
+        text: translations.address,
+      },
+      value: {
+        text: answersAddressFormatter(respondent.respondentAddress1, respondent.respondentAddressPostcode),
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.RESPONDENT_CHANGE,
+            text: translations.change,
+            visuallyHiddenText: translations.address,
+          },
+        ],
+      },
     },
-    actions: {
-      items: [
-        {
-          href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
-          text: translations.change,
-          visuallyHiddenText: translations.name,
-        },
-      ],
-    },
-  });
-
-  const changeAddressPage = respondent.respondentAddressPostcode
-    ? PageUrls.RESPONDENT_ADDRESS
-    : PageUrls.RESPONDENT_ADDRESS_NON_UK;
-  respondentSections.push({
-    key: {
-      text: translations.address,
-    },
-    value: {
-      text: answersAddressFormatter(respondent.respondentAddress1, respondent.respondentAddressPostcode),
-    },
-    actions: {
-      items: [
-        {
-          href: '/respondent/' + index + changeAddressPage + InterceptPaths.RESPONDENT_CHANGE,
-          text: translations.change,
-          visuallyHiddenText: translations.address,
-        },
-      ],
-    },
-  });
-
-  respondentSections.push({
-    key: {
-      text: translations.acasNum,
-    },
-    value: {
-      html: respondent.acasCertNum ?? translations.unProvided,
-    },
-    actions: {
-      items: [
-        {
-          href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
-          text: translations.change,
-          visuallyHiddenText: translations.acasNum,
-        },
-      ],
-    },
-  });
-
+    {
+      key: {
+        text: translations.acasNum,
+      },
+      value: {
+        html: respondent.acasCertNum ?? translations.unProvided,
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
+            text: translations.change,
+            visuallyHiddenText: translations.acasNum,
+          },
+        ],
+      },
+    }
+  );
   if (respondent.acasCert === YesOrNo.NO) {
     respondentSections.push({
       key: {
@@ -316,6 +311,5 @@ export const getRespondentDetailsSection = (
       },
     });
   }
-
   return respondentSections;
 };
