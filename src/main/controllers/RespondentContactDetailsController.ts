@@ -12,7 +12,7 @@ import { getRespondentContactDetails } from './helpers/RespondentContactDetailsH
 export default class RespondentContactDetailsController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const welshEnabled = await getFlagValue('welsh-language', null);
-    res.render(TranslationKeys.CONTACT_THE_TRIBUNAL, {
+    res.render(TranslationKeys.RESPONDENT_CONTACT_DETAILS, {
       ...req.t(TranslationKeys.COMMON as never, { returnObjects: true } as never),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US as never, { returnObjects: true } as never),
       ...req.t(TranslationKeys.RESPONDENT_CONTACT_DETAILS as never, { returnObjects: true } as never),

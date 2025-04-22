@@ -12,7 +12,7 @@ export const getRespondentContactDetails = (req: AppRequest): SummaryListRow[][]
     ...req.t(TranslationKeys.RESPONDENT_CONTACT_DETAILS, { returnObjects: true }),
   };
   const list: SummaryListRow[][] = [];
-  userCase.respondents.forEach(r => {
+  userCase.respondents?.forEach(r => {
     const assignedRep = userCase.representatives?.find(rep => rep.respondentId === r.ccdId);
     if (assignedRep) {
       list.push(getRespondentLegalRepInfo(assignedRep, translations));
