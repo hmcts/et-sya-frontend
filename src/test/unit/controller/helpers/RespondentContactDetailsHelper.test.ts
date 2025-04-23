@@ -2,8 +2,7 @@ import {
   getRespondentContactDetails,
   isET3Accepted,
 } from '../../../../main/controllers/helpers/RespondentContactDetailsHelper';
-import { CaseWithId, Respondent, YesOrNo } from '../../../../main/definitions/case';
-import { ET3_RESPONSE_STATUS } from '../../../../main/definitions/constants';
+import {CaseWithId, Et3ResponseStatus, Respondent, YesOrNo} from '../../../../main/definitions/case';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import respondentContactDetailsJson from '../../../../main/resources/locales/en/translation/respondent-contact-details.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -13,7 +12,7 @@ describe('Respondent Contact Details Helper', () => {
     it('should return true when responseReceived is Yes and responseStatus is Accepted', () => {
       const respondent: Respondent = {
         responseReceived: YesOrNo.YES,
-        responseStatus: ET3_RESPONSE_STATUS.ACCEPTED,
+        responseStatus: Et3ResponseStatus.ACCEPTED,
       } as Respondent;
       expect(isET3Accepted(respondent)).toBe(true);
     });
@@ -21,7 +20,7 @@ describe('Respondent Contact Details Helper', () => {
     it('should return false when responseReceived is No', () => {
       const respondent: Respondent = {
         responseReceived: YesOrNo.NO,
-        responseStatus: ET3_RESPONSE_STATUS.ACCEPTED,
+        responseStatus: Et3ResponseStatus.ACCEPTED,
       };
       expect(isET3Accepted(respondent)).toBe(false);
     });
@@ -29,14 +28,14 @@ describe('Respondent Contact Details Helper', () => {
     it('should return false when responseStatus is not Accepted', () => {
       const respondent: Respondent = {
         responseReceived: YesOrNo.YES,
-        responseStatus: ET3_RESPONSE_STATUS.REJECTED,
+        responseStatus: Et3ResponseStatus.REJECTED,
       };
       expect(isET3Accepted(respondent)).toBe(false);
     });
 
     it('should return false when responseReceived is undefined', () => {
       const respondent: Respondent = {
-        responseStatus: ET3_RESPONSE_STATUS.ACCEPTED,
+        responseStatus: Et3ResponseStatus.ACCEPTED,
       };
       expect(isET3Accepted(respondent)).toBe(false);
     });

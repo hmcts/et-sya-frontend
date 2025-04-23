@@ -1,6 +1,6 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { Representative, Respondent, YesOrNo } from '../../definitions/case';
-import { ET3_RESPONSE_STATUS, TranslationKeys } from '../../definitions/constants';
+import { EmailOrPost, Et3ResponseStatus, Representative, Respondent, YesOrNo } from '../../definitions/case';
+import { TranslationKeys } from '../../definitions/constants';
 import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -11,7 +11,7 @@ import { answersAddressFormatter } from './PageContentHelpers';
  * @param respondent respondent
  */
 export const isET3Accepted = (respondent: Respondent): boolean => {
-  return respondent?.responseReceived === YesOrNo.YES && respondent.responseStatus === ET3_RESPONSE_STATUS.ACCEPTED;
+  return respondent?.responseReceived === YesOrNo.YES && respondent.responseStatus === Et3ResponseStatus.ACCEPTED;
 };
 
 /**
@@ -59,7 +59,8 @@ const getRespondentLegalRepInfo = (rep: Representative, translations: AnyRecord)
   details.push(addSummaryRow(translations.email, rep.representativeEmailAddress));
 
   if (rep.representativePreference) {
-    details.push(addSummaryRow(translations.preferredMethod, rep.representativePreference));
+    const preference = rep.representativePreference === EmailOrPost.EMAIL ? translations.email : translations.post;
+    details.push(addSummaryRow(translations.preferredMethod, preference));
   }
 
   return details;
@@ -85,7 +86,9 @@ const getRespondentInfo = (respondent: Respondent, translations: AnyRecord): Sum
   details.push(addSummaryRow(translations.email, respondent.responseRespondentEmail || translations.notProvided));
 
   if (respondent.responseRespondentContactPreference) {
-    details.push(addSummaryRow(translations.preferredMethod, respondent.responseRespondentContactPreference));
+    const preference =
+      respondent.responseRespondentContactPreference === EmailOrPost.EMAIL ? translations.email : translations.post;
+    details.push(addSummaryRow(translations.preferredMethod, preference));
   }
 
   return details;

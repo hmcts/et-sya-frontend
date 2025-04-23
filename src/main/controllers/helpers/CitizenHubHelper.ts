@@ -6,6 +6,8 @@ import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
+import { isET3Accepted } from './RespondentContactDetailsHelper';
+
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
     hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
@@ -27,6 +29,10 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
   ) {
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
+
+  hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = userCase.respondents?.some(r => isET3Accepted(r))
+    ? HubLinkStatus.READY_TO_VIEW
+    : HubLinkStatus.NOT_YET_AVAILABLE;
 };
 
 export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
