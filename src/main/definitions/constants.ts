@@ -544,3 +544,10 @@ export const FEATURE_FLAGS = {
   ECC: 'ecc',
   MUL2: 'MUL2',
 } as const;
+
+export const ET3_RESPONSE_STATUS = {
+  ACCEPTED: 'Accepted',
+  NOT_RECEIVED: 'Not Received',
+  NOT_ACCEPTED: 'Not Accepted',
+  REJECTED: 'Rejected',
+} as const;

@@ -3,6 +3,7 @@ import { NoAcasNumberReason, YesOrNo } from '../case';
 import { Et1Address } from './et1Address';
 
 export interface RespondentType {
+  response_status?: string;
   respondent_name?: string;
   respondentOrganisation?: string;
   respondent_address?: Et1Address;

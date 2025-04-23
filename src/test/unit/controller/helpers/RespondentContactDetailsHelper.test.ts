@@ -1,10 +1,58 @@
-import { getRespondentContactDetails } from '../../../../main/controllers/helpers/RespondentContactDetailsHelper';
-import { CaseWithId } from '../../../../main/definitions/case';
+import {
+  getRespondentContactDetails,
+  isET3Accepted,
+} from '../../../../main/controllers/helpers/RespondentContactDetailsHelper';
+import { CaseWithId, Respondent, YesOrNo } from '../../../../main/definitions/case';
+import { ET3_RESPONSE_STATUS } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import respondentContactDetailsJson from '../../../../main/resources/locales/en/translation/respondent-contact-details.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Respondent Contact Details Helper', () => {
+  describe('isET3Accepted', () => {
+    it('should return true when responseReceived is Yes and responseStatus is Accepted', () => {
+      const respondent: Respondent = {
+        responseReceived: YesOrNo.YES,
+        responseStatus: ET3_RESPONSE_STATUS.ACCEPTED,
+      } as Respondent;
+      expect(isET3Accepted(respondent)).toBe(true);
+    });
+
+    it('should return false when responseReceived is No', () => {
+      const respondent: Respondent = {
+        responseReceived: YesOrNo.NO,
+        responseStatus: ET3_RESPONSE_STATUS.ACCEPTED,
+      };
+      expect(isET3Accepted(respondent)).toBe(false);
+    });
+
+    it('should return false when responseStatus is not Accepted', () => {
+      const respondent: Respondent = {
+        responseReceived: YesOrNo.YES,
+        responseStatus: ET3_RESPONSE_STATUS.REJECTED,
+      };
+      expect(isET3Accepted(respondent)).toBe(false);
+    });
+
+    it('should return false when responseReceived is undefined', () => {
+      const respondent: Respondent = {
+        responseStatus: ET3_RESPONSE_STATUS.ACCEPTED,
+      };
+      expect(isET3Accepted(respondent)).toBe(false);
+    });
+
+    it('should return false when responseStatus is undefined', () => {
+      const respondent: Respondent = {
+        responseReceived: YesOrNo.YES,
+      };
+      expect(isET3Accepted(respondent)).toBe(false);
+    });
+
+    it('should return false when respondent is undefined', () => {
+      expect(isET3Accepted(undefined)).toBe(false);
+    });
+  });
+
   describe('getRespondentContactDetails', () => {
     const translations: AnyRecord = {
       ...respondentContactDetailsJson,
@@ -15,6 +63,8 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
+            responseReceived: 'Yes',
+            responseStatus: 'Accepted',
             respondentName: 'John Doe',
             responseRespondentName: 'John Doe Test',
             responseRespondentAddress: {
@@ -28,7 +78,6 @@ describe('Respondent Contact Details Helper', () => {
             responseRespondentContactPreference: 'Email',
           },
         ],
-        representatives: [],
       } as CaseWithId;
 
       const req = mockRequestWithTranslation({ session: { userCase } }, translations);
@@ -53,6 +102,8 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
+            responseReceived: 'Yes',
+            responseStatus: 'Accepted',
             respondentName: 'Acme Corp',
             responseRespondentName: 'Acme Corp ET3',
             responseRespondentAddress: {
@@ -103,6 +154,8 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
+            responseReceived: 'Yes',
+            responseStatus: 'Accepted',
             respondentName: 'Name One',
             responseRespondentName: 'Company One',
             responseRespondentAddress: {
@@ -116,6 +169,8 @@ describe('Respondent Contact Details Helper', () => {
           },
           {
             ccdId: '2',
+            responseReceived: 'Yes',
+            responseStatus: 'Accepted',
             respondentName: 'Name Two',
             responseRespondentName: 'Company Two',
             responseRespondentAddress: {
@@ -153,6 +208,27 @@ describe('Respondent Contact Details Helper', () => {
       expect(result[0][0].value.text).toBe('Legal Rep 1');
       expect(result[1]).toHaveLength(4);
       expect(result[1][0].value.text).toBe('Name Two');
+    });
+
+    it('should return empty array if ET3 is not accepted', () => {
+      const userCase: CaseWithId = {
+        respondents: [
+          {
+            ccdId: '1',
+            responseReceived: 'No',
+          },
+          {
+            ccdId: '2',
+            responseReceived: 'Yes',
+            responseStatus: 'Not Received',
+          },
+        ],
+      } as CaseWithId;
+
+      const req = mockRequestWithTranslation({ session: { userCase } }, translations);
+
+      const result = getRespondentContactDetails(req);
+      expect(result).toHaveLength(0);
     });
   });
 });

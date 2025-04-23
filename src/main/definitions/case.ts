@@ -40,6 +40,8 @@ export interface Respondent {
   respondentAddressTown?: string;
   respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
+  responseReceived?: string;
+  responseStatus?: string;
   responseRespondentName?: string;
   responseRespondentAddress?: Et1Address;
   responseRespondentEmail?: string;

@@ -4,9 +4,10 @@
   "legalRepresentativesName": "Legal representative’s name",
   "legalRepsOrganisation": "Legal rep’s organisation",
   "name": "Name",
-  "organisationName": "Employer name",
+  "employerName": "Employer name",
   "address": "Address",
   "email": "Email",
   "preferredMethod": "Preferred method of contact",
-  "post": "Post"
+  "post": "Post",
+  "notProvided": "Not provided"
 }

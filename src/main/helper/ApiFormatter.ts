@@ -432,6 +432,8 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       respondentAddressCountry: respondent.value?.respondent_address?.Country,
       respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
       respondentEnterPostcode: respondent.value?.respondent_address?.PostCode,
+      responseReceived: respondent.value?.responseReceived,
+      responseStatus: respondent.value?.response_status,
       responseRespondentName: respondent.value?.responseRespondentName,
       responseRespondentAddress: respondent.value?.responseRespondentAddress,
       responseRespondentEmail: respondent.value?.responseRespondentEmail,
