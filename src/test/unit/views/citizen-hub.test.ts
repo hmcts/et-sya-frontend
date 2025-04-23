@@ -201,7 +201,7 @@ describe('Citizen hub page', () => {
       { selector: turquoiseTagSelector, expectedText: 'Submitted', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Not available yet', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Waiting for the tribunal', expectedCount: 1 },
-      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 5 },
+      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 6 },
     ])('should have the correct statuses: %o', ({ selector, expectedText, expectedCount }) => {
       const elements = htmlRes.querySelectorAll(selector);
 
