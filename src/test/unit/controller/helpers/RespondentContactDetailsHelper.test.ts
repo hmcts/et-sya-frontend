@@ -15,8 +15,8 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            respondentOrganisation: 'Organisation Test',
-            responseRespondentName: 'John Doe',
+            respondentName: 'John Doe',
+            responseRespondentName: 'John Doe Test',
             responseRespondentAddress: {
               AddressLine1: '123 High St',
               AddressLine2: '',
@@ -38,8 +38,8 @@ describe('Respondent Contact Details Helper', () => {
       expect(result[0]).toHaveLength(5);
       expect(result[0][0].key.text).toBe('Name');
       expect(result[0][0].value.text).toBe('John Doe');
-      expect(result[0][1].key.text).toBe('Organisation name');
-      expect(result[0][1].value.text).toBe('Organisation Test');
+      expect(result[0][1].key.text).toBe('Employer name');
+      expect(result[0][1].value.text).toBe('John Doe Test');
       expect(result[0][2].key.text).toBe('Address');
       expect(result[0][2].value.text).toBe('123 High St, Oxford, OX1 1AA, UK');
       expect(result[0][3].key.text).toBe('Email');
@@ -53,7 +53,8 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            responseRespondentName: 'Acme Corp',
+            respondentName: 'Acme Corp',
+            responseRespondentName: 'Acme Corp ET3',
             responseRespondentAddress: {
               AddressLine1: '100 Industrial Rd',
               AddressLine2: '',
@@ -102,6 +103,7 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
+            respondentName: 'Name One',
             responseRespondentName: 'Company One',
             responseRespondentAddress: {
               AddressLine1: '1 Corp Way',
@@ -114,6 +116,7 @@ describe('Respondent Contact Details Helper', () => {
           },
           {
             ccdId: '2',
+            respondentName: 'Name Two',
             responseRespondentName: 'Company Two',
             responseRespondentAddress: {
               AddressLine1: '2 Biz Rd',
@@ -149,7 +152,7 @@ describe('Respondent Contact Details Helper', () => {
       expect(result[0]).toHaveLength(4);
       expect(result[0][0].value.text).toBe('Legal Rep 1');
       expect(result[1]).toHaveLength(4);
-      expect(result[1][0].value.text).toBe('Company Two');
+      expect(result[1][0].value.text).toBe('Name Two');
     });
   });
 });

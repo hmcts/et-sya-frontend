@@ -52,9 +52,9 @@ const getRespondentLegalRepInfo = (rep: Representative, translations: AnyRecord)
 const getRespondentInfo = (respondent: Respondent, translations: AnyRecord): SummaryListRow[] => {
   const details: SummaryListRow[] = [];
 
-  details.push(addSummaryRow(translations.name, respondent.responseRespondentName));
+  details.push(addSummaryRow(translations.name, respondent.respondentName));
 
-  details.push(addSummaryRow(translations.organisationName, respondent.respondentOrganisation || ''));
+  details.push(addSummaryRow(translations.organisationName, respondent.responseRespondentName || ''));
 
   const address = respondent.responseRespondentAddress;
   const addressString = answersAddressFormatter(
