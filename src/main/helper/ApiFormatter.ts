@@ -425,7 +425,6 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
-      respondentOrganisation: respondent.value?.respondentOrganisation,
       respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
       respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
       respondentAddressTown: respondent.value?.respondent_address?.PostTown,

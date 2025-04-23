@@ -34,13 +34,12 @@ export interface AddressType {
 export interface Respondent {
   respondentNumber?: number;
   respondentName?: string;
-  respondentOrganisation?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
   respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
-  responseReceived?: string;
+  responseReceived?: YesOrNo;
   responseStatus?: string;
   responseRespondentName?: string;
   responseRespondentAddress?: Et1Address;

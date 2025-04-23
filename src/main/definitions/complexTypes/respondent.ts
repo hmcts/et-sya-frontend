@@ -3,9 +3,7 @@ import { NoAcasNumberReason, YesOrNo } from '../case';
 import { Et1Address } from './et1Address';
 
 export interface RespondentType {
-  response_status?: string;
   respondent_name?: string;
-  respondentOrganisation?: string;
   respondent_address?: Et1Address;
   respondent_ACAS_question?: YesOrNo;
   respondent_ACAS?: string;
@@ -16,5 +14,6 @@ export interface RespondentType {
   responseRespondentContactPreference?: string;
   claimant_work_address?: Et1Address;
   responseReceived?: YesOrNo;
+  response_status?: string;
   idamId?: string;
 }
