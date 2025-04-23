@@ -35,7 +35,7 @@ export default class RespondentPostCodeSelectController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, true);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const response = convertJsonArrayToTitleCase(

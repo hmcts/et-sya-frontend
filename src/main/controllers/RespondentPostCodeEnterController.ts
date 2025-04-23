@@ -43,7 +43,7 @@ export default class RespondentPostCodeEnterController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_SELECT);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, true);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
