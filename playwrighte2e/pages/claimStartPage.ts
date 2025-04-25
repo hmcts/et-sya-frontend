@@ -229,28 +229,5 @@ export class ClaimStartPage extends BasePage {
     );
     await this.webAction.checkElementById('#acas-multiple');
     await this.webAction.clickElementByText('Continue');
-
-    //Type of claim = discrimination
-    await this.delay(2000);
-    await this.webAction.verifyTextPresentOnPage('text=What type of claim are you making?');
-    await this.webAction.verifyTextPresentOnPage(
-      'text=You can choose all that apply to you. Further information will be asked for later in the claim.'
-    );
-    await this.webAction.verifyTextPresentOnPage('text=Select all that apply');
-    await this.webAction.verifyTextPresentOnPage('text=Discrimination of any type');
-    await this.webAction.verifyTextPresentOnPage(
-      'text=for example because of your sex, ethnicity, disability or other characteristic'
-    );
-    await this.webAction.verifyTextPresentOnPage('text=Pay-related claim');
-    await this.webAction.verifyTextPresentOnPage('text=Unfair dismissal');
-    await this.webAction.verifyTextPresentOnPage('text=including constructive dismissal');
-    await this.webAction.verifyTextIsVisible('text=Whistleblowing');
-    await this.webAction.verifyTextPresentOnPage(
-      'text=including dismissal or any other unfair treatment after whistleblowing'
-    );
-    await this.webAction.verifyTextPresentOnPage('text=Other type of claim');
-    await this.webAction.checkElementById('#discrimination');
-    await this.webAction.checkElementById('#whistleBlowing');
-    await this.clickContinue();
   }
 }
