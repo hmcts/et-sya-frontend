@@ -2,23 +2,21 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import {
   fillRespondentAddressFieldsNonUK,
   getRespondentAddressContent,
+  handleGet,
   handlePost,
 } from './helpers/RespondentAddressHelper';
-import { getRespondentIndex } from './helpers/RespondentHelpers';
 
 export default class RespondentAddressNonUkController {
   private readonly form: Form;
-  private readonly respondentAddressContent: FormContent = getRespondentAddressContent(false);
+  private readonly formContent: FormContent = getRespondentAddressContent(false);
 
   constructor() {
-    this.form = new Form(<FormFields>this.respondentAddressContent.fields);
+    this.form = new Form(<FormFields>this.formContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -26,21 +24,7 @@ export default class RespondentAddressNonUkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const { userCase } = req.session;
-    const respondentIndex = getRespondentIndex(req);
-    const selectedRespondent = userCase.respondents[respondentIndex];
-    const content = getPageContent(
-      req,
-      this.respondentAddressContent,
-      [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
-      respondentIndex
-    );
-    fillRespondentAddressFieldsNonUK(userCase, selectedRespondent);
-    assignFormData(userCase, this.form.getFormFields());
-    res.render(TranslationKeys.RESPONDENT_ADDRESS, {
-      ...content,
-      respondentName: selectedRespondent.respondentName,
-      previousPostcode: selectedRespondent.respondentAddressPostcode,
-    });
+    fillRespondentAddressFieldsNonUK(req);
+    handleGet(req, res, this.form, this.formContent);
   };
 }

@@ -8,17 +8,22 @@ import {
 } from '../../components/form/address_validator';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { PageUrls } from '../../definitions/constants';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 
 import { handlePostLogicForRespondent } from './CaseHelpers';
-import { getRespondentRedirectUrl } from './RespondentHelpers';
+import { assignFormData, getPageContent } from './FormHelpers';
+import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './RespondentHelpers';
 
 const logger = getLogger('RespondentAddressHelper');
 
+/**
+ * Get form contact for RespondentAddressController
+ * @param isRequired is the postcode field required
+ */
 export const getRespondentAddressContent = (isRequired: boolean): FormContent => ({
   fields: {
     respondentAddress1: {
@@ -90,6 +95,12 @@ export const getRespondentAddressContent = (isRequired: boolean): FormContent =>
   saveForLater: saveForLaterButton,
 });
 
+/**
+ * Handle common POST functions in RespondentAddressController
+ * @param req request
+ * @param res response
+ * @param form form
+ */
 export const handlePost = async (req: AppRequest, res: Response, form: Form): Promise<void> => {
   const { userCase } = req.session;
   const nextPage =
@@ -100,7 +111,24 @@ export const handlePost = async (req: AppRequest, res: Response, form: Form): Pr
   await handlePostLogicForRespondent(req, res, form, logger, redirectUrl);
 };
 
-export const fillRespondentAddressFieldsNonUK = (userCase: CaseWithId, selectedRespondent: Respondent): void => {
+/**
+ * Handle common GET functions for Non UK address
+ * @param userCase userCase
+ */
+export const fillRespondentAddressFieldsUK = (userCase: CaseWithId): void => {
+  if (userCase.respondentAddressTypes !== undefined) {
+    fillRespondentAddressFields(userCase.respondentAddressTypes, userCase);
+  }
+};
+
+/**
+ * Handle common GET functions for UK address
+ * @param req request
+ */
+export const fillRespondentAddressFieldsNonUK = (req: AppRequest): void => {
+  const { userCase } = req.session;
+  const respondentIndex = getRespondentIndex(req);
+  const selectedRespondent = userCase.respondents[respondentIndex];
   userCase.respondentEnterPostcode = undefined;
   userCase.respondentAddressTypes = undefined;
   userCase.respondentAddress1 = selectedRespondent?.respondentAddress1;
@@ -108,4 +136,29 @@ export const fillRespondentAddressFieldsNonUK = (userCase: CaseWithId, selectedR
   userCase.respondentAddressTown = selectedRespondent?.respondentAddressTown;
   userCase.respondentAddressCountry = selectedRespondent?.respondentAddressCountry;
   userCase.respondentAddressPostcode = selectedRespondent?.respondentAddressPostcode;
+};
+
+/**
+ * Handle common GET functions in RespondentAddressController
+ * @param req request
+ * @param res response
+ * @param form form
+ * @param formContent formContent
+ */
+export const handleGet = (req: AppRequest, res: Response, form: Form, formContent: FormContent): void => {
+  const { userCase } = req.session;
+  const respondentIndex = getRespondentIndex(req);
+  const selectedRespondent = userCase.respondents[respondentIndex];
+  const content = getPageContent(
+    req,
+    formContent,
+    [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
+    respondentIndex
+  );
+  assignFormData(userCase, form.getFormFields());
+  res.render(TranslationKeys.RESPONDENT_ADDRESS, {
+    ...content,
+    respondentName: selectedRespondent.respondentName,
+    previousPostcode: selectedRespondent.respondentAddressPostcode,
+  });
 };
