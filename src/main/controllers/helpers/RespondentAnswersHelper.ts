@@ -92,9 +92,6 @@ export const getRespondentSection = (
     },
   });
 
-  const changeAddressPage = respondent.respondentAddressPostcode
-    ? PageUrls.RESPONDENT_ADDRESS
-    : PageUrls.RESPONDENT_ADDRESS_NON_UK;
   respondentSections.push({
     key: {
       text: translations.respondentDetails.respondentAddress,
@@ -112,7 +109,7 @@ export const getRespondentSection = (
     actions: {
       items: [
         {
-          href: '/respondent/' + index + changeAddressPage + InterceptPaths.ANSWERS_CHANGE,
+          href: '/respondent/' + index + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.ANSWERS_CHANGE,
           text: translations.change,
           visuallyHiddenText: translations.respondentDetails.respondentAddress,
         },
@@ -258,20 +255,23 @@ export const getRespondentDetailsSection = (
     },
   });
 
-  const changeAddressPage = respondent.respondentAddressPostcode
-    ? PageUrls.RESPONDENT_ADDRESS
-    : PageUrls.RESPONDENT_ADDRESS_NON_UK;
   respondentSections.push({
     key: {
       text: translations.address,
     },
     value: {
-      text: answersAddressFormatter(respondent.respondentAddress1, respondent.respondentAddressPostcode),
+      text: answersAddressFormatter(
+        respondent.respondentAddress1,
+        respondent.respondentAddress2,
+        respondent.respondentAddressTown,
+        respondent.respondentAddressCountry,
+        respondent.respondentAddressPostcode
+      ),
     },
     actions: {
       items: [
         {
-          href: '/respondent/' + index + changeAddressPage + InterceptPaths.RESPONDENT_CHANGE,
+          href: '/respondent/' + index + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.RESPONDENT_CHANGE,
           text: translations.change,
           visuallyHiddenText: translations.address,
         },
