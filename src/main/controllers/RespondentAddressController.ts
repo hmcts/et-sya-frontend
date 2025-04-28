@@ -22,7 +22,8 @@ export default class RespondentAddressController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const { respondents, respondentAddressTypes } = req.session.userCase;
+    const respondents = req.session.userCase.respondents;
+    const x = req.session.userCase.respondentAddressTypes;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = respondents[respondentIndex];
     const content = getPageContent(
@@ -31,8 +32,8 @@ export default class RespondentAddressController {
       [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
       respondentIndex
     );
-    if (respondentAddressTypes !== undefined) {
-      fillRespondentAddressFields(respondentAddressTypes, req.session.userCase);
+    if (x !== undefined) {
+      fillRespondentAddressFields(x, req.session.userCase);
     }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {

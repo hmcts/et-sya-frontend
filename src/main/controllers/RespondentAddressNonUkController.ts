@@ -27,9 +27,8 @@ export default class RespondentAddressNonUkController {
 
   public get = (req: AppRequest, res: Response): void => {
     const { userCase } = req.session;
-    const { respondents } = userCase;
     const respondentIndex = getRespondentIndex(req);
-    const selectedRespondent = respondents[respondentIndex];
+    const selectedRespondent = userCase.respondents[respondentIndex];
     const content = getPageContent(
       req,
       this.respondentAddressContent,
