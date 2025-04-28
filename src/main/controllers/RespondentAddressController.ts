@@ -4,12 +4,8 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { FormContent, FormFields } from '../definitions/form';
 
-import {
-  fillRespondentAddressFieldsUK,
-  getRespondentAddressContent,
-  handleGet,
-  handlePost,
-} from './helpers/RespondentAddressHelper';
+import { getRespondentAddressContent, handleGet, handlePost } from './helpers/RespondentAddressHelper';
+import { fillRespondentAddressFields } from './helpers/RespondentHelpers';
 
 export default class RespondentAddressController {
   private readonly form: Form;
@@ -24,7 +20,10 @@ export default class RespondentAddressController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    fillRespondentAddressFieldsUK(req.session.userCase);
+    const { userCase } = req.session;
+    if (userCase.respondentAddressTypes !== undefined) {
+      fillRespondentAddressFields(userCase.respondentAddressTypes, userCase);
+    }
     handleGet(req, res, this.form, this.formContent);
   };
 }

@@ -8,7 +8,7 @@ import {
 } from '../../components/form/address_validator';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
@@ -16,7 +16,7 @@ import { getLogger } from '../../logger';
 
 import { handlePostLogicForRespondent } from './CaseHelpers';
 import { assignFormData, getPageContent } from './FormHelpers';
-import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './RespondentHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl } from './RespondentHelpers';
 
 const logger = getLogger('RespondentAddressHelper');
 
@@ -109,16 +109,6 @@ export const handlePost = async (req: AppRequest, res: Response, form: Form): Pr
       : PageUrls.WORK_ADDRESS;
   const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
   await handlePostLogicForRespondent(req, res, form, logger, redirectUrl);
-};
-
-/**
- * Handle common GET functions for Non UK address
- * @param userCase userCase
- */
-export const fillRespondentAddressFieldsUK = (userCase: CaseWithId): void => {
-  if (userCase.respondentAddressTypes !== undefined) {
-    fillRespondentAddressFields(userCase.respondentAddressTypes, userCase);
-  }
 };
 
 /**
