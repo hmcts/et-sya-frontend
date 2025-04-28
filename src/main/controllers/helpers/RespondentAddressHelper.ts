@@ -8,15 +8,14 @@ import {
 } from '../../components/form/address_validator';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { YesOrNo } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
+import { PageUrls } from '../../definitions/constants';
 import { FormContent } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 
 import { handlePostLogicForRespondent } from './CaseHelpers';
-import { assignFormData, getPageContent } from './FormHelpers';
-import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './RespondentHelpers';
+import { getRespondentRedirectUrl } from './RespondentHelpers';
 
 const logger = getLogger('RespondentAddressHelper');
 
@@ -101,24 +100,12 @@ export const handlePost = async (req: AppRequest, res: Response, form: Form): Pr
   await handlePostLogicForRespondent(req, res, form, logger, redirectUrl);
 };
 
-export const handleGet = (req: AppRequest, res: Response, form: Form, formContent: FormContent): void => {
-  const respondents = req.session.userCase.respondents;
-  const respondentIndex = getRespondentIndex(req);
-  const selectedRespondent = respondents[respondentIndex];
-  const content = getPageContent(
-    req,
-    formContent,
-    [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
-    respondentIndex
-  );
-  const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
-  if (respondentAddressTypes !== undefined) {
-    fillRespondentAddressFields(respondentAddressTypes, req.session.userCase);
-  }
-  assignFormData(req.session.userCase, form.getFormFields());
-  res.render(TranslationKeys.RESPONDENT_ADDRESS, {
-    ...content,
-    respondentName: selectedRespondent.respondentName,
-    previousPostcode: selectedRespondent.respondentAddressPostcode,
-  });
+export const fillRespondentAddressFieldsNonUK = (userCase: CaseWithId, selectedRespondent: Respondent): void => {
+  userCase.respondentEnterPostcode = undefined;
+  userCase.respondentAddressTypes = undefined;
+  userCase.respondentAddress1 = selectedRespondent?.respondentAddress1;
+  userCase.respondentAddress2 = selectedRespondent?.respondentAddress2;
+  userCase.respondentAddressTown = selectedRespondent?.respondentAddressTown;
+  userCase.respondentAddressCountry = selectedRespondent?.respondentAddressCountry;
+  userCase.respondentAddressPostcode = selectedRespondent?.respondentAddressPostcode;
 };
