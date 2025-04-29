@@ -1,9 +1,14 @@
-import { getAcasReason, getRespondentSection } from '../../../../main/controllers/helpers/RespondentAnswersHelper';
+import {
+  getAcasReason,
+  getRespondentDetailsSection,
+  getRespondentSection,
+} from '../../../../main/controllers/helpers/RespondentAnswersHelper';
 import { NoAcasNumberReason, Respondent, YesOrNo } from '../../../../main/definitions/case';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import checkYourAnswersJson from '../../../../main/resources/locales/en/translation/check-your-answers.json';
 import commonJson from '../../../../main/resources/locales/en/translation/common.json';
 import et1DetailsJson from '../../../../main/resources/locales/en/translation/et1-details.json';
+import respondentDetailsCheckJson from '../../../../main/resources/locales/en/translation/respondent-details-check.json';
 import mockUserCase from '../../mocks/mockUserCase';
 
 describe('getAcasReason', () => {
@@ -256,6 +261,165 @@ describe('getRespondentSection', () => {
         },
         value: {
           text: 'Another person I’m making a claim with has an Acas early conciliation certificate number',
+        },
+      },
+    ]);
+  });
+});
+
+describe('getRespondentDetailsSection', () => {
+  const translations: AnyRecord = { ...respondentDetailsCheckJson };
+
+  it('should return rows when acasCert = Yes', () => {
+    const respondent: Respondent = {
+      respondentName: 'Acme Corp',
+      respondentAddress1: '1 Acme Way',
+      respondentAddress2: '',
+      respondentAddressTown: 'London',
+      respondentAddressCountry: 'UK',
+      respondentAddressPostcode: 'AC1 2XY',
+      acasCert: YesOrNo.YES,
+      acasCertNum: 'ACAS123456',
+    };
+
+    const result = getRespondentDetailsSection(respondent, '2', translations);
+
+    expect(result).toStrictEqual([
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/2/respondent-name/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Name',
+            },
+          ],
+        },
+        key: {
+          text: 'Name',
+        },
+        value: {
+          text: 'Acme Corp',
+        },
+      },
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/2/respondent-postcode-enter/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Address',
+            },
+          ],
+        },
+        key: {
+          text: 'Address',
+        },
+        value: {
+          text: '1 Acme Way, London, UK, AC1 2XY',
+        },
+      },
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/2/acas-cert-num/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Acas certificate number',
+            },
+          ],
+        },
+        key: {
+          text: 'Acas certificate number',
+        },
+        value: {
+          html: 'ACAS123456',
+        },
+      },
+    ]);
+  });
+
+  it('should return rows when acasCert = No', () => {
+    const respondent: Respondent = {
+      respondentName: 'Acme Corp',
+      respondentAddress1: '1 Acme Way',
+      respondentAddress2: '',
+      respondentAddressTown: 'London',
+      respondentAddressCountry: 'UK',
+      respondentAddressPostcode: 'AC1 2XY',
+      acasCert: YesOrNo.NO,
+      noAcasReason: NoAcasNumberReason.ANOTHER,
+    };
+
+    const result = getRespondentDetailsSection(respondent, '1', translations);
+
+    expect(result).toStrictEqual([
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/1/respondent-name/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Name',
+            },
+          ],
+        },
+        key: {
+          text: 'Name',
+        },
+        value: {
+          text: 'Acme Corp',
+        },
+      },
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/1/respondent-postcode-enter/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Address',
+            },
+          ],
+        },
+        key: {
+          text: 'Address',
+        },
+        value: {
+          text: '1 Acme Way, London, UK, AC1 2XY',
+        },
+      },
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/1/acas-cert-num/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Acas certificate number',
+            },
+          ],
+        },
+        key: {
+          text: 'Acas certificate number',
+        },
+        value: {
+          html: 'Not provided',
+        },
+      },
+      {
+        actions: {
+          items: [
+            {
+              href: '/respondent/1/acas-cert-num/change?redirect=respondent',
+              text: 'Change',
+              visuallyHiddenText: 'Acas certificate number',
+            },
+          ],
+        },
+        key: {
+          text: 'Why do you not have an Acas Number?',
+        },
+        value: {
+          html: 'Another person I’m making a claim with has an Acas early conciliation certificate number',
         },
       },
     ]);

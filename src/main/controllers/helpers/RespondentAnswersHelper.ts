@@ -1,5 +1,6 @@
 import { CaseWithId, NoAcasNumberReason, Respondent, YesOrNo } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { SummaryListRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
@@ -40,8 +41,8 @@ export const getRespondentSection = (
   translations: AnyRecord,
   languageParam: string,
   addRemoveButton: boolean
-): unknown => {
-  const respondentSections = [];
+): SummaryListRow[] => {
+  const respondentSections: SummaryListRow[] = [];
   if (index === 1 || !addRemoveButton) {
     respondentSections.push({
       key: {
@@ -234,8 +235,8 @@ export const getRespondentDetailsSection = (
   respondent: Respondent,
   index: string,
   translations: AnyRecord
-): unknown => {
-  const respondentSections = [];
+): SummaryListRow[] => {
+  const respondentSections: SummaryListRow[] = [];
 
   respondentSections.push({
     key: {
