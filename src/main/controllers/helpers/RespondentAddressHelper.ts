@@ -8,15 +8,14 @@ import {
 } from '../../components/form/address_validator';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { YesOrNo } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
+import { PageUrls } from '../../definitions/constants';
 import { FormContent } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 
 import { handlePostLogicForRespondent } from './CaseHelpers';
-import { assignFormData, getPageContent } from './FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './RespondentHelpers';
+import { getRespondentRedirectUrl } from './RespondentHelpers';
 
 const logger = getLogger('RespondentAddressHelper');
 
@@ -112,13 +111,11 @@ export const handlePost = async (req: AppRequest, res: Response, form: Form): Pr
 };
 
 /**
- * Handle common GET functions for UK address
- * @param req request
+ * Clear AddressTypes and fill address for non UK address
+ * @param userCase userCase
+ * @param selectedRespondent selected respondent
  */
-export const fillRespondentAddressFieldsNonUK = (req: AppRequest): void => {
-  const { userCase } = req.session;
-  const respondentIndex = getRespondentIndex(req);
-  const selectedRespondent = userCase.respondents[respondentIndex];
+export const fillRespondentAddressFieldsNonUK = (userCase: CaseWithId, selectedRespondent: Respondent): void => {
   userCase.respondentEnterPostcode = undefined;
   userCase.respondentAddressTypes = undefined;
   userCase.respondentAddress1 = selectedRespondent?.respondentAddress1;
@@ -126,29 +123,4 @@ export const fillRespondentAddressFieldsNonUK = (req: AppRequest): void => {
   userCase.respondentAddressTown = selectedRespondent?.respondentAddressTown;
   userCase.respondentAddressCountry = selectedRespondent?.respondentAddressCountry;
   userCase.respondentAddressPostcode = selectedRespondent?.respondentAddressPostcode;
-};
-
-/**
- * Handle common GET functions in RespondentAddressController
- * @param req request
- * @param res response
- * @param form form
- * @param formContent formContent
- */
-export const handleGet = (req: AppRequest, res: Response, form: Form, formContent: FormContent): void => {
-  const { userCase } = req.session;
-  const respondentIndex = getRespondentIndex(req);
-  const selectedRespondent = userCase.respondents[respondentIndex];
-  const content = getPageContent(
-    req,
-    formContent,
-    [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
-    respondentIndex
-  );
-  assignFormData(userCase, form.getFormFields());
-  res.render(TranslationKeys.RESPONDENT_ADDRESS, {
-    ...content,
-    respondentName: selectedRespondent.respondentName,
-    previousPostcode: selectedRespondent.respondentAddressPostcode,
-  });
 };

@@ -11,10 +11,10 @@ import { fillRespondentAddressFields, getRespondentIndex } from './helpers/Respo
 
 export default class RespondentAddressController {
   private readonly form: Form;
-  private readonly formContent: FormContent = getRespondentAddressContent(true);
+  private readonly respondentAddressContent: FormContent = getRespondentAddressContent(true);
 
   constructor() {
-    this.form = new Form(<FormFields>this.formContent.fields);
+    this.form = new Form(<FormFields>this.respondentAddressContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -28,7 +28,7 @@ export default class RespondentAddressController {
     const selectedRespondent = respondents[respondentIndex];
     const content = getPageContent(
       req,
-      this.formContent,
+      this.respondentAddressContent,
       [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
       respondentIndex
     );
