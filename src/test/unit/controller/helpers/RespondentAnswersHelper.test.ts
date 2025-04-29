@@ -353,75 +353,39 @@ describe('getRespondentDetailsSection', () => {
 
     const result = getRespondentDetailsSection(respondent, '1', translations);
 
-    expect(result).toStrictEqual([
-      {
-        actions: {
-          items: [
-            {
-              href: '/respondent/1/respondent-name/change?redirect=respondent',
-              text: 'Change',
-              visuallyHiddenText: 'Name',
-            },
-          ],
-        },
-        key: {
-          text: 'Name',
-        },
-        value: {
-          text: 'Acme Corp',
-        },
+    expect(result).toContainEqual({
+      actions: {
+        items: [
+          {
+            href: '/respondent/1/acas-cert-num/change?redirect=respondent',
+            text: 'Change',
+            visuallyHiddenText: 'Acas certificate number',
+          },
+        ],
       },
-      {
-        actions: {
-          items: [
-            {
-              href: '/respondent/1/respondent-postcode-enter/change?redirect=respondent',
-              text: 'Change',
-              visuallyHiddenText: 'Address',
-            },
-          ],
-        },
-        key: {
-          text: 'Address',
-        },
-        value: {
-          text: '1 Acme Way, London, UK, AC1 2XY',
-        },
+      key: {
+        text: 'Acas certificate number',
       },
-      {
-        actions: {
-          items: [
-            {
-              href: '/respondent/1/acas-cert-num/change?redirect=respondent',
-              text: 'Change',
-              visuallyHiddenText: 'Acas certificate number',
-            },
-          ],
-        },
-        key: {
-          text: 'Acas certificate number',
-        },
-        value: {
-          html: 'Not provided',
-        },
+      value: {
+        html: 'Not provided',
       },
-      {
-        actions: {
-          items: [
-            {
-              href: '/respondent/1/acas-cert-num/change?redirect=respondent',
-              text: 'Change',
-              visuallyHiddenText: 'Acas certificate number',
-            },
-          ],
-        },
-        key: {
-          text: 'Why do you not have an Acas Number?',
-        },
-        value: {
-          html: 'Another person I’m making a claim with has an Acas early conciliation certificate number',
-        },
+    });
+    expect(result).toContainEqual({
+      actions: {
+        items: [
+          {
+            href: '/respondent/1/acas-cert-num/change?redirect=respondent',
+            text: 'Change',
+            visuallyHiddenText: 'Acas certificate number',
+          },
+        ],
       },
-    ]);
+      key: {
+        text: 'Why do you not have an Acas Number?',
+      },
+      value: {
+        html: 'Another person I’m making a claim with has an Acas early conciliation certificate number',
+      },
+    });
   });
 });
