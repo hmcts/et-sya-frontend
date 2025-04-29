@@ -56,7 +56,7 @@ describe('getRespondentAddressTypes', () => {
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({
       selected: true,
-      label: 'Daethpwyd o hyd i sawl cyfeiriad',
+      label: 'Daethpwyd o hyd i 1 cyfeiriad',
     });
     expect(result[1]).toEqual({
       value: 0,
