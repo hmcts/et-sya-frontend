@@ -1,11 +1,9 @@
 import { fillRespondentAddressFieldsNonUK } from '../../../../main/controllers/helpers/RespondentAddressHelper';
-import { mockRequest } from '../../mocks/mockRequest';
 import mockUserCase from '../../mocks/mockUserCase';
 
 describe('fillRespondentAddressFieldsNonUK', () => {
   it('should copy respondent address fields into userCase and clear postcode entry and address types', () => {
-    const request = mockRequest({ userCase: mockUserCase });
-    const { userCase } = request.session;
+    const userCase = mockUserCase;
     userCase.respondentEnterPostcode = 'Test';
     userCase.respondentAddressTypes = [
       {
@@ -22,17 +20,14 @@ describe('fillRespondentAddressFieldsNonUK', () => {
     userCase.respondentAddressTown = 'Sample City';
     userCase.respondentAddressCountry = 'Example';
     userCase.respondentAddressPostcode = 'EX4 8MP';
-    userCase.respondents = [
-      {
-        respondentAddress1: '123 Test Street',
-        respondentAddress2: 'Apt 4B',
-        respondentAddressTown: 'Test Town',
-        respondentAddressCountry: 'Test Country',
-        respondentAddressPostcode: 'TE5 7ST',
-      },
-    ];
-
-    fillRespondentAddressFieldsNonUK(request);
+    const respondent = {
+      respondentAddress1: '123 Test Street',
+      respondentAddress2: 'Apt 4B',
+      respondentAddressTown: 'Test Town',
+      respondentAddressCountry: 'Test Country',
+      respondentAddressPostcode: 'TE5 7ST',
+    };
+    fillRespondentAddressFieldsNonUK(userCase, respondent);
 
     expect(userCase.respondentEnterPostcode).toBeUndefined();
     expect(userCase.respondentAddressTypes).toBeUndefined();
