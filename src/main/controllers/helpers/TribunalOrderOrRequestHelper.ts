@@ -42,6 +42,7 @@ export const getTribunalOrderOrRequestDetails = (
   }
 
   respondentRequestOrOrderDetails.push(
+    addSummaryRow(translations.notificationSubject, translations[item.value.sendNotificationSubjectString]),
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
     addSummaryRow(translations.sentBy, translations.tribunal)
   );

@@ -119,6 +119,7 @@ export const TranslationKeys = {
   RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
   NOTIFICATIONS: 'notifications',
   NOTIFICATION_DETAILS: 'notification-details',
+  NOTIFICATION_SUBJECTS: 'notification-subjects',
   ALL_JUDGMENTS: 'all-judgments',
   JUDGMENT_DETAILS: 'judgment-details',
   ABOUT_HEARING_DOCUMENTS: 'about-hearing-documents',

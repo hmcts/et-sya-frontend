@@ -54,12 +54,14 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.NOTIFICATION_SUBJECTS, { returnObjects: true }),
       ...req.t(TranslationKeys.NOTIFICATION_DETAILS, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
+      TranslationKeys.NOTIFICATION_SUBJECTS,
       TranslationKeys.NOTIFICATION_DETAILS,
     ]);
 
