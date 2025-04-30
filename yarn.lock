@@ -9213,9 +9213,9 @@ __metadata:
   linkType: hard
 
 "i18next-http-middleware@npm:^3.3.0":
-  version: 3.7.2
-  resolution: "i18next-http-middleware@npm:3.7.2"
-  checksum: 149404114fd175bd12f66527cc0d3318740a8d01faf1dafcef8d634cfb8130114ede72ee8608a819f788c44af83205e177efbca4221cbd7f3b2fe55fc4f42b4e
+  version: 3.7.4
+  resolution: "i18next-http-middleware@npm:3.7.4"
+  checksum: d8ed3e2714a89ee687ba66b7487be64a4e999065381a6794ae372f6d2b60a03add2d5ba726728eb96bcaba6c1a1ed131390b6e9cce0cdb86dc954a5bd5e9dfbe
   languageName: node
   linkType: hard
 
