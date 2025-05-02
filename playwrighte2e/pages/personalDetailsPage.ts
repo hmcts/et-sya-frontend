@@ -47,9 +47,6 @@ export class PersonDetailsPage extends BasePage {
     await this.webAction.checkElementById('#update-hearing-language-2');
     await this.clickContinue();
 
-    await this.webAction.checkElementById('#hearingPreferences');
-    await this.clickContinue();
-
     await this.webAction.verifyTextIsVisible(
       'text=Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?'
     );
