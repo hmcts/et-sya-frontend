@@ -120,6 +120,7 @@ export class EmploymentDetailsPage extends BasePage {
 
       await this.webAction.waitForElementToBeVisible('#workEnterPostcode');
       await this.webAction.fillField('#workEnterPostcode', 'LS14 1AR');
+      await this.delay(2000);
       await this.clickSaveAndContinue();
 
       await this.webAction.verifyTextIsVisible('text=Select an address');
