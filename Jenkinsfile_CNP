@@ -153,26 +153,30 @@ afterSuccess('buildinfra:perftest') {
 
         //Submit Dynatrace Event - Build details, PR etc. 
         
-        //Trigger Dynatrace Synthetic Test
-        def triggerResponse = httpRequest(
-            acceptType: 'APPLICATION_JSON',
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
-            quiet: true,
-            customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${perf-synthetic-monitor-token}"]
-            ],
-            requestBody: '''{
-                "monitors": [
-                    {
-                        "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-                    }
-                ]
-            }''',
-            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
-        )
+        def dtAPIToken = "Api-Token${perf-synthetic-monitor-token}"
 
-        echo "${triggerResponse}"
+        echo "test: ${dtAPIToken}"
+
+        //Trigger Dynatrace Synthetic Test
+        // def triggerResponse = httpRequest(
+        //     acceptType: 'APPLICATION_JSON',
+        //     contentType: 'APPLICATION_JSON',
+        //     httpMode: 'POST',
+        //     quiet: true,
+        //     customHeaders: [
+        //         [name: 'Authorization', value: "Api-Token ${perf-synthetic-monitor-token}"]
+        //     ],
+        //     requestBody: '''{
+        //         "monitors": [
+        //             {
+        //                 "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+        //             }
+        //         ]
+        //     }''',
+        //     url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
+        // )
+
+        // echo "${triggerResponse}"
 
         //Trigger Gatling Test
 
