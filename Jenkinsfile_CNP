@@ -140,6 +140,8 @@ afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
         
         echo "Starting performance test stage..."
+        // Log details of the build 
+        echo "Workspace: ${env.WORKSPACE}, Branch: ${env.BRANCH_NAME}, Build Number: ${env.BUILD_NUMBER}, Date/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
     }
 }
 
