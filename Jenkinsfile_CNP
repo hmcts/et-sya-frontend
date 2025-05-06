@@ -14,8 +14,7 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
-        secret('perf-synthetic-monitor-token', 'perf-synthetic-monitor-token')
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
     ]
 ]
 
@@ -31,8 +30,9 @@ def inTestFalse = [
     ]
 ]
 
+// Forcing to look in et-aat keyvault *temp*
 def perfSecrets = [
-    'et-${env}': [
+    'et-aat': [
         secret('perf-synthetic-monitor-token', 'perf-synthetic-monitor-token')
     ]
 ]
@@ -145,7 +145,7 @@ withPipeline(type, product, component) {
 // Performance test stages wip
 afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
-        loadVaultSecrets(secrets) // Load Perf secrets
+        loadVaultSecrets(perfSecrets) // Load Perf secrets
 
         echo "Starting performance test stage..."
         // Log details of the build 
