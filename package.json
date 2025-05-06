@@ -7,7 +7,9 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix && prettier --write",
-    "*.{css,scss}": "stylelint --fix && prettier --write"
+    "*.{css,scss}": "stylelint --fix && prettier --write",
+    "*.js": "eslint --fix",
+    "*.ts": "eslint --fix"
   },
   "scripts": {
     "postinstall": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
@@ -15,6 +17,7 @@
     "start:dev": "nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
     "lint": "sass-lint -v -q && eslint . --ext .js,.jsx,.ts,.tsx --fix && prettier --check ./src/",
+    "lint-staged": "lint-staged",
     "build": "yarn webpack --config webpack.config.js",
     "build:ts": "tsc -P . --outDir ./src/main",
     "build:prod": "NODE_ENV=production yarn webpack --mode production --config webpack.config.js",

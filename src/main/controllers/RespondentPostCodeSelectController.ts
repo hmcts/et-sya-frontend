@@ -34,7 +34,18 @@ export default class RespondentPostCodeSelectController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    const respondentEnterPostcode = req.session.userCase.respondentAddressTypes?.filter(
+      r => r.label.toString().localeCompare('No addresses found') === 0
+    );
+
+    let targetUrl;
+    if (respondentEnterPostcode?.length === 1) {
+      targetUrl = PageUrls.RESPONDENT_ADDRESS_MANUAL;
+    } else {
+      targetUrl = PageUrls.RESPONDENT_ADDRESS;
+    }
+
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, targetUrl);
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -43,28 +54,32 @@ export default class RespondentPostCodeSelectController {
     );
     req.session.userCase.respondentAddresses = response;
     req.session.userCase.respondentAddressTypes = [];
-    if (response.length > 0) {
-      req.session.userCase.respondentAddressTypes.push({
-        selected: true,
-        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSeveral : locales.selectDefaultSeveral,
-      });
-    } else if (response.length === 1) {
+
+    if (response.length === 1) {
       req.session.userCase.respondentAddressTypes.push({
         selected: true,
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSingle : locales.selectDefaultSingle,
       });
+    } else if (response.length > 0) {
+      req.session.userCase.respondentAddressTypes.push({
+        selected: true,
+        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSeveral : locales.selectDefaultSeveral,
+      });
     } else {
+      //if no matching address found
       req.session.userCase.respondentAddressTypes.push({
         selected: true,
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultNone : locales.selectDefaultNone,
       });
     }
+
     for (const address of response) {
       req.session.userCase.respondentAddressTypes.push({
         value: response.indexOf(address),
         label: address.fullAddress,
       });
     }
+
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
