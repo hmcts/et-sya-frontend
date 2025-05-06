@@ -137,5 +137,10 @@ withPipeline(type, product, component) {
 
 // Performance test stages wip
 afterSuccess('build:perftest') {
-    stage("Performance Test") {{}}
+    stage("Performance Test") {
+        
+        echo "Starting performance test stage..."
+    }
+}
+
 }
