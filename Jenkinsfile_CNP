@@ -33,7 +33,7 @@ def inTestFalse = [
 // Forcing to look in et-aat keyvault *temp*
 def perfSecrets = [
     'et-aat': [
-        secret('perf-synthetic-monitor-token', 'perf-synthetic-monitor-token')
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
     ]
 ]
 
@@ -148,33 +148,26 @@ afterSuccess('buildinfra:perftest') {
         loadVaultSecrets(perfSecrets) // Load Perf secrets
 
         echo "Starting performance test stage..."
-        // Log details of the build 
-        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}"
+        // Log details of the build
+        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
 
-        //Submit Dynatrace Event - Build details, PR etc. 
-        
-        //env.DT_API_TOKEN = "Api-Token${perf-synthetic-monitor-token}"
+        //Submit Dynatrace Event - Build details, PR etc.
 
-        echo "test: ${perf-synthetic-monitor-token}"
+        sh """
+          curl -X POST \
+            'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch' \
+            -H 'Accept: application/json' \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: Api-Token ${PERF_SYNTHETIC_MONITOR_TOKEN}" \
+            -d '{
+                  "monitors": [
+                      {
+                          "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+                      }
+                  ]
+             }'
+        """
 
-        //Trigger Dynatrace Synthetic Test
-        // def triggerResponse = httpRequest(
-        //     acceptType: 'APPLICATION_JSON',
-        //     contentType: 'APPLICATION_JSON',
-        //     httpMode: 'POST',
-        //     quiet: true,
-        //     customHeaders: [
-        //         [name: 'Authorization', value: "Api-Token ${perf-synthetic-monitor-token}"]
-        //     ],
-        //     requestBody: '''{
-        //         "monitors": [
-        //             {
-        //                 "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-        //             }
-        //         ]
-        //     }''',
-        //     url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
-        // )
 
         // echo "${triggerResponse}"
 
