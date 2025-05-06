@@ -157,25 +157,6 @@ afterSuccess('buildinfra:perftest') {
 
         echo "test: ${DT_API_TOKEN}"
 
-        //Trigger Dynatrace Synthetic Test
-        // def triggerResponse = httpRequest(
-        //     acceptType: 'APPLICATION_JSON',
-        //     contentType: 'APPLICATION_JSON',
-        //     httpMode: 'POST',
-        //     quiet: true,
-        //     customHeaders: [
-        //         [name: 'Authorization', value: "Api-Token ${perf-synthetic-monitor-token}"]
-        //     ],
-        //     requestBody: '''{
-        //         "monitors": [
-        //             {
-        //                 "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-        //             }
-        //         ]
-        //     }''',
-        //     url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
-        // )
-
         // echo "${triggerResponse}"
 
         //Trigger Gatling Test
