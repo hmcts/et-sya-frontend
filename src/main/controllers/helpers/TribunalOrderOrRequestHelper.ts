@@ -42,7 +42,10 @@ export const getTribunalOrderOrRequestDetails = (
   }
 
   respondentRequestOrOrderDetails.push(
-    addSummaryRow(translations.notificationSubject, translations[item.value.sendNotificationSubjectString]),
+    addSummaryRow(
+      translations.notificationSubject,
+      formatNotificationSubjects(item.value.sendNotificationSubject, translations)
+    ),
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
     addSummaryRow(translations.sentBy, translations.tribunal)
   );
@@ -508,4 +511,8 @@ export function determineRedirectUrl(req: AppRequest, selectedRequestOrOrder: Se
     return PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url);
   }
   return copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);
+}
+
+export function formatNotificationSubjects(keys: string[] = [], translations: AnyRecord): string {
+  return keys.map(key => translations[key] || key).join(', ');
 }
