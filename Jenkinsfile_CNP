@@ -153,9 +153,9 @@ afterSuccess('buildinfra:perftest') {
 
         //Submit Dynatrace Event - Build details, PR etc. 
         
-        def dtAPIToken = "Api-Token${perf-synthetic-monitor-token}"
+        env.DT_API_TOKEN = "Api-Token${perf-synthetic-monitor-token}"
 
-        echo "test: ${dtAPIToken}"
+        echo "test: ${DT_API_TOKEN}"
 
         //Trigger Dynatrace Synthetic Test
         // def triggerResponse = httpRequest(
