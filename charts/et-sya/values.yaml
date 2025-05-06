@@ -14,7 +14,6 @@ nodejs:
         - os-places-token
         - pcq-token-key
         - launch-darkly-sdk-key
-        - perf-synthetic-monitor-token
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
