@@ -159,7 +159,7 @@ afterSuccess('buildinfra:perftest') {
             httpMode: 'POST',
             quiet: true,
             customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${perf-synthetic-monitor-token}"]
+                [name: 'Authorization', value: "Api-Token test"]
             ],
             requestBody: '''{
                 "monitors": [
