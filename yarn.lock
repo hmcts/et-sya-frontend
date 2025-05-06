@@ -2629,7 +2629,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.51.0":
+"@playwright/test@npm:^1.52.0":
   version: 1.52.0
   resolution: "@playwright/test@npm:1.52.0"
   dependencies:
@@ -7635,7 +7635,7 @@ __metadata:
     "@jest/globals": ^29.5.0
     "@launchdarkly/node-server-sdk": ^9.0.0
     "@pact-foundation/pact": 9.18.1
-    "@playwright/test": ^1.51.0
+    "@playwright/test": ^1.52.0
     "@swc/core": ^1.3.76
     "@swc/helpers": ^0.5.1
     "@swc/jest": ^0.2.29
@@ -8409,7 +8409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^3.5.3":
+"formidable@npm:^3.2.4":
   version: 3.5.4
   resolution: "formidable@npm:3.5.4"
   dependencies:
