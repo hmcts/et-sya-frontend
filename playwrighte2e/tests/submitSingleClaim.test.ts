@@ -30,7 +30,7 @@ test.describe('Submit a single claim for myself without the Complete PCQ/Equalit
       await employmentDetailsPage.areYouStillWorkingForOrg('Still working for respondent');
       await employmentDetailsPage.stillWorkingForRespondentJourney('Yes written contract with notice period', 'Months');
       await employmentDetailsPage.enterRespondantDetailsJourney('No', 'No');
-      await page.click("//a[contains(.,'Describe what happened to you')]");
+      await page.click("//a[contains(.,'Tell us about your claim')]");
       await claimDetailsPage.claimDet();
       await makeClaimPage.stepsToMakingYourClaim(true);
       await submitPage.submitClaim(false);
