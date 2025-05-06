@@ -14,7 +14,7 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
     ]
 ]
 
@@ -27,6 +27,12 @@ def inTestTrue = [
 def inTestFalse = [
     'et-${env}': [
         secret('', 'IN_TEST')
+    ]
+]
+
+def perfSecrets = [
+    'et-${env}': [
+        secret('perf-synthetic-monitor-token', 'perf-synthetic-monitor-token')
     ]
 ]
 
@@ -138,10 +144,21 @@ withPipeline(type, product, component) {
 // Performance test stages wip
 afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
-        
+        loadVaultSecrets(inTestTrue) // Load Perf secrets
+
         echo "Starting performance test stage..."
         // Log details of the build 
         echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+
+        //Submit Dynatrace Event - Build details, PR etc. 
+        
+        //Trigger Dynatrace Synthetic Test
+        
+
+        
+        //Trigger Gatling Test
+
+        //
     }
 }
 
