@@ -134,4 +134,8 @@ withPipeline(type, product, component) {
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
    ])
+
+// Performance test stages wip
+afterSuccess('build:perftest') {
+    stage("Performance Test") {{}}
 }
