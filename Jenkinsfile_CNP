@@ -154,18 +154,7 @@ afterSuccess('buildinfra:perftest') {
         //Submit Dynatrace Event - Build details, PR etc.
 
         sh """
-          curl -X POST \
-            'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch' \
-            -H 'Accept: application/json' \
-            -H 'Content-Type: application/json' \
-            -H "Authorization: Api-Token ${PERF_SYNTHETIC_MONITOR_TOKEN}" \
-            -d '{
-                  "monitors": [
-                      {
-                          "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-                      }
-                  ]
-             }'
+          ./bin/jenkins-dt.sh
         """
 
 
