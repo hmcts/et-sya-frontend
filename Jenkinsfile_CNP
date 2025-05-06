@@ -15,7 +15,7 @@ def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
-        //secret('perf-synthetic-monitor-token', 'perf-synthetic-monitor-token')
+        secret('perf-synthetic-monitor-token', 'perf-synthetic-monitor-token')
     ]
 ]
 
@@ -145,7 +145,7 @@ withPipeline(type, product, component) {
 // Performance test stages wip
 afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
-        loadVaultSecrets(perfSecrets) // Load Perf secrets
+        loadVaultSecrets(secrets) // Load Perf secrets
 
         echo "Starting performance test stage..."
         // Log details of the build 
