@@ -6,6 +6,7 @@
   "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
   "change": "Newid",
   "postcode": "Cod post neu god ardal (dewisol)",
+  "postcodeRequired": "Cod post neu god ardal (gofynnol)",
   "errorSummaryHeading": "Mae yna broblem",
   "addressLine1": "Llinell cyfeiriad 1",
   "addressLine2": "Llinell cyfeiriad 2 (dewisol)",
