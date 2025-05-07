@@ -20,7 +20,7 @@ describe('Contact Application Controller', () => {
   beforeAll(async () => {
     const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
     mockLdClient.mockResolvedValue(true);
-    jest.spyOn(helper, 'submitClaimantTse').mockImplementation(() => Promise.resolve());
+
     const uploadResponse: DocumentUploadResponse = {
       originalDocumentName: 'test.txt',
       uri: 'test.com',
@@ -79,6 +79,24 @@ describe('Contact Application Controller', () => {
   });
 
   describe('Correct validation', () => {
+    it('should assign values when clicking upload file for appropriate values', async () => {
+      const req = mockRequest({
+        body: { contactApplicationText: 'test' },
+        file: mockFile,
+      });
+      req.params.selectedOption = 'withdraw';
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
+      expect(req.session.userCase).toMatchObject({
+        contactApplicationText: 'test',
+        contactApplicationFile: {
+          document_filename: 'test.txt',
+        },
+      });
+    });
+
     it('should require either summary text or summary file', async () => {
       const req = mockRequest({ body: { contactApplicationText: '' } });
       req.params.selectedOption = 'withdraw';
@@ -124,24 +142,6 @@ describe('Contact Application Controller', () => {
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
-    });
-
-    it('should assign values when clicking upload file for appropriate values', async () => {
-      const req = mockRequest({
-        body: { contactApplicationText: 'test' },
-        file: mockFile,
-      });
-      req.params.selectedOption = 'withdraw';
-      const res = mockResponse();
-
-      await new ContactTheTribunalSelectedController().post(req, res);
-
-      expect(req.session.userCase).toMatchObject({
-        contactApplicationText: 'test',
-        contactApplicationFile: {
-          document_filename: 'test.txt',
-        },
-      });
     });
 
     it('should redirect to copy-to-other-party page when non-type-c application - in English language', async () => {
