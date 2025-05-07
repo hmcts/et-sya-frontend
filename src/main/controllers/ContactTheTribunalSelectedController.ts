@@ -11,7 +11,6 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
-import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -33,32 +32,11 @@ export default class ContactTheTribunalSelectedController {
         label: l => l.contactApplicationText,
         labelHidden: false,
       },
-      inset: {
-        id: 'inset',
-        classes: 'govuk-heading-m',
-        label: l => l.files.title,
-        type: 'insetFields',
-        subFields: {
-          contactApplicationFile: {
-            id: 'contactApplicationFile',
-            classes: 'govuk-label',
-            labelHidden: false,
-            labelSize: 'm',
-            type: 'upload',
-          },
-          upload: {
-            label: (l: AnyRecord): string => l.files.button,
-            classes: 'govuk-button--secondary',
-            id: 'upload',
-            type: 'button',
-            name: 'upload',
-            value: 'true',
-          },
-        },
-      },
-      filesUploaded: {
-        label: l => l.files.uploaded,
-        type: 'summaryList',
+      contactApplicationFile: {
+        type: 'upload',
+        id: 'contactApplicationFile',
+        label: l => l.fileUpload.title,
+        classes: 'govuk-label',
       },
     },
     submit: {
@@ -71,20 +49,27 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body.url) {
+      logger.warn('Potential bot activity detected from IP: ' + req.ip);
+      res.status(200).end('Thank you for your submission. You will be contacted in due course.');
+      return;
+    }
+
     const userCase = req.session.userCase;
-    const languageParam = getLanguageParam(req.url);
 
     userCase.contactApplicationText = req.body.contactApplicationText;
 
     const selectedOption = applications.find(appType => appType === req.params.selectedOption);
     if (!selectedOption) {
       logger.info('bad request parameter: "' + selectedOption + '"');
-      res.redirect(ErrorPages.NOT_FOUND + languageParam);
+      res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
       return;
     }
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+
     req.session.errors = [];
+
     const contactApplicationError = getFileUploadAndTextAreaError(
       formData.contactApplicationText,
       req.file,
@@ -94,15 +79,17 @@ export default class ContactTheTribunalSelectedController {
       'contactApplicationFile',
       logger
     );
-
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
       return res.redirect(
-        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+        setUrlLanguageFromSessionLanguage(
+          req,
+          PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption)
+        )
       );
     }
 
-    if (req.body.upload) {
+    if (req.file) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
@@ -112,29 +99,23 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-      return res.redirect(
-        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
-      );
     }
+
     req.session.errors = [];
 
     const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : copyToOtherPartyRedirectUrl(req.session.userCase);
-
-    const redirectUrl = setUrlLanguageFromSessionLanguage(req, redirectPage);
-
-    return res.redirect(redirectUrl);
+    return res.redirect(setUrlLanguageFromSessionLanguage(req, redirectPage));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const welshEnabled = await getFlagValue('welsh-language', null);
-    const languageParam = getLanguageParam(req.url);
     req.session.contactType = Rule92Types.CONTACT;
+
     const selectedApplication = req.params.selectedOption;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');
-      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + languageParam);
+      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + getLanguageParam(req.url));
       return;
     }
 
@@ -151,18 +132,6 @@ export default class ContactTheTribunalSelectedController {
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
 
-    (this.contactApplicationContent.fields as any).inset.subFields.upload.disabled =
-      userCase?.contactApplicationFile !== undefined;
-
-    (this.contactApplicationContent.fields as any).filesUploaded.rows = getFiles(
-      userCase,
-      getLanguageParam(req.url),
-      selectedApplication,
-      {
-        ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
-      }
-    );
-
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
     };
@@ -175,7 +144,7 @@ export default class ContactTheTribunalSelectedController {
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       errorMessage: getFileErrorMessage(req.session.errors, translations.errors.contactApplicationFile),
       ...content,
-      welshEnabled,
+      welshEnabled: await getFlagValue('welsh-language', null),
     });
   };
 }

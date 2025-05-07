@@ -128,7 +128,8 @@ describe('Contact Application Controller', () => {
 
     it('should assign values when clicking upload file for appropriate values', async () => {
       const req = mockRequest({
-        body: { upload: true, contactApplicationText: 'test', contactApplicationFile: mockFile },
+        body: { contactApplicationText: 'test' },
+        file: mockFile,
       });
       req.params.selectedOption = 'withdraw';
       const res = mockResponse();
@@ -146,7 +147,6 @@ describe('Contact Application Controller', () => {
     it('should redirect to copy-to-other-party page when non-type-c application - in English language', async () => {
       const req = mockRequest({
         body: {
-          upload: false,
           contactApplicationText: 'test',
           contactApplicationFile: mockFile,
         },
@@ -177,7 +177,6 @@ describe('Contact Application Controller', () => {
     it('should redirect to copy-to-other-party page when non-type-c application - in Welsh language', async () => {
       const req = mockRequest({
         body: {
-          upload: false,
           contactApplicationText: 'test',
           contactApplicationFile: mockFile,
         },
@@ -208,7 +207,6 @@ describe('Contact Application Controller', () => {
     it('should redirect to copy-to-other-party-not-system-user page when non-type-c application - English language', async () => {
       const req = mockRequest({
         body: {
-          upload: false,
           contactApplicationText: 'test',
           contactApplicationFile: mockFile,
         },
@@ -229,7 +227,6 @@ describe('Contact Application Controller', () => {
     it('should redirect to CYA page when type-c application - English language', async () => {
       const req = mockRequest({
         body: {
-          upload: false,
           contactApplicationText: 'test',
           contactApplicationFile: mockFile,
         },
@@ -250,7 +247,6 @@ describe('Contact Application Controller', () => {
   it('should redirect to CYA page when type-c application - Welsh language', async () => {
     const req = mockRequest({
       body: {
-        upload: false,
         contactApplicationText: 'test',
         contactApplicationFile: mockFile,
       },
