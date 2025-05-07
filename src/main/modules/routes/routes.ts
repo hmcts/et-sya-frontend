@@ -84,6 +84,7 @@ import RespondToApplicationController from '../../controllers/RespondToApplicati
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
 import RespondentAddInCheckAnswerController from '../../controllers/RespondentAddInCheckAnswerController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
+import RespondentAddressNonUkController from '../../controllers/RespondentAddressNonUkController';
 import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
@@ -183,6 +184,14 @@ export class Routes {
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().post);
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS_NON_UK,
+      new RespondentAddressNonUkController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS_NON_UK,
+      new RespondentAddressNonUkController().post
+    );
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS, new WorkAddressController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS, new WorkAddressController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.PLACE_OF_WORK, new PlaceOfWorkController().get);

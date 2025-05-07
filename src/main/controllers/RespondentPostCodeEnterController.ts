@@ -43,7 +43,7 @@ export default class RespondentPostCodeEnterController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_SELECT);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, true);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -52,14 +52,13 @@ export default class RespondentPostCodeEnterController {
     const respondents = req.session.userCase.respondents;
     const selectedRespondent = respondents[respondentIndex];
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
     const title = req.url?.includes('lng=cy')
       ? localesCy.respondentPostcodeEnterTitle
       : locales.respondentPostcodeEnterTitle;
     res.render(TranslationKeys.RESPONDENT_POSTCODE_ENTER, {
       ...content,
       respondentName: selectedRespondent.respondentName,
-      link,
+      nonUkAddressLink: getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS_NON_UK),
       title,
     });
   };
