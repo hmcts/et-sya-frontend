@@ -162,7 +162,7 @@ withPipeline(type, product, component) {
                 [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
             ],
             url: 'https://yrk32651.live.dynatrace.com/api/v2/events/ingest',
-            requestBody: '''{
+            requestBody: """{
                 "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
                 "eventType": "CUSTOM_INFO",
                 "properties": {
@@ -174,7 +174,7 @@ withPipeline(type, product, component) {
                 },
                 "timeout": 1,
                 "title": "ET-SYA-Frontend Performance Event"
-                }'''
+                }"""
         )
         echo "${env.postDTEvent}"
 
