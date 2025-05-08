@@ -163,7 +163,7 @@ withPipeline(type, product, component) {
             ],
             url: 'https://yrk32651.live.dynatrace.com/api/v2/events/ingest',
             requestBody: '''{
-                "entitySelector": "type(service),tag(\"[Kubernetes]namespace:et\"),tag(\"Environment:PERF\"),entityId(\"SERVICE-894163B308FBDD78\")",
+                "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
                 "eventType": "CUSTOM_INFO",
                 "properties": {
                         "Workspace": "${env.WORKSPACE}",
