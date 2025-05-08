@@ -154,24 +154,40 @@ withPipeline(type, product, component) {
 
 
         //Trigger Dynatrace Synthetic Test
-        def triggerResponse = httpRequest(
-            acceptType: 'APPLICATION_JSON',
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
-            quiet: true,
-            customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
-            ],
-            requestBody: '''{
-                "monitors": [
-                    {
-                        "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-                    }
-                ]
-            }''',
-            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
-        )
-        echo "${env.triggerResponse}"
+
+        sh """
+         curl -X POST \\
+           'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch' \\
+           -H 'Accept: application/json' \\
+           -H 'Content-Type: application/json' \\
+           -H "Authorization: Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}" \\
+           -d '{
+                 "monitors": [
+                     {
+                         "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+                     }
+                 ]
+            }'
+       """
+
+        // def triggerResponse = httpRequest(
+            // acceptType: 'APPLICATION_JSON',
+            // contentType: 'APPLICATION_JSON',
+            // httpMode: 'POST',
+            // quiet: true,
+            // customHeaders: [
+                // [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+            // ],
+            // requestBody: '''{
+                // "monitors": [
+                    // {
+                        // "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+                    // }
+                // ]
+            // }''',
+            // url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
+        // )
+        // echo "${env.triggerResponse}"
 
             }
           }
