@@ -161,7 +161,7 @@ withPipeline(type, product, component) {
             customHeaders: [
                 [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
             ],
-            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch',
+            url: 'https://yrk32651.live.dynatrace.com/api/v2/events/ingest',
             requestBody: '''{
                 "entitySelector": "type(service),tag(\"[Kubernetes]namespace:et\"),tag(\"Environment:PERF\"),entityId(\"SERVICE-894163B308FBDD78\")",
                 "eventType": "CUSTOM_INFO",
@@ -178,8 +178,19 @@ withPipeline(type, product, component) {
         )
         echo "${env.postDTEvent}"
 
-        /// Metric to highlight a deployment
-
+        /// POST Metric to highlight a deployment
+        def postDTMetric = httpRequest(
+            acceptType: 'TEXT_PLAIN',
+            contentType: 'TEXT_PLAIN',
+            httpMode: 'POST',
+            quiet: true,
+            customHeaders: [
+                [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
+            ],
+            url: 'https://yrk32651.live.dynatrace.com/api/v2/metrics/ingest',
+            requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
+        )
+        echo "${env.postDTMetric}"
 
         //def perfSynthMonitorToken = "${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
         //Trigger Dynatrace Synthetic Test
