@@ -171,7 +171,7 @@ withPipeline(type, product, component) {
             }''',
             url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
         )
-        echo "${triggerResponse}"
+        echo "${env.triggerResponse}"
 
             }
           }
