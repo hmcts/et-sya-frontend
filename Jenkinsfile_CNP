@@ -15,7 +15,9 @@ def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
-        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
+        secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
+        secret('perf-event-token', 'PERF_EVENT_TOKEN'),
     ]
 ]
 
@@ -151,27 +153,32 @@ withPipeline(type, product, component) {
         echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
        
         //Trigger Custom DT Event with Info:
-        // def postDTEvent = httpRequest(
-            // acceptType: 'APPLICATION_JSON',
-            // contentType: 'APPLICATION_JSON',
-            // httpMode: 'POST',
-            // quiet: true,
-            // customHeaders: [
-                // [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
-            // ],
-            // requestBody: '''{
-                // "monitors": [
-                    // {
-                        // "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-                    // }
-                // ]
-            // }''',
-            // url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
-        // )
-        // echo "${env.postDTEvent}"
+        def postDTEvent = httpRequest(
+            acceptType: 'APPLICATION_JSON',
+            contentType: 'APPLICATION_JSON',
+            httpMode: 'POST',
+            quiet: true,
+            customHeaders: [
+                [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+            ],
+            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch',
+            requestBody: '''{
+                "entitySelector": "type(service),tag(\"[Kubernetes]namespace:et\"),tag(\"Environment:PERF\"),entityId(\"SERVICE-894163B308FBDD78\")",
+                "eventType": "CUSTOM_INFO",
+                "properties": {
+                        "Workspace": "${env.WORKSPACE}",
+                        "Branch": "${env.BRANCH_NAME}",
+                        "Build Number": "${env.BUILD_NUMBER}",
+                        "Synthetic Performance Test": "SYNTHETIC_TEST-008CAF328F244320",
+                        "Performance Dashboard": "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
+                },
+                "timeout": 5,
+                "title": "ET-SYA-Frontend Performance Event"
+                }'''
+        )
+        echo "${env.postDTEvent}"
 
-
-        // / Metric to highlight a deployment
+        /// Metric to highlight a deployment
 
 
         //def perfSynthMonitorToken = "${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
@@ -200,14 +207,14 @@ withPipeline(type, product, component) {
             customHeaders: [
                 [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
             ],
+            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch',
             requestBody: '''{
                 "monitors": [
                     {
                         "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
                     }
                 ]
-            }''',
-            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
+            }'''
         )
         echo "${env.triggerResponse}"
 
