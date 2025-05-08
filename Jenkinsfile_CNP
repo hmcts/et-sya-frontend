@@ -15,7 +15,7 @@ def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
-        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MOINITOR_TOKEN')
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
     ]
 ]
 
@@ -98,7 +98,7 @@ withPipeline(type, product, component) {
         // Log details of the build
         echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
         //debug
-        echo "Token: ${env.PERF_SYNTHETIC_MOINITOR_TOKEN}"
+        echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
     }
   }
 
@@ -152,7 +152,7 @@ withPipeline(type, product, component) {
        
         //Trigger Custom DT Event
 
-        def perfSynthMonitorToken = "${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+        //def perfSynthMonitorToken = "${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
         //Trigger Dynatrace Synthetic Test
 
         sh """
@@ -160,7 +160,7 @@ withPipeline(type, product, component) {
            'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch' \\
            -H 'Accept: application/json' \\
            -H 'Content-Type: application/json' \\
-           -H "Authorization: Api-Token ${perfSynthMonitorToken}" \\
+           -H "Authorization: Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}" \\
            -d '{
                  "monitors": [
                      {
