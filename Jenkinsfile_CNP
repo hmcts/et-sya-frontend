@@ -188,7 +188,7 @@ withPipeline(type, product, component) {
                 [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
             ],
             url: 'https://yrk32651.live.dynatrace.com/api/v2/metrics/ingest',
-            requestBody: env.release.value,type=service,tag=namespace:et,env=testenv 3
+            requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
         )
         echo "${env.postDTMetric}"
 
