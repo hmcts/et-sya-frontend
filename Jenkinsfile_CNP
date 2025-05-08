@@ -172,7 +172,7 @@ withPipeline(type, product, component) {
                         "Synthetic Performance Test": "SYNTHETIC_TEST-008CAF328F244320",
                         "Performance Dashboard": "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
                 },
-                "timeout": 5,
+                "timeout": 1,
                 "title": "ET-SYA-Frontend Performance Event"
                 }'''
         )
@@ -180,7 +180,7 @@ withPipeline(type, product, component) {
 
         /// POST Metric to highlight a deployment
         def postDTMetric = httpRequest(
-            acceptType: 'TEXT_PLAIN',
+            acceptType: 'APPLICATION_JSON',
             contentType: 'TEXT_PLAIN',
             httpMode: 'POST',
             quiet: true,
@@ -188,7 +188,7 @@ withPipeline(type, product, component) {
                 [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
             ],
             url: 'https://yrk32651.live.dynatrace.com/api/v2/metrics/ingest',
-            requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
+            requestBody: env.release.value,type=service,tag=namespace:et,env=testenv 3
         )
         echo "${env.postDTMetric}"
 
