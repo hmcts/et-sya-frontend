@@ -19,6 +19,7 @@ import {
   CaseWithId,
   Document,
   EnglishOrWelsh,
+  HearingPanelPreference,
   Representative,
   Respondent,
   YesOrNo,
@@ -135,6 +136,17 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
+    hearingPanelPreference: fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference,
+    hearingPanelPreferenceReasonJudge:
+      fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference ===
+      HearingPanelPreference.JUDGE
+        ? fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference_why
+        : '',
+    hearingPanelPreferenceReasonPanel:
+      fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference ===
+      HearingPanelPreference.PANEL
+        ? fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference_why
+        : '',
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
@@ -289,6 +301,13 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         reasonable_adjustments: caseItem.reasonableAdjustments,
         reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
         hearing_preferences: caseItem.hearingPreferences,
+        claimant_hearing_panel_preference: caseItem.hearingPanelPreference,
+        claimant_hearing_panel_preference_why:
+          caseItem.hearingPanelPreference === HearingPanelPreference.JUDGE
+            ? caseItem.hearingPanelPreferenceReasonJudge
+            : caseItem.hearingPanelPreference === HearingPanelPreference.PANEL
+            ? caseItem.hearingPanelPreferenceReasonPanel
+            : '',
         hearing_assistance: caseItem.hearingAssistance,
         contact_language: caseItem.claimantContactLanguagePreference,
         hearing_language: caseItem.claimantHearingLanguagePreference,
