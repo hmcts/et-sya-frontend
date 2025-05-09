@@ -1,0 +1,13 @@
+{
+  "title": "Respondent contact details",
+  "respondent": "Respondent",
+  "legalRepresentativesName": "Legal representative’s name",
+  "legalRepsOrganisation": "Legal rep’s organisation",
+  "name": "Name",
+  "employerName": "Employer name",
+  "address": "Address",
+  "email": "Email",
+  "preferredMethod": "Preferred method of contact",
+  "post": "Post",
+  "notProvided": "Not provided"
+}

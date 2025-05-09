@@ -1,6 +1,7 @@
 export enum HubLinkNames {
   Et1ClaimForm = 'et1ClaimForm',
   RespondentResponse = 'respondentResponse',
+  ViewRespondentContactDetails = 'viewRespondentContactDetails',
   HearingDetails = 'hearingDetails',
   RequestsAndApplications = 'requestsAndApplications',
   RespondentApplications = 'respondentApplications',
@@ -79,7 +80,7 @@ export const displayStatusColorMap = new Map<HubLinkStatus, string>([
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
   [HubLinkNames.Et1ClaimForm],
-  [HubLinkNames.RespondentResponse],
+  [HubLinkNames.RespondentResponse, HubLinkNames.ViewRespondentContactDetails],
   [HubLinkNames.HearingDetails],
   [HubLinkNames.RequestsAndApplications, HubLinkNames.RespondentApplications, HubLinkNames.ContactTribunal],
   [HubLinkNames.TribunalOrders],

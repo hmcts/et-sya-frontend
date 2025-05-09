@@ -12,7 +12,7 @@ import {
   updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
-import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
+import { CaseWithId, Et3ResponseStatus, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
@@ -92,6 +92,48 @@ describe('updateHubLinkStatuses', () => {
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.Et1ClaimForm]).toEqual(HubLinkStatus.NOT_VIEWED);
+  });
+
+  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if ET3 is accepted', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: [
+        {
+          responseReceived: YesOrNo.YES,
+          responseStatus: Et3ResponseStatus.ACCEPTED,
+        },
+      ],
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
+  });
+
+  it('should set ViewRespondentContactDetails hubLink status to NOT_YET_AVAILABLE if no respondents or ET3 not accepted', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: [
+        {
+          responseReceived: YesOrNo.YES,
+          responseStatus: Et3ResponseStatus.REJECTED,
+        },
+      ],
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
 });
 
@@ -546,6 +588,7 @@ describe('getHubLinksUrlMap', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+      [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS],
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
@@ -563,6 +606,7 @@ describe('getHubLinksUrlMap', () => {
         HubLinkNames.RespondentResponse,
         PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
       ],
+      [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
@@ -577,6 +621,7 @@ describe('getHubLinksUrlMap', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+      [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS],
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
@@ -594,6 +639,7 @@ describe('getHubLinksUrlMap', () => {
         HubLinkNames.RespondentResponse,
         PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
       ],
+      [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],

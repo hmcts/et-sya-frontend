@@ -1,5 +1,6 @@
 import { HearingModel } from './api/caseApiResponse';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
+import { Et1Address } from './complexTypes/et1Address';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { PseResponseType, SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
@@ -11,7 +12,7 @@ import {
   TellUsWhatYouWant,
 } from './definition';
 import { HubLinksStatuses } from './hub';
-import { TypeItem, UnknownRecord } from './util-types';
+import { TypeItem } from './util-types';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -38,6 +39,12 @@ export interface Respondent {
   respondentAddressTown?: string;
   respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
+  responseReceived?: YesOrNo;
+  responseStatus?: string;
+  responseRespondentName?: string;
+  responseRespondentAddress?: Et1Address;
+  responseRespondentEmail?: string;
+  responseRespondentContactPreference?: string;
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
@@ -48,24 +55,6 @@ export interface Respondent {
   noAcasReason?: NoAcasNumberReason;
   ccdId?: string;
   idamId?: string;
-}
-
-export interface RespondentApiModel {
-  respondentNumber?: number;
-  respondentName?: string;
-  respondentAddress1?: string;
-  respondentAddress2?: string;
-  respondentAddressTown?: string;
-  respondentAddressCountry?: string;
-  respondentAddressPostcode?: string;
-  workAddress1?: string;
-  workAddress2?: string;
-  workAddressTown?: string;
-  workAddressCountry?: string;
-  workAddressPostcode?: string;
-  acasCert?: YesOrNo;
-  acasCertNum?: string;
-  noAcasReason?: NoAcasNumberReason;
 }
 
 export interface Case {
@@ -252,12 +241,6 @@ export const enum YesOrNo {
   NO = 'No',
 }
 
-export const enum YesOrNoOrPreferNot {
-  YES = 'Yes',
-  NO = 'No',
-  PREFER_NOT = 'Prefer not to say',
-}
-
 export const enum YesOrNoOrNotSure {
   YES = 'Yes',
   NO = 'No',
@@ -309,8 +292,6 @@ export const enum PayInterval {
   ANNUAL = 'Annual',
 }
 
-export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
-
 export const enum CaseDataCacheKey {
   CLAIM_JURISDICTION = 'claimJurisdiction',
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
@@ -354,8 +335,13 @@ export interface Document {
 }
 
 export interface Representative {
-  hasMyHMCTSAccount?: YesOrNo;
   respondentId?: string;
+  hasMyHMCTSAccount?: YesOrNo;
+  nameOfRepresentative?: string;
+  nameOfOrganisation?: string;
+  representativeAddress?: Et1Address;
+  representativeEmailAddress?: string;
+  representativePreference?: string;
 }
 
 export const enum claimantRepresented {
@@ -363,4 +349,11 @@ export const enum claimantRepresented {
   NO = 'No',
   LEGAL_REP_SINGLE_CLAIM = 'Legal Representative Single Claim',
   LEGAL_REP_GROUP_CLAIM = 'Legal Representative Group Claim',
+}
+
+export const enum Et3ResponseStatus {
+  ACCEPTED = 'Accepted',
+  NOT_RECEIVED = 'Not Received',
+  NOT_ACCEPTED = 'Not Accepted',
+  REJECTED = 'Rejected',
 }

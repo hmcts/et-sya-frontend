@@ -431,6 +431,12 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       respondentAddressCountry: respondent.value?.respondent_address?.Country,
       respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
       respondentEnterPostcode: respondent.value?.respondent_address?.PostCode,
+      responseReceived: respondent.value?.responseReceived,
+      responseStatus: respondent.value?.response_status,
+      responseRespondentName: respondent.value?.responseRespondentName,
+      responseRespondentAddress: respondent.value?.responseRespondentAddress,
+      responseRespondentEmail: respondent.value?.responseRespondentEmail,
+      responseRespondentContactPreference: respondent.value?.responseRespondentContactPreference,
       acasCert: respondent.value?.respondent_ACAS_question,
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,
@@ -443,8 +449,13 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
 export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
   return representatives?.map(rep => {
     return {
-      hasMyHMCTSAccount: rep.value.myHmctsYesNo,
       respondentId: rep.value.respondentId,
+      nameOfRepresentative: rep.value.name_of_representative,
+      nameOfOrganisation: rep.value.name_of_organisation,
+      representativeAddress: rep.value.representative_address,
+      representativeEmailAddress: rep.value.representative_email_address,
+      representativePreference: rep.value.representative_preference,
+      hasMyHMCTSAccount: rep.value.myHmctsYesNo,
     };
   });
 };
