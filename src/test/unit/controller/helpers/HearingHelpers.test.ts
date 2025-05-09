@@ -62,7 +62,7 @@ describe('Hearing Helpers', () => {
               date: '11 April 2025',
               displayStatus: 'Viewed',
               notificationTitle: 'Hearing-1',
-              redirectUrl: '/tribunal-order-or-request-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
+              redirectUrl: '/notification-details/daeade9a-52df-48f6-9ef8-4eb210dac9e3',
               statusColor: '--green',
             },
           ],

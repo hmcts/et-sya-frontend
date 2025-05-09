@@ -82,7 +82,7 @@ const getNotificationRow = (
 ): HearingNotificationRow => {
   return {
     date: notification.value?.date,
-    redirectUrl: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', notification.id),
+    redirectUrl: PageUrls.NOTIFICATION_DETAILS.replace(':orderId', notification.id),
     notificationTitle: notification.value?.sendNotificationTitle,
     displayStatus: translations[notification.value?.notificationState],
     statusColor: displayStatusColorMap.get(notification.value?.notificationState as HubLinkStatus),
