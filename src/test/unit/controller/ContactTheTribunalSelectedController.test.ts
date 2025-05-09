@@ -36,17 +36,17 @@ describe('Contact Application Controller', () => {
     });
   });
 
-  it('should render contact application page', async () => {
-    const controller = new ContactTheTribunalSelectedController();
-    const response = mockResponse();
-    const request = mockRequestWithTranslation({ t }, translationJsons);
-    request.params.selectedOption = 'withdraw';
-
-    await controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
-  });
-
   describe('GET - application names', () => {
+    it('should render contact application page', async () => {
+      const controller = new ContactTheTribunalSelectedController();
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ t }, translationJsons);
+      request.params.selectedOption = 'withdraw';
+
+      await controller.get(request, response);
+      expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
+    });
+
     it('allow white-listed application parameters', async () => {
       const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
       req.params.selectedOption = 'withdraw';
@@ -78,7 +78,15 @@ describe('Contact Application Controller', () => {
     });
   });
 
-  describe('Correct validation', () => {
+  describe('POST', () => {
+    it('should detect bot activity and return a thank you message', async () => {
+      const req = mockRequest({ body: { url: 'http://test-url.com' } });
+      const res = mockResponse();
+      await new ContactTheTribunalSelectedController().post(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.end).toHaveBeenCalledWith('Thank you for your submission. You will be contacted in due course.');
+    });
+
     it('should assign values when clicking upload file for appropriate values', async () => {
       const req = mockRequest({
         body: { contactApplicationText: 'test' },
@@ -95,53 +103,6 @@ describe('Contact Application Controller', () => {
           document_filename: 'test.txt',
         },
       });
-    });
-
-    it('should require either summary text or summary file', async () => {
-      const req = mockRequest({ body: { contactApplicationText: '' } });
-      req.params.selectedOption = 'withdraw';
-      await new ContactTheTribunalSelectedController().post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'required' }]);
-    });
-
-    it('should not allow invalid free text size', async () => {
-      const req = mockRequest({ body: { contactApplicationText: '1'.repeat(2501) } });
-      req.params.selectedOption = 'withdraw';
-      await new ContactTheTribunalSelectedController().post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'tooLong' }]);
-    });
-
-    it('should only allow valid file formats', async () => {
-      const newFile = mockFile;
-      newFile.originalname = 'file.invalidFileFormat';
-      const req = mockRequest({ body: {}, file: newFile });
-      req.params.selectedOption = 'withdraw';
-      await new ContactTheTribunalSelectedController().post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileFormat' }]);
-    });
-
-    it('should only allow valid file sizes', async () => {
-      const newFile = mockFile;
-      newFile.originalname = 'file.invalidFileSize';
-      const req = mockRequest({ body: {}, file: newFile });
-      req.fileTooLarge = true;
-      req.params.selectedOption = 'withdraw';
-      await new ContactTheTribunalSelectedController().post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
-    });
-
-    it('should only allow valid file names', async () => {
-      const newFile = mockFile;
-      newFile.originalname = '$%?invalid.txt';
-      const req = mockRequest({ body: {}, file: newFile });
-      req.params.selectedOption = 'withdraw';
-      await new ContactTheTribunalSelectedController().post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
     });
 
     it('should redirect to copy-to-other-party page when non-type-c application - in English language', async () => {
@@ -242,33 +203,82 @@ describe('Contact Application Controller', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.ENGLISH_URL_PARAMETER);
     });
-  });
 
-  it('should redirect to CYA page when type-c application - Welsh language', async () => {
-    const req = mockRequest({
-      body: {
-        contactApplicationText: 'test',
-        contactApplicationFile: mockFile,
-      },
-      userCase: {
-        contactApplicationType: 'witness',
-      },
+    it('should redirect to CYA page when type-c application - Welsh language', async () => {
+      const req = mockRequest({
+        body: {
+          contactApplicationText: 'test',
+          contactApplicationFile: mockFile,
+        },
+        userCase: {
+          contactApplicationType: 'witness',
+        },
+      });
+      req.session.lang = languages.WELSH;
+      req.params.selectedOption = 'witness';
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.WELSH_URL_PARAMETER);
     });
-    req.session.lang = languages.WELSH;
-    req.params.selectedOption = 'witness';
-    const res = mockResponse();
 
-    await new ContactTheTribunalSelectedController().post(req, res);
+    it('should return error page when Selected application not found', async () => {
+      const req = mockRequest({ body: { contactApplicationText: 'test' } });
+      req.params.selectedOption = 'test';
+      const res = mockResponse();
+      await new ContactTheTribunalSelectedController().post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.WELSH_URL_PARAMETER);
+      expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+    });
   });
 
-  it('should return error page when Selected application not found', async () => {
-    const req = mockRequest({ body: { contactApplicationText: 'test' } });
-    req.params.selectedOption = 'test';
-    const res = mockResponse();
-    await new ContactTheTribunalSelectedController().post(req, res);
+  describe('Correct validation', () => {
+    it('should require either summary text or summary file', async () => {
+      const req = mockRequest({ body: { contactApplicationText: '' } });
+      req.params.selectedOption = 'withdraw';
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
-    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'required' }]);
+    });
+
+    it('should not allow invalid free text size', async () => {
+      const req = mockRequest({ body: { contactApplicationText: '1'.repeat(2501) } });
+      req.params.selectedOption = 'withdraw';
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'tooLong' }]);
+    });
+
+    it('should only allow valid file formats', async () => {
+      const newFile = mockFile;
+      newFile.originalname = 'file.invalidFileFormat';
+      const req = mockRequest({ body: {}, file: newFile });
+      req.params.selectedOption = 'withdraw';
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileFormat' }]);
+    });
+
+    it('should only allow valid file sizes', async () => {
+      const newFile = mockFile;
+      newFile.originalname = 'file.invalidFileSize';
+      const req = mockRequest({ body: {}, file: newFile });
+      req.fileTooLarge = true;
+      req.params.selectedOption = 'withdraw';
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
+    });
+
+    it('should only allow valid file names', async () => {
+      const newFile = mockFile;
+      newFile.originalname = '$%?invalid.txt';
+      const req = mockRequest({ body: {}, file: newFile });
+      req.params.selectedOption = 'withdraw';
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
+    });
   });
 });
