@@ -14,7 +14,10 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
+        secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
+        secret('perf-event-token', 'PERF_EVENT_TOKEN'),
     ]
 ]
 
@@ -43,7 +46,7 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  enableSlackNotifications('#et-builds')
+  //enableSlackNotifications('#et-builds') // temp removal whilst wip
 
   afterAlways('build') {
     yarnBuilder.yarn('build')
@@ -90,6 +93,17 @@ withPipeline(type, product, component) {
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
+  afterSuccess('functionalTest:aat') {
+    stage("Performance Test") {
+        loadVaultSecrets(secrets) // Load Perf secrets
+        echo "Starting performance test stage..."
+        // Log details of the build
+        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+        //debug
+        echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+    }
+  }
+
   afterAlways('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
     publishHTML([
@@ -130,6 +144,117 @@ withPipeline(type, product, component) {
             ])
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
+
+  afterAlways('functionalTest:preview') {
+    stage('Performance Test') {
+        script {   
+            loadVaultSecrets(secrets) // Load Perf secrets
+            echo "Starting performance test stage..."
+            // Log details of the build
+            echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+
+            try {
+                def config = load 'src/test/performance/config/config.groovy'
+                echo "Loaded Config Succesfully.."
+            } catch (Exception e) {
+                echo "Error while loading the config file: ${e.message}"
+            }
+            
+            // Print the loaded config
+            echo "Dynatrace API URL: ${config.dynatraceApiHost}"
+            echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+            echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+
+            //Load Config
+            //def config = load '.\src\test\performance\config\config.groovy'
+            // Accessing the entitySelector from the config map
+            echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+        }
+        
+                    //Trigger Custom DT Event with Info:
+                    def postDTEvent = httpRequest(
+                    acceptType: 'APPLICATION_JSON',
+                    contentType: 'APPLICATION_JSON',
+                    httpMode: 'POST',
+                    quiet: true,
+                    customHeaders: [
+                        [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+                    ],
+                    url: "${dynatraceApiHost}${dynatraceEventIngestEndpoint}", //https://yrk32651.live.dynatrace.com/api/v2/events/ingest
+                    requestBody: """{
+                        "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
+                        "eventType": "CUSTOM_INFO",
+                        "properties": {
+                                "Workspace": "${env.WORKSPACE}",
+                                "Branch": "${env.BRANCH_NAME}",
+                                "Build Number": "${env.BUILD_NUMBER}",
+                                "Synthetic Performance Test": "SYNTHETIC_TEST-008CAF328F244320",
+                                "Performance Dashboard": "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
+                        },
+                        "timeout": 1,
+                        "title": "ET-SYA-Frontend Performance Event"
+                        }"""
+                )
+                echo "${env.postDTEvent}"
+            
+        /// POST Metric to highlight a deployment
+        def postDTMetric = httpRequest(
+            acceptType: 'APPLICATION_JSON',
+            contentType: 'TEXT_PLAIN',
+            httpMode: 'POST',
+            quiet: true,
+            customHeaders: [
+                [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
+            ],
+            url: 'https://yrk32651.live.dynatrace.com/api/v2/metrics/ingest',
+            requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
+        )
+        echo "${env.postDTMetric}"
+
+        //def perfSynthMonitorToken = "${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+        //Trigger Dynatrace Synthetic Test
+
+        // sh """
+        //  curl -X POST \\
+        //    'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch' \\
+        //    -H 'Accept: application/json' \\
+        //    -H 'Content-Type: application/json' \\
+        //    -H "Authorization: Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}" \\
+        //    -d '{
+                //  "monitors": [
+                    //  {
+                        //  "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+                    //  }
+                //  ]
+            // }'
+        //    """
+
+      //stage('Performance Test - Send DT Metric') {
+        //steps {
+        def triggerResponse = httpRequest(
+            acceptType: 'APPLICATION_JSON',
+            contentType: 'APPLICATION_JSON',
+            httpMode: 'POST',
+            quiet: true,
+            customHeaders: [
+                [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+            ],
+            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch',
+            requestBody: '''{
+                "monitors": [
+                    {
+                        "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+                    }
+                ]
+            }'''
+        )
+        echo "${env.triggerResponse}"
+    }
+  }
+
+            
+    
+    
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
