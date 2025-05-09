@@ -33,7 +33,7 @@ describe('Acas Multiple Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should add Yes selection to user case and continue to Type of claim page', () => {
+  it('should add Yes selection to user case and continue to Claim steps', () => {
     const body = { acasMultiple: 'Yes' };
 
     const controller = new AcasMultipleController();
@@ -42,7 +42,7 @@ describe('Acas Multiple Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TYPE_OF_CLAIM);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
     expect(req.session.userCase).toEqual(body);
   });
 });

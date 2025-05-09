@@ -189,6 +189,8 @@ export const getSectionStatus = (
 ): sectionStatus => {
   if (detailsCheckValue === YesOrNo.YES) {
     return sectionStatus.completed;
+  } else if (!sessionValue) {
+    return sectionStatus.notStarted;
   } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
     return sectionStatus.inProgress;
   } else {
@@ -205,7 +207,6 @@ export const getSectionStatusForEmployment = (
   if (detailsCheckValue === YesOrNo.YES) {
     return sectionStatus.completed;
   } else if (
-    detailsCheckValue === YesOrNo.NO ||
     (!!sessionValue && typesOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL) && isStillWorking) ||
     ((!!sessionValue || isStillWorking) && !typesOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL))
   ) {

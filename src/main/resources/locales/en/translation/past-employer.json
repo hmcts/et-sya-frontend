@@ -1,6 +1,6 @@
 {
   "title": "Did you work?",
-  "heading": "Did you work for the organisation or person you’re making your claim against?",
+  "heading": "Did you work for the organisation or person you’re making your claim against? (Optional)",
   "errors": {
     "pastEmployer": {
       "required": "Tell us if you worked for the organisation or person"

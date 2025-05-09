@@ -3,6 +3,10 @@ import { BasePage } from './basePage';
 export class ClaimDetailsPage extends BasePage {
   async claimDet(allClaimDetailsPages = true): Promise<void> {
     if (allClaimDetailsPages) {
+      await this.webAction.checkElementById('#discrimination');
+      await this.webAction.checkElementById('#whistleBlowing');
+      await this.clickContinue();
+
       await this.webAction.verifyTextIsVisible('text=What type of discrimination are you claiming?');
       await this.webAction.verifyTextIsVisible('text=Select all that apply.');
       await this.webAction.verifyTextIsVisible('text=Age');

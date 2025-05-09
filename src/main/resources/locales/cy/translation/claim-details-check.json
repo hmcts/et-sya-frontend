@@ -6,7 +6,8 @@
   "p": "Gallwch newid eich atebion yn hwyrach ymlaen.",
   "errors": {
     "claimDetailsCheck": {
-      "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon"
+      "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",
+      "invalid": "<placeholder>"
     }
   }
 }

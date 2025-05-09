@@ -7,10 +7,14 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { handleClaimStepsRedirect } from './helpers/RedirectHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+const logger = getLogger('ValidNoAcasReasonController');
 
 export default class ValidNoAcasReasonController {
   private readonly form: Form;
@@ -59,10 +63,14 @@ export default class ValidNoAcasReasonController {
     });
   };
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? PageUrls.TYPE_OF_CLAIM
+      ? PageUrls.CLAIM_STEPS
       : PageUrls.CONTACT_ACAS;
-    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
+    if (PageUrls.CLAIM_STEPS === redirectUrl) {
+      await handleClaimStepsRedirect(req, res, this.form, redirectUrl, logger);
+    } else {
+      handlePostLogicPreLogin(req, res, this.form, redirectUrl);
+    }
   };
 }
