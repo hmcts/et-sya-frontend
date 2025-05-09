@@ -161,9 +161,9 @@ withPipeline(type, product, component) {
             }
             
             // Print the loaded config
-            echo "Dynatrace API URL: ${dynatraceApiHost}"
-            echo "Dynatrace Endpoint: ${dynatraceEventIngestEndpoint}"
-            echo "Entity Selector: ${eventIngestDetails.entitySelector}"
+            echo "Dynatrace API URL: ${config.dynatraceApiHost}"
+            echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+            echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
             //Load Config
             //def config = load '.\src\test\performance\config\config.groovy'
