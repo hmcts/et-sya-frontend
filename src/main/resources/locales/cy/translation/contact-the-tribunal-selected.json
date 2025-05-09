@@ -3,16 +3,11 @@
   "contactApplicationText": "Rhowch fanylion eich cais yn y blwch testun neu uwchlwythwch ffeil",
   "contactTemplateText": "Rhowch fanylion eich cais. Nodwch ba atebydd neu atebwyr y mae eich cais yn ymwneud ag ef/â nhw. Defnyddiwch y blwch a’r cyfleuster llwytho ffeil os oes angen.",
   "subTitle": "Cofiwch:",
-  "remove": "Dileu",
-  "noFilesUpload": "Nid oes ffeiliau wedi’u llwytho",
-  "uploadFileButton": "Llwytho ffeil",
   "genericGuidanceItem1": "Os ydych yn tynnu llun o lythyr, rhowch ef ar arwyneb gwastad a thynnwch y llun o uchder",
   "genericGuidanceItem2": "Os ydych yn llwytho dogfennau ysgrifenedig gyda newidiadau wedi’u marcio, gwnewch yn siŵr bod y nodwedd hon ymlaen ar eich cyfrifiadur",
   "genericGuidanceItem3": "Gallwch wneud mwy nag un cais ar yr un pryd drwy lenwi ffurflen wahanol ar gyfer pob cais. Os yw’r ceisiadau’n gysylltiedig â’i gilydd, gallwch wneud hynny'n glir yn y blwch testun",
-  "files": {
-    "title": "Llwytho ffeil",
-    "button": "Llwytho ffeil",
-    "uploaded": "Ffeiliau sydd wedi’u llwytho"
+  "fileUpload": {
+    "title": "Llwytho ffeil"
   },
   "errors": {
     "contactApplicationText": {
