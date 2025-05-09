@@ -1,6 +1,6 @@
 //Static vars
-def dynatraceApiHost: "https://yrk32651.live.dynatrace.com/api/"
-def dynatraceEventIngestEndpoint: "/v2/events/ingest"
+def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/api/"
+def dynatraceEventIngestEndpoint = "/v2/events/ingest"
 
 //Vars for eventIngest
 def serviceType = "type(service)"
