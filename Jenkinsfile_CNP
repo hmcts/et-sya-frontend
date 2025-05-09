@@ -161,7 +161,8 @@ withPipeline(type, product, component) {
             }
             
             // Print the loaded config
-            echo "Dynatrace API URL: ${dynatraceApiUrl}"
+            echo "Dynatrace API URL: ${dynatraceApiHost}"
+            echo "Dynatrace Endpoint: ${dynatraceEventIngestEndpoint}"
             echo "Entity Selector: ${eventIngestDetails.entitySelector}"
 
             //Load Config
