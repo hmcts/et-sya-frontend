@@ -146,18 +146,21 @@ withPipeline(type, product, component) {
   }
 
   afterSuccess('functionalTest:preview') {
-    stage("Performance Test") {
-        loadVaultSecrets(secrets) // Load Perf secrets
-        echo "Starting performance test stage..."
-        // Log details of the build
-        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+    stages {
+        stage('Performance Test - Load Config') {
+        steps {
+            script {
+                    loadVaultSecrets(secrets) // Load Perf secrets
+                    echo "Starting performance test stage..."
+                    // Log details of the build
+                    echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
        
-        //Load Config
-        script {
-            
-            def config = load 'src/main/test/performance/config/config.groovy'
-            // Accessing the entitySelector from the config map
-            echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+                    //Load Config
+                    def config = load 'src/main/test/performance/config/config.groovy'
+                    // Accessing the entitySelector from the config map
+                    echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+            }
+        }
         }
 
         //Trigger Custom DT Event with Info:
