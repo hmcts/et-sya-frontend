@@ -15,7 +15,7 @@ export const getAppDetailsLink = (appId: string, languageParam: string): string 
 };
 
 export const getSendNotificationDetailsLink = (orderId: string, languageParam: string): string => {
-  return PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', orderId) + languageParam;
+  return PageUrls.NOTIFICATION_DETAILS.replace(':orderId', orderId) + languageParam;
 };
 
 export const copyToOtherPartyRedirectUrl = (userCase: CaseWithId): string => {

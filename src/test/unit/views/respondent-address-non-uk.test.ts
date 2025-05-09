@@ -22,10 +22,10 @@ const expectedInputLabel1 = 'Address line 1';
 const expectedInputLabel2 = 'Address line 2 (optional)';
 const expectedInputLabel3 = 'Town or city';
 const expectedInputLabel4 = 'Country';
-const expectedInputLabel5 = 'Postcode or area code';
+const expectedInputLabel5 = 'Postcode or area code (optional)';
 
 let htmlRes: Document;
-describe('Respondent Address Page', () => {
+describe('Respondent Address Non UK Page', () => {
   beforeAll(async () => {
     await request(
       mockApp({
@@ -39,7 +39,7 @@ describe('Respondent Address Page', () => {
         },
       })
     )
-      .get('/respondent/1/respondent-address')
+      .get('/respondent/1/respondent-address-non-uk')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

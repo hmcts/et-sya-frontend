@@ -5,7 +5,7 @@ import { PageUrls, Parties, ResponseRequired, TranslationKeys } from '../../../m
 import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import commonRaw from '../../../main/resources/locales/en/translation/common.json';
-import respondentOrderOrRequestDetailsRaw from '../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestDetailsRaw from '../../../main/resources/locales/en/translation/notification-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -31,7 +31,7 @@ describe('Respondent order or request details Controller', () => {
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ userCase }, translationJsons);
-    request.url = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+    request.url = PageUrls.NOTIFICATION_DETAILS;
     request.params.orderId = '1';
 
     const controller = new TribunalOrderOrRequestDetailsController();
@@ -57,14 +57,14 @@ describe('Respondent order or request details Controller', () => {
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ userCase }, translationJsons);
-    request.url = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+    request.url = PageUrls.NOTIFICATION_DETAILS;
     request.params.orderId = '1';
 
     const controller = new TribunalOrderOrRequestDetailsController();
     await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+      TranslationKeys.NOTIFICATION_DETAILS,
       expect.objectContaining({
         respondButton: true,
       })
@@ -87,14 +87,14 @@ describe('Respondent order or request details Controller', () => {
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ userCase }, translationJsons);
-    request.url = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+    request.url = PageUrls.NOTIFICATION_DETAILS;
     request.params.orderId = '1';
 
     const controller = new TribunalOrderOrRequestDetailsController();
     await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+      TranslationKeys.NOTIFICATION_DETAILS,
       expect.objectContaining({
         respondButton: false,
       })

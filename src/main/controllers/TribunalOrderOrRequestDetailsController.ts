@@ -27,7 +27,7 @@ export default class TribunalOrderOrRequestDetailsController {
       userCase.sendNotificationCollection,
       req.params.orderId
     );
-    req.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+    req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
@@ -54,18 +54,20 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.NOTIFICATION_SUBJECTS, { returnObjects: true }),
+      ...req.t(TranslationKeys.NOTIFICATION_DETAILS, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
-      TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+      TranslationKeys.NOTIFICATION_SUBJECTS,
+      TranslationKeys.NOTIFICATION_DETAILS,
     ]);
 
     const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);
 
-    res.render(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, {
+    res.render(TranslationKeys.NOTIFICATION_DETAILS, {
       ...content,
       respondButton,
       orderOrRequestContent: getTribunalOrderOrRequestDetails(translations, selectedRequestOrOrder, req.url),

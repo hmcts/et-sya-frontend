@@ -34,7 +34,7 @@
       "invalid": "Rhowch wlad ddilys ar gyfer cyfeiriad yr atebydd - hyd at 50 o lythrennau"
     },
     "respondentAddressPostcode": {
-      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "required": "Mae angen cod post. Rhowch god post. Er enghraifft, SW1 1AA",
       "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA"
     }
   }

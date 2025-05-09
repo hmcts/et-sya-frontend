@@ -7,6 +7,7 @@ import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
+import { formatNotificationSubjects } from './TribunalOrderOrRequestHelper';
 
 export const getCorrespondenceNotificationDetails = (
   translations: AnyRecord,
@@ -15,6 +16,10 @@ export const getCorrespondenceNotificationDetails = (
 ): SummaryListRow[] => {
   const generalCorrespondenceNotification = [];
   generalCorrespondenceNotification.push(
+    addSummaryRow(
+      translations.notificationSubject,
+      formatNotificationSubjects(item.value.sendNotificationSubject, translations)
+    ),
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
     addSummaryRow(translations.sentBy, translations.tribunal),
     addSummaryRow(translations.addInfo, item.value.sendNotificationAdditionalInfo)

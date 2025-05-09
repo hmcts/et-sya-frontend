@@ -32,6 +32,7 @@
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "date": "Date sent",
   "additionalInfo": "Additional information",
+  "notificationSubject": "Notification Subject",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Tell us if you also want to upload supporting material?"
