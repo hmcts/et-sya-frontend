@@ -146,10 +146,9 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('functionalTest:preview') {
-    stages {
-        stage('Performance Test - Load Config') {
-        steps {
-            script {
+        stage('Performance Test') {
+
+                 script {   
                     loadVaultSecrets(secrets) // Load Perf secrets
                     echo "Starting performance test stage..."
                     // Log details of the build
@@ -159,12 +158,8 @@ withPipeline(type, product, component) {
                     def config = load 'src/main/test/performance/config/config.groovy'
                     // Accessing the entitySelector from the config map
                     echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
-            }
-        }
-        }
-        stage('Performance Test - Send DT Event') {
-        steps {
-            script {
+                    }
+        
                     //Trigger Custom DT Event with Info:
                     def postDTEvent = httpRequest(
                     acceptType: 'APPLICATION_JSON',
@@ -190,10 +185,7 @@ withPipeline(type, product, component) {
                         }"""
                 )
                 echo "${env.postDTEvent}"
-            }
-        }
-        }
-
+            
         /// POST Metric to highlight a deployment
         def postDTMetric = httpRequest(
             acceptType: 'APPLICATION_JSON',
@@ -224,8 +216,10 @@ withPipeline(type, product, component) {
                     //  }
                 //  ]
             // }'
-    //    """
+        //    """
 
+      //stage('Performance Test - Send DT Metric') {
+        //steps {
         def triggerResponse = httpRequest(
             acceptType: 'APPLICATION_JSON',
             contentType: 'APPLICATION_JSON',
@@ -244,9 +238,12 @@ withPipeline(type, product, component) {
             }'''
         )
         echo "${env.triggerResponse}"
+    }
+  }
 
-            }
-          }
+            
+    
+    
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
