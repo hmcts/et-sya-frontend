@@ -34,7 +34,7 @@
       "invalid": "Enter a valid country for the respondent address - up to 50 characters"
     },
     "respondentAddressPostcode": {
-      "required": "Enter a postcode. For example, SW1 1AA",
+      "required": "Postcode is required. Enter a postcode. For example, SW1 1AA",
       "invalid": "Enter a valid postcode. For example, SW1 1AA"
     }
   }

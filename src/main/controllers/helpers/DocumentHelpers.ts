@@ -209,7 +209,7 @@ export const isSelectedAppResponseDocId = (
 
 export function isRequestDocId(req: AppRequest, docId: string): boolean {
   if (
-    req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS ||
+    req.session.documentDownloadPage === PageUrls.NOTIFICATION_DETAILS ||
     req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
   ) {
     const requestDoc = req.session?.userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
@@ -219,7 +219,7 @@ export function isRequestDocId(req: AppRequest, docId: string): boolean {
 }
 
 export function isRequestTribunalResponseDocId(req: AppRequest, docId: string): boolean {
-  if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+  if (req.session.documentDownloadPage === PageUrls.NOTIFICATION_DETAILS) {
     const requestResponseDoc =
       req.session?.userCase.selectedRequestOrOrder?.value.respondNotificationTypeCollection?.flatMap(notificationType =>
         notificationType.value.respondNotificationUploadDocument
@@ -236,7 +236,7 @@ export function isRequestTribunalResponseDocId(req: AppRequest, docId: string): 
 }
 
 export function isRequestResponseDocId(req: AppRequest, docId: string): boolean {
-  if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+  if (req.session.documentDownloadPage === PageUrls.NOTIFICATION_DETAILS) {
     const pseResponseList = [
       ...(req.session?.userCase.selectedRequestOrOrder?.value.respondCollection ?? []),
       ...(req.session?.userCase.selectedRequestOrOrder?.value.respondStoredCollection ?? []),

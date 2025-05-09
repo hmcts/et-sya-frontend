@@ -30,11 +30,8 @@ export default class ContactTheTribunalSelectedController {
       contactApplicationText: {
         id: 'Contact-Application-Text',
         type: 'textarea',
-        label: l => l.legend,
-        labelHidden: true,
-        labelSize: 'normal',
-        hint: l => l.contactApplicationText,
-        attributes: { title: 'Give details text area' },
+        label: l => l.contactApplicationText,
+        labelHidden: false,
       },
       inset: {
         id: 'inset',

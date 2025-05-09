@@ -1,5 +1,5 @@
 {
-  "title": "Gorchymyn neu gais tribiwnlys",
+  "title": "Hysbysiadau",
   "responder": "Ymateb gan",
   "hearing": "Gwrandawiad",
   "dateSent": "Dyddiad anfon",
@@ -29,5 +29,6 @@
   "copyCorrespondence": "Ydych chi eisiauanfon copi o’r ohebiaeth hon at yParti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
   "date": "Dyddiad anfon",
   "additionalInfo": "Gwybodaeth ychwanegol",
-  "No": "Na"
+  "No": "Na",
+  "notificationSubject": "Testun yr Hysbysiad"
 }

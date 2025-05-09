@@ -245,30 +245,32 @@
 {% endif %}
 
 {% if showOrderOrRequestReceived %}
-  {% for order in notifications %}
-    {% if order.showAlert %}
+    {% if showNotificationsBanner %}
       {% set htmlForOrderOrRequestReceived %}
-      <h3 class="govuk-notification-banner__heading">
-        {% if order.needsResponse %}
-          {{ notificationBanner.orderOrRequest.responseRequired }}
-        {% else %}
-          {{ notificationBanner.orderOrRequest.noResponseRequired }}
-        {% endif %}
-      </h3>
-      <p class="govuk-body">
-        {% if order.needsResponse %}
-          <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }}</a>
-        {% else %}
-          <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
-        {% endif %}
-      </p>
+        <h3 class="govuk-notification-banner__heading">
+          {% if order.needsResponse %}
+            {{ notificationBanner.orderOrRequest.responseRequired }}
+          {% else %}
+            {{ notificationBanner.orderOrRequest.noResponseRequired }}
+          {% endif %}
+        </h3>
+        {% for order in notifications %}
+          {% if order.showAlert %}
+            <p class="govuk-body">
+              {% if order.needsResponse %}
+                <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }}</a>
+              {% else %}
+                <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link + ' - ' + order.value.sendNotificationTitle}}</a>
+              {% endif %}
+            </p>
+          {% endif %}
+        {% endfor %}
       {% endset %}
       {{ govukNotificationBanner({
           html: htmlForOrderOrRequestReceived,
           titleText: important
         }) }}
     {% endif %}
-  {% endfor %}
 {% endif %}
 
 {% for app in storedPendingApplication %}
