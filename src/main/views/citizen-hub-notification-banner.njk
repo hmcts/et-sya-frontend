@@ -198,40 +198,9 @@
   }}
 {% endfor %}
 
-{% if showJudgmentReceived %}
-  {% for item in judgmentBannerContent %}
-    {% if item.value.notificationState !== 'viewed' %}
-      {% set htmlForJudgmentReceived %}
-      <h3 class="govuk-notification-banner__heading">
-        {{notificationBanner.judgment.header}}
-      </h3>
-      <h3 class="govuk-notification-banner__heading">
-        <a class="govuk-link" href="{{item.redirectUrl}}">{{notificationBanner.judgment.link}}</a>
-      </h3>
-      {% endset %}
-      {{ govukNotificationBanner({
-          html: htmlForJudgmentReceived,
-          titleText: important
-          }) }}
-    {% endif %}
-  {% endfor %}
-  {% for item in decisionBannerContent %}
-    {% set htmlForDecisionReceived %}
-    <h3 class="govuk-notification-banner__heading">
-      {{item.decisionBannerHeader}}
-    </h3>
-    <h3 class="govuk-notification-banner__heading">
-      <a class="govuk-link" href="{{item.redirectUrl}}">{{notificationBanner.decisionJudgment.link}}</a>
-    </h3>
-    {% endset %}
-    {{ govukNotificationBanner({
-          html: htmlForDecisionReceived,
-          titleText: important
-          }) }}
-  {% endfor %}
-{% endif %}
+{% include "citizen-hub-notification-banner/notifications-judgment.njk"%}
 
-{% include "citizen-hub-notification-banner/hearings.njk"%}
+{% include "citizen-hub-notification-banner/notifications-hearings.njk"%}
 
 {% include "citizen-hub-notification-banner/notifications.njk"%}
 
@@ -249,22 +218,7 @@
   }}
 {% endfor %}
 
-{% for notification in eccNotifications %}
-  {% if notification.showAlert %}
-    {% set htmlForEcc %}
-      <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.ecc.title + notification.value.sendNotificationTitle }}
-      </h3>
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ notification.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
-      </p>
-    {% endset %}
-  {{ govukNotificationBanner({
-      html: htmlForEcc,
-      titleText: important
-    }) }}
-  {% endif %}
-{% endfor %}
+{% include "citizen-hub-notification-banner/notifications-ecc.njk"%}
 
 {% for item in claimantTribunalResponseBannerContent %}
   {% set claimantTribunalResponseHtml %}
