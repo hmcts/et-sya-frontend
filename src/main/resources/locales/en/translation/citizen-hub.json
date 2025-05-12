@@ -88,7 +88,7 @@
     "orderOrRequest": {
       "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",
-      "link": "View the notification",
+      "view": "View the notification",
       "respond": "Respond to the tribunal"
     },
     "judgment": {
