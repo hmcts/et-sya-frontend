@@ -158,7 +158,7 @@ withPipeline(type, product, component) {
         echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
         //Check token:
         echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
-        echo "API Host: ${env.dynatraceApiHost}"
+        echo "API Host: ${dynatraceApiHost}"
         // try {
             // def config = load 'src/test/performance/config/config.groovy'
             // echo "Loaded Config Succesfully.."
