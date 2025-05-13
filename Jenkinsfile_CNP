@@ -183,6 +183,7 @@ withPipeline(type, product, component) {
         //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
         //Trigger Custom DT Event with Info:
+        try {
         def postDTEvent = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
@@ -205,7 +206,10 @@ withPipeline(type, product, component) {
             "timeout": 1,
             "title": "ET-SYA-Frontend Performance Event"
             }"""
-        )
+        ) }
+        catch (Exception e) {
+        echo "Error while sending Request: ${e.message}"
+        }
         echo "${env.postDTEvent}"
             
         /// POST Metric to highlight a deployment
