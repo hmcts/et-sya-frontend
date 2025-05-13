@@ -1,3 +1,5 @@
+return [
+
 //Static vars
 def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/api/"
 def dynatraceEventIngestEndpoint = "/v2/events/ingest"
@@ -20,4 +22,17 @@ eventIngestDetails: [
     timeout: 1,
     title: "ET-SYA-Frontend Performance Event",
     entitySelector: "${entitySelector}"
+]
+
+
+ // Print the loaded config
+ echo "INSIDE CONFIG: Dynatrace API URL: ${env.dynatraceApiHost}"
+ //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+ //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+ //Load Config
+ //def config = load '.\src\test\performance\config\config.groovy'
+ // Accessing the entitySelector from the config map
+ echo "INSIDE CONFIG: Entity Selector: ${env.eventIngestDetails.entitySelector}"
+
+
 ]
