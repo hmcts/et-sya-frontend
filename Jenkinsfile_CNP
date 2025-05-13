@@ -191,7 +191,7 @@ withPipeline(type, product, component) {
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}${dynatraceEventIngestEndpoint}",
+        url: "${dynatraceApiHost}api/v2/events/ingest",
         requestBody: """{
             "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
             "eventType": "CUSTOM_INFO",
