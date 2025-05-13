@@ -17,12 +17,12 @@ dynatraceEventIngestEndpoint = "/v2/events/ingest"
     // // 'Content-Type': 'application/json'
 // // ],
 
-eventIngestDetails: [
-    eventType: "CUSTOM_INFO",
-    timeout: 1,
-    title: "ET-SYA-Frontend Performance Event",
-    entitySelector: "${entitySelector}"
-]
+// eventIngestDetails: [
+    // eventType: "CUSTOM_INFO",
+    // timeout: 1,
+    // title: "ET-SYA-Frontend Performance Event",
+    // entitySelector: "${entitySelector}"
+// ]
 
 
  // Print the loaded config
@@ -32,7 +32,7 @@ eventIngestDetails: [
  //Load Config
  //def config = load '.\src\test\performance\config\config.groovy'
  // Accessing the entitySelector from the config map
- echo "INSIDE CONFIG: Entity Selector: ${env.eventIngestDetails.entitySelector}"
+ echo "INSIDE CONFIG: Entity Selector: ${env.dynatraceEventIngestEndpoint}"
 
 
 ]
