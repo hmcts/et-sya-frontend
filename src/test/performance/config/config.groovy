@@ -25,14 +25,14 @@ dynatraceEventIngestEndpoint = "/v2/events/ingest"
 // ]
 
 
- // Print the loaded config
- echo "INSIDE CONFIG: Dynatrace API URL: ${env.dynatraceApiHost}"
- //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
- //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
- //Load Config
- //def config = load '.\src\test\performance\config\config.groovy'
- // Accessing the entitySelector from the config map
- echo "INSIDE CONFIG: Entity Selector: ${env.dynatraceEventIngestEndpoint}"
+//  // Print the loaded config
+//  echo "INSIDE CONFIG: Dynatrace API URL: ${env.dynatraceApiHost}"
+//  //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+//  //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+//  //Load Config
+//  //def config = load '.\src\test\performance\config\config.groovy'
+//  // Accessing the entitySelector from the config map
+//  echo "INSIDE CONFIG: Entity Selector: ${env.dynatraceEventIngestEndpoint}"
 
 
 ]
