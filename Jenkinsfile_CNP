@@ -11,7 +11,7 @@ def component = "sya"
 def branchesToSync = ['demo', 'ithc']
 
 //Perf Vars
-def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/api/"
+//def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/api/"
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
@@ -159,15 +159,15 @@ withPipeline(type, product, component) {
         //Check token:
         echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
         echo "API Host: ${dynatraceApiHost}"
-        // try {
-            // def config = load 'src/test/performance/config/config.groovy'
-            // echo "Loaded Config Succesfully.."
-        // } catch (Exception e) {
-            // echo "Error while loading the config file: ${e.message}"
-        // }
+        try {
+            def config = load 'src/test/performance/config/config.groovy'
+            echo "Loaded Config Succesfully.."
+        } catch (Exception e) {
+            echo "Error while loading the config file: ${e.message}"
+        }
         
         // Print the loaded config
-        // echo "Dynatrace API URL: ${config.dynatraceApiHost}"
+         echo "Dynatrace API URL: ${config.dynatraceApiHost}"
         //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
         //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
