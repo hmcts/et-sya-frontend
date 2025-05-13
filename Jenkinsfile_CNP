@@ -151,31 +151,30 @@ withPipeline(type, product, component) {
 
   afterAlways('functionalTest:preview') {
     stage('Performance Test') {
-        script {   
-            loadVaultSecrets(secrets) // Load Perf secrets
-            echo "Starting performance test stage..."
-            // Log details of the build
-            echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
-            //Check token:
-            echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
-            echo "API Host: ${env.dynatraceApiHost}"
-            // try {
-                // def config = load 'src/test/performance/config/config.groovy'
-                // echo "Loaded Config Succesfully.."
-            // } catch (Exception e) {
-                // echo "Error while loading the config file: ${e.message}"
-            // }
-            
-            // Print the loaded config
-           // echo "Dynatrace API URL: ${config.dynatraceApiHost}"
-            //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
-            //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
-            //Load Config
-            //def config = load '.\src\test\performance\config\config.groovy'
-            // Accessing the entitySelector from the config map
-            //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
-        }
+        loadVaultSecrets(secrets) // Load Perf secrets
+        echo "Starting performance test stage..."
+        // Log details of the build
+        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+        //Check token:
+        echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+        echo "API Host: ${env.dynatraceApiHost}"
+        // try {
+            // def config = load 'src/test/performance/config/config.groovy'
+            // echo "Loaded Config Succesfully.."
+        // } catch (Exception e) {
+            // echo "Error while loading the config file: ${e.message}"
+        // }
+        
+        // Print the loaded config
+        // echo "Dynatrace API URL: ${config.dynatraceApiHost}"
+        //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+        //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+
+        //Load Config
+        //def config = load '.\src\test\performance\config\config.groovy'
+        // Accessing the entitySelector from the config map
+        //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
         //Trigger Custom DT Event with Info:
         def postDTEvent = httpRequest(
@@ -200,8 +199,8 @@ withPipeline(type, product, component) {
             "timeout": 1,
             "title": "ET-SYA-Frontend Performance Event"
             }"""
-    )
-    echo "${env.postDTEvent}"
+        )
+        echo "${env.postDTEvent}"
             
         /// POST Metric to highlight a deployment
         def postDTMetric = httpRequest(
