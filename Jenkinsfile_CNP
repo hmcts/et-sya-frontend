@@ -164,7 +164,7 @@ withPipeline(type, product, component) {
         } catch (Exception e) {
             echo "Error while loading the config file: ${e.message}"
         }
-        echo "API Host: ${dynatraceApiHost}"
+        echo "API Host: ${config.dynatraceApiHost}"
         
         // Print the loaded config
         // echo "Dynatrace API URL: ${config.dynatraceApiHost}"
