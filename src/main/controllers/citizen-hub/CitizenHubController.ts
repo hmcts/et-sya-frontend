@@ -202,6 +202,7 @@ export default class CitizenHubController {
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
+      showNotificationsBanner: notifications?.some(notification => notification.showAlert),
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
       storedPendingApplication: getStoredPendingBannerList(

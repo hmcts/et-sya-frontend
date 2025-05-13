@@ -97,11 +97,13 @@ export default class TribunalRespondToOrderController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.NOTIFICATION_SUBJECTS, { returnObjects: true }),
     };
 
     const content = getPageContent(req, this.respondToTribunalOrder, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
+      TranslationKeys.NOTIFICATION_SUBJECTS,
       TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER,
     ]);
 

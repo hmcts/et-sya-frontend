@@ -42,12 +42,14 @@ export default class GeneralCorrespondenceNotificationDetailsController {
     }
 
     const translations: AnyRecord = {
+      ...req.t(TranslationKeys.NOTIFICATION_SUBJECTS, { returnObjects: true }),
       ...req.t(TranslationKeys.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
+      TranslationKeys.NOTIFICATION_SUBJECTS,
       TranslationKeys.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
     ]);
     const welshEnabled = await getFlagValue('welsh-language', null);

@@ -42,6 +42,10 @@ export const getTribunalOrderOrRequestDetails = (
   }
 
   respondentRequestOrOrderDetails.push(
+    addSummaryRow(
+      translations.notificationSubject,
+      formatNotificationSubjects(item.value.sendNotificationSubject, translations)
+    ),
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
     addSummaryRow(translations.sentBy, translations.tribunal)
   );
@@ -105,7 +109,7 @@ export const getRedirectUrlForNotification = (
     );
   }
 
-  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+  let pageUrl: string = PageUrls.NOTIFICATION_DETAILS;
   if (responseRequired) {
     pageUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER;
   }
@@ -197,16 +201,11 @@ export const activateTribunalOrdersAndRequestsLink = async (
   if (eccFlag) {
     notices = items.filter(
       notice =>
-        (notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-          notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
+        notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY ||
         notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
     );
   } else {
-    notices = items.filter(
-      notice =>
-        notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-        notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
-    );
+    notices = items.filter(notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY);
   }
 
   if (!notices?.length) {
@@ -227,12 +226,7 @@ export const activateTribunalOrdersAndRequestsLink = async (
 };
 
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  return items?.filter(
-    it =>
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) ||
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE) ||
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
-  );
+  return items?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
 };
 
 export const filterECCNotifications = async (
@@ -445,7 +439,7 @@ export const getClaimantTribunalResponseBannerContent = (
             response.value.from === Applicant.CLAIMANT && response.value.responseState !== HubLinkStatus.VIEWED
         )
         .map(response => ({
-          redirectUrl: `/tribunal-order-or-request-details/${notification.id}${languageParam}`,
+          redirectUrl: `/notification-details/${notification.id}${languageParam}`,
           copyToOtherParty: response.value.copyToOtherParty,
         })) ?? []
   );
@@ -460,16 +454,12 @@ export async function getSendNotifications(
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
   if (eccFlag) {
     notifications = sendNotificationCollection?.filter(
-      it =>
-        (it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-          it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
-        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+      it => it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
     );
   } else {
     notifications = sendNotificationCollection?.filter(
       it =>
         it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
         !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
     );
   }
@@ -486,7 +476,7 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
   return storedRespond
     ? PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', storedRespond.id) +
         languageParam
-    : PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', item.id) + languageParam;
+    : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
 const sortResponsesByDate = (
@@ -521,4 +511,8 @@ export function determineRedirectUrl(req: AppRequest, selectedRequestOrOrder: Se
     return PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url);
   }
   return copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);
+}
+
+export function formatNotificationSubjects(keys: string[] = [], translations: AnyRecord): string {
+  return keys.map(key => translations[key] || key).join(', ');
 }
