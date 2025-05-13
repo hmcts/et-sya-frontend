@@ -4,18 +4,18 @@ return [
 dynatraceApiHost = "https://yrk32651.live.dynatrace.com/api/"
 dynatraceEventIngestEndpoint = "/v2/events/ingest"
 
-//Vars for eventIngest
-def serviceType = "type(service)"
-def kubernetesNamespaceTag = "[Kubernetes]namespace:et"
-def environmentTag = "Environment:PERF"
-def entityId = "SERVICE-894163B308FBDD78"
+// //Vars for eventIngest
+// def serviceType = "type(service)"
+// def kubernetesNamespaceTag = "[Kubernetes]namespace:et"
+// def environmentTag = "Environment:PERF"
+// def entityId = "SERVICE-894163B308FBDD78"
 
-def entitySelector = "${serviceType},tag(\"${kubernetesNamespaceTag}\"),tag(\"${environmentTag}\"),entityId(\"${entityId}\")"
+// def entitySelector = "${serviceType},tag(\"${kubernetesNamespaceTag}\"),tag(\"${environmentTag}\"),entityId(\"${entityId}\")"
 
-//Object Maps
-// commonHeaders: [
-    // 'Content-Type': 'application/json'
-// ],
+// //Object Maps
+// // commonHeaders: [
+    // // 'Content-Type': 'application/json'
+// // ],
 
 eventIngestDetails: [
     eventType: "CUSTOM_INFO",
