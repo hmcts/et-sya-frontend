@@ -9,6 +9,7 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 def branchesToSync = ['demo', 'ithc']
+
 //Perf Vars
 def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/api/"
 
