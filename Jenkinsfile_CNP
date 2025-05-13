@@ -163,14 +163,14 @@ withPipeline(type, product, component) {
             }
             
             // Print the loaded config
-            echo "Dynatrace API URL: ${env.config.dynatraceApiHost}"
+            echo "Dynatrace API URL: ${env.dynatraceApiHost}"
             //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
             //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
             //Load Config
             //def config = load '.\src\test\performance\config\config.groovy'
             // Accessing the entitySelector from the config map
-            echo "Entity Selector: ${env.config.eventIngestDetails.entitySelector}"
+            echo "Entity Selector: ${env.eventIngestDetails.entitySelector}"
         }
 
         //Trigger Custom DT Event with Info:
