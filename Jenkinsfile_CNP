@@ -162,41 +162,45 @@ withPipeline(type, product, component) {
             }
             
             // Print the loaded config
+            try {
             echo "Dynatrace API URL: ${config.dynatraceApiHost}"
-            echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
-            echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+            //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+            //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+            } catch (Exception e) {
+                     echo "Error while outputting tokens: ${e.message}"
+            }
 
             //Load Config
             //def config = load '.\src\test\performance\config\config.groovy'
             // Accessing the entitySelector from the config map
             echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
         }
-        
-                    //Trigger Custom DT Event with Info:
-                    def postDTEvent = httpRequest(
-                    acceptType: 'APPLICATION_JSON',
-                    contentType: 'APPLICATION_JSON',
-                    httpMode: 'POST',
-                    quiet: true,
-                    customHeaders: [
-                        [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
-                    ],
-                    url: "${dynatraceApiHost}${dynatraceEventIngestEndpoint}", //https://yrk32651.live.dynatrace.com/api/v2/events/ingest
-                    requestBody: """{
-                        "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
-                        "eventType": "CUSTOM_INFO",
-                        "properties": {
-                                "Workspace": "${env.WORKSPACE}",
-                                "Branch": "${env.BRANCH_NAME}",
-                                "Build Number": "${env.BUILD_NUMBER}",
-                                "Synthetic Performance Test": "SYNTHETIC_TEST-008CAF328F244320",
-                                "Performance Dashboard": "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
-                        },
-                        "timeout": 1,
-                        "title": "ET-SYA-Frontend Performance Event"
-                        }"""
-                )
-                echo "${env.postDTEvent}"
+
+        //Trigger Custom DT Event with Info:
+        def postDTEvent = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'POST',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}${dynatraceEventIngestEndpoint}", //https://yrk32651.live.dynatrace.com/api/v2/events/ingest
+        requestBody: """{
+            "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
+            "eventType": "CUSTOM_INFO",
+            "properties": {
+                    "Workspace": "${env.WORKSPACE}",
+                    "Branch": "${env.BRANCH_NAME}",
+                    "Build Number": "${env.BUILD_NUMBER}",
+                    "Synthetic Performance Test": "SYNTHETIC_TEST-008CAF328F244320",
+                    "Performance Dashboard": "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
+            },
+            "timeout": 1,
+            "title": "ET-SYA-Frontend Performance Event"
+            }"""
+    )
+    echo "${env.postDTEvent}"
             
         /// POST Metric to highlight a deployment
         def postDTMetric = httpRequest(
