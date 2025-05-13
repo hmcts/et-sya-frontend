@@ -153,6 +153,11 @@ withPipeline(type, product, component) {
 
         //Perf Vars
         def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
+        def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
+        def dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
+        def dynatraceTriggerSynthticEndpoint = "api/v2/synthetic/executions/batch"
+        def dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
+        def dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
 
         echo "Starting performance test stage..."
         // Log details of the build
@@ -186,7 +191,7 @@ withPipeline(type, product, component) {
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}api/v2/events/ingest",
+        url: "${dynatraceApiHost}${dynatraceEventIngestEndpoint}",
         requestBody: """{
             "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
             "eventType": "CUSTOM_INFO",
@@ -194,8 +199,8 @@ withPipeline(type, product, component) {
                     "Workspace": "${env.WORKSPACE}",
                     "Branch": "${env.BRANCH_NAME}",
                     "Build Number": "${env.BUILD_NUMBER}",
-                    "Synthetic Performance Test": "SYNTHETIC_TEST-008CAF328F244320",
-                    "Performance Dashboard": "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
+                    "Synthetic Performance Test": "${dynatraceSyntheticTestPerfTest}",
+                    "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
             },
             "timeout": 1,
             "title": "ET-SYA-Frontend Performance Event"
@@ -212,31 +217,12 @@ withPipeline(type, product, component) {
             customHeaders: [
                 [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
             ],
-            url: 'https://yrk32651.live.dynatrace.com/api/v2/metrics/ingest',
+            url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
             requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
         )
         echo "${env.postDTMetric}"
 
-        //def perfSynthMonitorToken = "${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
         //Trigger Dynatrace Synthetic Test
-
-        // sh """
-        //  curl -X POST \\
-        //    'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch' \\
-        //    -H 'Accept: application/json' \\
-        //    -H 'Content-Type: application/json' \\
-        //    -H "Authorization: Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}" \\
-        //    -d '{
-                //  "monitors": [
-                    //  {
-                        //  "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-                    //  }
-                //  ]
-            // }'
-        //    """
-
-      //stage('Performance Test - Send DT Metric') {
-        //steps {
         def triggerResponse = httpRequest(
             acceptType: 'APPLICATION_JSON',
             contentType: 'APPLICATION_JSON',
@@ -245,14 +231,14 @@ withPipeline(type, product, component) {
             customHeaders: [
                 [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
             ],
-            url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch',
-            requestBody: '''{
+            url: "${dynatraceApiHost}${dynatraceTriggerSynthticEndpoint}",
+            requestBody: """{
                 "monitors": [
                     {
-                        "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+                        "monitorId": "${dynatraceSyntheticTestPerfTest}"
                     }
                 ]
-            }'''
+            }"""
         )
         echo "${env.triggerResponse}"
     }
