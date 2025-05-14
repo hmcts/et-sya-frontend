@@ -151,7 +151,7 @@ withPipeline(type, product, component) {
 
         loadVaultSecrets(secrets) // Load Perf secrets
 
-        echo "DT API Host config.var = ${config.dynatraceApiHost}"
+        //echo "DT API Host config.var = ${config.dynatraceApiHost}"
 
         //Perf Vars (*Need to add to config file)
         def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
@@ -262,6 +262,10 @@ withPipeline(type, product, component) {
         }
         echo "${env.triggerResponse}"
     }
+
+      echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
+      sleep 300 // seconds
+
   }
 
             
