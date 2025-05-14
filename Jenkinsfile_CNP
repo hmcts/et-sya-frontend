@@ -12,7 +12,7 @@ def branchesToSync = ['perftest']
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 def secrets = [
-    'et-${env}': [
+    "${product}-${environment()}": [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
         secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
@@ -20,19 +20,19 @@ def secrets = [
 ]
 
 def inTestTrue = [
-    'et-${env}': [
+    "${product}-${environment()}": [
         secret('true', 'IN_TEST')
     ]
 ]
 
 def inTestFalse = [
-    'et-${env}': [
+    "${product}-${environment()}": [
         secret('', 'IN_TEST')
     ]
 ]
 
 def perfSecrets = [
-    'et-${env}': [
+    "${product}-${environment()}": [
         secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
     ]
 ]
@@ -40,6 +40,8 @@ def perfSecrets = [
 def vaultOverrides = [
   'perftest': 'aat'
 ]
+
+sh 'echo "PERF_SYNTHETIC_MONITOR_TOKEN=$PERF_SYNTHETIC_MONITOR_TOKEN"'
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
