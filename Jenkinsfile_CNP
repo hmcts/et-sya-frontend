@@ -151,6 +151,8 @@ withPipeline(type, product, component) {
 
         loadVaultSecrets(secrets) // Load Perf secrets
 
+        echo "DT API Host env.var = ${env.dynatraceApiHost}"
+
         //Perf Vars (*Need to add to config file)
         def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
         def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
