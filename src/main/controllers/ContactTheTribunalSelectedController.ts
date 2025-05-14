@@ -122,6 +122,9 @@ export default class ContactTheTribunalSelectedController {
       } catch (error) {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
+        return res.redirect(
+          PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+        );
       }
     }
     req.session.errors = [];

@@ -239,7 +239,9 @@ describe('Contact Application Controller', () => {
       });
       req.params.selectedOption = 'withdraw';
       const res = mockResponse();
+
       await new ContactTheTribunalSelectedController().post(req, res);
+
       expect(req.session.userCase.contactApplicationFile).toBeUndefined();
       expect(res.redirect).toHaveBeenCalledWith('/contact-the-tribunal/withdraw?lng=en');
     });
@@ -291,6 +293,31 @@ describe('Contact Application Controller', () => {
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
+    });
+  });
+
+  describe('getHint', () => {
+    let controller: ContactTheTribunalSelectedController;
+    beforeEach(() => {
+      controller = new ContactTheTribunalSelectedController();
+    });
+
+    it('should return the formatted hint with filename when uploadedFileName is set', () => {
+      controller['uploadedFileName'] = 'document.pdf';
+      const result = controller['getHint'](translationJsons);
+      expect(result).toBe('You have previously uploaded: document.pdf');
+    });
+
+    it('should return empty string when uploadedFileName is empty', () => {
+      controller['uploadedFileName'] = '';
+      const result = controller['getHint'](translationJsons);
+      expect(result).toBe('');
+    });
+
+    it('should return empty string when uploadedFileName is undefined', () => {
+      controller['uploadedFileName'] = undefined;
+      const result = controller['getHint'](translationJsons);
+      expect(result).toBe('');
     });
   });
 });
