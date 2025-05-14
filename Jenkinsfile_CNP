@@ -41,8 +41,6 @@ def vaultOverrides = [
   'perftest': 'aat'
 ]
 
-sh 'echo "PERF_SYNTHETIC_MONITOR_TOKEN=$PERF_SYNTHETIC_MONITOR_TOKEN"'
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -176,6 +174,8 @@ afterSuccess('buildinfra:perftest') {
         //debug
         echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
 
+        sh 'echo "PERF_SYNTHETIC_MONITOR_TOKEN=$PERF_SYNTHETIC_MONITOR_TOKEN"'
+        
         //Submit Dynatrace Event - Build details, PR etc.
         
 
