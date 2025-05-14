@@ -152,9 +152,9 @@ withPipeline(type, product, component) {
 // Performance test stages wip [Perftest]
 afterSuccess('buildinfra:perftest') {
     withAzureKeyvault(
-        vaultSecrets: secrets["${product}-${environment()}"],
-        keyVaultName: "et-${environment()}",
-        secretsFilter: ''
+        credentialsId: 'azure-service-principal',
+        keyVaultURL: "https://et-${environment()}.vault.azure.net/",
+        secrets: [[secretType: 'Secret', name: 'perf-synthetic-monitor-token', envVariable: 'PERF_SYNTHETIC_MONITOR_TOKEN']]
     ) {
         node {
             stage("Performance Test") {
@@ -168,11 +168,10 @@ afterSuccess('buildinfra:perftest') {
                 echo "Starting performance test stage..."
                 echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
 
-                // Debug token (will be masked if secrets are set properly)
+                // Debug token (masked in logs if correctly injected)
                 echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
                 sh 'echo "PERF_SYNTHETIC_MONITOR_TOKEN=$PERF_SYNTHETIC_MONITOR_TOKEN"'
 
-                // Trigger Dynatrace Synthetic Test
                 def triggerResponse = httpRequest(
                     acceptType: 'APPLICATION_JSON',
                     contentType: 'APPLICATION_JSON',
@@ -192,8 +191,6 @@ afterSuccess('buildinfra:perftest') {
                 )
 
                 echo "${triggerResponse}"
-
-                // Trigger Gatling Test (placeholder)
             }
         }
     }
