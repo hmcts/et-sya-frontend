@@ -154,7 +154,12 @@ afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
 
         overrideVaultEnvironments(vaultOverrides)
-        loadVaultSecrets(secrets) // Load secrets
+        try{
+        loadVaultSecrets(secrets)
+         }
+         catch (Exception e) {
+            echo "Error loading vault: $e"
+         } // Load secrets
         //loadVaultSecrets(perfSecrets) // Load Perf secrets
 
         echo "Starting performance test stage..."
