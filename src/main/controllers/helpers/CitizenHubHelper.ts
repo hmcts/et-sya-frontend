@@ -7,6 +7,7 @@ import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions
 import { StoreNotification } from '../../definitions/storeNotification';
 
 import { isHearingExist } from './HearingHelpers';
+import { isET3Accepted } from './RespondentContactDetailsHelper';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (isHearingExist(userCase.hearingCollection)) {
@@ -33,6 +34,10 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
   ) {
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
+
+  hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = userCase.respondents?.some(r => isET3Accepted(r))
+    ? HubLinkStatus.READY_TO_VIEW
+    : HubLinkStatus.NOT_YET_AVAILABLE;
 };
 
 export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
@@ -257,6 +262,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
+    [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
     [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
     [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + baseUrls[languageParam]],
