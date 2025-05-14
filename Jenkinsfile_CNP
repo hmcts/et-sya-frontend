@@ -151,7 +151,7 @@ withPipeline(type, product, component) {
 
         loadVaultSecrets(secrets) // Load Perf secrets
 
-        //Perf Vars
+        //Perf Vars (*Need to add to config file)
         def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
         def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
         def dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
@@ -182,7 +182,9 @@ withPipeline(type, product, component) {
         // Accessing the entitySelector from the config map
         //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
+        //==========================================
         //Trigger Custom DT Event with Info:
+        //==========================================
         try {
         def postDTEvent = httpRequest(
         acceptType: 'APPLICATION_JSON',
@@ -212,7 +214,10 @@ withPipeline(type, product, component) {
         }
         echo "${env.postDTEvent}"
             
+        //==========================================    
         /// POST Metric to highlight a deployment
+        //==========================================
+        try {
         def postDTMetric = httpRequest(
             acceptType: 'APPLICATION_JSON',
             contentType: 'TEXT_PLAIN',
@@ -223,10 +228,16 @@ withPipeline(type, product, component) {
             ],
             url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
             requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
-        )
+        ) }
+        catch (Exception e) {
+            echo "Error while sending Request: ${e.message}"
+        }
         echo "${env.postDTMetric}"
 
+        //==========================================   
         //Trigger Dynatrace Synthetic Test
+        //==========================================
+        try {
         def triggerResponse = httpRequest(
             acceptType: 'APPLICATION_JSON',
             contentType: 'APPLICATION_JSON',
@@ -243,7 +254,10 @@ withPipeline(type, product, component) {
                     }
                 ]
             }"""
-        )
+        ) }
+        catch (Exception e) {
+            echo "Error while sending Request: ${e.message}"
+        }
         echo "${env.triggerResponse}"
     }
   }
