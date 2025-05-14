@@ -23,6 +23,15 @@ const logger = getLogger('ContactTheTribunalSelectedController');
  * Controller for any contact-the-tribunal application page
  */
 export default class ContactTheTribunalSelectedController {
+  private uploadedFileName = '';
+  private getHint = (label: AnyRecord): string => {
+    if (this.uploadedFileName && this.uploadedFileName !== '') {
+      return (label.contactApplicationFile.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
+    } else {
+      return '';
+    }
+  };
+
   private readonly form: Form;
   private readonly contactApplicationContent: FormContent = {
     fields: {
@@ -35,8 +44,17 @@ export default class ContactTheTribunalSelectedController {
       contactApplicationFile: {
         type: 'upload',
         id: 'contactApplicationFile',
-        label: l => l.fileUpload.title,
         classes: 'govuk-label',
+        label: l => l.contactApplicationFile.title,
+        hint: (l: AnyRecord) => this.getHint(l),
+      },
+      remove: {
+        label: (l: AnyRecord): string => l.contactApplicationFile.removeButton,
+        classes: 'govuk-button--secondary',
+        type: 'button',
+        id: 'remove',
+        name: 'remove',
+        value: 'true',
       },
     },
     submit: {
@@ -65,6 +83,15 @@ export default class ContactTheTribunalSelectedController {
       logger.info('bad request parameter: "' + selectedOption + '"');
       res.redirect(ErrorPages.NOT_FOUND + languageParam);
       return;
+    }
+
+    if (req.body?.remove) {
+      if (req.session?.userCase?.contactApplicationFile) {
+        req.session.userCase.contactApplicationFile = undefined;
+      }
+      return res.redirect(
+        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+      );
     }
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -124,6 +151,8 @@ export default class ContactTheTribunalSelectedController {
       clearTseFields(userCase);
       userCase.contactApplicationType = selectedApplication;
     }
+
+    this.uploadedFileName = userCase?.contactApplicationFile?.document_filename;
 
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,

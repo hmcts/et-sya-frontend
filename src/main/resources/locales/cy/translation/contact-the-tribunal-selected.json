@@ -6,8 +6,10 @@
   "genericGuidanceItem1": "Os ydych yn tynnu llun o lythyr, rhowch ef ar arwyneb gwastad a thynnwch y llun o uchder",
   "genericGuidanceItem2": "Os ydych yn llwytho dogfennau ysgrifenedig gyda newidiadau wedi’u marcio, gwnewch yn siŵr bod y nodwedd hon ymlaen ar eich cyfrifiadur",
   "genericGuidanceItem3": "Gallwch wneud mwy nag un cais ar yr un pryd drwy lenwi ffurflen wahanol ar gyfer pob cais. Os yw’r ceisiadau’n gysylltiedig â’i gilydd, gallwch wneud hynny'n glir yn y blwch testun",
-  "fileUpload": {
-    "title": "Llwytho ffeil"
+  "contactApplicationFile": {
+    "title": "Llwytho ffeil",
+    "hintExisting": "Rydych chi wedi uwchlwytho'n flaenorol: {{filename}}",
+    "removeButton": "Dileu ffeil"
   },
   "errors": {
     "contactApplicationText": {
