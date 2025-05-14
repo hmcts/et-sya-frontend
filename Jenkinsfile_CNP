@@ -35,6 +35,10 @@ def perfSecrets = [
         secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
     ]
 ]
+//Add vault override
+def vaultOverrides = [
+  'perftest': 'aat'
+]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
@@ -147,7 +151,10 @@ withPipeline(type, product, component) {
 // Performance test stages wip [Perftest]
 afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
-        loadVaultSecrets(perfSecrets) // Load Perf secrets
+
+        overrideVaultEnvironments(vaultOverrides)
+        loadVaultSecrets(secrets) // Load secrets
+        //loadVaultSecrets(perfSecrets) // Load Perf secrets
 
         echo "Starting performance test stage..."
         // Log details of the build
