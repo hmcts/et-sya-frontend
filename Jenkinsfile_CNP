@@ -153,12 +153,17 @@ withPipeline(type, product, component) {
 afterSuccess('buildinfra:perftest') {
     stage("Performance Test") {
 
+        try {
         overrideVaultEnvironments(vaultOverrides)
+        }
+        catch (Exception e) {
+        echo "Error overriding Keyvault: ${e.message}"
+        }
         try{
         loadVaultSecrets(secrets)
          }
          catch (Exception e) {
-            echo "Error loading vault: $e"
+            echo "Error loading Keyvault: ${e.message}"
          } // Load secrets
         //loadVaultSecrets(perfSecrets) // Load Perf secrets
 
