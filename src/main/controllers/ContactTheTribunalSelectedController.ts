@@ -56,20 +56,19 @@ export default class ContactTheTribunalSelectedController {
     }
 
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
 
     userCase.contactApplicationText = req.body.contactApplicationText;
 
     const selectedOption = applications.find(appType => appType === req.params.selectedOption);
     if (!selectedOption) {
       logger.info('bad request parameter: "' + selectedOption + '"');
-      res.redirect(setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND));
+      res.redirect(ErrorPages.NOT_FOUND + languageParam);
       return;
     }
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-
     req.session.errors = [];
-
     const contactApplicationError = getFileUploadAndTextAreaError(
       formData.contactApplicationText,
       req.file,
@@ -79,13 +78,11 @@ export default class ContactTheTribunalSelectedController {
       'contactApplicationFile',
       logger
     );
+
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
       return res.redirect(
-        setUrlLanguageFromSessionLanguage(
-          req,
-          PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption)
-        )
+        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
       );
     }
 
@@ -100,22 +97,25 @@ export default class ContactTheTribunalSelectedController {
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
     }
-
     req.session.errors = [];
 
     const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : copyToOtherPartyRedirectUrl(req.session.userCase);
-    return res.redirect(setUrlLanguageFromSessionLanguage(req, redirectPage));
+
+    const redirectUrl = setUrlLanguageFromSessionLanguage(req, redirectPage);
+
+    return res.redirect(redirectUrl);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
+    const languageParam = getLanguageParam(req.url);
     req.session.contactType = Rule92Types.CONTACT;
-
     const selectedApplication = req.params.selectedOption;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');
-      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + getLanguageParam(req.url));
+      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + languageParam);
       return;
     }
 
@@ -144,7 +144,7 @@ export default class ContactTheTribunalSelectedController {
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       errorMessage: getFileErrorMessage(req.session.errors, translations.errors.contactApplicationFile),
       ...content,
-      welshEnabled: await getFlagValue('welsh-language', null),
+      welshEnabled,
     });
   };
 }
