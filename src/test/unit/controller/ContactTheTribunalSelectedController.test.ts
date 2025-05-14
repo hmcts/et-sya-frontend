@@ -231,6 +231,18 @@ describe('Contact Application Controller', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
     });
+
+    it('should remove uploaded file when remove button is clicked', async () => {
+      const req = mockRequest({
+        body: { remove: 'true' },
+        session: { userCase: { contactApplicationFile: { document_filename: 'test.pdf' } } },
+      });
+      req.params.selectedOption = 'withdraw';
+      const res = mockResponse();
+      await new ContactTheTribunalSelectedController().post(req, res);
+      expect(req.session.userCase.contactApplicationFile).toBeUndefined();
+      expect(res.redirect).toHaveBeenCalledWith('/contact-the-tribunal/withdraw?lng=en');
+    });
   });
 
   describe('Correct validation', () => {
