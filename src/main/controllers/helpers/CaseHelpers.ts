@@ -239,7 +239,7 @@ export const handlePostLogic = async (
   redirectUrl: string
 ): Promise<void> => {
   setUserCase(req, form);
-  await postLogic(req, res, form, logger, redirectUrl);
+  await postLogic(req, res, form, logger, redirectUrl, false);
 };
 
 export const handlePostLogicForRespondent = async (
@@ -265,13 +265,13 @@ export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Fo
   }
 };
 
-export const postLogic = async (
+const postLogic = async (
   req: AppRequest,
   res: Response,
   form: Form,
   logger: LoggerInstance,
   redirectUrl: string,
-  shouldUseRedirectUrl?: boolean
+  shouldUseRedirectUrl: boolean
 ): Promise<void> => {
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
