@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
@@ -13,7 +13,7 @@ import locales from '../resources/locales/en/translation/common.json';
 import { convertJsonArrayToTitleCase, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
-import { getRespondentAddressTypes } from './helpers/RespondentPostCodeSelectHelper';
+import { getRespondentAddressTypes } from './helpers/RespondentPostCodeHelper';
 
 const logger = getLogger('RespondentPostCodeSelectController');
 
@@ -49,7 +49,7 @@ export default class RespondentPostCodeSelectController {
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    const title = req.url?.includes('lng=cy')
+    const title = req.url?.includes(languages.WELSH_URL_POSTFIX)
       ? localesCy.respondentPostcodeSelectTitle
       : locales.respondentPostcodeSelectTitle;
     assignFormData(req.session.userCase, this.form.getFormFields());

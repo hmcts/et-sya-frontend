@@ -1,4 +1,4 @@
-import { getRespondentAddressTypes } from '../../../../main/controllers/helpers/RespondentPostCodeSelectHelper';
+import { getRespondentAddressTypes } from '../../../../main/controllers/helpers/RespondentPostCodeHelper';
 import { AppRequest } from '../../../../main/definitions/appRequest';
 import commonJson from '../../../../main/resources/locales/en/translation/common.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
