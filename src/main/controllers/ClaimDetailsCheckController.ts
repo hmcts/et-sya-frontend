@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { validateClaimCheckDetails } from '../components/form/claimDetailsValidator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -37,6 +38,23 @@ export default class ClaimDetailsCheckController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body?.claimDetailsCheck === 'Yes') {
+      const userCase = req.session?.userCase;
+      const isValid = validateClaimCheckDetails(userCase);
+
+      req.session.errors = [];
+      if (!isValid) {
+        req.session.errors.push({ propertyName: 'claimDetailsCheck', errorType: 'invalid' });
+        const content = getPageContent(req, this.claimDetailsCheckFormContent, [
+          TranslationKeys.COMMON,
+          TranslationKeys.CLAIM_DETAILS_CHECK,
+        ]);
+        return res.render(TranslationKeys.CLAIM_DETAILS_CHECK, {
+          ...content,
+        });
+      }
+    }
+
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 

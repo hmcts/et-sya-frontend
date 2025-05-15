@@ -42,7 +42,7 @@ describe('Type of Claim page', () => {
 
   it('should display checkboxes', () => {
     const checkboxes = htmlRes.getElementsByClassName(inputs);
-    expect(checkboxes.length).equal(6, `only ${checkboxes.length} found`);
+    expect(checkboxes.length).equal(5, `only ${checkboxes.length} found`);
   });
 
   it('should display inputs with valid labels', () => {

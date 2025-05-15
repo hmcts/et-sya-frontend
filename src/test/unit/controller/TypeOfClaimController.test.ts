@@ -1,19 +1,15 @@
 import axios from 'axios';
-import express from 'express';
 import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { CaseDataCacheKey } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
-import { cachePreloginCaseData } from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-const app = express();
 const redisClient = redis.createClient();
 
 jest.mock('../../../main/services/CacheService', () => {
@@ -84,7 +80,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_TYPE_PAY);
       expect(req.session.userCase).toStrictEqual({
         typeOfClaim: [
           TypesOfClaim.BREACH_OF_CONTRACT,
@@ -108,79 +104,10 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_TYPE_DISCRIMINATION);
       expect(req.session.userCase).toStrictEqual({
         typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       });
-    });
-
-    it('should cache the Other Types of Claims to Redis', async () => {
-      const body = {
-        typeOfClaim: [TypesOfClaim.OTHER_TYPES],
-        otherClaim: 'No notice',
-      };
-
-      const controller = new TypeOfClaimController();
-
-      const req = mockRequest({ body });
-      const res = mockResponse();
-
-      const cacheMap = new Map<CaseDataCacheKey, string>([
-        [CaseDataCacheKey.CLAIM_JURISDICTION, undefined],
-        [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
-        [CaseDataCacheKey.CASE_TYPE, undefined],
-        [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
-        [CaseDataCacheKey.OTHER_CLAIM_TYPE, 'No notice'],
-        [CaseDataCacheKey.ACAS_MULTIPLE, undefined],
-        [CaseDataCacheKey.VALID_NO_ACAS_REASON, undefined],
-      ]);
-      req.app = app;
-      req.app.locals = {
-        redisClient,
-      };
-      await controller.post(req, res);
-      expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
-    });
-
-    it('should cache the Types of Claims to Redis', () => {
-      const body = {
-        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
-      };
-
-      const controller = new TypeOfClaimController();
-
-      const req = mockRequest({ body });
-      const res = mockResponse();
-
-      const cacheMap = new Map<CaseDataCacheKey, string>([
-        [CaseDataCacheKey.CLAIM_JURISDICTION, undefined],
-        [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
-        [CaseDataCacheKey.CASE_TYPE, undefined],
-        [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
-        [CaseDataCacheKey.OTHER_CLAIM_TYPE, undefined],
-        [CaseDataCacheKey.ACAS_MULTIPLE, undefined],
-        [CaseDataCacheKey.VALID_NO_ACAS_REASON, undefined],
-      ]);
-      req.app = app;
-      req.app.locals = {
-        redisClient,
-      };
-      controller.post(req, res);
-      expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
-    });
-
-    it('should redirect to LOGIN page if Discrimination is selected', async () => {
-      const body = { typeOfClaim: [TypesOfClaim.DISCRIMINATION] };
-      const controller = new TypeOfClaimController();
-      const req = mockRequest({ body });
-      const res = mockResponse();
-
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
-
-      jest.spyOn(res, 'redirect');
-
-      await controller.post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
     });
   });
 
@@ -203,10 +130,7 @@ describe('Type Of Claim Controller', () => {
     });
 
     it("should not update draft case when case hasn't been created yet", async () => {
-      await new TypeOfClaimController().post(
-        mockRequest({ body: { typeOfClaim: [TypesOfClaim.DISCRIMINATION] }, userCase: { id: undefined } }),
-        mockResponse()
-      );
+      await new TypeOfClaimController().post(mockRequest({ body: {}, userCase: { id: undefined } }), mockResponse());
 
       expect(caseApi.updateDraftCase).toHaveBeenCalledTimes(0);
     });

@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { validateEmploymentAndRespondentDetails } from '../components/form/claimDetailsValidator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -37,6 +38,23 @@ export default class EmploymentAndRespondentCheckController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body?.employmentAndRespondentCheck === 'Yes') {
+      const userCase = req.session?.userCase;
+      const isValid = validateEmploymentAndRespondentDetails(userCase);
+
+      req.session.errors = [];
+      if (!isValid) {
+        req.session.errors.push({ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' });
+        const content = getPageContent(req, this.empResCheckContent, [
+          TranslationKeys.COMMON,
+          TranslationKeys.TASK_LIST_CHECK,
+        ]);
+        return res.render(TranslationKeys.TASK_LIST_CHECK, {
+          ...content,
+        });
+      }
+    }
+
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 

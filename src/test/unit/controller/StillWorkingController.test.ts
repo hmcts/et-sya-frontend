@@ -107,8 +107,7 @@ describe('Are you still working controller', () => {
     expect(req.session.userCase.noticeEnds).toStrictEqual({ year: '2024', month: '02', day: '02' });
   });
 
-  it('should redirect to the same screen when errors are present', async () => {
-    const errors = [{ propertyName: 'isStillWorking', errorType: 'required' }];
+  it('should go to the next screen when errors are present', async () => {
     const body = {
       isStillWorking: '',
     };
@@ -119,7 +118,6 @@ describe('Are you still working controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
-    expect(req.session.errors).toEqual(errors);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
   });
 });

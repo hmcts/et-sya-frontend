@@ -66,7 +66,7 @@ describe(`POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   });
 
   describe('require contact preference', () => {
-    test("should reload the page when the just contact preference isn't selected", async () => {
+    test("should go to the next page when the just contact preference isn't selected", async () => {
       await request(mockApp({}))
         .post(PageUrls.UPDATE_PREFERENCES)
         .send({
@@ -75,27 +75,27 @@ describe(`POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
         })
         .expect(res => {
           expect(res.status).toStrictEqual(302);
-          expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
         });
     });
 
-    test('should reload the page when the no radio button is selected', async () => {
+    test('should go to the next page when the no radio button is selected', async () => {
       await request(mockApp({}))
         .post(PageUrls.UPDATE_PREFERENCES)
         .send({})
         .expect(res => {
           expect(res.status).toStrictEqual(302);
-          expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
         });
     });
 
-    test('should reload the page when the no Language radio button is selected', async () => {
+    test('should go to the next page when the no Language radio button is selected', async () => {
       await request(mockApp({}))
         .post(PageUrls.UPDATE_PREFERENCES)
         .send({ claimantContactPreference: undefined })
         .expect(res => {
           expect(res.status).toStrictEqual(302);
-          expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
         });
     });
   });

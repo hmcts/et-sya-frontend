@@ -48,7 +48,7 @@ describe('Valid no acas reason Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TYPE_OF_CLAIM);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
       expect(req.session.userCase).toStrictEqual({
         validNoAcasReason: YesOrNo.YES,
       });

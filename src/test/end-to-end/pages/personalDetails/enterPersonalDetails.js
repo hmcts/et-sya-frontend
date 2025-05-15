@@ -43,7 +43,7 @@ module.exports = async function () {
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.click(commonConfig.saveAndContinue);
-  I.see('Communication preference');
+  I.see('Communication preference (Optional)');
   I.see('What format would you like to be contacted in?');
   I.see('Email');
   I.see('Post');
