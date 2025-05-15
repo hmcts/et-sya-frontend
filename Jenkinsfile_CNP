@@ -4,6 +4,8 @@
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
+overrideVaultEnvironments(['perftest': 'aat'])
+
 def type = "nodejs"
 def product = "et"
 def component = "sya"
@@ -150,8 +152,6 @@ withPipeline(type, product, component) {
   afterSuccess('buildinfra:perftest') {
   node {
     stage("Performance Test") {
-
-      overrideVaultEnvironments(['perftest': 'aat'])
 
       def vaultEnv = "${product}-${environment()}"
 
