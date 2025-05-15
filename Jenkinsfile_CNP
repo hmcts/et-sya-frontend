@@ -24,6 +24,8 @@ withPipeline(type, product, component) {
 
   overrideVaultEnvironments(['perftest': 'aat'])
   def vaultEnv = "${product}-${environment()}"
+  echo "Resolved vault env: ${vaultEnv}"
+
 
   def secrets = [
       "${product}-${environment()}": [
