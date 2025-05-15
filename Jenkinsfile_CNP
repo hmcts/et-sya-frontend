@@ -4,41 +4,12 @@
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
-overrideVaultEnvironments(['perftest': 'aat'])
-
 def type = "nodejs"
 def product = "et"
 def component = "sya"
 def branchesToSync = ['perftest']
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
-
-def secrets = [
-    "${product}-${environment()}": [
-        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
-        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
-    ]
-]
-
-def inTestTrue = [
-    "${product}-${environment()}": [
-        secret('true', 'IN_TEST')
-    ]
-]
-
-def inTestFalse = [
-    "${product}-${environment()}": [
-        secret('', 'IN_TEST')
-    ]
-]
-
-def perfSecrets = [
-    "${product}-${environment()}": [
-        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
-    ]
-]
-
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
@@ -50,156 +21,178 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withPipeline(type, product, component) {
+
+  overrideVaultEnvironments(['perftest': 'aat'])
+
+  def secrets = [
+      "${product}-${environment()}": [
+          secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+          secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
+          secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
+      ]
+  ]
+
+  def inTestTrue = [
+      "${product}-${environment()}": [
+          secret('true', 'IN_TEST')
+      ]
+  ]
+
+  def inTestFalse = [
+      "${product}-${environment()}": [
+          secret('', 'IN_TEST')
+      ]
+  ]
+
+  def perfSecrets = [
+      "${product}-${environment()}": [
+          secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
+      ]
+  ]
+
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  //enableSlackNotifications('#et-builds')   Temp comment out to avoid flooding deployment channel**
 
   afterAlways('build') {
     yarnBuilder.yarn('build')
   }
 
   afterAlways('smoketest:aat') {
-     loadVaultSecrets(inTestTrue)
-     publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'playwright-report',
-                    reportFiles          : 'index.html',
-                    reportName           : 'SYA Smoke Test Report'
-            ])
+    loadVaultSecrets(inTestTrue)
+    publishHTML([
+        allowMissing: true,
+        alwaysLinkToLastBuild: true,
+        keepAll: true,
+        reportDir: 'playwright-report',
+        reportFiles: 'index.html',
+        reportName: 'SYA Smoke Test Report'
+    ])
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+
+    stage('Accessibility') {
+      yarnBuilder.yarn('test:accessibility')
+      publishHTML([
+          allowMissing: true,
+          alwaysLinkToLastBuild: true,
+          keepAll: true,
+          reportDir: 'playwright-report',
+          reportFiles: 'index.html',
+          reportName: 'Accessibility results'
+      ])
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-      stage('Accessibility') {
-          yarnBuilder.yarn('test:accessibility')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : 'playwright-report',
-              reportFiles          : 'index.html',
-              reportName           : 'Accessibility results'
-          ])
-          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-      }
+    }
+
     loadVaultSecrets(inTestFalse)
-    sh """
-       yarn playwright install
-    """
+    sh 'yarn playwright install'
   }
 
   afterAlways('functionalTest:aat') {
-      publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'playwright-report',
-                    reportFiles          : 'index.html',
-                    reportName           : 'ET Functional UI Test Report'
-            ])
-      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    publishHTML([
+        allowMissing: true,
+        alwaysLinkToLastBuild: true,
+        keepAll: true,
+        reportDir: 'playwright-report',
+        reportFiles: 'index.html',
+        reportName: 'ET Functional UI Test Report'
+    ])
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
   afterAlways('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
     publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'playwright-report',
-                    reportFiles          : 'index.html',
-                    reportName           : 'SYA Smoke Test Report'
-            ])
+        allowMissing: true,
+        alwaysLinkToLastBuild: true,
+        keepAll: true,
+        reportDir: 'playwright-report',
+        reportFiles: 'index.html',
+        reportName: 'SYA Smoke Test Report'
+    ])
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+
     stage('Accessibility') {
-          yarnBuilder.yarn('test:accessibility')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : 'playwright-report',
-              reportFiles          : 'index.html',
-              reportName           : 'Accessibility results'
-          ])
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+      yarnBuilder.yarn('test:accessibility')
+      publishHTML([
+          allowMissing: true,
+          alwaysLinkToLastBuild: true,
+          keepAll: true,
+          reportDir: 'playwright-report',
+          reportFiles: 'index.html',
+          reportName: 'Accessibility results'
+      ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
     }
+
     loadVaultSecrets(inTestFalse)
-    sh """
-       yarn playwright install
-    """
+    sh 'yarn playwright install'
   }
 
   afterAlways('functionalTest:preview') {
-      publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'playwright-report',
-                    reportFiles          : 'index.html',
-                    reportName           : 'ET Functional UI Test Report'
-            ])
-      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    publishHTML([
+        allowMissing: true,
+        alwaysLinkToLastBuild: true,
+        keepAll: true,
+        reportDir: 'playwright-report',
+        reportFiles: 'index.html',
+        reportName: 'ET Functional UI Test Report'
+    ])
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
-   ])
+  ])
 
-
-
-
-// Performance test stages wip [Perftest]
   afterSuccess('buildinfra:perftest') {
-  node {
-    stage("Performance Test") {
+    node {
+      stage("Performance Test") {
 
-      def vaultEnv = "${product}-${environment()}"
+        def vaultEnv = "${product}-${environment()}"
 
-      try {
-        loadVaultSecrets([
-          (vaultEnv): [
-            secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
-          ]
-        ])
-      } catch (Exception e) {
-        echo "Error loading Key Vault secrets: ${e.message}"
+        try {
+          loadVaultSecrets([
+            (vaultEnv): [
+              secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
+            ]
+          ])
+        } catch (Exception e) {
+          echo "Error loading Key Vault secrets: ${e.message}"
+        }
+
+        echo "Starting performance test stage..."
+        echo "Workspace: ${env.WORKSPACE}"
+        echo "Branch: ${env.BRANCH_NAME}"
+        echo "Build Number: ${env.BUILD_NUMBER}"
+        echo "Date/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+
+        sh 'echo "PERF_SYNTHETIC_MONITOR_TOKEN=$PERF_SYNTHETIC_MONITOR_TOKEN"'
+
+        if (!env.PERF_SYNTHETIC_MONITOR_TOKEN?.trim()) {
+          error("PERF_SYNTHETIC_MONITOR_TOKEN was not loaded. Check Key Vault configuration and secret presence.")
+        }
+
+        def triggerResponse = httpRequest(
+          acceptType: 'APPLICATION_JSON',
+          contentType: 'APPLICATION_JSON',
+          httpMode: 'POST',
+          quiet: true,
+          customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+          ],
+          requestBody: '''{
+            "monitors": [
+              {
+                "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
+              }
+            ]
+          }''',
+          url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
+        )
+
+        echo "Synthetic trigger response: ${triggerResponse}"
       }
-
-      echo "Starting performance test stage..."
-      echo "Workspace: ${env.WORKSPACE}"
-      echo "Branch: ${env.BRANCH_NAME}"
-      echo "Build Number: ${env.BUILD_NUMBER}"
-      echo "Date/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
-
-      // Output token for visibility (safe in perftest, but redact if needed)
-      sh 'echo "PERF_SYNTHETIC_MONITOR_TOKEN=$PERF_SYNTHETIC_MONITOR_TOKEN"'
-
-      if (!env.PERF_SYNTHETIC_MONITOR_TOKEN?.trim()) {
-        error("PERF_SYNTHETIC_MONITOR_TOKEN was not loaded. Check Key Vault configuration and secret presence.")
-      }
-
-      def triggerResponse = httpRequest(
-        acceptType: 'APPLICATION_JSON',
-        contentType: 'APPLICATION_JSON',
-        httpMode: 'POST',
-        quiet: true,
-        customHeaders: [
-          [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
-        ],
-        requestBody: '''{
-          "monitors": [
-            {
-              "monitorId": "SYNTHETIC_TEST-008CAF328F244320"
-            }
-          ]
-        }''',
-        url: 'https://yrk32651.live.dynatrace.com/api/v2/synthetic/executions/batch'
-      )
-
-      echo "Synthetic trigger response: ${triggerResponse}"
     }
   }
-}
-
 
 }
