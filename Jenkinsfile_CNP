@@ -151,7 +151,9 @@ withPipeline(type, product, component) {
   node {
     stage("Performance Test") {
 
-      def vaultEnv = "${product}-aat"
+      overrideVaultEnvironments(['perftest': 'aat'])
+
+      def vaultEnv = "${product}-${environment()}"
 
       try {
         loadVaultSecrets([
