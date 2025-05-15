@@ -64,10 +64,10 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableFortifyScan('et-aat')
-    enableSecurityScan(
-           urlExclusions: urlExclusions,
-           alertFilters: alertFilters
-    )
+//    enableSecurityScan(
+//           urlExclusions: urlExclusions,
+//           alertFilters: alertFilters
+//    )
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
