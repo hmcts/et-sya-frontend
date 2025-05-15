@@ -40,3 +40,9 @@ export const getEnterTitle = (req: AppRequest): string => {
     ? localesCy.respondentPostcodeEnterTitle
     : locales.respondentPostcodeEnterTitle;
 };
+
+export const getSelectTitle = (req: AppRequest): string => {
+  return req.url?.includes(languages.WELSH_URL_POSTFIX)
+    ? localesCy.respondentPostcodeSelectTitle
+    : locales.respondentPostcodeSelectTitle;
+};

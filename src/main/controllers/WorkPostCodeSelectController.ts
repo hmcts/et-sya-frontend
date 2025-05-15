@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 import { convertJsonArrayToTitleCase, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
-import { getEnterTitle, getWorkAddressTypes } from './helpers/WorkPostCodeHelper';
+import { getSelectTitle, getWorkAddressTypes } from './helpers/WorkPostCodeHelper';
 
 const logger = getLogger('WorkPostCodeSelectController');
 
@@ -47,7 +47,7 @@ export default class WorkPostCodeSelectController {
     res.render(TranslationKeys.WORK_POSTCODE_SELECT, {
       ...content,
       link: getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK),
-      title: getEnterTitle(req),
+      title: getSelectTitle(req),
     });
   };
 }

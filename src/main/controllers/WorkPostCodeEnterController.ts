@@ -3,16 +3,15 @@ import { Response } from 'express';
 import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys, languages } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
-import localesCy from '../resources/locales/cy/translation/common.json';
-import locales from '../resources/locales/en/translation/common.json';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getEnterTitle } from './helpers/WorkPostCodeHelper';
 
 const logger = getLogger('WorkPostCodeEnterController');
 
@@ -49,13 +48,10 @@ export default class WorkPostCodeEnterController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const title = req.url?.includes(languages.WELSH_URL_POSTFIX)
-      ? localesCy.workPostcodeEnterTitle
-      : locales.workPostcodeEnterTitle;
     res.render(TranslationKeys.WORK_POSTCODE_ENTER, {
       ...content,
       link: getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK),
-      title,
+      title: getEnterTitle(req),
     });
   };
 }

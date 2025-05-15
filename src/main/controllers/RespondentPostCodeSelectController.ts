@@ -3,17 +3,15 @@ import { Response } from 'express';
 import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys, languages } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
-import localesCy from '../resources/locales/cy/translation/common.json';
-import locales from '../resources/locales/en/translation/common.json';
 
 import { convertJsonArrayToTitleCase, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
-import { getRespondentAddressTypes } from './helpers/RespondentPostCodeHelper';
+import { getRespondentAddressTypes, getSelectTitle } from './helpers/RespondentPostCodeHelper';
 
 const logger = getLogger('RespondentPostCodeSelectController');
 
@@ -48,15 +46,11 @@ export default class RespondentPostCodeSelectController {
     req.session.userCase.respondentAddressTypes = getRespondentAddressTypes(req, response);
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
-    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    const title = req.url?.includes(languages.WELSH_URL_POSTFIX)
-      ? localesCy.respondentPostcodeSelectTitle
-      : locales.respondentPostcodeSelectTitle;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_POSTCODE_SELECT, {
       ...content,
-      link,
-      title,
+      link: getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS),
+      title: getSelectTitle(req),
     });
   };
 }

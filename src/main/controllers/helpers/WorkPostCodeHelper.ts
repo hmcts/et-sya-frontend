@@ -37,6 +37,12 @@ export const getWorkAddressTypes = (response: Record<string, string>[], req: App
 
 export const getEnterTitle = (req: AppRequest): string => {
   return req.url?.includes(languages.WELSH_URL_POSTFIX)
+    ? localesCy.workPostcodeEnterTitle
+    : locales.workPostcodeEnterTitle;
+};
+
+export const getSelectTitle = (req: AppRequest): string => {
+  return req.url?.includes(languages.WELSH_URL_POSTFIX)
     ? localesCy.workPostcodeSelectTitle
     : locales.workPostcodeSelectTitle;
 };
