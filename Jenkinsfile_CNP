@@ -33,8 +33,10 @@ def inTestFalse = [
 
 def perfSecrets = [
     "${product}-${environment()}": [
-        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
     ]
+]
+
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
@@ -150,12 +152,6 @@ withPipeline(type, product, component) {
     stage("Performance Test") {
 
       def vaultEnv = "${product}-aat"
-
-      try {
-        overrideVaultEnvironments(vaultOverrides)
-      } catch (Exception e) {
-        echo "Error overriding Key Vault environment: ${e.message}"
-      }
 
       try {
         loadVaultSecrets([
