@@ -35,11 +35,6 @@ def perfSecrets = [
     "${product}-${environment()}": [
         secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
     ]
-]
-//Add vault override
-def vaultOverrides = [
-  'perftest': 'aat'
-]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
@@ -154,7 +149,7 @@ withPipeline(type, product, component) {
   node {
     stage("Performance Test") {
 
-      def vaultEnv = "${product}-perftest"
+      def vaultEnv = "${product}-aat"
 
       try {
         overrideVaultEnvironments(vaultOverrides)
