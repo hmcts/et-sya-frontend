@@ -6,19 +6,19 @@ import locales from '../../resources/locales/en/translation/common.json';
 
 export const getAddressAddressTypes = (response: Record<string, string>[], req: AppRequest): AddressType[] => {
   const addressAddressTypes: AddressType[] = [];
-  if (response !== undefined && response.length > 0) {
-    addressAddressTypes.push({
-      selected: true,
-      label: req.url?.includes(languages.WELSH_URL_POSTFIX)
-        ? localesCy.selectDefaultSeveral
-        : locales.selectDefaultSeveral,
-    });
-  } else if (response !== undefined && response.length === 1) {
+  if (response?.length === 1) {
     addressAddressTypes.push({
       selected: true,
       label: req.url?.includes(languages.WELSH_URL_POSTFIX)
         ? localesCy.selectDefaultSingle
         : locales.selectDefaultSingle,
+    });
+  } else if (response?.length > 0) {
+    addressAddressTypes.push({
+      selected: true,
+      label: req.url?.includes(languages.WELSH_URL_POSTFIX)
+        ? localesCy.selectDefaultSeveral
+        : locales.selectDefaultSeveral,
     });
   } else {
     addressAddressTypes.push({
@@ -26,13 +26,11 @@ export const getAddressAddressTypes = (response: Record<string, string>[], req: 
       label: req.url?.includes(languages.WELSH_URL_POSTFIX) ? localesCy.selectDefaultNone : locales.selectDefaultNone,
     });
   }
-  if (response !== undefined) {
-    for (const address of response) {
-      addressAddressTypes.push({
-        value: response.indexOf(address),
-        label: address.fullAddress,
-      });
-    }
+  for (const address of response || []) {
+    addressAddressTypes.push({
+      value: response.indexOf(address),
+      label: address.fullAddress,
+    });
   }
   return addressAddressTypes;
 };

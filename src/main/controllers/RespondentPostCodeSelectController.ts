@@ -43,7 +43,7 @@ export default class RespondentPostCodeSelectController {
       await getAddressesForPostcode(req.session.userCase.respondentEnterPostcode)
     );
     req.session.userCase.respondentAddresses = response;
-    req.session.userCase.respondentAddressTypes = getRespondentAddressTypes(req, response);
+    req.session.userCase.respondentAddressTypes = getRespondentAddressTypes(response, req);
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     assignFormData(req.session.userCase, this.form.getFormFields());
