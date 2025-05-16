@@ -150,15 +150,15 @@ withPipeline(type, product, component) {
 
   afterAlways('functionalTest:preview') {
 
-        //************** TEST **********
-        stage('Test load Utils') {
-            steps {
-                script {
-                    utils = load 'src/test/performance/config/config.groovy'
-                    echo "API Host: ${utils.Test}"
-                }
-            }
-        }
+        // //************** TEST **********
+        // stage('Test load Utils') {
+            // steps {
+                // script {
+                    // utils = load 'src/test/performance/config/config.groovy'
+                    // echo "API Host: ${utils.Test}"
+                // }
+            // }
+        // }
         stage('Performance Test') {
 
         loadVaultSecrets(secrets) // Load Perf secrets
