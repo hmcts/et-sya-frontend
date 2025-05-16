@@ -24,37 +24,37 @@ parameters([
         string(
           name: 'ALERT_FILTERS',
           defaultValue:
-            "-config globalalertfilter.filters.filter\\(2\\).ruleid=10029 " +
+            "-config globalalertfilter.filters.filter\\(0\\).ruleid=10029 " +
+            "-config globalalertfilter.filters.filter\\(0\\).newrisk=-1 " +
+            "-config globalalertfilter.filters.filter\\(0\\).enabled=true " +
+
+            "-config globalalertfilter.filters.filter\\(1\\).ruleid=10058 " +
+            "-config globalalertfilter.filters.filter\\(1\\).newrisk=-1 " +
+            "-config globalalertfilter.filters.filter\\(1\\).enabled=true " +
+
+            "-config globalalertfilter.filters.filter\\(2\\).ruleid=10027 " +
             "-config globalalertfilter.filters.filter\\(2\\).newrisk=-1 " +
             "-config globalalertfilter.filters.filter\\(2\\).enabled=true " +
 
-            "-config globalalertfilter.filters.filter\\(3\\).ruleid=10058 " +
+            "-config globalalertfilter.filters.filter\\(3\\).ruleid=10109 " +
             "-config globalalertfilter.filters.filter\\(3\\).newrisk=-1 " +
             "-config globalalertfilter.filters.filter\\(3\\).enabled=true " +
 
-            "-config globalalertfilter.filters.filter\\(4\\).ruleid=10027 " +
+            "-config globalalertfilter.filters.filter\\(4\\).ruleid=10049 " +
             "-config globalalertfilter.filters.filter\\(4\\).newrisk=-1 " +
             "-config globalalertfilter.filters.filter\\(4\\).enabled=true " +
 
-            "-config globalalertfilter.filters.filter\\(5\\).ruleid=10109 " +
+            "-config globalalertfilter.filters.filter\\(5\\).ruleid=10112 " +
             "-config globalalertfilter.filters.filter\\(5\\).newrisk=-1 " +
             "-config globalalertfilter.filters.filter\\(5\\).enabled=true " +
 
-            "-config globalalertfilter.filters.filter\\(6\\).ruleid=10049 " +
+            "-config globalalertfilter.filters.filter\\(6\\).ruleid=10104 " +
             "-config globalalertfilter.filters.filter\\(6\\).newrisk=-1 " +
             "-config globalalertfilter.filters.filter\\(6\\).enabled=true " +
 
-            "-config globalalertfilter.filters.filter\\(7\\).ruleid=10112 " +
+            "-config globalalertfilter.filters.filter\\(7\\).ruleid=10031 " +
             "-config globalalertfilter.filters.filter\\(7\\).newrisk=-1 " +
-            "-config globalalertfilter.filters.filter\\(7\\).enabled=true " +
-
-            "-config globalalertfilter.filters.filter\\(8\\).ruleid=10104 " +
-            "-config globalalertfilter.filters.filter\\(8\\).newrisk=-1 " +
-            "-config globalalertfilter.filters.filter\\(8\\).enabled=true " +
-
-            "-config globalalertfilter.filters.filter\\(9\\).ruleid=10031 " +
-            "-config globalalertfilter.filters.filter\\(9\\).newrisk=-1 " +
-            "-config globalalertfilter.filters.filter\\(9\\).enabled=true "
+            "-config globalalertfilter.filters.filter\\(7\\).enabled=true "
         ),
         string(name: 'CUSTOM_COOKIES')
     ])
