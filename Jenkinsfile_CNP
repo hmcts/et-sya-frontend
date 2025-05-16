@@ -150,13 +150,15 @@ withPipeline(type, product, component) {
   afterAlways('functionalTest:preview') {
 
         // //************** TEST **********
-        stage('Test load Utils') {
+        stage('Performance Test - Load Config & Utils') {
+
+            echo "Loading Performance test configuration and utilities from the test/performance directory..."
 
             script {
-                def utils
+                def config, utils
                 try {
-                    utils = load 'src/test/performance/config/config.groovy'
-                
+                    config = load 'src/test/performance/config/config.groovy'
+                    utils = load 'src/test/performance/utils/utils.groovy'
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
@@ -211,38 +213,44 @@ withPipeline(type, product, component) {
         //==========================================
 
         script {
-        def config
-        try {
+            def config
             config = load 'src/test/performance/config/config.groovy'
             echo "CONGIG\n: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
+
+            def postDTEvent = utils.postDynatraceEvent (
+                        config.dynatraceApiHost,
+                        config.dynatraceSyntheticPerfTest,
+                        config.dynatraceDashboardId
+            )
             
-            def postDTEvent = httpRequest(
-            acceptType: 'APPLICATION_JSON',
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
-            quiet: true,
-            customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
-            ],
-            url: "${config.dynatraceApiHost}api/v2/events/ingest",
-            requestBody: """{
-                "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
-                "eventType": "CUSTOM_INFO",
-                "properties": {
-                        "Workspace": "${env.WORKSPACE}",
-                        "Branch": "${env.BRANCH_NAME}",
-                        "Build Number": "${env.BUILD_NUMBER}",
-                        "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
-                        "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
-                },
-                "timeout": 1,
-                "title": "ET-SYA-Frontend Performance Event"
-                  }"""
-            ) }
-            catch (Exception e) {
-            echo "Error while sending Request: ${e.message}"
-            }
-            echo "${env.postDTEvent}"
+
+            // def postDTEvent = httpRequest(
+            // acceptType: 'APPLICATION_JSON',
+            // contentType: 'APPLICATION_JSON',
+            // httpMode: 'POST',
+            // quiet: true,
+            // customHeaders: [
+                // [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+            // ],
+            // url: "${config.dynatraceApiHost}api/v2/events/ingest",
+            // requestBody: """{
+                // "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
+                // "eventType": "CUSTOM_INFO",
+                // "properties": {
+                        // "Workspace": "${env.WORKSPACE}",
+                        // "Branch": "${env.BRANCH_NAME}",
+                        // "Build Number": "${env.BUILD_NUMBER}",
+                        // "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
+                        // "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
+                // },
+                // "timeout": 1,
+                // "title": "ET-SYA-Frontend Performance Event"
+                //   }"""
+            // ) }
+            // catch (Exception e) {
+            // echo "Error while sending Request: ${e.message}"
+            // }
+            // echo "${env.postDTEvent}"
 
         //==========================================    
         /// POST Metric to highlight a deployment
@@ -289,13 +297,13 @@ withPipeline(type, product, component) {
             echo "Error while sending Request: ${e.message}"
         }
         echo "${env.triggerResponse}"
-    }
+    //}
     } //End of script
 
       echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
       sleep 300 // seconds
 
-  }
+  } //End of perftest stage
 
             
     
