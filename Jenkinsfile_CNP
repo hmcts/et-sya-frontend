@@ -10,7 +10,8 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 def branchesToSync = ['demo', 'ithc']
-def config, utils
+def config
+def utils
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
