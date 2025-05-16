@@ -4,7 +4,7 @@ def sayHello(name) {
     echo "Hello, ${name}!"
 }
 
-def Test = "dev"
+def this.Test = "dev"
 
 echo "Inside the config file: ${Test}"
 
