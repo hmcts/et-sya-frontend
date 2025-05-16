@@ -212,21 +212,20 @@ withPipeline(type, product, component) {
         //==========================================
         //Trigger Custom DT Event with Info:
         //==========================================
-
         script {
-        try {
             //config = load 'src/test/performance/config/config.groovy'
-            echo "CONFIG\n: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
-
-            def postDTEvent = utils.postDynatraceEvent (
-                        config.dynatraceApiHost,
-                        config.dynatraceSyntheticPerfTest,
-                        config.dynatraceDashboardId
-            )
-        } catch (Exception e)
-        {
-            echo "Error Message: ${e.message}"
-        }
+            echo "CONFIG\n DT Host: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
+            try {
+                def postDTEvent = utils.postDynatraceEvent (
+                            config.dynatraceApiHost,
+                            config.dynatraceSyntheticPerfTest,
+                            config.dynatraceDashboardId,
+                            config.dynatraceEntitySelector
+                )
+            } catch (Exception e)
+            {
+                echo "Error Message: ${e.message}"
+            }
             
             // def postDTEvent = httpRequest(
             // acceptType: 'APPLICATION_JSON',
