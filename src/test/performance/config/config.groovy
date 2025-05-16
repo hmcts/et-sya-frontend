@@ -6,6 +6,8 @@ def sayHello(name) {
 
 def Test = "dev"
 
+echo "Inside the config file: ${Test}"
+
 return this
 
 //Static vars

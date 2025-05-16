@@ -154,7 +154,11 @@ withPipeline(type, product, component) {
         stage('Test load Utils') {
 
             script {
+                try {
                 def utils = load 'src/test/performance/config/config.groovy'
+                } catch (Exception e) {
+                    echo "Error Message: ${e.message}"
+                }
                 echo "API Host: ${utils.Test}"
             }
         }
