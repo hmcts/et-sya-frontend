@@ -91,7 +91,7 @@ withNightlyPipeline(type, product, component) {
       urlExclusions: urlExclusions,
       alertFilters: alertFilters
     )
-//    enableFortifyScan('et-aat')
+    enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
