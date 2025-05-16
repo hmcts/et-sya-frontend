@@ -108,16 +108,6 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('smoketest:preview') {
-    //************** TEST **********
-    stage('Test load Utils') {
-        steps {
-            script {
-                utils = load 'src/test/performance/config/config.groovy'
-                echo "API Host: ${utils.Test}"
-            }
-        }
-    }
-
     loadVaultSecrets(inTestTrue)
     publishHTML([
                     allowMissing         : true,
@@ -159,7 +149,17 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('functionalTest:preview') {
-    stage('Performance Test') {
+
+        //************** TEST **********
+        stage('Test load Utils') {
+            steps {
+                script {
+                    utils = load 'src/test/performance/config/config.groovy'
+                    echo "API Host: ${utils.Test}"
+                }
+            }
+        }
+        stage('Performance Test') {
 
         loadVaultSecrets(secrets) // Load Perf secrets
 
