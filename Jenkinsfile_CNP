@@ -160,6 +160,12 @@ withPipeline(type, product, component) {
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
+
+                if (utils?.Test) {
+                    echo "API Host: ${utils.Test}"
+                } else {
+                echo "utils is null or Test is not defined"
+                }
                 echo "API Host: ${utils.Test}"
             }
         }
