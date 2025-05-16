@@ -6,7 +6,16 @@ def sayHello(name) {
 
 this.Test = "dev"
 
-echo "Inside the config file: ${Test}"
+//Perf Vars (*Need to add to config file)
+this.dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
+this.dynatraceEventIngestEndpoint = "api/v2/events/ingest"
+this.dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
+this.dynatraceTriggerSynthticEndpoint = "api/v2/synthetic/executions/batch"
+this.dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
+this.dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
+
+
+echo "Inside the config file: ${dynatraceTriggerSynthticEndpoint}"
 
 return this
 
