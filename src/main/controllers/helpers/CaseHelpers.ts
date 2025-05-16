@@ -9,7 +9,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls } from '../../definitions/constants';
+import { PageUrls, languages } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -79,7 +79,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
-      req.session.userCase.updateDraftCaseError = req.url?.includes('lng=cy')
+      req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)
         ? localesCy.updateDraftErrorMessage
         : locales.updateDraftErrorMessage;
       req.session.returnUrl = req.url;

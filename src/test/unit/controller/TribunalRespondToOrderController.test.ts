@@ -3,7 +3,13 @@ import axios from 'axios';
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { NoticeOfECC, NotificationSubjects, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import {
+  NoticeOfECC,
+  NotificationSubjects,
+  PageUrls,
+  TranslationKeys,
+  languages,
+} from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/tribunal-respond-to-order.json';
@@ -71,9 +77,7 @@ describe('Tribunal Respond to Order Controller', () => {
     request.params.orderId = '246';
 
     controller.post(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(
-      PageUrls.COPY_TO_OTHER_PARTY + TranslationKeys.ENGLISH_URL_PARAMETER
-    );
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should post and redirect to the Rule92 with non system user', () => {
@@ -95,7 +99,7 @@ describe('Tribunal Respond to Order Controller', () => {
 
     controller.post(request, response);
     expect(response.redirect).toHaveBeenCalledWith(
-      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + TranslationKeys.ENGLISH_URL_PARAMETER
+      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
     );
   });
 
@@ -119,9 +123,7 @@ describe('Tribunal Respond to Order Controller', () => {
     const request = mockRequest({ t, body, userCase });
     request.params.orderId = '1234';
     controller.post(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(
-      PageUrls.TRIBUNAL_RESPONSE_CYA + TranslationKeys.ENGLISH_URL_PARAMETER
-    );
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.TRIBUNAL_RESPONSE_CYA + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should post and redirect to the supporting material page', () => {
