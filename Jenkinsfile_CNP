@@ -10,6 +10,7 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 def branchesToSync = ['demo', 'ithc']
+def config, utils
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
@@ -155,7 +156,6 @@ withPipeline(type, product, component) {
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
 
             script {
-                def config, utils
                 try {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
@@ -213,10 +213,9 @@ withPipeline(type, product, component) {
         //==========================================
 
         script {
-        def config
         try {
-            config = load 'src/test/performance/config/config.groovy'
-            echo "CONGIG\n: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
+            //config = load 'src/test/performance/config/config.groovy'
+            echo "CONFIG\n: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
 
             def postDTEvent = utils.postDynatraceEvent (
                         config.dynatraceApiHost,
