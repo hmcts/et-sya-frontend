@@ -213,7 +213,8 @@ withPipeline(type, product, component) {
         //==========================================
 
         script {
-            def config
+        def config
+        try {
             config = load 'src/test/performance/config/config.groovy'
             echo "CONGIG\n: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
 
@@ -222,8 +223,11 @@ withPipeline(type, product, component) {
                         config.dynatraceSyntheticPerfTest,
                         config.dynatraceDashboardId
             )
+        } catch (Exception e)
+        {
+            echo "Error Message: ${e.message}"
+        }
             
-
             // def postDTEvent = httpRequest(
             // acceptType: 'APPLICATION_JSON',
             // contentType: 'APPLICATION_JSON',
@@ -297,13 +301,13 @@ withPipeline(type, product, component) {
             echo "Error while sending Request: ${e.message}"
         }
         echo "${env.triggerResponse}"
-    //}
+    }
     } //End of script
 
       echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
       sleep 300 // seconds
 
-  } //End of perftest stage
+  }
 
             
     
