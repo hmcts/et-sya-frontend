@@ -23,6 +23,7 @@ export default class WorkPostCodeSelectController {
         type: 'option',
         classes: 'govuk-select',
         id: 'workAddressTypes',
+        label: l => l.selectAddress,
       },
     },
     submit: submitButton,

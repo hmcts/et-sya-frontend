@@ -22,6 +22,7 @@ export default class AddressPostCodeSelectController {
         type: 'option',
         classes: 'govuk-select',
         id: 'addressAddressTypes',
+        label: l => l.selectAddress,
       },
     },
     submit: submitButton,
