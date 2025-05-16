@@ -49,8 +49,11 @@
         <li>{{ genericGuidanceItem2 }}</li>
         <li>{{ genericGuidanceItem3 }}</li>
       </ul>
-      
+
       {% include "form/multipartForm.njk" %}
+        <p class="govuk-body">
+            <a href="{{ removeFileUrl }}" class="govuk-link">{{ removeFile }}</a>
+        </p>
     </div>
     <div class="govuk-grid-column-one-third">
       <p class="govuk-body">
