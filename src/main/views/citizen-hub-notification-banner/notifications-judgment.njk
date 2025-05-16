@@ -1,0 +1,35 @@
+{% if showJudgmentReceived %}
+  {% for item in judgmentBannerContent %}
+    {% if item.value.notificationState !== 'viewed' %}
+      {% set htmlForJudgmentReceived %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.judgment.header }}
+        </h3>
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ item.redirectUrl }}">{{ notificationBanner.judgment.link }}</a>
+        </p>
+      {% endset %}
+
+      {{ govukNotificationBanner({
+        html: htmlForJudgmentReceived,
+        titleText: important
+      }) }}
+    {% endif %}
+  {% endfor %}
+
+  {% for item in decisionBannerContent %}
+    {% set htmlForDecisionReceived %}
+      <h3 class="govuk-notification-banner__heading">
+        {{ item.decisionBannerHeader }}
+      </h3>
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ item.redirectUrl }}">{{ notificationBanner.decisionJudgment.link }}</a>
+      </p>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+      html: htmlForDecisionReceived,
+      titleText: important
+    }) }}
+  {% endfor %}
+{% endif %}
