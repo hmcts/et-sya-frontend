@@ -15,7 +15,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
             requestBody: """{
                 "entitySelector": "${dynatraceEntitySelector}",
                 "eventType": "CUSTOM_INFO",
-                "properties": "${dynatraceEntitySelector}",
+                "properties": {
                     "Workspace": "${env.WORKSPACE}",
                     "Branch": "${env.BRANCH_NAME}",
                     "Build Number": "${env.BUILD_NUMBER}",
