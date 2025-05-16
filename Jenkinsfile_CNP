@@ -4,6 +4,8 @@
 @Library('Infrastructure@add-perftest-vars') _
 
 import uk.gov.hmcts.contino.AppPipelineDsl
+import src\test\performance\config\config.groovy
+
 
 def type = "nodejs"
 def product = "et"
@@ -54,6 +56,15 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('smoketest:aat') {
+     
+     stage('Test load Utils') {
+            steps {
+                script {
+                    utils = load 'src/test/performance/config/config.groovy'
+                    echo "API Host: ${utils.Test}"
+                }
+            }
+     }
      loadVaultSecrets(inTestTrue)
      publishHTML([
                     allowMissing         : true,

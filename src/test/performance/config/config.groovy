@@ -1,7 +1,15 @@
-return [
+// Performance in pipelines 
+
+def sayHello(name) {
+    echo "Hello, ${name}!"
+}
+
+def Test = "dev"
+
+return this
 
 //Static vars
-dynatraceApiHost: "https://yrk32651.live.dynatrace.com/"
+//dynatraceApiHost: "https://yrk32651.live.dynatrace.com/"
 //dynatraceEventIngestEndpoint = "api/v2/events/ingest"
 
 // //Vars for eventIngest
@@ -35,4 +43,3 @@ dynatraceApiHost: "https://yrk32651.live.dynatrace.com/"
 //  echo "INSIDE CONFIG: Entity Selector: ${env.dynatraceEventIngestEndpoint}"
 
 
-]
