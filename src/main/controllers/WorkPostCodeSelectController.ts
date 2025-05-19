@@ -24,6 +24,8 @@ export default class WorkPostCodeSelectController {
         classes: 'govuk-select',
         id: 'workAddressTypes',
         label: l => l.selectAddress,
+        labelSize: 'xl',
+        isPageHeading: true,
       },
     },
     submit: submitButton,

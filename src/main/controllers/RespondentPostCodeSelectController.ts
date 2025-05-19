@@ -24,6 +24,8 @@ export default class RespondentPostCodeSelectController {
         classes: 'govuk-select',
         id: 'respondentAddressTypes',
         label: l => l.selectAddress,
+        labelSize: 'xl',
+        isPageHeading: true,
       },
     },
     submit: submitButton,

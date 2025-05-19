@@ -12,11 +12,9 @@
   {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ selectAddress }}</h1>
-          {% block form %}
-              {% include "form/form.njk"%}
-            {% endblock %}
+        {% block form %}
+          {% include "form/form.njk"%}
+        {% endblock %}
        <p class="govuk-body">
          <a href="{{ link }}" id="cannotFindAddress" class="govuk-link" target="_self">{{ cannotFindAddress }}</a>
        </p>
