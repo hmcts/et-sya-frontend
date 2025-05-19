@@ -4,9 +4,10 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
+import { ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
-import { getLogger } from '../../logger';
+
+import { setUrlLanguageFromSessionLanguage } from './LanguageHelper';
 
 export const handleSaveAsDraft = (res: Response): void => {
   return res.redirect(PageUrls.CLAIM_SAVED);
@@ -27,9 +28,9 @@ export const conditionalRedirect = (
 };
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  const logger = getLogger('returnNextPage');
   const nextPage = handleReturnUrl(req, redirectUrl);
-  return res.redirect(returnSafeRedirectUrl(req, nextPage, logger));
+  const checkedPage = isValidUrl(nextPage) ? nextPage : setUrlLanguageFromSessionLanguage(req, ErrorPages.NOT_FOUND);
+  return res.redirect(checkedPage);
 };
 
 const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
@@ -87,4 +88,17 @@ export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger:
 
 export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery => {
   return urlModule.parse(redirectUrl);
+};
+
+/**
+ * Checks if the given string has any of the PageURLs or equal to any of the Legacy Urls.
+ * For legacy URLs checks with an If clause and for {@PageURLs} check by validating with regexPattern.
+ * @param url url string that should be checked. with the {@PageUrls} constant values.
+ * @result true if string contains any of the PageURls
+ */
+const isValidUrl = (url: string): boolean => {
+  const urlStr: string[] = url.split('?');
+  const baseUrl: string = urlStr[0];
+  const legacyUrlValues: string[] = Object.values(LegacyUrls);
+  return legacyUrlValues.includes(baseUrl) || baseUrl === '/' || baseUrl === '#';
 };
