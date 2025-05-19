@@ -197,6 +197,30 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 $ yarn test:functional
 ```
 
+## Non-functional tests
+
+### Security tests
+
+The security tests are run using the [OWASP ZAP](https://www.zaproxy.org/) tool. The tests are run nightly and the
+results can be found in the `functional-output` folder of the nightly build.
+
+There are five severity levels of the alerts, the lower severity (False Positives) are ignored, any higher severity fails
+the build.
+
+#### Suppressing alerts
+
+In order to suppress the High, Medium and Low level alerts, check the console output of the nightly build and look for
+"Running base report...". Below that there will be a JSON output of the alerts, for each of the alerts copy the
+`fingerprint` value and paste it into the `audit.json` file in this repository.
+
+To suppress the Informational level alerts, add them to the `ALERT_FILTERS` parameter in the `Jenkinsfile_nightly` file.
+
+The difference between these two methods is that, the `ALERT_FILTERS` will downgrade severity of all instances of an
+alert. The `audit.json` file will not downgrade the severity but will ignore the specific instance of the alert.
+
+This way any High, Medium or Low alerts are still visible in the report but are not failing the build. The Informational
+alerts are visible in the report as False Positives and also not failing the build.
+
 ### Responsible Team
 
 ## Team
