@@ -42,6 +42,25 @@ const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
   return nextPage;
 };
 
+const isValidUrl = (url: string): boolean => {
+  const urlStr: string[] = url.split('?');
+  const baseUrl: string = urlStr[0];
+  const legacyUrlValues: string[] = Object.values(LegacyUrls);
+  if (legacyUrlValues.includes(baseUrl) || baseUrl === '/' || baseUrl === '#') {
+    return true;
+  }
+  const validUrls = Object.values(PageUrls);
+  for (const validUrl of validUrls) {
+    if (validUrl === '/' || validUrl === '#') {
+      continue;
+    }
+    if (baseUrl.includes(validUrl)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string => {
   for (const url of validUrls) {
     const welshUrl = url + languages.WELSH_URL_PARAMETER;
@@ -88,29 +107,4 @@ export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger:
 
 export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery => {
   return urlModule.parse(redirectUrl);
-};
-
-/**
- * Checks if the given string has any of the PageURLs or equal to any of the Legacy Urls.
- * For legacy URLs checks with an If clause and for {@PageURLs} check by validating with regexPattern.
- * @param url url string that should be checked. with the {@PageUrls} constant values.
- * @result true if string contains any of the PageURls
- */
-const isValidUrl = (url: string): boolean => {
-  const urlStr: string[] = url.split('?');
-  const baseUrl: string = urlStr[0];
-  const legacyUrlValues: string[] = Object.values(LegacyUrls);
-  if (legacyUrlValues.includes(baseUrl) || baseUrl === '/' || baseUrl === '#') {
-    return true;
-  }
-  const validUrls = Object.values(PageUrls);
-  for (const validUrl of validUrls) {
-    if (validUrl === '/' || validUrl === '#') {
-      continue;
-    }
-    if (baseUrl.includes(validUrl)) {
-      return true;
-    }
-  }
-  return false;
 };
