@@ -30,7 +30,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
         return response
     } catch (Exception e) {
         echo "Error while sending Dynatrace request: ${e.message}"
-        return null
+        return response
     }
 }
 

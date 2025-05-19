@@ -226,6 +226,12 @@ withPipeline(type, product, component) {
             {
                 echo "Error Message: ${e.message}"
             }
+            if (postDTEvent != null) {
+                echo "Dynatrace Response: ${postDTEvent}"
+            } else {
+                echo "No Dynatrace response available."
+            }
+        }
             
             // def postDTEvent = httpRequest(
             // acceptType: 'APPLICATION_JSON',
