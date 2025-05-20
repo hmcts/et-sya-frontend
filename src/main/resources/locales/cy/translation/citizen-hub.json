@@ -89,7 +89,7 @@
     "orderOrRequest": {
       "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
-      "link": "Gweld yr hysbysiad",
+      "view": "Gweld yr hysbysiad",
       "respond": "Ymateb i’r Tribiwnlys"
     },
     "judgment": {
