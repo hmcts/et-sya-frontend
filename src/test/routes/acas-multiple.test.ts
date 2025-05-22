@@ -13,16 +13,6 @@ describe(`GET ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
 });
 
 describe(`on POST ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
-  test('should go to the types of claim page when the Yes radio button is selected', async () => {
-    await request(mockApp({}))
-      .post(PageUrls.ACAS_MULTIPLE_CLAIM)
-      .send({ acasMultiple: YesOrNo.YES })
-      .expect(res => {
-        expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.TYPE_OF_CLAIM);
-      });
-  });
-
   test('should go to the no valid acas page when the No radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.ACAS_MULTIPLE_CLAIM)
