@@ -22,10 +22,31 @@ describe('Respondent Address Controller', () => {
     const request = mockRequest({ t });
 
     request.session.userCase = userCaseWithRespondent;
+    request.url = PageUrls.RESPONDENT_ADDRESS;
 
     controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_ADDRESS, expect.anything());
+  });
+
+  it('should return error when postcode empty on post', async () => {
+    const body = {
+      respondentAddress1: '10 test street',
+      respondentAddressTown: 'test',
+      respondentAddressCountry: 'Test Country',
+    };
+    const controller = new RespondentAddressController();
+
+    const response = mockResponse();
+    const request = mockRequest({ body });
+
+    request.session.userCase = userCaseWithRespondent;
+    request.url = PageUrls.RESPONDENT_ADDRESS;
+
+    await controller.post(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_ADDRESS);
+    expect(request.session.errors).toHaveLength(1);
   });
 
   it('should render the Work Address page on post', async () => {

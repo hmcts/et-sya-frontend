@@ -84,9 +84,11 @@ import RespondToApplicationController from '../../controllers/RespondToApplicati
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
 import RespondentAddInCheckAnswerController from '../../controllers/RespondentAddInCheckAnswerController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
+import RespondentAddressNonUkController from '../../controllers/RespondentAddressNonUkController';
 import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
+import RespondentContactDetailsController from '../../controllers/RespondentContactDetailsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
 import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
@@ -183,6 +185,14 @@ export class Routes {
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().post);
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS_NON_UK,
+      new RespondentAddressNonUkController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS_NON_UK,
+      new RespondentAddressNonUkController().post
+    );
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS, new WorkAddressController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS, new WorkAddressController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.PLACE_OF_WORK, new PlaceOfWorkController().get);
@@ -288,6 +298,7 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB, new CitizenHubController().get);
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
+    app.get(PageUrls.RESPONDENT_CONTACT_DETAILS, new RespondentContactDetailsController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.GET_SUPPORTING_MATERIAL, new AttachmentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
@@ -411,8 +422,8 @@ export class Routes {
     app.get(PageUrls.HEARING_DOCUMENT_REMOVE, new HearingDocumentFileController().get);
 
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
-    app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
-    app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
+    app.get(PageUrls.NOTIFICATIONS, new TribunalOrdersAndRequestsController().get);
+    app.get(PageUrls.NOTIFICATION_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.ALL_JUDGMENTS, new AllJudgmentsController().get);
     app.get(PageUrls.JUDGMENT_DETAILS, new JudgmentDetailsController().get);
     app.get(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().get);

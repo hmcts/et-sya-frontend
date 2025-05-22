@@ -66,7 +66,7 @@ describe('Tribunal orders and requests Controller', () => {
     const response = mockResponse();
 
     await tribunalOrdersAndRequestsController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTIFICATIONS, expect.anything());
   });
 
   it('should render tribunal orders and requests page without ECC flag', async () => {
@@ -78,6 +78,6 @@ describe('Tribunal orders and requests Controller', () => {
     const response = mockResponse();
 
     await tribunalOrdersAndRequestsController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTIFICATIONS, expect.anything());
   });
 });

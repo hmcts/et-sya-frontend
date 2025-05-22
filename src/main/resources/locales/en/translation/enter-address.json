@@ -6,6 +6,7 @@
   "cannotFindAddress": "I cannot find the address in the list",
   "change": "Change",
   "postcode": "Postcode or area code (optional)",
+  "postcodeRequired": "Postcode or area code",
   "errorSummaryHeading": "There is a problem",
   "addressLine1": "Address line 1",
   "addressLine2": "Address line 2 (optional)",

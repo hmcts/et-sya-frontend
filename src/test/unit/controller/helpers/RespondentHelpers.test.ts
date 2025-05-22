@@ -31,39 +31,78 @@ describe('setUserCaseForRespondent', () => {
     expect(req.session.userCase.respondents).toHaveLength(5);
   });
 });
-it('should add address fields to usercase', async () => {
-  const addresses = [
-    {
-      fullAddress: 'Buckingham Palace, London, SW1A 1AA',
-      street1: 'Buckingham Palace',
-      street2: '',
-      town: 'London',
-      county: 'City Of Westminster',
-      postcode: 'SW1A 1AA',
-      country: 'England',
-    },
-  ];
-  const userCase = {} as CaseWithId;
-  userCase.workAddresses = addresses;
-  userCase.respondentAddresses = addresses;
-  userCase.addressAddresses = addresses;
-  const x = 0;
-  fillWorkAddressFields(x, userCase);
-  fillAddressAddressFields(x, userCase);
-  fillRespondentAddressFields(x, userCase);
-  expect(userCase.workAddress1).toStrictEqual('Buckingham Palace');
-  expect(userCase.workAddress2).toStrictEqual('');
-  expect(userCase.workAddressTown).toStrictEqual('London');
-  expect(userCase.workAddressCountry).toStrictEqual('England');
-  expect(userCase.workAddressPostcode).toStrictEqual('SW1A 1AA');
-  expect(userCase.address1).toStrictEqual('Buckingham Palace');
-  expect(userCase.address2).toStrictEqual('');
-  expect(userCase.addressTown).toStrictEqual('London');
-  expect(userCase.addressCountry).toStrictEqual('England');
-  expect(userCase.addressPostcode).toStrictEqual('SW1A 1AA');
-  expect(userCase.respondentAddress1).toStrictEqual('Buckingham Palace');
-  expect(userCase.respondentAddress2).toStrictEqual('');
-  expect(userCase.respondentAddressTown).toStrictEqual('London');
-  expect(userCase.respondentAddressCountry).toStrictEqual('England');
-  expect(userCase.respondentAddressPostcode).toStrictEqual('SW1A 1AA');
+
+describe('fillWorkAddressFields', () => {
+  it('should add address fields to usercase', async () => {
+    const addresses = [
+      {
+        fullAddress: 'Buckingham Palace, London, SW1A 1AA',
+        street1: 'Buckingham Palace',
+        street2: '',
+        town: 'London',
+        county: 'City Of Westminster',
+        postcode: 'SW1A 1AA',
+        country: 'England',
+      },
+    ];
+    const userCase = {} as CaseWithId;
+    userCase.workAddresses = addresses;
+    const x = 0;
+    fillWorkAddressFields(x, userCase);
+    expect(userCase.workAddress1).toStrictEqual('Buckingham Palace');
+    expect(userCase.workAddress2).toStrictEqual('');
+    expect(userCase.workAddressTown).toStrictEqual('London');
+    expect(userCase.workAddressCountry).toStrictEqual('England');
+    expect(userCase.workAddressPostcode).toStrictEqual('SW1A 1AA');
+  });
+});
+
+describe('fillAddressAddressFields', () => {
+  it('should add address fields to usercase', async () => {
+    const addresses = [
+      {
+        fullAddress: 'Buckingham Palace, London, SW1A 1AA',
+        street1: 'Buckingham Palace',
+        street2: '',
+        town: 'London',
+        county: 'City Of Westminster',
+        postcode: 'SW1A 1AA',
+        country: 'England',
+      },
+    ];
+    const userCase = {} as CaseWithId;
+    userCase.addressAddresses = addresses;
+    const x = 0;
+    fillAddressAddressFields(x, userCase);
+    expect(userCase.address1).toStrictEqual('Buckingham Palace');
+    expect(userCase.address2).toStrictEqual('');
+    expect(userCase.addressTown).toStrictEqual('London');
+    expect(userCase.addressCountry).toStrictEqual('England');
+    expect(userCase.addressPostcode).toStrictEqual('SW1A 1AA');
+  });
+});
+
+describe('fillRespondentAddressFields', () => {
+  it('should add address fields to usercase', async () => {
+    const addresses = [
+      {
+        fullAddress: 'Buckingham Palace, London, SW1A 1AA',
+        street1: 'Buckingham Palace',
+        street2: '',
+        town: 'London',
+        county: 'City Of Westminster',
+        postcode: 'SW1A 1AA',
+        country: 'England',
+      },
+    ];
+    const userCase = {} as CaseWithId;
+    userCase.respondentAddresses = addresses;
+    const x = 0;
+    fillRespondentAddressFields(x, userCase);
+    expect(userCase.respondentAddress1).toStrictEqual('Buckingham Palace');
+    expect(userCase.respondentAddress2).toStrictEqual('');
+    expect(userCase.respondentAddressTown).toStrictEqual('London');
+    expect(userCase.respondentAddressCountry).toStrictEqual('England');
+    expect(userCase.respondentAddressPostcode).toStrictEqual('SW1A 1AA');
+  });
 });

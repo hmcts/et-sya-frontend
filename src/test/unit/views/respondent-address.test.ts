@@ -22,7 +22,7 @@ const expectedInputLabel1 = 'Address line 1';
 const expectedInputLabel2 = 'Address line 2 (optional)';
 const expectedInputLabel3 = 'Town or city';
 const expectedInputLabel4 = 'Country';
-const expectedInputLabel5 = 'Postcode or area code (optional)';
+const expectedInputLabel5 = 'Postcode or area code';
 
 let htmlRes: Document;
 describe('Respondent Address Page', () => {

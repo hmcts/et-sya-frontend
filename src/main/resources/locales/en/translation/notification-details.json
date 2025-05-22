@@ -1,5 +1,5 @@
 {
-  "title": "Tribunal order or request",
+  "title": "Notifications",
   "responder": "Response from",
   "hearing": "Hearing",
   "dateSent": "Date sent",
@@ -29,5 +29,6 @@
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "date": "Date sent",
   "additionalInfo": "Additional information",
-  "No": "No"
+  "No": "No",
+  "notificationSubject": "Notification Subject"
 }

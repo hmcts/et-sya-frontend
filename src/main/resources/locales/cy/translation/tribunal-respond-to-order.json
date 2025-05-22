@@ -32,6 +32,7 @@
   "copyCorrespondence": "Ydych chi eisiauanfon copi o’r ohebiaeth hon at yParti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
   "date": "Dyddiad anfon",
   "additionalInfo": "Gwybodaeth ychwanegol",
+  "notificationSubject": "Testun yr Hysbysiad",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"

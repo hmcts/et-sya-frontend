@@ -1,17 +1,15 @@
 {
   "genericGuidance": "Upload letters, photos or documents if they are relevant to your application. Do not upload any other material.",
+  "contactApplicationText": "Give details of your application in the text box or upload a file",
   "contactTemplateText": "Give details of your application. Please state which respondent or respondents your application applies to. Use both the box and the file upload if you need to.",
   "subTitle": "Remember that:",
-  "remove": "Remove",
-  "noFilesUpload": "No files uploaded",
-  "uploadFileButton": "Upload file",
   "genericGuidanceItem1": "If you are taking picture of a letter, place it on a flat surface and take the picture from above",
   "genericGuidanceItem2": "If you are uploading written documents with tracked changes, make sure that tracked changes are turned on",
   "genericGuidanceItem3": "You can make more than one application at the same time by completing each form separately. If the applications are linked you can make that clear in the text box",
-  "files": {
+  "contactApplicationFile": {
     "title": "Upload a file",
-    "button": "Upload file",
-    "uploaded": "Files uploaded"
+    "hintExisting": "You have previously uploaded: {{filename}}",
+    "removeButton": "Remove file"
   },
   "errors": {
     "contactApplicationText": {
