@@ -16,6 +16,28 @@ export const dateInLocale = (dateToTransform: Date, url: string): string => {
   });
 };
 
+export const dateTimeInLocale = (dateToTransform: Date, url: string): string => {
+  const date = new Date(dateToTransform);
+
+  if (isNaN(date.getTime())) {
+    return url.includes(languages.WELSH_URL_PARAMETER) ? 'Dyddiad ddim yn ddilys' : 'Invalid Date';
+  }
+
+  const locale = retrieveCurrentLocale(url);
+  const formattedDate = date.toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  const formattedTime = date.toLocaleTimeString(locale, {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  });
+
+  return `${formattedDate} ${formattedTime}`;
+};
+
 // Converts datestring to correct language (Welsh or English)
 // Checks if the string can be parsed into a valid date instance,
 // if not will return original string.
