@@ -54,7 +54,11 @@ parameters([
 
             "-config globalalertfilter.filters.filter\\(7\\).ruleid=10031 " +
             "-config globalalertfilter.filters.filter\\(7\\).newrisk=-1 " +
-            "-config globalalertfilter.filters.filter\\(7\\).enabled=true "
+            "-config globalalertfilter.filters.filter\\(7\\).enabled=true " +
+
+            "-config globalalertfilter.filters.filter\\(8\\).ruleid=90027 " +
+            "-config globalalertfilter.filters.filter\\(8\\).newrisk=-1 " +
+            "-config globalalertfilter.filters.filter\\(8\\).enabled=true "
         ),
         string(name: 'CUSTOM_COOKIES')
     ])
