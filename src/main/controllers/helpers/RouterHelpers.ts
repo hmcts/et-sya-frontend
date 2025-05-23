@@ -4,8 +4,10 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
+import { ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
+
+import { setUrlLanguage } from './LanguageHelper';
 
 export const handleSaveAsDraft = (res: Response): void => {
   return res.redirect(PageUrls.CLAIM_SAVED);
@@ -26,7 +28,9 @@ export const conditionalRedirect = (
 };
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  return res.redirect(handleReturnUrl(req, redirectUrl));
+  const nextPage = handleReturnUrl(req, redirectUrl);
+  const checkedPage = isValidUrl(nextPage) ? nextPage : setUrlLanguage(req, ErrorPages.NOT_FOUND);
+  return res.redirect(checkedPage);
 };
 
 const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
@@ -36,6 +40,25 @@ const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
     req.session.returnUrl = undefined;
   }
   return nextPage;
+};
+
+const isValidUrl = (url: string): boolean => {
+  const urlStr: string[] = url.split('?');
+  const baseUrl: string = urlStr[0];
+  const legacyUrlValues: string[] = Object.values(LegacyUrls);
+  if (legacyUrlValues.includes(baseUrl) || baseUrl === '/' || baseUrl === '#') {
+    return true;
+  }
+  const validUrls = Object.values(PageUrls);
+  for (const validUrl of validUrls) {
+    if (validUrl === '/' || validUrl === '#') {
+      continue;
+    }
+    if (baseUrl.includes(validUrl)) {
+      return true;
+    }
+  }
+  return false;
 };
 
 export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string => {
