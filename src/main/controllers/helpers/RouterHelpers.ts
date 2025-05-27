@@ -28,18 +28,10 @@ export const conditionalRedirect = (
 };
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  const nextPage = handleReturnUrl(req, redirectUrl);
+  const nextPage = req.session.returnUrl ?? redirectUrl;
+  req.session.returnUrl = undefined;
   const checkedPage = isValidUrl(nextPage) ? nextPage : setUrlLanguage(req, ErrorPages.NOT_FOUND);
   return res.redirect(checkedPage);
-};
-
-const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
-  let nextPage = redirectUrl;
-  if (req.session.returnUrl) {
-    nextPage = req.session.returnUrl;
-    req.session.returnUrl = undefined;
-  }
-  return nextPage;
 };
 
 const isValidUrl = (url: string): boolean => {
