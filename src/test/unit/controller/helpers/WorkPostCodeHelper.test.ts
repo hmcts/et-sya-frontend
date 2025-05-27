@@ -1,14 +1,23 @@
-import { getRespondentAddressTypes } from '../../../../main/controllers/helpers/RespondentPostCodeSelectHelper';
+import { getWorkAddressTypes } from '../../../../main/controllers/helpers/WorkPostCodeHelper';
 import { AppRequest } from '../../../../main/definitions/appRequest';
 import commonJson from '../../../../main/resources/locales/en/translation/common.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
-describe('getRespondentAddressTypes', () => {
+describe('getWorkAddressTypes', () => {
   const req: AppRequest = mockRequestWithTranslation({}, commonJson);
 
   it('returns default "none" address type when response is empty', () => {
     const response: Record<string, string>[] = [];
-    const result = getRespondentAddressTypes(req, response);
+    const result = getWorkAddressTypes(response, req);
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual({
+      selected: true,
+      label: 'No addresses found',
+    });
+  });
+
+  it('returns default "none" address type when response is undefined', () => {
+    const result = getWorkAddressTypes(undefined, req);
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
       selected: true,
@@ -18,7 +27,7 @@ describe('getRespondentAddressTypes', () => {
 
   it('returns default "single" address type when response has one item', () => {
     const response: Record<string, string>[] = [{ fullAddress: '123 Test St' }];
-    const result = getRespondentAddressTypes(req, response);
+    const result = getWorkAddressTypes(response, req);
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({
       selected: true,
@@ -32,7 +41,7 @@ describe('getRespondentAddressTypes', () => {
 
   it('returns multiple address types when response has multiple items', () => {
     const response: Record<string, string>[] = [{ fullAddress: '123 Test St' }, { fullAddress: '456 Example Ave' }];
-    const result = getRespondentAddressTypes(req, response);
+    const result = getWorkAddressTypes(response, req);
     expect(result).toHaveLength(3);
     expect(result[0]).toEqual({
       selected: true,
@@ -52,7 +61,7 @@ describe('getRespondentAddressTypes', () => {
     const reqCy: AppRequest = mockRequestWithTranslation({}, commonJson);
     reqCy.url = 'https://example.com/?lng=cy';
     const response: Record<string, string>[] = [{ fullAddress: '123 Test St' }];
-    const result = getRespondentAddressTypes(reqCy, response);
+    const result = getWorkAddressTypes(response, reqCy);
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({
       selected: true,

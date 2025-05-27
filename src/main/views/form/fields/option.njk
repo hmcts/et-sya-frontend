@@ -7,7 +7,8 @@
   name: fieldName,
   label: {
     text: getContent(field.label),
-    classes: "hidden" if field.labelHidden else labelClasses
+    classes: "hidden" if field.labelHidden else labelClasses,
+    isPageHeading: field.isPageHeading
   },
   items: formItems(field.values, userCase[fieldName]),
   errorMessage: getError(fieldName),
