@@ -93,7 +93,7 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section3.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.DESCRIBE_WHAT_HAPPENED.toString()),
+            url: setUrlLanguage(req, PageUrls.TYPE_OF_CLAIM.toString()),
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
             status: (): string =>
               getSectionStatus(

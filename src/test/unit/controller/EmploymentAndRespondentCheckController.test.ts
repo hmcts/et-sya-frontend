@@ -24,13 +24,27 @@ describe('Test task List check controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
   });
 
-  it('should render the claim steps page', async () => {
+  it('should render the claim steps page when employmentAndRespondentCheck is Yes and userCase is valid', async () => {
     const body = { employmentAndRespondentCheck: YesOrNo.YES };
+    const userCase: Record<string, any> = {
+      respondents: [
+        {
+          respondentAddress1: '123 Street',
+          respondentAddressTown: 'Town',
+          respondentAddressCountry: 'Country',
+          respondentAddressPostcode: 'AB12 3CD',
+          acasCert: 'Yes',
+          acasCertNum: '123456',
+        },
+      ],
+    };
     const controller = new EmploymentAndRespondentCheckController();
 
-    const req = mockRequest({ body });
+    const req = mockRequest({ body, userCase });
     const res = mockResponse();
+
     await controller.post(req, res);
+
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 
@@ -45,5 +59,23 @@ describe('Test task List check controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should render the task list check page with errors when isValid is false', async () => {
+    const body = { employmentAndRespondentCheck: YesOrNo.YES };
+    const errors = [{ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' }];
+    const controller = new EmploymentAndRespondentCheckController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    jest
+      .spyOn(require('../../../main/components/form/claimDetailsValidator'), 'validateEmploymentAndRespondentDetails')
+      .mockReturnValue(false);
+
+    await controller.post(req, res);
+
+    expect(req.session.errors).toEqual(errors);
+    expect(res.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
   });
 });

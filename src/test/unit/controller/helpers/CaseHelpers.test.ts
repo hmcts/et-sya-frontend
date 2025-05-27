@@ -49,7 +49,7 @@ describe('getSectionStatus()', () => {
     {
       detailsCheckValue: YesOrNo.NO,
       sessionValue: undefined,
-      expected: sectionStatus.inProgress,
+      expected: sectionStatus.notStarted,
     },
     {
       detailsCheckValue: undefined,
@@ -100,7 +100,7 @@ describe('getSectionStatusForEmployment()', () => {
     {
       detailsCheckValue: YesOrNo.NO,
       sessionValue: undefined,
-      expected: sectionStatus.inProgress,
+      expected: sectionStatus.notStarted,
     },
     {
       detailsCheckValue: undefined,

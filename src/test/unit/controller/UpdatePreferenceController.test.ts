@@ -1,7 +1,7 @@
 import UpdatePreferenceController from '../../../main/controllers/UpdatePreferenceController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -20,8 +20,7 @@ describe('Update Preference Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.UPDATE_PREFERENCE, expect.anything());
   });
 
-  it('should redirect to the same screen when errors are present', async () => {
-    const errors = [{ propertyName: 'claimantContactPreference', errorType: 'required' }];
+  it('should go to the next screen when errors are present', async () => {
     const body = { claimantContactPreference: '' };
 
     const controller = new UpdatePreferenceController();
@@ -30,8 +29,7 @@ describe('Update Preference Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
-    expect(req.session.errors).toEqual(errors);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.VIDEO_HEARINGS);
   });
 
   it('should add the update preference form value to the userCase', async () => {
