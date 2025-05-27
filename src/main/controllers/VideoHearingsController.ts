@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked, isContent2500CharsOrLess } from '../components/form/validator';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { HearingPreference } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -25,7 +25,6 @@ export default class VideoHearingsController {
         labelSize: 'l',
         type: 'checkboxes',
         hint: l => l.selectAllHint,
-        validator: atLeastOneFieldIsChecked,
         values: [
           {
             name: 'hearingPreferences',

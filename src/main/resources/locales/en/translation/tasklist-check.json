@@ -8,10 +8,12 @@
   "hint": "You can change your answers later.",
   "errors": {
     "personalDetailsCheck": {
-      "required": "Tell us if you have completed this section"
+      "required": "Tell us if you have completed this section",
+      "invalid": "You must complete the Your details section before you can mark it as completed"
     },
     "employmentAndRespondentCheck": {
-      "required": "Tell us if you have completed this section"
+      "required": "Tell us if you have completed this section",
+      "invalid": "You must complete the Employment and respondent details section before you can mark it as completed"
     }
   }
 }
