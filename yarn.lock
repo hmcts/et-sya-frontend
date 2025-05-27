@@ -2234,31 +2234,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.17.0":
-  version: 2.17.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.17.0"
-  checksum: 665a3aed0bf0d0260dd6a5836299d458947be5534724b3f7bdc22a008de9dd751183922bbfb6bff81e020b531ab94e4ae94cb624fe13af8a85eb947138424da8
+"@launchdarkly/js-sdk-common@npm:2.18.0":
+  version: 2.18.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.18.0"
+  checksum: 6b8d0125c2407a30611ed86a9fee41f698c305bb96d5ffbe1aa2a7a0b70e6c6aaaf475089bb939122430e5d3ff3466788483a56a287a9726350a931211b49fbe
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.15.1":
-  version: 2.15.1
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.15.1"
+"@launchdarkly/js-server-sdk-common@npm:2.15.2":
+  version: 2.15.2
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.15.2"
   dependencies:
-    "@launchdarkly/js-sdk-common": 2.17.0
+    "@launchdarkly/js-sdk-common": 2.18.0
     semver: 7.5.4
-  checksum: aa5d91569f35906ea68c368365c700162792bde6a7dc388e3e3faa4d4ccb952b48117cf838f658864f889b8a1fc537d5ed462b3680e7d5dead3fbeffbc4a63f9
+  checksum: f2962495cd4210834d214886940ac3e577218ee921f821a1255b77797ee131631d3bbe6e4df01c6b856a3cf8034a6401594a43f6342a0e81f19cfdef82a52be9
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.9.1
-  resolution: "@launchdarkly/node-server-sdk@npm:9.9.1"
+  version: 9.9.2
+  resolution: "@launchdarkly/node-server-sdk@npm:9.9.2"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.15.1
+    "@launchdarkly/js-server-sdk-common": 2.15.2
     https-proxy-agent: ^5.0.1
     launchdarkly-eventsource: 2.1.0
-  checksum: a5ab6a23c6fd6dd11d48416a07c804aef0b80bf6e2620e48b1c15acce74be5da36be0c712c55e8605d56bf2b9da4a7e0127fb32b0056887fed5ee5fae898872c
+  checksum: ee7784591ed608c2e060324a5c2d2ec7a0ccd24bcccb31be9699046eb4d4c40649963f4c78ad9f243a352f55e4701b48921318cd8bd7bace62443a23893ec940
   languageName: node
   linkType: hard
 
@@ -3187,25 +3187,25 @@ __metadata:
   linkType: hard
 
 "@types/express@npm:*, @types/express@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "@types/express@npm:5.0.1"
+  version: 5.0.2
+  resolution: "@types/express@npm:5.0.2"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^5.0.0
     "@types/serve-static": "*"
-  checksum: 189dd078679c5f748644c9dccf6b9666755d2fd37741ae5b7494129531b14d0366746a79191e1064060c2547daf7d342a02c48923730f20c8980c9ca7dfce1d2
+  checksum: c6f73c75c2b62e293e5fadcfd7de61716e3d0c0eaecda082b1921c9c8e56ddc37c530c5d4d68404794b38c7e8f5b893719ffc04c6fba2efa2fb13223bfb0346b
   languageName: node
   linkType: hard
 
 "@types/express@npm:^4.17.11":
-  version: 4.17.21
-  resolution: "@types/express@npm:4.17.21"
+  version: 4.17.22
+  resolution: "@types/express@npm:4.17.22"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^4.17.33
     "@types/qs": "*"
     "@types/serve-static": "*"
-  checksum: fb238298630370a7392c7abdc80f495ae6c716723e114705d7e3fb67e3850b3859bbfd29391463a3fb8c0b32051847935933d99e719c0478710f8098ee7091c5
+  checksum: 977b1da93765983d823c32898c74c159f30b98341f4fd9400724f18196913fe0a07fa12eaa4efdad3cc8cf31e4036e06a16a88d43e9e1f78bbbb84365026aab0
   languageName: node
   linkType: hard
 
@@ -3316,9 +3316,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.194":
-  version: 4.17.16
-  resolution: "@types/lodash@npm:4.17.16"
-  checksum: 915618c5735b10007e0ed7d06fdce6b344f88fc721d492b189a69064bfd046d2382e1ba61d683eeb61cad60ca0286cd110e6fe0fa4ab2e99066a40478376831d
+  version: 4.17.17
+  resolution: "@types/lodash@npm:4.17.17"
+  checksum: cfa34a752f3c540a196e9f92dbaff93ae15fe4058da8cce1918dd9219076dc19eec33b043aae45865e2b3ef8234a845bb57366144ec8e52551e2bc3f119e04a1
   languageName: node
   linkType: hard
 
@@ -3355,11 +3355,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^22.0.0, @types/node@npm:^22.2.0":
-  version: 22.15.19
-  resolution: "@types/node@npm:22.15.19"
+  version: 22.15.21
+  resolution: "@types/node@npm:22.15.21"
   dependencies:
     undici-types: ~6.21.0
-  checksum: 5aa45bf93c62bba1193bf07a56dddd84b74f89a554a08e1bd7772610f529d8dc6f828d464bc28c10001bd0092b6b3d11736544b52e154f25f5ca0ed93f04c32b
+  checksum: 989f1ce3a99916a7298ae885210385fbcb339b07f8ef420b015d69dd68863aca68aeae07833736b300720d9394b8e1875600ce74166c24957d9907d29de0b788
   languageName: node
   linkType: hard
 
@@ -14513,11 +14513,11 @@ __metadata:
   linkType: hard
 
 "semver@npm:^7.5.2":
-  version: 7.7.1
-  resolution: "semver@npm:7.7.1"
+  version: 7.7.2
+  resolution: "semver@npm:7.7.2"
   bin:
     semver: bin/semver.js
-  checksum: 586b825d36874007c9382d9e1ad8f93888d8670040add24a28e06a910aeebd673a2eb9e3bf169c6679d9245e66efb9057e0852e70d9daa6c27372aab1dda7104
+  checksum: dd94ba8f1cbc903d8eeb4dd8bf19f46b3deb14262b6717d0de3c804b594058ae785ef2e4b46c5c3b58733c99c83339068203002f9e37cfe44f7e2cc5e3d2f621
   languageName: node
   linkType: hard
 
@@ -16574,8 +16574,8 @@ __metadata:
   linkType: hard
 
 "webpack@npm:^5.80.0":
-  version: 5.99.8
-  resolution: "webpack@npm:5.99.8"
+  version: 5.99.9
+  resolution: "webpack@npm:5.99.9"
   dependencies:
     "@types/eslint-scope": ^3.7.7
     "@types/estree": ^1.0.6
@@ -16606,7 +16606,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 40388883f17bb8c68fe0cc10cf158c350a90e52495c9ae465002b83a5eb0106079f42544bd7b177fb2a79fd9cd9c63f4a5a72c71474411bdccec3cfb53a597a5
+  checksum: 5fd25e64b8d5a31919087834af3678eaee62dbf8990024fb4c71584d4beb2c3e75ecbabbcc654fa2536e0aa7900172512c674c6650acd7088e534716faa8449d
   languageName: node
   linkType: hard
 

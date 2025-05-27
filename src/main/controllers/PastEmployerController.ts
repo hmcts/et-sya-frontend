@@ -5,7 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
@@ -20,7 +20,17 @@ export default class PastEmployerController {
   private readonly pastEmployerFormContent: FormContent = {
     fields: {
       pastEmployer: {
-        ...DefaultRadioFormFields,
+        type: 'radios', // Add the 'type' property
+        values: [
+          {
+            label: (l: AnyRecord): string => l.yes,
+            value: YesOrNo.YES,
+          },
+          {
+            label: (l: AnyRecord): string => l.no,
+            value: YesOrNo.NO,
+          },
+        ],
         label: (l: AnyRecord): string => l.heading,
         labelHidden: false,
         labelSize: 'xl',
