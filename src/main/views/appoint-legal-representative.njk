@@ -1,0 +1,53 @@
+{% extends "template.njk" %}
+
+{% set pageHeading = "Appoint a legal representative" %}
+{% set pageSection = "" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        {{ pageHeading }}
+      </h1>
+
+      <p class="govuk-body">
+        You have chosen to appoint a legal representative
+      </p>
+
+      <h2 class="govuk-heading-m">Your Claim Details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Case reference
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ caseReference }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Claimant name
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ claimantName }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Respondent name
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ respondentName }}
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">Download documents</h2>
+      <p class="govuk-body">
+        <a href="{{ downloadDocumentsUrl }}" class="govuk-link">
+          Download your claim documents
+        </a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
