@@ -307,12 +307,12 @@ withPipeline(type, product, component) {
         }
         echo "${env.triggerResponse}"
     }
-    } //End of script
+    //} //End of script
 
       echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
       sleep 300 // seconds
 
-  }
+  //}
 
             
     
@@ -321,4 +321,5 @@ withPipeline(type, product, component) {
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
    ])
+} // end of perf stage
 }
