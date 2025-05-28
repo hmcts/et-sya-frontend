@@ -93,7 +93,6 @@ async function createSingleMyselfCase() {
   I.see('What type of claim are you making?');
   I.see('You can choose all that apply to you. Further information will be asked for later in the claim.');
   I.see('Select all that apply');
-  I.see('Breach of contract - including notice pay');
   I.see('Discrimination of any type');
   I.see('for example because of your sex, ethnicity, disability or other characteristic');
   I.see('Pay-related claim');

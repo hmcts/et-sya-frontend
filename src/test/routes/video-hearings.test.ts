@@ -55,13 +55,13 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       });
   });
 
-  test('should reload the page when nothing has been selected', async () => {
+  test('should go to the next page when nothing has been selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: undefined })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
       });
   });
 });

@@ -6,7 +6,8 @@
   "p": "You can change your answers later.",
   "errors": {
     "claimDetailsCheck": {
-      "required": "Tell us if you have completed this section"
+      "required": "Tell us if you have completed this section",
+      "invalid": "You must complete the Claim details section before you can mark it as completed"
     }
   }
 }

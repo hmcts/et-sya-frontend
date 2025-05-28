@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { validatePersonalDetails } from '../components/form/claimDetailsValidator';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -38,6 +39,24 @@ export default class PersonalDetailsCheckController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body?.personalDetailsCheck === 'Yes') {
+      const userCase = req.session?.userCase;
+      const isValid = validatePersonalDetails(userCase);
+
+      req.session.errors = [];
+      if (!isValid) {
+        req.session.errors.push({ propertyName: 'personalDetailsCheck', errorType: 'invalid' });
+        const content = getPageContent(req, this.personalDetailsCheckContent, [
+          TranslationKeys.COMMON,
+          TranslationKeys.TASK_LIST_CHECK,
+        ]);
+
+        return res.render(TranslationKeys.TASK_LIST_CHECK, {
+          ...content,
+        });
+      }
+    }
+
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 

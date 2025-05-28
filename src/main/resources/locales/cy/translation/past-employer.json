@@ -1,6 +1,6 @@
 {
   "title": "Oeddech chi’n gweithio?",
-  "heading": "A wnaethoch weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
+  "heading": "A wnaethoch weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn? (dewisol)",
   "errors": {
     "pastEmployer": {
       "required": "Dywedwch wrthym a oeddech chi’n gweithio i’r sefydliad neu’r unigolyn"
