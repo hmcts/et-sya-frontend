@@ -1,7 +1,9 @@
 import { Response } from 'express';
+
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { getLanguageParam } from '../helpers/RouterHelpers';
+
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class AppointLegalRepController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
