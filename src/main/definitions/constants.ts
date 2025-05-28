@@ -439,6 +439,7 @@ export const languages = {
   ENGLISH: 'en',
   WELSH_LOCALE: '&ui_locales=cy',
   ENGLISH_LOCALE: '&ui_locales=en',
+  WELSH_URL_POSTFIX: 'lng=cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
