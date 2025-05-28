@@ -107,8 +107,6 @@ export const TranslationKeys = {
   APPLICATION_COMPLETE: 'application-complete',
   RESPOND_TO_APPLICATION_COMPLETE: 'respond-to-application-complete',
   WELSH: 'cy',
-  WELSH_URL_PARAMETER: '?lng=cy',
-  ENGLISH_URL_PARAMETER: '?lng=en',
   CONTACT_APPLICATION: 'contact-application',
   COPY_TO_OTHER_PARTY: 'copy-to-other-party',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
