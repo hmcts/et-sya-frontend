@@ -4,6 +4,14 @@ def sayHello(name) {
     echo "Hello, ${name}!"
 }
 
+def dynatraceApiHost
+def dynatraceEventIngestEndpoint
+def dynatraceMetricIngestEndpoint
+def dynatraceTriggerSyntheticEndpoint
+def dynatraceSyntheticPerfTest
+def dynatraceDashboardId
+def dynatraceEntitySelector
+
 this.Test = "dev"
 
 //Perf Vars (*Need to add to config file)
