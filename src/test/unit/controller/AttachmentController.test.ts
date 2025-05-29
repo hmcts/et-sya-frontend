@@ -114,7 +114,7 @@ describe('Attachment Controller', () => {
       'http.site/12345';
     const request = mockRequest({ userCase });
     request.params.docId = '12345';
-    request.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+    request.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
 
     controller.get(request, response);
     expect(getCaseApiMock).toHaveBeenCalled();

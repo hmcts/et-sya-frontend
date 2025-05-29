@@ -63,7 +63,7 @@
     "@types/require-directory": "^2.1.2",
     "@types/serve-favicon": "^2.5.4",
     "@types/session-file-store": "^1.2.2",
-    "applicationinsights": "2.9.6",
+    "applicationinsights": "2.9.7",
     "autobind-decorator": "^2.4.0",
     "codeceptjs": "3.4.1",
     "config": "^3.3.9",
@@ -164,7 +164,7 @@
   "resolutions": {
     "@swc/core": "1.3.82",
     "axios": "^1.7.4",
-    "@opentelemetry/instrumentation": "^0.200.0",
+    "@opentelemetry/instrumentation": "^0.201.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",

@@ -168,7 +168,7 @@ describe('Check your answers confirmation page', () => {
       'Incorrect href found'
     );
     expect(respondentAddressLink).equals(
-      respondentPartialUrl + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
+      respondentPartialUrl + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.ANSWERS_CHANGE,
       'Incorrect href found'
     );
     expect(workedForRespondentLink).equals(

@@ -11,7 +11,6 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
-import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -24,44 +23,38 @@ const logger = getLogger('ContactTheTribunalSelectedController');
  * Controller for any contact-the-tribunal application page
  */
 export default class ContactTheTribunalSelectedController {
+  private uploadedFileName = '';
+  private getHint = (label: AnyRecord): string => {
+    if (this.uploadedFileName && this.uploadedFileName !== '') {
+      return (label.contactApplicationFile.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
+    } else {
+      return '';
+    }
+  };
+
   private readonly form: Form;
   private readonly contactApplicationContent: FormContent = {
     fields: {
       contactApplicationText: {
         id: 'Contact-Application-Text',
         type: 'textarea',
-        label: l => l.legend,
-        labelHidden: true,
-        labelSize: 'normal',
-        hint: l => l.contactApplicationText,
-        attributes: { title: 'Give details text area' },
+        label: l => l.contactApplicationText,
+        labelHidden: false,
       },
-      inset: {
-        id: 'inset',
-        classes: 'govuk-heading-m',
-        label: l => l.files.title,
-        type: 'insetFields',
-        subFields: {
-          contactApplicationFile: {
-            id: 'contactApplicationFile',
-            classes: 'govuk-label',
-            labelHidden: false,
-            labelSize: 'm',
-            type: 'upload',
-          },
-          upload: {
-            label: (l: AnyRecord): string => l.files.button,
-            classes: 'govuk-button--secondary',
-            id: 'upload',
-            type: 'button',
-            name: 'upload',
-            value: 'true',
-          },
-        },
+      contactApplicationFile: {
+        type: 'upload',
+        id: 'contactApplicationFile',
+        classes: 'govuk-label',
+        label: l => l.contactApplicationFile.title,
+        hint: (l: AnyRecord) => this.getHint(l),
       },
-      filesUploaded: {
-        label: l => l.files.uploaded,
-        type: 'summaryList',
+      remove: {
+        label: (l: AnyRecord): string => l.contactApplicationFile.removeButton,
+        classes: 'govuk-button--secondary',
+        type: 'button',
+        id: 'remove',
+        name: 'remove',
+        value: 'true',
       },
     },
     submit: {
@@ -74,6 +67,12 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body.url) {
+      logger.warn('Potential bot activity detected from IP: ' + req.ip);
+      res.status(200).end('Thank you for your submission. You will be contacted in due course.');
+      return;
+    }
+
     const userCase = req.session.userCase;
     const languageParam = getLanguageParam(req.url);
 
@@ -84,6 +83,15 @@ export default class ContactTheTribunalSelectedController {
       logger.info('bad request parameter: "' + selectedOption + '"');
       res.redirect(ErrorPages.NOT_FOUND + languageParam);
       return;
+    }
+
+    if (req.body?.remove) {
+      if (req.session?.userCase?.contactApplicationFile) {
+        req.session.userCase.contactApplicationFile = undefined;
+      }
+      return res.redirect(
+        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+      );
     }
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -105,7 +113,7 @@ export default class ContactTheTribunalSelectedController {
       );
     }
 
-    if (req.body.upload) {
+    if (req.file) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
@@ -114,10 +122,10 @@ export default class ContactTheTribunalSelectedController {
       } catch (error) {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
+        return res.redirect(
+          PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
+        );
       }
-      return res.redirect(
-        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam
-      );
     }
     req.session.errors = [];
 
@@ -147,24 +155,14 @@ export default class ContactTheTribunalSelectedController {
       userCase.contactApplicationType = selectedApplication;
     }
 
+    this.uploadedFileName = userCase?.contactApplicationFile?.document_filename;
+
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
-
-    (this.contactApplicationContent.fields as any).inset.subFields.upload.disabled =
-      userCase?.contactApplicationFile !== undefined;
-
-    (this.contactApplicationContent.fields as any).filesUploaded.rows = getFiles(
-      userCase,
-      getLanguageParam(req.url),
-      selectedApplication,
-      {
-        ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
-      }
-    );
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),

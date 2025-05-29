@@ -21,7 +21,7 @@ describe('Store response to Tribunal Order Complete Controller tests', () => {
       TranslationKeys.STORED_APPLICATION_CONFIRMATION,
       expect.objectContaining({
         redirectUrl: '/citizen-hub/1234',
-        viewThisCorrespondenceLink: '/tribunal-order-or-request-details/246?lng=en',
+        viewThisCorrespondenceLink: '/notification-details/246?lng=en',
       })
     );
   });

@@ -99,14 +99,14 @@ export default class AddressDetailsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const x = req.session.userCase.addressAddressTypes;
+    const addressAddressTypes = req.session.userCase.addressAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDRESS_DETAILS,
       TranslationKeys.ENTER_ADDRESS,
     ]);
-    if (x !== undefined) {
-      fillAddressAddressFields(x, req.session.userCase);
+    if (addressAddressTypes !== undefined) {
+      fillAddressAddressFields(addressAddressTypes, req.session.userCase);
     }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ADDRESS_DETAILS, {

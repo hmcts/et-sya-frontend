@@ -1,5 +1,6 @@
 import { CaseWithId, NoAcasNumberReason, Respondent, YesOrNo } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { SummaryListRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
@@ -40,8 +41,8 @@ export const getRespondentSection = (
   translations: AnyRecord,
   languageParam: string,
   addRemoveButton: boolean
-): unknown => {
-  const respondentSections = [];
+): SummaryListRow[] => {
+  const respondentSections: SummaryListRow[] = [];
   if (index === 1 || !addRemoveButton) {
     respondentSections.push({
       key: {
@@ -73,50 +74,50 @@ export const getRespondentSection = (
     });
   }
 
-  respondentSections.push(
-    {
-      key: {
-        text: translations.respondentDetails.respondentName,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: respondent.respondentName,
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.respondentDetails.respondentName,
-          },
-        ],
-      },
+  respondentSections.push({
+    key: {
+      text: translations.respondentDetails.respondentName,
+      classes: 'govuk-!-font-weight-regular-m',
     },
-    {
-      key: {
-        text: translations.respondentDetails.respondentAddress,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: answersAddressFormatter(
-          respondent.respondentAddress1,
-          respondent.respondentAddress2,
-          respondent.respondentAddressTown,
-          respondent.respondentAddressCountry,
-          respondent.respondentAddressPostcode
-        ),
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.respondentDetails.respondentAddress,
-          },
-        ],
-      },
-    }
-  );
+    value: {
+      text: respondent.respondentName,
+    },
+    actions: {
+      items: [
+        {
+          href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.ANSWERS_CHANGE,
+          text: translations.change,
+          visuallyHiddenText: translations.respondentDetails.respondentName,
+        },
+      ],
+    },
+  });
+
+  respondentSections.push({
+    key: {
+      text: translations.respondentDetails.respondentAddress,
+      classes: 'govuk-!-font-weight-regular-m',
+    },
+    value: {
+      text: answersAddressFormatter(
+        respondent.respondentAddress1,
+        respondent.respondentAddress2,
+        respondent.respondentAddressTown,
+        respondent.respondentAddressCountry,
+        respondent.respondentAddressPostcode
+      ),
+    },
+    actions: {
+      items: [
+        {
+          href: '/respondent/' + index + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.ANSWERS_CHANGE,
+          text: translations.change,
+          visuallyHiddenText: translations.respondentDetails.respondentAddress,
+        },
+      ],
+    },
+  });
+
   if (index === 1 && userCase.pastEmployer === YesOrNo.YES) {
     respondentSections.push({
       key: {
@@ -234,61 +235,69 @@ export const getRespondentDetailsSection = (
   respondent: Respondent,
   index: string,
   translations: AnyRecord
-): unknown => {
-  const respondentSections = [];
-  respondentSections.push(
-    {
-      key: {
-        text: translations.name,
-      },
-      value: {
-        text: respondent.respondentName,
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.name,
-          },
-        ],
-      },
+): SummaryListRow[] => {
+  const respondentSections: SummaryListRow[] = [];
+
+  respondentSections.push({
+    key: {
+      text: translations.name,
     },
-    {
-      key: {
-        text: translations.address,
-      },
-      value: {
-        text: answersAddressFormatter(respondent.respondentAddress1, respondent.respondentAddressPostcode),
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.address,
-          },
-        ],
-      },
+    value: {
+      text: respondent.respondentName,
     },
-    {
-      key: {
-        text: translations.acasNum,
-      },
-      value: {
-        html: respondent.acasCertNum ?? translations.unProvided,
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.acasNum,
-          },
-        ],
-      },
-    }
-  );
+    actions: {
+      items: [
+        {
+          href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
+          text: translations.change,
+          visuallyHiddenText: translations.name,
+        },
+      ],
+    },
+  });
+
+  respondentSections.push({
+    key: {
+      text: translations.address,
+    },
+    value: {
+      text: answersAddressFormatter(
+        respondent.respondentAddress1,
+        respondent.respondentAddress2,
+        respondent.respondentAddressTown,
+        respondent.respondentAddressCountry,
+        respondent.respondentAddressPostcode
+      ),
+    },
+    actions: {
+      items: [
+        {
+          href: '/respondent/' + index + PageUrls.RESPONDENT_POSTCODE_ENTER + InterceptPaths.RESPONDENT_CHANGE,
+          text: translations.change,
+          visuallyHiddenText: translations.address,
+        },
+      ],
+    },
+  });
+
+  respondentSections.push({
+    key: {
+      text: translations.acasNum,
+    },
+    value: {
+      html: respondent.acasCertNum ?? translations.unProvided,
+    },
+    actions: {
+      items: [
+        {
+          href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
+          text: translations.change,
+          visuallyHiddenText: translations.acasNum,
+        },
+      ],
+    },
+  });
+
   if (respondent.acasCert === YesOrNo.NO) {
     respondentSections.push({
       key: {
@@ -308,5 +317,6 @@ export const getRespondentDetailsSection = (
       },
     });
   }
+
   return respondentSections;
 };

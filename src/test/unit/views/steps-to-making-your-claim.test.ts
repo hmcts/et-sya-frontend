@@ -458,8 +458,8 @@ describe('Steps to making your claim page tags', () => {
       });
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
     expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
-    for (let index = 0; index < tasklistTags.length - 2; index++) {
-      expect(tasklistTags[index].innerHTML).contains(sectionStatus.inProgress);
+    for (let index = 0; index < tasklistTags.length - 3; index++) {
+      expect(tasklistTags[index].innerHTML).contains(sectionStatus.notStarted);
     }
     expect(tasklistTags[7].innerHTML).contains(sectionStatus.cannotStartYet);
   });
