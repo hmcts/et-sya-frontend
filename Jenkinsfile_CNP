@@ -213,6 +213,22 @@ withPipeline(type, product, component) {
         //==========================================    
         /// POST Metric to highlight a deployment
         //==========================================
+        //config = load 'src/test/performance/config/config.groovy'
+            echo "Posting Custom DT Metric:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceMetricIngestEndpoint}\n MetricType: ${config.dynatraceMetricType}\n MetricTag: ${config.dynatraceMetricTag}\Environment: ${env}"
+            try {
+                def postDynatraceMetric = utils.postDynatraceMetric (
+                            config.dynatraceApiHost,
+                            config.dynatraceMetricIngestEndpoint,
+                            config.dynatraceMetricType,
+                            config.dynatraceMetricTag,
+                            ${env}
+                )
+            } catch (Exception e)
+            {
+                echo "Failure posting Dynatrace Metric: ${e.message}"
+            }
+
+
         try {
         def postDTMetric = httpRequest(
             acceptType: 'APPLICATION_JSON',

@@ -1,48 +1,60 @@
 // Performance in pipelines
 
+//==========================================    
 // Request to send dynatrace custom_info event
+//==========================================    
 def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDashboardId, dynatraceEntitySelector) {
-    try {
-        def response = httpRequest(
-            acceptType: 'APPLICATION_JSON',
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
-            quiet: true,
-            customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
-            ],
-            url: "${dynatraceApiHost}api/v2/events/ingest",
-            requestBody: """{
-                "entitySelector": "${dynatraceEntitySelector}",
-                "eventType": "CUSTOM_INFO",
-                "properties": {
-                    "Workspace": "${env.WORKSPACE}",
-                    "Branch": "${env.BRANCH_NAME}",
-                    "Build Number": "${env.BUILD_NUMBER}",
-                    "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
-                    "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
-                },
-                "timeout": 1,
-                "title": "ET-SYA-Frontend Performance Event"
-            }"""
-        )
-        echo "Dynatrace event posted successfully."
-        return response
-    } catch (Exception e) {
-        echo "Error while sending Dynatrace request: ${e.message}"
-        return response
-    }
+
+    def response = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'POST',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}api/v2/events/ingest",
+        requestBody: """{
+            "entitySelector": "${dynatraceEntitySelector}",
+            "eventType": "CUSTOM_INFO",
+            "properties": {
+                "Workspace": "${env.WORKSPACE}",
+                "Branch": "${env.BRANCH_NAME}",
+                "Build Number": "${env.BUILD_NUMBER}",
+                "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
+                "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
+            },
+            "timeout": 1,
+            "title": "ET-SYA-Frontend Performance Event"
+        }"""
+    )
+    echo "Dynatrace event posted successfully."
+    return response
+}
+
+//==========================================    
+/// POST Metric to highlight a deployment
+//==========================================
+def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatraceMetricType, dynatraceMetricTag, environment) {
+
+    def postDTMetric = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'TEXT_PLAIN',
+        httpMode: 'POST',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
+        requestBody: "env.release.value,type=${dynatraceMetricType},tag=${dynatraceMetricTag},env=${environment} 3"
+    ) 
+    echo "${env.postDTMetric}"
+    return postDTMetric
 }
 
 return this
 
 
-
-
-
-
-
-return this
 
 //Static vars
 //dynatraceApiHost: "https://yrk32651.live.dynatrace.com/"
