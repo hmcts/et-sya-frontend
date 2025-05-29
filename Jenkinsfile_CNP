@@ -1,7 +1,7 @@
 #!groovy
 
-//@Library("Infrastructure")
-@Library('Infrastructure@add-perftest-vars') _
+@Library("Infrastructure")
+//@Library('Infrastructure@add-perftest-vars') _
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
@@ -180,11 +180,11 @@ withPipeline(type, product, component) {
 
         //Perf Vars (*Need to add to config file)
         //def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
-        def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
-        def dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
-        def dynatraceTriggerSynthticEndpoint = "api/v2/synthetic/executions/batch"
-        def dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
-        def dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
+        //def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
+        //def dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
+        //def dynatraceTriggerSynthticEndpoint = "api/v2/synthetic/executions/batch"
+        //def dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
+        //def dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
 
         echo "Starting performance test stage..."
         // Log details of the build
