@@ -191,13 +191,30 @@ withPipeline(type, product, component) {
         echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
         //Check token:
         echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+        // try {
+            // def config = load 'src/test/performance/config/config.groovy'
+            // echo "Loaded Config Succesfully.."
+        // } catch (Exception e) {
+            // echo "Error while loading the config file: ${e.message}"
+        // }
+        // echo "API Host: ${config.dynatraceApiHost}"
+        
+        // Print the loaded config
+        // echo "Dynatrace API URL: ${config.dynatraceApiHost}"
+        //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+        //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+
+        //Load Config
+        //def config = load '.\src\test\performance\config\config.groovy'
+        // Accessing the entitySelector from the config map
+        //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
 
         //==========================================
         //Trigger Custom DT Event with Info:
         //==========================================
         script {
             //config = load 'src/test/performance/config/config.groovy'
-            echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
+            echo "CONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
             try {
                 def postDTEvent = utils.postDynatraceEvent (
                             config.dynatraceApiHost,
@@ -207,8 +224,36 @@ withPipeline(type, product, component) {
                 )
             } catch (Exception e)
             {
-                echo "Failure posting Dynatrace Event: ${e.message}"
+                echo "Error Message: ${e.message}"
             }
+            
+            // def postDTEvent = httpRequest(
+            // acceptType: 'APPLICATION_JSON',
+            // contentType: 'APPLICATION_JSON',
+            // httpMode: 'POST',
+            // quiet: true,
+            // customHeaders: [
+                // [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+            // ],
+            // url: "${config.dynatraceApiHost}api/v2/events/ingest",
+            // requestBody: """{
+                // "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
+                // "eventType": "CUSTOM_INFO",
+                // "properties": {
+                        // "Workspace": "${env.WORKSPACE}",
+                        // "Branch": "${env.BRANCH_NAME}",
+                        // "Build Number": "${env.BUILD_NUMBER}",
+                        // "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
+                        // "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
+                // },
+                // "timeout": 1,
+                // "title": "ET-SYA-Frontend Performance Event"
+                //   }"""
+            // ) }
+            // catch (Exception e) {
+            // echo "Error while sending Request: ${e.message}"
+            // }
+            // echo "${env.postDTEvent}"
 
         //==========================================    
         /// POST Metric to highlight a deployment
