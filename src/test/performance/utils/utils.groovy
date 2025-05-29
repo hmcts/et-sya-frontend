@@ -5,6 +5,7 @@
 //==========================================    
 def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDashboardId, dynatraceEntitySelector) {
 
+    try {
     def response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
@@ -29,6 +30,10 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
         }"""
     )
     echo "Dynatrace event posted successfully."
+    } catch (Exception e)
+    {
+        echo "Failure posting Dynatrace Event: ${e.message}"
+    }
     return response
 }
 
@@ -37,6 +42,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
 //==========================================
 def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatraceMetricType, dynatraceMetricTag, environment) {
 
+    try {
     def postDTMetric = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'TEXT_PLAIN',
@@ -49,6 +55,10 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
         requestBody: "env.release.value,type=${dynatraceMetricType},tag=${dynatraceMetricTag},env=${environment} 3"
     ) 
     echo "${env.postDTMetric}"
+    } catch (Exception e)
+    {
+    echo "Failure posting Dynatrace EMetric: ${e.message}"
+    }
     return postDTMetric
 }
 
