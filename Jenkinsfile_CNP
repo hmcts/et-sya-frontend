@@ -214,7 +214,7 @@ withPipeline(type, product, component) {
         /// POST Metric to highlight a deployment
         //==========================================
         //config = load 'src/test/performance/config/config.groovy'
-            echo "Posting Custom DT Metric:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceMetricIngestEndpoint}\n MetricType: ${config.dynatraceMetricType}\n MetricTag: ${config.dynatraceMetricTag}\n Environment: ${env}"
+            echo "Posting Custom DT Metric:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceMetricIngestEndpoint}\n MetricType: ${config.dynatraceMetricType}\n MetricTag: ${config.dynatraceMetricTag}\n Environment: perftest"
             try {
                 def postDynatraceMetric = utils.postDynatraceMetric (
                             config.dynatraceApiHost,
@@ -227,24 +227,6 @@ withPipeline(type, product, component) {
             {
                 echo "Failure posting Dynatrace Metric: ${e.message}"
             }
-
-
-        try {
-        def postDTMetric = httpRequest(
-            acceptType: 'APPLICATION_JSON',
-            contentType: 'TEXT_PLAIN',
-            httpMode: 'POST',
-            quiet: true,
-            customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
-            ],
-            url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
-            requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
-        ) }
-        catch (Exception e) {
-            echo "Error while sending Request: ${e.message}"
-        }
-        echo "${env.postDTMetric}"
 
         //==========================================   
         //Trigger Dynatrace Synthetic Test

@@ -12,7 +12,7 @@ def dynatraceSyntheticPerfTest
 def dynatraceDashboardId
 def dynatraceEntitySelector
 
-this.Test = "dev"
+def this.Test = "dev"
 
 //Perf Vars (*Need to add to config file)
 this.dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
