@@ -56,7 +56,7 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
     echo "Dynatrace metric posted successfully. Response Code: ${response}"
     } catch (Exception e)
     {
-    echo "Failure posting Dynatrace EMetric: ${e.message}"
+    echo "Failure posting Dynatrace Metric: ${e.message}"
     }
     return response
 }
