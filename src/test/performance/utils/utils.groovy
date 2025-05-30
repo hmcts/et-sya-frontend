@@ -1,10 +1,10 @@
 // Performance in pipelines
+def response = null
 
 //==========================================    
 // Request to send dynatrace custom_info event
 //==========================================    
 def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDashboardId, dynatraceEntitySelector) {
-    def response = null
     try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
@@ -41,9 +41,8 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
 /// POST Metric to highlight a deployment
 //==========================================
 def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatraceMetricType, dynatraceMetricTag, environment) {
-
     try {
-    def postDTMetric = httpRequest(
+    def response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'TEXT_PLAIN',
         httpMode: 'POST',
@@ -54,12 +53,12 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
         url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
         requestBody: "env.release.value,type=${dynatraceMetricType},tag=${dynatraceMetricTag},env=${environment} 3"
     ) 
-    echo "${env.postDTMetric}"
+    echo "Dynatrace metric posted successfully. Response Code: ${response}"
     } catch (Exception e)
     {
     echo "Failure posting Dynatrace EMetric: ${e.message}"
     }
-    return postDTMetric
+    return response
 }
 
 return this
