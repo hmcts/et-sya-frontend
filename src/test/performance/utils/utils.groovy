@@ -86,7 +86,8 @@ def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoi
             ]
         }"""
     )
-    echo "Dynatrace synthetic test triggered. Response ${response}"}
+    echo "Dynatrace synthetic test triggered. Response ${response}"
+    }
     catch (Exception e) {
         echo "Error while sending Request: ${e.message}"
     }
