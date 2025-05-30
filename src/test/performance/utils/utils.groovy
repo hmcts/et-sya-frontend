@@ -29,7 +29,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
             "title": "ET-SYA-Frontend Performance Event"
         }"""
     )
-    echo "Dynatrace event posted successfully. Response Code: ${response}"
+    echo "Dynatrace event posted successfully. Response ${response}"
     } catch (Exception e)
     {
         echo "Failure posting Dynatrace Event: ${e.message}"
@@ -54,7 +54,7 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
         url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
         requestBody: "env.release.value,type=${dynatraceMetricType},tag=${dynatraceMetricTag},env=${environment} 3"
     ) 
-    echo "Dynatrace metric posted successfully. Response Code: ${response}"
+    echo "Dynatrace metric posted successfully. Response ${response}"
     } catch (Exception e)
     {
     echo "Failure posting Dynatrace Metric: ${e.message}"
@@ -85,7 +85,8 @@ def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoi
                 }
             ]
         }"""
-    ) }
+    )
+    echo "Dynatrace synthetic test triggered. Response ${response}"}
     catch (Exception e) {
         echo "Error while sending Request: ${e.message}"
     }

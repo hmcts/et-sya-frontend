@@ -160,7 +160,9 @@ withPipeline(type, product, component) {
 
   afterAlways('functionalTest:preview') {
 
-        // //************** TEST **********
+        //==========================================
+        // Load Performance Test Config
+        //==========================================
         stage('Performance Test - Load Config & Utils') {
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
             script {
