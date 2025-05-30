@@ -10,8 +10,17 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 def branchesToSync = ['demo', 'ithc']
+
+//Perf Vars
 def config
 def utils
+def dynatraceApiHost
+def dynatraceEventIngestEndpoint
+def dynatraceMetricIngestEndpoint
+def dynatraceTriggerSyntheticEndpoint
+def dynatraceSyntheticPerfTest
+def dynatraceDashboardId
+def dynatraceEntitySelector
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 

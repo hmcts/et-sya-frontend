@@ -4,15 +4,15 @@ def sayHello(name) {
     echo "Hello, ${name}!"
 }
 
-def dynatraceApiHost
-def dynatraceEventIngestEndpoint
-def dynatraceMetricIngestEndpoint
-def dynatraceTriggerSyntheticEndpoint
-def dynatraceSyntheticPerfTest
-def dynatraceDashboardId
-def dynatraceEntitySelector
+//def dynatraceApiHost
+//def dynatraceEventIngestEndpoint
+//def dynatraceMetricIngestEndpoint
+//def dynatraceTriggerSyntheticEndpoint
+//def dynatraceSyntheticPerfTest
+//def dynatraceDashboardId
+//def dynatraceEntitySelector
 
-def this.Test = "dev"
+this.Test = "dev"
 
 //Perf Vars (*Need to add to config file)
 this.dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
