@@ -4,9 +4,9 @@
 // Request to send dynatrace custom_info event
 //==========================================    
 def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDashboardId, dynatraceEntitySelector) {
-
+    def response = null
     try {
-    def response = httpRequest(
+    response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
         httpMode: 'POST',

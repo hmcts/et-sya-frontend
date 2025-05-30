@@ -207,17 +207,12 @@ withPipeline(type, product, component) {
         script {
             //config = load 'src/test/performance/config/config.groovy'
             echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
-            //try {
-                def postDTEvent = utils.postDynatraceEvent (
-                            config.dynatraceApiHost,
-                            config.dynatraceSyntheticPerfTest,
-                            config.dynatraceDashboardId,
-                            config.dynatraceEntitySelector
-                )
-            //} catch (Exception e)
-            //{
-            //    echo "Failure posting Dynatrace Event: ${e.message}"
-           // }
+            
+            def postDTEvent = utils.postDynatraceEvent (
+                        config.dynatraceApiHost,
+                        config.dynatraceSyntheticPerfTest,
+                        config.dynatraceDashboardId,
+                        config.dynatraceEntitySelector)
 
         //==========================================    
         /// POST Metric to highlight a deployment
