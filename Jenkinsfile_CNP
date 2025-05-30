@@ -233,7 +233,7 @@ withPipeline(type, product, component) {
         //==========================================    
             echo "Triggering Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceTriggerSyntheticEndpoint}\n SyntheticTest: ${config.dynatraceSyntheticPerfTest}\n Dashboard: ${config.dynatraceDashboardURL}\n Environment: perftest"
             try {
-                def postDynatraceMetric = utils.postDynatraceMetric (
+                def postDynatraceSyntheticTest = utils.postDynatraceSyntheticTest (
                             config.dynatraceApiHost,
                             config.dynatraceTriggerSyntheticEndpoint,
                             config.dynatraceSyntheticPerfTest
