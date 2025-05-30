@@ -21,6 +21,7 @@ this.dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
 this.dynatraceTriggerSyntheticEndpoint = "api/v2/synthetic/executions/batch"
 this.dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
 this.dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
+this.dynatraceDashboardURL "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
 this.dynatraceEntitySelector = 'type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")'
 this.dynatraceMetricType = 'nodejs'
 this.dynatraceMetricTag = 'namespace:et'

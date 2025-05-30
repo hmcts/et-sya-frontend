@@ -162,9 +162,7 @@ withPipeline(type, product, component) {
 
         // //************** TEST **********
         stage('Performance Test - Load Config & Utils') {
-
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
-
             script {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
@@ -172,7 +170,6 @@ withPipeline(type, product, component) {
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
-
                 if (utils?.Test) {
                     echo "API Host: ${config.Test}"
                 } else {
@@ -205,19 +202,18 @@ withPipeline(type, product, component) {
         //Trigger Custom DT Event with Info:
         //==========================================
         script {
-            //config = load 'src/test/performance/config/config.groovy'
-            echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
+            echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardURL}"
             
             def postDTEvent = utils.postDynatraceEvent (
                         config.dynatraceApiHost,
                         config.dynatraceSyntheticPerfTest,
                         config.dynatraceDashboardId,
-                        config.dynatraceEntitySelector)
+                        config.dynatraceEntitySelector
+                )
 
         //==========================================    
         /// POST Metric to highlight a deployment
         //==========================================
-        //config = load 'src/test/performance/config/config.groovy'
             echo "Posting Custom DT Metric:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceMetricIngestEndpoint}\n MetricType: ${config.dynatraceMetricType}\n MetricTag: ${config.dynatraceMetricTag}\n Environment: perftest"
             try {
                 def postDynatraceMetric = utils.postDynatraceMetric (
@@ -234,40 +230,24 @@ withPipeline(type, product, component) {
 
         //==========================================   
         //Trigger Dynatrace Synthetic Test
-        //==========================================
-        try {
-        def triggerResponse = httpRequest(
-            acceptType: 'APPLICATION_JSON',
-            contentType: 'APPLICATION_JSON',
-            httpMode: 'POST',
-            quiet: true,
-            customHeaders: [
-                [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
-            ],
-            url: "${dynatraceApiHost}${dynatraceTriggerSyntheticEndpoint}",
-            requestBody: """{
-                "monitors": [
-                    {
-                        "monitorId": "${dynatraceSyntheticPerfTest}"
-                    }
-                ]
-            }"""
-        ) }
-        catch (Exception e) {
-            echo "Error while sending Request: ${e.message}"
-        }
-        echo "${env.triggerResponse}"
-    }
-    } //End of script
+        //==========================================    
+            echo "Triggering Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceTriggerSyntheticEndpoint}\n SyntheticTest: ${config.dynatraceSyntheticPerfTest}\n Dashboard: ${config.dynatraceDashboardURL}\n Environment: perftest"
+            try {
+                def postDynatraceMetric = utils.postDynatraceMetric (
+                            config.dynatraceApiHost,
+                            config.dynatraceTriggerSyntheticEndpoint,
+                            config.dynatraceSyntheticPerfTest
+                )
+            } catch (Exception e)
+            {
+                echo "Failure posting Dynatrace Metric: ${e.message}"
+            }
+        } //End of script
+    } //End of Stage
 
       echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
       sleep 300 // seconds
-
   }
-
-            
-    
-    
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER

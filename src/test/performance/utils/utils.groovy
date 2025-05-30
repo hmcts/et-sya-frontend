@@ -1,10 +1,10 @@
 // Performance in pipelines
-def response = null
 
 //==========================================    
 // Request to send dynatrace custom_info event
 //==========================================    
 def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDashboardId, dynatraceEntitySelector) {
+    def response = null
     try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
@@ -41,8 +41,9 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
 /// POST Metric to highlight a deployment
 //==========================================
 def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatraceMetricType, dynatraceMetricTag, environment) {
+    def response = null
     try {
-    def response = httpRequest(
+    response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'TEXT_PLAIN',
         httpMode: 'POST',
@@ -57,6 +58,36 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
     } catch (Exception e)
     {
     echo "Failure posting Dynatrace Metric: ${e.message}"
+    }
+    return response
+}
+
+
+//==========================================   
+//Trigger Dynatrace Synthetic Test
+//==========================================
+def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoint,dynatraceSyntheticPerfTest) {
+    def response = null
+    try {
+    response = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'POST',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}${dynatraceTriggerSyntheticEndpoint}",
+        requestBody: """{
+            "monitors": [
+                {
+                    "monitorId": "${dynatraceSyntheticPerfTest}"
+                }
+            ]
+        }"""
+    ) }
+    catch (Exception e) {
+        echo "Error while sending Request: ${e.message}"
     }
     return response
 }
