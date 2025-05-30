@@ -63,34 +63,34 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
 }
 
 
-//==========================================   
-//Trigger Dynatrace Synthetic Test
-//==========================================
-def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoint,dynatraceSyntheticPerfTest) {
-    def response = null
-    try {
-    response = httpRequest(
-        acceptType: 'APPLICATION_JSON',
-        contentType: 'APPLICATION_JSON',
-        httpMode: 'POST',
-        quiet: true,
-        customHeaders: [
-            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
-        ],
-        url: "${dynatraceApiHost}${dynatraceTriggerSyntheticEndpoint}",
-        requestBody: """{
-            "monitors": [
-                {
-                    "monitorId": "${dynatraceSyntheticPerfTest}"
-                }
-            ]
-        }"""
-    ) }
-    catch (Exception e) {
-        echo "Error while sending Request: ${e.message}"
-    }
-    return response
-}
+// //==========================================   
+// //Trigger Dynatrace Synthetic Test
+// //==========================================
+// def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoint,dynatraceSyntheticPerfTest) {
+    // def response = null
+    // try {
+    // response = httpRequest(
+        // acceptType: 'APPLICATION_JSON',
+        // contentType: 'APPLICATION_JSON',
+        // httpMode: 'POST',
+        // quiet: true,
+        // customHeaders: [
+            // [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+        // ],
+        // url: "${dynatraceApiHost}${dynatraceTriggerSyntheticEndpoint}",
+        // requestBody: """{
+            // "monitors": [
+                // {
+                    // "monitorId": "${dynatraceSyntheticPerfTest}"
+                // }
+            // ]
+        // }"""
+    // ) }
+    // catch (Exception e) {
+        // echo "Error while sending Request: ${e.message}"
+    // }
+    // return response
+// }
 
 return this
 
