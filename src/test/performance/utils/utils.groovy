@@ -29,8 +29,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
             "title": "ET-SYA-Frontend Performance Event"
         }"""
     )
-    echo "${response}"
-    echo "Dynatrace event posted successfully."
+    echo "Dynatrace event posted successfully. Response Code: ${response}"
     } catch (Exception e)
     {
         echo "Failure posting Dynatrace Event: ${e.message}"
