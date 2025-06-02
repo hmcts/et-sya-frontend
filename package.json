@@ -176,7 +176,7 @@
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
     "es5-ext": "^0.10.63",
-    "formidable": "^3.2.4",
+    "formidable": "^3.5.3",
     "puppeteer": "^23.2.0",
     "ws": "^8.17.1",
     "ip": "^2.0.1",
@@ -185,7 +185,8 @@
     "lodash": "^4.17.21",
     "nanoid": "^3.3.8",
     "path-to-regexp": "^0.1.12",
-    "serialize-javascript": "^6.0.2"
+    "serialize-javascript": "^6.0.2",
+    "tar-fs": "^3.0.7"
   },
   "packageManager": "yarn@3.8.7"
 }
