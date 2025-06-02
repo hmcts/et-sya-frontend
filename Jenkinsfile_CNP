@@ -244,6 +244,32 @@ withPipeline(type, product, component) {
             {
                 echo "Failure posting Dynatrace Metric: ${e.message}"
             }
+
+        //==========================================  
+        //Check for Status of Synthetic Test
+        //========================================== 
+        def status = "TRIGGERED"
+        def checkCount = 1
+        def getDynatraceSyntheticStatus = null 
+
+        while (status == "TRIGGERED" && checkCount <= 16) {
+            echo "Checking Status of Synthetic Test:\n TestID: ${postDynatraceSyntheticTest.lastExecutionId}\nStatus: ${config.dynatraceTriggerSyntheticEndpoint} \nCheckCount: ${checkCount} "
+            try {
+                def getDynatraceSyntheticStatus = utils.postDynatraceSyntheticTest (
+                            config.dynatraceApiHost,
+                            postDynatraceSyntheticTest.lastExecutionId
+                )
+                status = getDynatraceSyntheticStatus.executionStatus
+            } catch (Exception e)
+            {
+                echo "Failure posting Dynatrace Metric: ${e.message}"
+                break
+            }
+            if (status == "TRIGGERED") {
+                sleep 20
+                checkCount++
+            }
+        } //End of While
         } //End of script
     } //End of Stage
 

@@ -115,7 +115,42 @@ def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoi
         triggeredCount: triggeredCount,
         lastExecutionId: lastExecutionId
     ]
+}
 
+// //==========================================   
+// //Check Status of Synthetic Test
+// //==========================================
+def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
+    def response = null
+    try {
+    response = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'GET',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}api/v2/synthetic/executions/${lastExecutionId}"
+    )
+    echo "Check Synthetic Status: Response ${response}"
+    }
+    catch (Exception e) {
+        echo "Error while sending Request: ${e.message}"
+    }
+      echo "Raw JSON response:\n${response.content}"
+
+    // Parse the JSON string into an object
+    def json = new JsonSlurper().parseText(response.content)
+
+    // Extract Status 
+    def executionStatus = json.executionStage
+        
+    echo "Current Status: ${executionStatus}"
+    return [
+        response: response,
+        executionStatus: executionStatus
+    ]
 }
 
 return this
