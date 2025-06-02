@@ -176,7 +176,7 @@
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
     "es5-ext": "^0.10.63",
-    "formidable": "^3.5.3",
+    "formidable": "^3.2.4",
     "puppeteer": "^23.2.0",
     "ws": "^8.17.1",
     "ip": "^2.0.1",
