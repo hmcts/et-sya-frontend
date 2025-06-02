@@ -251,11 +251,12 @@ withPipeline(type, product, component) {
         def status = "TRIGGERED"
         def checkCount = 1
         def getDynatraceSyntheticStatus = null 
+        echo "Checking Status of Synthetic...."
 
         while (status == "TRIGGERED" && checkCount <= 16) {
             echo "Checking Status of Synthetic Test:\n TestID: ${postDynatraceSyntheticTest.lastExecutionId}\nStatus: ${config.dynatraceTriggerSyntheticEndpoint} \nCheckCount: ${checkCount} "
             try {
-                getDynatraceSyntheticStatus = utils.postDynatraceSyntheticTest (
+                getDynatraceSyntheticStatus = utils.getDynatraceSyntheticStatus (
                             config.dynatraceApiHost,
                             postDynatraceSyntheticTest.lastExecutionId
                 )
