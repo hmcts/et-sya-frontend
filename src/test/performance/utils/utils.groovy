@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 // Performance in pipelines
 
 //==========================================    
@@ -91,7 +93,29 @@ def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoi
     catch (Exception e) {
         echo "Error while sending Request: ${e.message}"
     }
-    return response
+    
+    echo "Raw JSON response:\n${response.content}"
+
+    // Parse the JSON string into an object
+    def json = new JsonSlurper().parseText(response.content)
+
+    // Extract individual values
+    def triggeredCount = json.triggeredCount
+    def executedSynthetics = json.triggered[0].executions
+    
+    // Get last execution ID using index
+    def selectedIndex = triggeredCount - 1
+    def lastExecutionId = executedSynthetics[selectedIndex].executionId
+
+    echo "Triggered Count: ${triggeredCount}"
+    echo "Last Execution ID: ${lastExecutionId}"
+
+    return [
+        response: response,
+        triggeredCount: triggeredCount,
+        lastExecutionId: lastExecutionId
+    ]
+
 }
 
 return this
