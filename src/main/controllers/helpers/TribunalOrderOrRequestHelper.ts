@@ -240,7 +240,11 @@ export const filterECCNotifications = async (
 };
 
 export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  return notifications?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
+  return notifications?.filter(
+    it =>
+      !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC) &&
+      it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING
+  );
 };
 
 function requiresResponse(notification: SendNotificationType) {
