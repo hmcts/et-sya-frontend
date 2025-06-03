@@ -155,8 +155,9 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================   
 // //Update Dynatrace Synthetic Test
 // //==========================================
-def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScript) {
+def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
+    def dynatraceScript = load "src/test/performance/payloads/${dynatraceScriptName}.groovy"
     try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
