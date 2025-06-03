@@ -155,7 +155,7 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================   
 // //Update Dynatrace Synthetic Test
 // //==========================================
-def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
+def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
     def dynatraceScript = load "src/test/performance/payloads/${dynatraceScriptName}.groovy"
     try {
@@ -167,7 +167,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}",
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
         requestBody: "${dynatraceScript.requestBody}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
