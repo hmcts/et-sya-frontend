@@ -241,7 +241,7 @@ withPipeline(type, product, component) {
                 putDynatraceSyntheticTest = utils.putDynatraceSyntheticTest (
                             config.dynatraceApiHost,
                             config.dynatraceUpdateSyntheticEndpoint,
-                            "SYNTHETIC_TEST-58D99F542AAB721C"
+                            "SYNTHETIC_TEST-58D99F542AAB721C",
                             "true",
                             env.AKS_TEST_URL,
                             "et_cui_applicant_preview")
