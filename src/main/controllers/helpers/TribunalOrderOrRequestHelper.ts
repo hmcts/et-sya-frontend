@@ -228,12 +228,26 @@ export const filterECCNotifications = async (
   return [];
 };
 
-export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
+/**
+ * Filter out ECC notifications or Hearing only notifications
+ * @param notifications
+ */
+export const filterOutSpecialNotifications = (
+  notifications: SendNotificationTypeItem[]
+): SendNotificationTypeItem[] => {
   return notifications?.filter(
     it =>
       !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC) &&
       it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING
   );
+};
+
+/**
+ * Check if any notication showAlert is true
+ * @param notifications
+ */
+export const shouldShowNotificationsBanner = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(notification => notification.showAlert);
 };
 
 function requiresResponse(notification: SendNotificationType) {

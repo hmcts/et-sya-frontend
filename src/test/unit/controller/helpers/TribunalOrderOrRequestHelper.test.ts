@@ -1,7 +1,7 @@
 import {
   activateTribunalOrdersAndRequestsLink,
   filterECCNotifications,
-  filterOutEcc,
+  filterOutSpecialNotifications,
   filterSendNotifications,
   getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
@@ -845,7 +845,7 @@ describe('Tribunal order or request helper', () => {
           },
         },
       ];
-      const result = filterOutEcc(notifications);
+      const result = filterOutSpecialNotifications(notifications);
       expect(result).toHaveLength(2);
       expect(result[0].value.sendNotificationTitle).toEqual('1 Show');
       expect(result[1].value.sendNotificationTitle).toEqual('5 Show');
