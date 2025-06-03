@@ -5,7 +5,6 @@
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
-
 def type = "nodejs"
 def product = "et"
 def component = "sya"
@@ -14,6 +13,7 @@ def branchesToSync = ['demo', 'ithc']
 //Perf Vars
 def config
 def utils
+def et_cui_applicant_preview
 def dynatraceApiHost
 def dynatraceEventIngestEndpoint
 def dynatraceMetricIngestEndpoint
@@ -31,6 +31,7 @@ def secrets = [
         secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
         secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
         secret('perf-event-token', 'PERF_EVENT_TOKEN'),
+        secret('perf-synthetic-update-token', 'PERF_SYNTHETIC_UPDATE_TOKEN')
     ]
 ]
 
@@ -164,6 +165,7 @@ withPipeline(type, product, component) {
         // Load Performance Test Config
         //==========================================
         stage('Performance Test - Load Config & Utils') {
+            echo "Check ENV VARS: ${env}"
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
             script {
                 try {
@@ -230,6 +232,25 @@ withPipeline(type, product, component) {
                 echo "Failure posting Dynatrace Metric: ${e.message}"
             }
 
+
+        //==================================================================
+        // For Preview -> Update the DT Synthetic Test with the correct URL & enable
+        //==================================================================
+            echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: ${config.dynatraceSyntheticPerfTest}\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
+            def putDynatraceSyntheticTest = null
+            try {
+                putDynatraceSyntheticTest = utils.putDynatraceSyntheticTest (
+                            config.dynatraceApiHost,
+                            config.dynatraceUpdateSyntheticEndpoint,
+                            "true",
+                            env.AKS_TEST_URL,
+                            "et_cui_applicant_preview")
+            } catch (Exception e)
+            {
+                echo "Failure Updating Dynatrace Synthetic: ${e.message}"
+            }
+
+
         //==========================================   
         //Trigger Dynatrace Synthetic Test
         //==========================================    
@@ -243,7 +264,7 @@ withPipeline(type, product, component) {
                 )
             } catch (Exception e)
             {
-                echo "Failure posting Dynatrace Metric: ${e.message}"
+                echo "Failure Triggering Dynatrace Synthetic: ${e.message}"
             }
 
         //==========================================  
@@ -274,10 +295,7 @@ withPipeline(type, product, component) {
         } //End of While
         } //End of script
     } //End of Stage
-
-      echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
-      sleep 300 // seconds
-  }
+  } // End of after always
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER

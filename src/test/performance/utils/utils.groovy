@@ -64,7 +64,6 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
     return response
 }
 
-
 // //==========================================   
 // //Trigger Dynatrace Synthetic Test
 // //==========================================
@@ -152,6 +151,32 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
         executionStatus: executionStatus
     ]
 }
+
+// //==========================================   
+// //Update Dynatrace Synthetic Test
+// //==========================================
+def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScript) {
+    def response = null
+    try {
+    response = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'PUT',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}",
+        requestBody: "${dynatraceScript.requestBody}"
+    )
+    echo "Dynatrace synthetic test updated. Response ${response}"
+    }
+    catch (Exception e) {
+        echo "Error while updating synthetic: ${e.message}"
+    }
+}
+
+
 
 return this
 
