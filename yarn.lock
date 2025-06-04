@@ -195,8 +195,8 @@ __metadata:
   linkType: hard
 
 "@babel/eslint-parser@npm:^7.21.3":
-  version: 7.27.1
-  resolution: "@babel/eslint-parser@npm:7.27.1"
+  version: 7.27.5
+  resolution: "@babel/eslint-parser@npm:7.27.5"
   dependencies:
     "@nicolo-ribaudo/eslint-scope-5-internals": 5.1.1-v1
     eslint-visitor-keys: ^2.1.0
@@ -204,7 +204,7 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.11.0
     eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
-  checksum: 0e8aa37fe03e5e5f2db35e1e628c02012a9ea9aa14429495eacdb0418e8ebeaf7b6308f9f8931ee3fe64a61fd6ac7637c8ffcc2c0d85eee246b6115198418bc2
+  checksum: 133191a3ea312dea92abb0f2cae87bc8d36b4a02ce7dce9367473940d91a1102d0dbb53418ba4b1e955d430741c1a1ed622ad3e5973e727e0a6d8d094a65aa5c
   languageName: node
   linkType: hard
 
@@ -9086,9 +9086,9 @@ __metadata:
   linkType: hard
 
 "govuk-frontend@npm:^4.6.0":
-  version: 4.9.0
-  resolution: "govuk-frontend@npm:4.9.0"
-  checksum: f70cf65d91e00669b6b818e82b343df8dc40fef1ffdda02ad4394291bdb184aca3593e610f5399ee01b1c921a5226f13cd537606a7755a4e882864852fd2e18c
+  version: 4.10.0
+  resolution: "govuk-frontend@npm:4.10.0"
+  checksum: 2c0b0be3b6661173839057bd025bda181d99f4d93678be4e9640c67bfb4a63a4f7a366fdbde3f1c634dd45ca48a3dc4c095e625af45e4b30d2c18378a2e5857c
   languageName: node
   linkType: hard
 
