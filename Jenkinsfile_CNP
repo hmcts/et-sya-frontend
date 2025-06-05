@@ -236,8 +236,6 @@ withPipeline(type, product, component) {
         //==================================================================
         // For Preview -> Update the DT Synthetic Test with the correct URL & enable
         //==================================================================
-            dynatraceScript = readFile("src/test/performance/scripts/${dynatraceScriptName}.json")
-            echo "Dynatrace script: ${dynatraceScript}"
 
             echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
             def putDynatraceSyntheticTest = null

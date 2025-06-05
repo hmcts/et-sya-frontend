@@ -4,7 +4,7 @@
 // Synthetic test script for: https://yrk32651.live.dynatrace.com/ui/settings/SYNTHETIC_TEST-58D99F542AAB721C/
 //===============================================================================================================
 
-this.requestBody = """{
+this.requestBodyOne = """{
 {
   "frequencyMin": "5",
   "type": "BROWSER",
@@ -211,7 +211,8 @@ this.requestBody = """{
         },
         "button": 0,
         "description": "click on \"I’m claiming on my own\""
-    }, {
+    },
+    {
         "type": "click",
         "wait": {
             "waitFor": "validation",
@@ -1112,6 +1113,8 @@ this.requestBody = """{
                 "value": "#main-form-submit"
             }]
         },
+        }"""
+this.requestBodyTwo = """{
         "button": 0,
         "description": "CUI_ET_Synthetic_210_PersonalDetailsSaveContinue",
         "validate": [{

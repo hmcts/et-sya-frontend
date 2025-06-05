@@ -157,16 +157,10 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================
 def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
-    //def dynatraceScript = null
+    def dynatraceScript = null
     def dynatraceScriptRequestBody = null
     try {
-        //dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
-        //dynatraceScript = readFile("src/test/performance/scripts/${dynatraceScriptName}.json")
-
-        //Replace placeholders
-        //dynatraceScriptRequestBody = dynatraceScript
-        //.replace('${AKS_TEST_URL}', "${env.AKS_TEST_URL}")
-        //.replace('${DYNATRACE_SYNTHETIC_ENABLED}', dynatraceSyntheticEnabled)
+        dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
 
     } catch (Exception e) {
         echo "Error Message: ${e.message}"
@@ -181,8 +175,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
         url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
-        //requestBody: "${dynatraceScript.requestBody}"
-        requestBody: "${dynatraceScript}"
+        requestBody: "${dynatraceScript.requestBodyOne}${dynatraceScript.requestBodyTwo}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
     }
