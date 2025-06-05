@@ -162,16 +162,19 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     echo "DynatraceScript Name: ${dynatraceScriptName}"
     try {
         dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
-        echo "REQUEST BODY 1: ${dynatraceScript.requestBodyOne}\n REQUEST BODY2:${dynatraceScript.requestBodyOne}"
+        echo "REQUEST BODY 1:\n"
+        echo dynatraceScript.requestBodyOne
+        echo "REQUEST BODY 2:\n"
+        echo dynatraceScript.requestBodyTwo
     } catch (Exception e) {
-     echo "Error Message: ${e.message}"
+     echo "Error while loading and outputting script Message: ${e.message}"
     }
     try {
         requestBodyOne = dynatraceScript.requestBodyOne
         .replace('DYNATRACE_SYNTHETIC_ENABLED', dynatraceSyntheticEnabled)
         .replace('AKS_TEST_URL', env.AKS_TEST_URL)
     } catch (Exception e) {
-        echo "Error Message: ${e.message}"
+        echo "Error while replacing vals in requestBodyOneMessage: ${e.message}"
     }
     try {
     response = httpRequest(
@@ -183,7 +186,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
         url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
-        requestBody: "${dynatraceScript.requestBodyOne}${dynatraceScript.requestBodyTwo}"
+        requestBody: "${requestBodyOne}${dynatraceScript.requestBodyTwo}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
     }
