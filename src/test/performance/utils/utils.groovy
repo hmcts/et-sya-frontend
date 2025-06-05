@@ -179,7 +179,11 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     }
     try {
     echo "full request body:${requestBodyOne}${dynatraceScript.requestBodyTwo}"
-    writeFile file: 'dynatrace_request.json', text: requestBody
+    // Overwrite or create the file with the first part
+    writeFile file: 'dynatrace_request.json', text: requestBodyOne
+
+    // Append the second part
+    writeFile file: 'dynatrace_request.json', text: dynatraceScript.requestBodyTwo, append: true
 
 
 
