@@ -70,7 +70,7 @@ export default class VideoHearingsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REASONABLE_ADJUSTMENTS);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.HEARING_PANEL_PREFERENCE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
