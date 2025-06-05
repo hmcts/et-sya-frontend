@@ -169,7 +169,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     try {
         requestBodyOne = dynatraceScript.requestBodyOne
         .replace('DYNATRACE_SYNTHETIC_ENABLED', dynatraceSyntheticEnabled)
-        .replace('${ENV.AKS_TEST_URL}', env.AKS_TEST_URL)
+        .replace('AKS_TEST_URL', env.AKS_TEST_URL)
     } catch (Exception e) {
         echo "Error Message: ${e.message}"
     }
