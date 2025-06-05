@@ -171,13 +171,18 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     }
     try {
         requestBodyOne = dynatraceScript.requestBodyOne
-        .replace('DYNATRACE_SYNTHETIC_ENABLED', dynatraceSyntheticEnabled)
+        .replace('"DYNATRACE_SYNTHETIC_ENABLED"', dynatraceSyntheticEnabled)
         .replace('AKS_TEST_URL', env.AKS_TEST_URL)
         echo requestBodyOne
     } catch (Exception e) {
         echo "Error while replacing vals in requestBodyOneMessage: ${e.message}"
     }
     try {
+    echo "full request body:${requestBodyOne}${dynatraceScript.requestBodyTwo}"
+    writeFile file: 'dynatrace_request.json', text: requestBody
+
+
+
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
@@ -193,6 +198,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     }
     catch (Exception e) {
         echo "Error while updating synthetic in utils: ${e.message}"
+        echo "response detail: ${response.content}"
     }
 }
 
