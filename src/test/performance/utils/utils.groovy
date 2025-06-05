@@ -160,13 +160,13 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     def dynatraceScript = null
     def dynatraceScriptRequestBody = null
     try {
-        //dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
-        dynatraceScript = readFile("src/test/performance/scripts/${dynatraceScriptName}.json")
+        dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
+        //dynatraceScript = readFile("src/test/performance/scripts/${dynatraceScriptName}.json")
 
         //Replace placeholders
-        dynatraceScriptRequestBody = dynatraceScript
-        .replace('${AKS_TEST_URL}', "${env.AKS_TEST_URL}")
-        .replace('${DYNATRACE_SYNTHETIC_ENABLED}', dynatraceSyntheticEnabled)
+        //dynatraceScriptRequestBody = dynatraceScript
+        //.replace('${AKS_TEST_URL}', "${env.AKS_TEST_URL}")
+        //.replace('${DYNATRACE_SYNTHETIC_ENABLED}', dynatraceSyntheticEnabled)
 
     } catch (Exception e) {
         echo "Error Message: ${e.message}"
@@ -181,8 +181,8 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
         url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
-       // requestBody: "${dynatraceScript.requestBody}"
-        requestBody: "${dynatraceScript}"
+        requestBody: "${dynatraceScript.requestBody}"
+        //requestBody: "${dynatraceScript}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
     }
