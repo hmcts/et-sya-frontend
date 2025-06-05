@@ -4,7 +4,7 @@
 // Synthetic test script for: https://yrk32651.live.dynatrace.com/ui/settings/SYNTHETIC_TEST-58D99F542AAB721C/
 //===============================================================================================================
 
-this.requestBodyOne = """{
+this.requestBodyOne = """
 {
   "frequencyMin": "5",
   "type": "BROWSER",
@@ -1113,7 +1113,7 @@ this.requestBodyOne = """{
                 "value": "#main-form-submit"
             }]
         },
-        }"""
+        """
 this.requestBodyTwo = """{
         "button": 0,
         "description": "CUI_ET_Synthetic_210_PersonalDetailsSaveContinue",
@@ -2416,7 +2416,7 @@ this.requestBodyTwo = """{
     "value": "Preview"
   }
   ]
-}}"""
+}"""
 
 return this
 
