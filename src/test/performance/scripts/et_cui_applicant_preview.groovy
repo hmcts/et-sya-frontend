@@ -48,7 +48,7 @@ this.requestBodyOne = """{
             "timeoutInMilliseconds": 5000
         },
         "description": "CUI_ET_Synthetic_010_LandingPage",
-        "url": "{AKS_TEST_URL}" 
+        "url": "AKS_TEST_URL" 
     }, {
         "type": "javascript",
         "description": "JS_Common",
