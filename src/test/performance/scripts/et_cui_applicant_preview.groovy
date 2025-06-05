@@ -15,7 +15,7 @@ this.requestBodyOne = """{
     "GEOLOCATION-871416B95457AB88"
   ],
   "manuallyAssignedApps": [],
-  "enabled": "${DYNATRACE_SYNTHETIC_ENABLED}",
+  "enabled": "DYNATRACE_SYNTHETIC_ENABLED",
   "keyPerformanceMetrics": {
     "loadActionKpm": "VISUALLY_COMPLETE",
     "xhrActionKpm": "VISUALLY_COMPLETE"

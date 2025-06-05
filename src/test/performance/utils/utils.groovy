@@ -159,13 +159,17 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     def response = null
     def dynatraceScript = null
     def requestBodyOne = null
+    echo "DynatraceScript Name: ${dynatraceScriptName}"
     try {
         dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
         echo "REQUEST BODY 1: ${dynatraceScript.requestBodyOne}\n REQUEST BODY2:${dynatraceScript.requestBodyOne}"
+    } catch (Exception e) {
+     echo "Error Message: ${e.message}"
+    }
+    try {
         requestBodyOne = dynatraceScript.requestBodyOne
-        .replace('${DYNATRACE_SYNTHETIC_ENABLED}', dynatraceSyntheticEnabled)
+        .replace('DYNATRACE_SYNTHETIC_ENABLED', dynatraceSyntheticEnabled)
         .replace('${ENV.AKS_TEST_URL}', env.AKS_TEST_URL)
-        
     } catch (Exception e) {
         echo "Error Message: ${e.message}"
     }
