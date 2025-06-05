@@ -157,11 +157,11 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================
 def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
-    def dynatraceScript = null
+    //def dynatraceScript = null
     def dynatraceScriptRequestBody = null
     try {
         //dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
-        dynatraceScript = readFile("src/test/performance/scripts/${dynatraceScriptName}.json")
+        //dynatraceScript = readFile("src/test/performance/scripts/${dynatraceScriptName}.json")
 
         //Replace placeholders
         //dynatraceScriptRequestBody = dynatraceScript
