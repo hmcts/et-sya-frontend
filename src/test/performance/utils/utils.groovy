@@ -183,7 +183,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     writeFile file: 'dynatrace_request.json', text: requestBodyOne
 
     // Append the second part
-    writeFile file: 'dynatrace_request.json', text: dynatraceScript.requestBodyTwo, append: true
+    writeFile file: 'dynatrace_requestTwo.json', text: dynatraceScript.requestBodyTwo
 
 
 
