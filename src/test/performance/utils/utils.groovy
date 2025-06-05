@@ -165,7 +165,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
 
         //Replace placeholders
         dynatraceScriptRequestBody = dynatraceScript
-        .replace('${${AKS_TEST_URL}}', "${env.AKS_TEST_URL}")
+        .replace('${AKS_TEST_URL}', "${env.AKS_TEST_URL}")
         .replace('${DYNATRACE_SYNTHETIC_ENABLED}', dynatraceSyntheticEnabled)
 
     } catch (Exception e) {
