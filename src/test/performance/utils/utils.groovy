@@ -159,7 +159,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     def response = null
     def dynatraceScript = null
     try {
-        dynatraceScript = load "src/test/performance/payloads/${dynatraceScriptName}.groovy"
+        dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
     } catch (Exception e) {
         echo "Error Message: ${e.message}"
     }
