@@ -158,10 +158,14 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
     def dynatraceScript = null
-    def dynatraceScriptRequestBody = null
+    def requestBodyOne = null
     try {
         dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
-
+        echo "REQUEST BODY 1: ${dynatraceScript.requestBodyOne}\n REQUEST BODY2:${dynatraceScript.requestBodyOne}"
+        requestBodyOne = dynatraceScript.requestBodyOne
+        .replace('${DYNATRACE_SYNTHETIC_ENABLED}', dynatraceSyntheticEnabled)
+        .replace('${ENV.AKS_TEST_URL}', env.AKS_TEST_URL)
+        
     } catch (Exception e) {
         echo "Error Message: ${e.message}"
     }
@@ -180,7 +184,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     echo "Dynatrace synthetic test updated. Response ${response}"
     }
     catch (Exception e) {
-        echo "Error while updating synthetic: ${e.message}"
+        echo "Error while updating synthetic in utils: ${e.message}"
     }
 }
 

@@ -15,7 +15,7 @@ this.requestBodyOne = """{
     "GEOLOCATION-871416B95457AB88"
   ],
   "manuallyAssignedApps": [],
-  "enabled": ${dynatraceSyntheticEnabled},
+  "enabled": "${DYNATRACE_SYNTHETIC_ENABLED}",
   "keyPerformanceMetrics": {
     "loadActionKpm": "VISUALLY_COMPLETE",
     "xhrActionKpm": "VISUALLY_COMPLETE"
@@ -48,7 +48,7 @@ this.requestBodyOne = """{
             "timeoutInMilliseconds": 5000
         },
         "description": "CUI_ET_Synthetic_010_LandingPage",
-        "url": "${env.AKS_TEST_URL}" 
+        "url": "${ENV.AKS_TEST_URL}" 
     }, {
         "type": "javascript",
         "description": "JS_Common",
