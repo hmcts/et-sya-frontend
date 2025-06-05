@@ -1,4 +1,6 @@
 import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 
 // Performance in pipelines
 
@@ -179,11 +181,13 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     }
     try {
     echo "full request body:${requestBodyOne}${dynatraceScript.requestBodyTwo}"
+    def jsonRequestBodyOne = JsonOutput.toJson(requestBodyOne)
+    def jsonRequestBodyTwo = JsonOutput.toJson(dynatraceScript.requestBodyTwo)
     // Overwrite or create the file with the first part
-    writeFile file: 'dynatrace_request.json', text: requestBodyOne
+    writeFile file: 'dynatrace_request.json', text: jsonRequestBodyOne
 
     // Append the second part
-    writeFile file: 'dynatrace_requestTwo.json', text: dynatraceScript.requestBodyTwo
+    writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo
 
 
 
@@ -196,7 +200,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
         url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
-        requestBody: "${requestBodyOne}${dynatraceScript.requestBodyTwo}"
+        requestBody: "${jsonRequestBodyOne}${jsonRequestBodyTwo}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
     }
