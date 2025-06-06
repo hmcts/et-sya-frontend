@@ -224,7 +224,7 @@ withPipeline(type, product, component) {
         // For Preview -> Update the DT Synthetic Test with the correct URL & enable
         //==================================================================
         
-            echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
+           /* echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
             def putDynatraceSyntheticTest = null
             try {
                 putDynatraceSyntheticTest = utils.putDynatraceSyntheticTest (
@@ -237,7 +237,7 @@ withPipeline(type, product, component) {
             } catch (Exception e)
             {
                 echo "Failure Updating Dynatrace Synthetic: ${e.message}"
-            }
+            } */
 
         //==========================================   
         //Trigger Dynatrace Synthetic Test
