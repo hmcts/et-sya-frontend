@@ -35,6 +35,8 @@ import {
   et1DocTypes,
   et3AttachmentDocTypes,
   et3FormDocTypes,
+  noticeClaimDocTypes,
+  noticeHearingDocTypes,
   rejectionDocTypes,
   responseAcceptedDocTypes,
   responseRejectedDocTypes,
@@ -175,6 +177,14 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
+    ),
+    noticeOfClaimLetterDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.servingDocumentCollection,
+      noticeClaimDocTypes
+    ),
+    noticeOfHearingLetterDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.servingDocumentCollection,
+      noticeHearingDocTypes
     ),
     rejectionOfClaimDocumentDetail: setDocumentValues(
       fromApiCaseData?.case_data?.documentCollection,

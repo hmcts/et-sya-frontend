@@ -333,6 +333,8 @@ describe('Format Case Data to Frontend Model', () => {
       tribunalCorrespondenceEmail: undefined,
       tribunalCorrespondenceTelephone: undefined,
       acknowledgementOfClaimLetterDetail: undefined,
+      noticeOfClaimLetterDetail: undefined,
+      noticeOfHearingLetterDetail: undefined,
       respondentResponseDeadline: undefined,
       rejectionOfClaimDocumentDetail: undefined,
       responseAcknowledgementDocumentDetail: undefined,
