@@ -102,7 +102,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.10.1",
+    "@axe-core/playwright": "4.10.2",
     "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.21.4",
@@ -164,7 +164,7 @@
   "resolutions": {
     "@swc/core": "1.3.82",
     "axios": "^1.7.4",
-    "@opentelemetry/instrumentation": "^0.201.0",
+    "@opentelemetry/instrumentation": "^0.202.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",
@@ -183,9 +183,8 @@
     "send": "^0.19.0",
     "cookie": "^1.0.0",
     "lodash": "^4.17.21",
-    "nanoid": "^3.3.8",
     "path-to-regexp": "^0.1.12",
-    "serialize-javascript": "^6.0.2"
+    "tar-fs": "^3.0.7"
   },
   "packageManager": "yarn@3.8.7"
 }
