@@ -157,11 +157,15 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================   
 // //Update Dynatrace Synthetic Test
 // //==========================================
-def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
-    def response = null
-    def dynatraceScript = null
-    def requestBodyOne = null
-    echo "DynatraceScript Name: ${dynatraceScriptName}"
+def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName, rawRequestBody) {
+    //def response = null
+    //def dynatraceScript = null
+    //def requestBodyOne = null
+    def requestBody = rawRequestBody
+    .replace('AKS_TEST_URL', env.AKS_TEST_URL)
+    .replace('"${DYNATRACE_SYNTHETIC_ENABLED}"', dynatraceSyntheticEnabled)
+    
+    /*echo "DynatraceScript Name: ${dynatraceScriptName}"
     try {
         dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
         echo "REQUEST BODY 1:\n"
@@ -187,10 +191,9 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     writeFile file: 'dynatrace_request.json', text: jsonRequestBodyOne
 
     // Append the second part
-    writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo
-
-
-
+    writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo */
+    
+    try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
