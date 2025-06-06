@@ -241,7 +241,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost) {
 
     //Edit the JSON
     json.enabled = "true"
-    json.script.events[0].url = "https://et-sya.testURL.platform.hmcts.net/"
+    json.script.events[0].url = "https://et-sya.testURL1234.platform.hmcts.net/"
 
     //Convert updated JSON to String:
     def modifiedRequestBody = JsonOutput.toJson(json)
