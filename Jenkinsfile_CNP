@@ -169,7 +169,6 @@ withPipeline(type, product, component) {
         stage('Performance Test - Load Config & Utils') {
             echo "Check ENV VARS: ${env.environment}"
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
-            checkout scm
             script {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
@@ -190,16 +189,6 @@ withPipeline(type, product, component) {
         stage('Performance Test') {
 
         loadVaultSecrets(secrets) // Load Perf secrets
-
-        //echo "DT API Host config.var = ${config.dynatraceApiHost}"
-
-        //Perf Vars (*Need to add to config file)
-        //def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
-        //def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
-        //def dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
-        //def dynatraceTriggerSynthticEndpoint = "api/v2/synthetic/executions/batch"
-        //def dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
-        //def dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
 
         echo "Starting performance test stage..."
         // Log details of the build
@@ -240,10 +229,6 @@ withPipeline(type, product, component) {
         //==================================================================
         // For Preview -> Update the DT Synthetic Test with the correct URL & enable
         //==================================================================
-
-            echo "Saving JSON File"
-            // Jenkinsfile or main pipeline script
-            //def requestBodyTest = null
         
             echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
             def putDynatraceSyntheticTest = null

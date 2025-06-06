@@ -161,37 +161,37 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     //def response = null
     //def dynatraceScript = null
     //def requestBodyOne = null
-    def requestBody = rawRequestBody
-    .replace('AKS_TEST_URL', env.AKS_TEST_URL)
-    .replace('"${DYNATRACE_SYNTHETIC_ENABLED}"', dynatraceSyntheticEnabled)
+    //def requestBody = rawRequestBody
+    //.replace('AKS_TEST_URL', env.AKS_TEST_URL)
+    //.replace('"${DYNATRACE_SYNTHETIC_ENABLED}"', dynatraceSyntheticEnabled)
     
-    /*echo "DynatraceScript Name: ${dynatraceScriptName}"
+    echo "DynatraceScript Name: ${dynatraceScriptName}"
     try {
-        dynatraceScript = load "src/test/performance/scripts/${dynatraceScriptName}.groovy"
-        echo "REQUEST BODY 1:\n"
-        echo dynatraceScript.requestBodyOne
-        echo "REQUEST BODY 2:\n"
-        echo dynatraceScript.requestBodyTwo
+        dynatraceScript = load "src/test/performance/scripts/et_cui_applicant_previewEscaped.groovy"
+        //echo "REQUEST BODY 1:\n"
+        //echo dynatraceScript.requestBodyOne
+        //echo "REQUEST BODY 2:\n"
+        //echo dynatraceScript.requestBodyTwo
     } catch (Exception e) {
      echo "Error while loading and outputting script Message: ${e.message}"
     }
-    try {
-        requestBodyOne = dynatraceScript.requestBodyOne
-        .replace('"DYNATRACE_SYNTHETIC_ENABLED"', dynatraceSyntheticEnabled)
-        .replace('AKS_TEST_URL', env.AKS_TEST_URL)
-        echo requestBodyOne
-    } catch (Exception e) {
-        echo "Error while replacing vals in requestBodyOneMessage: ${e.message}"
-    }
-    try {
-    echo "full request body:${requestBodyOne}${dynatraceScript.requestBodyTwo}"
-    def jsonRequestBodyOne = JsonOutput.toJson(requestBodyOne)
-    def jsonRequestBodyTwo = JsonOutput.toJson(dynatraceScript.requestBodyTwo)
+    //try {
+        //requestBodyOne = dynatraceScript.requestBodyOne
+        //.replace('"DYNATRACE_SYNTHETIC_ENABLED"', dynatraceSyntheticEnabled)
+        //.replace('AKS_TEST_URL', env.AKS_TEST_URL)
+        //echo requestBodyOne
+    //} catch (Exception e) {
+    //    echo "Error while replacing vals in requestBodyOneMessage: ${e.message}"
+   //}
+    //try {
+    //echo "full request body:${requestBodyOne}${dynatraceScript.requestBodyTwo}"
+    //def jsonRequestBodyOne = JsonOutput.toJson(requestBodyOne)
+    //def jsonRequestBodyTwo = JsonOutput.toJson(dynatraceScript.requestBodyTwo)
     // Overwrite or create the file with the first part
-    writeFile file: 'dynatrace_request.json', text: jsonRequestBodyOne
+   //writeFile file: 'dynatrace_request.json', text: jsonRequestBodyOne
 
     // Append the second part
-    writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo */
+    //writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo
     
     try {
     response = httpRequest(
@@ -203,7 +203,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
         url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
-        requestBody: "${jsonRequestBodyOne}${jsonRequestBodyTwo}"
+        requestBody: "${dynatraceScript.requestBodyOne}${dynatraceScript.requestBodyTwo}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
     }
