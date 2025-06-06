@@ -173,8 +173,6 @@ withPipeline(type, product, component) {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
-                    //requestBodyTest = readFile("src/test/performance/requests/et_cui_applicant_preview.json")
-
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
