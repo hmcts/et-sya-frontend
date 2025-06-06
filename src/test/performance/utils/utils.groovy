@@ -190,7 +190,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     // Append the second part
     //writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo
     
-    try {
+    /*try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
@@ -207,7 +207,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     catch (Exception e) {
         echo "Error while updating synthetic in utils: ${e.message}"
         echo "response detail: ${response.content}"
-    }
+    } */
 }
 
 
