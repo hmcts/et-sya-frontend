@@ -13,6 +13,7 @@ def branchesToSync = ['demo', 'ithc']
 //Perf Vars
 def config
 def utils
+def requestBodyTest
 def et_cui_applicant_preview
 def dynatraceApiHost
 def dynatraceEventIngestEndpoint
@@ -173,7 +174,7 @@ withPipeline(type, product, component) {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
                     requestBodyTest = readFile('src/test/performance/requests/et_cui_applicant_preview.json')
-                    
+
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
@@ -241,7 +242,7 @@ withPipeline(type, product, component) {
 
             echo "Saving JSON File"
             // Jenkinsfile or main pipeline script
-            def requestBodyTest = null
+            //def requestBodyTest = null
 
             //script{
             //    requestBodyTest = readFile("src/test/performance/requests/et_cui_applicant_preview.json")
