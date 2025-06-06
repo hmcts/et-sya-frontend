@@ -239,8 +239,11 @@ withPipeline(type, product, component) {
 
             echo "Saving JSON File"
             // Jenkinsfile or main pipeline script
-            def requestBodyTest = readFile("src/test/performance/requests/et_cui_applicant_preview.json")
+            def requestBodyTest = null
 
+            script{
+                requestBodyTest = readFile("src/test/performance/requests/et_cui_applicant_preview.json")
+            }
             echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
             def putDynatraceSyntheticTest = null
             try {
