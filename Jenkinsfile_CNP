@@ -173,7 +173,6 @@ withPipeline(type, product, component) {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
-                    requestBodyTest = readFile('src/test/performance/requests/et_cui_applicant_preview.json')
 
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
@@ -244,9 +243,9 @@ withPipeline(type, product, component) {
             // Jenkinsfile or main pipeline script
             //def requestBodyTest = null
 
-            //script{
-            //    requestBodyTest = readFile("src/test/performance/requests/et_cui_applicant_preview.json")
-            //}
+            script{
+                requestBodyTest = steps.readFile("src/test/performance/requests/et_cui_applicant_preview.json")
+            }
             echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
             def putDynatraceSyntheticTest = null
             try {
