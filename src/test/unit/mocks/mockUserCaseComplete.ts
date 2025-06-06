@@ -216,6 +216,8 @@ export default {
   tribunalCorrespondenceTelephone: '0300 123 1024',
   submittedDate: { day: '03', month: '10', year: '2022' },
   acknowledgementOfClaimLetterDetail: undefined,
+  noticeOfClaimLetterDetail: undefined,
+  noticeOfHearingLetterDetail: undefined,
   respondentResponseDeadline: undefined,
   rejectionOfClaimDocumentDetail: undefined,
   responseAcknowledgementDocumentDetail: undefined,

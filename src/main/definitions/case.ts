@@ -163,6 +163,8 @@ export interface Case {
   hubLinksStatuses?: HubLinksStatuses;
   allEt1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
+  noticeOfClaimLetterDetail?: DocumentDetail[];
+  noticeOfHearingLetterDetail?: DocumentDetail[];
   rejectionOfClaimDocumentDetail?: DocumentDetail[];
   responseAcknowledgementDocumentDetail?: DocumentDetail[];
   responseRejectionDocumentDetail?: DocumentDetail[];
