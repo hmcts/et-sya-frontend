@@ -1,7 +1,4 @@
 import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
-
-
 // Performance in pipelines
 
 //==========================================    
