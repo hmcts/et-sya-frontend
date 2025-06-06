@@ -13,7 +13,6 @@ def branchesToSync = ['demo', 'ithc']
 //Perf Vars
 def config
 def utils
-def requestBodyTest
 def et_cui_applicant_preview
 def dynatraceApiHost
 def dynatraceEventIngestEndpoint
@@ -22,8 +21,6 @@ def dynatraceTriggerSyntheticEndpoint
 def dynatraceSyntheticPerfTest
 def dynatraceDashboardId
 def dynatraceEntitySelector
-def dynatraceScript
-
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 def secrets = [
