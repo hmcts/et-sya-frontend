@@ -1,4 +1,6 @@
 import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 // Performance in pipelines
 
 //==========================================    
@@ -163,20 +165,20 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     //.replace('"${DYNATRACE_SYNTHETIC_ENABLED}"', dynatraceSyntheticEnabled)
     
     echo "DynatraceScript Name: ${dynatraceScriptName}"
-    try {
-        dynatraceScript = load "src/test/performance/scripts/et_cui_applicant_previewEscaped.groovy"
+    //try {
+    //    dynatraceScript = load "src/test/performance/scripts/et_cui_applicant_previewEscaped.groovy"
         //echo "REQUEST BODY 1:\n"
         //echo dynatraceScript.requestBodyOne
         //echo "REQUEST BODY 2:\n"
         //echo dynatraceScript.requestBodyTwo
-    } catch (Exception e) {
-     echo "Error while loading and outputting script Message: ${e.message}"
-    }
+    //} catch (Exception e) {
+    // echo "Error while loading and outputting script Message: ${e.message}"
+    //}
     //try {
-        //requestBodyOne = dynatraceScript.requestBodyOne
-        //.replace('"DYNATRACE_SYNTHETIC_ENABLED"', dynatraceSyntheticEnabled)
-        //.replace('AKS_TEST_URL', env.AKS_TEST_URL)
-        //echo requestBodyOne
+    //    requestBodyOne = dynatraceScript.requestBodyOne
+    //    .replace('"DYNATRACE_SYNTHETIC_ENABLED"', dynatraceSyntheticEnabled)
+    //    .replace('AKS_TEST_URL', env.AKS_TEST_URL)
+    //    echo requestBodyOne
     //} catch (Exception e) {
     //    echo "Error while replacing vals in requestBodyOneMessage: ${e.message}"
    //}
@@ -190,7 +192,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     // Append the second part
     //writeFile file: 'dynatrace_requestTwo.json', text: jsonRequestBodyTwo
     
-    /*try {
+    try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
@@ -207,10 +209,63 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     catch (Exception e) {
         echo "Error while updating synthetic in utils: ${e.message}"
         echo "response detail: ${response.content}"
-    } */
+    } 
 }
 
+// Use JSON Object & JSON ECHO SERVER FOR DEBUG
+// //==========================================   
+// //GET Synthetic Info 
+// //==========================================
+def getDynatraceSyntheticBody(dynatraceApiHost) {
+    def response = null
+    try {
+    response = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'GET',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}/api/v1/synthetic/monitors/SYNTHETIC_TEST-58D99F542AAB721C"
+    )
+    echo "Check Synthetic Status: Response ${response}"
+    }
+    catch (Exception e) {
+        echo "Error while sending Request: ${e.message}"
+    }
+      echo "Raw JSON response:\n${response.content}"
 
+    // Parse the JSON string into an object
+    def json = new JsonSlurper().parseText(response.content)
+
+    //Edit the JSON
+    json.enabled = "true"
+    json.script.events[0].url = "https://et-sya.testURL.platform.hmcts.net/"
+
+    //Convert updated JSON to String:
+    def modifiedRequestBody = JsonOutput.toJson(json)
+
+    //PUT back to DT
+    try {
+    response = httpRequest(
+        acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'PUT',
+        quiet: true,
+        customHeaders: [
+            [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
+        ],
+        url: "${dynatraceApiHost}/api/v1/synthetic/monitors/SYNTHETIC_TEST-58D99F542AAB721C",
+        requestBody: "${modifiedRequestBody}"
+    )
+    echo "Dynatrace synthetic test updated. Response ${response}"
+    }
+    catch (Exception e) {
+        echo "Error while updating synthetic in utils: ${e.message}"
+        echo "response detail: ${response.content}"
+    } 
+}
 
 return this
 
