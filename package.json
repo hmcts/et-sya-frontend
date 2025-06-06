@@ -170,7 +170,7 @@
     "minimist": "^1.2.6",
     "semver": "^7.5.2",
     "jsdom": "^25.0.0",
-    "shelljs": "^0.9.0",
+    "shelljs": "^0.10.0",
     "merge": "^2.1.1",
     "micromatch": "^4.0.8",
     "import-in-the-middle": "^1.4.2",
