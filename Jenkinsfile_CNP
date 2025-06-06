@@ -169,10 +169,12 @@ withPipeline(type, product, component) {
         stage('Performance Test - Load Config & Utils') {
             echo "Check ENV VARS: ${env.environment}"
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
+            checkout scm
             script {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
+                    requestBodyTest = readFile("src/test/performance/requests/et_cui_applicant_preview.json")
 
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
@@ -242,8 +244,6 @@ withPipeline(type, product, component) {
             echo "Saving JSON File"
             // Jenkinsfile or main pipeline script
             //def requestBodyTest = null
-           
-            requestBodyTest = steps.readFile("src/test/performance/requests/et_cui_applicant_preview.json")
         
             echo "Updating Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceUpdateSyntheticEndpoint}\nSyntheticTest: SYNTHETIC_TEST-58D99F542AAB721C\nPreviewURL: ${env.AKS_TEST_URL}\nEnvironment: perftest"
             def putDynatraceSyntheticTest = null
