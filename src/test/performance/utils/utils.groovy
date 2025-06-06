@@ -157,7 +157,7 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================   
 // //Update Dynatrace Synthetic Test
 // //==========================================
-def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName, rawRequestBody) {
+def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     //def response = null
     //def dynatraceScript = null
     //def requestBodyOne = null
