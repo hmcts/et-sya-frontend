@@ -587,6 +587,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+      [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
       [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS],
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
@@ -602,6 +603,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is system user in Welsh', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + languages.WELSH_URL_PARAMETER],
       [
         HubLinkNames.RespondentResponse,
         PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
@@ -620,6 +622,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is non-system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+      [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
       [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS],
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
@@ -635,6 +638,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is non-system user in Welsh', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + languages.WELSH_URL_PARAMETER],
       [
         HubLinkNames.RespondentResponse,
         PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
@@ -778,5 +782,45 @@ describe('show submitted alert', () => {
   it('should not submitted alert when case accepted', () => {
     userCase.state = CaseState.ACCEPTED;
     expect(shouldShowSubmittedAlert(userCase)).toEqual(false);
+  });
+});
+
+describe('updateHubLinkStatuses for HearingDetails', () => {
+  it('should update HearingDetails to READY_TO_VIEW', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      hearingCollection: [
+        {
+          id: '123',
+          value: {
+            hearingFormat: ['In person', 'Telephone', 'Video'],
+            hearingNumber: '3333',
+            hearingSitAlone: 'Sit Alone',
+            judicialMediation: 'Yes',
+            hearingEstLengthNum: 22,
+            hearingPublicPrivate: 'Public',
+            hearingDateCollection: [],
+          },
+        },
+      ],
+    };
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
+  });
+
+  it('should not update HearingDetails', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+    };
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
 });

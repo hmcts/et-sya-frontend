@@ -82,6 +82,10 @@
     "ecc": {
       "title": "Welsh translation required: "
     },
+    "hearingBanner": {
+      "hearing": "Mae'r tribiwnlys wedi anfon hysbysiad atoch am eich gwrandawiad.",
+      "link": "Gweld yr hysbysiad"
+    },
     "orderOrRequest": {
       "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
