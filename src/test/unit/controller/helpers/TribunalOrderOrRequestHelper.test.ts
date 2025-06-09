@@ -1,6 +1,7 @@
 import {
   activateTribunalOrdersAndRequestsLink,
   filterECCNotifications,
+  filterOutSpecialNotifications,
   filterSendNotifications,
   getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
@@ -713,7 +714,7 @@ describe('Tribunal order or request helper', () => {
       expect(notification.needsResponse).toBeFalsy();
     });
 
-    test('should not show notification to responent only', async () => {
+    test('should not show notification to respondent only', async () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
@@ -797,6 +798,57 @@ describe('Tribunal order or request helper', () => {
       setNotificationBannerData([notification], 'url');
       expect(notification.showAlert).toBeTruthy();
       expect(notification.needsResponse).toBeTruthy();
+    });
+  });
+
+  describe('filterOutEcc', () => {
+    test('should show filtered notification', async () => {
+      const notifications: SendNotificationTypeItem[] = [
+        {
+          id: '1',
+          value: {
+            date: '1 December 2023',
+            sendNotificationSubjectString: 'Response (ET3)',
+            sendNotificationTitle: '1 Show',
+          },
+        },
+        {
+          id: '2',
+          value: {
+            date: '2 December 2023',
+            sendNotificationSubjectString: 'Employer Contract Claim',
+            sendNotificationTitle: '2 Do not show',
+          },
+        },
+        {
+          id: '3',
+          value: {
+            date: '3 December 2023',
+            sendNotificationSubjectString: 'Employer Contract Claim, Response (ET3)',
+            sendNotificationTitle: '3 Do not show',
+          },
+        },
+        {
+          id: '4',
+          value: {
+            date: '4 December 2023',
+            sendNotificationSubjectString: 'Hearing',
+            sendNotificationTitle: '4 Do not show',
+          },
+        },
+        {
+          id: '5',
+          value: {
+            date: '5 December 2023',
+            sendNotificationSubjectString: 'Hearing, Response (ET3)',
+            sendNotificationTitle: '5 Show',
+          },
+        },
+      ];
+      const result = filterOutSpecialNotifications(notifications);
+      expect(result).toHaveLength(2);
+      expect(result[0].value.sendNotificationTitle).toEqual('1 Show');
+      expect(result[1].value.sendNotificationTitle).toEqual('5 Show');
     });
   });
 });

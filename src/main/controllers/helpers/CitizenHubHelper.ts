@@ -6,9 +6,14 @@ import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
+import { isHearingExist } from './HearingHelpers';
 import { isET3Accepted } from './RespondentContactDetailsHelper';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
+  if (isHearingExist(userCase.hearingCollection)) {
+    hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.READY_TO_VIEW;
+  }
+
   if (
     hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
     userCase.et3ResponseReceived
@@ -255,6 +260,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   };
   return new Map<string, string>([
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
+    [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
     [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
