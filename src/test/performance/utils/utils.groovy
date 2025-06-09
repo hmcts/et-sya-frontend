@@ -154,7 +154,7 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 }
 
 // //==========================================   
-// //Update Dynatrace Synthetic Test
+// Get & Put Dynatrace
 // //==========================================
 def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
@@ -212,11 +212,11 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
     } 
 }
 
-// Use JSON Object & JSON ECHO SERVER FOR DEBUG
 // //==========================================   
-// //GET Synthetic Info 
+// GET & Put Dynatrace Synthetic
+// GET Synthetic Info 
 // //==========================================
-def getDynatraceSyntheticBody(dynatraceApiHost) {
+def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled) {
     def response = null
     try {
     response = httpRequest(
@@ -227,7 +227,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost) {
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}/api/v1/synthetic/monitors/SYNTHETIC_TEST-58D99F542AAB721C"
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}"
     )
     echo "Check Synthetic Status: Response ${response}"
     }
@@ -240,8 +240,8 @@ def getDynatraceSyntheticBody(dynatraceApiHost) {
     def json = new JsonSlurper().parseText(response.content)
 
     //Edit the JSON
-    json.enabled = "true"
-    json.script.events[0].url = "https://et-sya.testURL.platform.hmcts.net/"
+    json.enabled = "${dynatraceSyntheticEnabled}"
+    json.script.events[0].url = "" //https://et-sya.testURL.platform.hmcts.net/
 
     //Convert updated JSON to String:
     def modifiedRequestBody = JsonOutput.toJson(json)

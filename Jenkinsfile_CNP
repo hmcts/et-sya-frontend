@@ -219,13 +219,14 @@ withPipeline(type, product, component) {
                 echo "Failure posting Dynatrace Metric: ${e.message}"
             }
 
-
-
         //===================================================================
             def getAndPutDTSynthetic = null
             try {
                 getAndPutDTSynthetic = utils.getDynatraceSyntheticBody (
-                            config.dynatraceApiHost)
+                            config.dynatraceApiHost,
+                            config.dynatraceUpdateSyntheticEndpoint,
+                            config.dynatraceSyntheticAATTest,
+                            "true")
             } catch (Exception e)
             {
                 echo "Failure Getting & Updating Dynatrace Synthetic: ${e.message}"
