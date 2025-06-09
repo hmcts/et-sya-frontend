@@ -222,7 +222,9 @@ withPipeline(type, product, component) {
                 echo "Failure posting Dynatrace Metric: ${e.message}"
             }
 
-        //===================================================================
+        //==================================================================
+        // For Preview -> Update the DT Synthetic Test with the correct URL & enable
+        //==================================================================
             def getAndPutDTSynthetic = null
             try {
                 getAndPutDTSynthetic = utils.getDynatraceSyntheticBody (

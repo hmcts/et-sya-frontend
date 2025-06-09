@@ -9,7 +9,7 @@ this.dynatraceUpdateSyntheticEndpoint = "api/v1/synthetic/monitors/"
 this.dynatraceMetricType = 'nodejs'
 this.dynatraceMetricTag = 'namespace:et'
 
-this.setEnvironmentConfig{ String envName -> 
+this.setEnvironmentConfig(String envName) { 
     if (envName == "preview") {
         this.dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
         this.dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
