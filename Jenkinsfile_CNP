@@ -184,26 +184,26 @@ withPipeline(type, product, component) {
 
         stage('Performance Test') {
 
-        loadVaultSecrets(secrets) // Load Perf secrets
+            loadVaultSecrets(secrets) // Load Perf secrets
 
-        echo "Starting performance test stage..."
-        // Log details of the build
-        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
-        //Check token:
-        echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+            echo "Starting performance test stage..."
+            // Log details of the build
+            echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+            //Check token:
+            echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
 
-        //==========================================
-        //Trigger Custom DT Event with Info:
-        //==========================================
-        script {
-            echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardURL}"
-            
-            def postDTEvent = utils.postDynatraceEvent (
-                        config.dynatraceApiHost,
-                        config.dynatraceSyntheticPerfTest,
-                        config.dynatraceDashboardId,
-                        config.dynatraceEntitySelector
-                )
+            //==========================================
+            //Trigger Custom DT Event with Info:
+            //==========================================
+            script {
+                echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardURL}"
+                
+                def postDTEvent = utils.postDynatraceEvent (
+                            config.dynatraceApiHost,
+                            config.dynatraceSyntheticPerfTest,
+                            config.dynatraceDashboardId,
+                            config.dynatraceEntitySelector
+                    )
 
         //==========================================    
         /// POST Metric to highlight a deployment
