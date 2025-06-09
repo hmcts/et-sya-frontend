@@ -27,6 +27,12 @@ export default class CitizenHubDocumentController {
         case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
           userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
           return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
+        case TranslationKeys.CITIZEN_HUB_NOTICE_OF_A_CLAIM:
+          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
+          return req.session?.userCase?.noticeOfClaimLetterDetail;
+        case TranslationKeys.CITIZEN_HUB_NOTICE_OF_HEARING:
+          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
+          return req.session?.userCase?.noticeOfHearingLetterDetail;
         case TranslationKeys.CITIZEN_HUB_REJECTION:
           userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
           return req.session?.userCase?.rejectionOfClaimDocumentDetail;

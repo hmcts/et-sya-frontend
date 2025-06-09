@@ -2,7 +2,7 @@ import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
-import { CaseState } from '../../definitions/definition';
+import { CaseState, DocumentDetail } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -48,20 +48,28 @@ export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
   );
 };
 
-export const shouldShowAcknowledgementAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
+const shouldShowAlert = (documentDetails: DocumentDetail[], hubLinksStatuses: HubLinksStatuses): boolean => {
   return (
-    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
+    !!documentDetails?.length &&
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
   );
 };
 
+export const shouldShowAcknowledgementAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
+  return shouldShowAlert(userCase?.acknowledgementOfClaimLetterDetail, hubLinksStatuses);
+};
+
+export const shouldShowNoticeOfClaimAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
+  return shouldShowAlert(userCase?.noticeOfClaimLetterDetail, hubLinksStatuses);
+};
+
+export const shouldShowNoticeOfHearingAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
+  return shouldShowAlert(userCase?.noticeOfHearingLetterDetail, hubLinksStatuses);
+};
+
 export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
-  return (
-    !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
+  return shouldShowAlert(userCase?.rejectionOfClaimDocumentDetail, hubLinksStatuses);
 };
 
 // Show response received if there's a respondent application where the respondent was the last to respond

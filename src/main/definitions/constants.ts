@@ -95,6 +95,8 @@ export const TranslationKeys = {
   ET1_DETAILS: 'et1-details',
   SIDEBAR_CONTACT_US: 'sidebar-contact-us',
   CITIZEN_HUB_ACKNOWLEDGEMENT: 'acknowledgement-of-claim',
+  CITIZEN_HUB_NOTICE_OF_A_CLAIM: 'notice-of-a-claim',
+  CITIZEN_HUB_NOTICE_OF_HEARING: 'notice-of-hearing',
   CITIZEN_HUB_REJECTION: 'rejection-of-claim',
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
@@ -424,7 +426,7 @@ export const ET3_FORM = 'ET3';
 
 export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
-export const noticeClaimDocTypes = ['2.6', '2.7', '2.8', 'Notice of a claim'];
+export const noticeClaimDocTypes = ['2.7', '2.8'];
 export const noticeHearingDocTypes = ['7.7', '7.8', '7.8a', 'Notice of Hearing'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];

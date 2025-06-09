@@ -1,0 +1,11 @@
+{
+  "title": "Notice of Hearing",
+  "h1": "Notice of Hearing",
+  "description": {
+    "firstCell": "Description",
+    "secondCell": "Notice of Hearing"
+  },
+  "document": "Document",
+  "documentDetails": "Details",
+  "date": "Date"
+}

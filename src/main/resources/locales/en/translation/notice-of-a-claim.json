@@ -1,0 +1,11 @@
+{
+  "title": "Notice of a claim",
+  "h1": "Notice of a claim",
+  "description": {
+    "firstCell": "Description",
+    "secondCell": "Notice of a claim"
+  },
+  "document": "Document",
+  "documentDetails": "Details",
+  "date": "Date"
+}

@@ -1,12 +1,12 @@
-{% if showAcknowledgementAlert %}
+{% if showNoticeOfClaimAlert %}
 
-  {% set htmlForAcknowledgementAlert %}
+  {% set htmlForNoticeOfClaimAlert %}
     <h3 class="govuk-notification-banner__heading">
       {{ notificationBanner.acknowledgement.header }}
     </h3>
 
     <p class="govuk-body">
-      <a class="govuk-link" href="/case-document/acknowledgement-of-claim">{{ notificationBanner.acknowledgement.link }}</a>.
+      <a class="govuk-link" href="/case-document/notice-of-a-claim">{{ notificationBanner.acknowledgement.link }}</a>.
     </p>
 
     <p class="govuk-body">
@@ -22,7 +22,7 @@
   {% endset %}
 
   {{ govukNotificationBanner({
-    html: htmlForAcknowledgementAlert,
+    html: htmlForNoticeOfClaimAlert,
     titleText: important
   }) }}
 

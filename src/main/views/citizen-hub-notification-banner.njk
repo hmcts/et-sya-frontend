@@ -83,6 +83,10 @@
 
 {% include "citizen-hub-notification-banner/acknowledgement.njk"%}
 
+{% include "citizen-hub-notification-banner/notice-of-a-claim.njk"%}
+
+{% include "citizen-hub-notification-banner/notice-of-hearing.njk"%}
+
 {% if showRejectionAlert %}
   {{ govukNotificationBanner({
    html: htmlForRejectionAlert,
