@@ -5,7 +5,11 @@ import {
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
+  shouldShowAcknowledgementAlert,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowNoticeOfClaimAlert,
+  shouldShowNoticeOfHearingAlert,
+  shouldShowRejectionAlert,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
   shouldShowSubmittedAlert,
@@ -16,7 +20,7 @@ import { CaseWithId, Et3ResponseStatus, YesOrNo } from '../../../../main/definit
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
-import { CaseState } from '../../../../main/definitions/definition';
+import { CaseState, DocumentDetail } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { StoreNotification } from '../../../../main/definitions/storeNotification';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
@@ -782,6 +786,181 @@ describe('show submitted alert', () => {
   it('should not submitted alert when case accepted', () => {
     userCase.state = CaseState.ACCEPTED;
     expect(shouldShowSubmittedAlert(userCase)).toEqual(false);
+  });
+});
+
+describe('shouldShowAcknowledgementAlert', () => {
+  const userCase: CaseWithId = mockUserCase;
+  const mockDoc: DocumentDetail[] = [
+    {
+      id: '1',
+      description: 'test',
+    },
+  ];
+
+  it('returns false if no case is provided', () => {
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowAcknowledgementAlert(undefined, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document details are empty', () => {
+    userCase.acknowledgementOfClaimLetterDetail = [];
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowAcknowledgementAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is VIEWED', () => {
+    userCase.acknowledgementOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.VIEWED,
+    };
+    expect(shouldShowAcknowledgementAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is SUBMITTED_AND_VIEWED', () => {
+    userCase.acknowledgementOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.SUBMITTED_AND_VIEWED,
+    };
+    expect(shouldShowAcknowledgementAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns true if document exists and status is NOT_VIEWED', () => {
+    userCase.acknowledgementOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowAcknowledgementAlert(userCase, hubLinksStatuses)).toBe(true);
+  });
+});
+
+describe('shouldShowNoticeOfClaimAlert', () => {
+  const userCase: CaseWithId = mockUserCase;
+  const mockDoc: DocumentDetail[] = [
+    {
+      id: '1',
+      description: 'test',
+    },
+  ];
+
+  it('returns false if document details are empty', () => {
+    userCase.noticeOfClaimLetterDetail = [];
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowNoticeOfClaimAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is VIEWED', () => {
+    userCase.noticeOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.VIEWED,
+    };
+    expect(shouldShowNoticeOfClaimAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is SUBMITTED_AND_VIEWED', () => {
+    userCase.noticeOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.SUBMITTED_AND_VIEWED,
+    };
+    expect(shouldShowNoticeOfClaimAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns true if document exists and status is NOT_VIEWED', () => {
+    userCase.noticeOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowNoticeOfClaimAlert(userCase, hubLinksStatuses)).toBe(true);
+  });
+});
+
+describe('shouldShowNoticeOfHearingAlert', () => {
+  const userCase: CaseWithId = mockUserCase;
+  const mockDoc: DocumentDetail[] = [
+    {
+      id: '1',
+      description: 'test',
+    },
+  ];
+
+  it('returns false if document details are empty', () => {
+    userCase.noticeOfHearingLetterDetail = [];
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowNoticeOfHearingAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is VIEWED', () => {
+    userCase.noticeOfHearingLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.VIEWED,
+    };
+    expect(shouldShowNoticeOfHearingAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is SUBMITTED_AND_VIEWED', () => {
+    userCase.noticeOfHearingLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.SUBMITTED_AND_VIEWED,
+    };
+    expect(shouldShowNoticeOfHearingAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns true if document exists and status is NOT_VIEWED', () => {
+    userCase.noticeOfHearingLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowNoticeOfHearingAlert(userCase, hubLinksStatuses)).toBe(true);
+  });
+});
+
+describe('shouldShowRejectionAlert', () => {
+  const userCase: CaseWithId = mockUserCase;
+  const mockDoc: DocumentDetail[] = [
+    {
+      id: '1',
+      description: 'test',
+    },
+  ];
+
+  it('returns false if document details are empty', () => {
+    userCase.rejectionOfClaimDocumentDetail = [];
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowRejectionAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is VIEWED', () => {
+    userCase.rejectionOfClaimDocumentDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.VIEWED,
+    };
+    expect(shouldShowRejectionAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns false if document exists but status is SUBMITTED_AND_VIEWED', () => {
+    userCase.rejectionOfClaimDocumentDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.SUBMITTED_AND_VIEWED,
+    };
+    expect(shouldShowRejectionAlert(userCase, hubLinksStatuses)).toBe(false);
+  });
+
+  it('returns true if document exists and status is NOT_VIEWED', () => {
+    userCase.rejectionOfClaimDocumentDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    expect(shouldShowRejectionAlert(userCase, hubLinksStatuses)).toBe(true);
   });
 });
 
