@@ -181,6 +181,7 @@ withPipeline(type, product, component) {
                 echo "API Host: ${config.Test}"
             }
         }
+
         stage('Performance Test - preview') {
 
         loadVaultSecrets(secrets) // Load Perf secrets
@@ -231,8 +232,8 @@ withPipeline(type, product, component) {
             } catch (Exception e)
             {
                 echo "Failure Getting & Updating Dynatrace Synthetic: ${e.message}"
-            }
-*/
+            }*/
+
         //==================================================================
         // For Preview -> Update the DT Synthetic Test with the correct URL & enable
         //==================================================================
