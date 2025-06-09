@@ -163,7 +163,6 @@ withPipeline(type, product, component) {
         // Load Performance Test Config
         //==========================================
         stage('Performance Test - Load Config & Utils') {
-            echo "Check ENV VARS: ${env.environment}"
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
             script {
                 try {
