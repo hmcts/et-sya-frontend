@@ -24,6 +24,7 @@ def setEnvironmentConfig(String envName) {
     } else {
         error("Unknown environment: ${envName}")
     }
+    this.setEnvironmentConfig = setEnvironmentConfig
 }
 
 
