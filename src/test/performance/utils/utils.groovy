@@ -246,7 +246,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
     //Convert updated JSON to String:
     def modifiedRequestBody = JsonOutput.toJson(json)
 
-    //PUT back to DT
+    //Updte the synthetic in Dynatrace
     try {
     response = httpRequest(
         acceptType: 'APPLICATION_JSON',

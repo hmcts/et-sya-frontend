@@ -164,10 +164,13 @@ withPipeline(type, product, component) {
         //==========================================
         stage('Performance Test - Load Config & Utils') {
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
+            def envName = "aat" ///**
             script {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
+                    config.setEnvironmentConfig(envName)
+
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
