@@ -1,6 +1,20 @@
 // Performance in pipelines 
 
-//Perf Vars (*Can Be global ENV.vars*)
+def sayHello(name) {
+    echo "Hello, ${name}!"
+}
+
+//def dynatraceApiHost
+//def dynatraceEventIngestEndpoint
+//def dynatraceMetricIngestEndpoint
+//def dynatraceTriggerSyntheticEndpoint
+//def dynatraceSyntheticPerfTest
+//def dynatraceDashboardId
+//def dynatraceEntitySelector
+
+this.Test = "dev"
+
+//Perf Vars (*Need to add to config file)
 this.dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
 this.dynatraceEventIngestEndpoint = "api/v2/events/ingest"
 this.dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
