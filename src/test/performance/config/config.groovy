@@ -1,27 +1,16 @@
 // Performance in pipelines 
 
-def sayHello(name) {
-    echo "Hello, ${name}!"
-}
-
-//def dynatraceApiHost
-//def dynatraceEventIngestEndpoint
-//def dynatraceMetricIngestEndpoint
-//def dynatraceTriggerSyntheticEndpoint
-//def dynatraceSyntheticPerfTest
-//def dynatraceDashboardId
-//def dynatraceEntitySelector
-
-this.Test = "dev"
-
-//Perf Vars (*Need to add to config file)
+//Perf Vars (*Can Be global ENV.vars*)
 this.dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
 this.dynatraceEventIngestEndpoint = "api/v2/events/ingest"
 this.dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
 this.dynatraceTriggerSyntheticEndpoint = "api/v2/synthetic/executions/batch"
 this.dynatraceUpdateSyntheticEndpoint = "api/v1/synthetic/monitors/"
+
 this.dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
 this.dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
+
+
 this.dynatraceDashboardURL = "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
 this.dynatraceEntitySelector = 'type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")'
 this.dynatraceMetricType = 'nodejs'

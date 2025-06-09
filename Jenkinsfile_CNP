@@ -13,6 +13,7 @@ def branchesToSync = ['demo', 'ithc']
 //Perf Vars
 def config
 def utils
+def env
 def dynatraceApiHost
 def dynatraceEventIngestEndpoint
 def dynatraceMetricIngestEndpoint
@@ -163,7 +164,7 @@ withPipeline(type, product, component) {
         // Load Performance Test Config
         //==========================================
         stage('Performance Test - Load Config & Utils') {
-            echo "Check ENV VARS: ${env.environment}"
+            env = "preview"
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
             script {
                 try {
@@ -180,7 +181,7 @@ withPipeline(type, product, component) {
                 echo "API Host: ${config.Test}"
             }
         }
-        stage('Performance Test') {
+        stage('Performance Test - preview') {
 
         loadVaultSecrets(secrets) // Load Perf secrets
 
@@ -222,7 +223,7 @@ withPipeline(type, product, component) {
 
 
 
-        //===================================================================
+      /*  //===================================================================
             def getAndPutDTSynthetic = null
             try {
                 getAndPutDTSynthetic = utils.getDynatraceSyntheticBody (
@@ -231,7 +232,7 @@ withPipeline(type, product, component) {
             {
                 echo "Failure Getting & Updating Dynatrace Synthetic: ${e.message}"
             }
-
+*/
         //==================================================================
         // For Preview -> Update the DT Synthetic Test with the correct URL & enable
         //==================================================================
