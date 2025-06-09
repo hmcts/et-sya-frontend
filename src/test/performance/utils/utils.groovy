@@ -256,7 +256,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}/api/v1/synthetic/monitors/SYNTHETIC_TEST-58D99F542AAB721C",
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
         requestBody: "${modifiedRequestBody}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
