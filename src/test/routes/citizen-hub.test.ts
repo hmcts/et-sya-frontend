@@ -22,7 +22,7 @@ caseApi.getUserCase = jest.fn().mockResolvedValue(
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
 
-describe(`GET ${PageUrls.CITIZEN_HUB}`, () => {
+describe('GET CITIZEN_HUB', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
   it('should return the citizen hub page', async () => {
