@@ -267,6 +267,30 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
     } 
 }
 
+// //==========================================
+// Set Environment Config
+// //==========================================
+def setEnvironmentConfig(config,envName) {
+    if (envName == "preview") {
+        config.dynatraceSyntheticPerfTest = config.dynatraceSyntheticPerfTestPreview
+        config.dynatraceDashboardId = config.dynatraceDashboardIdPreview
+        config.dynatraceDashboardURL = config.dynatraceDashboardURLPreview
+        config.dynatraceEntitySelector = config.dynatraceEntitySelectorPreview
+    } else if (envName == "aat") {
+        config.dynatraceSyntheticPerfTest = config.dynatraceSyntheticPerfTestAAT
+        config.dynatraceDashboardId = config.dynatraceDashboardIdAAT
+        config.dynatraceDashboardURL = config.dynatraceDashboardURLAAT
+        config.dynatraceEntitySelector = config.dynatraceEntitySelectorAAT
+    } else if (envName == "perftest") {
+        config.dynatraceSyntheticPerfTest = config.dynatraceSyntheticPerfTest
+        config.dynatraceDashboardId = config.dynatraceDashboardIdPerfTest
+        config.dynatraceDashboardURL = config.dynatraceDashboardURLPerfTest
+        config.dynatraceEntitySelector = config.dynatraceEntitySelectorPerfTest
+    } else {
+        error("Unknown environment: ${envName}")
+    }
+}
+
 return this
 
 

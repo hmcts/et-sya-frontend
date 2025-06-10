@@ -169,8 +169,11 @@ withPipeline(type, product, component) {
                 try {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
-                    config.setEnvironmentConfig(envName)
-
+                    utils.setEnvironmentConfig(config, envName)
+                    echo "✅ Environment config loaded for ${envName}"
+                    echo "▶ Synthetic Test ID: ${config.dynatraceSyntheticPerfTest}"
+                    echo "▶ Dashboard URL: ${config.dynatraceDashboardURL}"
+                    echo "▶ Entity Selector: ${config.dynatraceEntitySelector}"
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
