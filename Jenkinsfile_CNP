@@ -166,7 +166,7 @@ withPipeline(type, product, component) {
         //==========================================
         stage('Performance Test - Load Config & Utils') {
             echo "Loading Performance test configuration and utilities from the test/performance directory..."
-            echo "TEST ENV VARS: /n ${env.GIT_URL} /n${env.BUILD_NOTICE_SLACK_CHANNEL} /n${env.BUILD_ID} /n${env.BUILD_DISPLAY_NAME} /n${env.JOB_NAME}/n${env.JOB_BASE_NAME}/n${env.BUILD_TAG}/n${env.CHANGE_URL}/n${env.CHANGE_ID}/n${env.BUILD_URL}/n${env.JOB_URL}/n${env.GIT_COMMIT}"
+            echo "TEST ENV VARS: \nGIT URL:${env.GIT_URL} \nSlack Channel:${env.BUILD_NOTICE_SLACK_CHANNEL}\nBuildID:${env.BUILD_ID}\nBuild Display Name:${env.BUILD_DISPLAY_NAME}\nJob Name:${env.JOB_NAME}\nJob Base Name:${env.JOB_BASE_NAME}\nBuild Tag:${env.BUILD_TAG}\nChange URL:${env.CHANGE_URL}\nChange ID:${env.CHANGE_ID}\nBuild URL:${env.BUILD_URL}\nJob URL:${env.JOB_URL}\n GIT COMMIT ID:${env.GIT_COMMIT}"
             
             envName = "aat" ///**
             script {
