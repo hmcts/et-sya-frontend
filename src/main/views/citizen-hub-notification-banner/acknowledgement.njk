@@ -1,0 +1,29 @@
+{% if showAcknowledgementAlert %}
+    {% set htmlForAcknowledgementAlert %}
+
+        <h3 class="govuk-notification-banner__heading">
+            {{ notificationBanner.acknowledgement.header }}
+        </h3>
+
+        <p class="govuk-body">
+            <a class="govuk-link" href="/case-document/acknowledgement-of-claim">{{ notificationBanner.acknowledgement.link }}</a>.
+        </p>
+
+        <p class="govuk-body">
+            {{ notificationBanner.acknowledgement.p1 }}
+        </p>
+
+        {% if respondentResponseDeadline %}
+            <p class="govuk-body">
+                <span class="govuk-body govuk-!-font-weight-bold">{{ notificationBanner.acknowledgement.p2a }}</span><br>
+                {{ notificationBanner.acknowledgement.p2b }} {{ respondentResponseDeadline }}.
+            </p>
+        {% endif %}
+
+    {% endset %}
+
+    {{ govukNotificationBanner({
+        html: htmlForAcknowledgementAlert,
+        titleText: important
+    }) }}
+{% endif %}

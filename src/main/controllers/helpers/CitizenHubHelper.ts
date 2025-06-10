@@ -88,7 +88,7 @@ export const shouldShowClaimantTribunalResponseReceived = (notifications: SendNo
 
 // Only show new respondent applications if there are applications that are not started yet
 // notStartedYet applications can also be ones where the tribunal has asked the claimant for more information.
-// Therefore make sure also that there's a notStartedYet application with no requests for information
+// Therefore, make sure also that there's a notStartedYet application with no requests for information
 export const shouldShowRespondentApplicationReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
   return applications?.some(
     app =>
@@ -103,7 +103,7 @@ export const shouldShowRespondentRejection = (userCase: CaseWithId, hubLinksStat
   );
 };
 
-export const shouldShowRespondentAcknolwedgement = (
+export const shouldShowRespondentAcknowledgement = (
   userCase: CaseWithId,
   hubLinksStatuses: HubLinksStatuses
 ): boolean => {
