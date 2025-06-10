@@ -17,7 +17,7 @@ def dynatraceApiHost
 def dynatraceEventIngestEndpoint
 def dynatraceMetricIngestEndpoint
 def dynatraceTriggerSyntheticEndpoint
-def dynatraceSyntheticPerfTest
+def dynatraceSyntheticTest
 def dynatraceDashboardId
 def dynatraceEntitySelector
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
@@ -170,10 +170,6 @@ withPipeline(type, product, component) {
                     config = load 'src/test/performance/config/config.groovy'
                     utils = load 'src/test/performance/utils/utils.groovy'
                     utils.setEnvironmentConfig(config, envName)
-                    echo "✅ Environment config loaded for ${envName}"
-                    echo "▶ Synthetic Test ID: ${config.dynatraceSyntheticPerfTest}"
-                    echo "▶ Dashboard URL: ${config.dynatraceDashboardURL}"
-                    echo "▶ Entity Selector: ${config.dynatraceEntitySelector}"
                 } catch (Exception e) {
                     echo "Error Message: ${e.message}"
                 }
@@ -199,11 +195,11 @@ withPipeline(type, product, component) {
         //Trigger Custom DT Event with Info:
         //==========================================
         script {
-            echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticPerfTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardURL}"
+            echo "Posting Custom DT Event:\nCONFIG\n DT Host: ${config.dynatraceApiHost}\nSynthetic Perftest: ${config.dynatraceSyntheticTest}\n EntitySelector: ${config.dynatraceEntitySelector}\n EventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardURL}"
             
             def postDTEvent = utils.postDynatraceEvent (
                         config.dynatraceApiHost,
-                        config.dynatraceSyntheticPerfTest,
+                        config.dynatraceSyntheticTest,
                         config.dynatraceDashboardId,
                         config.dynatraceEntitySelector
                 )
@@ -233,7 +229,7 @@ withPipeline(type, product, component) {
                 getAndPutDTSynthetic = utils.getDynatraceSyntheticBody (
                             config.dynatraceApiHost,
                             config.dynatraceUpdateSyntheticEndpoint,
-                            config.dynatraceSyntheticAATTest,
+                            config.,
                             "true")
             } catch (Exception e)
             {
@@ -262,13 +258,13 @@ withPipeline(type, product, component) {
         //==========================================   
         //Trigger Dynatrace Synthetic Test
         //==========================================    
-            echo "Triggering Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceTriggerSyntheticEndpoint}\n SyntheticTest: ${config.dynatraceSyntheticPerfTest}\n Dashboard: ${config.dynatraceDashboardURL}\n Environment: perftest"
+            echo "Triggering Dynatrace Synthetic Test:\nCONFIG\nDT Host: ${config.dynatraceApiHost}\nDT Endpoint: ${config.dynatraceTriggerSyntheticEndpoint}\n SyntheticTest: ${config.dynatraceSyntheticTest}\n Dashboard: ${config.dynatraceDashboardURL}\n Environment: perftest"
             def postDynatraceSyntheticTest = null 
             try {
                 postDynatraceSyntheticTest = utils.postDynatraceSyntheticTest (
                             config.dynatraceApiHost,
                             config.dynatraceTriggerSyntheticEndpoint,
-                            config.dynatraceSyntheticPerfTest
+                            config.dynatraceSyntheticTest
                 )
             } catch (Exception e)
             {

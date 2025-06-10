@@ -6,7 +6,7 @@ import groovy.json.JsonOutput
 //==========================================    
 // Request to send dynatrace custom_info event
 //==========================================    
-def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDashboardId, dynatraceEntitySelector) {
+def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticTest, dynatraceDashboardId, dynatraceEntitySelector) {
     def response = null
     try {
     response = httpRequest(
@@ -25,7 +25,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticPerfTest, dynatraceDa
                 "Workspace": "${env.WORKSPACE}",
                 "Branch": "${env.BRANCH_NAME}",
                 "Build Number": "${env.BUILD_NUMBER}",
-                "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
+                "Synthetic Performance Test": "${dynatraceSyntheticTest}",
                 "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
             },
             "timeout": 1,
@@ -68,7 +68,7 @@ def postDynatraceMetric(dynatraceApiHost, dynatraceMetricIngestEndpoint, dynatra
 // //==========================================   
 // //Trigger Dynatrace Synthetic Test
 // //==========================================
-def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoint,dynatraceSyntheticPerfTest) {
+def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoint,dynatraceSyntheticTest) {
     def response = null
     try {
     response = httpRequest(
@@ -83,7 +83,7 @@ def postDynatraceSyntheticTest(dynatraceApiHost, dynatraceTriggerSyntheticEndpoi
         requestBody: """{
             "monitors": [
                 {
-                    "monitorId": "${dynatraceSyntheticPerfTest}"
+                    "monitorId": "${dynatraceSyntheticTest}"
                 }
             ]
         }"""
@@ -272,17 +272,17 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
 // //==========================================
 def setEnvironmentConfig(config,envName) {
     if (envName == "preview") {
-        config.dynatraceSyntheticPerfTest = config.dynatraceSyntheticPerfTestPreview
+        config.dynatraceSyntheticTest = config.dynatraceSyntheticTestPreview
         config.dynatraceDashboardId = config.dynatraceDashboardIdPreview
         config.dynatraceDashboardURL = config.dynatraceDashboardURLPreview
         config.dynatraceEntitySelector = config.dynatraceEntitySelectorPreview
     } else if (envName == "aat") {
-        config.dynatraceSyntheticPerfTest = config.dynatraceSyntheticPerfTestAAT
+        config.dynatraceSyntheticTest = config.dynatraceSyntheticTestAAT
         config.dynatraceDashboardId = config.dynatraceDashboardIdAAT
         config.dynatraceDashboardURL = config.dynatraceDashboardURLAAT
         config.dynatraceEntitySelector = config.dynatraceEntitySelectorAAT
     } else if (envName == "perftest") {
-        config.dynatraceSyntheticPerfTest = config.dynatraceSyntheticPerfTest
+        config.dynatraceSyntheticTest = config.dynatraceSyntheticTest
         config.dynatraceDashboardId = config.dynatraceDashboardIdPerfTest
         config.dynatraceDashboardURL = config.dynatraceDashboardURLPerfTest
         config.dynatraceEntitySelector = config.dynatraceEntitySelectorPerfTest
