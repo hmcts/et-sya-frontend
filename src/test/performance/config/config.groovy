@@ -6,6 +6,10 @@ this.dynatraceTriggerSyntheticEndpoint = "api/v2/synthetic/executions/batch"
 this.dynatraceUpdateSyntheticEndpoint = "api/v1/synthetic/monitors/"
 this.dynatraceMetricType = 'nodejs'
 this.dynatraceMetricTag = 'namespace:et'
+this.dynatraceSyntheticPerfTest = ""
+this.dynatraceDashboardId = ""
+this.dynatraceDashboardURL = ""
+this.dynatraceEntitySelector = ""
 
 // ====== Define the config-setting method as a closure ======
 def setEnvironmentConfigClosure = { String envName ->
@@ -29,12 +33,6 @@ def setEnvironmentConfigClosure = { String envName ->
     }
     // ====== Assign the closure to `this` ======
     this.setEnvironmentConfig = setEnvironmentConfigClosure
-     return [
-     dynatraceSyntheticPerfTest: dynatraceSyntheticPerfTest,
-     dynatraceDashboardId: dynatraceDashboardId,
-     dynatraceDashboardURL: dynatraceDashboardURL,
-     dynatraceEntitySelector: dynatraceEntitySelector
- ]
 }
 
 echo "Completed Config Load..."
