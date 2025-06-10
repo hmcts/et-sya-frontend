@@ -156,7 +156,7 @@ def getDynatraceSyntheticStatus(dynatraceApiHost, lastExecutionId) {
 // //==========================================   
 // Get & Put Dynatrace
 // //==========================================
-def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
+def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticTest, dynatraceSyntheticEnabled, previewUrl = "https://et-sya.DEFAULT.platform.hmcts.net/", dynatraceScriptName) {
     def response = null
     def dynatraceScript = null
     //def requestBodyOne = null
@@ -201,7 +201,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticTest}",
         requestBody: "${dynatraceScript.requestBodyOne}${dynatraceScript.requestBodyTwo}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
@@ -216,7 +216,7 @@ def putDynatraceSyntheticTest(dynatraceApiHost, dynatraceUpdateSyntheticEndpoint
 // GET & Put Dynatrace Synthetic
 // GET Synthetic Info 
 // //==========================================
-def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticPerftest, dynatraceSyntheticEnabled) {
+def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint, dynatraceSyntheticTest, dynatraceSyntheticEnabled) {
     def response = null
     try {
     response = httpRequest(
@@ -227,7 +227,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}"
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticTest}"
     )
     echo "Check Synthetic Status: Response ${response}"
     }
@@ -256,7 +256,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
         customHeaders: [
             [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_UPDATE_TOKEN}"]
         ],
-        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticPerftest}",
+        url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticTest}",
         requestBody: "${modifiedRequestBody}"
     )
     echo "Dynatrace synthetic test updated. Response ${response}"
