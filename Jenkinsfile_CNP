@@ -20,6 +20,7 @@ def dynatraceTriggerSyntheticEndpoint
 def dynatraceSyntheticTest
 def dynatraceDashboardId
 def dynatraceEntitySelector
+
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 def secrets = [
@@ -214,7 +215,7 @@ withPipeline(type, product, component) {
                             config.dynatraceMetricIngestEndpoint,
                             config.dynatraceMetricType,
                             config.dynatraceMetricTag,
-                            'perftest'
+                            envName
                 )
             } catch (Exception e)
             {
