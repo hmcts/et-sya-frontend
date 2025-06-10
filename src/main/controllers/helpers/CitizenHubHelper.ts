@@ -1,7 +1,13 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import {
+  Applicant,
+  NotificationSubjects,
+  PageUrls,
+  acknowledgementOfClaimDocTypes,
+  languages,
+} from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
@@ -48,12 +54,25 @@ export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
   );
 };
 
-export const shouldShowAcknowledgementAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
-  return (
-    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
+export const getAcknowledgementAlert = (
+  userCase: CaseWithId,
+  hubLinksStatuses: HubLinksStatuses
+): {
+  shouldShowAlert: boolean;
+  isAcknowledgementOfClaimOnly: boolean;
+  respondentResponseDeadline?: string;
+} => {
+  const isLetterExist = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
+  return {
+    shouldShowAlert:
+      isLetterExist &&
+      hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+      hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
+    isAcknowledgementOfClaimOnly:
+      isLetterExist &&
+      userCase.acknowledgementOfClaimLetterDetail.every(doc => acknowledgementOfClaimDocTypes.includes(doc.type ?? '')),
+    respondentResponseDeadline: userCase?.respondentResponseDeadline,
+  };
 };
 
 export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
