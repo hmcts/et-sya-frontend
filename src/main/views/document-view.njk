@@ -20,76 +20,9 @@
       </h1>
 
       {% for doc in docs %}
-
-        {% if doc.description %}
-          {% set row = [
-            [
-              {
-                text: description.firstCell
-              },
-              {
-                text: description.secondCell
-              }
-            ],
-            [
-              {
-                text: document
-              },
-              {
-                html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
-              }
-            ],
-            [
-              {
-                text: documentDetails
-              },
-              {
-                html: doc.description
-              }
-            ],
-            [
-              {
-                text: date
-              },
-              {
-                html: doc.createdOn
-              }
-            ]
-          ] %}
-        {% else %}
-
-          {% set row = [
-            [
-              {
-                text: description.firstCell
-              },
-              {
-                text: description.secondCell
-              }
-            ],
-            [
-              {
-                text: document
-              },
-              {
-                html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
-              }
-            ],
-            [
-              {
-                text: date
-              },
-              {
-                html: doc.createdOn
-              }
-            ]
-          ] %}
-
-        {% endif %}
-
         {{ govukTable({
           firstCellIsHeader: true,
-          rows: row
+          rows: doc.table
         }) }}
       {% endfor %}
 

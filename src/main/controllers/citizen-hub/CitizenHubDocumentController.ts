@@ -4,7 +4,9 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId } from '../../definitions/case';
 import { ErrorPages, TranslationKeys, Views } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
+import { GovukTable, GovukTableRow } from '../../definitions/govuk/govukTable';
 import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
+import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
 import { handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
 import { getDocumentDetails } from '../helpers/DocumentHelpers';
@@ -47,7 +49,7 @@ export default class CitizenHubDocumentController {
     res.render(Views.DOCUMENT_VIEW, {
       ...translations,
       hideContactUs: true,
-      docs: documents,
+      docs: generateTableContents(documents, translations),
     });
   };
 }
@@ -65,4 +67,33 @@ const mapParamToDoc = (documentType: string, userCase: CaseWithId): DocumentDeta
     default:
       return undefined;
   }
+};
+
+const generateTableContents = (documents: DocumentDetail[], translations: AnyRecord): GovukTable[] => {
+  const tableContents: GovukTable[] = [];
+  documents.forEach(doc => {
+    tableContents.push({ rows: generateDocumentRows(doc, translations) });
+  });
+  return tableContents;
+};
+
+const generateDocumentRows = (doc: DocumentDetail, translations: AnyRecord): GovukTableRow[][] => {
+  const rows: GovukTableRow[][] = [];
+
+  rows.push([{ text: translations.description.firstCell }, { text: translations.description.secondCell }]);
+
+  rows.push([
+    { text: translations.document },
+    {
+      html: `<a href="/getCaseDocument/${doc.id}" target="_blank" class="govuk-link">${doc.originalDocumentName} [${doc.size}MB]</a>`,
+    },
+  ]);
+
+  if (doc.description) {
+    rows.push([{ text: translations.documentDetails }, { html: doc.description }]);
+  }
+
+  rows.push([{ text: translations.date }, { html: doc.createdOn }]);
+
+  return rows;
 };

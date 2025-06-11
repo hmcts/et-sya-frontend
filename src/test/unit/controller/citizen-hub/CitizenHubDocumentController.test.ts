@@ -5,9 +5,10 @@ import { CaseWithId } from '../../../../main/definitions/case';
 import { DocumentDetail } from '../../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../../main/definitions/hub';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
+import translations from '../../../../main/resources/locales/en/translation/acknowledgement-of-claim.json';
 import { CaseApi } from '../../../../main/services/CaseService';
 import * as caseService from '../../../../main/services/CaseService';
-import { mockRequest } from '../../mocks/mockRequest';
+import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
 jest.mock('axios');
@@ -47,7 +48,7 @@ describe('Citizen Hub Document Controller', () => {
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     const response = mockResponse();
     request.params.documentType = 'acknowledgement-of-claim';
@@ -63,7 +64,7 @@ describe('Citizen Hub Document Controller', () => {
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
 
     const response = mockResponse();
@@ -86,6 +87,7 @@ describe('Citizen Hub Document Controller', () => {
       })
     );
   });
+
   it('should redirect to not-found when the document request returns an error', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -95,7 +97,7 @@ describe('Citizen Hub Document Controller', () => {
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     const response = mockResponse();
     request.params.documentType = 'unknown';
 
@@ -106,7 +108,7 @@ describe('Citizen Hub Document Controller', () => {
 
   it('should redirect back to the citizen hub when the acknowledment documents are not found in the userCase', async () => {
     const userCase: Partial<CaseWithId> = { id: '1' };
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     const response = mockResponse();
 
     await new CitizenHubDocumentController().get(request, response);
