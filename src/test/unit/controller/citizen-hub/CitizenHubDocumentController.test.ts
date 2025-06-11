@@ -76,12 +76,15 @@ describe('Citizen Hub Document Controller', () => {
       expect.objectContaining({
         docs: [
           {
-            size: '0.011',
-            mimeType: 'application/pdf',
-            originalDocumentName: 'sample.pdf',
-            createdOn: '8 September 2022',
-            description: 'description',
-            id: '1',
+            rows: [
+              [{ text: 'Description' }, { text: 'Acknowledgement of Claim' }],
+              [
+                { text: 'Document' },
+                { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">sample.pdf [0.011MB]</a>' },
+              ],
+              [{ text: 'Details' }, { html: 'description' }],
+              [{ text: 'Date' }, { html: '8 September 2022' }],
+            ],
           },
         ],
       })

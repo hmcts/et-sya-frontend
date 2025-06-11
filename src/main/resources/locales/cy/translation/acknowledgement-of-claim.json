@@ -3,7 +3,9 @@
   "h1": "Cydnabod derbyn yr hawliad",
   "description": {
     "firstCell": "Disgrifiad",
-    "secondCell": "Cydnabod derbyn yr hawliad"
+    "secondCell": "Cydnabod derbyn yr hawliad",
+    "d2": "[W]Notice of a Claim and Notice of Hearing",
+    "d7": "[W]Notice of case management discussion"
   },
   "document": "Dogfen",
   "documentDetails": "Manylion",

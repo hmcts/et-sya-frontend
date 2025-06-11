@@ -49,7 +49,7 @@ export default class CitizenHubDocumentController {
     res.render(Views.DOCUMENT_VIEW, {
       ...translations,
       hideContactUs: true,
-      docs: generateTableContents(documents, translations),
+      docs: generateTableContents(documents, documentType, translations),
     });
   };
 }
@@ -69,31 +69,59 @@ const mapParamToDoc = (documentType: string, userCase: CaseWithId): DocumentDeta
   }
 };
 
-const generateTableContents = (documents: DocumentDetail[], translations: AnyRecord): GovukTable[] => {
+const generateTableContents = (
+  documents: DocumentDetail[],
+  documentType: string,
+  translations: AnyRecord
+): GovukTable[] => {
   const tableContents: GovukTable[] = [];
   documents.forEach(doc => {
-    tableContents.push({ rows: generateDocumentRows(doc, translations) });
+    tableContents.push({ rows: generateDocumentRows(doc, documentType, translations) });
   });
   return tableContents;
 };
 
-const generateDocumentRows = (doc: DocumentDetail, translations: AnyRecord): GovukTableRow[][] => {
+const generateDocumentRows = (
+  doc: DocumentDetail,
+  documentType: string,
+  translations: AnyRecord
+): GovukTableRow[][] => {
+  const { description, document, documentDetails, date } = translations;
   const rows: GovukTableRow[][] = [];
 
-  rows.push([{ text: translations.description.firstCell }, { text: translations.description.secondCell }]);
+  const descriptionText = getDescriptionText(doc, documentType, translations);
+  rows.push([{ text: description.firstCell }, { text: descriptionText }]);
 
   rows.push([
-    { text: translations.document },
+    { text: document },
     {
       html: `<a href="/getCaseDocument/${doc.id}" target="_blank" class="govuk-link">${doc.originalDocumentName} [${doc.size}MB]</a>`,
     },
   ]);
 
   if (doc.description) {
-    rows.push([{ text: translations.documentDetails }, { html: doc.description }]);
+    rows.push([{ text: documentDetails }, { html: doc.description }]);
   }
 
-  rows.push([{ text: translations.date }, { html: doc.createdOn }]);
+  rows.push([{ text: date }, { html: doc.createdOn }]);
 
   return rows;
+};
+
+const getDescriptionText = (doc: DocumentDetail, documentType: string, translations: AnyRecord): string => {
+  const { description } = translations;
+  if (documentType === TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT) {
+    switch (doc.type) {
+      case '2.7':
+      case '2.8':
+        return description.d2;
+      case '7.7':
+      case '7.8':
+      case '7.8a':
+        return description.d7;
+      default:
+        return description.secondCell;
+    }
+  }
+  return description.secondCell;
 };
