@@ -141,6 +141,7 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
+import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
@@ -299,6 +300,7 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB, new CitizenHubController().get);
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
+    app.get(PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT, new CitizenHubResponseFromRespondentController().get);
     app.get(PageUrls.RESPONDENT_CONTACT_DETAILS, new RespondentContactDetailsController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.GET_SUPPORTING_MATERIAL, new AttachmentController().get);

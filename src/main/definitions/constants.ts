@@ -21,6 +21,11 @@ export const LegacyUrls = {
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',
 } as const;
 
+export const Views = {
+  DOCUMENT_VIEW: 'document-view',
+  RESPONSE_FROM_RESPONDENT_VIEW: 'response-from-respondent-view',
+} as const;
+
 export const TranslationKeys = {
   COMMON: 'common',
   HOME: 'home',
@@ -224,7 +229,7 @@ export const PageUrls = {
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CLAIM_DETAILS: '/claim-details',
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
-  CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
+  CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document-response-from-respondent',
   RESPONDENT_CONTACT_DETAILS: '/respondent-contact-details',
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   GET_SUPPORTING_MATERIAL: '/getSupportingMaterial/:docId',
