@@ -38,13 +38,15 @@ withPipeline(type, product, component) {
   def vaultEnv = "${product}-${environment()}"
   echo "Resolved vault env: ${vaultEnv}"
 
-
   def secrets = [
-      "${product}-${environment()}": [
-          secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-          secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
-          secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN')
-      ]
+    'et-${env}': [
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
+        secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
+        secret('perf-event-token', 'PERF_EVENT_TOKEN'),
+        secret('perf-synthetic-update-token', 'PERF_SYNTHETIC_UPDATE_TOKEN')
+    ]
   ]
 
   def inTestTrue = [
