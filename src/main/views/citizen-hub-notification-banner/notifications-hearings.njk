@@ -1,0 +1,12 @@
+{% if showHearingBanner %}
+  {% set htmlForHearingBanner %}
+    <h3 class="govuk-notification-banner__heading">{{ notificationBanner.hearingBanner.hearing }}</h3>
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ PageUrls.HEARING_DETAILS + languageParam }}">{{ notificationBanner.hearingBanner.link }}</a>
+    </p>
+  {% endset %}
+  {{ govukNotificationBanner({
+    html: htmlForHearingBanner,
+    titleText: important
+  }) }}
+{% endif %}
