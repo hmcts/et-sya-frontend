@@ -1,0 +1,83 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+
+{% block beforeContent %}
+    {{ super() }}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            {% include "back-link.njk" %}
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
+
+            {% for hearing in hearingDetailsCollection %}
+               <h2 class="govuk-heading-l">{{ hearing.hearingNumber }} - {{ hearing.hearingType }}</h2>
+
+              {% if hearing.notifications.length > 0 %}
+              <table class="govuk-table govuk-!-width-three-quarters">
+                <caption class="govuk-table__caption govuk-table__caption--m">{{ notification }}</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">{{ notificationDate }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-half">{{ notificationTitle }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">{{ status }}</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for notification in hearing.notifications %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ dateStringToLocale(notification.date) }}</td>
+                    <td class="govuk-table__cell">
+                      <a href="{{ notification.redirectUrl }}" class="govuk-link">{{ notification.notificationTitle }}</a>
+                    </td>
+                    <td class="govuk-table__cell">{{ govukTag({
+                        text: notification.displayStatus,
+                        classes: "no-text-transform govuk-tag" + notification.statusColor
+                      }) }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
+
+              <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">{{ hearingDetails }}</caption>
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingDate }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingStatus }}</th>
+                    <th scope="col" class="govuk-table__header govuk-!-width-one-third">{{ hearingVenue }}</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for hearingDate in hearing.hearingDateRows %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ dateTimeInLocale(hearingDate.date) }}</td>
+                    <td class="govuk-table__cell">{{ hearingDate.status }}</td>
+                    <td class="govuk-table__cell">{{ hearingDate.venue }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <hr class="govuk-section-break govuk-section-break--l">
+
+            {% endfor %}
+
+            {% set contactContent %}
+                {% include "./citizen-hub-sidebar.njk" %}
+            {% endset %}
+
+            {{ govukDetails({
+                summaryText: contact,
+                html: contactContent
+            }) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include "./footer.njk" %}
+{% endblock %}
