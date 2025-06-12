@@ -158,7 +158,6 @@ withPipeline(type, product, component) {
   }
 
   afterSuccess('buildinfra:perftest') {
-    node {
 
         //==========================================
         // Load Performance Test Config
@@ -184,7 +183,6 @@ withPipeline(type, product, component) {
                 echo "API Host: ${config.Test}"
             }
         }
-    }
         stage('Performance Test') {
 
         loadVaultSecrets(secrets) // Load Perf secrets
