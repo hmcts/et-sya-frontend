@@ -157,10 +157,6 @@ withPipeline(type, product, component) {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
-  enablePactAs([
-    AppPipelineDsl.PactRoles.CONSUMER
-  ])
-
   afterSuccess('buildinfra:perftest') {
 
         //==========================================
@@ -306,6 +302,11 @@ withPipeline(type, product, component) {
         } //End of script
     } //End of Stage
   } // End of after always
+
+enablePactAs([
+  AppPipelineDsl.PactRoles.CONSUMER
+])
+
 }
 
 
