@@ -26,7 +26,7 @@ def postDynatraceEvent(dynatraceApiHost, dynatraceSyntheticTest, dynatraceDashbo
                 "Branch": "${env.BRANCH_NAME}",
                 "Build Number": "${env.BUILD_NUMBER}",
                 "Change URL": "${env.CHANGE_URL}",
-                "Commit ID": "${env.GIT_COMMIT}",
+                "PR ID": "${env.GIT_COMMIT}",
                 "Build URL": "${env.BUILD_URL}", 
                 "Synthetic Performance Test": "${dynatraceSyntheticTest}",
                 "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
