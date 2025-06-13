@@ -4,8 +4,8 @@
   "description": {
     "firstCell": "Disgrifiad",
     "secondCell": "Cydnabod derbyn yr hawliad",
-    "d2": "[W]Notice of a Claim and Notice of Hearing",
-    "d7": "[W]Notice of case management discussion"
+    "d2": "Hysbysiad o Hawliad a Hysbysiad o Wrandawiad",
+    "d7": "Hysbysiad o wrandawiad rhagarweiniol ar gyfer rheoli achosion"
   },
   "document": "Dogfen",
   "documentDetails": "Manylion",
