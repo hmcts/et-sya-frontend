@@ -53,8 +53,10 @@
     "acknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod eich hawliad",
       "link": "Gweld y gydnabyddiaeth o dderbyn yr hawliad",
-      "p1": "Mae’r tribiwnlys hefyd wedi cyflwyno Hysbysiad o Hawliad i’r atebydd ac wedi pennu dyddiad ar gyfer y gwrandawiad.",
-      "p2": "<span class=\"govuk-body govuk-!-font-weight-bold\">Beth fydd yn digwydd nesaf</span><br>Mae’r tribiwnlys wedi gofyn i’r atebydd ymateb i’ch cais erbyn"
+      "p1a": "Mae’r tribiwnlys hefyd wedi cyflwyno Hysbysiad o Hawliad i’r atebydd.",
+      "p1b": "Mae’r tribiwnlys hefyd wedi cyflwyno Hysbysiad o Hawliad i’r atebydd ac wedi pennu dyddiad ar gyfer y gwrandawiad.",
+      "p21": "Beth fydd yn digwydd nesaf",
+      "p22": "Mae’r tribiwnlys wedi gofyn i’r atebydd ymateb i’ch cais erbyn"
     },
     "rejection": {
       "header": "Mae’r tribiwnlys wedi gwrthod y cyfan neu ran o’ch hawliad",
