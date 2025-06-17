@@ -13,12 +13,14 @@ export default class AppointLegalRepController {
     };
 
     const languageParam = getLanguageParam(req.url);
+    const userCase = req.session.userCase;
 
     res.render(TranslationKeys.APPOINT_LEGAL_REPRESENTATIVE, {
       ...content,
       currentUrl: '/appoint-legal-representative',
       languageParam,
-      PageUrls
+      userCase,
+      PageUrls,
     });
   };
 }

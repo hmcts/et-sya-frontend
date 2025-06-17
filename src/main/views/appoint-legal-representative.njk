@@ -5,13 +5,14 @@
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl">
         {{ pageHeading }}
       </h1>
 
       <p class="govuk-body">
-        You have chosen to appoint a legal representative
+        You have chosen to appoint a legal representative so you will need to give the following information
+        to your solicitor so they can perform a Notice of Change.
       </p>
 
       <h2 class="govuk-heading-m">Your Claim Details</h2>
@@ -21,7 +22,15 @@
             Case reference
           </dt>
           <dd class="govuk-summary-list__value">
-            {{ caseReference }}
+            {{ userCase.id }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Tribunal Case Number
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ userCase.ethosCaseReference }}
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -29,24 +38,18 @@
             Claimant name
           </dt>
           <dd class="govuk-summary-list__value">
-            {{ claimantName }}
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Respondent name
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{ respondentName }}
+            {{ userCase.firstName + ' ' + userCase.lastName }}
           </dd>
         </div>
       </dl>
 
       <h2 class="govuk-heading-m">Download documents</h2>
       <p class="govuk-body">
-        <a href="{{ downloadDocumentsUrl }}" class="govuk-link">
-          Download your claim documents
+        You  may also wish to
+        <a href="{{ PageUrls.ALL_DOCUMENTS }}" class="govuk-link">
+          download all your documents
         </a>
+        so you may share them with your legal representative.
       </p>
     </div>
   </div>

@@ -285,6 +285,7 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
 } as const;
 
 export const InterceptPaths = {
