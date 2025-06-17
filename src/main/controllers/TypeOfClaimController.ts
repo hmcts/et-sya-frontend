@@ -10,6 +10,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -74,9 +75,8 @@ export default class TypeOfClaimController {
         ],
       },
     },
-    submit: {
-      text: l => l.continue,
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {

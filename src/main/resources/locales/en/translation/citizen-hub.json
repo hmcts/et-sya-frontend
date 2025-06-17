@@ -96,6 +96,10 @@
     "ecc": {
       "title": "The tribunal has sent you a notification: "
     },
+    "hearingBanner": {
+      "hearing": "The tribunal has sent you a notification about your hearing.",
+      "link": "View the notification"
+    },
     "orderOrRequest": {
       "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",

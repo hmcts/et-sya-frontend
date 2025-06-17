@@ -55,6 +55,7 @@ import EmploymentAndRespondentCheckController from '../../controllers/Employment
 import EndDateController from '../../controllers/EndDateController';
 import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
 import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
+import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
 import HomeController from '../../controllers/HomeController';
@@ -449,5 +450,6 @@ export class Routes {
     app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
     app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
     app.get(PageUrls.APPOINT_LEGAL_REPRESENTATIVE, new AppointLegalRepController().get);
+    app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
   }
 }

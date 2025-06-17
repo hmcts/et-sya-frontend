@@ -148,6 +148,7 @@ export const TranslationKeys = {
   AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
+  HEARING_DETAILS: 'hearing-details',
 } as const;
 
 export const PageUrls = {
@@ -286,6 +287,7 @@ export const PageUrls = {
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
+  HEARING_DETAILS: '/hearing-details',
 } as const;
 
 export const InterceptPaths = {
@@ -478,6 +480,7 @@ export const AllDocumentTypes = {
 export type AllDocumentTypeValue = (typeof AllDocumentTypes)[keyof typeof AllDocumentTypes];
 
 export const NotificationSubjects = {
+  HEARING: 'Hearing',
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
   ECC: 'Employer Contract Claim',
