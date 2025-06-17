@@ -100,7 +100,6 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
   APPOINT_LEGAL_REPRESENTATIVE: 'appoint-legal-representative',
-  APPOINT_LEGAL_REPRESENTATIVE_SCREEN: 'appoint-legal-representative-screen',
   RESPONDENT_CONTACT_DETAILS: 'respondent-contact-details',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
