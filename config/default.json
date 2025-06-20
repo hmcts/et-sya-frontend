@@ -9,7 +9,8 @@
     "roleName": "et-sya"
   },
   "featureFlags": {
-    "welsh": "true"
+    "welsh": "true",
+    "govukRebrand": "false"
   },
   "session": {
     "maxAgeInMs": "3600000",
