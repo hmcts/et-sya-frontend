@@ -5,10 +5,10 @@ import { CaseWithId } from '../../../../main/definitions/case';
 import { DocumentDetail } from '../../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../../main/definitions/hub';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
-import responseTranslations from '../../../../main/resources/locales/en/translation/response-from-respondent.json';
+import translations from '../../../../main/resources/locales/en/translation/acknowledgement-of-claim.json';
 import { CaseApi } from '../../../../main/services/CaseService';
 import * as caseService from '../../../../main/services/CaseService';
-import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
+import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
 jest.mock('axios');
@@ -48,7 +48,7 @@ describe('Citizen Hub Document Controller', () => {
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     const response = mockResponse();
     request.params.documentType = 'acknowledgement-of-claim';
@@ -64,7 +64,7 @@ describe('Citizen Hub Document Controller', () => {
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
 
     const response = mockResponse();
@@ -76,17 +76,21 @@ describe('Citizen Hub Document Controller', () => {
       expect.objectContaining({
         docs: [
           {
-            size: '0.011',
-            mimeType: 'application/pdf',
-            originalDocumentName: 'sample.pdf',
-            createdOn: '8 September 2022',
-            description: 'description',
-            id: '1',
+            rows: [
+              [{ text: 'Description' }, { text: 'Acknowledgement of Claim' }],
+              [
+                { text: 'Document' },
+                { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">sample.pdf [0.011MB]</a>' },
+              ],
+              [{ text: 'Details' }, { html: 'description' }],
+              [{ text: 'Date' }, { html: '8 September 2022' }],
+            ],
           },
         ],
       })
     );
   });
+
   it('should redirect to not-found when the document request returns an error', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -96,7 +100,7 @@ describe('Citizen Hub Document Controller', () => {
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     const response = mockResponse();
     request.params.documentType = 'unknown';
 
@@ -107,155 +111,11 @@ describe('Citizen Hub Document Controller', () => {
 
   it('should redirect back to the citizen hub when the acknowledment documents are not found in the userCase', async () => {
     const userCase: Partial<CaseWithId> = { id: '1' };
-    const request = mockRequest({ userCase });
+    const request = mockRequestWithTranslation({ userCase }, translations);
     const response = mockResponse();
 
     await new CitizenHubDocumentController().get(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
-  });
-
-  it('should add ecc notifications and documents to response related information', async () => {
-    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-    getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
-
-    const userCase: Partial<CaseWithId> = {
-      responseEt3FormDocumentDetail: [
-        { type: 'ET3', id: '1', description: 'ET3 Form', createdOn: '1 November 2023', originalDocumentName: '1.pdf' },
-        {
-          type: 'ET3 Attachment',
-          id: '1',
-          description: 'attachment',
-          createdOn: '2 November 2023',
-          originalDocumentName: '2.pdf',
-        },
-        {
-          type: 'et3Supporting',
-          id: '1',
-          description: 'tSupporting materials',
-          createdOn: '3 November 2023',
-          originalDocumentName: '3.pdf',
-        },
-        {
-          type: '2.11',
-          id: '1',
-          description: 'Acceptance letter',
-          createdOn: '4 November 2023',
-          originalDocumentName: '4.pdf',
-        },
-        {
-          type: 'Letter 14',
-          id: '1',
-          description: 'Acceptance of ET3',
-          createdOn: '5 November 2023',
-          originalDocumentName: '5.pdf',
-        },
-        {
-          type: '2.12',
-          id: '1',
-          description: 'Rejection letter',
-          createdOn: '6 November 2023',
-          originalDocumentName: '6.pdf',
-        },
-      ],
-      sendNotificationCollection: [
-        {
-          id: '1',
-          value: {
-            date: '1 December 2023',
-            sendNotificationSubjectString: 'Response (ET3)',
-            sendNotificationTitle: 'Show',
-          },
-        },
-        {
-          id: '2',
-          value: {
-            date: '2 December 2023',
-            sendNotificationSubjectString: 'Employer Contract Claim',
-            sendNotificationTitle: 'Show',
-          },
-        },
-        {
-          id: '3',
-          value: {
-            date: '3 December 2023',
-            sendNotificationSubjectString: 'Employer Contract Claim, Response (ET3)',
-            sendNotificationTitle: 'Show',
-          },
-        },
-        {
-          id: '4',
-          value: {
-            date: '4 December 2023',
-            sendNotificationSubjectString: 'Hearing',
-            sendNotificationTitle: 'Do not show',
-          },
-        },
-      ],
-    };
-
-    const request = mockRequestWithTranslation({ userCase }, responseTranslations);
-    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-
-    const response = mockResponse();
-    request.params.documentType = 'response-from-respondent';
-
-    let renderCalledWith: any = {};
-    response.render = (view, data) => (renderCalledWith = { view, data });
-
-    await new CitizenHubDocumentController().get(request, response);
-
-    const tableContents = renderCalledWith.data.tableContents;
-    expect(renderCalledWith.view).toEqual('response-from-respondent-view');
-    expect(tableContents).toHaveLength(9);
-
-    expect(tableContents).toEqual([
-      [
-        { text: '3 December 2023' },
-        { text: 'Response (ET3), Employer Contract Claim' },
-        { html: '<a href="/notification-details/3" target="_blank" class="govuk-link">Show</a>' },
-      ],
-      [
-        { text: '2 December 2023' },
-        { text: 'Employer Contract Claim' },
-        { html: '<a href="/notification-details/2" target="_blank" class="govuk-link">Show</a>' },
-      ],
-      [
-        { text: '1 December 2023' },
-        { text: 'Response (ET3)' },
-        { html: '<a href="/notification-details/1" target="_blank" class="govuk-link">Show</a>' },
-      ],
-      [
-        { text: '6 November 2023' },
-        { text: 'Response rejected' },
-        { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">6.pdf</a>' },
-      ],
-      [
-        { text: '5 November 2023' },
-        { text: 'Response accepted' },
-        { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">5.pdf</a>' },
-      ],
-      [
-        { text: '4 November 2023' },
-        { text: 'Response accepted' },
-        { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">4.pdf</a>' },
-      ],
-      [
-        { text: '3 November 2023' },
-        { text: 'Supporting materials' },
-        { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">3.pdf</a>' },
-      ],
-      [
-        { text: '2 November 2023' },
-        { text: 'ET3 attachment' },
-        { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">2.pdf</a>' },
-      ],
-      [
-        { text: '8 September 2022' },
-        { text: 'ET3 Form' },
-        { html: '<a href="/getCaseDocument/1" target="_blank" class="govuk-link">sample.pdf</a>' },
-      ],
-    ]);
   });
 });
