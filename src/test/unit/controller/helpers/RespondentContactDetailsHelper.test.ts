@@ -1,54 +1,61 @@
 import {
   getRespondentContactDetails,
-  isET3Accepted,
+  shouldShowViewRespondentContactDetails,
 } from '../../../../main/controllers/helpers/RespondentContactDetailsHelper';
-import {CaseWithId, Et3ResponseStatus, Respondent, YesOrNo} from '../../../../main/definitions/case';
+import { CaseWithId } from '../../../../main/definitions/case';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import respondentContactDetailsJson from '../../../../main/resources/locales/en/translation/respondent-contact-details.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Respondent Contact Details Helper', () => {
-  describe('isET3Accepted', () => {
-    it('should return true when responseReceived is Yes and responseStatus is Accepted', () => {
-      const respondent: Respondent = {
-        responseReceived: YesOrNo.YES,
-        responseStatus: Et3ResponseStatus.ACCEPTED,
-      } as Respondent;
-      expect(isET3Accepted(respondent)).toBe(true);
+  describe('shouldShowViewRespondentContactDetails', () => {
+    it('should return true if respondent response received', () => {
+      const userCase = {
+        respondents: [
+          {
+            responseReceived: 'Yes',
+          },
+        ],
+      } as CaseWithId;
+      const result = shouldShowViewRespondentContactDetails(userCase);
+      expect(result).toEqual(true);
     });
 
-    it('should return false when responseReceived is No', () => {
-      const respondent: Respondent = {
-        responseReceived: YesOrNo.NO,
-        responseStatus: Et3ResponseStatus.ACCEPTED,
-      };
-      expect(isET3Accepted(respondent)).toBe(false);
+    it('should return true if representative is assigned', () => {
+      const userCase: CaseWithId = {
+        respondents: [
+          {
+            ccdId: '1',
+          },
+        ],
+        representatives: [
+          {
+            respondentId: '1',
+          },
+        ],
+      } as CaseWithId;
+      const result = shouldShowViewRespondentContactDetails(userCase);
+      expect(result).toEqual(true);
     });
 
-    it('should return false when responseStatus is not Accepted', () => {
-      const respondent: Respondent = {
-        responseReceived: YesOrNo.YES,
-        responseStatus: Et3ResponseStatus.REJECTED,
-      };
-      expect(isET3Accepted(respondent)).toBe(false);
+    it('should return false if ET3 is not received', () => {
+      const userCase: CaseWithId = {
+        respondents: [
+          {
+            responseReceived: 'No',
+          },
+        ],
+      } as CaseWithId;
+      const result = shouldShowViewRespondentContactDetails(userCase);
+      expect(result).toEqual(false);
     });
 
-    it('should return false when responseReceived is undefined', () => {
-      const respondent: Respondent = {
-        responseStatus: Et3ResponseStatus.ACCEPTED,
-      };
-      expect(isET3Accepted(respondent)).toBe(false);
-    });
-
-    it('should return false when responseStatus is undefined', () => {
-      const respondent: Respondent = {
-        responseReceived: YesOrNo.YES,
-      };
-      expect(isET3Accepted(respondent)).toBe(false);
-    });
-
-    it('should return false when respondent is undefined', () => {
-      expect(isET3Accepted(undefined)).toBe(false);
+    it('should return false if respondents is undefined', () => {
+      const userCase: CaseWithId = {
+        respondents: undefined,
+      } as CaseWithId;
+      const result = shouldShowViewRespondentContactDetails(userCase);
+      expect(result).toEqual(false);
     });
   });
 
@@ -63,7 +70,6 @@ describe('Respondent Contact Details Helper', () => {
           {
             ccdId: '1',
             responseReceived: 'Yes',
-            responseStatus: 'Accepted',
             respondentName: 'John Doe',
             responseRespondentName: 'John Doe Test',
             responseRespondentAddress: {
@@ -78,7 +84,6 @@ describe('Respondent Contact Details Helper', () => {
           },
         ],
       } as CaseWithId;
-
       const req = mockRequestWithTranslation({ session: { userCase } }, translations);
 
       const result = getRespondentContactDetails(req);
@@ -101,8 +106,6 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            responseReceived: 'Yes',
-            responseStatus: 'Accepted',
             respondentName: 'Acme Corp',
             responseRespondentName: 'Acme Corp ET3',
             responseRespondentAddress: {
@@ -132,7 +135,6 @@ describe('Respondent Contact Details Helper', () => {
           },
         ],
       } as CaseWithId;
-
       const req = mockRequestWithTranslation({ session: { userCase } }, translations);
 
       const result = getRespondentContactDetails(req);
@@ -153,8 +155,6 @@ describe('Respondent Contact Details Helper', () => {
         respondents: [
           {
             ccdId: '1',
-            responseReceived: 'Yes',
-            responseStatus: 'Accepted',
             respondentName: 'Name One',
             responseRespondentName: 'Company One',
             responseRespondentAddress: {
@@ -169,7 +169,6 @@ describe('Respondent Contact Details Helper', () => {
           {
             ccdId: '2',
             responseReceived: 'Yes',
-            responseStatus: 'Accepted',
             respondentName: 'Name Two',
             responseRespondentName: 'Company Two',
             responseRespondentAddress: {
@@ -198,7 +197,6 @@ describe('Respondent Contact Details Helper', () => {
           },
         ],
       } as CaseWithId;
-
       const req = mockRequestWithTranslation({ session: { userCase } }, translations);
 
       const result = getRespondentContactDetails(req);
@@ -209,23 +207,26 @@ describe('Respondent Contact Details Helper', () => {
       expect(result[1][0].value.text).toBe('Name Two');
     });
 
-    it('should return empty array if ET3 is not accepted', () => {
+    it('should return empty array if ET3 is not received', () => {
       const userCase: CaseWithId = {
         respondents: [
           {
             ccdId: '1',
             responseReceived: 'No',
           },
-          {
-            ccdId: '2',
-            responseReceived: 'Yes',
-            responseStatus: 'Not Received',
-          },
         ],
       } as CaseWithId;
-
       const req = mockRequestWithTranslation({ session: { userCase } }, translations);
 
+      const result = getRespondentContactDetails(req);
+      expect(result).toHaveLength(0);
+    });
+
+    it('should return false if respondents is undefined', () => {
+      const userCase: CaseWithId = {
+        respondents: undefined,
+      } as CaseWithId;
+      const req = mockRequestWithTranslation({ session: { userCase } }, translations);
       const result = getRespondentContactDetails(req);
       expect(result).toHaveLength(0);
     });
