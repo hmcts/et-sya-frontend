@@ -2340,24 +2340,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.15.2":
-  version: 2.15.2
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.15.2"
+"@launchdarkly/js-server-sdk-common@npm:2.16.0":
+  version: 2.16.0
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.16.0"
   dependencies:
     "@launchdarkly/js-sdk-common": 2.18.0
     semver: 7.5.4
-  checksum: f2962495cd4210834d214886940ac3e577218ee921f821a1255b77797ee131631d3bbe6e4df01c6b856a3cf8034a6401594a43f6342a0e81f19cfdef82a52be9
+  checksum: ab0c7393d7497d767e4af8815048918ee2e37c2e1b00bda697036f175d37e39bdbf4068d40b881122a09e9160a19f37e617f2738420cb2ec587a6fdb437a893f
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.9.2
-  resolution: "@launchdarkly/node-server-sdk@npm:9.9.2"
+  version: 9.10.0
+  resolution: "@launchdarkly/node-server-sdk@npm:9.10.0"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.15.2
+    "@launchdarkly/js-server-sdk-common": 2.16.0
     https-proxy-agent: ^5.0.1
-    launchdarkly-eventsource: 2.1.0
-  checksum: ee7784591ed608c2e060324a5c2d2ec7a0ccd24bcccb31be9699046eb4d4c40649963f4c78ad9f243a352f55e4701b48921318cd8bd7bace62443a23893ec940
+    launchdarkly-eventsource: 2.2.0
+  checksum: ed2d1269f6a1be3b8b190bc74b18e0fa33798da16776c28413cb9d7af20686cd7419ee92f041caeab7e39fa5532573cb485eee74eaeba34d40d61d174a4b6c4e
   languageName: node
   linkType: hard
 
@@ -3413,9 +3413,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.194":
-  version: 4.17.17
-  resolution: "@types/lodash@npm:4.17.17"
-  checksum: cfa34a752f3c540a196e9f92dbaff93ae15fe4058da8cce1918dd9219076dc19eec33b043aae45865e2b3ef8234a845bb57366144ec8e52551e2bc3f119e04a1
+  version: 4.17.18
+  resolution: "@types/lodash@npm:4.17.18"
+  checksum: 539b2a01a83062888c36e53450b03ff2fbb4631a8226df38e1d77888c954c931b0b1abcbb26bb4f19ffc37da5b0be4db8b3002560d2acc036e8d28ebad132c47
   languageName: node
   linkType: hard
 
@@ -8486,7 +8486,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fresh@npm:0.5.2":
+"fresh@npm:0.5.2, fresh@npm:~0.5.2":
   version: 0.5.2
   resolution: "fresh@npm:0.5.2"
   checksum: 13ea8b08f91e669a64e3ba3a20eb79d7ca5379a81f1ff7f4310d54e2320645503cc0c78daedc93dfb6191287295f6479544a649c64d8e41a1c0fb0c221552346
@@ -11114,10 +11114,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"launchdarkly-eventsource@npm:2.1.0":
-  version: 2.1.0
-  resolution: "launchdarkly-eventsource@npm:2.1.0"
-  checksum: b7d85f9149640b8230ff75531162360bc33470ed6688bcd8c6423a18962026e0f143cbde0ce6e845b4a4dd53c24f8bd5f709aa48c71ba4e6e25db51ba8544462
+"launchdarkly-eventsource@npm:2.2.0":
+  version: 2.2.0
+  resolution: "launchdarkly-eventsource@npm:2.2.0"
+  checksum: ac7cd33ae84d099053ead9b445020b40c7ef14f5e87bfbb900214f2f51a56ec201a0ed1fee881c0dca914e74d74cede2a702e7713a4fbe77c623dda6fd6f711e
   languageName: node
   linkType: hard
 
@@ -12105,13 +12105,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ms@npm:2.1.1":
-  version: 2.1.1
-  resolution: "ms@npm:2.1.1"
-  checksum: 0078a23cd916a9a7435c413caa14c57d4b4f6e2470e0ab554b6964163c8a4436448ac7ae020e883685475da6b6796cc396b670f579cb275db288a21e3e57721e
-  languageName: node
-  linkType: hard
-
 "ms@npm:2.1.2":
   version: 2.1.2
   resolution: "ms@npm:2.1.2"
@@ -12119,7 +12112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ms@npm:2.1.3, ms@npm:^2.1.1, ms@npm:^2.1.3":
+"ms@npm:2.1.3, ms@npm:^2.1.1, ms@npm:^2.1.3, ms@npm:~2.1.3":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
@@ -14327,14 +14320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:5.1.1":
-  version: 5.1.1
-  resolution: "safe-buffer@npm:5.1.1"
-  checksum: 7f117b604554c9daca713be76cecc6c52932ed1dd6303638274f21319038bfd760fbfd353e526cc83f11894935bc4beb71f5b7b9478c11bf9718c0e0d94c51cb
-  languageName: node
-  linkType: hard
-
-"safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.2, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0":
+"safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.0, safe-buffer@npm:^5.1.2, safe-buffer@npm:^5.2.1, safe-buffer@npm:~5.2.0, safe-buffer@npm:~5.2.1":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
@@ -14546,15 +14532,15 @@ __metadata:
   linkType: hard
 
 "serve-favicon@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "serve-favicon@npm:2.5.0"
+  version: 2.5.1
+  resolution: "serve-favicon@npm:2.5.1"
   dependencies:
     etag: ~1.8.1
-    fresh: 0.5.2
-    ms: 2.1.1
+    fresh: ~0.5.2
+    ms: ~2.1.3
     parseurl: ~1.3.2
-    safe-buffer: 5.1.1
-  checksum: f4dd0fbee3b7e18d0a27ba6ba01d2f585f23f533010c9e8c74aad74615b19b12d8fbe714f14cb3579803f0bacecd67cdc858714cb56c6e28f8dd07ccc997aea4
+    safe-buffer: ~5.2.1
+  checksum: 8b52657f8f3ce7f381a79ca796a95060a382304aa8f1fb8d4a18339ae111242eb4f43205bf9bdfeac31b315cdcb18eea239c3526f735d1b97a3e21ca6110eb82
   languageName: node
   linkType: hard
 
@@ -15420,8 +15406,8 @@ __metadata:
   linkType: hard
 
 "tar-fs@npm:^3.0.7":
-  version: 3.0.9
-  resolution: "tar-fs@npm:3.0.9"
+  version: 3.0.10
+  resolution: "tar-fs@npm:3.0.10"
   dependencies:
     bare-fs: ^4.0.1
     bare-path: ^3.0.0
@@ -15432,7 +15418,7 @@ __metadata:
       optional: true
     bare-path:
       optional: true
-  checksum: ec1b1d83bca3f7e66cc3273e06969ecef9da639144a71732b799884ecde978c69583aae4232162fe92aedfe051fc74a6553a99c6aadd6503e41f82de5015b4c9
+  checksum: 3b91597bdb447f35bf09b9df02e14806e1e14d71a1bdc09a684c7afb70179f8621b3b3fe03508df3fe1bfe424cac98219a3258d787c0f7b2fa660a8b932252d1
   languageName: node
   linkType: hard
 
