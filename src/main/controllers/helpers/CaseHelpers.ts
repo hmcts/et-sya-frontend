@@ -237,10 +237,11 @@ export const handlePostLogic = async (
   res: Response,
   form: Form,
   logger: LoggerInstance,
-  redirectUrl: string
+  redirectUrl: string,
+  shouldUseRedirectUrl?: boolean
 ): Promise<void> => {
   setUserCase(req, form);
-  await postLogic(req, res, form, logger, redirectUrl);
+  await postLogic(req, res, form, logger, redirectUrl, shouldUseRedirectUrl);
 };
 
 export const handlePostLogicForRespondent = async (

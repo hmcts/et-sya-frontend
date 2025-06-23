@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -59,13 +59,23 @@ export default class StillWorkingController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (req.body.isStillWorking !== StillWorking.NO_LONGER_WORKING) {
-      req.session.userCase.endDate = undefined;
+    switch (req.body.isStillWorking) {
+      case StillWorking.WORKING:
+        req.session.userCase.endDate = undefined;
+        req.session.userCase.noticeEnds = undefined;
+        return handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE, false);
+
+      case StillWorking.NOTICE:
+        req.session.userCase.endDate = undefined;
+        return handlePostLogic(req, res, this.form, logger, PageUrls.NOTICE_END, true);
+
+      case StillWorking.NO_LONGER_WORKING:
+        req.session.userCase.noticeEnds = undefined;
+        return handlePostLogic(req, res, this.form, logger, PageUrls.END_DATE, true);
+
+      default:
+        return res.redirect(ErrorPages.NOT_FOUND);
     }
-    if (req.body.isStillWorking !== StillWorking.NOTICE) {
-      req.session.userCase.noticeEnds = undefined;
-    }
-    await handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
