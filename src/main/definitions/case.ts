@@ -1,6 +1,7 @@
 import { HearingModel } from './api/caseApiResponse';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { Et1Address } from './complexTypes/et1Address';
+import { Et3Vetting } from './complexTypes/et3Vetting';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { PseResponseType, SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
@@ -55,6 +56,7 @@ export interface Respondent {
   noAcasReason?: NoAcasNumberReason;
   ccdId?: string;
   idamId?: string;
+  et3Vetting?: Et3Vetting;
 }
 
 export interface Case {
@@ -161,6 +163,7 @@ export interface Case {
   et3ResponseReceived?: boolean;
   et3DueDate?: string;
   hubLinksStatuses?: HubLinksStatuses;
+  servingDocuments?: DocumentDetail[];
   allEt1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
   rejectionOfClaimDocumentDetail?: DocumentDetail[];

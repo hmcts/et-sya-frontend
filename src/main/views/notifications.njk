@@ -47,6 +47,40 @@
           </tbody>
         {% endif %}
       </table>
+
+      <h2 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ et1ServingTitle }}</h2>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">
+            {{ date }}
+          </th>
+          <th class="govuk-table__header" scope="col">
+            {{ type }}
+          </th>
+          <th class="govuk-table__header" scope="col">
+            {{ documentName }}
+          </th>
+        </tr>
+        </thead>
+        {% if servingDocuments !== 'undefined' and servingDocuments.length %}
+          <tbody class="govuk-table__body">
+          {% for document in servingDocuments %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                {{ dateToLocale(document.createdOn) }}
+              </td>
+              <td class="govuk-table__cell">
+                {{ document.type }}
+              </td>
+              <td class="govuk-table__cell">
+                {{ document.originalDocumentName }}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        {% endif %}
+      </table>
     </div>
 
     <div class="govuk-grid-column-one-third-from-desktop">
