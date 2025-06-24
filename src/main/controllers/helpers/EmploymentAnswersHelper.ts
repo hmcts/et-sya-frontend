@@ -12,8 +12,10 @@ import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definit
 import { AnyRecord } from '../../definitions/util-types';
 
 const getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  let translation = translations.employmentDetails.working;
-  if (userCase.isStillWorking === StillWorking.NOTICE) {
+  let translation = translations.employmentDetails.notProvided;
+  if (userCase.isStillWorking === StillWorking.WORKING) {
+    translation = translations.employmentDetails.working;
+  } else if (userCase.isStillWorking === StillWorking.NOTICE) {
     translation = translations.employmentDetails.notice;
   } else if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
     translation = translations.employmentDetails.noLongerWorking;

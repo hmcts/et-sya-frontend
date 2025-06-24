@@ -65,7 +65,21 @@ export default class StillWorkingController {
     if (req.body.isStillWorking !== StillWorking.NOTICE) {
       req.session.userCase.noticeEnds = undefined;
     }
-    await handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
+
+    let redirectUrl: string = PageUrls.JOB_TITLE;
+    let shouldUseRedirectUrl = false;
+
+    if (req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS)) {
+      if (req.body.isStillWorking === StillWorking.NOTICE) {
+        redirectUrl = PageUrls.NOTICE_END;
+        shouldUseRedirectUrl = true;
+      } else if (req.body.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+        redirectUrl = PageUrls.END_DATE;
+        shouldUseRedirectUrl = true;
+      }
+    }
+
+    await handlePostLogic(req, res, this.form, logger, redirectUrl, shouldUseRedirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

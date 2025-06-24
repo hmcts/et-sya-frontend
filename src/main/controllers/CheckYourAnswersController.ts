@@ -18,7 +18,7 @@ export default class CheckYourAnswersController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
-    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim.length === 0) {
+    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim?.length === 0) {
       if (req.session.errors === undefined) {
         req.session.errors = [];
       }
