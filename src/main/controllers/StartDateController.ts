@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { isReturnUrlIsCheckAnswers } from './helpers/RouterHelpers';
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
@@ -50,6 +51,12 @@ export default class StartDateController {
     } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
+
+    if (isReturnUrlIsCheckAnswers(req)) {
+      const shouldRedirect = isShouldRedirect(req);
+      return handlePostLogic(req, res, this.form, logger, redirectUrl, shouldRedirect);
+    }
+
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
@@ -82,3 +89,11 @@ export default class StartDateController {
     });
   };
 }
+
+const isShouldRedirect = (req: AppRequest): boolean => {
+  const { isStillWorking, noticeEnds, endDate } = req.session.userCase;
+  return (
+    (isStillWorking === StillWorking.NOTICE && noticeEnds === undefined) ||
+    (isStillWorking === StillWorking.NO_LONGER_WORKING && endDate === undefined)
+  );
+};
