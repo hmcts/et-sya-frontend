@@ -12,25 +12,29 @@ import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definit
 import { AnyRecord } from '../../definitions/util-types';
 
 const getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  let translation = translations.employmentDetails.notProvided;
-  if (userCase.isStillWorking === StillWorking.WORKING) {
-    translation = translations.employmentDetails.working;
-  } else if (userCase.isStillWorking === StillWorking.NOTICE) {
-    translation = translations.employmentDetails.notice;
-  } else if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-    translation = translations.employmentDetails.noLongerWorking;
+  switch (userCase.isStillWorking) {
+    case StillWorking.WORKING:
+      return translations.employmentDetails.working;
+    case StillWorking.NOTICE:
+      return translations.employmentDetails.notice;
+    case StillWorking.NO_LONGER_WORKING:
+      return translations.employmentDetails.noLongerWorking;
+    default:
+      return translations.employmentDetails.notProvided;
   }
-  return translation;
 };
 
 const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  let translation = translations.employmentDetails.annual;
-  if (userCase.payInterval === PayInterval.MONTHLY) {
-    translation = translations.employmentDetails.monthly;
-  } else if (userCase.payInterval === PayInterval.WEEKLY) {
-    translation = translations.employmentDetails.weekly;
+  switch (userCase.payInterval) {
+    case PayInterval.ANNUAL:
+      return translations.employmentDetails.annual;
+    case PayInterval.MONTHLY:
+      return translations.employmentDetails.monthly;
+    case PayInterval.WEEKLY:
+      return translations.employmentDetails.weekly;
+    default:
+      return translations.employmentDetails.notProvided;
   }
-  return translation;
 };
 
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
