@@ -36,7 +36,7 @@ const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, transl
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const employmentDetails = [];
 
-  if (userCase.pastEmployer === YesOrNo.NO) {
+  if (userCase.pastEmployer !== YesOrNo.YES) {
     employmentDetails.push(
       {
         key: {
@@ -47,7 +47,9 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       },
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
-        translations.employmentDetails.didYouWorkForNo,
+        userCase.pastEmployer
+          ? translations.employmentDetails.didYouWorkForNo
+          : translations.employmentDetails.notProvided,
         createChangeAction(
           PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
