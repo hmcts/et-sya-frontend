@@ -19,7 +19,7 @@ export default class ContactTheTribunalController {
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const DOCUMENTS = 'documents';
     const { hearingCollection } = req.session.userCase;
-    // const isClaimantRepresented = req.session.userCase.claimantRepresentativeOrganisationPolicy;
+    const claimantRepresented = req.session.userCase.claimantRepresentative;
     const representedOrg = 'ABC Organisation'; // Placeholder for represented organisation, replace with actual logic if needed
 
     const translations: AnyRecord = {
@@ -34,7 +34,7 @@ export default class ContactTheTribunalController {
     const allowBundlesFlow =
       bundlesEnabled && hearingCollection?.length && createRadioBtnsForHearings(hearingCollection)?.length;
 
-    if (!req.session.userCase) {
+    if (!claimantRepresented) {
       if (!allowBundlesFlow) {
         applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
       } else {
@@ -70,7 +70,7 @@ export default class ContactTheTribunalController {
       ...content,
       hideContactUs: true,
       applicationsAccordionItems,
-      isClaimantRepresented,
+      claimantRepresented,
       representedOrg,
       welshEnabled,
     });
