@@ -2,6 +2,7 @@ import {
   StatusesInOrderOfUrgency,
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getAcknowledgementAlert,
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
@@ -16,7 +17,7 @@ import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
-import { CaseState } from '../../../../main/definitions/definition';
+import { CaseState, DocumentDetail } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { StoreNotification } from '../../../../main/definitions/storeNotification';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
@@ -805,6 +806,89 @@ describe('show submitted alert', () => {
   it('should not submitted alert when case accepted', () => {
     userCase.state = CaseState.ACCEPTED;
     expect(shouldShowSubmittedAlert(userCase)).toEqual(false);
+  });
+});
+
+describe('getAcknowledgementAlert', () => {
+  let userCase: CaseWithId;
+  const mockDoc: DocumentDetail[] = [
+    {
+      id: '1',
+      description: 'test',
+      type: '1.1',
+    },
+  ];
+
+  beforeEach(() => {
+    userCase = {
+      ...mockUserCase,
+      acknowledgementOfClaimLetterDetail: [],
+      respondentResponseDeadline: '2025-06-30',
+    };
+  });
+
+  it('returns false for shouldShowAlert if no userCase is provided', () => {
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    const result = getAcknowledgementAlert(undefined, hubLinksStatuses);
+    expect(result.shouldShowAlert).toBe(false);
+    expect(result.isAcknowledgementOfClaimOnly).toBe(false);
+    expect(result.respondentResponseDeadline).toBeUndefined();
+  });
+
+  it('returns false for shouldShowAlert if document details are empty', () => {
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    const result = getAcknowledgementAlert(userCase, hubLinksStatuses);
+    expect(result.shouldShowAlert).toBe(false);
+    expect(result.isAcknowledgementOfClaimOnly).toBe(false);
+    expect(result.respondentResponseDeadline).toBe('2025-06-30');
+  });
+
+  it('returns false for shouldShowAlert if document exists but status is VIEWED', () => {
+    userCase.acknowledgementOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.VIEWED,
+    };
+    const result = getAcknowledgementAlert(userCase, hubLinksStatuses);
+    expect(result.shouldShowAlert).toBe(false);
+    expect(result.isAcknowledgementOfClaimOnly).toBe(true);
+    expect(result.respondentResponseDeadline).toBe('2025-06-30');
+  });
+
+  it('returns false for shouldShowAlert if document exists but status is SUBMITTED_AND_VIEWED', () => {
+    userCase.acknowledgementOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.SUBMITTED_AND_VIEWED,
+    };
+    const result = getAcknowledgementAlert(userCase, hubLinksStatuses);
+    expect(result.shouldShowAlert).toBe(false);
+    expect(result.isAcknowledgementOfClaimOnly).toBe(true);
+    expect(result.respondentResponseDeadline).toBe('2025-06-30');
+  });
+
+  it('returns true for shouldShowAlert if document exists and status is NOT_VIEWED', () => {
+    userCase.acknowledgementOfClaimLetterDetail = mockDoc;
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    const result = getAcknowledgementAlert(userCase, hubLinksStatuses);
+    expect(result.shouldShowAlert).toBe(true);
+    expect(result.isAcknowledgementOfClaimOnly).toBe(true);
+    expect(result.respondentResponseDeadline).toBe('2025-06-30');
+  });
+
+  it('returns false for isAcknowledgementOfClaimOnly if any doc type is not in the list', () => {
+    userCase.acknowledgementOfClaimLetterDetail = [...mockDoc, { id: '2', description: 'test 2', type: '2.7' }];
+    const hubLinksStatuses: HubLinksStatuses = {
+      [HubLinkNames.Et1ClaimForm]: HubLinkStatus.NOT_VIEWED,
+    };
+    const result = getAcknowledgementAlert(userCase, hubLinksStatuses);
+    expect(result.shouldShowAlert).toBe(true);
+    expect(result.isAcknowledgementOfClaimOnly).toBe(false);
+    expect(result.respondentResponseDeadline).toBe('2025-06-30');
   });
 });
 
