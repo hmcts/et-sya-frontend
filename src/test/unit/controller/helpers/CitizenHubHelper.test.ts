@@ -12,7 +12,7 @@ import {
   updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
-import { CaseWithId, Et3ResponseStatus, YesOrNo } from '../../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
@@ -94,7 +94,7 @@ describe('updateHubLinkStatuses', () => {
     expect(hubLinksStatuses[HubLinkNames.Et1ClaimForm]).toEqual(HubLinkStatus.NOT_VIEWED);
   });
 
-  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if ET3 is accepted', () => {
+  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if ET3 is received', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -103,7 +103,6 @@ describe('updateHubLinkStatuses', () => {
       respondents: [
         {
           responseReceived: YesOrNo.YES,
-          responseStatus: Et3ResponseStatus.ACCEPTED,
         },
       ],
     };
@@ -115,7 +114,32 @@ describe('updateHubLinkStatuses', () => {
     expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
   });
 
-  it('should set ViewRespondentContactDetails hubLink status to NOT_YET_AVAILABLE if no respondents or ET3 not accepted', () => {
+  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if respondent is legally represented', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      representatives: [
+        {
+          respondentId: '1',
+        },
+      ],
+      respondents: [
+        {
+          ccdId: '1',
+        },
+      ],
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
+  });
+
+  it('should set ViewRespondentContactDetails hubLink status to NOT_YET_AVAILABLE if ET3 is not received', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -123,8 +147,7 @@ describe('updateHubLinkStatuses', () => {
       lastModified: DATE,
       respondents: [
         {
-          responseReceived: YesOrNo.YES,
-          responseStatus: Et3ResponseStatus.REJECTED,
+          responseReceived: YesOrNo.NO,
         },
       ],
     };
