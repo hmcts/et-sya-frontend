@@ -148,9 +148,9 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       ),
       addSummaryRow(
         translations.employmentDetails.startDate,
-        userCase.startDate === undefined
-          ? translations.notProvided
-          : userCase.startDate.day + '-' + userCase.startDate.month + '-' + userCase.startDate.year,
+        userCase.startDate
+          ? userCase.startDate.day + '-' + userCase.startDate.month + '-' + userCase.startDate.year
+          : translations.notProvided,
         createChangeAction(
           PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -167,9 +167,9 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         employmentDetails.push(
           addSummaryRow(
             translations.employmentDetails.endDate,
-            userCase.endDate === undefined
-              ? translations.notProvided
-              : userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year,
+            userCase.endDate
+              ? userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year
+              : translations.notProvided,
             createChangeAction(
               PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE,
               translations.change,
@@ -193,9 +193,9 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       employmentDetails.push(
         addSummaryRow(
           translations.employmentDetails.noticeEnds,
-          userCase.noticeEnds === undefined
-            ? translations.notProvided
-            : userCase.noticeEnds.day + '-' + userCase.noticeEnds.month + '-' + userCase.noticeEnds.year,
+          userCase.noticeEnds
+            ? userCase.noticeEnds.day + '-' + userCase.noticeEnds.month + '-' + userCase.noticeEnds.year
+            : translations.notProvided,
           createChangeAction(
             PageUrls.NOTICE_END + InterceptPaths.ANSWERS_CHANGE,
             translations.change,
@@ -302,13 +302,13 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         employmentDetails.push(
           addSummaryRow(
             translations.employmentDetails.newStartDate,
-            userCase.newJobStartDate === undefined
-              ? translations.notProvided
-              : userCase.newJobStartDate.day +
+            userCase.newJobStartDate
+              ? userCase.newJobStartDate.day +
                   '-' +
                   userCase.newJobStartDate.month +
                   '-' +
-                  userCase.newJobStartDate.year,
+                  userCase.newJobStartDate.year
+              : translations.notProvided,
             createChangeAction(
               PageUrls.NEW_JOB_START_DATE + InterceptPaths.ANSWERS_CHANGE,
               translations.change,
