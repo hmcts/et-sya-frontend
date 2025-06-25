@@ -1,4 +1,4 @@
 export interface ClaimantRepresentative {
   name_of_representative?: string;
-  nameOfOrganisation?: string;
+  name_of_organisation?: string;
 }

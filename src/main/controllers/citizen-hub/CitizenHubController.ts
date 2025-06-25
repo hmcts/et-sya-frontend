@@ -194,6 +194,7 @@ export default class CitizenHubController {
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
+      claimantRepresented: userCase.claimantRepresentative,
       showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),

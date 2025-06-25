@@ -20,7 +20,6 @@ export default class ContactTheTribunalController {
     const DOCUMENTS = 'documents';
     const { hearingCollection } = req.session.userCase;
     const claimantRepresented = req.session.userCase.claimantRepresentative;
-    const representedOrg = 'ABC Organisation'; // Placeholder for represented organisation, replace with actual logic if needed
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -71,7 +70,6 @@ export default class ContactTheTribunalController {
       hideContactUs: true,
       applicationsAccordionItems,
       claimantRepresented,
-      representedOrg,
       welshEnabled,
     });
   }
