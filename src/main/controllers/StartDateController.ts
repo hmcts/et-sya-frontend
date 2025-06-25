@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDate, StillWorking } from '../definitions/case';
+import { CaseDate, CaseWithId, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
@@ -53,7 +53,7 @@ export default class StartDateController {
     }
 
     if (isReturnUrlIsCheckAnswers(req)) {
-      const shouldRedirect = isShouldRedirect(req);
+      const shouldRedirect = isShouldRedirect(req.session.userCase, redirectUrl);
       return handlePostLogic(req, res, this.form, logger, redirectUrl, shouldRedirect);
     }
 
@@ -90,10 +90,10 @@ export default class StartDateController {
   };
 }
 
-const isShouldRedirect = (req: AppRequest): boolean => {
-  const { isStillWorking, noticeEnds, endDate } = req.session.userCase;
+const isShouldRedirect = (userCase: CaseWithId, redirectUrl: string): boolean => {
+  const { noticeEnds, endDate } = userCase;
   return (
-    (isStillWorking === StillWorking.NOTICE && noticeEnds === undefined) ||
-    (isStillWorking === StillWorking.NO_LONGER_WORKING && endDate === undefined)
+    (redirectUrl === PageUrls.NOTICE_END && noticeEnds === undefined) ||
+    (redirectUrl === PageUrls.END_DATE && endDate === undefined)
   );
 };

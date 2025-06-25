@@ -66,8 +66,7 @@
     "months": "Misoedd",
     "weeks": "Wythnosau",
     "yes": "Oes",
-    "no": "Nac oes",
-    "notProvided": "Dim byd wedi ei ddarparu"
+    "no": "Nac oes"
   },
   "respondentDetails": {
     "header": "Atebydd ",
@@ -142,7 +141,7 @@
     "Sex": "Rhyw (gan gynnwys cyflog cyfartal)",
     "Sexual orientation": "Cyfeiriadedd rhywiol"
   },
+  "notProvided": "Dim byd wedi ei ddarparu",
   "addAnotherRespondent": "Ychwanegu atebydd arall",
-  "removeRespondent": "Dileu atebydd",
-  "linkToAmendTheClaim": "Welsh translation required <a href='/contact-the-tribunal/amend?lng=cy' class=\"govuk-link\">Welsh translation required</a>"
+  "removeRespondent": "Dileu atebydd"
 }
