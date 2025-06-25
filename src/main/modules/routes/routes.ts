@@ -20,6 +20,7 @@ import AllDocumentsController from '../../controllers/AllDocumentsController';
 import AllJudgmentsController from '../../controllers/AllJudgmentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
+import AppointLegalRepController from '../../controllers/AppointLegalRepController';
 import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
@@ -448,6 +449,7 @@ export class Routes {
     app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
     app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
     app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
+    app.get(PageUrls.APPOINT_LEGAL_REPRESENTATIVE, new AppointLegalRepController().get);
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
   }
 }

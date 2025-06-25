@@ -99,6 +99,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  APPOINT_LEGAL_REPRESENTATIVE: 'appoint-legal-representative',
   RESPONDENT_CONTACT_DETAILS: 'respondent-contact-details',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
@@ -284,6 +285,7 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
 } as const;
 
