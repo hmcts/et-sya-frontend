@@ -107,6 +107,50 @@ describe('Are you still working controller', () => {
     expect(req.session.userCase.noticeEnds).toStrictEqual({ year: '2024', month: '02', day: '02' });
   });
 
+  it('should redirect START_DATE when returnUrl is cya and startDate is undefined', async () => {
+    const req = mockRequest({ body: { isStillWorking: StillWorking.NOTICE } });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    req.session.userCase.startDate = undefined;
+    const res = mockResponse();
+
+    await new StillWorkingController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
+  });
+
+  it('should redirect NOTICE_END when returnUrl is cya and isStillWorking is NOTICE', async () => {
+    const req = mockRequest({ body: { isStillWorking: StillWorking.NOTICE } });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    req.session.userCase.startDate = { year: '2024', month: '01', day: '01' };
+    const res = mockResponse();
+
+    await new StillWorkingController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_END);
+  });
+
+  it('should redirect END_DATE when returnUrl is cya and isStillWorking is NO_LONGER_WORKING', async () => {
+    const req = mockRequest({ body: { isStillWorking: StillWorking.NO_LONGER_WORKING } });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    req.session.userCase.startDate = { year: '2024', month: '01', day: '01' };
+    const res = mockResponse();
+
+    await new StillWorkingController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
+  });
+
+  it('should redirect CYA when returnUrl is cya and isStillWorking is WORKING', async () => {
+    const req = mockRequest({ body: { isStillWorking: StillWorking.WORKING } });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    req.session.userCase.startDate = { year: '2024', month: '01', day: '01' };
+    const res = mockResponse();
+
+    await new StillWorkingController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+  });
+
   it('should go to the next screen when errors are present', async () => {
     const body = {
       isStillWorking: '',
