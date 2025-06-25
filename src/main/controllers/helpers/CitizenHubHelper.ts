@@ -13,7 +13,7 @@ import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions
 import { StoreNotification } from '../../definitions/storeNotification';
 
 import { isHearingExist } from './HearingHelpers';
-import { isET3Accepted } from './RespondentContactDetailsHelper';
+import { shouldShowViewRespondentContactDetails } from './RespondentContactDetailsHelper';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (isHearingExist(userCase.hearingCollection)) {
@@ -41,7 +41,7 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
 
-  hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = userCase.respondents?.some(r => isET3Accepted(r))
+  hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = shouldShowViewRespondentContactDetails(userCase)
     ? HubLinkStatus.READY_TO_VIEW
     : HubLinkStatus.NOT_YET_AVAILABLE;
 };
