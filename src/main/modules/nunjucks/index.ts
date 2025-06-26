@@ -9,7 +9,6 @@ import { AnyRecord } from '../../definitions/util-types';
 import { dateInLocale, dateTimeInLocale, datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import createFilters from './njkFilters';
-import config from 'config';
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -154,7 +153,6 @@ export class Nunjucks {
       nunEnv.addGlobal('dateStringToLocale', (dateToTransform: string) =>
         datesStringToDateInLocale(dateToTransform, req.url)
       );
-      nunEnv.addGlobal('govukRebrand', config.get('featureFlags.govukRebrand'));
       next();
     });
   }
