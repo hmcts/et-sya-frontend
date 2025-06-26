@@ -1,6 +1,7 @@
 import { NoAcasNumberReason, YesOrNo } from '../case';
 
 import { Et1Address } from './et1Address';
+import { Et3Vetting } from './et3Vetting';
 
 export interface RespondentType {
   respondent_name?: string;
@@ -16,4 +17,5 @@ export interface RespondentType {
   responseReceived?: YesOrNo;
   response_status?: string;
   idamId?: string;
+  et3Vetting: Et3Vetting;
 }

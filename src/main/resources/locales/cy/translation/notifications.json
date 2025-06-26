@@ -2,5 +2,8 @@
   "title": "Yr holl hysbysiadau",
   "date": "Dyddiad",
   "ordersAndRequests": "Hysbysiadau",
-  "status": "Statws"
+  "status": "Statws",
+  "et1ServingTitle": "[W]ET1 Serving Notification",
+  "type": "[W]Type",
+  "documentName": "[W]Document name"
 }

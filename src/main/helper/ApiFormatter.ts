@@ -168,6 +168,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     et3DueDate: fromApiCaseData.case_data?.et3DueDate,
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
+    servingDocuments: setDocumentValues(fromApiCaseData?.case_data?.servingDocumentCollection),
     et1SubmittedForm: returnSubmittedEt1Form(
       fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
       fromApiCaseData.case_data?.documentCollection
@@ -442,6 +443,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       noAcasReason: respondent.value?.respondent_ACAS_no,
       ccdId: respondent?.id,
       idamId: respondent.value?.idamId,
+      et3Vetting: respondent.value?.et3Vetting,
     };
   });
 };
@@ -478,6 +480,7 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
         respondent_ACAS_question: respondent.acasCert,
         respondent_ACAS: respondent.acasCertNum,
         respondent_ACAS_no: respondent.noAcasReason,
+        et3Vetting: respondent.et3Vetting,
       },
       id: respondent.ccdId,
     };
