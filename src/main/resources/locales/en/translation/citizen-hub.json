@@ -142,5 +142,7 @@
   "withdraw": "withdraw all/part of claim",
   "Amend response": "amend response",
   "your": "your",
-  "theRespondent": "the respondent's"
+  "theRespondent": "the respondent's",
+  "appointLegalRepresentative": "Appoint a legal representative",
+  "changeLegalRepresentative": "Change my legal representative"
 }

@@ -148,6 +148,7 @@ export const TranslationKeys = {
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
 } as const;
 
 export const PageUrls = {
@@ -287,6 +288,7 @@ export const PageUrls = {
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
 } as const;
 
 export const InterceptPaths = {

@@ -28,6 +28,7 @@ import BundlesCompletedController from '../../controllers/BundlesCompletedContro
 import BundlesDocsForHearingCYAController from '../../controllers/BundlesDocsForHearingCYAController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
+import ChangeLegalRepresentativeController from '../../controllers/ChangeLegalRepresentativeController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
 import ChecklistController from '../../controllers/ChecklistController';
 import ClaimDetailsCheckController from '../../controllers/ClaimDetailsCheckController';
@@ -451,5 +452,6 @@ export class Routes {
     app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
     app.get(PageUrls.APPOINT_LEGAL_REPRESENTATIVE, new AppointLegalRepController().get);
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
+    app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
   }
 }
