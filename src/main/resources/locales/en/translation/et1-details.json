@@ -16,7 +16,6 @@
     "takePartInHearing": "Would you be able to take part in hearings by video or phone",
     "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
     "title": "Preferred title",
-    "notSelected": "Not selected",
     "male": "Male",
     "female": "Female",
     "preferNotToSay": "Prefer not to say",
@@ -30,8 +29,7 @@
   },
   "contactDetails": {
     "header": "Contact details",
-    "telephone": "Telephone number",
-    "notProvided": "Not provided"
+    "telephone": "Telephone number"
   },
   "employmentDetails": {
     "header": "Employment details",
@@ -141,7 +139,7 @@
     "Sex": "Sex (Including equal pay)",
     "Sexual orientation": "Sexual Orientation"
   },
+  "notProvided": "Not provided",
   "addAnotherRespondent": "Add another respondent",
-  "removeRespondent": "Remove respondent",
-  "linkToAmendTheClaim": "If you need to, you can <a href='/contact-the-tribunal/amend?lng=en' class=\"govuk-link\">request to amend your claim</a>"
+  "removeRespondent": "Remove respondent"
 }

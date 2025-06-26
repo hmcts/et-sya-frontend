@@ -16,7 +16,6 @@
     "takePartInHearing": "A fyddech chi’n gallu cymryd rhan mewn gwrandawiadau drwy fideo a dros y ffôn?",
     "disability": "A oes gennych anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu bod angen cymorth arnoch yn ystod eich achos?",
     "title": "Teitl o ddewis",
-    "notSelected": "Dim byd wedi ei ddewis",
     "male": "Gwryw",
     "female": "Benyw",
     "preferNotToSay": "Mae’n well gen i beidio dweud",
@@ -30,8 +29,7 @@
   },
   "contactDetails": {
     "header": "Manylion cyswllt",
-    "telephone": "Rhif ffôn",
-    "notProvided": "Dim byd wedi ei ddarparu"
+    "telephone": "Rhif ffôn"
   },
   "employmentDetails": {
     "header": "Manylion cyflogaeth",
@@ -141,7 +139,7 @@
     "Sex": "Rhyw (gan gynnwys cyflog cyfartal)",
     "Sexual orientation": "Cyfeiriadedd rhywiol"
   },
+  "notProvided": "Dim byd wedi ei ddarparu",
   "addAnotherRespondent": "Ychwanegu atebydd arall",
-  "removeRespondent": "Dileu atebydd",
-  "linkToAmendTheClaim": "Welsh translation required <a href='/contact-the-tribunal/amend?lng=cy' class=\"govuk-link\">Welsh translation required</a>"
+  "removeRespondent": "Dileu atebydd"
 }

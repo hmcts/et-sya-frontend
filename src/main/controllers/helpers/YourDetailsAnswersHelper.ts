@@ -13,32 +13,60 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
 
-const getTranslationsForSexEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  let translation = translations.personalDetails.preferNotToSay;
-  if (userCase.claimantSex === Sex.MALE) {
-    translation = translations.personalDetails.male;
-  } else if (userCase.claimantSex === Sex.FEMALE) {
-    translation = translations.personalDetails.female;
+const getTranslationsSex = (userCase: CaseWithId, translations: AnyRecord): string => {
+  switch (userCase?.claimantSex) {
+    case Sex.MALE:
+      return translations.personalDetails.male;
+    case Sex.FEMALE:
+      return translations.personalDetails.female;
+    case Sex.PREFER_NOT_TO_SAY:
+      return translations.personalDetails.preferNotToSay;
+    default:
+      return translations.notProvided;
   }
-  return translation;
 };
 
-const getTranslationsForHearingPreferences = function (userCase: CaseWithId, translations: AnyRecord) {
-  const hearingPreferences: string[] = [];
-  if (userCase.hearingPreferences !== undefined) {
-    userCase.hearingPreferences.forEach(function (item) {
-      if (item === HearingPreference.VIDEO) {
-        hearingPreferences.push(translations.personalDetails.video);
-      }
-      if (item === HearingPreference.PHONE) {
-        hearingPreferences.push(translations.personalDetails.phone);
-      }
-      if (item === HearingPreference.NEITHER) {
-        hearingPreferences.push(translations.personalDetails.neither);
-      }
-    });
+const getTranslationsContactPreference = (userCase: CaseWithId, translations: AnyRecord): string => {
+  switch (userCase?.claimantContactPreference) {
+    case EmailOrPost.EMAIL:
+      return translations.personalDetails.email;
+    case EmailOrPost.POST:
+      return translations.personalDetails.post;
+    default:
+      return translations.notProvided;
   }
-  return hearingPreferences;
+};
+
+const getTranslationsLanguagePreference = (answer: EnglishOrWelsh, translations: AnyRecord): string => {
+  switch (answer) {
+    case EnglishOrWelsh.WELSH:
+      return translations.personalDetails.welsh;
+    case EnglishOrWelsh.ENGLISH:
+      return translations.personalDetails.english;
+    default:
+      return translations.notProvided;
+  }
+};
+
+const getTranslationsHearingPreferences = function (userCase: CaseWithId, translations: AnyRecord) {
+  const preferenceMap: Record<string, string> = {
+    [HearingPreference.VIDEO]: translations.personalDetails.video,
+    [HearingPreference.PHONE]: translations.personalDetails.phone,
+    [HearingPreference.NEITHER]: translations.personalDetails.neither,
+  };
+  const preferences = (userCase?.hearingPreferences || []).map(preference => preferenceMap[preference]).filter(Boolean);
+  return preferences.length > 0 ? preferences : [translations.notProvided];
+};
+
+const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
+  switch (userCase?.reasonableAdjustments) {
+    case YesOrNo.YES:
+      return translations.personalDetails.yes + ', ' + userCase.reasonableAdjustmentsDetail;
+    case YesOrNo.NO:
+      return translations.personalDetails.no;
+    default:
+      return translations.notProvided;
+  }
 };
 
 export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
@@ -54,9 +82,9 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     },
     addSummaryRow(
       translations.personalDetails.dob,
-      userCase.dobDate === undefined
-        ? ''
-        : userCase.dobDate.day + '-' + userCase.dobDate.month + '-' + userCase.dobDate.year,
+      userCase.dobDate
+        ? userCase.dobDate.day + '-' + userCase.dobDate.month + '-' + userCase.dobDate.year
+        : translations.notProvided,
       createChangeAction(
         PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
@@ -65,7 +93,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     ),
     addSummaryRow(
       translations.personalDetails.sex,
-      getTranslationsForSexEnum(userCase, translations),
+      getTranslationsSex(userCase, translations),
       createChangeAction(
         PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
@@ -74,7 +102,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     ),
     addSummaryRow(
       translations.personalDetails.title,
-      userCase.preferredTitle ?? translations.personalDetails.notSelected,
+      userCase.preferredTitle ?? translations.notProvided,
       createChangeAction(
         PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
@@ -98,7 +126,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     ),
     addSummaryRow(
       translations.contactDetails.telephone,
-      userCase.telNumber ?? translations.contactDetails.notProvided,
+      userCase.telNumber ?? translations.notProvided,
       createChangeAction(
         PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
@@ -107,9 +135,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     ),
     addSummaryRow(
       translations.personalDetails.howToBeContacted,
-      userCase.claimantContactPreference === EmailOrPost.EMAIL
-        ? translations.personalDetails.email
-        : translations.personalDetails.post,
+      getTranslationsContactPreference(userCase, translations),
       createChangeAction(
         PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
@@ -122,9 +148,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     rows.push(
       addSummaryRow(
         translations.personalDetails.languageLabel,
-        userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH
-          ? translations.personalDetails.welsh
-          : translations.personalDetails.english,
+        getTranslationsLanguagePreference(userCase?.claimantContactLanguagePreference, translations),
         createChangeAction(
           PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -133,9 +157,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
       ),
       addSummaryRow(
         translations.personalDetails.hearingLabel,
-        userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH
-          ? translations.personalDetails.welsh
-          : translations.personalDetails.english,
+        getTranslationsLanguagePreference(userCase?.claimantHearingLanguagePreference, translations),
         createChangeAction(
           PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -148,7 +170,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
   rows.push(
     addSummaryRow(
       translations.personalDetails.takePartInHearing,
-      getTranslationsForHearingPreferences(userCase, translations),
+      getTranslationsHearingPreferences(userCase, translations),
       createChangeAction(
         PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
@@ -157,9 +179,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     ),
     addSummaryRow(
       translations.personalDetails.disability,
-      userCase.reasonableAdjustments === YesOrNo.YES
-        ? translations.personalDetails.yes + ', ' + userCase.reasonableAdjustmentsDetail
-        : translations.personalDetails.no,
+      getTranslationsReasonableAdjustments(userCase, translations),
       createChangeAction(
         PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
