@@ -23,9 +23,7 @@
     "post": "Trwy’r post",
     "video": "Fideo",
     "phone": "Ffôn",
-    "neither": "Dim un",
-    "yes": "Oes",
-    "no": "Nac oes"
+    "neither": "Dim un"
   },
   "contactDetails": {
     "header": "Manylion cyswllt",
@@ -34,8 +32,6 @@
   "employmentDetails": {
     "header": "Manylion cyflogaeth",
     "didYouWorkFor": "A wnaethoch chi weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
-    "didYouWorkForYes": "Do",
-    "didYouWorkForNo": "Naddo",
     "isStillWorking": "A ydych chi’n dal i weithio i’r sefydliad neu’r unigolyn rydych yn gwneud eich hawliad yn ei erbyn?",
     "jobTitle": "Teitl y swydd",
     "startDate": "Dyddiad cychwyn y gyflogaeth",
@@ -62,9 +58,7 @@
     "monthly": "Misol",
     "annual": "Blynyddol",
     "months": "Misoedd",
-    "weeks": "Wythnosau",
-    "yes": "Oes",
-    "no": "Nac oes"
+    "weeks": "Wythnosau"
   },
   "respondentDetails": {
     "header": "Atebydd ",
@@ -80,9 +74,7 @@
     "name": "Enw",
     "telephone": "Rhif ffôn yn y DU",
     "officeAddress": "Cyfeiriad cofrestredig neu brif swyddfa",
-    "workAddress": "Cyfeiriad gwaith",
-    "yes": "Do",
-    "no": "Naddo"
+    "workAddress": "Cyfeiriad gwaith"
   },
   "acasReason": {
     "another": "Mae gan rywun arall rwy’n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
@@ -139,7 +131,15 @@
     "Sex": "Rhyw (gan gynnwys cyflog cyfartal)",
     "Sexual orientation": "Cyfeiriadedd rhywiol"
   },
-  "notProvided": "Dim byd wedi ei ddarparu",
   "addAnotherRespondent": "Ychwanegu atebydd arall",
-  "removeRespondent": "Dileu atebydd"
+  "removeRespondent": "Dileu atebydd",
+  "doYesOrNo": {
+    "yes": "Do",
+    "no": "Naddo"
+  },
+  "oesYesOrNo": {
+    "yes": "Oes",
+    "no": "Nac oes"
+  },
+  "notProvided": "Dim byd wedi ei ddarparu"
 }

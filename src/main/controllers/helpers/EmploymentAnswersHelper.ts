@@ -14,9 +14,9 @@ import { AnyRecord } from '../../definitions/util-types';
 const getTranslationsDidYouWorkFor = (pastEmployer: YesOrNo, translations: AnyRecord): string => {
   switch (pastEmployer) {
     case YesOrNo.YES:
-      return translations.employmentDetails.didYouWorkForYes;
+      return translations.doYesOrNo.yes;
     case YesOrNo.NO:
-      return translations.employmentDetails.didYouWorkForNo;
+      return translations.doYesOrNo.no;
     default:
       return translations.notProvided;
   }
@@ -38,9 +38,9 @@ const getTranslationsIsStillWorking = (isStillWorking: StillWorking, translation
 const getTranslationsNoticePeriod = (noticePeriod: YesOrNo, translations: AnyRecord): string => {
   switch (noticePeriod) {
     case YesOrNo.YES:
-      return translations.employmentDetails.yes;
+      return translations.oesYesOrNo.yes;
     case YesOrNo.NO:
-      return translations.employmentDetails.no;
+      return translations.oesYesOrNo.no;
     default:
       return translations.notProvided;
   }
@@ -73,9 +73,9 @@ const getTranslationsPayInterval = (payInterval: PayInterval, translations: AnyR
 const getTranslationsPensionScheme = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.claimantPensionContribution) {
     case YesOrNoOrNotSure.YES:
-      return translations.employmentDetails.yes + ': ' + userCase.claimantPensionWeeklyContribution;
+      return translations.oesYesOrNo.yes + ': ' + userCase.claimantPensionWeeklyContribution;
     case YesOrNoOrNotSure.NO:
-      return translations.employmentDetails.no;
+      return translations.oesYesOrNo.no;
     case YesOrNoOrNotSure.NOT_SURE:
       return translations.notSure;
     default:
@@ -86,9 +86,9 @@ const getTranslationsPensionScheme = (userCase: CaseWithId, translations: AnyRec
 const getTranslationsEmployeeBenefits = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.employeeBenefits) {
     case YesOrNo.YES:
-      return translations.employmentDetails.yes + ': ' + userCase.benefitsCharCount;
+      return translations.oesYesOrNo.yes + ': ' + userCase.benefitsCharCount;
     case YesOrNo.NO:
-      return translations.employmentDetails.no;
+      return translations.oesYesOrNo.no;
     default:
       return translations.notProvided;
   }

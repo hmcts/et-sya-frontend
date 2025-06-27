@@ -12,9 +12,9 @@ import { AnyRecord } from '../../definitions/util-types';
 const getTranslationsYesOrNo = (answer: YesOrNo, translations: AnyRecord): string => {
   switch (answer) {
     case YesOrNo.YES:
-      return translations.yes;
+      return translations.doYesOrNo.yes;
     case YesOrNo.NO:
-      return translations.no;
+      return translations.doYesOrNo.no;
     default:
       return translations.notProvided;
   }
@@ -31,7 +31,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     value: {},
   });
 
-  if (userCase?.claimTypeDiscrimination) {
+  if (userCase.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION)) {
     claimDetails.push(
       addSummaryHtmlRow(
         translations.claimDetails.claimTypeDiscrimination,
@@ -45,7 +45,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     );
   }
 
-  if (userCase?.claimTypePay) {
+  if (userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM)) {
     claimDetails.push(
       addSummaryHtmlRow(
         translations.claimDetails.claimTypePay,
@@ -74,7 +74,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
   claimDetails.push(
     addSummaryHtmlRow(
       translations.claimDetails.ifClaimSuccessful,
-      userCase?.tellUsWhatYouWant?.map(type => translations.tellUsWhatYouWant[type]).join('<br>') ??
+      userCase.tellUsWhatYouWant?.map(type => translations.tellUsWhatYouWant[type]).join('<br>') ??
         translations.notProvided,
       createChangeAction(
         PageUrls.TELL_US_WHAT_YOU_WANT + InterceptPaths.ANSWERS_CHANGE,
@@ -118,7 +118,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     claimDetails.push(
       addSummaryRow(
         translations.claimDetails.forwardClaim,
-        getTranslationsYesOrNo(userCase?.whistleblowingClaim, translations) +
+        getTranslationsYesOrNo(userCase.whistleblowingClaim, translations) +
           ' - ' +
           (userCase.whistleblowingEntityName ?? translations.notProvided),
         createChangeAction(
@@ -133,7 +133,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
   claimDetails.push(
     addSummaryRow(
       translations.claimDetails.linkedCases,
-      getTranslationsYesOrNo(userCase?.linkedCases, translations),
+      getTranslationsYesOrNo(userCase.linkedCases, translations),
       createChangeAction(
         PageUrls.LINKED_CASES + InterceptPaths.ANSWERS_CHANGE,
         translations.change,

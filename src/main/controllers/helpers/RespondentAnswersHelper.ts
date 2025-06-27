@@ -126,9 +126,7 @@ export const getRespondentSection = (
       },
       value: {
         text:
-          userCase.claimantWorkAddressQuestion === YesOrNo.YES
-            ? translations.respondentDetails.yes
-            : translations.respondentDetails.no,
+          userCase.claimantWorkAddressQuestion === YesOrNo.YES ? translations.doYesOrNo.yes : translations.doYesOrNo.no,
       },
       actions: {
         items: [

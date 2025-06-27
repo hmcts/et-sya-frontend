@@ -34,8 +34,6 @@
   "employmentDetails": {
     "header": "Employment details",
     "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
-    "didYouWorkForYes": "Yes",
-    "didYouWorkForNo": "No",
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",
@@ -139,7 +137,11 @@
     "Sex": "Sex (Including equal pay)",
     "Sexual orientation": "Sexual Orientation"
   },
-  "notProvided": "Not provided",
   "addAnotherRespondent": "Add another respondent",
-  "removeRespondent": "Remove respondent"
+  "removeRespondent": "Remove respondent",
+  "doYesOrNo": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "notProvided": "Not provided"
 }
