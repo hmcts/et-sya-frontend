@@ -130,21 +130,19 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     );
   }
 
-  if (userCase.linkedCases?.includes(YesOrNo.YES) || userCase.linkedCases?.includes(YesOrNo.NO)) {
-    claimDetails.push(
-      addSummaryRow(
-        translations.claimDetails.linkedCases,
-        getTranslationsYesOrNo(userCase?.linkedCases, translations),
-        createChangeAction(
-          PageUrls.LINKED_CASES + InterceptPaths.ANSWERS_CHANGE,
-          translations.change,
-          translations.claimDetails.linkedCases
-        )
+  claimDetails.push(
+    addSummaryRow(
+      translations.claimDetails.linkedCases,
+      getTranslationsYesOrNo(userCase?.linkedCases, translations),
+      createChangeAction(
+        PageUrls.LINKED_CASES + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.claimDetails.linkedCases
       )
-    );
-  }
+    )
+  );
 
-  if (userCase.linkedCases?.includes(YesOrNo.YES) && userCase.linkedCasesDetail) {
+  if (userCase.linkedCases?.includes(YesOrNo.YES)) {
     claimDetails.push(
       addSummaryRow(
         translations.claimDetails.linkedCasesDetail,
