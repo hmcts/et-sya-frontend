@@ -54,7 +54,10 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
     [HearingPreference.PHONE]: translations.personalDetails.phone,
     [HearingPreference.NEITHER]: translations.personalDetails.neither,
   };
-  const preferences = (userCase?.hearingPreferences || []).map(preference => preferenceMap[preference]).filter(Boolean);
+  const preferences = (userCase?.hearingPreferences || [])
+    .map(preference => preferenceMap[preference])
+    .filter(Boolean)
+    .join(', ');
   return preferences.length > 0 ? preferences : [translations.notProvided];
 };
 
