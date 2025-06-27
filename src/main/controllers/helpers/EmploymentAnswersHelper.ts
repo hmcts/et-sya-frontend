@@ -86,15 +86,16 @@ const getTranslationsEmployeeBenefits = (userCase: CaseWithId, translations: Any
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const employmentDetails = [];
 
+  employmentDetails.push({
+    key: {
+      text: translations.employmentDetails.header,
+      classes: 'govuk-summary-list__key govuk-heading-m',
+    },
+    value: {},
+  });
+
   if (userCase.pastEmployer !== YesOrNo.YES) {
     employmentDetails.push(
-      {
-        key: {
-          text: translations.employmentDetails.header,
-          classes: 'govuk-summary-list__key govuk-heading-m',
-        },
-        value: {},
-      },
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
         userCase.pastEmployer ? translations.employmentDetails.didYouWorkForNo : translations.notProvided,
@@ -108,13 +109,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
   } else {
     if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
       employmentDetails.push(
-        {
-          key: {
-            text: translations.employmentDetails.header,
-            classes: 'govuk-summary-list__key govuk-heading-m',
-          },
-          value: {},
-        },
         addSummaryRow(
           translations.employmentDetails.didYouWorkFor,
           translations.employmentDetails.didYouWorkForYes,
