@@ -23,9 +23,7 @@
     "post": "Post",
     "video": "Video",
     "phone": "Phone",
-    "neither": "Neither",
-    "yes": "Yes",
-    "no": "No"
+    "neither": "Neither"
   },
   "contactDetails": {
     "header": "Contact details",
@@ -60,9 +58,7 @@
     "monthly": "Monthly",
     "annual": "Annual",
     "months": "Months",
-    "weeks": "Weeks",
-    "yes": "Yes",
-    "no": "No"
+    "weeks": "Weeks"
   },
   "respondentDetails": {
     "header": "Respondent ",
@@ -78,9 +74,7 @@
     "name": "Name",
     "telephone": "UK telephone number",
     "officeAddress": "Registered or head office address",
-    "workAddress": "Work address",
-    "yes": "Yes",
-    "no": "No"
+    "workAddress": "Work address"
   },
   "acasReason": {
     "another": "Another person I’m making a claim with has an Acas early conciliation certificate number",
@@ -140,6 +134,10 @@
   "addAnotherRespondent": "Add another respondent",
   "removeRespondent": "Remove respondent",
   "doYesOrNo": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "oesYesOrNo": {
     "yes": "Yes",
     "no": "No"
   },

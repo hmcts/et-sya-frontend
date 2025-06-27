@@ -167,8 +167,7 @@ export const getRespondentSection = (
     });
   }
 
-  const acasCertValue =
-    respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.respondentDetails.no;
+  const acasCertValue = respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.doYesOrNo.no;
   respondentSections.push({
     key: {
       text: translations.respondentDetails.acasNumber,
