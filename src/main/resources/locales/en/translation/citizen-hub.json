@@ -116,6 +116,10 @@
         }
       },
       "link": "View your response"
+    },
+    "claimantRepresented": {
+      "title": "You are now being legally represented by",
+      "p1": "You will be kept updated but will no longer be able to submit applications or contact the tribunal directly."
     }
   },
   "multiples": {

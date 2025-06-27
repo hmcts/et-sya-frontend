@@ -14,6 +14,7 @@ import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { CaseState } from '../definition';
 import { HubLinksStatuses } from '../hub';
 import { TypeItem } from '../util-types';
+import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 
 export interface CreateCaseResponse {
   data: CaseApiDataResponse;
@@ -76,6 +77,7 @@ export interface CaseData {
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   batchCaseStayed?: YesOrNo;
+  representativeClaimantType?: ClaimantRepresentative;
 }
 
 export type HearingBundleType = {

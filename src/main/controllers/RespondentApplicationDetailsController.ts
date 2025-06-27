@@ -105,6 +105,7 @@ export default class RespondentApplicationDetailsController {
       decisionContent,
       respondButton,
       isAdminRespondButton: responseToTribunalRequired(selectedApplication),
+      isClaimantRepresented: req.session.userCase.claimantRepresentative !== undefined,
       adminRespondRedirectUrl,
       allResponses,
       welshEnabled,

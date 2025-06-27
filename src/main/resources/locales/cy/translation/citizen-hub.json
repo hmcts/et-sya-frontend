@@ -116,6 +116,10 @@
         }
       },
       "link": "Gweld eich ymateb"
+    },
+    "claimantRepresented": {
+      "title": "<placeholder>",
+      "p1": "<placeholder>"
     }
   },
   "multiples": {
