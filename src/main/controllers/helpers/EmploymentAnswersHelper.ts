@@ -105,7 +105,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
     value: {},
   });
 
-  if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+  if (userCase.pastEmployer !== YesOrNo.YES || !userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
     employmentDetails.push(
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
