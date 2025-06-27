@@ -6,11 +6,11 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
 
 const logger = getLogger('TypeOfClaimController');
 

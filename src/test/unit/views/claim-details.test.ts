@@ -75,28 +75,6 @@ describe('ET1 details', () => {
     expect(summaryLists[5].innerHTML).toMatch('Respondent 2 details');
     expect(summaryLists[6].innerHTML).toMatch('Claim details');
   });
-
-  /*it.each([
-    { sectionName: 'Application details', numberOfEntries: 0 },
-    { sectionName: 'Your details', numberOfEntries: 0 },
-    { sectionName: 'Employment details', numberOfEntries: 0 },
-    { sectionName: 'Respondent 1 details', numberOfEntries: 0 },
-    { sectionName: 'Respondent 2 details', numberOfEntries: 0 },
-    { sectionName: 'Claim details', numberOfEntries: 0 },
-  ])('should display correct number of entries for section: $sectionName', ({ sectionName, numberOfEntries }) => {
-    const sections = Array.from(htmlRes.getElementsByClassName(summaryListHeadingClass)).filter(el => {
-      const titles = el.getElementsByClassName(summaryListHeadingClass);
-      expect(titles).toHaveLength(0);
-
-      return titles[0].textContent.trim() === sectionName;
-    });
-
-    expect(sections).toHaveLength(0);
-
-    const entries = sections[0].querySelectorAll(summaryListKeyExcludeHeadingClass);
-
-    expect(entries).toHaveLength(numberOfEntries);
-  });*/
 });
 
 describe('ET1 documents', () => {
