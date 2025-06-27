@@ -155,7 +155,7 @@ export const getRespondentSection = (
             userCase.workAddressTown,
             userCase.workAddressCountry,
             userCase.workAddressPostcode
-          ) ?? translations.notProvided,
+          ) || translations.notProvided,
       },
       actions: {
         items: [
