@@ -43,6 +43,7 @@ export const getRespondentSection = (
   addRemoveButton: boolean
 ): SummaryListRow[] => {
   const respondentSections: SummaryListRow[] = [];
+
   if (index === 1 || !addRemoveButton) {
     respondentSections.push({
       key: {
@@ -147,13 +148,14 @@ export const getRespondentSection = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: answersAddressFormatter(
-          userCase.workAddress1,
-          userCase.workAddress2,
-          userCase.workAddressTown,
-          userCase.workAddressCountry,
-          userCase.workAddressPostcode
-        ),
+        text:
+          answersAddressFormatter(
+            userCase.workAddress1,
+            userCase.workAddress2,
+            userCase.workAddressTown,
+            userCase.workAddressCountry,
+            userCase.workAddressPostcode
+          ) ?? translations.notProvided,
       },
       actions: {
         items: [
@@ -186,6 +188,7 @@ export const getRespondentSection = (
       ],
     },
   });
+
   if (respondent.acasCert === YesOrNo.NO) {
     const reasonText = getAcasReason(respondent.noAcasReason, translations);
     respondentSections.push({
