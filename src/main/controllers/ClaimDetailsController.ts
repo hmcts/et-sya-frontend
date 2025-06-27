@@ -7,8 +7,8 @@ import { DocumentDetail } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
-import { getClaimDetails } from "./helpers/ClaimDetailsAnswersHelper";
 
+import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
