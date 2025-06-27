@@ -8,6 +8,18 @@ import {
   createChangeAction,
 } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+
+const getTranslationsYesOrNo = (answer: YesOrNo, translations: AnyRecord): string => {
+  switch (answer) {
+    case YesOrNo.YES:
+      return translations.yes;
+    case YesOrNo.NO:
+      return translations.no;
+    default:
+      return translations.notProvided;
+  }
+};
+
 export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const claimDetails = [];
 
@@ -65,7 +77,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
       userCase?.tellUsWhatYouWant?.map(type => translations.tellUsWhatYouWant[type]).join('<br>') ??
         translations.notProvided,
       createChangeAction(
-        PageUrls.CLAIM_TYPE_PAY + InterceptPaths.ANSWERS_CHANGE,
+        PageUrls.TELL_US_WHAT_YOU_WANT + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
         translations.claimDetails.ifClaimSuccessful
       )
@@ -106,7 +118,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     claimDetails.push(
       addSummaryRow(
         translations.claimDetails.forwardClaim,
-        (userCase.whistleblowingClaim ?? translations.notProvided) +
+        getTranslationsYesOrNo(userCase?.whistleblowingClaim, translations) +
           ' - ' +
           (userCase.whistleblowingEntityName ?? translations.notProvided),
         createChangeAction(
@@ -118,19 +130,21 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     );
   }
 
-  claimDetails.push(
-    addSummaryRow(
-      translations.claimDetails.linkedCases,
-      userCase.linkedCases ?? translations.notProvided,
-      createChangeAction(
-        PageUrls.LINKED_CASES + InterceptPaths.ANSWERS_CHANGE,
-        translations.change,
-        translations.claimDetails.linkedCases
+  if (userCase.linkedCases?.includes(YesOrNo.YES) || userCase.linkedCases?.includes(YesOrNo.NO)) {
+    claimDetails.push(
+      addSummaryRow(
+        translations.claimDetails.linkedCases,
+        getTranslationsYesOrNo(userCase?.linkedCases, translations),
+        createChangeAction(
+          PageUrls.LINKED_CASES + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.claimDetails.linkedCases
+        )
       )
-    )
-  );
+    );
+  }
 
-  if (userCase.linkedCases?.includes(YesOrNo.YES)) {
+  if (userCase.linkedCases?.includes(YesOrNo.YES) && userCase.linkedCasesDetail) {
     claimDetails.push(
       addSummaryRow(
         translations.claimDetails.linkedCasesDetail,

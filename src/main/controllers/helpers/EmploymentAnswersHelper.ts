@@ -11,19 +11,19 @@ import { TypesOfClaim } from '../../definitions/definition';
 import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
-const getTranslationsYesOrNo = (answer: YesOrNo, translations: AnyRecord): string => {
-  switch (answer) {
+const getTranslationsDidYouWorkFor = (pastEmployer: YesOrNo, translations: AnyRecord): string => {
+  switch (pastEmployer) {
     case YesOrNo.YES:
-      return translations.employmentDetails.yes;
+      return translations.employmentDetails.didYouWorkForYes;
     case YesOrNo.NO:
-      return translations.employmentDetails.no;
+      return translations.employmentDetails.didYouWorkForNo;
     default:
       return translations.notProvided;
   }
 };
 
-const getTranslationsIsStillWorking = (userCase: CaseWithId, translations: AnyRecord): string => {
-  switch (userCase?.isStillWorking) {
+const getTranslationsIsStillWorking = (isStillWorking: StillWorking, translations: AnyRecord): string => {
+  switch (isStillWorking) {
     case StillWorking.WORKING:
       return translations.employmentDetails.working;
     case StillWorking.NOTICE:
@@ -35,8 +35,19 @@ const getTranslationsIsStillWorking = (userCase: CaseWithId, translations: AnyRe
   }
 };
 
-const getTranslationsNoticePeriodUnit = (userCase: CaseWithId, translations: AnyRecord): string => {
-  switch (userCase?.noticePeriodUnit) {
+const getTranslationsNoticePeriod = (noticePeriod: YesOrNo, translations: AnyRecord): string => {
+  switch (noticePeriod) {
+    case YesOrNo.YES:
+      return translations.employmentDetails.yes;
+    case YesOrNo.NO:
+      return translations.employmentDetails.no;
+    default:
+      return translations.notProvided;
+  }
+};
+
+const getTranslationsNoticePeriodUnit = (noticePeriodUnit: WeeksOrMonths, translations: AnyRecord): string => {
+  switch (noticePeriodUnit) {
     case WeeksOrMonths.MONTHS:
       return translations.employmentDetails.months;
     case WeeksOrMonths.WEEKS:
@@ -46,8 +57,8 @@ const getTranslationsNoticePeriodUnit = (userCase: CaseWithId, translations: Any
   }
 };
 
-const getTranslationsPayInterval = (userCase: CaseWithId, translations: AnyRecord): string => {
-  switch (userCase?.payInterval) {
+const getTranslationsPayInterval = (payInterval: PayInterval, translations: AnyRecord): string => {
+  switch (payInterval) {
     case PayInterval.ANNUAL:
       return translations.employmentDetails.annual;
     case PayInterval.MONTHLY:
@@ -94,11 +105,11 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
     value: {},
   });
 
-  if (userCase.pastEmployer !== YesOrNo.YES) {
+  if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
     employmentDetails.push(
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
-        userCase.pastEmployer ? translations.employmentDetails.didYouWorkForNo : translations.notProvided,
+        getTranslationsDidYouWorkFor(userCase?.pastEmployer, translations),
         createChangeAction(
           PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -106,25 +117,13 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         )
       )
     );
-  } else {
-    if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
-      employmentDetails.push(
-        addSummaryRow(
-          translations.employmentDetails.didYouWorkFor,
-          translations.employmentDetails.didYouWorkForYes,
-          createChangeAction(
-            PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
-            translations.change,
-            translations.employmentDetails.didYouWorkFor
-          )
-        )
-      );
-    }
+  }
 
+  if (userCase.pastEmployer === YesOrNo.YES) {
     employmentDetails.push(
       addSummaryRow(
         translations.employmentDetails.isStillWorking,
-        getTranslationsIsStillWorking(userCase, translations),
+        getTranslationsIsStillWorking(userCase?.isStillWorking, translations),
         createChangeAction(
           PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -133,7 +132,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       ),
       addSummaryRow(
         translations.employmentDetails.jobTitle,
-        userCase.jobTitle || translations.notProvided,
+        userCase.jobTitle ?? translations.notProvided,
         createChangeAction(
           PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -153,29 +152,30 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       )
     );
 
+    if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+      employmentDetails.push(
+        addSummaryRow(
+          translations.employmentDetails.endDate,
+          userCase.endDate
+            ? userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year
+            : translations.notProvided,
+          createChangeAction(
+            PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.endDate
+          )
+        )
+      );
+    }
+
     if (
       userCase.isStillWorking === StillWorking.WORKING ||
       userCase.isStillWorking === StillWorking.NO_LONGER_WORKING
     ) {
-      if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-        employmentDetails.push(
-          addSummaryRow(
-            translations.employmentDetails.endDate,
-            userCase.endDate
-              ? userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year
-              : translations.notProvided,
-            createChangeAction(
-              PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE,
-              translations.change,
-              translations.employmentDetails.endDate
-            )
-          )
-        );
-      }
       employmentDetails.push(
         addSummaryRow(
           translations.employmentDetails.noticePeriod,
-          getTranslationsYesOrNo(userCase?.noticePeriod, translations),
+          getTranslationsNoticePeriod(userCase?.noticePeriod, translations),
           createChangeAction(
             PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE,
             translations.change,
@@ -183,7 +183,9 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
           )
         )
       );
-    } else {
+    }
+
+    if (userCase.isStillWorking === StillWorking.NOTICE) {
       employmentDetails.push(
         addSummaryRow(
           translations.employmentDetails.noticeEnds,
@@ -203,7 +205,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       employmentDetails.push(
         addSummaryRow(
           translations.employmentDetails.noticePeriodWeeksOrMonths,
-          getTranslationsNoticePeriodUnit(userCase, translations),
+          getTranslationsNoticePeriodUnit(userCase?.noticePeriodUnit, translations),
           createChangeAction(
             PageUrls.NOTICE_TYPE + InterceptPaths.ANSWERS_CHANGE,
             translations.change,
@@ -212,7 +214,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         ),
         addSummaryRow(
           translations.employmentDetails.noticeLength,
-          userCase.noticePeriodLength || translations.notProvided,
+          userCase.noticePeriodLength ?? translations.notProvided,
           createChangeAction(
             PageUrls.NOTICE_LENGTH + InterceptPaths.ANSWERS_CHANGE,
             translations.change,
@@ -225,7 +227,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
     employmentDetails.push(
       addSummaryRow(
         translations.employmentDetails.weeklyHours,
-        userCase.avgWeeklyHrs || translations.notProvided,
+        userCase.avgWeeklyHrs ?? translations.notProvided,
         createChangeAction(
           PageUrls.AVERAGE_WEEKLY_HOURS + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -234,7 +236,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       ),
       addSummaryRow(
         translations.employmentDetails.payBeforeTax,
-        userCase.payBeforeTax || translations.notProvided,
+        userCase.payBeforeTax ?? translations.notProvided,
         createChangeAction(
           PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -243,7 +245,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       ),
       addSummaryRow(
         translations.employmentDetails.payAfterTax,
-        userCase.payAfterTax || translations.notProvided,
+        userCase.payAfterTax ?? translations.notProvided,
         createChangeAction(
           PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -252,7 +254,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       ),
       addSummaryRow(
         translations.employmentDetails.payPeriod,
-        getTranslationsPayInterval(userCase, translations),
+        getTranslationsPayInterval(userCase?.payInterval, translations),
         createChangeAction(
           PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -283,7 +285,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       employmentDetails.push(
         addSummaryRow(
           translations.employmentDetails.newJob,
-          userCase.newJob || translations.notProvided,
+          userCase.newJob ?? translations.notProvided,
           createChangeAction(
             PageUrls.NEW_JOB + InterceptPaths.ANSWERS_CHANGE,
             translations.change,
@@ -311,7 +313,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
           ),
           addSummaryRow(
             translations.employmentDetails.newPayBeforeTax,
-            userCase.newJobPay || translations.notProvided,
+            userCase.newJobPay ?? translations.notProvided,
             createChangeAction(
               PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
               translations.change,
@@ -320,7 +322,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
           ),
           addSummaryRow(
             translations.employmentDetails.payPeriod,
-            userCase.newJobPayInterval || translations.notProvided,
+            userCase.newJobPayInterval ?? translations.notProvided,
             createChangeAction(
               PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
               translations.change,

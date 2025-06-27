@@ -7,6 +7,7 @@ import { DocumentDetail } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getClaimDetails } from "./helpers/ClaimDetailsAnswersHelper";
 
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
@@ -70,10 +71,11 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
+      translations,
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
-      translations,
       getRespondentSection,
+      claimDetailsSection: getClaimDetails(userCase, translations),
       et1Documents,
     });
   };
