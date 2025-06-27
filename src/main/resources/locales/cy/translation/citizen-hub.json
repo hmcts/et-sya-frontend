@@ -142,5 +142,7 @@
   "Amend response": "Diwygio ymateb",
   "withdraw": "tynnu",
   "your": "eich",
-  "theRespondent": "yr atebydd"
+  "theRespondent": "yr atebydd",
+  "appointLegalRepresentative": "[W]Appoint a legal representative",
+  "changeLegalRepresentative": "[W]Change my legal representative"
 }
