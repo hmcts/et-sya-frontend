@@ -9,8 +9,19 @@ import {
 } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
-const getTranslationsYesOrNo = (answer: YesOrNo, translations: AnyRecord): string => {
-  switch (answer) {
+const getTranslationsWhistleblowingClaim = (userCase: CaseWithId, translations: AnyRecord): string => {
+  switch (userCase?.whistleblowingClaim) {
+    case YesOrNo.YES:
+      return translations.doYesOrNo.yes + ' - ' + userCase.whistleblowingEntityName;
+    case YesOrNo.NO:
+      return translations.doYesOrNo.no;
+    default:
+      return translations.notProvided;
+  }
+};
+
+const getTranslationsLinkedCases = (linkedCases: YesOrNo, translations: AnyRecord): string => {
+  switch (linkedCases) {
     case YesOrNo.YES:
       return translations.doYesOrNo.yes;
     case YesOrNo.NO:
@@ -118,9 +129,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     claimDetails.push(
       addSummaryRow(
         translations.claimDetails.forwardClaim,
-        getTranslationsYesOrNo(userCase.whistleblowingClaim, translations) +
-          ' - ' +
-          (userCase.whistleblowingEntityName ?? translations.notProvided),
+        getTranslationsWhistleblowingClaim(userCase, translations),
         createChangeAction(
           PageUrls.WHISTLEBLOWING_CLAIMS + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -133,7 +142,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
   claimDetails.push(
     addSummaryRow(
       translations.claimDetails.linkedCases,
-      getTranslationsYesOrNo(userCase.linkedCases, translations),
+      getTranslationsLinkedCases(userCase.linkedCases, translations),
       createChangeAction(
         PageUrls.LINKED_CASES + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
