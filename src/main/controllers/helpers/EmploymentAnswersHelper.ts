@@ -34,15 +34,16 @@ const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, transl
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const employmentDetails = [];
 
+  employmentDetails.push({
+    key: {
+      text: translations.employmentDetails.header,
+      classes: 'govuk-summary-list__key govuk-heading-m',
+    },
+    value: {},
+  });
+
   if (userCase.pastEmployer === YesOrNo.NO) {
     employmentDetails.push(
-      {
-        key: {
-          text: translations.employmentDetails.header,
-          classes: 'govuk-summary-list__key govuk-heading-m',
-        },
-        value: {},
-      },
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
         translations.employmentDetails.didYouWorkForNo,
@@ -56,13 +57,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
   } else {
     if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
       employmentDetails.push(
-        {
-          key: {
-            text: translations.employmentDetails.header,
-            classes: 'govuk-summary-list__key govuk-heading-m',
-          },
-          value: {},
-        },
         addSummaryRow(
           translations.employmentDetails.didYouWorkFor,
           translations.employmentDetails.didYouWorkForYes,
