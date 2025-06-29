@@ -38,6 +38,7 @@ export const TranslationKeys = {
   VALID_ACAS_REASON: 'valid-no-acas-reason',
   STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
+  HEARING_PANEL_PREFERENCE: 'hearing-panel-preference',
   CONTACT_ACAS: 'contact-acas',
   PENSION: 'pension',
   JOB_TITLE: 'job-title',
@@ -168,6 +169,7 @@ export const PageUrls = {
   ADDRESS_DETAILS: '/address-details',
   CONTACT_ACAS: '/contact-acas',
   VIDEO_HEARINGS: '/would-you-want-to-take-part-in-video-hearings',
+  HEARING_PANEL_PREFERENCE: '/hearing-panel-preference',
   TELEPHONE_NUMBER: '/telephone-number',
   SEX_AND_TITLE: '/sex-and-title',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
@@ -309,6 +311,7 @@ export const ErrorPages = {
 export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',
+  TOO_LONG: 'tooLong',
 } as const;
 
 export const AuthUrls = {

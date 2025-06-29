@@ -1,7 +1,14 @@
 import i18next from 'i18next';
 
 import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
-import { CaseWithId, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import {
+  CaseWithId,
+  HearingPanelPreference,
+  HearingPreference,
+  Sex,
+  StillWorking,
+  YesOrNo,
+} from '../../../main/definitions/case';
 import { languages } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
@@ -134,6 +141,9 @@ export const mockRequestWithTranslation = (
       typeOfClaim: [],
       claimantSex: Sex.FEMALE,
       hearingPreferences: [HearingPreference.NEITHER],
+      hearingPanelPreference: HearingPanelPreference.JUDGE,
+      hearingPanelPreferenceReasonJudge: 'Judge test reason',
+      hearingPanelPreferenceReasonPanel: '',
       ...userCase,
     } as CaseWithId,
     submittedCase: {
@@ -147,6 +157,9 @@ export const mockRequestWithTranslation = (
       typeOfClaim: [],
       claimantSex: Sex.FEMALE,
       hearingPreferences: [HearingPreference.NEITHER],
+      hearingPanelPreference: HearingPanelPreference.JUDGE,
+      hearingPanelPreferenceReasonJudge: 'Judge test reason',
+      hearingPanelPreferenceReasonPanel: '',
       ...userCase,
     } as CaseWithId,
     ...session,

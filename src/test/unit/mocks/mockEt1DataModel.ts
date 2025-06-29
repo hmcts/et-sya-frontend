@@ -1,6 +1,7 @@
 import {
   EmailOrPost,
   EnglishOrWelsh,
+  HearingPanelPreference,
   HearingPreference,
   NoAcasNumberReason,
   Sex,
@@ -100,6 +101,8 @@ export const mockEt1DataModelUpdate = {
       reasonable_adjustments: YesOrNo.YES,
       reasonable_adjustments_detail: 'Adjustments detail test',
       hearing_preferences: [HearingPreference.PHONE],
+      claimant_hearing_panel_preference: HearingPanelPreference.JUDGE,
+      claimant_hearing_panel_preference_why: 'Judge test reason',
       hearing_assistance: 'Hearing assistance test',
       contact_language: EnglishOrWelsh.ENGLISH,
       hearing_language: EnglishOrWelsh.ENGLISH,
@@ -220,6 +223,8 @@ export const submittedCaseResponse = {
         reasonable_adjustments: YesOrNo.YES,
         reasonable_adjustments_detail: 'Adjustments detail test',
         hearing_preferences: [HearingPreference.PHONE],
+        claimant_hearing_panel_preference: HearingPanelPreference.JUDGE,
+        claimant_hearing_panel_preference_why: 'Judge test reason',
         hearing_assistance: 'Hearing assistance test',
       },
       claimantTaskListChecks: {

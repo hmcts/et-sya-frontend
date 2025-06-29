@@ -1,0 +1,49 @@
+{% extends "template.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <span class="govuk-caption-l">{{ sectionTitle.s1 }}</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
+      <p class="govuk-body">{{ p1 }}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ hearingPanelBullet1 }} </li>
+        <li>{{ hearingPanelBullet2 }} </li>
+      </ul>
+      <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ whatIsAPanel.summary }}</span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">{{ whatIsAPanel.p1 }}</p>
+          <p class="govuk-body">{{ whatIsAPanel.p2 }}</p>
+        </div>
+      </details>
+      <details class="govuk-details govuk-!-margin-bottom-2 govuk-!-margin-bottom-4" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ presidentialGuidance.summary }}</span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body"><a href="https://www.judiciary.uk/guidance-and-resources/employment-rules-and-legislation-practice-directions/" target="_blank">{{ presidentialGuidance.link1 }}(Opens in a new tab)</a></p>
+          <p class="govuk-body"><a href="https://www.judiciary.uk/guidance-and-resources/directions-for-employment-tribunals-scotland/" target="_blank">{{ presidentialGuidance.link2 }}</a></p>
+        </div>
+      </details>
+      <p class="govuk-body">{{ p2 }}</p>
+      <p class="govuk-body">{{ p3 }}</p>
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

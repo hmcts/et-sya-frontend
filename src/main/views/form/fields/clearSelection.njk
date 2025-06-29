@@ -1,0 +1,9 @@
+{% if "lng=cy" in currentUrl %}
+  {% set addLanguagePostfix = "&lng=cy" %}
+{% else %}
+  {% set addLanguagePostfix = "" %}
+{% endif %}
+
+<p class="govuk-body">
+  <a href="{{ field.targetUrl }}?redirect=clearSelection{{ addLanguagePostfix }}" class="govuk-link">{{ clearSelection }}</a>
+</p>

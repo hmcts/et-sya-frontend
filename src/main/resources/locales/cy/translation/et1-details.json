@@ -26,7 +26,12 @@
     "phone": "Ffôn",
     "neither": "Dim un",
     "yes": "Oes",
-    "no": "Nac oes"
+    "no": "Nac oes",
+    "hearingPanelPreference": "[W]How do you prefer to have your case heard?",
+    "hearingPanelPreferenceReason": "[W]Reason for Judge or Panel preference",
+    "noPreference": "[W]No Preference",
+    "judge": "[W]Judge",
+    "panel": "[W]Panel"
   },
   "contactDetails": {
     "header": "Manylion cyswllt",

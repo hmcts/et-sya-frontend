@@ -57,6 +57,7 @@ import GeneralCorrespondenceNotificationDetailsController from '../../controller
 import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
+import HearingPanelPreferenceController from '../../controllers/HearingPanelPreferenceController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
@@ -220,6 +221,8 @@ export class Routes {
     app.post(PageUrls.TELEPHONE_NUMBER, new TelNumberController().post);
     app.get(PageUrls.VIDEO_HEARINGS, new VideoHearingsController().get);
     app.post(PageUrls.VIDEO_HEARINGS, new VideoHearingsController().post);
+    app.get(PageUrls.HEARING_PANEL_PREFERENCE, new HearingPanelPreferenceController().get);
+    app.post(PageUrls.HEARING_PANEL_PREFERENCE, new HearingPanelPreferenceController().post);
     app.get(PageUrls.CLAIM_STEPS, new StepsToMakingYourClaimController().get);
     app.get(PageUrls.CLAIM_SAVED, new ClaimSavedController().get);
     app.get(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().get);

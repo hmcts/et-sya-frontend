@@ -26,7 +26,12 @@
     "phone": "Phone",
     "neither": "Neither",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "hearingPanelPreference": "How do you prefer to have your case heard?",
+    "hearingPanelPreferenceReason": "Reason for Judge or Panel preference",
+    "noPreference": "No Preference",
+    "judge": "Judge",
+    "panel": "Panel"
   },
   "contactDetails": {
     "header": "Contact details",
