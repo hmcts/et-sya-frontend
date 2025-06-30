@@ -19,31 +19,6 @@
 
 {% endset %}
 
-{% set htmlForAcknowledgementAlert %}
-
-{% if showAcknowledgementAlert %}
-  <h3 class="govuk-notification-banner__heading">
-    {{notificationBanner.acknowledgement.header}}
-  </h3>
-
-  <p class="govuk-body">
-    <a class="govuk-link" href="/case-document/acknowledgement-of-claim">{{notificationBanner.acknowledgement.link}}</a>.
-  </p>
-
-  <p class="govuk-body">
-    {{notificationBanner.acknowledgement.p1}}
-  </p>
-
-  {% if respondentResponseDeadline %}
-    <p class="govuk-body">
-      {{notificationBanner.acknowledgement.p2 | safe}}
-      {{respondentResponseDeadline}}.
-    </p>
-  {% endif %}
-{% endif %}
-
-{% endset %}
-
 {% set htmlForRejectionAlert %}
 
 {% if showRejectionAlert %}
@@ -110,12 +85,7 @@
   }) }}
 {% endif %}
 
-{% if showAcknowledgementAlert %}
-  {{ govukNotificationBanner({
-   html: htmlForAcknowledgementAlert,
-   titleText: important
-  }) }}
-{% endif %}
+{% include "citizen-hub-notification-banner/acknowledgement.njk"%}
 
 {% if showRejectionAlert %}
   {{ govukNotificationBanner({

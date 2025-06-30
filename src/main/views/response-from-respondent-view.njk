@@ -16,30 +16,30 @@
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-xl">
-        {{h1}}
+        {{ h1 }}
       </h1>
 
       {# TODO: Remove this when ECC Flag is live #}
 
       {% set et3FormRows = [] %}
       {% set documentsRows = [] %}
-        {% if et3Forms.length %}
-         {% for et3Form in et3Forms %}
-           {% set _ = et3FormRows.push(
-             [
-               {
-                 text: et3Form.createdOn
-               },
-               {
-                 text: et3FormText
-               },
-               {
-                 html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
-               }
-             ]
-           ) %}
-         {% endfor %}
-       {% endif %}
+      {% if et3Forms.length %}
+        {% for et3Form in et3Forms %}
+          {% set _ = et3FormRows.push(
+            [
+              {
+                text: et3Form.createdOn
+              },
+              {
+                text: et3FormText
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
+              }
+            ]
+          ) %}
+        {% endfor %}
+      {% endif %}
 
       {% if et3Attachments.length %}
         {% for et3Attachment in et3Attachments %}
@@ -117,20 +117,20 @@
           captionClasses: "govuk-table__caption--m",
           rows: tableContents
         }) }}
-        {% else %}
-          {{ govukTable({
-            caption: et3H2Text,
-            firstCellIsHeader: true,
-            captionClasses: "govuk-table__caption--m",
-            rows: et3FormRows
-          }) }}
+      {% else %}
+        {{ govukTable({
+          caption: et3H2Text,
+          firstCellIsHeader: true,
+          captionClasses: "govuk-table__caption--m",
+          rows: et3FormRows
+        }) }}
 
-          {{ govukTable({
-            caption: h2,
-            firstCellIsHeader: true,
-            captionClasses: "govuk-table__caption--m",
-            rows: documentsRows
-          }) }}
+        {{ govukTable({
+          caption: h2,
+          firstCellIsHeader: true,
+          captionClasses: "govuk-table__caption--m",
+          rows: documentsRows
+        }) }}
       {% endif %}
 
     </div>
