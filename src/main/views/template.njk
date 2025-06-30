@@ -6,7 +6,6 @@
 {% from "components/web-chat.njk" import webChatModal %}
 
 {% set htmlLang = i18n.language %}
-{% set htmlClass = "govuk-template--rebranded" %}
 
 {% block head %}
   {% include "webpack/css.njk" %}
@@ -88,24 +87,9 @@
   <!-- End of hidden session object for user already logged in check-->
 {% endblock %}
 
-{% set logInOrOut = {
-  href: "/logout",
-  text: signOut,
-  active: false
-}
-if isLoggedIn %}
-
 {% block header %}
   {% include "cookie-banner.njk" %}
-  {{ govukHeader({
-    containerClasses: "govuk-width-container",
-    homepageUrl: "https://www.gov.uk",
-    serviceName: serviceName,
-    serviceUrl: "/",
-    navigationClasses: 'govuk-header__navigation--end',
-    navigation: [logInOrOut],
-    rebrand: true
-  }) }}
+  {% include "./header.njk" %}
 {% endblock %}
 
 {% block pageTitle %}

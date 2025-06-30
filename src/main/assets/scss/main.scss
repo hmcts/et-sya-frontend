@@ -228,3 +228,17 @@ $lightgrey-panel: #d3d3d3;
     overflow-x: auto;
   }
 }
+
+.nav-right {
+  width: fit-content;
+  flex-shrink: 0;
+  float: right;
+}
+
+.govuk-header-custom__logo {
+  width: fit-content;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+  padding-top: 16px;
+  display: inline-block;
+}
