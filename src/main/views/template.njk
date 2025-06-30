@@ -87,9 +87,24 @@
   <!-- End of hidden session object for user already logged in check-->
 {% endblock %}
 
+{% set logInOrOut = {
+  href: "/logout",
+  text: signOut,
+  active: false
+}
+if isLoggedIn %}
+
 {% block header %}
   {% include "cookie-banner.njk" %}
-  {% include "./header.njk" %}
+  {{ govukHeader({
+    classes: "govuk-header--full-width-border",
+    homepageUrl: "https://www.gov.uk",
+    productName: serviceName,
+    serviceUrl: "/",
+    navigationClasses: 'govuk-header__navigation--end',
+    navigation: [logInOrOut],
+    rebrand: true
+  }) }}
 {% endblock %}
 
 {% block pageTitle %}

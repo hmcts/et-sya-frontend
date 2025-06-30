@@ -229,16 +229,19 @@ $lightgrey-panel: #d3d3d3;
   }
 }
 
-.nav-right {
-  width: fit-content;
-  flex-shrink: 0;
-  float: right;
+@media (min-width: 48.0625em) {
+  .govuk-header__logo {
+    width: fit-content;
+  }
+
+  .govuk-header__content {
+    float: right;
+    width: fit-content;
+  }
 }
 
-.govuk-header-custom__logo {
-  width: fit-content;
-  margin-bottom: 0;
-  padding-bottom: 12px;
-  padding-top: 16px;
-  display: inline-block;
+.govuk-header__navigation-item {
+  &:last-child {
+    float: right;
+  }
 }
