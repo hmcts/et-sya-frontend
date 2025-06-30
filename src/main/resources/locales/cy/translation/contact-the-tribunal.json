@@ -10,6 +10,10 @@
     "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at yr atebydd a fydd yn cael cyfle i ymateb.",
     "p3": "Efallai y byddwch yn gallu gofyn nad yw rhai manylion yn cael eu rhannu gyda’r atebydd."
   },
+  "landing_text_when_represented": {
+    "p1": "<placeholder> ",
+    "p2": "<placeholder>"
+  },
   "sections": {
     "withdraw": {
       "caption": "Tynnu fy hawliad yn ôl",

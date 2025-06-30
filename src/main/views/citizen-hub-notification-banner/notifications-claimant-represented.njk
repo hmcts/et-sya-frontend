@@ -1,0 +1,12 @@
+{% if claimantRepresented %}
+  {% set htmlForClaimantRepresentedBanner %}
+    <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.title }} {{claimantRepresented.name_of_organisation}}. </h3>
+    <p class="govuk-body">
+      {{ notificationBanner.claimantRepresented.p1 }}
+    </p>
+  {% endset %}
+  {{ govukNotificationBanner({
+    html: htmlForClaimantRepresentedBanner,
+    titleText: important
+  }) }}
+{% endif %}

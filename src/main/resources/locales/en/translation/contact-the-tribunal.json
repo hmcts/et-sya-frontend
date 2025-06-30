@@ -10,6 +10,10 @@
     "p2": "These requests and applications will be reviewed by the tribunal and copied to the respondent who will have an opportunity to respond.",
     "p3": "You may be able to request that some details do not get shared with the respondent."
   },
+  "landing_text_when_represented": {
+    "p1": "You are now being legally represented by ",
+    "p2": "You will be kept updated but will no longer be able to submit applications or contact the tribunal directly."
+  },
   "sections": {
     "withdraw": {
       "caption": "Withdraw my claim",
