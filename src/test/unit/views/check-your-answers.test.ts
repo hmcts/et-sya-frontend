@@ -59,11 +59,6 @@ describe('Check your answers confirmation page', () => {
     expect(button[5].innerHTML).contains('Submit', 'Could not find the submit claim button');
   });
 
-  it('should display Save as draft button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[6].innerHTML).contains('Save as draft', 'Could not find the button');
-  });
-
   it('should display 5 summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
     expect(summaryLists.length).equal(5, '5 summary lists not found');

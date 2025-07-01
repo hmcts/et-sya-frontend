@@ -3,10 +3,6 @@
   "h1": "Steps to making your claim",
   "applicationDetails": "Application Details",
   "claimType": "Claim type",
-  "notStarted": "NOT STARTED",
-  "completed": "COMPLETED",
-  "inProgress": "IN PROGRESS",
-  "cannotStartYet": "CANNOT START YET",
   "section1": {
     "title": "Your details",
     "link1Text": "Personal details",
@@ -26,5 +22,9 @@
   "section4": {
     "title": "Check and submit",
     "link1Text": "Check your answers"
-  }
+  },
+  "completed": "Completed",
+  "notStarted": "Not started yet",
+  "inProgress": "In progress",
+  "cannotStartYet": "Cannot start yet"
 }
