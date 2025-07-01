@@ -6,10 +6,13 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
+import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
+
 const logger = getLogger('SubmitCaseController');
 
 export default class SubmitCaseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    checkCaseStateAndRedirect(req, res);
     try {
       const submittedClaim = await getCaseApi(req.session.user?.accessToken).submitCase(req.session.userCase);
       logger.info(`Submitted Case - ${submittedClaim.data.id}`);

@@ -12,7 +12,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { fillAddressAddressFields } from './helpers/RespondentHelpers';
 
@@ -99,6 +99,7 @@ export default class AddressDetailsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const addressAddressTypes = req.session.userCase.addressAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,

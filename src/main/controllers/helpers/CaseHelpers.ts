@@ -10,7 +10,7 @@ import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, languages } from '../../definitions/constants';
-import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
+import { CaseState, TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
@@ -345,4 +345,16 @@ export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[])
     }
     return newObj;
   });
+};
+
+/**
+ * Checks if the case state is AWAITING_SUBMISSION_TO_HMCTS and redirects to claimant-applications if so
+ * @param req - Express request object containing session and user case data
+ * @param res - Express response object for redirecting
+ * @returns true if redirect occurred (should return early from calling method), false if no redirect needed
+ */
+export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): void => {
+  if (req.session?.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+  }
 };

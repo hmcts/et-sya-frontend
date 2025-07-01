@@ -9,7 +9,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
@@ -60,6 +60,7 @@ export default class NewJobController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }

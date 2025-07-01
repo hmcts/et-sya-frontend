@@ -6,6 +6,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentDetailsCardActionItem, getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
@@ -46,6 +47,7 @@ export default class RespondentDetailsCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const respondents = req.session.userCase.respondents;
     const translations: AnyRecord = { ...req.t(TranslationKeys.RESPONDENT_DETAILS_CHECK, { returnObjects: true }) };
     const content = getPageContent(req, this.addRespondentForm, [

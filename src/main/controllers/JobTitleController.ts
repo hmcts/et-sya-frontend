@@ -8,7 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('JobTitleController');
@@ -51,6 +51,7 @@ export default class JobTitleController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const content = getPageContent(req, this.jobTitleContent, [TranslationKeys.COMMON, TranslationKeys.JOB_TITLE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.JOB_TITLE, {

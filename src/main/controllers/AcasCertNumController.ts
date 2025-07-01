@@ -9,7 +9,7 @@ import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
@@ -84,6 +84,7 @@ export default class AcasCertNumController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
     const currentRespondentName = respondents[respondentIndex].respondentName;

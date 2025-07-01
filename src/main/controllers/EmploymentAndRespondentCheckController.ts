@@ -9,7 +9,7 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('EmploymentAndRespondentCheckController');
@@ -59,6 +59,7 @@ export default class EmploymentAndRespondentCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const content = getPageContent(req, this.empResCheckContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TASK_LIST_CHECK,

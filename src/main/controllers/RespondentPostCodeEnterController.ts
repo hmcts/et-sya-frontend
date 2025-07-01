@@ -8,7 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { getEnterTitle } from './helpers/RespondentPostCodeHelper';
@@ -46,6 +46,7 @@ export default class RespondentPostCodeEnterController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     const respondentIndex = getRespondentIndex(req);
     const respondents = req.session.userCase.respondents;

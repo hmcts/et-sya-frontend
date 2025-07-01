@@ -9,7 +9,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('UpdatePreferenceController');
@@ -95,6 +95,7 @@ export default class UpdatePreferenceController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const content = getPageContent(req, this.getFormContent(req.session.userCase.caseTypeId), [
       TranslationKeys.COMMON,
       TranslationKeys.UPDATE_PREFERENCE,

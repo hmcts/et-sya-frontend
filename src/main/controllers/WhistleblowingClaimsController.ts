@@ -10,7 +10,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('WhistleblowingClaimsController');
@@ -60,6 +60,7 @@ export default class WhistleblowingClaimsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const content = getPageContent(req, this.whistleblowingClaimsFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.WHISTLEBLOWING_CLAIMS,

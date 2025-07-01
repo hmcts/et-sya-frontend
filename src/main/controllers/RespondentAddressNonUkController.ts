@@ -5,6 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 
+import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import {
   fillRespondentAddressFieldsNonUK,
@@ -26,6 +27,7 @@ export default class RespondentAddressNonUkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const { userCase } = req.session;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = userCase.respondents[respondentIndex];

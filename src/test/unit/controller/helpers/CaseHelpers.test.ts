@@ -3,6 +3,7 @@ import { nextTick } from 'process';
 import axios, { AxiosResponse } from 'axios';
 
 import {
+  checkCaseStateAndRedirect,
   getSectionStatus,
   getSectionStatusForEmployment,
   handleUpdateDraftCase,
@@ -16,6 +17,7 @@ import {
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { StillWorking, YesOrNo } from '../../../../main/definitions/case';
+import { PageUrls } from '../../../../main/definitions/constants';
 import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
 import * as CaseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -23,6 +25,7 @@ import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockLogger } from '../../mocks/mockLogger';
 import { mockRequest } from '../../mocks/mockRequest';
+import { mockResponse } from '../../mocks/mockResponse';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
@@ -333,5 +336,28 @@ describe('add response to send notification', () => {
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     submitClaimantTse(req, mockLogger);
     expect(req.session.userCase).toBeDefined();
+  });
+});
+
+describe('checkCaseStateAndRedirect()', () => {
+  it('redirects to claimant applications when case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
+    const req = mockRequest({ session: { userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } } });
+    const res = mockResponse();
+    checkCaseStateAndRedirect(req, res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+  });
+
+  it('does not redirect when case state is not AWAITING_SUBMISSION_TO_HMCTS', () => {
+    const req = mockRequest({ session: { userCase: { state: CaseState.DRAFT } } });
+    const res = mockResponse();
+    checkCaseStateAndRedirect(req, res);
+    expect(res.redirect).not.toHaveBeenCalled();
+  });
+
+  it('does not redirect when userCase is undefined', () => {
+    const req = mockRequest({ session: { userCase: undefined } });
+    const res = mockResponse();
+    checkCaseStateAndRedirect(req, res);
+    expect(res.redirect).not.toHaveBeenCalled();
   });
 });

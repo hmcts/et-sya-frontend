@@ -8,7 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
@@ -47,6 +47,7 @@ export default class RespondentNameController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     let respondentIndex: number;
     if (req.session.userCase?.respondents) {
       respondentIndex = getRespondentIndex(req);

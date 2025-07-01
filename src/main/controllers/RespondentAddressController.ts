@@ -5,6 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 
+import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentAddressContent, handlePost } from './helpers/RespondentAddressHelper';
 import { fillRespondentAddressFields, getRespondentIndex } from './helpers/RespondentHelpers';
@@ -22,6 +23,7 @@ export default class RespondentAddressController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const respondents = req.session.userCase.respondents;
     const x = req.session.userCase.respondentAddressTypes;
     const respondentIndex = getRespondentIndex(req);

@@ -9,7 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex } from './helpers/RespondentHelpers';
 
@@ -79,6 +79,7 @@ export default class NoAcasNumberController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const respondentIndex = getRespondentIndex(req);
     const content = getPageContent(
       req,

@@ -9,7 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
 import { getClaimSummaryError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -124,6 +124,7 @@ export default class DescribeWhatHappenedController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     this.uploadedFileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,

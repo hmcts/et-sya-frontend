@@ -6,11 +6,11 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -96,6 +96,7 @@ export default class TypeOfClaimController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    checkCaseStateAndRedirect(req, res);
     const content = getPageContent(req, this.typeOfClaimFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TYPE_OF_CLAIM,

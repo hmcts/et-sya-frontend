@@ -6,6 +6,7 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 
+import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
@@ -14,6 +15,7 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
+    checkCaseStateAndRedirect(req, res);
     if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
