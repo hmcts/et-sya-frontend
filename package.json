@@ -75,7 +75,7 @@
     "express": "^4.20.0",
     "express-rate-limit": "^7.0.0",
     "express-session": "^1.17.3",
-    "govuk-frontend": "^5.10.2",
+    "govuk-frontend": "^5.11.0",
     "helmet": "^8.0.0",
     "i18next": "^24.1.2",
     "i18next-http-middleware": "^3.3.0",

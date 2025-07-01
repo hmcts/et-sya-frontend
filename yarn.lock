@@ -7837,7 +7837,7 @@ __metadata:
     express-rate-limit: ^7.0.0
     express-session: ^1.17.3
     git-rev-sync: 3.0.2
-    govuk-frontend: ^5.10.2
+    govuk-frontend: ^5.11.0
     helmet: ^8.0.0
     html-webpack-plugin: ^5.5.1
     husky: ^9.0.0
@@ -9110,10 +9110,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.10.2":
-  version: 5.10.2
-  resolution: "govuk-frontend@npm:5.10.2"
-  checksum: d7b9c788a4dee8ecc0dbb0b6ed0866e97822af8b3f7390824626835e920905c48e40f2e250505dc2d9bb66ad9efc96abffc63bb5cfa68f4e4e6c29f4e910321b
+"govuk-frontend@npm:^5.11.0":
+  version: 5.11.0
+  resolution: "govuk-frontend@npm:5.11.0"
+  checksum: be7896e9834930807427e23d6966476460ef91673ed3516f2dcd4957f9270c88df1ca3db1752eb6e96d4bc9213b9b32ceb1f9eb2259507993c96a5b3a86b58b2
   languageName: node
   linkType: hard
 
