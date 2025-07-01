@@ -84,7 +84,9 @@ export default class AcasCertNumController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
     const currentRespondentName = respondents[respondentIndex].respondentName;

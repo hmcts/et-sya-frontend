@@ -45,7 +45,9 @@ export default class WorkPostCodeSelectController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const response = convertJsonArrayToTitleCase(await getAddressesForPostcode(req.session.userCase.workEnterPostcode));
     req.session.userCase.workAddresses = response;
     req.session.userCase.workAddressTypes = getWorkAddressTypes(response, req);

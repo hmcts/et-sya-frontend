@@ -62,7 +62,9 @@ export default class PersonalDetailsCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.personalDetailsCheckContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TASK_LIST_CHECK,

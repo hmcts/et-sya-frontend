@@ -39,7 +39,9 @@ export default class DobController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     dob_date.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,

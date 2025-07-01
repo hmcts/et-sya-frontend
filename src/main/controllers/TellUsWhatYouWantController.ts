@@ -74,7 +74,9 @@ export default class TellUsWhatYouWantController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.tellUsWhatYouWantFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TELL_US_WHAT_YOU_WANT,

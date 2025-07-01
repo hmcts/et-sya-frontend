@@ -60,7 +60,9 @@ export default class WhistleblowingClaimsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.whistleblowingClaimsFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.WHISTLEBLOWING_CLAIMS,

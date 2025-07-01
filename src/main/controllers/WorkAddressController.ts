@@ -61,7 +61,9 @@ export default class WorkAddressController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const respondentIndex = getRespondentIndex(req);
     const respondent = req.session.userCase.respondents[respondentIndex];
     const addressLine1 = respondent.respondentAddress1 || '';

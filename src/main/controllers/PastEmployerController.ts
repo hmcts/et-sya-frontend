@@ -55,7 +55,9 @@ export default class PastEmployerController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.pastEmployerFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.PAST_EMPLOYER,

@@ -99,7 +99,9 @@ export default class PlaceOfWorkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const x = req.session.userCase.workAddressTypes;
     const content = getPageContent(
       req,

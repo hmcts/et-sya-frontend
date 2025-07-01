@@ -96,7 +96,9 @@ export default class TypeOfClaimController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.typeOfClaimFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TYPE_OF_CLAIM,

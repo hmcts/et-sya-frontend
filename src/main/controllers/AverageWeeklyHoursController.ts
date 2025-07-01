@@ -46,7 +46,9 @@ export default class AverageWeeklyHoursController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.averageWeeklyHoursContent, [
       TranslationKeys.COMMON,
       TranslationKeys.AVERAGE_WEEKLY_HOURS,

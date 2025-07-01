@@ -49,7 +49,9 @@ export default class NoticeLengthController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.noticeLengthContent, [
       TranslationKeys.COMMON,
       req.session.userCase.noticePeriodUnit === WeeksOrMonths.WEEKS

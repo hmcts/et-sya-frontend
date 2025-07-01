@@ -39,7 +39,9 @@ export default class EndDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     end_date.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,

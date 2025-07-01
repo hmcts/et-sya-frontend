@@ -54,7 +54,9 @@ export default class StartDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     start_date.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,

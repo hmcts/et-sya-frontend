@@ -47,7 +47,9 @@ export default class RespondentNameController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     let respondentIndex: number;
     if (req.session.userCase?.respondents) {
       respondentIndex = getRespondentIndex(req);

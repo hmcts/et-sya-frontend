@@ -9,7 +9,9 @@ import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class RespondentAddInCheckAnswerController {
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     req.session.respondentRedirectCheckAnswer = true;
     const newRespondentNum =
       req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : 1;

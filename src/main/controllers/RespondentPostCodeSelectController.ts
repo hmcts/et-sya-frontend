@@ -46,7 +46,9 @@ export default class RespondentPostCodeSelectController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const response = convertJsonArrayToTitleCase(
       await getAddressesForPostcode(req.session.userCase.respondentEnterPostcode)
     );

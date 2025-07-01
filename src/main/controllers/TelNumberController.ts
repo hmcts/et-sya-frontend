@@ -48,7 +48,9 @@ export default class TelNumberController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.telNumberContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TELEPHONE_NUMBER,

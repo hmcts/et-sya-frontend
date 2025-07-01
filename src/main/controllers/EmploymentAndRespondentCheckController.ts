@@ -59,7 +59,9 @@ export default class EmploymentAndRespondentCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.empResCheckContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TASK_LIST_CHECK,

@@ -47,7 +47,9 @@ export default class RespondentDetailsCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const respondents = req.session.userCase.respondents;
     const translations: AnyRecord = { ...req.t(TranslationKeys.RESPONDENT_DETAILS_CHECK, { returnObjects: true }) };
     const content = getPageContent(req, this.addRespondentForm, [

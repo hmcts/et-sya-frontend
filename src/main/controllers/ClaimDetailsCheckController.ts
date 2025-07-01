@@ -59,7 +59,9 @@ export default class ClaimDetailsCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.claimDetailsCheckFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIM_DETAILS_CHECK,

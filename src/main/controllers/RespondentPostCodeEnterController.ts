@@ -46,7 +46,9 @@ export default class RespondentPostCodeEnterController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     const respondentIndex = getRespondentIndex(req);
     const respondents = req.session.userCase.respondents;

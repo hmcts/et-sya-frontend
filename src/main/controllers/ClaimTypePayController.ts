@@ -69,7 +69,9 @@ export default class ClaimTypePayController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.claimTypePayFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIM_TYPE_PAY,

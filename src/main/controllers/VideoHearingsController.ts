@@ -74,7 +74,9 @@ export default class VideoHearingsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.videoHearingsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.VIDEO_HEARINGS,

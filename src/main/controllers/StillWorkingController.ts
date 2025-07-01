@@ -69,7 +69,9 @@ export default class StillWorkingController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.stillWorkingContent, [
       TranslationKeys.COMMON,
       TranslationKeys.STILL_WORKING,

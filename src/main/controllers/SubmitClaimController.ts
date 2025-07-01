@@ -12,7 +12,9 @@ const logger = getLogger('SubmitCaseController');
 
 export default class SubmitCaseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return; // Early return if redirect occurred
+    }
     try {
       const submittedClaim = await getCaseApi(req.session.user?.accessToken).submitCase(req.session.userCase);
       logger.info(`Submitted Case - ${submittedClaim.data.id}`);

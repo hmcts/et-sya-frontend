@@ -23,7 +23,9 @@ export default class RespondentAddressController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const respondents = req.session.userCase.respondents;
     const x = req.session.userCase.respondentAddressTypes;
     const respondentIndex = getRespondentIndex(req);

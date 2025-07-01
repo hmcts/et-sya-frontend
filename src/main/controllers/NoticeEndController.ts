@@ -42,7 +42,9 @@ export default class NoticeEndController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     notice_dates.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,

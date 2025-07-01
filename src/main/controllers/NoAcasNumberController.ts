@@ -79,7 +79,9 @@ export default class NoAcasNumberController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const respondentIndex = getRespondentIndex(req);
     const content = getPageContent(
       req,

@@ -12,7 +12,9 @@ const logger = getLogger('RespondentRemoveController');
 
 export default class RespondentRemoveController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     req.session.userCase.respondents = getRespondentsWithRemoved(
       req.session.userCase.respondents,
       getRespondentIndex(req)

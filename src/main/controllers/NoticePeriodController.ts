@@ -65,7 +65,9 @@ export default class NoticePeriodController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const session = req.session;
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);

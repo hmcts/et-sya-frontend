@@ -51,7 +51,9 @@ export default class JobTitleController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.jobTitleContent, [TranslationKeys.COMMON, TranslationKeys.JOB_TITLE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.JOB_TITLE, {

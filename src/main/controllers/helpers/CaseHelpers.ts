@@ -22,7 +22,7 @@ import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
-import { returnNextPage } from './RouterHelpers';
+import { getLanguageParam, returnNextPage } from './RouterHelpers';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -94,7 +94,7 @@ export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logg
     await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
     logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
   } catch (error) {
-    logger.error(error.message);
+    logger.error(`Failed to update hub links statuses for case ${req.session.userCase.id}: ${error.message}`);
   }
 };
 
@@ -348,13 +348,22 @@ export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[])
 };
 
 /**
- * Checks if the case state is AWAITING_SUBMISSION_TO_HMCTS and redirects to claimant-applications if so
+ * Checks the state of the user case and redirects to either Citizen Hub or Claimant Applications.
  * @param req - Express request object containing session and user case data
  * @param res - Express response object for redirecting
  * @returns true if redirect occurred (should return early from calling method), false if no redirect needed
  */
-export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): void => {
-  if (req.session?.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boolean => {
+  const userCase = req.session?.userCase;
+
+  if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    const redirectUrl = userCase?.id
+      ? `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`
+      : PageUrls.CLAIMANT_APPLICATIONS;
+
+    res.redirect(redirectUrl);
+    return true; // Redirect occurred
   }
+
+  return false; // No redirect needed
 };

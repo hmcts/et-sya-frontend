@@ -59,7 +59,9 @@ export default class NewJobPayController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }

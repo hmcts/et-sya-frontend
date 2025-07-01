@@ -92,7 +92,9 @@ export default class ClaimTypeDiscriminationController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.claimTypeDiscriminationFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIM_TYPE_DISCRIMINATION,

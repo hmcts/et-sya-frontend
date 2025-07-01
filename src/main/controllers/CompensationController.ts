@@ -58,7 +58,9 @@ export default class CompensationController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const content = getPageContent(req, this.compensationFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.COMPENSATION,

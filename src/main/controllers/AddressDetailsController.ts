@@ -99,7 +99,9 @@ export default class AddressDetailsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    checkCaseStateAndRedirect(req, res);
+    if (checkCaseStateAndRedirect(req, res)) {
+      return;
+    }
     const addressAddressTypes = req.session.userCase.addressAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,

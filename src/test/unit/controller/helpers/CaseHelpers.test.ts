@@ -340,24 +340,25 @@ describe('add response to send notification', () => {
 });
 
 describe('checkCaseStateAndRedirect()', () => {
-  it('redirects to claimant applications when case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
-    const req = mockRequest({ session: { userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } } });
+  it('redirects to citizen hub when user case state is not AWAITING_SUBMISSION_TO_HMCTS and user case has an id', () => {
+    const req = mockRequest({ session: { userCase: { state: CaseState.ACCEPTED, id: '12345' } } });
+    const res = mockResponse();
+    checkCaseStateAndRedirect(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+  });
+
+  it('redirects to claimant applications when user case state is not AWAITING_SUBMISSION_TO_HMCTS and user case has no id', () => {
+    const req = mockRequest({ session: { userCase: { state: CaseState.ACCEPTED } } });
     const res = mockResponse();
     checkCaseStateAndRedirect(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
   });
 
-  it('does not redirect when case state is not AWAITING_SUBMISSION_TO_HMCTS', () => {
-    const req = mockRequest({ session: { userCase: { state: CaseState.DRAFT } } });
+  it('does not redirect when user case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
+    const req = mockRequest({ session: { userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } } });
     const res = mockResponse();
-    checkCaseStateAndRedirect(req, res);
+    const result = checkCaseStateAndRedirect(req, res);
     expect(res.redirect).not.toHaveBeenCalled();
-  });
-
-  it('does not redirect when userCase is undefined', () => {
-    const req = mockRequest({ session: { userCase: undefined } });
-    const res = mockResponse();
-    checkCaseStateAndRedirect(req, res);
-    expect(res.redirect).not.toHaveBeenCalled();
+    expect(result).toBe(false);
   });
 });
