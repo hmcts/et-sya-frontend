@@ -4,6 +4,10 @@
     <p class="govuk-body">
       {{ notificationBanner.claimantRepresented.p1 }}
     </p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>{{ notificationBanner.claimantRepresented.l1 }}</li>
+        <li>{{ notificationBanner.claimantRepresented.l2 }}</li>
+    </ul>
   {% endset %}
   {{ govukNotificationBanner({
     html: htmlForClaimantRepresentedBanner,

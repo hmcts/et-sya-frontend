@@ -121,7 +121,9 @@
     },
     "claimantRepresented": {
       "title": "You are now being legally represented by",
-      "p1": "You will be kept updated but will no longer be able to submit applications or contact the tribunal directly."
+      "p1": "You will be kept updated with case correspondence but will no longer be able to",
+      "l1": "Submit applications",
+      "l2": "Directly respond to applications or notifications"
     }
   },
   "multiples": {
