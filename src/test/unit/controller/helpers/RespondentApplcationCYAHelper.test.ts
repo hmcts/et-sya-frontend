@@ -47,7 +47,7 @@ describe('Respondent application CYA controller helper', () => {
 
     expect(appContent[0].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: "What's your response to the other party's application?",
+      text: "What's your response to the respondent's application?",
     });
     expect(appContent[0].value).toEqual({ text: 'responseText' });
     expect(appContent[0].actions).toEqual({
