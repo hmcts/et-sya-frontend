@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { validateEmploymentAndRespondentDetails } from '../components/form/claimDetailsValidator';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
-import { DefaultValues } from '../definitions/constants';
+import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
