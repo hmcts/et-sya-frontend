@@ -100,7 +100,7 @@
     },
     "decisionJudgment": {
       "headerClaimant": "The tribunal has made a decision on your application to ",
-      "headerRespondent": "The tribunal has made a decision on the other party's application to ",
+      "headerRespondent": "The tribunal has made a decision on the respondent's application to ",
       "link": "View the decision"
     },
     "storedPending": {
@@ -111,9 +111,9 @@
     },
     "claimantResponseToTribunal": {
       "title": {
-        "rule92Yes": "You have sent a response to the tribunal and copied it to the other party.",
+        "rule92Yes": "You have sent a response to the tribunal and copied it to the respondent.",
         "rule92No": {
-          "p1": "You have sent a response to the tribunal and given your reasons not to copy it to the other party.",
+          "p1": "You have sent a response to the tribunal and given your reasons not to copy it to the respondent.",
           "p2": "The tribunal will consider your reasons and let you know what happens next."
         }
       },
