@@ -10,7 +10,8 @@
     "*.{css,scss}": "stylelint --fix && prettier --write"
   },
   "scripts": {
-    "postinstall": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
+    "setup:husky": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
+    "postinstall": "yarn setup:husky && yarn build",
     "start": "NODE_ENV=production yarn node src/main/server.js",
     "start:dev": "nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
@@ -43,7 +44,6 @@
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
     "@hmcts/cookie-manager": "^1.0.0",
-    "@hmcts/frontend": "^0.0.50-alpha",
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.8.0",
     "@hmcts/nodejs-logging": "^4.0.4",
@@ -75,7 +75,7 @@
     "express": "^4.20.0",
     "express-rate-limit": "^7.0.0",
     "express-session": "^1.17.3",
-    "govuk-frontend": "^4.6.0",
+    "govuk-frontend": "^5.11.0",
     "helmet": "^8.0.0",
     "i18next": "^24.1.2",
     "i18next-http-middleware": "^3.3.0",
