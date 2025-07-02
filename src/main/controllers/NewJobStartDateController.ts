@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -11,7 +12,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -45,10 +46,8 @@ export default class NewJobStartDateController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.NEW_JOB_PAY);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }

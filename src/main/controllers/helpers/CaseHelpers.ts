@@ -10,7 +10,7 @@ import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, languages } from '../../definitions/constants';
-import { CaseState, TypesOfClaim, sectionStatus } from '../../definitions/definition';
+import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
@@ -22,7 +22,7 @@ import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
-import { getLanguageParam, returnNextPage } from './RouterHelpers';
+import { returnNextPage } from './RouterHelpers';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -345,25 +345,4 @@ export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[])
     }
     return newObj;
   });
-};
-
-/**
- * Checks the state of the user case and redirects to either Citizen Hub or Claimant Applications.
- * @param req - Express request object containing session and user case data
- * @param res - Express response object for redirecting
- * @returns true if redirect occurred (should return early from calling method), false if no redirect needed
- */
-export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boolean => {
-  const userCase = req.session?.userCase;
-
-  if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    const redirectUrl = userCase?.id
-      ? `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`
-      : PageUrls.CLAIMANT_APPLICATIONS;
-
-    res.redirect(redirectUrl);
-    return true; // Redirect occurred
-  }
-
-  return false; // No redirect needed
 };

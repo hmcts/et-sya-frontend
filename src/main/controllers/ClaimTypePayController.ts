@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypePay } from '../definitions/definition';
@@ -9,7 +10,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimTypePayController');
@@ -68,10 +69,8 @@ export default class ClaimTypePayController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const content = getPageContent(req, this.claimTypePayFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIM_TYPE_PAY,

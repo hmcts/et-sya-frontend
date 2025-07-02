@@ -3,7 +3,6 @@ import { nextTick } from 'process';
 import axios, { AxiosResponse } from 'axios';
 
 import {
-  checkCaseStateAndRedirect,
   getSectionStatus,
   getSectionStatusForEmployment,
   handleUpdateDraftCase,
@@ -17,7 +16,6 @@ import {
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { StillWorking, YesOrNo } from '../../../../main/definitions/case';
-import { PageUrls } from '../../../../main/definitions/constants';
 import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
 import * as CaseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -25,7 +23,6 @@ import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockLogger } from '../../mocks/mockLogger';
 import { mockRequest } from '../../mocks/mockRequest';
-import { mockResponse } from '../../mocks/mockResponse';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
@@ -336,29 +333,5 @@ describe('add response to send notification', () => {
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     submitClaimantTse(req, mockLogger);
     expect(req.session.userCase).toBeDefined();
-  });
-});
-
-describe('checkCaseStateAndRedirect()', () => {
-  it('redirects to citizen hub when user case state is not AWAITING_SUBMISSION_TO_HMCTS and user case has an id', () => {
-    const req = mockRequest({ session: { userCase: { state: CaseState.ACCEPTED, id: '12345' } } });
-    const res = mockResponse();
-    checkCaseStateAndRedirect(req, res);
-    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
-  });
-
-  it('redirects to claimant applications when user case state is not AWAITING_SUBMISSION_TO_HMCTS and user case has no id', () => {
-    const req = mockRequest({ session: { userCase: { state: CaseState.ACCEPTED } } });
-    const res = mockResponse();
-    checkCaseStateAndRedirect(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
-  });
-
-  it('does not redirect when user case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
-    const req = mockRequest({ session: { userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } } });
-    const res = mockResponse();
-    const result = checkCaseStateAndRedirect(req, res);
-    expect(res.redirect).not.toHaveBeenCalled();
-    expect(result).toBe(false);
   });
 });

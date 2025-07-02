@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -9,7 +10,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { getAddressAddressTypes, getLink, getSelectTitle } from './helpers/AddressPostCodeHelper';
-import { checkCaseStateAndRedirect, convertJsonArrayToTitleCase, handlePostLogic } from './helpers/CaseHelpers';
+import { convertJsonArrayToTitleCase, handlePostLogic } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('AddressPostCodeSelectController');
@@ -38,10 +39,8 @@ export default class AddressPostCodeSelectController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
 
+  @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const response = convertJsonArrayToTitleCase(
       await getAddressesForPostcode(req.session.userCase.addressEnterPostcode)
     );

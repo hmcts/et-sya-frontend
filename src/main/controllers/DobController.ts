@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -11,7 +12,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const dob_date: DateFormFields = {
@@ -38,10 +39,8 @@ export default class DobController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.SEX_AND_TITLE);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     dob_date.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,

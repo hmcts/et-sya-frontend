@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -10,7 +11,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const start_date: DateFormFields = {
@@ -53,10 +54,8 @@ export default class StartDateController {
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     start_date.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,

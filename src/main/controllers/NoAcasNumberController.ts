@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { NoAcasNumberReason } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -9,7 +10,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex } from './helpers/RespondentHelpers';
 
@@ -78,10 +79,8 @@ export default class NoAcasNumberController {
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const respondentIndex = getRespondentIndex(req);
     const content = getPageContent(
       req,

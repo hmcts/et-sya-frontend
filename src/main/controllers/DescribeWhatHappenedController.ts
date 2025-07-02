@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -9,7 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
 import { getClaimSummaryError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -123,10 +124,8 @@ export default class DescribeWhatHappenedController {
     }
   }
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     this.uploadedFileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,

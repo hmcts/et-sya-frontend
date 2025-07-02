@@ -1,11 +1,11 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 
-import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import {
   fillRespondentAddressFieldsNonUK,
@@ -26,10 +26,8 @@ export default class RespondentAddressNonUkController {
     await handlePost(req, res, this.form);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const { userCase } = req.session;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = userCase.respondents[respondentIndex];
