@@ -52,6 +52,7 @@ describe('Reasonable Adjustments Controller', () => {
     expect(req.session.userCase).toStrictEqual({
       reasonableAdjustments: 'Yes',
       reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

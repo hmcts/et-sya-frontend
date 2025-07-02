@@ -43,6 +43,6 @@ describe('Update Preference Controller', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ claimantContactPreference: 'Email' });
+    expect(req.session.userCase).toStrictEqual({ claimantContactPreference: 'Email', state: 'AWAITING_SUBMISSION_TO_HMCTS' });
   });
 });

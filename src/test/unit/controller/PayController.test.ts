@@ -68,6 +68,7 @@ describe('Pay Controller', () => {
       payBeforeTax: '123',
       payAfterTax: '124',
       payInterval: PayInterval.WEEKLY,
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 

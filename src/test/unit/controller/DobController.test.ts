@@ -33,6 +33,7 @@ describe('Dob Controller', () => {
         year: '2019',
       },
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 

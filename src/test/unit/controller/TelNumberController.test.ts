@@ -51,6 +51,7 @@ describe('Telephone number Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.UPDATE_PREFERENCES);
       expect(req.session.userCase).toStrictEqual({
         telNumber: '01234567890',
+        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
   });

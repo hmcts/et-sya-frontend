@@ -80,6 +80,7 @@ describe('New Job Controller', () => {
       newJobStartDate: undefined,
       newJobPay: undefined,
       newJobPayInterval: undefined,
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

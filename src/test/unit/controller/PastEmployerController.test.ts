@@ -57,6 +57,7 @@ describe('Update Past Employer Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       pastEmployer: YesOrNo.YES,
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

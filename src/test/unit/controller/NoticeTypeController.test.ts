@@ -69,6 +69,7 @@ describe('Notice Type Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       noticePeriodUnit: WeeksOrMonths.WEEKS,
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

@@ -85,7 +85,10 @@ describe('Pension controller', () => {
     await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
-    expect(req.session.userCase).toStrictEqual(body);
+    expect(req.session.userCase).toStrictEqual({
+      ...body,
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
+    });
   });
 
   it('should reset contribution if No selected', async () => {

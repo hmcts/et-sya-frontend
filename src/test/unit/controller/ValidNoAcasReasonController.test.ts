@@ -51,6 +51,7 @@ describe('Valid no acas reason Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
       expect(req.session.userCase).toStrictEqual({
         validNoAcasReason: YesOrNo.YES,
+        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
   });

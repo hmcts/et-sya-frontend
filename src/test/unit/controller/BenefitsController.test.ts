@@ -83,7 +83,10 @@ describe('Benefits Controller', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual(body);
+    expect(req.session.userCase).toStrictEqual({
+      ...body,
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
+    });
   });
 
   it('should reset benefits if No selected', async () => {
@@ -96,6 +99,6 @@ describe('Benefits Controller', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO, benefitsCharCount: undefined });
+    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO, benefitsCharCount: undefined, state: 'AWAITING_SUBMISSION_TO_HMCTS' });
   });
 });

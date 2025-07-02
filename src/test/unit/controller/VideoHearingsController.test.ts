@@ -29,6 +29,6 @@ describe('Hearing Preferences Controller', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ hearingPreferences: ['Phone'] });
+    expect(req.session.userCase).toStrictEqual({ hearingPreferences: ['Phone'], state: 'AWAITING_SUBMISSION_TO_HMCTS' });
   });
 });

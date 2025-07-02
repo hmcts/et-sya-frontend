@@ -38,12 +38,14 @@ export const mockRequest = ({
   req.session = {
     userCase: {
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
       ...userCase,
     } as CaseWithId,
     submittedCase: {
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
       ...userCase,
@@ -82,9 +84,11 @@ export const mockRequestEmpty = ({
   };
   req.session = {
     userCase: {
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       ...userCase,
     } as CaseWithId,
     submittedCase: {
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       ...userCase,
     } as CaseWithId,
     ...session,
@@ -125,6 +129,7 @@ export const mockRequestWithTranslation = (
   req.session = {
     userCase: {
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
       noticeEnds: { year: '2019', month: '04', day: '21' },
@@ -138,6 +143,7 @@ export const mockRequestWithTranslation = (
     } as CaseWithId,
     submittedCase: {
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
       noticeEnds: { year: '2019', month: '04', day: '21' },
@@ -181,12 +187,14 @@ export const mockRequestWithSaveException = ({
   req.session = {
     userCase: {
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
       ...userCase,
     } as CaseWithId,
     submittedCase: {
       id: '1234',
+      state: 'AWAITING_SUBMISSION_TO_HMCTS',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
       ...userCase,
