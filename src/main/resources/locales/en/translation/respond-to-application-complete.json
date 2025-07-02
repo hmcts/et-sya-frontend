@@ -4,7 +4,7 @@
   "h1": "What happens next",
   "p1": {
     "rule92No": "You have sent your response to the tribunal.",
-    "rule92Yes": "You have sent your response to the tribunal and copied it to the respondent."
+    "rule92Yes": "You have sent your response to the tribunal and copied it to the other party."
   },
   "p2": "The tribunal will consider all correspondence and let you know what happens next.",
   "button": "Close and return to case overview"
