@@ -68,7 +68,6 @@ describe('Notice length Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       noticePeriodLength: '2',
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

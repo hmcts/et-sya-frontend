@@ -85,7 +85,6 @@ describe('Benefits Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       ...body,
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 
@@ -99,6 +98,6 @@ describe('Benefits Controller', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO, benefitsCharCount: undefined, state: 'AWAITING_SUBMISSION_TO_HMCTS' });
+    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO, benefitsCharCount: undefined });
   });
 });

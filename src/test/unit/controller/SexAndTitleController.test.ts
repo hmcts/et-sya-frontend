@@ -81,7 +81,6 @@ describe('Sex and Title Controller', () => {
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 
@@ -100,7 +99,6 @@ describe('Sex and Title Controller', () => {
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

@@ -64,7 +64,6 @@ describe('Address details Controller', () => {
         addressTown: 'test',
         addressCountry: 'country',
         addressPostcode: 'AB1 2CD',
-        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
   });

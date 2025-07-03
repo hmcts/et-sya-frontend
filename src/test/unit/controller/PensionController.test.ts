@@ -87,7 +87,6 @@ describe('Pension controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase).toStrictEqual({
       ...body,
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 

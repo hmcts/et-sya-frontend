@@ -44,7 +44,6 @@ describe('Average weekly hours Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       avgWeeklyHrs: '3',
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

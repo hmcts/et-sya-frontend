@@ -51,7 +51,6 @@ describe('Job Title Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
       expect(req.session.userCase).toStrictEqual({
         jobTitle: 'Vice President Branch Co-Manager',
-        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
   });
