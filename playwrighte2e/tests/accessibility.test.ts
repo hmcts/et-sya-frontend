@@ -23,7 +23,6 @@ async function expectNoErrors(page: Page): Promise<void> {
 
 test.describe('SYA Accessibility', () => {
   Object.values({ ...PageUrls, CITIZEN_HUB: '/citizen-hub/a11y' }).forEach(url => {
-    // testAccessibility(url);
     test(`Page ${url} should have no accessibility errors`, { tag: '@Accessibility' }, async ({ page }) => {
       if (!ignoredPages.includes(url)) {
         const pageUrl = envUrl + url;

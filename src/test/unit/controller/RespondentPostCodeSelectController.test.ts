@@ -14,7 +14,6 @@ jest.mock('../../../main/address', () => ({
 // Mock the case helpers
 jest.mock('../../../main/controllers/helpers/CaseHelpers', () => ({
   ...jest.requireActual('../../../main/controllers/helpers/CaseHelpers'),
-  checkCaseStateAndRedirect: jest.fn().mockReturnValue(false),
   handleUpdateDraftCase: jest.fn().mockResolvedValue({}),
 }));
 
