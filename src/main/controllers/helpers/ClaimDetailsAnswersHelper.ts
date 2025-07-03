@@ -109,7 +109,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
 
   if (userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
     claimDetails.push(
-      addSummaryRow(
+      addSummaryHtmlRow(
         translations.claimDetails.expectedCompensation,
         getTranslationsCompensationOutcome(userCase, translations),
         createChangeAction(
