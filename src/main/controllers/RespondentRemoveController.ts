@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import { CaseStateCheck } from '../decorators/CaseStateCheck';
 
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';

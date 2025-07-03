@@ -10,9 +10,10 @@ import { CaseState } from '../definitions/definition';
  * If the `checkCaseStateAndRedirect` function determines a redirect is needed, the original method will not be executed.
  * Otherwise, the original method is invoked with the provided arguments.
  *
- * @returns {Function} A decorator function that can be applied to methods or properties.
+ *  A decorator function that can be applied to methods or properties.
  */
 export function CaseStateCheck() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return (target: any, propertyKey: string | symbol, descriptor?: PropertyDescriptor): any => {
     /**
      * Wraps the original method to include case state checking and redirection logic.
