@@ -3,7 +3,9 @@
   "h1": "Cydnabod derbyn yr hawliad",
   "description": {
     "firstCell": "Disgrifiad",
-    "secondCell": "Cydnabod derbyn yr hawliad"
+    "secondCell": "Cydnabod derbyn yr hawliad",
+    "d2": "Hysbysiad o Hawliad a Hysbysiad o Wrandawiad",
+    "d7": "Hysbysiad o wrandawiad rhagarweiniol ar gyfer rheoli achosion"
   },
   "document": "Dogfen",
   "documentDetails": "Manylion",

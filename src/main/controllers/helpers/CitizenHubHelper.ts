@@ -1,13 +1,19 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import {
+  Applicant,
+  NotificationSubjects,
+  PageUrls,
+  acknowledgementOfClaimDocTypes,
+  languages,
+} from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
 import { isHearingExist } from './HearingHelpers';
-import { isET3Accepted } from './RespondentContactDetailsHelper';
+import { shouldShowViewRespondentContactDetails } from './RespondentContactDetailsHelper';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (isHearingExist(userCase.hearingCollection)) {
@@ -35,7 +41,7 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
 
-  hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = userCase.respondents?.some(r => isET3Accepted(r))
+  hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = shouldShowViewRespondentContactDetails(userCase)
     ? HubLinkStatus.READY_TO_VIEW
     : HubLinkStatus.NOT_YET_AVAILABLE;
 };
@@ -48,12 +54,25 @@ export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
   );
 };
 
-export const shouldShowAcknowledgementAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
-  return (
-    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
+export const getAcknowledgementAlert = (
+  userCase: CaseWithId,
+  hubLinksStatuses: HubLinksStatuses
+): {
+  shouldShowAlert: boolean;
+  isAcknowledgementOfClaimOnly: boolean;
+  respondentResponseDeadline?: string;
+} => {
+  const isLetterExist = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
+  return {
+    shouldShowAlert:
+      isLetterExist &&
+      hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+      hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
+    isAcknowledgementOfClaimOnly:
+      isLetterExist &&
+      userCase.acknowledgementOfClaimLetterDetail.every(doc => acknowledgementOfClaimDocTypes.includes(doc.type ?? '')),
+    respondentResponseDeadline: userCase?.respondentResponseDeadline,
+  };
 };
 
 export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
@@ -88,7 +107,7 @@ export const shouldShowClaimantTribunalResponseReceived = (notifications: SendNo
 
 // Only show new respondent applications if there are applications that are not started yet
 // notStartedYet applications can also be ones where the tribunal has asked the claimant for more information.
-// Therefore make sure also that there's a notStartedYet application with no requests for information
+// Therefore, make sure also that there's a notStartedYet application with no requests for information
 export const shouldShowRespondentApplicationReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
   return applications?.some(
     app =>
@@ -103,7 +122,7 @@ export const shouldShowRespondentRejection = (userCase: CaseWithId, hubLinksStat
   );
 };
 
-export const shouldShowRespondentAcknolwedgement = (
+export const shouldShowRespondentAcknowledgement = (
   userCase: CaseWithId,
   hubLinksStatuses: HubLinksStatuses
 ): boolean => {
