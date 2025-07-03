@@ -1,17 +1,15 @@
 import { Response } from 'express';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 
-import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class RespondentAddInCheckAnswerController {
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     req.session.respondentRedirectCheckAnswer = true;
     const newRespondentNum =
       req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : 1;

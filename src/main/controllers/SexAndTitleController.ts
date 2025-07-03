@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { validateTitlePreference } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { Sex } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -10,7 +11,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -70,10 +71,8 @@ export default class SexAndTitleController {
     }
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }

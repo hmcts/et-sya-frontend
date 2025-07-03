@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -8,7 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -60,10 +61,8 @@ export default class WorkAddressController {
     }
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const respondentIndex = getRespondentIndex(req);
     const respondent = req.session.userCase.respondents[respondentIndex];
     const addressLine1 = respondent.respondentAddress1 || '';

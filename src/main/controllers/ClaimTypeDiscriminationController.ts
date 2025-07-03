@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition';
@@ -9,7 +10,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimTypeDiscriminationController');
@@ -91,10 +92,8 @@ export default class ClaimTypeDiscriminationController {
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const content = getPageContent(req, this.claimTypeDiscriminationFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIM_TYPE_DISCRIMINATION,

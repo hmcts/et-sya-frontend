@@ -69,7 +69,6 @@ describe('Notice Period Controller', () => {
 
     expect(req.session.userCase).toStrictEqual({
       noticePeriod: YesOrNo.YES,
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 
@@ -87,7 +86,6 @@ describe('Notice Period Controller', () => {
       noticePeriod: YesOrNo.NO,
       noticePeriodUnit: undefined,
       noticePeriodLength: undefined,
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

@@ -45,7 +45,6 @@ describe('Acas Multiple Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
     expect(req.session.userCase).toEqual({
       ...body,
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

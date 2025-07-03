@@ -59,7 +59,6 @@ describe('Are you still working controller', () => {
       isStillWorking: StillWorking.WORKING,
       endDate: undefined,
       noticeEnds: undefined,
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 

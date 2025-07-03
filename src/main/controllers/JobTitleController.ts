@@ -2,13 +2,14 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isJobTitleValid } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('JobTitleController');
@@ -50,10 +51,8 @@ export default class JobTitleController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.START_DATE);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const content = getPageContent(req, this.jobTitleContent, [TranslationKeys.COMMON, TranslationKeys.JOB_TITLE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.JOB_TITLE, {

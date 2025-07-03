@@ -6,13 +6,14 @@ import {
   isValidCountryTownOrCity,
 } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { fillAddressAddressFields } from './helpers/RespondentHelpers';
 
@@ -98,10 +99,8 @@ export default class AddressDetailsController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.TELEPHONE_NUMBER);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const addressAddressTypes = req.session.userCase.addressAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,

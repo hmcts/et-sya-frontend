@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -9,7 +10,7 @@ import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
@@ -83,10 +84,8 @@ export default class AcasCertNumController {
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
     const currentRespondentName = respondents[respondentIndex].respondentName;

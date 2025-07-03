@@ -1,20 +1,17 @@
 import { Response } from 'express';
 
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { checkCaseStateAndRedirect } from './helpers/CaseHelpers';
-
 const logger = getLogger('SubmitCaseController');
 
 export default class SubmitCaseController {
+  @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return; // Early return if redirect occurred
-    }
     try {
       const submittedClaim = await getCaseApi(req.session.user?.accessToken).submitCase(req.session.userCase);
       logger.info(`Submitted Case - ${submittedClaim.data.id}`);

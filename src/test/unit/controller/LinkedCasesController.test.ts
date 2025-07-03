@@ -68,7 +68,6 @@ describe('Linked Cases Controller', () => {
     expect(req.session.userCase).toStrictEqual({
       linkedCases: 'Yes',
       linkedCasesDetail: 'Linked cases detail test text',
-      state: 'AWAITING_SUBMISSION_TO_HMCTS',
     });
   });
 });

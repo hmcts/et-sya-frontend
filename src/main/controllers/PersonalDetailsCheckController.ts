@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { validatePersonalDetails } from '../components/form/claimDetailsValidator';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -10,7 +11,7 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { checkCaseStateAndRedirect, handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('PersonalDetailsCheckController');
@@ -61,10 +62,8 @@ export default class PersonalDetailsCheckController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (checkCaseStateAndRedirect(req, res)) {
-      return;
-    }
     const content = getPageContent(req, this.personalDetailsCheckContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TASK_LIST_CHECK,

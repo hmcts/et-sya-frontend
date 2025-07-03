@@ -89,7 +89,6 @@ describe('Type Of Claim Controller', () => {
           TypesOfClaim.UNFAIR_DISMISSAL,
         ],
         otherClaim: 'Help',
-        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
 
@@ -108,7 +107,6 @@ describe('Type Of Claim Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_TYPE_DISCRIMINATION);
       expect(req.session.userCase).toStrictEqual({
         typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
-        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
   });
