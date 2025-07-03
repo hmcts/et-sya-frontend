@@ -1,14 +1,18 @@
-const govUkFrontend = require('govuk-frontend');
+document.body.classList.add('govuk-frontend-supported');
+// Import the GOV.UK Frontend JavaScript
+import { initAll } from 'govuk-frontend';
 
-const sessionTimeout = require('./session/utils');
-
+// Import other JavaScript modules or files
 import '../scss/main.scss';
 import './go-back';
-
-govUkFrontend.initAll();
 import './print';
 import './cookie';
 import './set-focus';
-import './submit-claim';
-sessionTimeout.ready(sessionTimeout.initialize);
+// import './submit-claim';
+import { initialize, ready } from './session/utils';
 import './data-layer';
+// Initialize GOV.UK Frontend components
+initAll();
+
+// Initialize other components or modules
+ready(initialize);

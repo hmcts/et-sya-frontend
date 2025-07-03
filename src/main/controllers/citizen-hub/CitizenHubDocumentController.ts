@@ -1,19 +1,13 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import {
-  FEATURE_FLAGS,
-  PageUrls,
-  TranslationKeys,
-  responseAcceptedDocTypes,
-  responseRejectedDocTypes,
-} from '../../definitions/constants';
+import { CaseWithId } from '../../definitions/case';
+import { ErrorPages, TranslationKeys, Views } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
-import { createTable } from '../../definitions/govuk/govukTable';
+import { GovukTable, GovukTableRow } from '../../definitions/govuk/govukTable';
 import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
+import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
-import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import { handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
 import { getDocumentDetails } from '../helpers/DocumentHelpers';
 
@@ -21,124 +15,113 @@ const logger = getLogger('CitizenHubDocumentController');
 
 export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const mapParamToDoc = (documentType: string) => {
-      const userCase = req.session.userCase;
-      switch (documentType) {
-        case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
-          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
-          return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
-        case TranslationKeys.CITIZEN_HUB_REJECTION:
-          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
-          return req.session?.userCase?.rejectionOfClaimDocumentDetail;
-        case TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION:
-          return req.session?.userCase?.responseRejectionDocumentDetail;
-        case TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT:
-          return req.session?.userCase?.responseAcknowledgementDocumentDetail;
-        case TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT:
-          return req.session?.userCase?.responseEt3FormDocumentDetail;
-        default:
-          return undefined;
-      }
-    };
+    const documentType = req.params?.documentType;
+    const userCase = req.session?.userCase;
 
-    const documents = mapParamToDoc(req?.params?.documentType);
+    const documents = mapParamToDoc(documentType, userCase);
     if (!documents) {
-      logger.info('no documents found for ', req?.params?.documentType);
-      return res.redirect('/not-found');
+      logger.info('no documents found for ', documentType);
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
+
     try {
       await getDocumentDetails(documents, req.session.user?.accessToken);
     } catch (err) {
       logger.error(err.message);
-      return res.redirect('/not-found');
-    }
-
-    let view = 'document-view';
-    if (req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT) {
-      view = 'response-from-respondent-view';
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
 
     const translations: { [key: string]: string } = {
       ...(req.t(TranslationKeys.COMMON, { returnObjects: true }) as { [key: string]: string }),
-      ...(req.t(req?.params?.documentType, { returnObjects: true }) as { [key: string]: string }),
+      ...(req.t(documentType, { returnObjects: true }) as { [key: string]: string }),
       ...(req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }) as { [key: string]: string }),
       ...(req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }) as { [key: string]: string }),
     };
 
-    await handleUpdateHubLinksStatuses(req, logger);
-    const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
+    if (
+      documentType === TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT ||
+      documentType === TranslationKeys.CITIZEN_HUB_REJECTION
+    ) {
+      userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
+      await handleUpdateHubLinksStatuses(req, logger);
+    }
 
-    const rows: { time: Date; date: string; subject: string; link: string }[] = [];
-
-    const documentRows = getDocumentRows(translations, documents);
-    rows.push(...documentRows.flat());
-
-    const eccNotifications = getEccNotificationRows(req.session.userCase?.sendNotificationCollection || []);
-    rows.push(...eccNotifications);
-
-    rows.sort((a: any, b: any) => b.time - a.time);
-    const table = createTable(rows, { date: 'text', subject: 'text', link: 'html' });
-
-    const data = {
+    res.render(Views.DOCUMENT_VIEW, {
       ...translations,
       hideContactUs: true,
-      docs: documents,
-      // TODO: remove this once EEC Flag is live
-      et3Forms: documents.filter(d => d.type === 'ET3'),
-      et3Attachments: documents.filter(d => d.type === 'ET3 Attachment'),
-      et3SupportingDocs: documents.filter(d => d.type === 'et3Supporting'),
-      et3AcceptedDocs: documents.filter(d => responseAcceptedDocTypes.includes(d.type)),
-      et3RejectionDocs: documents.filter(d => responseRejectedDocTypes.includes(d.type)),
-      // End TODO
-      tableContents: table,
-      eccFlag,
-    };
-
-    res.render(view, data);
-  };
-}
-
-function getDocumentRows(translations: Record<string, string>, documents: DocumentDetail[]) {
-  const documentTypes: Record<string, string[]> = {
-    [translations.et3FormText]: ['ET3'],
-    [translations.et3AttachmentText]: ['ET3 Attachment'],
-    [translations.supportingMaterials]: ['et3Supporting'],
-    [translations.acceptanceLetter]: responseAcceptedDocTypes,
-    [translations.rejectionLetter]: responseRejectedDocTypes,
-  };
-
-  return Object.entries(documentTypes).map(([key, value]) => {
-    const docs = documents.filter(d => value.includes(d.type));
-    return docs.map(d => {
-      return {
-        time: new Date(d.createdOn),
-        date: d.createdOn,
-        subject: key,
-        link: `<a href="/getCaseDocument/${d.id}" target="_blank" class="govuk-link">${d.originalDocumentName}</a>`,
-      };
+      docs: generateTableContents(documents, documentType, translations),
     });
-  });
+  };
 }
 
-function getEccNotificationRows(notifications: SendNotificationTypeItem[]) {
-  const eccSubjects = ['Response (ET3)', 'Employer Contract Claim'];
-  const eccNotifications =
-    notifications?.reduce((acc, o) => {
-      const found = eccSubjects.filter(ecc => o.value.sendNotificationSubjectString?.includes(ecc));
-      if (found.length) {
-        acc.push({ subject: found.join(', '), ...o });
-      }
-      return acc;
-    }, [] as ({ subject: string } & SendNotificationTypeItem)[]) || [];
+const mapParamToDoc = (documentType: string, userCase: CaseWithId): DocumentDetail[] => {
+  switch (documentType) {
+    case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
+      return userCase?.acknowledgementOfClaimLetterDetail;
+    case TranslationKeys.CITIZEN_HUB_REJECTION:
+      return userCase?.rejectionOfClaimDocumentDetail;
+    case TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION:
+      return userCase?.responseRejectionDocumentDetail;
+    case TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT:
+      return userCase?.responseAcknowledgementDocumentDetail;
+    default:
+      return undefined;
+  }
+};
 
-  return eccNotifications.map(n => {
-    return {
-      time: new Date(n.value.date),
-      date: n.value.date,
-      subject: n.subject,
-      link: `<a href="${PageUrls.NOTIFICATION_DETAILS.replace(':orderId', n.id)}" target="_blank" class="govuk-link">${
-        n.value.sendNotificationTitle
-      }</a>`,
-    };
+const generateTableContents = (
+  documents: DocumentDetail[],
+  documentType: string,
+  translations: AnyRecord
+): GovukTable[] => {
+  const tableContents: GovukTable[] = [];
+  documents.forEach(doc => {
+    tableContents.push({ rows: generateDocumentRows(doc, documentType, translations) });
   });
-}
+  return tableContents;
+};
+
+const generateDocumentRows = (
+  doc: DocumentDetail,
+  documentType: string,
+  translations: AnyRecord
+): GovukTableRow[][] => {
+  const { description, document, documentDetails, date } = translations;
+  const rows: GovukTableRow[][] = [];
+
+  const descriptionText = getDescriptionText(doc, documentType, translations);
+  rows.push([{ text: description.firstCell }, { text: descriptionText }]);
+
+  rows.push([
+    { text: document },
+    {
+      html: `<a href="/getCaseDocument/${doc.id}" target="_blank" class="govuk-link">${doc.originalDocumentName} [${doc.size}MB]</a>`,
+    },
+  ]);
+
+  if (doc.description) {
+    rows.push([{ text: documentDetails }, { html: doc.description }]);
+  }
+
+  rows.push([{ text: date }, { html: doc.createdOn }]);
+
+  return rows;
+};
+
+const getDescriptionText = (doc: DocumentDetail, documentType: string, translations: AnyRecord): string => {
+  const { description } = translations;
+  if (documentType === TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT) {
+    switch (doc.type) {
+      case '2.7':
+      case '2.8':
+        return description.d2;
+      case '7.7':
+      case '7.8':
+      case '7.8a':
+        return description.d7;
+      default:
+        return description.secondCell;
+    }
+  }
+  return description.secondCell;
+};

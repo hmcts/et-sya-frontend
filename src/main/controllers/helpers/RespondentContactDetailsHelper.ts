@@ -1,5 +1,5 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { EmailOrPost, Et3ResponseStatus, Representative, Respondent, YesOrNo } from '../../definitions/case';
+import { CaseWithId, EmailOrPost, Representative, Respondent, YesOrNo } from '../../definitions/case';
 import { TranslationKeys } from '../../definitions/constants';
 import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
@@ -7,11 +7,18 @@ import { AnyRecord } from '../../definitions/util-types';
 import { answersAddressFormatter } from './PageContentHelpers';
 
 /**
- * Check if respondent ET3 is received and accepted
- * @param respondent respondent
+ * check if Respondent Contact Details is ready to show
+ * return true when any respondent is legally represented or ET3 received
+ * @param userCase userCase
  */
-export const isET3Accepted = (respondent: Respondent): boolean => {
-  return respondent?.responseReceived === YesOrNo.YES && respondent.responseStatus === Et3ResponseStatus.ACCEPTED;
+export const shouldShowViewRespondentContactDetails = (userCase: CaseWithId): boolean => {
+  if (!userCase?.respondents) {
+    return false;
+  }
+  return userCase.respondents.some(respondent => {
+    const hasRepresentative = userCase.representatives?.some(rep => rep.respondentId === respondent.ccdId);
+    return hasRepresentative || respondent.responseReceived === YesOrNo.YES;
+  });
 };
 
 /**
@@ -20,20 +27,21 @@ export const isET3Accepted = (respondent: Respondent): boolean => {
  */
 export const getRespondentContactDetails = (req: AppRequest): SummaryListRow[][] => {
   const userCase = req.session?.userCase;
+  if (!userCase?.respondents) {
+    return [];
+  }
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.RESPONDENT_CONTACT_DETAILS, { returnObjects: true }),
   };
   const list: SummaryListRow[][] = [];
-  userCase.respondents
-    ?.filter(r => isET3Accepted(r))
-    .forEach(r => {
-      const assignedRep = userCase.representatives?.find(rep => rep.respondentId === r.ccdId);
-      if (assignedRep) {
-        list.push(getRespondentLegalRepInfo(assignedRep, translations));
-      } else {
-        list.push(getRespondentInfo(r, translations));
-      }
-    });
+  userCase.respondents.forEach(respondent => {
+    const legalRep = userCase.representatives?.find(rep => rep.respondentId === respondent.ccdId);
+    if (legalRep) {
+      list.push(getRespondentLegalRepInfo(legalRep, translations));
+    } else if (respondent.responseReceived === YesOrNo.YES) {
+      list.push(getRespondentInfo(respondent, translations));
+    }
+  });
   return list;
 };
 
