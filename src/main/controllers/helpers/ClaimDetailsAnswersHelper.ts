@@ -9,6 +9,18 @@ import {
 } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
+const getTranslationsCompensationOutcome = (userCase: CaseWithId, translations: AnyRecord): string => {
+  if (userCase.compensationOutcome && userCase.compensationAmount) {
+    return userCase.compensationOutcome + '<br>£' + userCase.compensationAmount;
+  } else if (userCase.compensationOutcome) {
+    return userCase.compensationOutcome;
+  } else if (userCase.compensationAmount) {
+    return '£' + userCase.compensationAmount;
+  } else {
+    return translations.notProvided;
+  }
+};
+
 const getTranslationsWhistleblowingClaim = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.whistleblowingClaim) {
     case YesOrNo.YES:
@@ -99,9 +111,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     claimDetails.push(
       addSummaryRow(
         translations.claimDetails.expectedCompensation,
-        (userCase.compensationOutcome ?? translations.notProvided) +
-          ': ' +
-          (userCase.compensationAmount ?? translations.notProvided),
+        getTranslationsCompensationOutcome(userCase, translations),
         createChangeAction(
           PageUrls.COMPENSATION + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
