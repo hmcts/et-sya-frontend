@@ -1,4 +1,4 @@
-import { isDateEmpty } from '../components/form/dateValidators';
+import { isDateEmpty } from '../components/form/date-validator';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';

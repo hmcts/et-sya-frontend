@@ -4,7 +4,7 @@ import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
-} from '../components/form/address_validator';
+} from '../components/form/address-validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';

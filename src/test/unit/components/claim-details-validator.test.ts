@@ -2,7 +2,7 @@ import {
   validateClaimCheckDetails,
   validateEmploymentAndRespondentDetails,
   validatePersonalDetails,
-} from '../../../main/components/form/claimDetailsValidator';
+} from '../../../main/components/form/claim-details-validator';
 
 describe('claimDetailsValidator', () => {
   describe('validatePersonalDetails', () => {

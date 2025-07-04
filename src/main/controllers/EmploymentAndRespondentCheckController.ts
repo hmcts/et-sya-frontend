@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { validateEmploymentAndRespondentDetails } from '../components/form/claimDetailsValidator';
+import { validateEmploymentAndRespondentDetails } from '../components/form/claim-details-validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
