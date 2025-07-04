@@ -84,7 +84,7 @@ describe('Pay Controller', () => {
   it('should have error when pay is not a valid number', () => {
     const controller = new PayController();
     const body = { payBeforeTax: 'ten', payInterval: PayInterval.WEEKLY };
-    const expectedErrors = [{ propertyName: 'payBeforeTax', errorType: 'notANumber' }];
+    const expectedErrors = [{ propertyName: 'payBeforeTax', errorType: 'invalid' }];
     const response = mockResponse();
     const request = mockRequest({ body });
     controller.post(request, response);
