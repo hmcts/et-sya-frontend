@@ -19,7 +19,7 @@
       "tooLong": "The details for the Compensation you are claiming must be entered as less than 2500 characters"
     },
     "compensationAmount": {
-      "invalidCurrency": "Amount must only contain numbers and a decimal point/comma (if required). For example: 1500 25000  25,000.00 etc"
+      "invalid": "Enter the compensation amount in pounds, with or without a decimal point. For example, 10 or 10.00"
     }
   }
 }

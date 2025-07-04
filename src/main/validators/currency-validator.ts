@@ -1,4 +1,5 @@
 import { Validator } from '../components/form/validator';
+import { ValidationErrors } from '../definitions/constants';
 
 export const isValidPension: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
@@ -6,17 +7,17 @@ export const isValidPension: Validator = value => {
   }
 
   if (/^\D+$/.test(value as string) || /^\d+[^\d.]+$/.test(value as string)) {
-    return 'notANumber';
+    return ValidationErrors.INVALID_VALUE;
   }
 
   if ((value as string).trim().length < 2) {
-    return 'invalid';
+    return ValidationErrors.INVALID_VALUE;
   }
 
   if (/^\d{2,}$/.test(value as string) || /^\d{2,}\.\d+$/.test(value as string)) {
     return;
   } else {
-    return 'invalid';
+    return ValidationErrors.INVALID_VALUE;
   }
 };
 
@@ -33,7 +34,7 @@ export const isValidPay: Validator = value => {
   }
   const validatedValues: [digitCount: number, correctFormat: boolean] = currencyValidation(value);
   if (!validatedValues[1]) {
-    return 'notANumber';
+    return ValidationErrors.INVALID_VALUE;
   }
   if (validatedValues[0] < 2 || validatedValues[0] > 12) {
     return 'minLengthRequired';
@@ -48,5 +49,5 @@ export const isValidCurrency: Validator = value => {
   if (validatedValues[0] <= 12 && validatedValues[1]) {
     return;
   }
-  return 'invalidCurrency';
+  return ValidationErrors.INVALID_VALUE;
 };

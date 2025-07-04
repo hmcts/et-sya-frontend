@@ -10,12 +10,12 @@
     "payBeforeTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
       "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
-      "notANumber": "Rhaid i dâl cyn treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+      "invalid": "<W>Enter the pay before tax and NI amount in pounds, with or without a decimal point. For example, 10 or 10.00"
     },
     "payAfterTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
       "minLengthRequired": "Rhaid i dâl ar ôl treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
-      "notANumber": "Rhaid i dâl ar ôl treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+      "invalid": "<W>Enter the pay after tax and NI amount in pounds, with or without a decimal point. For example, 10 or 10.00"
     },
     "payInterval": {
       "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl cyn treth ac YG.",
