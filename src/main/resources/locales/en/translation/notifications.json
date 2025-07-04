@@ -2,5 +2,8 @@
   "title": "All notifications",
   "date": "Date",
   "ordersAndRequests": "Notifications",
-  "status": "Status"
+  "status": "Status",
+  "et1ServingTitle": "ET1 serving notification",
+  "type": "Type",
+  "documentName": "Document name"
 }
