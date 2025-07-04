@@ -3,41 +3,41 @@ import { ValidationErrors } from '../../definitions/constants';
 import { Validator } from './validator';
 
 export const isValidPension: Validator = value => {
-  if (!value || (value as string).trim().length === 0) {
+  const str = (value as string)?.trim();
+  if (!str || str.length === 0) {
     return;
   }
 
-  if (/^\D+$/.test(value as string) || /^\d+[^\d.]+$/.test(value as string)) {
+  const validPattern = /^\d{2,}(\.\d{1,2})?$/;
+  if (!validPattern.test(str)) {
     return ValidationErrors.INVALID_VALUE;
   }
 
-  if ((value as string).trim().length < 2) {
-    return ValidationErrors.INVALID_VALUE;
-  }
-
-  if (/^\d{2,}$/.test(value as string) || /^\d{2,}\.\d+$/.test(value as string)) {
-    return;
-  } else {
-    return ValidationErrors.INVALID_VALUE;
-  }
+  return;
 };
 
-export const currencyValidation = (value: string | string[]): [digitCount: number, correctFormat: boolean] => {
+const getDigitCount = (value: string | string[]): number => {
   value = (value as string).trim();
-  const digitCount = value.replace(/\D/g, '').length;
-  const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
-  return [digitCount, correctFormat];
+  return value.replace(/\D/g, '').length;
+};
+
+const getCorrectFormat = (value: string | string[]): boolean => {
+  value = (value as string).trim();
+  return /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
 };
 
 export const isValidPay: Validator = value => {
   if (!value) {
     return;
   }
-  const validatedValues: [digitCount: number, correctFormat: boolean] = currencyValidation(value);
-  if (!validatedValues[1]) {
+
+  const correctFormat = getCorrectFormat(value);
+  if (!correctFormat) {
     return ValidationErrors.INVALID_VALUE;
   }
-  if (validatedValues[0] < 2 || validatedValues[0] > 12) {
+
+  const digitCount = getDigitCount(value);
+  if (digitCount < 2 || digitCount > 12) {
     return 'minLengthRequired';
   }
 };
@@ -46,8 +46,9 @@ export const isValidCurrency: Validator = value => {
   if (!value) {
     return;
   }
-  const validatedValues: [digitCount: number, correctFormat: boolean] = currencyValidation(value);
-  if (validatedValues[0] <= 12 && validatedValues[1]) {
+  const digitCount = getDigitCount(value);
+  const correctFormat = getCorrectFormat(value);
+  if (digitCount <= 12 && correctFormat) {
     return;
   }
   return ValidationErrors.INVALID_VALUE;
