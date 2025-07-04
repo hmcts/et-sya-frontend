@@ -1,13 +1,13 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isValidPension } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { isValidPension } from '../validators/currency-validator';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';

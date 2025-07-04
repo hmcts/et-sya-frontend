@@ -13,14 +13,12 @@ import {
   isPayIntervalNull,
   isRespondentNameValid,
   isValidAvgWeeklyHours,
-  isValidCurrency,
   isValidNoticeLength,
-  isValidPay,
-  isValidPension,
   isValidTwoDigitInteger,
   isValidUKTelNumber,
   validateTitlePreference,
 } from '../../../main/components/form/validator';
+import { isValidCurrency, isValidPay, isValidPension } from "../../../main/validators/currency-validator";
 import { mockFile } from '../mocks/mockFile';
 
 describe('Validation', () => {

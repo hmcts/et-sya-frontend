@@ -1,4 +1,4 @@
-import { isValidCurrency, isValidPay } from '../components/form/validator';
+import { isValidCurrency, isValidPay } from '../validators/currency-validator';
 
 import { AnyRecord } from './util-types';
 
