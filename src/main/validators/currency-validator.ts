@@ -26,6 +26,7 @@ export const currencyValidation = (value: string | string[]): [digitCount: numbe
   const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
   return [digitCount, correctFormat];
 };
+
 export const isValidPay: Validator = value => {
   if (!value) {
     return;
