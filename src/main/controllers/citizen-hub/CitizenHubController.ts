@@ -24,11 +24,11 @@ import {
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getAcknowledgementAlert,
   getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
-  getAcknowledgementAlert,
   shouldShowClaimantTribunalResponseReceived,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,

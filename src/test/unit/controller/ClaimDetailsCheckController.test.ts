@@ -39,7 +39,7 @@ describe('Test claim details check controller', () => {
     const res = mockResponse();
 
     jest
-      .spyOn(require('../../../main/components/form/claimDetailsValidator'), 'validateClaimCheckDetails')
+      .spyOn(require('../../../main/components/form/claim-details-validator'), 'validateClaimCheckDetails')
       .mockReturnValue(false);
 
     await controller.post(req, res);

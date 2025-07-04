@@ -70,7 +70,7 @@ describe('Test task List check controller', () => {
     const res = mockResponse();
 
     jest
-      .spyOn(require('../../../main/components/form/claimDetailsValidator'), 'validateEmploymentAndRespondentDetails')
+      .spyOn(require('../../../main/components/form/claim-details-validator'), 'validateEmploymentAndRespondentDetails')
       .mockReturnValue(false);
 
     await controller.post(req, res);

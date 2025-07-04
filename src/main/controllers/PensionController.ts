@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
+import { isValidPension } from '../components/form/currency-validator';
 import { Form } from '../components/form/form';
-import { isValidPension } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';

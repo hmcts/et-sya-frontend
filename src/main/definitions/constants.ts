@@ -314,6 +314,7 @@ export const ErrorPages = {
 export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',
+  MIN_LENGTH_REQUIRED: 'minLengthRequired',
 } as const;
 
 export const AuthUrls = {

@@ -8,7 +8,7 @@
     "newJobPay": {
       "required": "Tell us your Pay before tax and NI",
       "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10",
-      "notANumber": "Pay before tax must be entered as a number and a minimum of double figures. For example 10"
+      "invalid": "Enter the pay before tax and NI amount in pounds, with or without a decimal point. For example, 10 or 10.00"
     },
     "newJobPayInterval": {
       "required": "Tell us your pay frequency"

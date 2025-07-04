@@ -6,8 +6,7 @@
   "pensionContributions": "Enter their pension contributions - worked out weekly",
   "errors": {
     "claimantPensionWeeklyContribution": {
-      "invalid": "Enter amount in double figures, with/without decimal point. For example, 10, 10.00 etc",
-      "notANumber": "Amount entered must be a number For example 100, 10.00"
+      "invalid": "Enter the pension contribution amount in pounds, with or without a decimal point. For example, 10 or 10.00"
     }
   }
 }

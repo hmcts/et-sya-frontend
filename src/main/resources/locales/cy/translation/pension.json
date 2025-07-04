@@ -6,8 +6,7 @@
   "pensionContributions": "Nodwch eu cyfraniadau pensiwn - wedi’u cyfrifo ar sail wythnos",
   "errors": {
     "claimantPensionWeeklyContribution": {
-      "invalid": "Rhowch swm mewn ffigyrau dwbl, gyda/heb bwynt degol. Er enghraifft, 10, 10.00 ac ati",
-      "notANumber": "Rhaid i’r swm a roir fod yn rhif Er enghraifft 100, 10.00"
+      "invalid": "<W>Enter the pension contribution amount in pounds, with or without a decimal point. For example, 10 or 10.00"
     }
   }
 }

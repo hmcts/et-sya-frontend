@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { validatePersonalDetails } from '../components/form/claimDetailsValidator';
+import { validatePersonalDetails } from '../components/form/claim-details-validator';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
