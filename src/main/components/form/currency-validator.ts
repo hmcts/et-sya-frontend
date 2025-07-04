@@ -23,7 +23,13 @@ const getDigitCount = (value: string | string[]): number => {
 
 const getCorrectFormat = (value: string | string[]): boolean => {
   value = (value as string).trim();
-  return /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
+
+  if (!/^[0-9.,]+$/.test(value)) {
+    return false;
+  }
+
+  const regex = /^(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
+  return regex.test(value);
 };
 
 export const isValidPay: Validator = value => {
