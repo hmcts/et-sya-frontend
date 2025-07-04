@@ -113,4 +113,64 @@ describe('Start date Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
   });
+
+  it('should redirect CHECK_ANSWERS when returnUrl is cya and isStillWorking is WORKING', async () => {
+    const req = mockRequest({
+      body: {
+        'startDate-day': '11',
+        'startDate-month': '11',
+        'startDate-year': '2000',
+      },
+      userCase: {
+        dobDate: { year: '1990', month: '12', day: '24' },
+        isStillWorking: StillWorking.WORKING,
+      },
+    });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    const res = mockResponse();
+
+    await new StartDateController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+  });
+
+  it('should redirect NOTICE_END when returnUrl is cya and isStillWorking is NOTICE', async () => {
+    const req = mockRequest({
+      body: {
+        'startDate-day': '11',
+        'startDate-month': '11',
+        'startDate-year': '2000',
+      },
+      userCase: {
+        dobDate: { year: '1990', month: '12', day: '24' },
+        isStillWorking: StillWorking.NOTICE,
+      },
+    });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    const res = mockResponse();
+
+    await new StartDateController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_END);
+  });
+
+  it('should redirect END_DATE when returnUrl is cya and isStillWorking is NO_LONGER_WORKING', async () => {
+    const req = mockRequest({
+      body: {
+        'startDate-day': '11',
+        'startDate-month': '11',
+        'startDate-year': '2000',
+      },
+      userCase: {
+        dobDate: { year: '1990', month: '12', day: '24' },
+        isStillWorking: StillWorking.NO_LONGER_WORKING,
+      },
+    });
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    const res = mockResponse();
+
+    await new StartDateController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
+  });
 });

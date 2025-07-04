@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDate, StillWorking } from '../definitions/case';
+import { CaseDate, CaseWithId, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { isReturnUrlIsCheckAnswers } from './helpers/RouterHelpers';
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
@@ -50,6 +51,12 @@ export default class StartDateController {
     } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
+
+    if (isReturnUrlIsCheckAnswers(req)) {
+      const shouldRedirect = isShouldRedirect(req.session.userCase, redirectUrl);
+      return handlePostLogic(req, res, this.form, logger, redirectUrl, shouldRedirect);
+    }
+
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
@@ -82,3 +89,11 @@ export default class StartDateController {
     });
   };
 }
+
+const isShouldRedirect = (userCase: CaseWithId, redirectUrl: string): boolean => {
+  const { noticeEnds, endDate } = userCase;
+  return (
+    (redirectUrl === PageUrls.NOTICE_END && noticeEnds === undefined) ||
+    (redirectUrl === PageUrls.END_DATE && endDate === undefined)
+  );
+};

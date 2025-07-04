@@ -16,7 +16,6 @@
     "takePartInHearing": "Would you be able to take part in hearings by video or phone",
     "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
     "title": "Preferred title",
-    "notSelected": "Not selected",
     "male": "Male",
     "female": "Female",
     "preferNotToSay": "Prefer not to say",
@@ -24,20 +23,15 @@
     "post": "Post",
     "video": "Video",
     "phone": "Phone",
-    "neither": "Neither",
-    "yes": "Yes",
-    "no": "No"
+    "neither": "Neither"
   },
   "contactDetails": {
     "header": "Contact details",
-    "telephone": "Telephone number",
-    "notProvided": "Not provided"
+    "telephone": "Telephone number"
   },
   "employmentDetails": {
     "header": "Employment details",
     "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
-    "didYouWorkForYes": "Yes",
-    "didYouWorkForNo": "No",
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",
@@ -64,9 +58,7 @@
     "monthly": "Monthly",
     "annual": "Annual",
     "months": "Months",
-    "weeks": "Weeks",
-    "yes": "Yes",
-    "no": "No"
+    "weeks": "Weeks"
   },
   "respondentDetails": {
     "header": "Respondent ",
@@ -82,9 +74,7 @@
     "name": "Name",
     "telephone": "UK telephone number",
     "officeAddress": "Registered or head office address",
-    "workAddress": "Work address",
-    "yes": "Yes",
-    "no": "No"
+    "workAddress": "Work address"
   },
   "acasReason": {
     "another": "Another person I’m making a claim with has an Acas early conciliation certificate number",
@@ -143,5 +133,13 @@
   },
   "addAnotherRespondent": "Add another respondent",
   "removeRespondent": "Remove respondent",
-  "linkToAmendTheClaim": "If you need to, you can <a href='/contact-the-tribunal/amend?lng=en' class=\"govuk-link\">request to amend your claim</a>"
+  "doYesOrNo": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "oesYesOrNo": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "notProvided": "Not provided"
 }

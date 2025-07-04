@@ -105,7 +105,7 @@ describe('Check your answers confirmation page', () => {
   it('should display 6 rows in Claim Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const claimDetailsList = summaryListSections[4].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(claimDetailsList.length).equals(6, 'Incorrect number of rows found');
+    expect(claimDetailsList.length).equals(7, 'Incorrect number of rows found');
   });
 
   it('should display correct url in the change buttons for Application details row', () => {
