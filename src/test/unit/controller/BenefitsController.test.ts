@@ -83,7 +83,9 @@ describe('Benefits Controller', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual(body);
+    expect(req.session.userCase).toStrictEqual({
+      ...body,
+    });
   });
 
   it('should reset benefits if No selected', async () => {

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
@@ -58,6 +59,7 @@ export default class NewJobPayController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);

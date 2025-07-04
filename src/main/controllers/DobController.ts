@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -38,6 +39,7 @@ export default class DobController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.SEX_AND_TITLE);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     dob_date.values = [
       {

@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { validateTitlePreference } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { Sex } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -70,6 +71,7 @@ export default class SexAndTitleController {
     }
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);

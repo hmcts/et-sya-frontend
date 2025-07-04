@@ -94,7 +94,7 @@ export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logg
     await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
     logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
   } catch (error) {
-    logger.error(error.message);
+    logger.error(`Failed to update hub links statuses for case ${req.session.userCase.id}: ${error.message}`);
   }
 };
 

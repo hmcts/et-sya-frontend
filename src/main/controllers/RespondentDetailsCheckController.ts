@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -45,6 +46,7 @@ export default class RespondentDetailsCheckController {
     }
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
     const translations: AnyRecord = { ...req.t(TranslationKeys.RESPONDENT_DETAILS_CHECK, { returnObjects: true }) };

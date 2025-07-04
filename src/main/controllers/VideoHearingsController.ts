@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { HearingPreference } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -73,6 +74,7 @@ export default class VideoHearingsController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.REASONABLE_ADJUSTMENTS);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.videoHearingsContent, [
       TranslationKeys.COMMON,

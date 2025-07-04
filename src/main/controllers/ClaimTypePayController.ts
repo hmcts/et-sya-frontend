@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypePay } from '../definitions/definition';
@@ -68,6 +69,7 @@ export default class ClaimTypePayController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.claimTypePayFormContent, [
       TranslationKeys.COMMON,

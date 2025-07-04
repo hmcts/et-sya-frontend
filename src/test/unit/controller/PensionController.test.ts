@@ -85,7 +85,9 @@ describe('Pension controller', () => {
     await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
-    expect(req.session.userCase).toStrictEqual(body);
+    expect(req.session.userCase).toStrictEqual({
+      ...body,
+    });
   });
 
   it('should reset contribution if No selected', async () => {

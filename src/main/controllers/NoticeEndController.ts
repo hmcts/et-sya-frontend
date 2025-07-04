@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -41,6 +42,7 @@ export default class NoticeEndController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.NOTICE_TYPE);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     notice_dates.values = [
       {

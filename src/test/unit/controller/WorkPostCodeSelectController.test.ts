@@ -6,6 +6,17 @@ import { AppRequest } from '../../../main/definitions/appRequest';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+// Mock the address module
+jest.mock('../../../main/address', () => ({
+  getAddressesForPostcode: jest.fn().mockResolvedValue([]),
+}));
+
+// Mock the case helpers
+jest.mock('../../../main/controllers/helpers/CaseHelpers', () => ({
+  ...jest.requireActual('../../../main/controllers/helpers/CaseHelpers'),
+  handleUpdateDraftCase: jest.fn().mockResolvedValue({}),
+}));
+
 describe('WorkPostCodeSelectController', () => {
   let controller: WorkPostCodeSelectController;
   let req: AppRequest;

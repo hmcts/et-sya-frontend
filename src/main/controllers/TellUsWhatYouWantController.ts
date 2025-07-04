@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
@@ -73,6 +74,7 @@ export default class TellUsWhatYouWantController {
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.tellUsWhatYouWantFormContent, [
       TranslationKeys.COMMON,

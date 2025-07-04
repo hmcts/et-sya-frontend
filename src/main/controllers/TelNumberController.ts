@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isValidUKTelNumber } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -47,6 +48,7 @@ export default class TelNumberController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.UPDATE_PREFERENCES);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.telNumberContent, [
       TranslationKeys.COMMON,

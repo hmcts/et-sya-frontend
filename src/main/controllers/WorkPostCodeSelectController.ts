@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -40,6 +41,7 @@ export default class WorkPostCodeSelectController {
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const response = convertJsonArrayToTitleCase(await getAddressesForPostcode(req.session.userCase.workEnterPostcode));
     req.session.userCase.workAddresses = response;

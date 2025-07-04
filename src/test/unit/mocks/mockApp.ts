@@ -107,6 +107,7 @@ export const mockApp = ({
     req.session = {
       userCase: {
         id: '1234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
         dobDate: { year: '2000', month: '12', day: '24' },
         typeOfClaim: [],
         contactType: 'Application',
@@ -145,6 +146,7 @@ export const mockAppWithRedisClient = ({
     req.session = {
       userCase: {
         id: '1234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
         dobDate: { year: '2000', month: '12', day: '24' },
         ...userCase,
       } as CaseWithId,
