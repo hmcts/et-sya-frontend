@@ -1,5 +1,6 @@
-import { Validator } from '../components/form/validator';
-import { ValidationErrors } from '../definitions/constants';
+import { ValidationErrors } from '../../definitions/constants';
+
+import { Validator } from './validator';
 
 export const isValidPension: Validator = value => {
   if (!value || (value as string).trim().length === 0) {

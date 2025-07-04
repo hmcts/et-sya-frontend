@@ -1,4 +1,4 @@
-import { isValidCurrency, isValidPay, isValidPension } from '../../../main/validators/currency-validator';
+import { isValidCurrency, isValidPay, isValidPension } from '../../../main/components/form/currency-validator';
 
 describe('Validation', () => {
   describe('isValidPension()', () => {
