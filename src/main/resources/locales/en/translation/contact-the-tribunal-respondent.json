@@ -1,11 +1,11 @@
 {
-  "title": "Order the respondent",
-  "applicationType": "Order the respondent",
-  "applicationTitle": "Order the respondent to do something",
+  "title": "Order the other party",
+  "applicationType": "Order the other party",
+  "applicationTitle": "Order the other party to do something",
   "content": [
     {
       "type": "paragraph",
-      "text": "Use this form to ask the tribunal to order the respondent to do or provide something."
+      "text": "Use this form to ask the tribunal to order the other party to do or provide something."
     },
 
     { "type": "bold-paragraph", "text": "Details to include in your application:" },
@@ -13,10 +13,10 @@
     {
       "type": "list",
       "items": [
-        "what you want the respondent to do. For example: you may want the respondent to provide information, documents, or further details of their response",
+        "what you want the other party to do. For example: you may want the other party to provide information, documents, or further details of their response",
         "why it is relevant to your claim",
-        "if you have already asked the respondent to do or provide this thing. If you have, tell us when you asked and what their response was",
-        "if you have not asked the respondent to do or provide this thing yet, explain why"
+        "if you have already asked the other party to do or provide this thing. If you have, tell us when you asked and what their response was",
+        "if you have not asked the other party to do or provide this thing yet, explain why"
       ]
     }
   ]

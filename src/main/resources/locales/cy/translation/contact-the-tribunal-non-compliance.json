@@ -1,15 +1,15 @@
 {
-  "title": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
-  "applicationType": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
-  "applicationTitle": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
+  "title": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio",
+  "applicationType": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio",
+  "applicationTitle": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio â gorchymyn",
   "content": [
     {
       "type": "paragraph",
-      "text": "Defnyddiwch y ffurflen hon i ddweud wrthym nad yw’r atebydd wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
+      "text": "Defnyddiwch y ffurflen hon i ddweud wrthym nad yw’r parti arall wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
     },
     {
       "type": "paragraph",
-      "text": "Dylech geisio datrys eich cwyn gyda’r atebydd. Dylech ond defnyddio’r ffurflen hon os nad yw hynny’n bosibl."
+      "text": "Dylech geisio datrys eich cwyn gyda’r parti arall. Dylech ond defnyddio’r ffurflen hon os nad yw hynny’n bosibl."
     },
     { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
     {
@@ -17,7 +17,7 @@
       "items": [
         "pa orchymyn nas cydymffurfiwyd ag ef",
         "y dyddiad y cyhoeddodd y tribiwnlys y gorchymyn",
-        "yr hyn nad yw’r atebydd wedi’i wneud",
+        "yr hyn nad yw’r parti arall wedi’i wneud",
         "beth ydych chi eisiau i’r tribiwnlys ei wneud nesaf"
       ]
     }

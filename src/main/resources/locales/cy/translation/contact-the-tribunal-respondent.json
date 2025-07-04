@@ -1,11 +1,11 @@
 {
-  "title": "Gorchymyn yr atebydd",
-  "applicationType": "Gorchymyn yr atebydd",
-  "applicationTitle": "Gorchymyn bod yr atebydd yn gwneud rhywbeth",
+  "title": "Gorchymyn y parti arall",
+  "applicationType": "Gorchymyn y parti arall",
+  "applicationTitle": "Gorchymyn bod y parti arall yn gwneud rhywbeth",
   "content": [
     {
       "type": "paragraph",
-      "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys orchymyn bod yr atebydd yn gwneud neu’n darparu rhywbeth."
+      "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys orchymyn bod y parti arall yn gwneud neu’n darparu rhywbeth."
     },
 
     { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
@@ -13,10 +13,10 @@
     {
       "type": "list",
       "items": [
-        "beth ydych chi eisiau i’r atebydd ei wneud. Er enghraifft: Efallai y byddwch eisiau i’r atebydd ddarparu gwybodaeth, dogfennau, neu fanylion pellach am ei ymateb",
+        "beth ydych chi eisiau i’r parti arall ei wneud. Er enghraifft: Efallai y byddwch eisiau i’r parti arall ddarparu gwybodaeth, dogfennau, neu fanylion pellach am ei ymateb",
         "pam fod hyn yn berthnasol i’ch hawliad",
-        "os ydych eisoes wedi gofyn i’r atebydd wneud neu ddarparu'r peth hwn. Os ydych wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch chi ofyn a beth oedd ei ymateb",
-        "os nad ydych wedi gofyn i’r atebydd wneud neu ddarparu’r peth hwn, esboniwch pam"
+        "os ydych eisoes wedi gofyn i’r parti arall wneud neu ddarparu'r peth hwn. Os ydych wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch chi ofyn a beth oedd ei ymateb",
+        "os nad ydych wedi gofyn i’r parti arall wneud neu ddarparu’r peth hwn, esboniwch pam"
       ]
     }
   ]

@@ -10,7 +10,7 @@
     },
     {
       "type": "paragraph",
-      "text": "The tribunal can strike out all or parts of the respondent's response on their own initiative or after a request from the claimant."
+      "text": "The tribunal can strike out all or parts of the other party's response on their own initiative or after a request from the claimant."
     },
     {
       "type": "paragraph",
@@ -22,7 +22,7 @@
       "items": [
         "the response is scandalous, vexatious or has no reasonable prospect of success",
         "the proceedings have been conducted in a way that is scandalous, unreasonable or vexatious",
-        "the respondent has not complied with tribunal orders or the Rules of Procedure",
+        "the other party has not complied with tribunal orders or the Rules of Procedure",
         "the response has not been actively pursued",
         "it is no longer possible to have a fair hearing"
       ]
