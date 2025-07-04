@@ -28,8 +28,8 @@ const getCorrectFormat = (value: string | string[]): boolean => {
     return false;
   }
 
-  const regex = /^(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
-  return regex.test(value);
+  const validPattern = /^(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
+  return validPattern.test(value);
 };
 
 export const isValidPay: Validator = value => {
@@ -43,8 +43,10 @@ export const isValidPay: Validator = value => {
   }
 
   const digitCount = getDigitCount(value);
-  if (digitCount < 2 || digitCount > 12) {
-    return 'minLengthRequired';
+  if (digitCount < 2) {
+    return ValidationErrors.MIN_LENGTH_REQUIRED;
+  } else if (digitCount > 12) {
+    return ValidationErrors.INVALID_VALUE;
   }
 };
 
