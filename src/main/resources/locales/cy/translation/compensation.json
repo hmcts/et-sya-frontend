@@ -19,7 +19,7 @@
       "tooLong": "Rhaid i fanylion am yr Iawndal rydych yn ei hawlio fod yn llai na 2500 o lythrennau"
     },
     "compensationAmount": {
-      "invalid": "<W>Enter the compensation amount in pounds, with or without a decimal point. For example, 10 or 10.00"
+      "invalid": "<W>Compensation can only include pounds and pence. For example, 100 or 100.00"
     }
   }
 }

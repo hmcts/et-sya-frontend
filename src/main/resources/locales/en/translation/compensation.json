@@ -19,7 +19,7 @@
       "tooLong": "The details for the Compensation you are claiming must be entered as less than 2500 characters"
     },
     "compensationAmount": {
-      "invalid": "Enter the compensation amount in pounds, with or without a decimal point. For example, 10 or 10.00"
+      "invalid": "Compensation can only include pounds and pence. For example, 100 or 100.00"
     }
   }
 }
