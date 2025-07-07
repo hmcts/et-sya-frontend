@@ -21,22 +21,7 @@ const isNumberLessThan10 = (value: string): boolean => {
   return numericValue < 10;
 };
 
-export const isValidPension: Validator = value => {
-  const str = (value as string)?.trim();
-  if (isEmpty(str)) {
-    return;
-  }
-
-  if (isInvalidNumber(str)) {
-    return ValidationErrors.INVALID_VALUE;
-  }
-
-  if (isNumberLessThan10(str)) {
-    return ValidationErrors.MIN_LENGTH_REQUIRED;
-  }
-};
-
-export const isValidPay: Validator = value => {
+export const isValidDoubleCurrency: Validator = value => {
   const str = (value as string)?.trim();
   if (isEmpty(str)) {
     return;

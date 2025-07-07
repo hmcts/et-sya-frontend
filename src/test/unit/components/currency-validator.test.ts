@@ -1,4 +1,4 @@
-import { isValidCurrency, isValidPay, isValidPension } from '../../../main/components/form/currency-validator';
+import { isValidCurrency, isValidDoubleCurrency } from '../../../main/components/form/currency-validator';
 
 describe('Validation', () => {
   type ValidationTestCase = {
@@ -43,27 +43,18 @@ describe('Validation', () => {
     { mockRef: '9.99', expected: 'minLengthRequired' },
   ];
 
-  describe('isValidPension()', () => {
+  describe('isValidDoubleCurrency()', () => {
     it.each([...emptyCases, ...validCases, ...invalidCases, ...lessThan10Cases])(
-      'check integer input is valid',
+      'Check double currency amount is valid when %o',
       ({ mockRef, expected }) => {
-        expect(isValidPension(mockRef)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('isValidPay()', () => {
-    it.each([...emptyCases, ...validCases, ...invalidCases, ...lessThan10Cases])(
-      'Check pay amount is valid when %o',
-      ({ mockRef, expected }) => {
-        expect(isValidPay(mockRef)).toEqual(expected);
+        expect(isValidDoubleCurrency(mockRef)).toEqual(expected);
       }
     );
   });
 
   describe('isValidCurrency()', () => {
     it.each([...emptyCases, ...validCases, ...invalidCases])(
-      'Check pay amount is valid when %o',
+      'Check currency amount is valid when %o',
       ({ mockRef, expected }) => {
         expect(isValidCurrency(mockRef)).toEqual(expected);
       }
