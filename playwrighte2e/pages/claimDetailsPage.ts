@@ -193,7 +193,7 @@ export class ClaimDetailsPage extends BasePage {
       await this.webAction.checkElementById('#anotherJob');
 
       await this.clickSaveAndContinue();
-      await this.webAction.verifyTextIsVisible('text=What compensation are you seeking? (optional)');
+      await this.webAction.verifyTextIsVisible('text=What compensation are you seeking?');
 
       await this.webAction.verifyTextIsVisible('text=Compensation - what can a tribunal award?');
       await this.webAction.verifyTextIsVisible(

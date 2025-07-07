@@ -43,6 +43,7 @@ export const getRespondentSection = (
   addRemoveButton: boolean
 ): SummaryListRow[] => {
   const respondentSections: SummaryListRow[] = [];
+
   if (index === 1 || !addRemoveButton) {
     respondentSections.push({
       key: {
@@ -126,9 +127,7 @@ export const getRespondentSection = (
       },
       value: {
         text:
-          userCase.claimantWorkAddressQuestion === YesOrNo.YES
-            ? translations.respondentDetails.yes
-            : translations.respondentDetails.no,
+          userCase.claimantWorkAddressQuestion === YesOrNo.YES ? translations.doYesOrNo.yes : translations.doYesOrNo.no,
       },
       actions: {
         items: [
@@ -149,13 +148,14 @@ export const getRespondentSection = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: answersAddressFormatter(
-          userCase.workAddress1,
-          userCase.workAddress2,
-          userCase.workAddressTown,
-          userCase.workAddressCountry,
-          userCase.workAddressPostcode
-        ),
+        text:
+          answersAddressFormatter(
+            userCase.workAddress1,
+            userCase.workAddress2,
+            userCase.workAddressTown,
+            userCase.workAddressCountry,
+            userCase.workAddressPostcode
+          ) || translations.notProvided,
       },
       actions: {
         items: [
@@ -169,8 +169,7 @@ export const getRespondentSection = (
     });
   }
 
-  const acasCertValue =
-    respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.respondentDetails.no;
+  const acasCertValue = respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.doYesOrNo.no;
   respondentSections.push({
     key: {
       text: translations.respondentDetails.acasNumber,
@@ -189,6 +188,7 @@ export const getRespondentSection = (
       ],
     },
   });
+
   if (respondent.acasCert === YesOrNo.NO) {
     const reasonText = getAcasReason(respondent.noAcasReason, translations);
     respondentSections.push({

@@ -3,11 +3,12 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { DocumentDetail, TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
+import { DocumentDetail } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
+import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
@@ -70,13 +71,11 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
+      translations,
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
-      translations,
       getRespondentSection,
-      showCompensationRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY),
-      showTribunalRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION),
-      showWhistleBlowingRequest: !!userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING),
+      claimDetailsSection: getClaimDetails(userCase, translations),
       et1Documents,
     });
   };
