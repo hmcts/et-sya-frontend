@@ -110,7 +110,7 @@ module.exports = async function (allClaimDetailsPages) {
 
   //What Compensation are you seeking...
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  await I.see('What compensation are you seeking? (optional)');
+  await I.see('What compensation are you seeking?');
   await claimDetailsContentHelper.verifyWhatCanACompensationTribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
