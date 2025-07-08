@@ -1,25 +1,27 @@
 import { isValidCurrency, isValidDoubleCurrency } from '../components/form/currency-validator';
+import { Validator } from '../components/form/validator';
 
 import { AnyRecord } from './util-types';
 
 export type CurrencyFormFields = {
   id: string;
-  classes: string;
   type: string;
+  classes: string;
   label: (l: AnyRecord) => string;
   attributes: object;
+  validator?: Validator;
 };
 
 export const DefaultCurrencyFormFields = {
   classes: 'govuk-input--width-10',
   type: 'currency',
-  attributes: { maxLength: 16 }, // longest amount is of the form x,xxx,xxx,xxx.xx
+  attributes: { maxLength: 15 },
   validator: isValidDoubleCurrency,
 };
 
 export const DefaultCompensationCurrencyFormFields = {
   classes: 'govuk-input--width-10',
   type: 'currency',
-  attributes: { maxLength: 16 }, // longest amount is of the form x,xxx,xxx,xxx.xx
+  attributes: { maxLength: 15 },
   validator: isValidCurrency,
 };

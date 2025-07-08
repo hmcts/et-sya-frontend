@@ -35,9 +35,8 @@ export default class PensionController {
             subFields: {
               claimantPensionWeeklyContribution: {
                 id: 'pension-contributions',
-                name: 'pension-contributions',
                 type: 'currency',
-                classes: 'govuk-input--width-5',
+                classes: 'govuk-input--width-10',
                 label: (l: AnyRecord): string => l.pensionContributions,
                 labelAsHint: true,
                 attributes: { maxLength: 12 },
