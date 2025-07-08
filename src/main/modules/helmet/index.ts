@@ -87,8 +87,6 @@ export class Helmet {
       '*.tagmanager.google.com',
     ];
 
-    const manifestSrc = 
-
     if (app.locals.developmentMode) {
       connectSrc.push('https://localhost:5000/login');
       scriptSrc.push('https://localhost:5000/login');
