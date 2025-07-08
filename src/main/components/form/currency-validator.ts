@@ -5,18 +5,15 @@ import { Validator } from './validator';
 const validNumberPattern = /^[0-9.,]+$/;
 const validCurrencyPattern = /^(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
 
-const isEmpty = (value: string): boolean => {
-  const str = (value as string)?.trim();
+const isEmpty = (str: string): boolean => {
   return !str || str.length === 0;
 };
 
-const isInvalidNumber = (value: string): boolean => {
-  const str = (value as string)?.trim();
+const isInvalidNumber = (str: string): boolean => {
   return !validNumberPattern.test(str) || !validCurrencyPattern.test(str);
 };
 
-const isNumberLessThan10 = (value: string): boolean => {
-  const str = (value as string)?.trim();
+const isNumberLessThan10 = (str: string): boolean => {
   const numericValue = parseFloat(str.replace(/,/g, ''));
   return numericValue < 10;
 };
