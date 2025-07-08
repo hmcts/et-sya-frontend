@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -45,6 +46,7 @@ export default class RespondentPostCodeEnterController {
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, true);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     const respondentIndex = getRespondentIndex(req);

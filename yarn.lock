@@ -15481,9 +15481,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^10.2.1":
-  version: 10.2.1
-  resolution: "superagent@npm:10.2.1"
+"superagent@npm:^10.2.2":
+  version: 10.2.2
+  resolution: "superagent@npm:10.2.2"
   dependencies:
     component-emitter: ^1.3.0
     cookiejar: ^2.1.4
@@ -15494,17 +15494,17 @@ __metadata:
     methods: ^1.1.2
     mime: 2.6.0
     qs: ^6.11.0
-  checksum: de131361749e73ea91d97d6641ca19c6b56bdf9ddfbdc413830bd6f1871dfa83f061eb352c649e7aea2757f011cd5e2326870122b8dc8ca816858f8917252cc4
+  checksum: 47935395b72fe8186b858f58c593d991cd304f7b30c8d4e9937645e4c1a97c22aad4ff9cfd1a9aa9233c518af637435839d8a11a3d7ba0da5da29a7529d7ebf7
   languageName: node
   linkType: hard
 
 "supertest@npm:^7.0.0":
-  version: 7.1.1
-  resolution: "supertest@npm:7.1.1"
+  version: 7.1.3
+  resolution: "supertest@npm:7.1.3"
   dependencies:
     methods: ^1.1.2
-    superagent: ^10.2.1
-  checksum: ec574fab955aaa6f86d75dde97a750f70a1355d38010d040b388d9f1e325dc7ee4fccea00a6e5019cfb19c9d258686cd50816b5110800e67dbddad7808f2d683
+    superagent: ^10.2.2
+  checksum: 817cb5091351ce311bd3b58d4cb8b4e7f7a0cf1a4570684ad0d942f270cc8e75d9015f33101beba8d5d277bc66a5e9bc2b923438e8e8d19333b75825a6c49535
   languageName: node
   linkType: hard
 
