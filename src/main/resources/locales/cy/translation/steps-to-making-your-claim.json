@@ -3,10 +3,6 @@
   "h1": "Camau i wneud eich hawliad",
   "applicationDetails": "Manylion yr hawliad",
   "claimType": "Math o hawliad",
-  "notStarted": "HEB GYCHWYN",
-  "completed": "WEDI'I GWBLHAU",
-  "inProgress": "YN MYND RHAGDDO",
-  "cannotStartYet": "NI ALLWCH WNEUD HYN ETO",
   "section1": {
     "title": "Eich manylion",
     "link1Text": "Manylion personol",
@@ -26,5 +22,9 @@
   "section4": {
     "title": "Gwirio a chyflwyno",
     "link1Text": "Gwirio'ch atebion"
-  }
+  },
+  "completed": "Wedi’i gwblhau",
+  "notStarted": "Heb ddechrau eto",
+  "inProgress": "Yn mynd rhagddo",
+  "cannotStartYet": "Methu dechrau eto"
 }

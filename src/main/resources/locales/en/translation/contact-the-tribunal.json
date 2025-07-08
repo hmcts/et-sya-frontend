@@ -7,8 +7,8 @@
   "hideSection": "Hide",
   "landing_text": {
     "p1": "Use the appropriate form to communicate with the tribunal.",
-    "p2": "These requests and applications will be reviewed by the tribunal and copied to the respondent who will have an opportunity to respond.",
-    "p3": "You may be able to request that some details do not get shared with the respondent."
+    "p2": "These requests and applications will be reviewed by the tribunal and copied to the other party who will have an opportunity to respond.",
+    "p3": "You may be able to request that some details do not get shared with the other party."
   },
   "landing_text_when_represented": {
     "p1": "You are now being legally represented by ",
@@ -46,9 +46,9 @@
       "body": "Request to amend your ET1 claim - including adding or removing claims or details of your claim."
     },
     "respondent": {
-      "caption": "Order the respondent",
-      "label": "Order the respondent to do something",
-      "body": "Apply to order the respondent to do or provide something."
+      "caption": "Order the other party",
+      "label": "Order the other party to do something",
+      "body": "Apply to order the other party to do or provide something."
     },
     "witness": {
       "caption": "Order a witness to attend",
@@ -56,9 +56,9 @@
       "body": "Apply to order a witness to attend to give evidence in your case."
     },
     "non-compliance": {
-      "caption": "Tell the tribunal the respondent has not complied",
-      "label": "Tell the tribunal the respondent has not complied with an order",
-      "body": "Tell us that the respondent has not complied with all or part of an order from the tribunal."
+      "caption": "Tell the tribunal the other party has not complied",
+      "label": "Tell the tribunal the other party has not complied with an order",
+      "body": "Tell us that the other party has not complied with all or part of an order from the tribunal."
     },
     "publicity": {
       "caption": "Restrict publicity",
@@ -68,7 +68,7 @@
     "strike": {
       "caption": "Strike out the response",
       "label": "Strike out all or part of the response",
-      "body": "You can request that the tribunal strike out all or parts of the respondent's response."
+      "body": "You can request that the tribunal strike out all or parts of the other party's response."
     },
     "reconsider-judgement": {
       "caption": "Reconsider a judgment",
