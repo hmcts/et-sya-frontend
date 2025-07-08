@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { validateEmploymentAndRespondentDetails } from '../components/form/claim-details-validator';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -58,6 +59,7 @@ export default class EmploymentAndRespondentCheckController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.empResCheckContent, [
       TranslationKeys.COMMON,

@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
@@ -9,6 +10,7 @@ import { getCaseApi } from '../services/CaseService';
 const logger = getLogger('SubmitCaseController');
 
 export default class SubmitCaseController {
+  @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       const submittedClaim = await getCaseApi(req.session.user?.accessToken).submitCase(req.session.userCase);

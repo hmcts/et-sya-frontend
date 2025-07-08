@@ -6,6 +6,7 @@ import {
   isValidCountryTownOrCity,
 } from '../components/form/address-validator';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -98,6 +99,7 @@ export default class PlaceOfWorkController {
     await handlePostLogic(req, res, this.form, logger, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const x = req.session.userCase.workAddressTypes;
     const content = getPageContent(

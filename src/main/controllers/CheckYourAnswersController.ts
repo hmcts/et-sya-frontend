@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
@@ -12,7 +13,8 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
-  public get(req: AppRequest, res: Response): void {
+  @CaseStateCheck()
+  public get = (req: AppRequest, res: Response): void => {
     if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
@@ -53,5 +55,5 @@ export default class CheckYourAnswersController {
       languageParam: getLanguageParam(req.url),
       isAddRespondent: newRespondentNum <= 5,
     });
-  }
+  };
 }

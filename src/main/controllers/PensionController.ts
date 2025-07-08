@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { isValidDoubleCurrency } from '../components/form/currency-validator';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -79,6 +80,7 @@ export default class PensionController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.BENEFITS);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
