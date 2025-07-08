@@ -20,6 +20,7 @@ const isNumberLessThan10 = (str: string): boolean => {
 
 export const isValidDoubleCurrency: Validator = value => {
   const str = (value as string)?.trim();
+
   if (isEmpty(str)) {
     return;
   }
@@ -35,6 +36,7 @@ export const isValidDoubleCurrency: Validator = value => {
 
 export const isValidCurrency: Validator = value => {
   const str = (value as string)?.trim();
+
   if (isEmpty(str)) {
     return;
   }

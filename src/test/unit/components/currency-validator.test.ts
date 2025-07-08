@@ -16,6 +16,7 @@ describe('Validation', () => {
     { mockRef: '10', expected: undefined },
     { mockRef: ' 10 ', expected: undefined },
     { mockRef: '1000', expected: undefined },
+    { mockRef: '1000000', expected: undefined },
     { mockRef: '1,000', expected: undefined },
     { mockRef: '10.4', expected: undefined },
     { mockRef: '10.40', expected: undefined },
