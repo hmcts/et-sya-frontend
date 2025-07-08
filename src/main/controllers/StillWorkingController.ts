@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { isReturnUrlIsCheckAnswers } from './helpers/RouterHelpers';
 
 const logger = getLogger('StillWorkingController');
 
@@ -66,6 +67,12 @@ export default class StillWorkingController {
     if (req.body.isStillWorking !== StillWorking.NOTICE) {
       req.session.userCase.noticeEnds = undefined;
     }
+
+    if (isReturnUrlIsCheckAnswers(req)) {
+      const { redirectUrl, shouldRedirect } = getRedirectInfo(req);
+      return handlePostLogic(req, res, this.form, logger, redirectUrl, shouldRedirect);
+    }
+
     await handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
   };
 
@@ -81,3 +88,22 @@ export default class StillWorkingController {
     });
   };
 }
+
+const getRedirectInfo = (req: AppRequest): { redirectUrl: string; shouldRedirect: boolean } => {
+  const { startDate } = req.session.userCase;
+  const { isStillWorking } = req.body;
+
+  if (startDate === undefined) {
+    return { redirectUrl: PageUrls.START_DATE, shouldRedirect: true };
+  }
+
+  if (isStillWorking === StillWorking.NOTICE) {
+    return { redirectUrl: PageUrls.NOTICE_END, shouldRedirect: true };
+  }
+
+  if (isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    return { redirectUrl: PageUrls.END_DATE, shouldRedirect: true };
+  }
+
+  return { redirectUrl: PageUrls.JOB_TITLE, shouldRedirect: false };
+};

@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, isReturnUrlIsCheckAnswers } from './helpers/RouterHelpers';
 
 const logger = getLogger('PastEmployerController');
 
@@ -52,6 +52,13 @@ export default class PastEmployerController {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
       : PageUrls.FIRST_RESPONDENT_NAME;
+
+    if (isReturnUrlIsCheckAnswers(req)) {
+      const shouldRedirect =
+        redirectUrl === PageUrls.STILL_WORKING && req.session.userCase?.isStillWorking === undefined;
+      return handlePostLogic(req, res, this.form, logger, redirectUrl, shouldRedirect);
+    }
+
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
