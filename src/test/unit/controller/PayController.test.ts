@@ -106,7 +106,7 @@ describe('Pay Controller', () => {
 
   it('should have error when pay is less than two characters', () => {
     const controller = new PayController();
-    const body = { payAfterTax: '1', payInterval: PayInterval.WEEKLY };
+    const body = { payAfterTax: '0.1', payInterval: PayInterval.WEEKLY };
     const expectedErrors = [{ propertyName: 'payAfterTax', errorType: 'minLengthRequired' }];
     const response = mockResponse();
     const request = mockRequest({ body });

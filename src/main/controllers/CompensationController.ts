@@ -5,7 +5,7 @@ import { isContent2500CharsOrLess } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { CurrencyFormFields, DefaultCompensationCurrencyFormFields } from '../definitions/currency-fields';
+import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -16,7 +16,7 @@ import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const compensation_amount: CurrencyFormFields = {
-  ...DefaultCompensationCurrencyFormFields,
+  ...DefaultCurrencyFormFields,
   id: 'compensation-amount',
   label: (l: AnyRecord): string => l.amountLabel,
 };

@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { isValidDoubleCurrency } from '../components/form/currency-validator';
+import { isValidCurrency } from '../components/form/currency-validator';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
@@ -40,7 +40,7 @@ export default class PensionController {
                 label: (l: AnyRecord): string => l.pensionContributions,
                 labelAsHint: true,
                 attributes: { maxLength: 12 },
-                validator: isValidDoubleCurrency,
+                validator: isValidCurrency,
               },
             },
           },

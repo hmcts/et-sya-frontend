@@ -15,24 +15,10 @@ const isInvalidNumber = (value: string | string[]): boolean => {
   return !validNumberPattern.test(value) || !validCurrencyPattern.test(value);
 };
 
-const isNumberLessThan10 = (value: string | string[]): boolean => {
+const isNumberLessThanSingleDigit = (value: string | string[]): boolean => {
   value = (value as string)?.trim();
   const numericValue = parseFloat(value.replace(/,/g, ''));
-  return numericValue < 10;
-};
-
-export const isValidDoubleCurrency: Validator = value => {
-  if (isEmpty(value)) {
-    return;
-  }
-
-  if (isInvalidNumber(value)) {
-    return ValidationErrors.INVALID_VALUE;
-  }
-
-  if (isNumberLessThan10(value)) {
-    return ValidationErrors.MIN_LENGTH_REQUIRED;
-  }
+  return numericValue < 1;
 };
 
 export const isValidCurrency: Validator = value => {
@@ -42,5 +28,9 @@ export const isValidCurrency: Validator = value => {
 
   if (isInvalidNumber(value)) {
     return ValidationErrors.INVALID_VALUE;
+  }
+
+  if (isNumberLessThanSingleDigit(value)) {
+    return ValidationErrors.MIN_LENGTH_REQUIRED;
   }
 };

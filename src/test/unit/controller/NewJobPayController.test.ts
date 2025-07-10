@@ -50,7 +50,7 @@ describe('New Job Pay Controller', () => {
 
   it('should have error when pay is less than two characters', async () => {
     const controller = new NewJobPayController();
-    const body = { newJobPay: '1', newJobPayInterval: PayInterval.WEEKLY };
+    const body = { newJobPay: '0.1', newJobPayInterval: PayInterval.WEEKLY };
     const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'minLengthRequired' }];
     const response = mockResponse();
     const request = mockRequest({ body });
