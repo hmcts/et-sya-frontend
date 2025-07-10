@@ -26,15 +26,15 @@ describe('Validation', () => {
   ];
 
   const invalidCases: ValidationTestCase[] = [
-    { mockRef: 'abc', expected: 'invalid' },
-    { mockRef: '$10', expected: 'invalid' },
-    { mockRef: '25a', expected: 'invalid' },
-    { mockRef: '%', expected: 'invalid' },
-    { mockRef: '-100', expected: 'invalid' },
-    { mockRef: '10,00', expected: 'invalid' },
-    { mockRef: '100.', expected: 'invalid' },
-    { mockRef: '10.123', expected: 'invalid' },
-    { mockRef: '1 0', expected: 'invalid' },
+    { mockRef: 'abc', expected: 'invalidCurrency' },
+    { mockRef: '$10', expected: 'invalidCurrency' },
+    { mockRef: '25a', expected: 'invalidCurrency' },
+    { mockRef: '%', expected: 'invalidCurrency' },
+    { mockRef: '-100', expected: 'invalidCurrency' },
+    { mockRef: '10,00', expected: 'invalidCurrency' },
+    { mockRef: '100.', expected: 'invalidCurrency' },
+    { mockRef: '10.123', expected: 'invalidCurrency' },
+    { mockRef: '1 0', expected: 'invalidCurrency' },
   ];
 
   const lessThan10Cases: ValidationTestCase[] = [

@@ -1,11 +1,11 @@
 import { Response } from 'express';
 
-import { isValidCurrency } from '../components/form/currency-validator';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DefaultCurrencyFormFields } from '../definitions/currency-fields';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -34,13 +34,10 @@ export default class PensionController {
             value: YesOrNoOrNotSure.YES,
             subFields: {
               claimantPensionWeeklyContribution: {
+                ...DefaultCurrencyFormFields,
                 id: 'pension-contributions',
-                type: 'currency',
-                classes: 'govuk-input--width-10',
                 label: (l: AnyRecord): string => l.pensionContributions,
                 labelAsHint: true,
-                attributes: { maxLength: 12 },
-                validator: isValidCurrency,
               },
             },
           },

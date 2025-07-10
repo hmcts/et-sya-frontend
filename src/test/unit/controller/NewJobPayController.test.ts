@@ -31,7 +31,7 @@ describe('New Job Pay Controller', () => {
   it('should have error when pay is not a valid number', async () => {
     const controller = new NewJobPayController();
     const body = { newJobPay: 'ten', newJobPayInterval: PayInterval.WEEKLY };
-    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'invalid' }];
+    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'invalidCurrency' }];
     const response = mockResponse();
     const request = mockRequest({ body });
     await controller.post(request, response);

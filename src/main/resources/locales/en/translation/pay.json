@@ -9,13 +9,13 @@
   "errors": {
     "payBeforeTax": {
       "required": "Tell us at least one amount for your Pay ",
-      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10",
-      "invalid": "Pay before tax and National insurance can only include pounds and pence. For example, 100 or 100.00"
+      "invalidCurrency": "Pay before tax and National insurance can only include pounds and pence. For example, 100 or 100.00",
+      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10"
     },
     "payAfterTax": {
       "required": "Tell us at least one amount for your Pay",
-      "minLengthRequired": "Pay after tax and NI must be a minimum of double figures. For example £10",
-      "invalid": "Pay after tax and National insurance can only include pounds and pence. For example, 100 or 100.00"
+      "invalidCurrency": "Pay after tax and National insurance can only include pounds and pence. For example, 100 or 100.00",
+      "minLengthRequired": "Pay after tax and NI must be a minimum of double figures. For example £10"
     },
     "payInterval": {
       "payBeforeTax": "Tell us a Frequency for Pay before tax and NI",

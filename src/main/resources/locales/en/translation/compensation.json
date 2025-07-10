@@ -19,7 +19,8 @@
       "tooLong": "The details for the Compensation you are claiming must be entered as less than 2500 characters"
     },
     "compensationAmount": {
-      "invalid": "Compensation can only include pounds and pence. For example, 100 or 100.00"
+      "invalidCurrency": "Compensation can only include pounds and pence. For example, 100 or 100.00",
+      "minLengthRequired": "Compensation must be a minimum of double figures. For example £10"
     }
   }
 }

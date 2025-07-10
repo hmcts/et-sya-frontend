@@ -6,8 +6,8 @@
   "pensionContributions": "Enter their pension contributions - worked out weekly",
   "errors": {
     "claimantPensionWeeklyContribution": {
-      "minLengthRequired": "Pension contributions must be a minimum of double figures. For example £10",
-      "invalid": "Pension contributions can only include pounds and pence. For example, 100 or 100.00"
+      "invalidCurrency": "Pension contributions can only include pounds and pence. For example, 100 or 100.00",
+      "minLengthRequired": "Pension contributions must be a minimum of double figures. For example £10"
     }
   }
 }

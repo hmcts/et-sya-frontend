@@ -27,7 +27,7 @@ export const isValidCurrency: Validator = value => {
   }
 
   if (isInvalidNumber(value)) {
-    return ValidationErrors.INVALID_VALUE;
+    return ValidationErrors.INVALID_CURRENCY;
   }
 
   if (isNumberLessThanSingleDigit(value)) {

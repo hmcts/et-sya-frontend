@@ -53,7 +53,7 @@ describe('Compensation Controller', () => {
       const res = mockResponse();
       new CompensationController().post(req, res);
 
-      const expectedErrors = [{ propertyName: 'compensationAmount', errorType: 'invalid' }];
+      const expectedErrors = [{ propertyName: 'compensationAmount', errorType: 'invalidCurrency' }];
 
       expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);

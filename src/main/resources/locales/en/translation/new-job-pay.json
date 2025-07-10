@@ -7,8 +7,8 @@
   "errors": {
     "newJobPay": {
       "required": "Tell us your Pay before tax and NI",
-      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10",
-      "invalid": "Pay before tax and National insurance can only include pounds and pence. For example, 100 or 100.00"
+      "invalidCurrency": "Pay before tax and National insurance can only include pounds and pence. For example, 100 or 100.00",
+      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10"
     },
     "newJobPayInterval": {
       "required": "Tell us your pay frequency"
