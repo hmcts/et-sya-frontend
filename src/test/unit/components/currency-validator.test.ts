@@ -34,6 +34,7 @@ describe('Validation', () => {
     { mockRef: '%', expected: 'invalidCurrency' },
     { mockRef: '-100', expected: 'invalidCurrency' },
     { mockRef: '10,00', expected: 'invalidCurrency' },
+    { mockRef: '100,10.12', expected: 'invalidCurrency' },
     { mockRef: '10.123', expected: 'invalidCurrency' },
     { mockRef: '1 0', expected: 'invalidCurrency' },
     { mockRef: '0', expected: 'invalidCurrency' },
