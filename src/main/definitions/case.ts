@@ -13,6 +13,7 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { TypeItem } from './util-types';
+import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -216,6 +217,7 @@ export interface Case {
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;
+  claimantRepresentative?: ClaimantRepresentative;
 }
 
 export const enum StillWorking {
