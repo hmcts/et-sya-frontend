@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { validateClaimCheckDetails } from '../components/form/claimDetailsValidator';
+import { validateClaimCheckDetails } from '../components/form/claim-details-validator';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';

@@ -31,7 +31,7 @@ describe('New Job Pay Controller', () => {
   it('should have error when pay is not a valid number', async () => {
     const controller = new NewJobPayController();
     const body = { newJobPay: 'ten', newJobPayInterval: PayInterval.WEEKLY };
-    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'notANumber' }];
+    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'invalidCurrency' }];
     const response = mockResponse();
     const request = mockRequest({ body });
     await controller.post(request, response);
@@ -48,10 +48,10 @@ describe('New Job Pay Controller', () => {
     expect(request.session.errors).toEqual(expectedErrors);
   });
 
-  it('should have error when pay is less than two characters', async () => {
+  it('should have error when pay is too high', async () => {
     const controller = new NewJobPayController();
-    const body = { newJobPay: '1', newJobPayInterval: PayInterval.WEEKLY };
-    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'minLengthRequired' }];
+    const body = { newJobPay: '10000000', newJobPayInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'tooHighCurrency' }];
     const response = mockResponse();
     const request = mockRequest({ body });
     await controller.post(request, response);
