@@ -471,6 +471,7 @@ export const Applicant = {
   CLAIMANT: 'Claimant',
   RESPONDENT: 'Respondent',
   ADMIN: 'Admin',
+  CLAIMANT_REP: 'Claimant Representative',
 } as const;
 
 export const AllDocumentTypes = {

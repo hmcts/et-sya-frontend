@@ -199,7 +199,9 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
 };
 
 export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
-  return userCase.genericTseApplicationCollection?.filter(item => item.value.applicant === Applicant.CLAIMANT);
+  return userCase.genericTseApplicationCollection?.filter(
+    item => item.value.applicant === Applicant.CLAIMANT || item.value.applicant === Applicant.CLAIMANT_REP
+  );
 };
 
 export const getClaimantAppsAndUpdateStatusTag = (userCase: CaseWithId): void => {
