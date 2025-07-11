@@ -9,13 +9,13 @@
   "errors": {
     "payBeforeTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
-      "invalidCurrency": "<W>Pay before tax and National insurance can only include pounds and pence. For example, 100 or 100.00",
-      "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10"
+      "invalidCurrency": "<W>Enter pay before tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "<W>Pay before tax and NI must be £9,999,999.99 or less"
     },
     "payAfterTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
-      "invalidCurrency": "<W>Pay after tax and National insurance can only include pounds and pence. For example, 100 or 100.00",
-      "minLengthRequired": "Rhaid i dâl ar ôl treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10"
+      "invalidCurrency": "<W>Enter pay after tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "<W>Pay after tax and NI must be £9,999,999.99 or less"
     },
     "payInterval": {
       "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl cyn treth ac YG.",

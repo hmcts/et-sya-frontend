@@ -19,8 +19,8 @@
       "tooLong": "Rhaid i fanylion am yr Iawndal rydych yn ei hawlio fod yn llai na 2500 o lythrennau"
     },
     "compensationAmount": {
-      "invalidCurrency": "<W>Compensation can only include pounds and pence. For example, 100 or 100.00",
-      "minLengthRequired": "<W>Compensation must be a minimum of double figures. For example £10"
+      "invalidCurrency": "<W>Enter compensation in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "<W>Compensation must be £9,999,999.99 or less"
     }
   }
 }

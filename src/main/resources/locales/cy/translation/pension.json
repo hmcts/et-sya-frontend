@@ -6,8 +6,8 @@
   "pensionContributions": "Nodwch eu cyfraniadau pensiwn - wedi’u cyfrifo ar sail wythnos",
   "errors": {
     "claimantPensionWeeklyContribution": {
-      "invalidCurrency": "<W>Pension contributions can only include pounds and pence. For example, 100 or 100.00",
-      "minLengthRequired": "<W>Pension contributions must be a minimum of double figures. For example £10"
+      "invalidCurrency": "<W>Enter pension contributions in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "<W>Pension contributions must be £9,999,999.99 or less"
     }
   }
 }

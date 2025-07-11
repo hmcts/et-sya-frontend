@@ -104,10 +104,10 @@ describe('Pay Controller', () => {
     expect(request.session.errors).toEqual(expectedErrors);
   });
 
-  it('should have error when pay is less than two characters', () => {
+  it('should have error when pay is too high', () => {
     const controller = new PayController();
-    const body = { payAfterTax: '0.1', payInterval: PayInterval.WEEKLY };
-    const expectedErrors = [{ propertyName: 'payAfterTax', errorType: 'minLengthRequired' }];
+    const body = { payAfterTax: '10000000', payInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'payAfterTax', errorType: 'tooHighCurrency' }];
     const response = mockResponse();
     const request = mockRequest({ body });
     controller.post(request, response);

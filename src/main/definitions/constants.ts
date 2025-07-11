@@ -315,7 +315,7 @@ export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',
   INVALID_CURRENCY: 'invalidCurrency',
-  MIN_LENGTH_REQUIRED: 'minLengthRequired',
+  TOO_HIGH_CURRENCY: 'tooHighCurrency',
 } as const;
 
 export const AuthUrls = {

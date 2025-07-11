@@ -2,35 +2,27 @@ import { ValidationErrors } from '../../definitions/constants';
 
 import { Validator } from './validator';
 
-const validNumberPattern = /^[0-9.,]+$/;
-const validCurrencyPattern = /^(\d{1,3}(,\d{3})+|\d+)(\.\d{1,2})?$/;
-
-const isEmpty = (value: string | string[]): boolean => {
-  value = (value as string)?.trim();
-  return !value || value.length === 0;
-};
-
-const isInvalidNumber = (value: string | string[]): boolean => {
-  value = (value as string)?.trim();
-  return !validNumberPattern.test(value) || !validCurrencyPattern.test(value);
-};
-
-const isNumberLessThanSingleDigit = (value: string | string[]): boolean => {
-  value = (value as string)?.trim();
-  const numericValue = parseFloat(value.replace(/,/g, ''));
-  return numericValue < 1;
-};
+const validCurrencyPattern = /^£?(\d{1,3}(,\d{3})*|\d+)(\.\d{0,2})?$/;
+const regExpToReplace = /[£,]/g;
+const minCurrencyValue = 0.01;
+const maxCurrencyValue = 9999999.99;
 
 export const isValidCurrency: Validator = value => {
-  if (isEmpty(value)) {
+  const str = (value as string)?.trim();
+  if (!str || str.length === 0) {
     return;
   }
 
-  if (isInvalidNumber(value)) {
+  if (!validCurrencyPattern.test(str)) {
     return ValidationErrors.INVALID_CURRENCY;
   }
 
-  if (isNumberLessThanSingleDigit(value)) {
-    return ValidationErrors.MIN_LENGTH_REQUIRED;
+  const numeric = parseFloat(str.replace(regExpToReplace, ''));
+  if (numeric < minCurrencyValue) {
+    return ValidationErrors.INVALID_CURRENCY;
+  }
+
+  if (numeric > maxCurrencyValue) {
+    return ValidationErrors.TOO_HIGH_CURRENCY;
   }
 };
