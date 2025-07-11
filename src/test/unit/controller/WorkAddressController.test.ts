@@ -58,6 +58,37 @@ describe('Update Work Address Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/work-postcode-enter');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
+
+  it('should redirect WORK_POSTCODE_ENTER when returnUrl is cya and yes is selected', () => {
+    const body = { claimantWorkAddressQuestion: YesOrNo.YES };
+
+    const controller = new WorkAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith('/check-your-answers');
+  });
+
+  it('should redirect CHECK_ANSWERS when returnUrl is cya and no is selected', () => {
+    const body = { claimantWorkAddressQuestion: YesOrNo.NO };
+
+    const controller = new WorkAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/work-postcode-enter');
+  });
+
   it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO, saveForLater: true };
 
@@ -71,6 +102,7 @@ describe('Update Work Address Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
+
   it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', () => {
     const body = { saveForLater: true };
 
@@ -84,6 +116,7 @@ describe('Update Work Address Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
+
   it('should redirect to undefined when save as draft not clicked and no answer selected', () => {
     const body = { saveForLater: false };
 
@@ -98,6 +131,7 @@ describe('Update Work Address Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(undefined);
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
+
   it('should redirect to undefined when save as draft not selected and no answer', () => {
     const body = {};
 
@@ -112,6 +146,7 @@ describe('Update Work Address Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(undefined);
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
+
   it('should throw error, when session errors exists and unable to save session', () => {
     const body = { saveForLater: false };
 

@@ -38,7 +38,7 @@ export default class WorkPostCodeSelectController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, true);
   };
 
   @CaseStateCheck()

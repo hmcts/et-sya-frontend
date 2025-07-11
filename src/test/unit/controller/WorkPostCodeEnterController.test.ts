@@ -1,4 +1,5 @@
 import WorkPostCodeEnterController from '../../../main/controllers/WorkPostCodeEnterController';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,6 +12,16 @@ describe('Work Postcode Enter Controller', () => {
   it('should render the Work Enter Postcode page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
+
+    new WorkPostCodeEnterController().get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith('work-postcode-enter', expect.anything());
+  });
+
+  it('should render the Work Enter Postcode page when returnUrl is CHECK_ANSWERS', () => {
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.returnUrl = PageUrls.CHECK_ANSWERS;
 
     new WorkPostCodeEnterController().get(request, response);
 
