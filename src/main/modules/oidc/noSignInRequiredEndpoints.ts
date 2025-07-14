@@ -10,7 +10,6 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.ACAS_MULTIPLE_CLAIM,
   PageUrls.VALID_ACAS_REASON,
   PageUrls.CONTACT_ACAS,
-  PageUrls.TYPE_OF_CLAIM,
   PageUrls.COOKIE_PREFERENCES,
   PageUrls.RETURN_TO_EXISTING,
   PageUrls.ACCESSIBILITY_STATEMENT,

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -75,6 +76,7 @@ export default class StillWorkingController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.stillWorkingContent, [
       TranslationKeys.COMMON,
