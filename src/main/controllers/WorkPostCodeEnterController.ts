@@ -43,7 +43,7 @@ export default class WorkPostCodeEnterController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.WORK_POSTCODE_SELECT);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, true);
   };
 
   @CaseStateCheck()
