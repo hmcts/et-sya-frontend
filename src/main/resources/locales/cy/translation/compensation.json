@@ -19,8 +19,8 @@
       "tooLong": "Rhaid i fanylion am yr Iawndal rydych yn ei hawlio fod yn llai na 2500 o lythrennau"
     },
     "compensationAmount": {
-      "invalidCurrency": "<W>Enter compensation in the correct format, for example £600 or £193.54",
-      "tooHighCurrency": "<W>Compensation must be £9,999,999.99 or less"
+      "invalidCurrency": "Rhowch Iawndal yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Iawndal fod yn £9,999,999.99 neu lai"
     }
   }
 }

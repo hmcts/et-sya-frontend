@@ -7,8 +7,8 @@
   "errors": {
     "newJobPay": {
       "required": "Dywedwch beth yw eich Cyflog cyn treth ac YG",
-      "invalidCurrency": "<W>Enter pay before tax and NI in the correct format, for example £600 or £193.54",
-      "tooHighCurrency": "<W>Pay before tax and NI must be £9,999,999.99 or less"
+      "invalidCurrency": "Rhowch Cyflog cyn treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog cyn treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "newJobPayInterval": {
       "required": "Dywedwch wrthym pa mor aml oeddech chi’n cael tâl."

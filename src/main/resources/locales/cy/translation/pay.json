@@ -9,13 +9,13 @@
   "errors": {
     "payBeforeTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
-      "invalidCurrency": "<W>Enter pay before tax and NI in the correct format, for example £600 or £193.54",
-      "tooHighCurrency": "<W>Pay before tax and NI must be £9,999,999.99 or less"
+      "invalidCurrency": "Rhowch Cyflog cyn treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog cyn treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "payAfterTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
-      "invalidCurrency": "<W>Enter pay after tax and NI in the correct format, for example £600 or £193.54",
-      "tooHighCurrency": "<W>Pay after tax and NI must be £9,999,999.99 or less"
+      "invalidCurrency": "Rhowch Cyflog ar ôl treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog ar ôl treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "payInterval": {
       "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl cyn treth ac YG.",
