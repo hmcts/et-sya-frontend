@@ -25,6 +25,7 @@ describe('Validation', () => {
     { mockRef: '0.01', expected: undefined },
     { mockRef: '9,999,999.99', expected: undefined },
     { mockRef: '9999999.99', expected: undefined },
+    { mockRef: '£100', expected: undefined },
   ];
 
   const invalidCurrency: ValidationTestCase[] = [
