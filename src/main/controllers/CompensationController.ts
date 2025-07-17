@@ -15,7 +15,7 @@ import { getLogger } from '../logger';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
-const compensation_amount: CurrencyFormFields = {
+const compensationAmountField: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
   id: 'compensation-amount',
   label: (l: AnyRecord): string => l.amountLabel,
@@ -36,7 +36,7 @@ export default class CompensationController {
         attributes: { title: 'Compensation outcome text area' },
         validator: isContent2500CharsOrLess,
       },
-      compensationAmount: compensation_amount,
+      compensationAmount: compensationAmountField,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
@@ -47,14 +47,7 @@ export default class CompensationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl;
-    if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
-    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
-    } else {
-      redirectUrl = PageUrls.LINKED_CASES;
-    }
+    const redirectUrl = getRedirectUrl(req);
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
@@ -70,3 +63,13 @@ export default class CompensationController {
     });
   };
 }
+
+const getRedirectUrl = (req: AppRequest): string => {
+  if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+    return PageUrls.TRIBUNAL_RECOMMENDATION;
+  } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+    return PageUrls.WHISTLEBLOWING_CLAIMS;
+  } else {
+    return PageUrls.LINKED_CASES;
+  }
+};

@@ -19,19 +19,19 @@ import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-const pay_before_tax: CurrencyFormFields = {
+const payBeforeTaxField: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
   id: 'pay-before-tax',
   label: (l: AnyRecord): string => l.payBeforeTax,
 };
 
-const pay_after_tax: CurrencyFormFields = {
+const payAfterTaxField: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
   id: 'pay-after-tax',
   label: (l: AnyRecord): string => l.payAfterTax,
 };
 
-const pay_interval: PayIntervalRadioFormFields = {
+const payIntervalField: PayIntervalRadioFormFields = {
   ...DefaultPayIntervalRadioFormFields,
   id: 'pay-interval',
   label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
@@ -43,9 +43,9 @@ export default class PayController {
   private readonly form: Form;
   private readonly payContent: FormContent = {
     fields: {
-      payBeforeTax: pay_before_tax,
-      payAfterTax: pay_after_tax,
-      payInterval: pay_interval,
+      payBeforeTax: payBeforeTaxField,
+      payAfterTax: payAfterTaxField,
+      payInterval: payIntervalField,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
