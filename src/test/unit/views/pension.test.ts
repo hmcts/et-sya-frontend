@@ -16,7 +16,7 @@ const pensionJson = JSON.parse(pensionJsonRaw);
 const titleClass = 'govuk-fieldset__legend';
 const expectedTitle = pensionJson.h1;
 const buttonClass = 'govuk-button';
-const inputs = 'govuk-input--width-5';
+const inputs = 'govuk-input--width-10';
 const radios = 'govuk-radios';
 
 let htmlRes: Document;

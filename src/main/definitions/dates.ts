@@ -10,7 +10,7 @@ import {
   isDateInputInvalid,
   isDateNotInPast,
   isDateNotPartial,
-} from '../components/form/dateValidators';
+} from '../components/form/date-validator';
 
 import { CaseDate } from './case';
 import { InvalidField } from './form';

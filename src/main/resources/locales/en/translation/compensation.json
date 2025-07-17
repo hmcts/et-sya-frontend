@@ -19,7 +19,8 @@
       "tooLong": "The details for the Compensation you are claiming must be entered as less than 2500 characters"
     },
     "compensationAmount": {
-      "invalidCurrency": "Amount must only contain numbers and a decimal point/comma (if required). For example: 1500 25000  25,000.00 etc"
+      "invalidCurrency": "Enter compensation in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Compensation must be £9,999,999.99 or less"
     }
   }
 }

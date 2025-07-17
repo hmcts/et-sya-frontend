@@ -9,13 +9,13 @@
   "errors": {
     "payBeforeTax": {
       "required": "Tell us at least one amount for your Pay ",
-      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10",
-      "notANumber": "Pay before tax must be entered as a number and a minimum of double figures. For example 10"
+      "invalidCurrency": "Enter pay before tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Pay before tax and NI must be £9,999,999.99 or less"
     },
     "payAfterTax": {
       "required": "Tell us at least one amount for your Pay",
-      "minLengthRequired": "Pay after tax and NI must be a minimum of double figures. For example £10",
-      "notANumber": "Pay after tax must be entered as a number and a minimum of double figures. For example 10"
+      "invalidCurrency": "Enter pay after tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Pay after tax and NI must be £9,999,999.99 or less"
     },
     "payInterval": {
       "payBeforeTax": "Tell us a Frequency for Pay before tax and NI",

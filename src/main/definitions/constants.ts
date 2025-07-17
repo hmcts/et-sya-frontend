@@ -314,6 +314,8 @@ export const ErrorPages = {
 export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',
+  INVALID_CURRENCY: 'invalidCurrency',
+  TOO_HIGH_CURRENCY: 'tooHighCurrency',
 } as const;
 
 export const AuthUrls = {

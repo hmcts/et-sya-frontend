@@ -5,7 +5,7 @@ import {
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
   isValidUKPostcode,
-} from '../../components/form/address_validator';
+} from '../../components/form/address-validator';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';

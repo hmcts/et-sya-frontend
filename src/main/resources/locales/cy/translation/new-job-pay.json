@@ -7,8 +7,8 @@
   "errors": {
     "newJobPay": {
       "required": "Dywedwch beth yw eich Cyflog cyn treth ac YG",
-      "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
-      "notANumber": "Rhaid i dâl cyn treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+      "invalidCurrency": "Rhowch Cyflog cyn treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog cyn treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "newJobPayInterval": {
       "required": "Dywedwch wrthym pa mor aml oeddech chi’n cael tâl."
