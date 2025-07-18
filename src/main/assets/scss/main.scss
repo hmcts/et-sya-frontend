@@ -1,5 +1,4 @@
 @import 'govuk-frontend';
-@import '~@hmcts/frontend/all';
 @import './utilities/borders';
 @import 'patterns/task-list';
 @import 'patterns/timeout-modal';
@@ -114,18 +113,104 @@ $lightgrey-panel: #d3d3d3;
   }
 }
 
-.hmcts-progress-bar__icon {
-  border: 1px solid $govuk-grey;
+// ==========================================================================
+// #PROGRESS BAR
+// ==========================================================================
 
-  .hmcts-progress-bar__icon--complete {
-    background-color: $govuk-blue;
-  }
+.hmcts-progress-bar {
+  margin-bottom: govuk-spacing(7);
 }
 
 .hmcts-progress-bar__list {
-  &::before {
-    border-top: 6px solid $govuk-grey;
+  font-size: 0; // Hide white space between elements
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: justify;
+  vertical-align: top;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
   }
+
+  &::before {
+    border-top: 6px solid govuk-colour('green');
+    content: '';
+    left: 0;
+    position: absolute;
+    top: 13px;
+    width: 100%;
+  }
+}
+
+.hmcts-progress-bar__list-item {
+  @include govuk-font(19);
+  display: inline-block;
+  max-width: 20%;
+  position: relative;
+  text-align: center;
+  vertical-align: top;
+
+  &:first-child,
+  &:last-child {
+    &::before {
+      border-top: 6px solid govuk-colour('white');
+      content: '';
+      left: 0;
+      position: absolute;
+      top: 13px;
+      width: 50%;
+    }
+  }
+
+  &:first-child {
+    &::before {
+      left: 0;
+    }
+  }
+
+  &:last-child {
+    &::before {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  &[aria-current='step'] {
+    // https://tink.uk/using-the-aria-current-attribute
+    font-weight: 700;
+  }
+}
+
+.hmcts-progress-bar__icon {
+  background-color: govuk-colour('white');
+  border: 6px solid govuk-colour('green');
+  border-radius: 50%; // IE8 does not support border radius but we’re ok with that
+  box-sizing: border-box;
+  display: block;
+  height: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 32px;
+}
+
+.hmcts-progress-bar__icon--complete {
+  background-color: govuk-colour('green');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.hmcts-progress-bar__label {
+  @include govuk-font(16);
+  display: block;
+  font-weight: inherit;
+  margin-top: 10px;
+  position: relative;
+  word-wrap: break-word; // Just in case
 }
 
 .top-border-blue {
@@ -141,5 +226,22 @@ $lightgrey-panel: #d3d3d3;
   .govuk-table {
     display: block;
     overflow-x: auto;
+  }
+}
+
+@media (min-width: 48.0625em) {
+  .govuk-header__logo {
+    width: fit-content;
+  }
+
+  .govuk-header__content {
+    float: right;
+    width: fit-content;
+  }
+}
+
+.govuk-header__navigation-item {
+  &:last-child {
+    float: right;
   }
 }

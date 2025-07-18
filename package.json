@@ -10,7 +10,8 @@
     "*.{css,scss}": "stylelint --fix && prettier --write"
   },
   "scripts": {
-    "postinstall": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
+    "setup:husky": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
+    "postinstall": "yarn setup:husky && yarn build",
     "start": "NODE_ENV=production yarn node src/main/server.js",
     "start:dev": "nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
@@ -43,7 +44,6 @@
   "dependencies": {
     "@faker-js/faker": "^9.0.0",
     "@hmcts/cookie-manager": "^1.0.0",
-    "@hmcts/frontend": "^0.0.50-alpha",
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.8.0",
     "@hmcts/nodejs-logging": "^4.0.4",
@@ -75,7 +75,7 @@
     "express": "^4.20.0",
     "express-rate-limit": "^7.0.0",
     "express-session": "^1.17.3",
-    "govuk-frontend": "^4.6.0",
+    "govuk-frontend": "^5.11.0",
     "helmet": "^8.0.0",
     "i18next": "^24.1.2",
     "i18next-http-middleware": "^3.3.0",
@@ -120,7 +120,7 @@
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
-    "babel-loader": "^9.1.2",
+    "babel-loader": "^10.0.0",
     "chai": "^4.3.7",
     "chai-as-promised": "^8.0.0",
     "copy-webpack-plugin": "^12.0.0",
@@ -135,7 +135,7 @@
     "html-webpack-plugin": "^5.5.1",
     "husky": "^9.0.0",
     "jest": "^29.6.2",
-    "jest-pact": "0.11.3",
+    "jest-pact": "0.11.4",
     "jest_workaround": "^0.79.19",
     "lint-staged": "^15.0.0",
     "mini-css-extract-plugin": "^2.7.5",
@@ -164,7 +164,7 @@
   "resolutions": {
     "@swc/core": "1.3.82",
     "axios": "^1.7.4",
-    "@opentelemetry/instrumentation": "^0.202.0",
+    "@opentelemetry/instrumentation": "^0.203.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",

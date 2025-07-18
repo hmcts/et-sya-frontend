@@ -1,7 +1,13 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import {
+  Applicant,
+  NotificationSubjects,
+  PageUrls,
+  acknowledgementOfClaimDocTypes,
+  languages,
+} from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
@@ -48,12 +54,25 @@ export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
   );
 };
 
-export const shouldShowAcknowledgementAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
-  return (
-    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
+export const getAcknowledgementAlert = (
+  userCase: CaseWithId,
+  hubLinksStatuses: HubLinksStatuses
+): {
+  shouldShowAlert: boolean;
+  isAcknowledgementOfClaimOnly: boolean;
+  respondentResponseDeadline?: string;
+} => {
+  const isLetterExist = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
+  return {
+    shouldShowAlert:
+      isLetterExist &&
+      hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+      hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
+    isAcknowledgementOfClaimOnly:
+      isLetterExist &&
+      userCase.acknowledgementOfClaimLetterDetail.every(doc => acknowledgementOfClaimDocTypes.includes(doc.type ?? '')),
+    respondentResponseDeadline: userCase?.respondentResponseDeadline,
+  };
 };
 
 export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {
@@ -88,7 +107,7 @@ export const shouldShowClaimantTribunalResponseReceived = (notifications: SendNo
 
 // Only show new respondent applications if there are applications that are not started yet
 // notStartedYet applications can also be ones where the tribunal has asked the claimant for more information.
-// Therefore make sure also that there's a notStartedYet application with no requests for information
+// Therefore, make sure also that there's a notStartedYet application with no requests for information
 export const shouldShowRespondentApplicationReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
   return applications?.some(
     app =>
@@ -103,7 +122,7 @@ export const shouldShowRespondentRejection = (userCase: CaseWithId, hubLinksStat
   );
 };
 
-export const shouldShowRespondentAcknolwedgement = (
+export const shouldShowRespondentAcknowledgement = (
   userCase: CaseWithId,
   hubLinksStatuses: HubLinksStatuses
 ): boolean => {
@@ -180,7 +199,9 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
 };
 
 export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
-  return userCase.genericTseApplicationCollection?.filter(item => item.value.applicant === Applicant.CLAIMANT);
+  return userCase.genericTseApplicationCollection?.filter(
+    item => item.value.applicant === Applicant.CLAIMANT || item.value.applicant === Applicant.CLAIMANT_REP
+  );
 };
 
 export const getClaimantAppsAndUpdateStatusTag = (userCase: CaseWithId): void => {
@@ -215,7 +236,7 @@ export const updateYourApplicationsStatusTag = (
     // If claimant responds to tribunal request, hub link status set to 'In progress'
     // Only set if it is not already set to 'Updated', as 'Updated' is the higher priority status
     if (
-      lastItem.value.from === Applicant.CLAIMANT &&
+      (lastItem.value.from === Applicant.CLAIMANT || lastItem.value.from === Applicant.CLAIMANT_REP) &&
       isAdmin &&
       citizenHubHighestPriorityStatus !== HubLinkStatus.UPDATED
     ) {

@@ -53,8 +53,10 @@
     "acknowledgement": {
       "header": "The tribunal has acknowledged your claim",
       "link": "View the Acknowledgement of Claim",
-      "p1": "The tribunal has also served a Notice of Claim to the respondent and set a hearing date.",
-      "p2": "<span class=\"govuk-body govuk-!-font-weight-bold\">What happens next</span><br>The tribunal has asked the respondent to respond to your claim by"
+      "p1a": "The tribunal has also served a Notice of Claim to the respondent.",
+      "p1b": "The tribunal has also served a Notice of Claim to the respondent and set a hearing date.",
+      "p21": "What happens next",
+      "p22": "The tribunal has asked the respondent to respond to your claim by"
     },
     "rejection": {
       "header": "The tribunal has rejected all or part of your claim",
@@ -116,6 +118,12 @@
         }
       },
       "link": "View your response"
+    },
+    "claimantRepresented": {
+      "title": "You are now being legally represented by",
+      "p1": "You will be kept updated with case communication but will no longer be able to",
+      "l1": "Submit applications",
+      "l2": "Directly respond to applications or notifications"
     }
   },
   "multiples": {

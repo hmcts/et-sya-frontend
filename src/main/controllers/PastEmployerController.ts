@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -11,7 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, isReturnUrlIsCheckAnswers } from './helpers/RouterHelpers';
 
 const logger = getLogger('PastEmployerController');
 
@@ -51,9 +52,17 @@ export default class PastEmployerController {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
       : PageUrls.FIRST_RESPONDENT_NAME;
+
+    if (isReturnUrlIsCheckAnswers(req)) {
+      const shouldRedirect =
+        redirectUrl === PageUrls.STILL_WORKING && req.session.userCase?.isStillWorking === undefined;
+      return handlePostLogic(req, res, this.form, logger, redirectUrl, shouldRedirect);
+    }
+
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.pastEmployerFormContent, [
       TranslationKeys.COMMON,

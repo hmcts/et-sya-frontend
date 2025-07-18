@@ -6,10 +6,10 @@
   "status": "Status",
   "Amend my claim": "Amend my claim",
   "Change my personal details": "Change my personal details",
-  "Tell tribunal respondent not complied": "Tell tribunal respondent not complied",
+  "Tell tribunal respondent not complied": "Tell tribunal other party not complied",
   "Consider a decision afresh": "Consider a decision afresh",
   "Contact about something else": "Contact about something else",
-  "Order respondent to do something": "Order respondent to do something",
+  "Order respondent to do something": "Order other party to do something",
   "Order a witness to attend": "Order a witness to attend",
   "Postpone a hearing": "Postpone a hearing",
   "Reconsider judgement": "Reconsider judgement",
@@ -17,5 +17,17 @@
   "Strike out all/part of response": "Strike out all/part of response",
   "Vary/revoke an order": "Vary or revoke an order",
   "Withdraw all/part of claim": "Withdraw my claim",
-  "withdraw": "Withdraw my claim"
+  "withdraw": "Withdraw my claim",
+
+  "Amend claim": "Amend claim",
+  "Change personal details": "Change personal details",
+  "Consider decision afresh": "Consider decision afresh",
+  "Contact the tribunal": "Contact the tribunal",
+  "Order a witness to attend to give evidence": "Order a witness to attend to give evidence",
+  "Order other party": "Order other party",
+  "Reconsider judgment": "Reconsider judgment",
+  "Respondent not complied": "Respondent not complied",
+  "Strike out all or part of the response": "Strike out all or part of the response",
+  "Vary or revoke an order": "Vary or revoke an order",
+  "Withdraw all or part of claim": "Withdraw all or part of claim"
 }
