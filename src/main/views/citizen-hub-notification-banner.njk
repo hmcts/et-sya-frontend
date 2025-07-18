@@ -1,5 +1,9 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
+{% include "citizen-hub-notification-banner/notifications-claimant-represented.njk"%}
+
+{% if not claimantRepresented %}
+
 {% set htmlForSubmittedAlert %}
 
 {% if showSubmittedAlert %}
@@ -201,6 +205,7 @@
   {% endfor %}
 {% endif %}
 
+
 {% include "citizen-hub-notification-banner/notifications-hearings.njk"%}
 
 {% include "citizen-hub-notification-banner/notifications.njk"%}
@@ -258,3 +263,4 @@
       })
   }}
 {% endfor %}
+{% endif %}
