@@ -14,7 +14,7 @@ import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { conditionalRedirect, isReturnUrlIsCheckAnswers, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('WorkAddressController');
 
@@ -51,6 +51,9 @@ export default class WorkAddressController {
       }
       if (saveForLater) {
         redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+        return res.redirect(redirectUrl);
+      } else if (isReturnUrlIsCheckAnswers(req) && !isRespondentAndWorkAddressSame) {
+        redirectUrl = setUrlLanguage(req, redirectUrl);
         return res.redirect(redirectUrl);
       } else {
         redirectUrl = setUrlLanguage(req, redirectUrl);
