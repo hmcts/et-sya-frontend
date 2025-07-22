@@ -33,7 +33,6 @@ src/test/end-to-end/functional-output/*
 /dump.rdb
 
 .pnp.*
-.yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
