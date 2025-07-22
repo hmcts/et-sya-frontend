@@ -85,3 +85,7 @@ export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger:
 export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery => {
   return urlModule.parse(redirectUrl);
 };
+
+export const isReturnUrlIsCheckAnswers = (req: AppRequest): boolean => {
+  return req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS);
+};

@@ -47,6 +47,7 @@ export class Helmet {
       "'sha256-TrZe7TNXf5jal9UL8qSy3pDcRFvZ3IbumaN7m05kuqY='",
       "'sha256-aXmvy0r4VTfGzDelklEkOYupLUj3qI9Gwx8DXWQb4YE='",
       "'sha256-BxZiXSZ/Vto7GjFKGm4Sdu3xoxmzp1Xjm7HSW3lLUvQ='",
+      "'sha256-GUQ5ad8JK5KmEWmROf3LZd9ge94daqNvd8xy9YS1iDw='",
       idamUrl,
       webChat,
       webChat_cf,
@@ -103,6 +104,7 @@ export class Helmet {
           scriptSrc,
           styleSrc,
           formAction: [self, ...formActionUrls],
+          manifestSrc: [self],
         },
       })
     );

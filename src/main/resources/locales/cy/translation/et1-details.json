@@ -16,7 +16,6 @@
     "takePartInHearing": "A fyddech chi’n gallu cymryd rhan mewn gwrandawiadau drwy fideo a dros y ffôn?",
     "disability": "A oes gennych anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu bod angen cymorth arnoch yn ystod eich achos?",
     "title": "Teitl o ddewis",
-    "notSelected": "Dim byd wedi ei ddewis",
     "male": "Gwryw",
     "female": "Benyw",
     "preferNotToSay": "Mae’n well gen i beidio dweud",
@@ -24,20 +23,15 @@
     "post": "Trwy’r post",
     "video": "Fideo",
     "phone": "Ffôn",
-    "neither": "Dim un",
-    "yes": "Oes",
-    "no": "Nac oes"
+    "neither": "Dim un"
   },
   "contactDetails": {
     "header": "Manylion cyswllt",
-    "telephone": "Rhif ffôn",
-    "notProvided": "Dim byd wedi ei ddarparu"
+    "telephone": "Rhif ffôn"
   },
   "employmentDetails": {
     "header": "Manylion cyflogaeth",
     "didYouWorkFor": "A wnaethoch chi weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
-    "didYouWorkForYes": "Do",
-    "didYouWorkForNo": "Naddo",
     "isStillWorking": "A ydych chi’n dal i weithio i’r sefydliad neu’r unigolyn rydych yn gwneud eich hawliad yn ei erbyn?",
     "jobTitle": "Teitl y swydd",
     "startDate": "Dyddiad cychwyn y gyflogaeth",
@@ -64,9 +58,7 @@
     "monthly": "Misol",
     "annual": "Blynyddol",
     "months": "Misoedd",
-    "weeks": "Wythnosau",
-    "yes": "Oes",
-    "no": "Nac oes"
+    "weeks": "Wythnosau"
   },
   "respondentDetails": {
     "header": "Atebydd ",
@@ -82,9 +74,7 @@
     "name": "Enw",
     "telephone": "Rhif ffôn yn y DU",
     "officeAddress": "Cyfeiriad cofrestredig neu brif swyddfa",
-    "workAddress": "Cyfeiriad gwaith",
-    "yes": "Do",
-    "no": "Naddo"
+    "workAddress": "Cyfeiriad gwaith"
   },
   "acasReason": {
     "another": "Mae gan rywun arall rwy’n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
@@ -143,5 +133,13 @@
   },
   "addAnotherRespondent": "Ychwanegu atebydd arall",
   "removeRespondent": "Dileu atebydd",
-  "linkToAmendTheClaim": "Welsh translation required <a href='/contact-the-tribunal/amend?lng=cy' class=\"govuk-link\">Welsh translation required</a>"
+  "doYesOrNo": {
+    "yes": "Do",
+    "no": "Naddo"
+  },
+  "oesYesOrNo": {
+    "yes": "Oes",
+    "no": "Nac oes"
+  },
+  "notProvided": "Dim byd wedi ei ddarparu"
 }

@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { validatePersonalDetails } from '../components/form/claimDetailsValidator';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -12,6 +13,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
 const logger = getLogger('PersonalDetailsCheckController');
 
 export default class PersonalDetailsCheckController {
@@ -60,6 +62,7 @@ export default class PersonalDetailsCheckController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.personalDetailsCheckContent, [
       TranslationKeys.COMMON,
