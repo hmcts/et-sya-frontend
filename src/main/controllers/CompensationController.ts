@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CurrencyFormFields, DefaultCompensationCurrencyFormFields } from '../definitions/currency-fields';
@@ -57,6 +58,7 @@ export default class CompensationController {
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.compensationFormContent, [
       TranslationKeys.COMMON,

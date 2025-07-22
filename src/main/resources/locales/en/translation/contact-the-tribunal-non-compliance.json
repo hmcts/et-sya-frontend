@@ -1,15 +1,15 @@
 {
-  "title": "Tell the tribunal the respondent has not complied",
-  "applicationType": "Tell the tribunal the respondent has not complied",
-  "applicationTitle": "Tell the tribunal the respondent has not complied with an order",
+  "title": "Tell the tribunal the other party has not complied",
+  "applicationType": "Tell the tribunal the other party has not complied",
+  "applicationTitle": "Tell the tribunal the other party has not complied with an order",
   "content": [
     {
       "type": "paragraph",
-      "text": "Use this form to tell us that the respondent has not complied with all or part of an order from the tribunal."
+      "text": "Use this form to tell us that the other party has not complied with all or part of an order from the tribunal."
     },
     {
       "type": "paragraph",
-      "text": "You should try to resolve your complaint with the respondent. Only use this form if that is not possible."
+      "text": "You should try to resolve your complaint with the other party. Only use this form if that is not possible."
     },
     { "type": "bold-paragraph", "text": "Details to include in your application:" },
     {
@@ -17,7 +17,7 @@
       "items": [
         "which order has not been complied with",
         "the date the tribunal issued the order",
-        "what the respondent has not done",
+        "what the other party has not done",
         "what you want the tribunal to do next"
       ]
     }

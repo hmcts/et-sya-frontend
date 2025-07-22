@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -13,7 +14,7 @@ import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { conditionalRedirect, isReturnUrlIsCheckAnswers, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('WorkAddressController');
 
@@ -51,6 +52,9 @@ export default class WorkAddressController {
       if (saveForLater) {
         redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
         return res.redirect(redirectUrl);
+      } else if (isReturnUrlIsCheckAnswers(req) && !isRespondentAndWorkAddressSame) {
+        redirectUrl = setUrlLanguage(req, redirectUrl);
+        return res.redirect(redirectUrl);
       } else {
         redirectUrl = setUrlLanguage(req, redirectUrl);
         returnNextPage(req, res, redirectUrl);
@@ -60,6 +64,7 @@ export default class WorkAddressController {
     }
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const respondentIndex = getRespondentIndex(req);
     const respondent = req.session.userCase.respondents[respondentIndex];
