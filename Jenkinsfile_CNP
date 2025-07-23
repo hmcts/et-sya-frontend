@@ -238,7 +238,7 @@ withPipeline(type, product, component) {
                 getAndPutDTSynthetic = utils.getDynatraceSyntheticBody (
                             config.dynatraceApiHost,
                             config.dynatraceUpdateSyntheticEndpoint,
-                            config.dynatraceSyntheticTest,
+                            "SYNTHETIC_TEST-58D99F542AAB721C",   // Check test
                             "true")
             } catch (Exception e)
             {
