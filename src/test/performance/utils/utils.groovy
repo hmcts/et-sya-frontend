@@ -233,6 +233,7 @@ def getDynatraceSyntheticBody(dynatraceApiHost,dynatraceUpdateSyntheticEndpoint,
         url: "${dynatraceApiHost}${dynatraceUpdateSyntheticEndpoint}${dynatraceSyntheticTest}"
     )
     echo "Check Synthetic Status: Response ${response}"
+    echo "Check Synthetic Response: ${response.content}"
     }
     catch (Exception e) {
         echo "Error while sending Request: ${e.message}"
