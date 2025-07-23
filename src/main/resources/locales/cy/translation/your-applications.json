@@ -17,5 +17,17 @@
   "Strike out all/part of response": "Dileu’r ymateb cyfan neu ran o’r ymateb",
   "Vary/revoke an order": "Amrywio neu ddiddymu gorchymyn",
   "Withdraw all/part of claim": "Tynnu fy hawliad yn ôl",
-  "withdraw": "Dynnu fy hawliad yn ôl"
+  "withdraw": "Dynnu fy hawliad yn ôl",
+
+  "Amend claim": "<placeholder>",
+  "Change personal details": "<placeholder>",
+  "Consider decision afresh": "<placeholder>",
+  "Contact the tribunal": "<placeholder>",
+  "Order a witness to attend to give evidence": "<placeholder>",
+  "Order other party": "<placeholder>",
+  "Reconsider judgment": "<placeholder>",
+  "Respondent not complied": "<placeholder>",
+  "Strike out all or part of the response": "<placeholder>",
+  "Vary or revoke an order": "<placeholder>",
+  "Withdraw all or part of claim": "<placeholder>"
 }

@@ -19,6 +19,7 @@ export default class ContactTheTribunalController {
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const DOCUMENTS = 'documents';
     const { hearingCollection } = req.session.userCase;
+    const claimantRepresented = req.session.userCase.claimantRepresentative;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -26,36 +27,39 @@ export default class ContactTheTribunalController {
 
     const languageParam = getLanguageParam(req.url);
     let applicationsToDisplay;
+    let applicationsAccordionItems;
 
     // if bundles not enabled or no hearings in future then remove documents from displayed application types
     const allowBundlesFlow =
       bundlesEnabled && hearingCollection?.length && createRadioBtnsForHearings(hearingCollection)?.length;
 
-    if (!allowBundlesFlow) {
-      applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
-    } else {
-      applicationsToDisplay = applications;
-    }
+    if (!claimantRepresented) {
+      if (!allowBundlesFlow) {
+        applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
+      } else {
+        applicationsToDisplay = applications;
+      }
 
-    const applicationsAccordionItems = applicationsToDisplay.map(application => {
-      const label = translations.sections[application].label;
-      const link =
-        application === DOCUMENTS
-          ? PageUrls.PREPARE_DOCUMENTS + languageParam
-          : `/contact-the-tribunal/${application}${languageParam}`;
-      return {
-        heading: {
-          text: label,
-        },
-        content: {
-          bodyText: translations.sections[application].body,
-          link: {
-            href: link,
+      applicationsAccordionItems = applicationsToDisplay.map(application => {
+        const label = translations.sections[application].label;
+        const link =
+          application === DOCUMENTS
+            ? PageUrls.PREPARE_DOCUMENTS + languageParam
+            : `/contact-the-tribunal/${application}${languageParam}`;
+        return {
+          heading: {
             text: label,
           },
-        },
-      };
-    });
+          content: {
+            bodyText: translations.sections[application].body,
+            link: {
+              href: link,
+              text: label,
+            },
+          },
+        };
+      });
+    }
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
@@ -65,6 +69,7 @@ export default class ContactTheTribunalController {
       ...content,
       hideContactUs: true,
       applicationsAccordionItems,
+      claimantRepresented,
       welshEnabled,
     });
   }
