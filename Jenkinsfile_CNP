@@ -233,7 +233,7 @@ withPipeline(type, product, component) {
         //==================================================================
         // For Preview -> Update the DT Synthetic Test with the correct URL & enable
         //==================================================================
-        /*    def getAndPutDTSynthetic = null
+            def getAndPutDTSynthetic = null
             try {
                 getAndPutDTSynthetic = utils.getDynatraceSyntheticBody (
                             config.dynatraceApiHost,
@@ -263,7 +263,7 @@ withPipeline(type, product, component) {
             {
                 echo "Failure Updating Dynatrace Synthetic: ${e.message}"
             }
-        */
+        
         //==========================================   
         //Trigger Dynatrace Synthetic Test
         //==========================================    
