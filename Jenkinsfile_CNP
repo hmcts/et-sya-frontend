@@ -60,6 +60,7 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
+  enablePerformanceTestStages()
   //enableSlackNotifications('#et-builds') // temp removal whilst wip
 
   afterAlways('build') {
@@ -158,6 +159,9 @@ withPipeline(type, product, component) {
             ])
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
+
+ 
+/*  COMMENTING OUT ALL PERF CODE AS COVERED IN MAIN PIPELINE    ******
 
   afterAlways('functionalTest:preview') {
 
@@ -311,6 +315,9 @@ withPipeline(type, product, component) {
         } //End of script
     } //End of Stage
   } // End of after always
+*/ // COMMENTING OUT ALL PERF CODE **
+
+
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
