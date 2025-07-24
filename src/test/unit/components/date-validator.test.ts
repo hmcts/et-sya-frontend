@@ -11,7 +11,7 @@ import {
   isDateNotInPast,
   isDateNotPartial,
   isFirstDateBeforeSecond,
-} from '../../../main/components/form/dateValidators';
+} from '../../../main/components/form/date-validator';
 import { CaseDate } from '../../../main/definitions/case';
 
 describe('areDateFieldsFilledIn()', () => {

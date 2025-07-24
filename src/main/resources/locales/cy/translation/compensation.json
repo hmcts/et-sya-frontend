@@ -19,7 +19,8 @@
       "tooLong": "Rhaid i fanylion am yr Iawndal rydych yn ei hawlio fod yn llai na 2500 o lythrennau"
     },
     "compensationAmount": {
-      "invalidCurrency": "Dim ond rhifau a phwynt degol/coma (os oes angen) ddylai’r swm eu cynnwys. Er enghraifft: 1500 25000  25,000.00 ayyb."
+      "invalidCurrency": "Rhowch Iawndal yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Iawndal fod yn £9,999,999.99 neu lai"
     }
   }
 }

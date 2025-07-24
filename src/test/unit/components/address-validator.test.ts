@@ -3,7 +3,7 @@ import {
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
   isValidUKPostcode,
-} from '../../../main/components/form/address_validator';
+} from '../../../main/components/form/address-validator';
 import { ValidationErrors } from '../../../main/definitions/constants';
 
 describe('Validation', () => {

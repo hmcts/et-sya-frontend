@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { isFirstDateBeforeSecond } from '../../components/form/dateValidators';
+import { isFirstDateBeforeSecond } from '../../components/form/date-validator';
 import { Form } from '../../components/form/form';
 import {
   arePayValuesNull,
