@@ -676,8 +676,8 @@ describe('set Serving Document Values()', () => {
     expect(result).toEqual([
       {
         id: 'abc123',
-        description: 'ET3 response "Response accepted" status document',
-        type: 'Response accepted',
+        description: 'ET3 form English version',
+        type: 'ET3',
       },
     ]);
   });
