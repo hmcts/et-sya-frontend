@@ -21,7 +21,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { acceptanceDocTypes } from '../../../main/definitions/constants';
+import { acceptanceDocTypes, et3NotificationDocTypes } from "../../../main/definitions/constants";
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -648,6 +648,37 @@ describe('set Serving Document Values()', () => {
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
     expect(result).toEqual(expected);
+  });
+
+  it('should retrieve Document with documentType', () => {
+    const documentCollection = [
+      {
+        id: '896180c5-8cf5-457f-99ca-edc5bdc3865b',
+        value: {
+          docNumber: '6',
+          documentType: 'Response accepted',
+          shortDescription: 'ET3 response "Response accepted" status document',
+          uploadedDocument: {
+            document_url: 'http://address/documents/abc123',
+            document_filename: 'Test.pdf',
+            document_binary_url: 'http://address/documents/abc123/binary',
+          },
+          topLevelDocuments: 'Response to a Claim',
+          dateOfCorrespondence: '2025-07-25',
+          responseClaimDocuments: 'Response accepted',
+        },
+      },
+    ];
+
+    const result = setDocumentValues(documentCollection, et3NotificationDocTypes);
+
+    expect(result).toEqual([
+      {
+        id: 'abc123',
+        description: 'ET3 response "Response accepted" status document',
+        type: 'Response accepted',
+      },
+    ]);
   });
 
   it('should retrieve serving Document id, type and description for ET3 and no description', () => {
