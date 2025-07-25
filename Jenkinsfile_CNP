@@ -21,6 +21,7 @@ def dynatraceTriggerSyntheticEndpoint
 def dynatraceSyntheticTest
 def dynatraceDashboardId
 def dynatraceEntitySelector
+def test
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
