@@ -8,7 +8,7 @@ nodejs:
     et:
       resourceGroup: et
       secrets:
-        - AppInsightsInstrumentationKey
+        - app-insights-connection-string
         - idam-secret
         - redis-access-key
         - os-places-token

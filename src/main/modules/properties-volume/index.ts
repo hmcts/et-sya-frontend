@@ -8,7 +8,7 @@ export class PropertiesVolume {
     if (server.locals.ENV !== 'development' && server.locals.ENV !== 'test') {
       propertiesVolume.addTo(config);
 
-      this.setSecret('secrets.et.AppInsightsInstrumentationKey', 'appInsights.instrumentationKey');
+      this.setSecret('secrets.et.app-insights-connection-string', 'appInsights.connectionString');
       this.setSecret('secrets.et.idam-secret', 'services.idam.clientSecret');
       this.setSecret('secrets.et.redis-access-key', 'session.redis.key');
       this.setSecret('secrets.et.redis-access-key', 'session.secret');

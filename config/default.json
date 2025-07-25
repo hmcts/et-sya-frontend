@@ -5,7 +5,7 @@
     "referrerPolicy": "origin"
   },
   "appInsights": {
-    "instrumentationKey": false,
+    "connectionString": false,
     "roleName": "et-sya"
   },
   "featureFlags": {
