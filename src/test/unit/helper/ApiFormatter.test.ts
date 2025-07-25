@@ -21,7 +21,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { acceptanceDocTypes } from '../../../main/definitions/constants';
+import { acceptanceDocTypes, et3FormDocTypes } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -648,6 +648,38 @@ describe('set Serving Document Values()', () => {
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
     expect(result).toEqual(expected);
+  });
+
+  it('should retrieve Document with documentType', () => {
+    const documentCollection = [
+      {
+        id: '566a7b37-665f-4cfd-9665-d195d3d10d10',
+        value: {
+          docNumber: '1',
+          documentType: 'ET3',
+          shortDescription: 'ET3 form English version',
+          uploadedDocument: {
+            category_id: 'C18',
+            document_url: 'http://address/documents/abc123',
+            document_filename: 'ET3 - RET-5938.pdf',
+            document_binary_url: 'http://address/documents/abc123/binary',
+          },
+          topLevelDocuments: 'Response to a Claim',
+          dateOfCorrespondence: '2025-07-25',
+          responseClaimDocuments: 'ET3',
+        },
+      },
+    ];
+
+    const result = setDocumentValues(documentCollection, et3FormDocTypes);
+
+    expect(result).toEqual([
+      {
+        id: 'abc123',
+        description: 'ET3 form English version',
+        type: 'ET3',
+      },
+    ]);
   });
 
   it('should retrieve serving Document id, type and description for ET3 and no description', () => {
