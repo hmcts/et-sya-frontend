@@ -1,5 +1,5 @@
-import { YesOrNo } from '../../definitions/case';
-import { TypeItem } from '../../definitions/util-types';
+import { YesOrNo } from '../case';
+import { TypeItem } from '../util-types';
 
 import { DocumentTypeItem } from './documentTypeItem';
 

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
@@ -18,13 +19,13 @@ import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-const pay_before_tax: CurrencyFormFields = {
+const payBeforeTaxField: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
   id: 'new-pay-before-tax',
   label: (l: AnyRecord): string => l.payBeforeTax,
 };
 
-const pay_interval: PayIntervalRadioFormFields = {
+const payIntervalField: PayIntervalRadioFormFields = {
   ...DefaultPayIntervalRadioFormFields,
   id: 'new-job-pay-interval',
   label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
@@ -36,8 +37,8 @@ export default class NewJobPayController {
   private readonly form: Form;
   private readonly newJobPayContent: FormContent = {
     fields: {
-      newJobPay: pay_before_tax,
-      newJobPayInterval: pay_interval,
+      newJobPay: payBeforeTaxField,
+      newJobPayInterval: payIntervalField,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
@@ -58,6 +59,7 @@ export default class NewJobPayController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);

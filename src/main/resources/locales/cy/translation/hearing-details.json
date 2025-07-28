@@ -1,0 +1,21 @@
+{
+  "header": "Gwrandawiadau",
+  "notification": "Hysbysiad",
+  "notificationDate": "Dyddiad yr Hysbysiad",
+  "notificationTitle": "Teitl yr Hysbysiad",
+  "status": "Statws",
+  "hearingDetails": "Manylion y Gwrandawiad",
+  "hearingDate": "Dyddiad y Gwrandawiad",
+  "hearingStatus": "Statws y Gwrandawiad",
+  "hearingVenue": "Lleoliad y Gwrandawiad",
+  "Postponed": "Wedi’i Ohirio",
+  "Heard": "Wedi’i Wrando",
+  "Listed": "Wedi’i Restru",
+  "Settled": "Wedi’i Setlo",
+  "Vacated": "Wedi’i Ddad-restru",
+  "Withdrawn": "Wedi’i Dynnu’n Ôl",
+  "notStartedYet": "Heb ddechrau eto",
+  "notViewedYet": "Heb ei weld eto",
+  "viewed": "Wedi’i weld",
+  "submitted": "Wedi'i gyflwyno"
+}

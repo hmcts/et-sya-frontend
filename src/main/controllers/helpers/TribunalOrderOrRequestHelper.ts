@@ -142,7 +142,7 @@ export const setNotificationBannerData = (
 };
 
 /**
- * Returns a filtered list of notifications where ANY criteria is matched:
+ * Returns a filtered list of notifications where ANY criteria are matched:
  * 1. Notification is not viewed or started yet
  * 2. A response on the notification is not viewed
  * 3. A response on the notification requires a response where none has been given yet
@@ -160,14 +160,9 @@ function isActionableNotification(notification: SendNotificationTypeItem): boole
   if (requiresResponse(notification.value) && !hasClaimantResponded(notification.value)) {
     return true;
   }
-  if (
-    notification.value.respondNotificationTypeCollection?.some(
-      r => claimantRelevant(r) && r.value?.isClaimantResponseDue
-    )
-  ) {
-    return true;
-  }
-  return false;
+  return !!notification.value.respondNotificationTypeCollection?.some(
+    r => claimantRelevant(r) && r.value?.isClaimantResponseDue
+  );
 }
 
 export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
@@ -177,15 +172,9 @@ export const anyResponseRequired = (sendNotification: SendNotificationTypeItem):
   if (sendNotification.value.notificationState === HubLinkStatus.NOT_STARTED_YET) {
     return true;
   }
-  if (
-    sendNotification.value?.respondNotificationTypeCollection?.some(
-      response => response.value?.isClaimantResponseDue === YesOrNo.YES
-    )
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  return !!sendNotification.value?.respondNotificationTypeCollection?.some(
+    response => response.value?.isClaimantResponseDue === YesOrNo.YES
+  );
 };
 
 export const activateTribunalOrdersAndRequestsLink = async (
@@ -195,7 +184,7 @@ export const activateTribunalOrdersAndRequestsLink = async (
   if (!items?.length) {
     return;
   }
-  let notices = [];
+  let notices: SendNotificationTypeItem[];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
 
   if (eccFlag) {
@@ -239,8 +228,26 @@ export const filterECCNotifications = async (
   return [];
 };
 
-export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  return notifications?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
+/**
+ * Filter out ECC notifications or Hearing only notifications
+ * @param notifications
+ */
+export const filterOutSpecialNotifications = (
+  notifications: SendNotificationTypeItem[]
+): SendNotificationTypeItem[] => {
+  return notifications?.filter(
+    it =>
+      !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC) &&
+      it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING
+  );
+};
+
+/**
+ * Check if any notication showAlert is true
+ * @param notifications
+ */
+export const shouldShowNotificationsBanner = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(notification => notification.showAlert);
 };
 
 function requiresResponse(notification: SendNotificationType) {
@@ -300,7 +307,7 @@ export const getNotificationResponses = async (
 
 const populateAdminResponse = async (
   response: RespondNotificationTypeItem,
-  req: AppRequest<Partial<AnyRecord>>,
+  req: AppRequest,
   translations: AnyRecord
 ): Promise<any> => {
   if (response.value.respondNotificationPartyToNotify === Parties.RESPONDENT_ONLY) {
@@ -409,11 +416,7 @@ const populateAdminResponse = async (
   ];
 };
 
-async function getNonAdminResponse(
-  response: TypeItem<PseResponseType>,
-  req: AppRequest<Partial<AnyRecord>>,
-  translations: AnyRecord
-) {
+async function getNonAdminResponse(response: TypeItem<PseResponseType>, req: AppRequest, translations: AnyRecord) {
   const responseDate = datesStringToDateInLocale(response.value.date, req.url);
   if (
     response.value.from === Applicant.CLAIMANT ||

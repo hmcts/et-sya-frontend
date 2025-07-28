@@ -62,7 +62,7 @@ describe('Pension controller', () => {
   });
 
   it('should render same page if an invalid value is entered', async () => {
-    const errors = [{ propertyName: 'claimantPensionWeeklyContribution', errorType: 'notANumber' }];
+    const errors = [{ propertyName: 'claimantPensionWeeklyContribution', errorType: 'invalidCurrency' }];
     const body = { claimantPensionContribution: YesOrNo.YES, claimantPensionWeeklyContribution: 'a' };
     const controller = new PensionController();
 
@@ -85,7 +85,9 @@ describe('Pension controller', () => {
     await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
-    expect(req.session.userCase).toStrictEqual(body);
+    expect(req.session.userCase).toStrictEqual({
+      ...body,
+    });
   });
 
   it('should reset contribution if No selected', async () => {

@@ -9,13 +9,13 @@
   "errors": {
     "payBeforeTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
-      "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
-      "notANumber": "Rhaid i dâl cyn treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+      "invalidCurrency": "Rhowch Cyflog cyn treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog cyn treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "payAfterTax": {
       "required": "Nodwch o leiaf un swm am eich Tâl",
-      "minLengthRequired": "Rhaid i dâl ar ôl treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
-      "notANumber": "Rhaid i dâl ar ôl treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+      "invalidCurrency": "Rhowch Cyflog ar ôl treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog ar ôl treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "payInterval": {
       "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl cyn treth ac YG.",

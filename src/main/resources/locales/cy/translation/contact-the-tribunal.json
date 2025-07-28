@@ -7,8 +7,8 @@
   "hideSection": "Cuddio",
   "landing_text": {
     "p1": "Defnyddiwch y ffurflen briodol i gyfathrebu â'r tribiwnlys.",
-    "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at yr atebydd a fydd yn cael cyfle i ymateb.",
-    "p3": "Efallai y byddwch yn gallu gofyn nad yw rhai manylion yn cael eu rhannu gyda’r atebydd."
+    "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at y parti arall a fydd yn cael cyfle i ymateb.",
+    "p3": "Efallai y byddwch yn gallu gofyn nad yw rhai manylion yn cael eu rhannu gyda’r parti arall."
   },
   "sections": {
     "withdraw": {
@@ -42,9 +42,9 @@
       "body": "Gwneud cais i ddiwygio eich hawliad ET1 - gan gynnwys ychwanegu neu ddileu hawliadau neu fanylion eich hawliad."
     },
     "respondent": {
-      "caption": "Gorchymyn yr atebydd",
-      "label": "Gorchymyn bod yr atebydd yn gwneud rhywbeth",
-      "body": "Gwneud cais i orchymyn bod yr atebydd yn gwneud neu’n darparu rhywbeth."
+      "caption": "Gorchymyn y parti arall",
+      "label": "Gorchymyn bod y parti arall yn gwneud rhywbeth",
+      "body": "Gwneud cais i orchymyn bod y parti arall yn gwneud neu’n darparu rhywbeth."
     },
     "witness": {
       "caption": "Gorchymyn tyst i fynychu",
@@ -52,9 +52,9 @@
       "body": "Gwneud cais i orchymyn bod tyst yn bresennol i roi tystiolaeth yn eich achos chi."
     },
     "non-compliance": {
-      "caption": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
-      "label": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
-      "body": "Dweud wrthym nad yw’r atebydd wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
+      "caption": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio",
+      "label": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio â gorchymyn",
+      "body": "Dweud wrthym nad yw’r parti arall wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
     },
     "publicity": {
       "caption": "Cyfyngu ar gyhoeddusrwydd",
@@ -64,7 +64,7 @@
     "strike": {
       "caption": "Dileu’r ymateb",
       "label": "Dileu’r cyfan neu ran o’r ymateb",
-      "body": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o ymateb yr atebydd."
+      "body": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o ymateb y parti arall."
     },
     "reconsider-judgement": {
       "caption": "Ailystyried dyfarniad",

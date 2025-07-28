@@ -224,7 +224,7 @@ describe('getRespondentSection', () => {
           text: 'The address you work or worked at',
         },
         value: {
-          text: '',
+          text: 'Not provided',
         },
       },
       {

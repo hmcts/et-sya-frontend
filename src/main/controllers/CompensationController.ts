@@ -2,9 +2,10 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { CurrencyFormFields, DefaultCompensationCurrencyFormFields } from '../definitions/currency-fields';
+import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -14,8 +15,8 @@ import { getLogger } from '../logger';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
-const compensation_amount: CurrencyFormFields = {
-  ...DefaultCompensationCurrencyFormFields,
+const compensationAmountField: CurrencyFormFields = {
+  ...DefaultCurrencyFormFields,
   id: 'compensation-amount',
   label: (l: AnyRecord): string => l.amountLabel,
 };
@@ -35,7 +36,7 @@ export default class CompensationController {
         attributes: { title: 'Compensation outcome text area' },
         validator: isContent2500CharsOrLess,
       },
-      compensationAmount: compensation_amount,
+      compensationAmount: compensationAmountField,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
@@ -46,17 +47,11 @@ export default class CompensationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl;
-    if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
-    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
-    } else {
-      redirectUrl = PageUrls.LINKED_CASES;
-    }
+    const redirectUrl = getRedirectUrl(req);
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.compensationFormContent, [
       TranslationKeys.COMMON,
@@ -68,3 +63,13 @@ export default class CompensationController {
     });
   };
 }
+
+const getRedirectUrl = (req: AppRequest): string => {
+  if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+    return PageUrls.TRIBUNAL_RECOMMENDATION;
+  } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+    return PageUrls.WHISTLEBLOWING_CLAIMS;
+  } else {
+    return PageUrls.LINKED_CASES;
+  }
+};

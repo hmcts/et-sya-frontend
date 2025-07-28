@@ -24,15 +24,15 @@ import {
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getAcknowledgementAlert,
   getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
-  shouldShowAcknowledgementAlert,
   shouldShowClaimantTribunalResponseReceived,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
-  shouldShowRespondentAcknolwedgement,
+  shouldShowRespondentAcknowledgement,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentRejection,
   shouldShowRespondentResponseReceived,
@@ -41,6 +41,7 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
+import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
   getAllAppsWithDecisions,
@@ -53,9 +54,10 @@ import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
   filterECCNotifications,
-  filterOutEcc,
+  filterOutSpecialNotifications,
   getClaimantTribunalResponseBannerContent,
   setNotificationBannerData,
+  shouldShowNotificationsBanner,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 import { getMultiplePanelData, showMutipleData } from '../helpers/multiples/MultiplePanelHelper';
@@ -153,7 +155,7 @@ export default class CitizenHubController {
     });
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
-    const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
+    const generalNotifications = filterOutSpecialNotifications(notifications);
     const eccNotifications = await filterECCNotifications(notifications);
 
     let respondentBannerContent = undefined;
@@ -192,17 +194,15 @@ export default class CitizenHubController {
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
-      showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
+      showAcknowledgementAlert: getAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),
       showClaimantTribunalResponseReceived: shouldShowClaimantTribunalResponseReceived(notifications),
       showRespondentApplicationReceived: respAppsReceived,
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
-      showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
+      showRespondentAcknowledgement: shouldShowRespondentAcknowledgement(userCase, hubLinksStatuses),
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
-      respondentResponseDeadline: userCase?.respondentResponseDeadline,
-      showOrderOrRequestReceived: notifications?.length,
-      showNotificationsBanner: notifications?.some(notification => notification.showAlert),
+      showNotificationsBanner: shouldShowNotificationsBanner(generalNotifications),
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
       storedPendingApplication: getStoredPendingBannerList(
@@ -211,7 +211,8 @@ export default class CitizenHubController {
         notifications,
         languageParam
       ),
-      notifications: ordersRequestsGeneralNotifications,
+      showHearingBanner: shouldShowHearingBanner(userCase?.sendNotificationCollection),
+      notifications: generalNotifications,
       eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,

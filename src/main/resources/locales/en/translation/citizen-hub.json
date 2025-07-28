@@ -53,8 +53,10 @@
     "acknowledgement": {
       "header": "The tribunal has acknowledged your claim",
       "link": "View the Acknowledgement of Claim",
-      "p1": "The tribunal has also served a Notice of Claim to the respondent and set a hearing date.",
-      "p2": "<span class=\"govuk-body govuk-!-font-weight-bold\">What happens next</span><br>The tribunal has asked the respondent to respond to your claim by"
+      "p1a": "The tribunal has also served a Notice of Claim to the respondent.",
+      "p1b": "The tribunal has also served a Notice of Claim to the respondent and set a hearing date.",
+      "p21": "What happens next",
+      "p22": "The tribunal has asked the respondent to respond to your claim by"
     },
     "rejection": {
       "header": "The tribunal has rejected all or part of your claim",
@@ -81,6 +83,10 @@
     },
     "ecc": {
       "title": "The tribunal has sent you a notification: "
+    },
+    "hearingBanner": {
+      "hearing": "The tribunal has sent you a notification about your hearing.",
+      "link": "View the notification"
     },
     "orderOrRequest": {
       "responseRequired": "The tribunal requires some information from you.",

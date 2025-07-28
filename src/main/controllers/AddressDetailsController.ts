@@ -4,8 +4,9 @@ import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
-} from '../components/form/address_validator';
+} from '../components/form/address-validator';
 import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -98,6 +99,7 @@ export default class AddressDetailsController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.TELEPHONE_NUMBER);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const addressAddressTypes = req.session.userCase.addressAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [

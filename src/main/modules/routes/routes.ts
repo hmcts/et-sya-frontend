@@ -54,6 +54,7 @@ import EmploymentAndRespondentCheckController from '../../controllers/Employment
 import EndDateController from '../../controllers/EndDateController';
 import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
 import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
+import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
 import HomeController from '../../controllers/HomeController';
@@ -140,6 +141,7 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
+import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
@@ -298,6 +300,7 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB, new CitizenHubController().get);
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
+    app.get(PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT, new CitizenHubResponseFromRespondentController().get);
     app.get(PageUrls.RESPONDENT_CONTACT_DETAILS, new RespondentContactDetailsController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.GET_SUPPORTING_MATERIAL, new AttachmentController().get);
@@ -447,5 +450,6 @@ export class Routes {
     app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
     app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
     app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
+    app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
   }
 }

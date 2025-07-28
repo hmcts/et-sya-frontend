@@ -6,7 +6,7 @@ import nunjucks from 'nunjucks';
 import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { dateInLocale, datesStringToDateInLocale } from '../../helper/dateInLocale';
+import { dateInLocale, dateTimeInLocale, datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import createFilters from './njkFilters';
 
@@ -17,16 +17,12 @@ export class Nunjucks {
 
   enableFor(app: express.Express): void {
     app.set('view engine', 'njk');
-    const govUkFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', 'govuk-frontend');
-    const hmctsFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', '@hmcts', 'frontend');
-    const nunEnv = nunjucks.configure(
-      [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath, hmctsFrontendPath],
-      {
-        autoescape: true,
-        watch: app.locals.developmentMode,
-        express: app,
-      }
-    );
+    const govUkFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', 'govuk-frontend', 'dist');
+    const nunEnv = nunjucks.configure([path.join(__dirname, '..', '..', 'views'), govUkFrontendPath], {
+      autoescape: true,
+      watch: app.locals.developmentMode,
+      express: app,
+    });
     createFilters(nunEnv);
 
     nunEnv.addGlobal('getContent', function (prop: ((param: string) => string) | string): string {
@@ -153,9 +149,11 @@ export class Nunjucks {
       nunEnv.addGlobal('currentUrl', req.url);
       nunEnv.addGlobal('currentHost', req?.headers?.host?.toLowerCase());
       nunEnv.addGlobal('dateToLocale', (dateToTransform: Date) => dateInLocale(dateToTransform, req.url));
+      nunEnv.addGlobal('dateTimeInLocale', (dateToTransform: Date) => dateTimeInLocale(dateToTransform, req.url));
       nunEnv.addGlobal('dateStringToLocale', (dateToTransform: string) =>
         datesStringToDateInLocale(dateToTransform, req.url)
       );
+      nunEnv.addGlobal('govukRebrand', true);
       next();
     });
   }

@@ -16,81 +16,14 @@
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-xl">
-        {{h1}}
+        {{ h1 }}
       </h1>
 
       {% for doc in docs %}
-
-        {% if doc.description %}
-          {% set row = [
-    [
-      {
-        text: description.firstCell
-      },
-      {
-        text: description.secondCell
-      }
-    ],
-    [
-      {
-        text: document
-      },
-      {
-        html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
-      }
-    ],
-        [
-      {
-        text: documentDetails
-      },
-      {
-        html: doc.description
-      }
-    ],
-        [
-      {
-        text: date
-      },
-      {
-        html: doc.createdOn
-      }
-    ]
-  ] %}
-        {% else %}
-
-          {% set row = [
-    [
-      {
-        text: description.firstCell
-      },
-      {
-        text: description.secondCell
-      }
-    ],
-    [
-      {
-        text: document
-      },
-      {
-        html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
-      }
-    ],
-        [
-      {
-        text: date
-      },
-      {
-        html: doc.createdOn
-      }
-    ]
-  ] %}
-
-        {% endif %}
-
         {{ govukTable({
-  firstCellIsHeader: true,
-  rows: row
-}) }}
+          firstCellIsHeader: true,
+          rows: doc.rows
+        }) }}
       {% endfor %}
 
     </div>
@@ -98,13 +31,13 @@
     <div class="govuk-grid-column-one-third-from-desktop">
 
       {% set sideBarContent %}
-      {% include "./citizen-hub-sidebar.njk" %}
+        {% include "./citizen-hub-sidebar.njk" %}
       {% endset %}
 
       {{ govukDetails({
-              summaryText: contact,
-              html: sideBarContent
-            }) }}
+        summaryText: contact,
+        html: sideBarContent
+      }) }}
 
     </div>
 

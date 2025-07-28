@@ -21,6 +21,11 @@ export const LegacyUrls = {
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',
 } as const;
 
+export const Views = {
+  DOCUMENT_VIEW: 'document-view',
+  RESPONSE_FROM_RESPONDENT_VIEW: 'response-from-respondent-view',
+} as const;
+
 export const TranslationKeys = {
   COMMON: 'common',
   HOME: 'home',
@@ -146,6 +151,7 @@ export const TranslationKeys = {
   AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
+  HEARING_DETAILS: 'hearing-details',
 } as const;
 
 export const PageUrls = {
@@ -223,7 +229,7 @@ export const PageUrls = {
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CLAIM_DETAILS: '/claim-details',
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
-  CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
+  CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document-response-from-respondent',
   RESPONDENT_CONTACT_DETAILS: '/respondent-contact-details',
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   GET_SUPPORTING_MATERIAL: '/getSupportingMaterial/:docId',
@@ -283,6 +289,7 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  HEARING_DETAILS: '/hearing-details',
 } as const;
 
 export const InterceptPaths = {
@@ -307,6 +314,8 @@ export const ErrorPages = {
 export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',
+  INVALID_CURRENCY: 'invalidCurrency',
+  TOO_HIGH_CURRENCY: 'tooHighCurrency',
 } as const;
 
 export const AuthUrls = {
@@ -421,7 +430,8 @@ export const inScopeLocations = [].concat(
 export const ET3_FORM = 'ET3';
 
 export const et1DocTypes = ['ET1'];
-export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
+export const acknowledgementOfClaimDocTypes = ['1.1', 'Acknowledgement of Claim'];
+export const acceptanceDocTypes = ['1.1', '2.7', '2.8', '7.7', '7.8', '7.8a', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', 'Letter 10', 'Letter 11'];
@@ -475,6 +485,7 @@ export const AllDocumentTypes = {
 export type AllDocumentTypeValue = (typeof AllDocumentTypes)[keyof typeof AllDocumentTypes];
 
 export const NotificationSubjects = {
+  HEARING: 'Hearing',
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
   ECC: 'Employer Contract Claim',
