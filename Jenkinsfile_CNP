@@ -9,8 +9,8 @@ import uk.gov.hmcts.contino.AppPipelineDsl
 def type = "nodejs"
 def product = "et"
 def component = "sya"
-//def branchesToSync = ['demo', 'ithc']
-def branchesToSync = ['perftest']
+def branchesToSync = ['demo', 'ithc']
+//def branchesToSync = ['perftest']
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
