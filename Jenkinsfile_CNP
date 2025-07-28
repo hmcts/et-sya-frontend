@@ -1,6 +1,8 @@
 #!groovy
 
-@Library("Infrastructure")
+//@Library("Infrastructure")
+@Library('Infrastructure@add-perftest-vars') _
+
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
@@ -14,7 +16,11 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
-        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
+	    secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
+	    secret('perf-event-token', 'PERF_EVENT_TOKEN'),
+        secret('perf-synthetic-update-token', 'PERF_SYNTHETIC_UPDATE_TOKEN')
     ]
 ]
 
@@ -43,7 +49,8 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  enableSlackNotifications('#et-builds')
+  enablePerformanceTestStages(15)
+  //enableSlackNotifications('#et-builds')
 
   afterAlways('build') {
     yarnBuilder.yarn('build')
