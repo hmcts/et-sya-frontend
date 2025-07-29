@@ -9162,9 +9162,9 @@ __metadata:
   linkType: hard
 
 "govuk-frontend@npm:^5.11.0":
-  version: 5.11.0
-  resolution: "govuk-frontend@npm:5.11.0"
-  checksum: be7896e9834930807427e23d6966476460ef91673ed3516f2dcd4957f9270c88df1ca3db1752eb6e96d4bc9213b9b32ceb1f9eb2259507993c96a5b3a86b58b2
+  version: 5.11.1
+  resolution: "govuk-frontend@npm:5.11.1"
+  checksum: cd334f91bc8bbaa4cd963fd19fe62f0dabb6e7be63c8ff37ea2efb7bf34423a4932b49ff75b36b37200ade93b61fdcf093921a7da1d6df290d7c3965ca6f25ec
   languageName: node
   linkType: hard
 
@@ -9535,9 +9535,9 @@ __metadata:
   linkType: hard
 
 "i18next-http-middleware@npm:^3.3.0":
-  version: 3.7.4
-  resolution: "i18next-http-middleware@npm:3.7.4"
-  checksum: d8ed3e2714a89ee687ba66b7487be64a4e999065381a6794ae372f6d2b60a03add2d5ba726728eb96bcaba6c1a1ed131390b6e9cce0cdb86dc954a5bd5e9dfbe
+  version: 3.8.0
+  resolution: "i18next-http-middleware@npm:3.8.0"
+  checksum: d7182b5f566f3a3556b837596e64fdc799fab334bf887a72377e32cfc16b3632b2c3ddacdf19c44cfa29a157d97fdfa18067edf91377aacf573b1a0c606c835f
   languageName: node
   linkType: hard
 
