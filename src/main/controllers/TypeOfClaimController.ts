@@ -88,10 +88,10 @@ export default class TypeOfClaimController {
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     const formData = this.form.getParsedBody(req.body);
     const typeOfClaim = formData.typeOfClaim;
-    if (typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
-      redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
-    } else if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
+    if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_DISCRIMINATION.toString();
+    } else if (typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
+      redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
