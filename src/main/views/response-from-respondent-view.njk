@@ -23,6 +23,7 @@
 
       {% set et3FormRows = [] %}
       {% set documentsRows = [] %}
+
       {% if et3Forms.length %}
         {% for et3Form in et3Forms %}
           {% set _ = et3FormRows.push(
@@ -43,7 +44,7 @@
 
       {% if et3Attachments.length %}
         {% for et3Attachment in et3Attachments %}
-          {% set _ = documentsRows.push(
+          {% set _ = et3FormRows.push(
             [
               {text: et3Attachment.createdOn},
               {
@@ -56,6 +57,7 @@
           ) %}
         {% endfor %}
       {% endif %}
+
       {% if et3AcceptedDocs.length %}
         {% for et3AcceptedDoc in et3AcceptedDocs %}
           {% set _ = documentsRows.push(
