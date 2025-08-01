@@ -30,6 +30,7 @@ import {
   AllDocumentTypeValue,
   AllDocumentTypes,
   CcdDataModel,
+  ET3_SUPPORTING,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
@@ -512,12 +513,12 @@ export const setDocumentValues = (
   }
 
   const foundDocuments = documentCollection
-    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
+    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument) || docType.includes(doc.value.documentType))
     .map(doc => {
       return {
         id: getDocId(doc.value?.uploadedDocument?.document_url),
         description: !docType ? '' : doc.value?.shortDescription,
-        type: isEt3Supporting ? 'et3Supporting' : doc.value.typeOfDocument,
+        type: isEt3Supporting ? ET3_SUPPORTING : doc.value.typeOfDocument || doc.value.documentType,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;
