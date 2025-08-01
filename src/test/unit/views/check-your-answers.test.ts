@@ -358,3 +358,44 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
     expect(allKeys[25].innerHTML).contains('New job start date', '');
   });
 });
+
+describe('Check your answers confirmation page - Discrimination and Pay with undefined', () => {
+  beforeAll(async () => {
+    await request(
+      mockApp({
+        userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
+          typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.PAY_RELATED_CLAIM],
+          claimantWorkAddressQuestion: YesOrNo.NO,
+          pastEmployer: YesOrNo.YES,
+          noticePeriod: YesOrNo.YES,
+          isStillWorking: StillWorking.NO_LONGER_WORKING,
+          newJob: YesOrNo.YES,
+          newJobStartDate: undefined,
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'John Doe',
+              respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              acasCert: YesOrNo.NO,
+              noAcasReason: NoAcasNumberReason.ANOTHER,
+            },
+          ],
+          claimTypeDiscrimination: undefined,
+          claimTypePay: undefined,
+          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
+        },
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should show not provided for Discrimination and Pay types of claim', () => {
+    const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
+    expect(allKeys[34].innerHTML).contains('What type of discrimination claim are you making?', 'Not provided');
+    expect(allKeys[35].innerHTML).contains('What type of pay claim are you making?', 'Not provided');
+  });
+});
