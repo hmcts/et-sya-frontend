@@ -118,6 +118,12 @@
         }
       },
       "link": "View your response"
+    },
+    "claimantRepresented": {
+      "title": "You are now being legally represented by",
+      "p1": "You will be kept updated with case communication but will no longer be able to",
+      "l1": "Submit applications",
+      "l2": "Directly respond to applications or notifications"
     }
   },
   "multiples": {
