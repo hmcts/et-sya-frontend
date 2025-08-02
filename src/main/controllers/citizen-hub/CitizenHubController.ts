@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { NO_LONGER_REPRESENTED_REPRESENTATIVE_NAME, PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -167,6 +167,7 @@ export default class CitizenHubController {
 
     let judgmentBannerContent = undefined;
     let decisionBannerContent = undefined;
+    let showNoLongerRepresentedNotification: boolean = false;
     const claimantTribunalResponseBannerContent = getClaimantTribunalResponseBannerContent(
       notifications,
       languageParam
@@ -178,6 +179,9 @@ export default class CitizenHubController {
     }
 
     const showMultipleData = await showMutipleData(userCase);
+    if (NO_LONGER_REPRESENTED_REPRESENTATIVE_NAME === userCase.claimantRepresentative.name_of_representative) {
+      showNoLongerRepresentedNotification = true;
+    }
 
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -219,6 +223,7 @@ export default class CitizenHubController {
       welshEnabled,
       showMultipleData,
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
+      showNoLongerRepresentedNotification,
     });
   }
 }

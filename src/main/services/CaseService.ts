@@ -5,11 +5,11 @@ import FormData from 'form-data';
 import { CaseApiDataResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
-import { UserDetails } from '../definitions/appRequest';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls } from '../definitions/constants';
+import { JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -395,6 +395,35 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error uploading document: ' + axiosErrorDetails(error));
+    }
+  };
+
+  revokeCaseUserRole = async (request: AppRequest): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.post(JavaApiUrls.REVOKE_CASE_USER_ROLES, {
+        case_users: [
+          {
+            case_id: request.session.userCase.id,
+            user_id: request.session.user.id,
+            case_role: Roles.CLAIMANT_SOLICITOR,
+            case_type_id: request.session.userCase.caseTypeId,
+            respondent_name: 'Respondent Name Not Required',
+          },
+        ],
+      });
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_REVOKING_USER_ROLE + axiosErrorDetails(error));
+    }
+  };
+
+  removeClaimantRepresentative = async (req: AppRequest): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.post(
+        `${JavaApiUrls.REVOKE_CLAIMANT_SOLICITOR}?caseSubmissionReference=${req.session.userCase.id}`,
+        {}
+      );
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_REVOKING_USER_ROLE + axiosErrorDetails(error));
     }
   };
 }

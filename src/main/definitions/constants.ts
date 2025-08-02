@@ -351,6 +351,8 @@ export const JavaApiUrls = {
   SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
+  REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
+  REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
 } as const;
 
 export const Urls = {
@@ -413,6 +415,7 @@ export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
 export const FILE_SIZE_LIMIT = 83886500;
+export const NO_LONGER_REPRESENTED_REPRESENTATIVE_NAME = 'not_exists';
 
 export const inScopeLocations = [].concat(
   postcode_Glasgow,
@@ -558,4 +561,17 @@ export const FEATURE_FLAGS = {
   BUNDLES: 'bundles',
   ECC: 'ecc',
   MUL2: 'MUL2',
+} as const;
+
+export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
+  change: 'change',
+  remove: 'remove',
+} as const;
+
+export const Roles = {
+  CLAIMANT_SOLICITOR: 'DEFENDANT',
+} as const;
+
+export const ServiceErrors = {
+  ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
 } as const;

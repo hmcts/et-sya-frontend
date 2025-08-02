@@ -455,5 +455,6 @@ export class Routes {
     app.get(PageUrls.APPOINT_LEGAL_REPRESENTATIVE, new AppointLegalRepController().get);
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
+    app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
   }
 }

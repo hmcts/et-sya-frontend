@@ -124,6 +124,10 @@
       "p1": "You will be kept updated with case communication but will no longer be able to",
       "l1": "Submit applications",
       "l2": "Directly respond to applications or notifications"
+    },
+    "claimantNotRepresented": {
+      "p1": "You no longer legally represented.",
+      "p2": "You may continue to represent yourself or you may wish to appoint a new legal representative."
     }
   },
   "multiples": {

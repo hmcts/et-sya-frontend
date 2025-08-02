@@ -1,18 +1,18 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
-
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ pageTitle }}</h1>
-      <p class="govuk-body">{{ p1 }}</p>
-      <p class="govuk-body">{{ p2 }} <a href="{{ contactTheTribunalUrl }}">{{ contactTheTribunal }}</a>.</p>
-      {{ govukButton({
-        text: returnToCaseOverview,
-        href: citizenHubUrl
-      }) }}
-
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
   </div>
 {% endblock %}
