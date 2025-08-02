@@ -6,15 +6,6 @@ import { FormError } from './form';
 import { AnyRecord } from './util-types';
 
 export interface AppRequest<T = Partial<AnyRecord>> extends Request {
-  req: {
-    userCase: {
-      id: string;
-      state: import('/Users/mehmet.dede/dev/Webstorm/et-sya/et-sya-frontend/src/main/definitions/definition').CaseState.DRAFT;
-      createdDate: string;
-      lastModified: string;
-    };
-  };
-  req: { userCase: { id: string; state: any; createdDate: string; lastModified: string } };
   session: AppSession;
   body: T;
   fileTooLarge?: boolean;
