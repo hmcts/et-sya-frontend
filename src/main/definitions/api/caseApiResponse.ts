@@ -1,4 +1,5 @@
 import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
+import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -14,7 +15,6 @@ import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { CaseState } from '../definition';
 import { HubLinksStatuses } from '../hub';
 import { TypeItem } from '../util-types';
-import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 
 export interface CreateCaseResponse {
   data: CaseApiDataResponse;
@@ -78,6 +78,7 @@ export interface CaseData {
   leadClaimant?: YesOrNo;
   batchCaseStayed?: YesOrNo;
   representativeClaimantType?: ClaimantRepresentative;
+  claimantRepresentativeRemoved?: YesOrNo;
 }
 
 export type HearingBundleType = {

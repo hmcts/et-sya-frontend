@@ -415,7 +415,6 @@ export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
 export const FILE_SIZE_LIMIT = 83886500;
-export const NO_LONGER_REPRESENTED_REPRESENTATIVE_NAME = 'not_exists';
 
 export const inScopeLocations = [].concat(
   postcode_Glasgow,

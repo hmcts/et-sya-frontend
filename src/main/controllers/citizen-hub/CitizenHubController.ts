@@ -1,7 +1,8 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { NO_LONGER_REPRESENTED_REPRESENTATIVE_NAME, PageUrls, TranslationKeys } from '../../definitions/constants';
+import { YesOrNo } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -179,7 +180,7 @@ export default class CitizenHubController {
     }
 
     const showMultipleData = await showMutipleData(userCase);
-    if (NO_LONGER_REPRESENTED_REPRESENTATIVE_NAME === userCase.claimantRepresentative.name_of_representative) {
+    if (YesOrNo.YES === userCase?.claimantRepresentativeRemoved) {
       showNoLongerRepresentedNotification = true;
     }
 
