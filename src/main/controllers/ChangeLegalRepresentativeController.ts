@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { LEGAL_REPRESENTATIVE_CHANGE_OPTIONS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -35,6 +36,7 @@ export default class ChangeLegalRepresentativeController {
             value: LEGAL_REPRESENTATIVE_CHANGE_OPTIONS.remove,
           },
         ],
+        validator: isFieldFilledIn,
       },
     },
     submit: {
