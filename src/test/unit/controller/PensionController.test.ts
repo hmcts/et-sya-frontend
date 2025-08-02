@@ -62,7 +62,7 @@ describe('Pension controller', () => {
   });
 
   it('should render same page if an invalid value is entered', async () => {
-    const errors = [{ propertyName: 'claimantPensionWeeklyContribution', errorType: 'notANumber' }];
+    const errors = [{ propertyName: 'claimantPensionWeeklyContribution', errorType: 'invalidCurrency' }];
     const body = { claimantPensionContribution: YesOrNo.YES, claimantPensionWeeklyContribution: 'a' };
     const controller = new PensionController();
 
