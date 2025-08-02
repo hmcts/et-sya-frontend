@@ -1,31 +1,13 @@
-import fs from 'fs';
-import path from 'path';
-
 import { expect } from 'chai';
 
 import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 import { getHtmlRes } from '../test-helpers/requester';
 
-const changeLegalRepresentativeJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/change-legal-representative.json'),
-  'utf-8'
-);
-const changeLegalRepresentativeJson = JSON.parse(changeLegalRepresentativeJsonRaw);
 const PAGE_URL = '/change-legal-representative';
-const titleClass = 'govuk-heading-xl';
-const pClass = 'govuk-body';
-const buttonClass = 'govuk-button';
-const expectedTitle = changeLegalRepresentativeJson.pageTitle;
-const expectedP1 = changeLegalRepresentativeJson.p1;
-const expectedP2 = changeLegalRepresentativeJson.p2;
-const expectedButton = changeLegalRepresentativeJson.returnToCaseOverview;
-
-const EXPECTED_TITLE = 'Changing legal representative';
-const FIRST_PARAGRAPH =
-  'If you are currently legally represented and you wish to change your legal representative or become unrepresented then you should contact your legal representative.';
-const SECOND_PARAGRAPH =
-  'If you cannot do that then you should <a href="contact-the-tribunal/other">contact the tribunal</a>.';
-const BUTTON_TEXT = 'Return to case overview';
+const EXPECTED_LEGEND = 'Do you want to change your legal representative?';
+const EXPECTED_RADIO_BUTTON1 = 'Yes, I confirm I want to change my legal representative.';
+const EXPECTED_RADIO_BUTTON2 =
+  'Yes, I confirm I wish to remove my legal representative and continue my case representing myself.';
 
 let htmlRes: Document;
 describe('Change legal representative page', () => {
@@ -33,23 +15,18 @@ describe('Change legal representative page', () => {
     htmlRes = await getHtmlRes(mockUserCaseComplete, PAGE_URL);
   });
 
-  it('should display title', () => {
-    const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedTitle, EXPECTED_TITLE);
+  it('should question', () => {
+    const legends = htmlRes.getElementsByTagName('legend');
+    expect(legends[0].innerHTML).contains(EXPECTED_LEGEND);
   });
 
-  it('should display first paragraph', () => {
-    const p = htmlRes.getElementsByClassName(pClass);
-    expect(p[6].innerHTML).contains(expectedP1, FIRST_PARAGRAPH);
+  it('should display radio button option 1', () => {
+    const labels = htmlRes.getElementsByTagName('label');
+    expect(labels[0].innerHTML).contains(EXPECTED_RADIO_BUTTON1);
   });
 
-  it('should display second paragraph', () => {
-    const p = htmlRes.getElementsByClassName(pClass);
-    expect(p[7].innerHTML).contains(expectedP2, SECOND_PARAGRAPH);
-  });
-
-  it('should display start now button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[5].innerHTML).contains(expectedButton, BUTTON_TEXT);
+  it('should display radio button option 2', () => {
+    const labels = htmlRes.getElementsByTagName('label');
+    expect(labels[1].innerHTML).contains(EXPECTED_RADIO_BUTTON2);
   });
 });
