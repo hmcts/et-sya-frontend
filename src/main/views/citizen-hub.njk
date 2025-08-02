@@ -72,12 +72,19 @@
                 {{findLegalAdvice}}
               </a>
             </p>
-
-            <p class="govuk-body">
-              <a href="/appoint-legal-representative" target="_blank">
-                Appoint a legal representative
-              </a>
-            </p>
+            {% if userCase.claimantRepresentedQuestion and userCase.claimantRepresentedQuestion === 'Yes' %}
+              <p class="govuk-body">
+                <a href="/change-legal-representative">
+                  {{ changeLegalRepresentative }}
+                </a>
+              </p>
+            {% else %}
+              <p class="govuk-body">
+                <a href="/appoint-legal-representative" target="_blank">
+                  {{ appointLegalRepresentative }}
+                </a>
+              </p>
+            {% endif %}
 
             {% set sideBarContent %}
             {% include "./citizen-hub-sidebar.njk" %}

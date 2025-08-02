@@ -124,6 +124,10 @@
       "p1": "<placeholder>",
       "l1": "<placeholder>",
       "l2": "<placeholder>"
+    },
+    "claimantNotRepresented": {
+      "p1": "[W]You no longer legally represented.",
+      "p2": "[W]You may continue to represent yourself or you may wish to appoint a new legal representative."
     }
   },
   "multiples": {
@@ -150,5 +154,7 @@
   "Amend response": "Diwygio ymateb",
   "withdraw": "tynnu",
   "your": "eich",
-  "theRespondent": "yr atebydd"
+  "theRespondent": "yr atebydd",
+  "appointLegalRepresentative": "[W]Appoint a legal representative",
+  "changeLegalRepresentative": "[W]Change my legal representative"
 }

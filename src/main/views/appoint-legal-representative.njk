@@ -1,25 +1,27 @@
 {% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
-{% set pageHeading = "Appoint a legal representative" %}
-{% set pageSection = "" %}
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl">
-        {{ pageHeading }}
+        {{ title }}
       </h1>
 
       <p class="govuk-body">
-        You have chosen to appoint a legal representative so you will need to give the following information
-        to your solicitor so they can perform a Notice of Change.
+        {{ p1 }}
       </p>
 
-      <h2 class="govuk-heading-m">Your Claim Details</h2>
+      <h2 class="govuk-heading-m">{{ h2 }}</h2>
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Case reference
+            {{ caseReference }}
           </dt>
           <dd class="govuk-summary-list__value">
             {{ userCase.id }}
@@ -27,7 +29,7 @@
         </div>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Tribunal Case Number
+            {{ tribunalCaseNumber }}
           </dt>
           <dd class="govuk-summary-list__value">
             {{ userCase.ethosCaseReference }}
@@ -35,7 +37,7 @@
         </div>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
-            Claimant name
+            {{ claimantName }}
           </dt>
           <dd class="govuk-summary-list__value">
             {{ userCase.firstName + ' ' + userCase.lastName }}
@@ -43,13 +45,13 @@
         </div>
       </dl>
 
-      <h2 class="govuk-heading-m">Download documents</h2>
+      <h2 class="govuk-heading-m">{{ downloadDocuments }}</h2>
       <p class="govuk-body">
-        You  may also wish to
+        {{ p2a }}
         <a href="{{ allDocumentsUrl }}" class="govuk-link">
-          download all your documents
+          {{ p2b }}
         </a>
-        so you may share them with your legal representative.
+        {{ p2c }}
       </p>
     </div>
   </div>
