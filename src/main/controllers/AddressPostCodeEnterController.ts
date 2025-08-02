@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { isValidUKPostcode } from '../components/form/address_validator';
+import { isValidUKPostcode } from '../components/form/address-validator';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';

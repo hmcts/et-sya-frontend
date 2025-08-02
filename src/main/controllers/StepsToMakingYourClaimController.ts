@@ -121,11 +121,6 @@ export default class StepsToMakingYourClaimController {
         ],
       },
     ];
-    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
-      sections[2].links[0].url = setUrlLanguage(req, PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
-    } else if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
-      sections[2].links[0].url = setUrlLanguage(req, PageUrls.CLAIM_TYPE_PAY.toString());
-    }
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       req.session.userCase.pastEmployer = YesOrNo.YES;
       sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());

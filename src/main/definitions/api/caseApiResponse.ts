@@ -162,6 +162,7 @@ export interface DocumentApiModel {
   id: string;
   value: {
     typeOfDocument?: string;
+    documentType?: string;
     shortDescription?: string;
     uploadedDocument: {
       document_url: string;

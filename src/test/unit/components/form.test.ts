@@ -1,4 +1,4 @@
-import { areDateFieldsFilledIn } from '../../../main/components/form/dateValidators';
+import { areDateFieldsFilledIn } from '../../../main/components/form/date-validator';
 import { Form } from '../../../main/components/form/form';
 import { convertToDateObject } from '../../../main/components/form/parser';
 import { isFieldFilledIn } from '../../../main/components/form/validator';

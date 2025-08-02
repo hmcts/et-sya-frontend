@@ -27,6 +27,19 @@ describe('Compensation Controller', () => {
       expect(req.session.errors).toHaveLength(0);
     });
 
+    it('should allow valid compensation amount', () => {
+      const body = {
+        compensationOutcome: '',
+        compensationAmount: '£100.12',
+      };
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      new CompensationController().post(req, res);
+
+      expect(req.session.errors).toHaveLength(0);
+    });
+
     it('should not allow invalid compensation outcome text', () => {
       const body = {
         compensationOutcome: '1'.repeat(2501),

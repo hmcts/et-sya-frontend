@@ -58,7 +58,8 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     claimDetails.push(
       addSummaryHtmlRow(
         translations.claimDetails.claimTypeDiscrimination,
-        userCase.claimTypeDiscrimination.map(type => translations.discriminationClaims[type]).join('<br>'),
+        userCase.claimTypeDiscrimination?.map(type => translations.discriminationClaims[type]).join('<br>') ??
+          translations.notProvided,
         createChangeAction(
           PageUrls.CLAIM_TYPE_DISCRIMINATION + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -72,7 +73,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     claimDetails.push(
       addSummaryHtmlRow(
         translations.claimDetails.claimTypePay,
-        userCase.claimTypePay.map(type => translations.payClaims[type]).join('<br>'),
+        userCase.claimTypePay?.map(type => translations.payClaims[type]).join('<br>') ?? translations.notProvided,
         createChangeAction(
           PageUrls.CLAIM_TYPE_PAY + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
