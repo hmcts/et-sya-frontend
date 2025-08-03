@@ -10,7 +10,6 @@ import { getLogger } from '../logger';
 
 import { removeClaimantRepresentative } from './helpers/CaseRoleHelper';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondentApplicationDetailsController');
@@ -66,8 +65,6 @@ export default class ChangeLegalRepresentativeController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const citizenHubUrl = setUrlLanguage(req, TranslationKeys.CITIZEN_HUB + '/' + req.session.userCase.id);
-    const contactTheTribunalUrl = setUrlLanguage(req, TranslationKeys.CONTACT_THE_TRIBUNAL + '/other');
     const content = getPageContent(req, this.changeLegalRepresentativeContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -76,8 +73,6 @@ export default class ChangeLegalRepresentativeController {
     res.render(TranslationKeys.CHANGE_LEGAL_REPRESENTATIVE, {
       ...content,
       PageUrls,
-      citizenHubUrl,
-      contactTheTribunalUrl,
       languageParam: getLanguageParam(req.url),
     });
   };
