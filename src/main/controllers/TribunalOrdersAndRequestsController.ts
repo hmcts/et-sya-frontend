@@ -12,7 +12,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getSendNotifications } from './helpers/TribunalOrderOrRequestDetailsHelper';
+import { getSendNotifications } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrdersAndRequestsController');
 export class TribunalOrdersAndRequestsController {

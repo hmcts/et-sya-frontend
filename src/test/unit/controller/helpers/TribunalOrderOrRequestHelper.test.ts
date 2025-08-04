@@ -5,10 +5,10 @@ import {
   filterSendNotifications,
   getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
-  getSendNotifications,
   getTribunalOrderOrRequestDetails,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
+import { getSendNotifications } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
 import {
   SendNotificationType,
