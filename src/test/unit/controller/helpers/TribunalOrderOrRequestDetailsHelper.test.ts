@@ -8,7 +8,6 @@ import {
   getTribunalOrderOrRequestDetails,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
-import { getSendNotifications } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
 import {
   SendNotificationType,
@@ -36,7 +35,6 @@ import {
   mockNotificationItem,
   mockNotificationItemOther,
   mockNotificationRespondOnlyReq,
-  mockNotificationResponseReq,
   mockNotificationSubmitted,
   mockNotificationViewed,
   mockNotificationWithResponses,
@@ -47,7 +45,7 @@ import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { mockTribunalResponse } from '../../mocks/mockTribunalResponse';
 import { getOrderOrRequestTribunalResponse, selectedRequestOrOrder } from '../../mocks/mockUserCaseComplete';
 
-describe('Tribunal order or request helper', () => {
+describe('Tribunal order or request Details helper', () => {
   const translationJsons = {
     ...respondentOrderOrRequestRaw,
     ...notificationSubjectsRaw,
@@ -336,48 +334,6 @@ describe('Tribunal order or request helper', () => {
       const eccNotifications = await filterECCNotifications([notificationItem, notificationItemOther]);
 
       expect(eccNotifications).toHaveLength(0);
-    });
-  });
-
-  describe('getSendNotifications', () => {
-    it('should populate notification with status and color', async () => {
-      const populatedNotification = await getSendNotifications([notificationItem], translations, '?lng=en');
-      expect(populatedNotification[0].redirectUrl).toEqual(
-        '/notification-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
-      );
-      expect(populatedNotification[0].statusColor).toEqual('--red');
-      expect(populatedNotification[0].displayStatus).toEqual('Not viewed yet');
-    });
-
-    it('should populate notification with correct status when required to respond and no response exists', async () => {
-      const populatedNotification = await getSendNotifications([mockNotificationResponseReq], translations, '?lng=en');
-      expect(populatedNotification[0].statusColor).toEqual('--red');
-      expect(populatedNotification[0].displayStatus).toEqual('Not started yet');
-    });
-
-    it('should populate notification with stored status and link', async () => {
-      notificationItem.value.notificationState = 'stored';
-      notificationItem.value.respondStoredCollection = [
-        {
-          id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
-          value: {
-            from: 'Claimant',
-          },
-        },
-      ];
-      const populatedNotification = await getSendNotifications([notificationItem], translations, '?lng=en');
-      expect(populatedNotification[0].redirectUrl).toEqual(
-        '/stored-to-submit-tribunal/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28/0173ccd0-e20c-41bf-9a1c-37e97c728efc?lng=en'
-      );
-      expect(populatedNotification[0].displayStatus).toEqual('Stored');
-      expect(populatedNotification[0].statusColor).toEqual('--yellow');
-    });
-
-    it('should filter and show ECC notifications when eccFlag is true', async () => {
-      mockLdClient.mockResolvedValue(true);
-      const populatedNotification = await getSendNotifications([mockECCNotification], translations, '?lng=en');
-
-      expect(populatedNotification).toHaveLength(1);
     });
   });
 

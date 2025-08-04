@@ -2,5 +2,6 @@
   "title": "All notifications",
   "date": "Date",
   "ordersAndRequests": "Notifications",
-  "status": "Status"
+  "status": "Status",
+  "et1Serving": "ET1 Serving"
 }
