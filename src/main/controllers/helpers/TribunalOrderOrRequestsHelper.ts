@@ -8,7 +8,7 @@ import {
   Parties,
   TranslationKeys,
 } from '../../definitions/constants';
-import { HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses, displayStatusColorMap } from '../../definitions/hub';
 import { TribunalNotification } from '../../definitions/tribunal-notification';
 import { AnyRecord } from '../../definitions/util-types';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
@@ -17,7 +17,7 @@ import { getLanguageParam } from './RouterHelpers';
 
 export async function getSendNotifications(req: AppRequest): Promise<TribunalNotification[]> {
   const { userCase } = req.session;
-  const { sendNotificationCollection, acknowledgementOfClaimLetterDetail } = userCase;
+  const { sendNotificationCollection, acknowledgementOfClaimLetterDetail, hubLinksStatuses } = userCase;
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -31,10 +31,7 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
   notifications.forEach(item => notificationList.push(getTribunalNotification(item, translations, languageParam)));
 
   if (acknowledgementOfClaimLetterDetail?.length) {
-    notificationList.push({
-      redirectUrl: PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT),
-      sendNotificationTitle: translations.et1Serving,
-    });
+    notificationList.push(getServingNotification(hubLinksStatuses, translations));
   }
 
   return notificationList;
@@ -75,4 +72,18 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
     ? PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', storedRespond.id) +
         languageParam
     : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
+};
+
+const getServingNotification = (hubLinksStatuses: HubLinksStatuses, translations: AnyRecord): TribunalNotification => {
+  const servingState: string =
+    hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.VIEWED ||
+    hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
+      ? HubLinkStatus.VIEWED
+      : HubLinkStatus.NOT_VIEWED;
+  return {
+    redirectUrl: PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT),
+    sendNotificationTitle: translations.et1Serving,
+    displayStatus: translations[servingState],
+    statusColor: displayStatusColorMap.get(servingState as HubLinkStatus),
+  };
 };
