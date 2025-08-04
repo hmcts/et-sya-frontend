@@ -29,11 +29,11 @@
           {% for notification in notifications %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                {{ dateToLocale(notification.value.date) }}
+                {{ dateToLocale(notification.date) }}
               </td>
               <td class="govuk-table__cell">
                 <a href="{{ notification.redirectUrl }}" class="govuk-link">
-                  {{ notification.value.sendNotificationTitle }}
+                  {{ notification.sendNotificationTitle }}
                 </a>
               </td>
               <td class="govuk-table__cell">
