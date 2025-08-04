@@ -8,7 +8,7 @@ import {
   getSendNotifications,
   getTribunalOrderOrRequestDetails,
   setNotificationBannerData,
-} from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
+} from '../../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
 import {
   SendNotificationType,

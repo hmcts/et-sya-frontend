@@ -19,7 +19,7 @@ import {
   determineRedirectUrl,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
-} from './helpers/TribunalOrderOrRequestHelper';
+} from './helpers/TribunalOrderOrRequestDetailsHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
