@@ -35,13 +35,10 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
   notifications?.forEach(item => notificationList.push(buildSendNotification(item, translations, languageParam)));
 
   // acknowledgementOfClaimLetterDetail
-  const servingNotifications = await buildServingNotifications(
-    acknowledgementOfClaimLetterDetail,
-    hubLinksStatuses,
-    translations,
-    accessToken
+  const servingDocs = await getServingDocs(acknowledgementOfClaimLetterDetail, accessToken);
+  servingDocs?.forEach(item =>
+    notificationList.push(buildServingNotification(item, hubLinksStatuses, translations, languageParam))
   );
-  notificationList.push(...servingNotifications);
 
   return sortNotificationsByDate(notificationList);
 }
@@ -83,27 +80,33 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
     : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
-const buildServingNotifications = async (
-  documents: DocumentDetail[],
-  hubLinksStatuses: HubLinksStatuses,
-  translations: AnyRecord,
-  accessToken: string
-): Promise<TribunalNotification[]> => {
-  if (!documents?.length || !hubLinksStatuses) {
+const getServingDocs = async (documents: DocumentDetail[], accessToken: string): Promise<DocumentDetail[]> => {
+  if (!documents?.length) {
     return [];
   }
+  await getDocumentDetails(documents, accessToken);
+  return documents;
+};
+
+const buildServingNotification = (
+  doc: DocumentDetail,
+  hubLinksStatuses: HubLinksStatuses,
+  translations: AnyRecord,
+  languageParam: string
+): TribunalNotification => {
   const servingState: string =
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
+    hubLinksStatuses && hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
       ? HubLinkStatus.VIEWED
       : HubLinkStatus.NOT_VIEWED;
-  await getDocumentDetails(documents, accessToken);
-  return documents.map(doc => ({
+  return {
     date: doc.createdOn,
-    redirectUrl: PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT),
+    redirectUrl:
+      PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT) +
+      languageParam,
     sendNotificationTitle: getServingNotificationTitle(doc, translations),
     displayStatus: translations[servingState],
     statusColor: displayStatusColorMap.get(servingState as HubLinkStatus),
-  }));
+  };
 };
 
 const getServingNotificationTitle = (doc: DocumentDetail, translations: AnyRecord): string => {
@@ -124,7 +127,7 @@ const getServingNotificationTitle = (doc: DocumentDetail, translations: AnyRecor
 const sortNotificationsByDate = (notificationList: TribunalNotification[]): TribunalNotification[] => {
   return notificationList.sort((a, b) => {
     if (a.date && b.date) {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
     }
     return 0;
   });
