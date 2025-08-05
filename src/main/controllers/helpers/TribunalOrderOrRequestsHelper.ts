@@ -14,11 +14,13 @@ import { TribunalNotification } from '../../definitions/tribunal-notification';
 import { AnyRecord } from '../../definitions/util-types';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 
+import { getDocumentDetails } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export async function getSendNotifications(req: AppRequest): Promise<TribunalNotification[]> {
-  const { userCase } = req.session;
+  const { userCase, user } = req.session;
   const { sendNotificationCollection, acknowledgementOfClaimLetterDetail, hubLinksStatuses } = userCase;
+  const { accessToken } = user;
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -30,12 +32,16 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
 
   // sendNotificationCollection
   const notifications: SendNotificationTypeItem[] = await getSendNotification(sendNotificationCollection);
-  notifications.forEach(item => notificationList.push(buildSendNotification(item, translations, languageParam)));
+  notifications?.forEach(item => notificationList.push(buildSendNotification(item, translations, languageParam)));
 
   // acknowledgementOfClaimLetterDetail
-  notificationList.push(
-    ...buildServingNotifications(acknowledgementOfClaimLetterDetail, hubLinksStatuses, translations)
+  const servingNotifications = await buildServingNotifications(
+    acknowledgementOfClaimLetterDetail,
+    hubLinksStatuses,
+    translations,
+    accessToken
   );
+  notificationList.push(...servingNotifications);
 
   return sortNotificationsByDate(notificationList);
 }
@@ -77,11 +83,12 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
     : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
-const buildServingNotifications = (
+const buildServingNotifications = async (
   documents: DocumentDetail[],
   hubLinksStatuses: HubLinksStatuses,
-  translations: AnyRecord
-): TribunalNotification[] => {
+  translations: AnyRecord,
+  accessToken: string
+): Promise<TribunalNotification[]> => {
   if (!documents?.length || !hubLinksStatuses) {
     return [];
   }
@@ -89,21 +96,14 @@ const buildServingNotifications = (
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
       ? HubLinkStatus.VIEWED
       : HubLinkStatus.NOT_VIEWED;
-  return documents.map(doc => buildServingNotificationItem(doc, servingState, translations));
-};
-
-const buildServingNotificationItem = (
-  doc: DocumentDetail,
-  servingState: string,
-  translations: AnyRecord
-): TribunalNotification => {
-  return {
+  await getDocumentDetails(documents, accessToken);
+  return documents.map(doc => ({
     date: doc.createdOn,
     redirectUrl: PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT),
     sendNotificationTitle: getServingNotificationTitle(doc, translations),
     displayStatus: translations[servingState],
     statusColor: displayStatusColorMap.get(servingState as HubLinkStatus),
-  };
+  }));
 };
 
 const getServingNotificationTitle = (doc: DocumentDetail, translations: AnyRecord): string => {
