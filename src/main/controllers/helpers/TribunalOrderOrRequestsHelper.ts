@@ -36,8 +36,9 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
 
   // acknowledgementOfClaimLetterDetail
   const servingDocs = await getServingDocs(acknowledgementOfClaimLetterDetail, accessToken);
+  const servingState: string = getServingState(hubLinksStatuses);
   servingDocs?.forEach(item =>
-    notificationList.push(buildServingNotification(item, hubLinksStatuses, translations, languageParam))
+    notificationList.push(buildServingNotification(item, translations, languageParam, servingState))
   );
 
   return sortNotificationsByDate(notificationList);
@@ -88,16 +89,18 @@ const getServingDocs = async (documents: DocumentDetail[], accessToken: string):
   return documents;
 };
 
+const getServingState = (hubLinksStatuses: HubLinksStatuses): string => {
+  return hubLinksStatuses && hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
+    ? HubLinkStatus.VIEWED
+    : HubLinkStatus.NOT_VIEWED;
+};
+
 const buildServingNotification = (
   doc: DocumentDetail,
-  hubLinksStatuses: HubLinksStatuses,
   translations: AnyRecord,
-  languageParam: string
+  languageParam: string,
+  servingState: string
 ): TribunalNotification => {
-  const servingState: string =
-    hubLinksStatuses && hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
-      ? HubLinkStatus.VIEWED
-      : HubLinkStatus.NOT_VIEWED;
   return {
     date: doc.createdOn,
     redirectUrl:
