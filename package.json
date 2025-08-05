@@ -77,7 +77,7 @@
     "express-session": "^1.18.2",
     "govuk-frontend": "^5.11.0",
     "helmet": "^8.0.0",
-    "i18next": "^24.1.2",
+    "i18next": "^25.0.0",
     "i18next-http-middleware": "^3.3.0",
     "jest-environment-jsdom": "^29.5.0",
     "jwt-decode": "^3.1.2",
