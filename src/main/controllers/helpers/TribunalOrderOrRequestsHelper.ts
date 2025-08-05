@@ -8,6 +8,7 @@ import {
   Parties,
   TranslationKeys,
 } from '../../definitions/constants';
+import { DocumentDetail } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses, displayStatusColorMap } from '../../definitions/hub';
 import { TribunalNotification } from '../../definitions/tribunal-notification';
 import { AnyRecord } from '../../definitions/util-types';
@@ -27,14 +28,16 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
 
   const notificationList: TribunalNotification[] = [];
 
+  // sendNotificationCollection
   const notifications: SendNotificationTypeItem[] = await getSendNotification(sendNotificationCollection);
-  notifications.forEach(item => notificationList.push(getTribunalNotification(item, translations, languageParam)));
+  notifications.forEach(item => notificationList.push(buildSendNotification(item, translations, languageParam)));
 
-  if (acknowledgementOfClaimLetterDetail?.length) {
-    notificationList.push(getServingNotification(hubLinksStatuses, translations));
-  }
+  // acknowledgementOfClaimLetterDetail
+  notificationList.push(
+    ...buildServingNotifications(acknowledgementOfClaimLetterDetail, hubLinksStatuses, translations)
+  );
 
-  return notificationList;
+  return sortNotificationsByDate(notificationList);
 }
 
 const getSendNotification = async (
@@ -52,7 +55,7 @@ const getSendNotification = async (
   }
 };
 
-const getTribunalNotification = (
+const buildSendNotification = (
   item: SendNotificationTypeItem,
   translations: AnyRecord,
   languageParam: string
@@ -74,16 +77,55 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
     : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
-const getServingNotification = (hubLinksStatuses: HubLinksStatuses, translations: AnyRecord): TribunalNotification => {
+const buildServingNotifications = (
+  documents: DocumentDetail[],
+  hubLinksStatuses: HubLinksStatuses,
+  translations: AnyRecord
+): TribunalNotification[] => {
+  if (!documents?.length || !hubLinksStatuses) {
+    return [];
+  }
   const servingState: string =
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.VIEWED ||
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
       ? HubLinkStatus.VIEWED
       : HubLinkStatus.NOT_VIEWED;
+  return documents.map(doc => buildServingNotificationItem(doc, servingState, translations));
+};
+
+const buildServingNotificationItem = (
+  doc: DocumentDetail,
+  servingState: string,
+  translations: AnyRecord
+): TribunalNotification => {
   return {
+    date: doc.createdOn,
     redirectUrl: PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT),
-    sendNotificationTitle: translations.et1Serving,
+    sendNotificationTitle: getServingNotificationTitle(doc, translations),
     displayStatus: translations[servingState],
     statusColor: displayStatusColorMap.get(servingState as HubLinkStatus),
   };
+};
+
+const getServingNotificationTitle = (doc: DocumentDetail, translations: AnyRecord): string => {
+  const { notificationTitle } = translations;
+  switch (doc.type) {
+    case '2.7':
+    case '2.8':
+      return notificationTitle.noticeOfClaimAndHearing;
+    case '7.7':
+    case '7.8':
+    case '7.8a':
+      return notificationTitle.noticeOfPreliminaryHearing;
+    default:
+      return notificationTitle.acknowledgementOfClaim;
+  }
+};
+
+const sortNotificationsByDate = (notificationList: TribunalNotification[]): TribunalNotification[] => {
+  return notificationList.sort((a, b) => {
+    if (a.date && b.date) {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    return 0;
+  });
 };

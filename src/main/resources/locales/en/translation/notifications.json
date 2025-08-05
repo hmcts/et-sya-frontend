@@ -3,5 +3,9 @@
   "date": "Date",
   "ordersAndRequests": "Notifications",
   "status": "Status",
-  "et1Serving": "ET1 Serving"
+  "notificationTitle": {
+    "acknowledgementOfClaim": "Acknowledgement of Claim",
+    "noticeOfClaimAndHearing": "Notice of a Claim and Notice of Hearing",
+    "noticeOfPreliminaryHearing": "Notice of preliminary hearing for case management"
+  }
 }
