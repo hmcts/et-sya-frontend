@@ -7955,7 +7955,7 @@ __metadata:
     eslint-plugin-jest: ^29.0.0
     eslint-plugin-prettier: ^4.2.1
     express: ^4.20.0
-    express-rate-limit: ^7.0.0
+    express-rate-limit: ^8.0.0
     express-session: ^1.18.2
     git-rev-sync: 3.0.2
     govuk-frontend: ^5.11.0
@@ -8126,12 +8126,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-rate-limit@npm:^7.0.0":
-  version: 7.5.1
-  resolution: "express-rate-limit@npm:7.5.1"
+"express-rate-limit@npm:^8.0.0":
+  version: 8.0.1
+  resolution: "express-rate-limit@npm:8.0.1"
+  dependencies:
+    ip-address: 10.0.1
   peerDependencies:
     express: ">= 4.11"
-  checksum: 544fdd576a846a7d3ed0203a011cec6d65ad8e5eab58dbe045a0bdefd119060c140c38b327e32713b56342cc901a3ca5c99f13cce4ceee08408e775ec4742c16
+  checksum: 98782a67d98ee5d477e69a4ecacfef44bd8d536211ec07187968e999fedef08d49a48eceb9c0a1abb9da166f174fd4695547320dc9d8c1edcd055a5debbb3bb6
   languageName: node
   linkType: hard
 
@@ -9802,6 +9804,13 @@ __metadata:
     redis-parser: ^3.0.0
     standard-as-callback: ^2.1.0
   checksum: b085cec251581224c6b9e3e4b0c1f92f99a272976ebcad552bc9d0c63d31abbe0208294b3acedeae4f29759ff3821478727207a47597e2ba081b1036fbc69181
+  languageName: node
+  linkType: hard
+
+"ip-address@npm:10.0.1":
+  version: 10.0.1
+  resolution: "ip-address@npm:10.0.1"
+  checksum: 525d5391cfd31a91f80f5857e98487aeaa8474e860a6725a0b6461ac8e436c7f8c869774dece391c8f8e7486306a34a4d1c094778c4c583a3f1f2cd905e5ed50
   languageName: node
   linkType: hard
 
