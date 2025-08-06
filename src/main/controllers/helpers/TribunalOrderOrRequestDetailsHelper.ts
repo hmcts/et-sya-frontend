@@ -18,7 +18,7 @@ import {
   ResponseRequired,
 } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
-import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
