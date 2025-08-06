@@ -6,6 +6,8 @@
   "notificationTitle": {
     "acknowledgementOfClaim": "Acknowledgement of Claim",
     "noticeOfClaimAndHearing": "Notice of a Claim and Notice of Hearing",
-    "noticeOfPreliminaryHearing": "Notice of preliminary hearing for case management"
+    "noticeOfPreliminaryHearing": "Notice of preliminary hearing for case management",
+    "acknowledgementOfResponse": "Acknowledgement of response",
+    "rejectionOfResponse": "Rejection of Response"
   }
 }
