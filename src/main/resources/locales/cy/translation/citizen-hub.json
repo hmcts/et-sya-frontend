@@ -120,10 +120,10 @@
       "link": "Gweld eich ymateb"
     },
     "claimantRepresented": {
-      "title": "<placeholder>",
-      "p1": "<placeholder>",
-      "l1": "<placeholder>",
-      "l2": "<placeholder>"
+      "title": "Rydych chi bellach yn cael eich cynrychioli’n gyfreithiol gan",
+      "p1": "Byddwch yn cael eich diweddaru gyda gohebiaeth ynghylch yr achos ond ni fyddwch yn gallu gwneud y canlynol mwyach",
+      "l1": "Cyflwyno ceisiadau",
+      "l2": "Ymateb yn uniongyrchol i geisiadau a hysbysiadau"
     }
   },
   "multiples": {
