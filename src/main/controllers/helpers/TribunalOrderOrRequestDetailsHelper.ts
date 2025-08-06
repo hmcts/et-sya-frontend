@@ -18,7 +18,7 @@ import {
   ResponseRequired,
 } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
-import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
@@ -181,27 +181,27 @@ export const activateTribunalOrdersAndRequestsLink = async (
   items: SendNotificationTypeItem[],
   userCase: CaseWithId
 ): Promise<void> => {
-  if (!items?.length) {
-    return;
-  }
   let notices: SendNotificationTypeItem[];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
 
   if (eccFlag) {
-    notices = items.filter(
+    notices = items?.filter(
       notice =>
         notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY ||
         notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
     );
   } else {
-    notices = items.filter(notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY);
+    notices = items?.filter(notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY);
   }
 
   if (!notices?.length) {
-    return;
-  }
-
-  if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
+    if (userCase.acknowledgementOfClaimLetterDetail?.length) {
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] =
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
+          ? HubLinkStatus.VIEWED
+          : HubLinkStatus.NOT_VIEWED;
+    }
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_VIEWED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
