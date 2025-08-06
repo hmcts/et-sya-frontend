@@ -9,7 +9,7 @@ import {
   TranslationKeys,
 } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, displayStatusColorMap, statusColorMap } from '../../definitions/hub';
 import { TribunalNotification } from '../../definitions/tribunal-notification';
 import { AnyRecord } from '../../definitions/util-types';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
@@ -154,7 +154,7 @@ const buildResponseAckNotification = (
       languageParam,
     sendNotificationTitle: translations.notificationTitle.acknowledgementOfResponse,
     displayStatus: translations[state],
-    statusColor: displayStatusColorMap.get(state as HubLinkStatus),
+    statusColor: statusColorMap.get(state as HubLinkStatus),
   };
 };
 
@@ -171,7 +171,7 @@ const buildResponseRejNotification = (
       languageParam,
     sendNotificationTitle: translations.notificationTitle.rejectionOfResponse,
     displayStatus: translations[state],
-    statusColor: displayStatusColorMap.get(state as HubLinkStatus),
+    statusColor: statusColorMap.get(state as HubLinkStatus),
   };
 };
 
