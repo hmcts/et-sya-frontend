@@ -9,7 +9,7 @@ import {
   TranslationKeys,
 } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, HubLinksStatuses, displayStatusColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { TribunalNotification } from '../../definitions/tribunal-notification';
 import { AnyRecord } from '../../definitions/util-types';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
@@ -42,7 +42,10 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
 
   // acknowledgementOfClaimLetterDetail
   const servingDocs = await getDocsInfo(acknowledgementOfClaimLetterDetail, accessToken);
-  const servingState: string = getServingState(hubLinksStatuses);
+  const servingState: string =
+    hubLinksStatuses && hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
+      ? HubLinkStatus.VIEWED
+      : HubLinkStatus.NOT_VIEWED;
   servingDocs?.forEach(item =>
     notificationList.push(buildServingNotification(item, translations, languageParam, servingState))
   );
@@ -107,12 +110,6 @@ const getDocsInfo = async (documents: DocumentDetail[], accessToken: string): Pr
   return documents;
 };
 
-const getServingState = (hubLinksStatuses: HubLinksStatuses): string => {
-  return hubLinksStatuses && hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
-    ? HubLinkStatus.VIEWED
-    : HubLinkStatus.NOT_VIEWED;
-};
-
 const buildServingNotification = (
   doc: DocumentDetail,
   translations: AnyRecord,
@@ -172,7 +169,7 @@ const buildResponseRejNotification = (
     redirectUrl:
       PageUrls.CITIZEN_HUB_DOCUMENT.replace(':documentType', TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION) +
       languageParam,
-    sendNotificationTitle: translations.notificationTitle.acknowledgementOfResponse,
+    sendNotificationTitle: translations.notificationTitle.rejectionOfResponse,
     displayStatus: translations[state],
     statusColor: displayStatusColorMap.get(state as HubLinkStatus),
   };
