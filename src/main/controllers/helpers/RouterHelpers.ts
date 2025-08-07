@@ -30,11 +30,12 @@ export const conditionalRedirect = (
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
   const nextPage = req.session.returnUrl ?? redirectUrl;
   req.session.returnUrl = undefined;
+  // Validate nextPage to prevent open redirect vulnerabilities
   const checkedPage = isValidUrl(nextPage) ? nextPage : setUrlLanguage(req, ErrorPages.NOT_FOUND);
   return res.redirect(checkedPage);
 };
 
-const isValidUrl = (url: string): boolean => {
+export const isValidUrl = (url: string): boolean => {
   // Prevent open redirects to external sites
   if (!url || url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
     return false;
