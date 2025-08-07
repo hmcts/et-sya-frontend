@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { getLanguageParam, isValidUrl } from '../controllers/helpers/RouterHelpers';
+import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
@@ -67,12 +67,7 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
       : null;
 
   if (redirectUrl) {
-    // Validate redirectUrl to prevent open redirect vulnerabilities
-    if (isValidUrl(redirectUrl)) {
-      res.redirect(redirectUrl);
-    } else {
-      res.redirect(PageUrls.HOME); // fallback to a safe default
-    }
+    res.redirect(returnValidUrl(redirectUrl));
     return true;
   }
   return false;
