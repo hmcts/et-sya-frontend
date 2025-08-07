@@ -195,11 +195,12 @@ export const activateTribunalOrdersAndRequestsLink = async (
   }
 
   if (!notices?.length) {
-    if (userCase.acknowledgementOfClaimLetterDetail?.length) {
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] =
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
-          ? HubLinkStatus.VIEWED
-          : HubLinkStatus.NOT_VIEWED;
+    if (
+      userCase.acknowledgementOfClaimLetterDetail?.length ||
+      userCase.responseAcknowledgementDocumentDetail?.length ||
+      userCase.responseRejectionDocumentDetail?.length
+    ) {
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.READY_TO_VIEW;
     }
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
