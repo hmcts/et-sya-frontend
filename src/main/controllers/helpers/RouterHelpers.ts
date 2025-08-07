@@ -35,6 +35,10 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
 };
 
 const isValidUrl = (url: string): boolean => {
+  // Prevent open redirects to external sites
+  if (!url || url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
+    return false;
+  }
   const urlStr: string[] = url.split('?');
   const baseUrl: string = urlStr[0];
   const legacyUrlValues: string[] = Object.values(LegacyUrls);
