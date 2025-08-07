@@ -43,7 +43,7 @@ const isValidUrl = (url: string): boolean => {
   }
   const validUrls = Object.values(PageUrls);
   for (const validUrl of validUrls) {
-    if (validUrl === '/' || validUrl === '#') {
+    if (validUrl === '/') {
       continue;
     }
     if (baseUrl.includes(validUrl)) {
