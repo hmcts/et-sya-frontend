@@ -4,10 +4,10 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
+import { DefaultValues, ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
-
-import { setUrlLanguage } from './LanguageHelper';
+import StringUtils from '../../utils/StringUtils';
+import UrlUtils from '../../utils/UrlUtils';
 
 export const handleSaveAsDraft = (res: Response): void => {
   return res.redirect(PageUrls.CLAIM_SAVED);
@@ -27,50 +27,69 @@ export const conditionalRedirect = (
   return matchingValues?.some(v => v === condition);
 };
 
+// Main function to redirect to the next page
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  const nextPage = req.session.returnUrl ?? redirectUrl;
-  req.session.returnUrl = undefined;
-  // Validate nextPage to prevent open redirect vulnerabilities
-  const checkedPage = isValidUrl(nextPage) ? nextPage : setUrlLanguage(req, ErrorPages.NOT_FOUND);
-  return res.redirect(checkedPage);
+  let nextPage = redirectUrl;
+  if (req.session.returnUrl) {
+    nextPage = req.session.returnUrl;
+    req.session.returnUrl = undefined;
+  }
+  return res.redirect(returnValidUrl(nextPage));
 };
 
-export const isValidUrl = (url: string): boolean => {
-  // Prevent open redirects to external sites
-  if (!url || url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
-    return false;
-  }
-  const urlStr: string[] = url.split('?');
-  const baseUrl: string = urlStr[0];
-  const legacyUrlValues: string[] = Object.values(LegacyUrls);
-  if (legacyUrlValues.includes(baseUrl) || baseUrl === '/' || baseUrl === '#') {
-    return true;
-  }
-  const validUrls = Object.values(PageUrls);
-  for (const validUrl of validUrls) {
-    if (validUrl === '/') {
-      continue;
-    }
-    if (baseUrl.includes(validUrl)) {
-      return true;
-    }
-  }
-  return false;
-};
+/**
+ * Checks for a valid url stored within the system to avoid open redirects
+ *
+ * @param {string} redirectUrl
+ * @param {string[]} validUrls
+ * @return {string}
+ */
+export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
+  // if undefined use PageURLs
+  validUrls = validUrls ?? Object.values(PageUrls);
+  validUrls.push(LegacyUrls.ET1);
+  // split url, first part will always be the url (in a format similar to that in PageUrls)
+  const urlStr = redirectUrl.split('?');
+  const baseUrl = urlStr[0];
 
-export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string => {
-  for (const url of validUrls) {
-    const welshUrl = url + languages.WELSH_URL_PARAMETER;
-    const englishUrl = url + languages.ENGLISH_URL_PARAMETER;
-    if (redirectUrl === url) {
-      return url;
-    } else if (redirectUrl === welshUrl) {
-      return welshUrl;
-    } else if (redirectUrl === englishUrl) {
-      return englishUrl;
+  for (let validUrl of validUrls) {
+    if (baseUrl === validUrl) {
+      // get parameters as an array of strings
+      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+
+      // add params to the validUrl
+      for (const param of parameters) {
+        // Should never add clear selection parameter.
+        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+          validUrl = addParameterToUrl(validUrl, param, validUrls);
+        }
+      }
+      return validUrl;
     }
   }
+  // Return a safe fallback if no validUrl is found
   return ErrorPages.NOT_FOUND;
+};
+
+export const addParameterToUrl = (url: string, parameter: string, validUrls?: string[]): string => {
+  if (StringUtils.isBlank(url)) {
+    return DefaultValues.STRING_EMPTY;
+  }
+  if (StringUtils.isBlank(parameter)) {
+    return url;
+  }
+  if (!url.includes(parameter)) {
+    if (url.includes(DefaultValues.STRING_QUESTION_MARK)) {
+      url = UrlUtils.isValidUrl(url + DefaultValues.STRING_AMPERSAND + parameter, validUrls)
+        ? url + DefaultValues.STRING_AMPERSAND + parameter
+        : ErrorPages.NOT_FOUND;
+    } else {
+      url = UrlUtils.isValidUrl(url + DefaultValues.STRING_QUESTION_MARK + parameter, validUrls)
+        ? url + DefaultValues.STRING_QUESTION_MARK + parameter
+        : ErrorPages.NOT_FOUND;
+    }
+  }
+  return url;
 };
 
 export const validateLanguageParam = (lng: string): boolean => {
