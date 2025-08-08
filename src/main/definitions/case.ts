@@ -1,4 +1,5 @@
 import { HearingModel } from './api/caseApiResponse';
+import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { Et1Address } from './complexTypes/et1Address';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
@@ -13,7 +14,6 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { TypeItem } from './util-types';
-import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -218,6 +218,7 @@ export interface Case {
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;
   claimantRepresentative?: ClaimantRepresentative;
+  claimantRepresentativeRemoved?: YesOrNo;
 }
 
 export const enum StillWorking {

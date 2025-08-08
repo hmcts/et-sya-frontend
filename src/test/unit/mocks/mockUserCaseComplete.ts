@@ -115,6 +115,7 @@ export default {
   claimantPensionContribution: YesOrNoOrNotSure.YES,
   claimantPensionWeeklyContribution: 15,
   claimantRepresentative: undefined,
+  claimantRepresentativeRemoved: undefined,
   employeeBenefits: YesOrNo.YES,
   jobTitle: 'Developer',
   noticePeriod: YesOrNo.YES,
