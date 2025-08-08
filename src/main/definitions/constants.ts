@@ -227,6 +227,7 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
+  CITIZEN_HUB_BASE: '/citizen-hub',
   CLAIM_DETAILS: '/claim-details',
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document-response-from-respondent',

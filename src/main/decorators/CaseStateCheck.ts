@@ -67,7 +67,7 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
       : null;
 
   if (redirectUrl) {
-    res.redirect(returnValidUrl(redirectUrl));
+    res.redirect(returnValidUrl(redirectUrl, [PageUrls.CITIZEN_HUB_BASE, PageUrls.CLAIMANT_APPLICATIONS]));
     return true;
   }
   return false;
