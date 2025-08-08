@@ -571,10 +571,6 @@ export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
   remove: 'remove',
 } as const;
 
-export const Roles = {
-  CLAIMANT_SOLICITOR: 'DEFENDANT',
-} as const;
-
 export const ServiceErrors = {
   ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
 } as const;
