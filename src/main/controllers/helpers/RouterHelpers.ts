@@ -38,29 +38,34 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
 };
 
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
+  // if undefined use PageURLs
   validUrls = validUrls ?? Object.values(PageUrls);
   validUrls.push(LegacyUrls.ET1);
   validUrls.push(LegacyUrls.ET1_BASE);
-
+  // split url, first part will always be the url (in a format similar to that in PageUrls)
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
-  const urlParts = baseUrl.split('/').filter(Boolean);
 
-  for (const validUrl of validUrls) {
-    const validUrlParts = validUrl.split('/').filter(Boolean);
+  for (let validUrl of validUrls) {
+    if (baseUrl === validUrl) {
+      // get parameters as an array of strings
+      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
 
-    if (
-      urlParts.length === validUrlParts.length &&
-      urlParts.every((part, idx) => (validUrlParts[idx] === ':id' ? /^\d+$/.test(part) : validUrlParts[idx] === part))
-    ) {
-      // Optionally handle parameters here
+      // add params to the validUrl
+      for (const param of parameters) {
+        // Should never add clear selection parameter.
+        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+          validUrl = addParameterToUrl(validUrl, param);
+        }
+      }
       return validUrl;
     }
   }
+  // Return a safe fallback if no validUrl is found
   return ErrorPages.NOT_FOUND;
 };
 
-export const addParameterToUrl = (url: string, parameter: string, validUrls?: string[]): string => {
+export const addParameterToUrl = (url: string, parameter: string): string => {
   if (StringUtils.isBlank(url)) {
     return DefaultValues.STRING_EMPTY;
   }
@@ -69,13 +74,9 @@ export const addParameterToUrl = (url: string, parameter: string, validUrls?: st
   }
   if (!url.includes(parameter)) {
     if (url.includes(DefaultValues.STRING_QUESTION_MARK)) {
-      url = UrlUtils.isValidUrl(url + DefaultValues.STRING_AMPERSAND + parameter, validUrls)
-        ? url + DefaultValues.STRING_AMPERSAND + parameter
-        : ErrorPages.NOT_FOUND;
+      url = url + DefaultValues.STRING_AMPERSAND + parameter;
     } else {
-      url = UrlUtils.isValidUrl(url + DefaultValues.STRING_QUESTION_MARK + parameter, validUrls)
-        ? url + DefaultValues.STRING_QUESTION_MARK + parameter
-        : ErrorPages.NOT_FOUND;
+      url = url + DefaultValues.STRING_QUESTION_MARK + parameter;
     }
   }
   return url;
