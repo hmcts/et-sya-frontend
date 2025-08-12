@@ -66,7 +66,6 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
           redirectBase = addParameterToUrl(redirectBase, param, validUrls);
         }
       }
-
       return redirectBase;
     }
   }
