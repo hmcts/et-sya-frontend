@@ -2,5 +2,12 @@
   "title": "Yr holl hysbysiadau",
   "date": "Dyddiad",
   "ordersAndRequests": "Hysbysiadau",
-  "status": "Statws"
+  "status": "Statws",
+  "notificationTitle": {
+    "acknowledgementOfClaim": "Cydnabod derbyn yr hawliad",
+    "noticeOfClaimAndHearing": "Hysbysiad o Hawliad a Hysbysiad o Wrandawiad",
+    "noticeOfPreliminaryHearing": "Hysbysiad o wrandawiad rhagarweiniol ar gyfer rheoli achosion",
+    "acknowledgementOfResponse": "Cydnabod derbyn yr ymateb",
+    "rejectionOfResponse": "Gwrthod yr ymateb"
+  }
 }

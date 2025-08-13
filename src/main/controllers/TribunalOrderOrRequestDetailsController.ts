@@ -16,7 +16,7 @@ import {
   anyResponseRequired,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
-} from './helpers/TribunalOrderOrRequestHelper';
+} from './helpers/TribunalOrderOrRequestDetailsHelper';
 
 const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {

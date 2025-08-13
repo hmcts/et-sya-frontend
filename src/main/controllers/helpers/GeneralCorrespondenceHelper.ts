@@ -7,7 +7,7 @@ import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
-import { formatNotificationSubjects } from './TribunalOrderOrRequestHelper';
+import { formatNotificationSubjects } from './TribunalOrderOrRequestDetailsHelper';
 
 export const getCorrespondenceNotificationDetails = (
   translations: AnyRecord,
