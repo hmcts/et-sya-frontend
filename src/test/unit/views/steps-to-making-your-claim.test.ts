@@ -101,55 +101,26 @@ describe('Steps to making your claim page', () => {
     expect(header[3].innerHTML).contains(expectedHeader4, 'could not find table 4 header text');
   });
 
-  it(
-    'should have the correct link(PageUrls.CLAIM_TYPE_DISCRIMINATION) on Summarise what happened to you ' +
-      'when TypeOfClaim.DISCRIMINATION selected',
-    async () => {
-      await request(
-        mockAppWithRedisClient({
-          session: mockSession([], [], []),
-          redisClient: mockRedisClient(
-            new Map<CaseDataCacheKey, string>([
-              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
-              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
-              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.DISCRIMINATION])],
-            ])
-          ),
-        })
-      )
-        .get(PAGE_URL)
-        .then(res => {
-          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-        });
-      const links = htmlRes.querySelectorAll(linkClass);
-
-      expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
-    }
-  );
-  it(
-    'should have the correct link(PageUrls.CLAIM_TYPE_PAY) on Summarise what happened to you ' +
-      'when TypeOfClaim.PAY_RELATED_CLAIM selected and TypeOfClaim.DISCRIMINATION is not selected',
-    async () => {
-      await request(
-        mockAppWithRedisClient({
-          session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []),
-          redisClient: mockRedisClient(
-            new Map<CaseDataCacheKey, string>([
-              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
-              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
-              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
-            ])
-          ),
-        })
-      )
-        .get(PAGE_URL)
-        .then(res => {
-          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-        });
-      const links = htmlRes.querySelectorAll(linkClass);
-      expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_PAY.toString());
-    }
-  );
+  it('should have the correct link(PageUrls.TYPE_OF_CLAIM) on Summarise what happened to you', async () => {
+    await request(
+      mockAppWithRedisClient({
+        session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const links = htmlRes.querySelectorAll(linkClass);
+    expect(links[5].outerHTML).contains(PageUrls.TYPE_OF_CLAIM.toString());
+  });
   it(
     'should have the correct link(PageUrls.STILL_WORKING) on Employment status ' +
       'when TypeOfClaim.UNFAIR_DISMISSAL is selected',
