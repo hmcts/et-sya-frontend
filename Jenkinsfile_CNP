@@ -1,7 +1,6 @@
 #!groovy
 
 //@Library("Infrastructure")
-
 @Library('Infrastructure@add-perftest-vars') _
 
 import uk.gov.hmcts.contino.AppPipelineDsl
