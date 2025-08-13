@@ -61,7 +61,7 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
       return validUrl;
     }
   }
-  // Return a safe fallback if no validUrl is found
+  // Return safe fallback if no validUrl is found
   return ErrorPages.NOT_FOUND;
 };
 
