@@ -6,6 +6,7 @@ import { LoggerInstance } from 'winston';
 import { AppRequest } from '../../definitions/appRequest';
 import { DefaultValues, ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
+import NumberUtils from '../../utils/NumberUtils';
 import StringUtils from '../../utils/StringUtils';
 import UrlUtils from '../../utils/UrlUtils';
 
@@ -37,6 +38,15 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
   return res.redirect(returnValidUrl(nextPage));
 };
 
+const dynamicMatchers: ((path: string) => boolean)[] = [
+  isRespondentWorkAddressPath, // /respondent/{id}/work-address
+  isRespondentNoAcasPath, // /respondent/{id}/no-acas-reason
+  isRespondentWorkPostcodePath, // /respondent/{id}/work-postcode-enter
+  isRespondentAcasCertPath, // /respondent/{id}/acas-cert-num
+  isRespondentPostcodeEnterPath, // /respondent/{id}/respondent-postcode-enter
+  isCitizenHubPath, // /citizen-hub/{id}
+];
+
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
   // if undefined use PageURLs
   validUrls = validUrls ?? Object.values(PageUrls);
@@ -46,6 +56,7 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
 
+  // check static urls
   for (let validUrl of validUrls) {
     if (baseUrl === validUrl) {
       // get parameters as an array of strings
@@ -61,9 +72,82 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
       return validUrl;
     }
   }
-  // Return safe fallback if no validUrl is found
+  // check dynamic urls
+  const matchedDynamic = dynamicMatchers.some(m => m(baseUrl));
+  if (matchedDynamic) {
+    // Re-attach query params safely. We want addParameterToUrl() to accept this dynamic URL,
+    // so temporarily include the dynamic baseUrl in the validUrls set for validation.
+    const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+    let rebuilt = baseUrl;
+
+    for (const param of parameters) {
+      if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+        rebuilt = addParameterToUrl(rebuilt, param);
+        if (rebuilt === ErrorPages.NOT_FOUND) {
+          // If any param fails validation, stop and return safe fallback.
+          return ErrorPages.NOT_FOUND;
+        }
+      }
+    }
+    return rebuilt;
+  }
+
+  // Return a safe fallback if no validUrl is found
   return ErrorPages.NOT_FOUND;
 };
+
+function isRespondentWorkAddressPath(path: string): boolean {
+  const seg = toSegments(path); // ["respondent","1","work-address"]
+  return seg.length === 3 && seg[0] === 'respondent' && NumberUtils.isNumericValue(seg[1]) && seg[2] === 'work-address';
+}
+
+function isRespondentNoAcasPath(path: string): boolean {
+  const seg = toSegments(path); // ["respondent","1","no-acas-reason"]
+  return (
+    seg.length === 3 && seg[0] === 'respondent' && NumberUtils.isNumericValue(seg[1]) && seg[2] === 'no-acas-reason'
+  );
+}
+
+function isRespondentWorkPostcodePath(path: string): boolean {
+  const seg = toSegments(path); // ["respondent","1","work-postcode-enter"]
+  return (
+    seg.length === 3 &&
+    seg[0] === 'respondent' &&
+    NumberUtils.isNumericValue(seg[1]) &&
+    seg[2] === 'work-postcode-enter'
+  );
+}
+
+function isRespondentAcasCertPath(path: string): boolean {
+  const seg = toSegments(path); // ["respondent","1","acas-cert-num"]
+  return (
+    seg.length === 3 && seg[0] === 'respondent' && NumberUtils.isNumericValue(seg[1]) && seg[2] === 'acas-cert-num'
+  );
+}
+
+function isRespondentPostcodeEnterPath(path: string): boolean {
+  const seg = toSegments(path); // ["respondent","1","respondent-postcode-enter"]
+  return (
+    seg.length === 3 &&
+    seg[0] === 'respondent' &&
+    NumberUtils.isNumericValue(seg[1]) &&
+    seg[2] === 'respondent-postcode-enter'
+  );
+}
+
+function isCitizenHubPath(path: string): boolean {
+  const seg = toSegments(path); // ["citizen-hub","12345"]
+  return seg.length === 2 && seg[0] === 'citizen-hub' && NumberUtils.isNumericValue(seg[1]);
+}
+
+function toSegments(path: string): string[] {
+  const p = path.split('?')[0].split('#')[0];
+  const trimmed = p.startsWith('/') ? p.slice(1) : p;
+  if (!trimmed) {
+    return [];
+  }
+  return trimmed.endsWith('/') && trimmed.length > 1 ? trimmed.slice(0, -1).split('/') : trimmed.split('/');
+}
 
 export const addParameterToUrl = (url: string, parameter: string): string => {
   if (StringUtils.isBlank(url)) {
