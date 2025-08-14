@@ -29,6 +29,6 @@ describe('Case role Helpers', () => {
     const request = <AppRequest>mockRequest({ userCase });
     request.url = '/some-other-url';
     const actualUrl = await removeClaimantRepresentative(request);
-    expect(actualUrl).toEqual('/citizen-hub/1234567890123456?language=?lng=en');
+    expect(actualUrl).toEqual('/citizen-hub/1234567890123456?lng=en');
   });
 });

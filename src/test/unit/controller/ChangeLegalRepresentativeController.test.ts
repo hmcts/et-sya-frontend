@@ -54,6 +54,6 @@ describe('ChangeLegalRepresentative Controller', () => {
     const res = mockResponse();
     await changeLegalRepresentativeController.post(request, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1234567890123456?language=?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1234567890123456?lng=en');
   });
 });
