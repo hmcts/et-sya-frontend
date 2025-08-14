@@ -1,10 +1,14 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
+
 {% block beforeContent %}
   {{ super() }}
   {% include "back-link.njk"%}
 {% endblock %}
+
+{% set pageSection = "" %}
+
 
 {% block content %}
   <div class="govuk-grid-row">
@@ -13,9 +17,12 @@
         {{ title }}
       </h1>
 
+
       <p class="govuk-body">
         {{ p1 }}
       </p>
+
+
 
       <h2 class="govuk-heading-m">{{ h2 }}</h2>
       <dl class="govuk-summary-list">
@@ -30,6 +37,7 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             {{ tribunalCaseNumber }}
+
           </dt>
           <dd class="govuk-summary-list__value">
             {{ userCase.ethosCaseReference }}
@@ -49,9 +57,15 @@
       <p class="govuk-body">
         {{ p2a }}
         <a href="{{ allDocumentsUrl }}" class="govuk-link">
+
           {{ p2b }}
         </a>
         {{ p2c }}
+
+          {{ downloadDocuments }}
+        </a>
+        {{ p2b }}
+
       </p>
     </div>
   </div>
