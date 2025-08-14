@@ -38,7 +38,21 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
   return res.redirect(returnValidUrl(nextPage));
 };
 
-const dynamicMatchers: ((path: string) => boolean)[] = [
+const isRespondentWorkAddressPath = (path: string) => isDynamicPath(path, ['respondent', null, 'work-address'], 1);
+
+const isRespondentNoAcasPath = (path: string) => isDynamicPath(path, ['respondent', null, 'no-acas-reason'], 1);
+
+const isRespondentWorkPostcodePath = (path: string) =>
+  isDynamicPath(path, ['respondent', null, 'work-postcode-enter'], 1);
+
+const isRespondentAcasCertPath = (path: string) => isDynamicPath(path, ['respondent', null, 'acas-cert-num'], 1);
+
+const isRespondentPostcodeEnterPath = (path: string) =>
+  isDynamicPath(path, ['respondent', null, 'respondent-postcode-enter'], 1);
+
+const isCitizenHubPath = (path: string) => isDynamicPath(path, ['citizen-hub', null], 1);
+
+const dynamicMatchers: ((path: string) => string)[] = [
   isRespondentWorkAddressPath, // /respondent/{id}/work-address
   isRespondentNoAcasPath, // /respondent/{id}/no-acas-reason
   isRespondentWorkPostcodePath, // /respondent/{id}/work-postcode-enter
@@ -75,7 +89,6 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   // check dynamic urls
   const matchedDynamic = dynamicMatchers.some(m => m(baseUrl));
   if (matchedDynamic) {
-    // Re-attach query params safely. We want addParameterToUrl() to accept this dynamic URL,
     // so temporarily include the dynamic baseUrl in the validUrls set for validation.
     const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
     let rebuilt = baseUrl;
@@ -96,48 +109,20 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   return ErrorPages.NOT_FOUND;
 };
 
-function isRespondentWorkAddressPath(path: string): boolean {
-  const seg = toSegments(path); // ["respondent","1","work-address"]
-  return seg.length === 3 && seg[0] === 'respondent' && NumberUtils.isNumericValue(seg[1]) && seg[2] === 'work-address';
-}
-
-function isRespondentNoAcasPath(path: string): boolean {
-  const seg = toSegments(path); // ["respondent","1","no-acas-reason"]
-  return (
-    seg.length === 3 && seg[0] === 'respondent' && NumberUtils.isNumericValue(seg[1]) && seg[2] === 'no-acas-reason'
-  );
-}
-
-function isRespondentWorkPostcodePath(path: string): boolean {
-  const seg = toSegments(path); // ["respondent","1","work-postcode-enter"]
-  return (
-    seg.length === 3 &&
-    seg[0] === 'respondent' &&
-    NumberUtils.isNumericValue(seg[1]) &&
-    seg[2] === 'work-postcode-enter'
-  );
-}
-
-function isRespondentAcasCertPath(path: string): boolean {
-  const seg = toSegments(path); // ["respondent","1","acas-cert-num"]
-  return (
-    seg.length === 3 && seg[0] === 'respondent' && NumberUtils.isNumericValue(seg[1]) && seg[2] === 'acas-cert-num'
-  );
-}
-
-function isRespondentPostcodeEnterPath(path: string): boolean {
-  const seg = toSegments(path); // ["respondent","1","respondent-postcode-enter"]
-  return (
-    seg.length === 3 &&
-    seg[0] === 'respondent' &&
-    NumberUtils.isNumericValue(seg[1]) &&
-    seg[2] === 'respondent-postcode-enter'
-  );
-}
-
-function isCitizenHubPath(path: string): boolean {
-  const seg = toSegments(path); // ["citizen-hub","12345"]
-  return seg.length === 2 && seg[0] === 'citizen-hub' && NumberUtils.isNumericValue(seg[1]);
+function isDynamicPath(path: string, expectedSegments: (string | null)[], numericIndex: number | null = null): string {
+  const seg = toSegments(path);
+  if (seg.length !== expectedSegments.length) {
+    return null;
+  }
+  for (let i = 0; i < expectedSegments.length; i++) {
+    if (expectedSegments[i] !== null && seg[i] !== expectedSegments[i]) {
+      return null;
+    }
+    if (numericIndex === i && !NumberUtils.isNumericValue(seg[i])) {
+      return null;
+    }
+  }
+  return '/' + seg.join('/');
 }
 
 function toSegments(path: string): string[] {
