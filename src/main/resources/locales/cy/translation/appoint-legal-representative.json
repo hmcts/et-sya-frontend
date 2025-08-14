@@ -2,10 +2,10 @@
   "title": "Penodi cynrychiolydd cyfreithiol",
   "p1": "Rydych wedi dewis penodi cynrychiolydd cyfreithiol felly bydd angen i chi roi’r wybodaeth ganlynol i’ch cyfreithiwr er mwyn iddynt allu cyflwyno Hysbysiad o Newid.",
   "h2": "[W]Your claim details",
-  "caseReference": "[W]Case reference",
-  "tribunalCaseNumber": "[W]Tribunal case number",
-  "claimantName": "[W]Claimant name",
-  "downloadDocuments": "[W]Download documents",
+  "caseReference": "Cyfeirnod yr achos",
+  "tribunalCaseNumber": "Rhif Achos Tribiwnlys",
+  "claimantName": "Enw’r hawlydd"
+  "downloadDocuments": "lawrlwytho eich holl ddogfennau",
   "p2a": "Efallai yr hoffech hefyd",
   "p2b": "fel y gallwch eu rhannu gyda'ch cynrychiolydd cyfreithiol.",
   "p2c": "[W]so you may share them with your legal representative."
