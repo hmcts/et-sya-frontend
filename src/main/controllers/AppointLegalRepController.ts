@@ -9,6 +9,7 @@ export default class AppointLegalRepController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const content = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.APPOINT_LEGAL_REPRESENTATIVE, { returnObjects: true }),
     };
 
     const languageParam = getLanguageParam(req.url);

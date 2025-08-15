@@ -153,6 +153,7 @@ export const TranslationKeys = {
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
 } as const;
 
 export const PageUrls = {
@@ -292,6 +293,7 @@ export const PageUrls = {
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
 } as const;
 
 export const InterceptPaths = {
@@ -351,6 +353,8 @@ export const JavaApiUrls = {
   SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
+  REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
+  REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
 } as const;
 
 export const Urls = {
@@ -560,4 +564,13 @@ export const FEATURE_FLAGS = {
   BUNDLES: 'bundles',
   ECC: 'ecc',
   MUL2: 'MUL2',
+} as const;
+
+export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
+  change: 'change',
+  remove: 'remove',
+} as const;
+
+export const ServiceErrors = {
+  ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
 } as const;
