@@ -10,6 +10,7 @@
   "iWantTo": "I want to...",
   "contactTribunalMyCase": "Contact the tribunal about my case",
   "findLegalAdvice": "Find legal advice (opens in new tab)",
+  "appointLegalRepresentative": "Appoint a legal representative",
   "section1": "Your claim",
   "section2": "The response",
   "section3": "Your hearings",
@@ -118,6 +119,16 @@
         }
       },
       "link": "View your response"
+    },
+    "claimantRepresented": {
+      "title": "You are now being legally represented by",
+      "p1": "You will be kept updated with case communication but will no longer be able to",
+      "l1": "Submit applications",
+      "l2": "Directly respond to applications or notifications"
+    },
+    "claimantNotRepresented": {
+      "p1": "You are no longer legally represented.",
+      "p2": "You may continue to represent yourself or you may wish to appoint a new legal representative."
     }
   },
   "multiples": {
@@ -144,5 +155,7 @@
   "withdraw": "withdraw all/part of claim",
   "Amend response": "amend response",
   "your": "your",
-  "theRespondent": "the respondent's"
+  "theRespondent": "the respondent's",
+  "appointLegalRepresentative": "Appoint a legal representative",
+  "changeLegalRepresentative": "Change my legal representative"
 }
