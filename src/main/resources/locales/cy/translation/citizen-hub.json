@@ -11,6 +11,7 @@
   "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
   "appointLegalRepresentative": "Penodi cynrychiolydd cyfreithiol",
+  "changeLegalRepresentative": "Newid fy nghynrychiolydd cyfreithiol",
   "section1": "Eich hawliad",
   "section2": "Yr ymateb",
   "section3": "Eich gwrandawiadau",
@@ -155,7 +156,5 @@
   "Amend response": "Diwygio ymateb",
   "withdraw": "tynnu",
   "your": "eich",
-  "theRespondent": "yr atebydd",
-  "appointLegalRepresentative": "[W]Appoint a legal representative",
-  "changeLegalRepresentative": "[W]Change my legal representative"
+  "theRespondent": "yr atebydd"
 }

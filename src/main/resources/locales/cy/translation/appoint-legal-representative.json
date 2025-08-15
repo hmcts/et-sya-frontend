@@ -1,14 +1,12 @@
 {
-  "title": "[W]Appoint a legal representative",
-  "heading1": "[W]Your Claim Details",
-  "heading2": "[W]Download documents",
-  "p1": "[W]You have chosen to appoint a legal representative so you will need to give the following information to your solicitor so they can perform a Notice of Change.",
-  "h2": "[W]Your claim details",
-  "caseReference": "[W]Case reference",
-  "tribunalCaseNumber": "[W]Tribunal case number",
-  "claimantName": "[W]Claimant name",
-  "downloadDocuments": "[W]Download documents",
-  "p2a": "[W]You  may also wish to",
-  "p2b": "[W]download all your documents",
-  "p2c": "[W]so you may share them with your legal representative."
+  "title": "Penodi cynrychiolydd cyfreithiol",
+  "heading1": "Manylion Eich Hawliad",
+  "heading2": "Lawrlwytho dogfennau",
+  "p1": "Rydych wedi dewis penodi cynrychiolydd cyfreithiol felly bydd angen i chi roi’r wybodaeth ganlynol i’ch cyfreithiwr er mwyn iddynt allu cyflwyno Hysbysiad o Newid.",
+  "p2a": "Efallai yr hoffech hefyd",
+  "p2b": "fel y gallwch eu rhannu gyda'ch cynrychiolydd cyfreithiol.",
+  "downloadDocuments": "lawrlwytho eich holl ddogfennau",
+  "caseReference": "Cyfeirnod yr achos",
+  "caseNumber": "Rhif Achos Tribiwnlys",
+  "claimantName": "Enw’r hawlydd"
 }
