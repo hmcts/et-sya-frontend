@@ -16,6 +16,7 @@ export default class AppointLegalRepController {
     const allDocumentsUrl = PageUrls.ALL_DOCUMENTS;
 
     res.render(TranslationKeys.APPOINT_LEGAL_REPRESENTATIVE, {
+      ...req.t(TranslationKeys.APPOINT_LEGAL_REPRESENTATIVE, { returnObjects: true }),
       ...content,
       currentUrl: '/appoint-legal-representative',
       languageParam,
