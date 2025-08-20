@@ -49,7 +49,16 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  enablePerformanceTestStages(timeout: 60)
+  enablePerformanceTestStages(timeout: 15)
+  enableGatlingLoadTests([
+    repo: 'https://github.com/hmcts/et-performance.git',
+    branch: 'main',
+    simulation: 'ETCreateClaim',
+    users: 5,
+    rampDuration: '60s',
+    testDuration: '300s',
+    timeout: 10
+  ])
   //enableSlackNotifications('#et-builds')
 
   afterAlways('build') {
