@@ -53,6 +53,7 @@ export class Session {
               tls: true,
               connect_timeout: 15000,
               password: config.get('session.redis.key') as string,
+              prefix: 'et-sya-session:',
             };
 
       const client = createClient(clientOptions);
