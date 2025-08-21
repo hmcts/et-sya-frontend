@@ -128,8 +128,8 @@
       "l2": "Ymateb yn uniongyrchol i geisiadau a hysbysiadau"
     },
     "claimantNotRepresented": {
-      "p1": "[W]You are no longer legally represented.",
-      "p2": "[W]You may continue to represent yourself or you may wish to appoint a new legal representative."
+      "p1": "Nid ydych bellach yn cael eich cynrychioli'n gyfreithiol.",
+      "p2": "Gallwch barhau i gynrychioli'ch hun neu efallai yr hoffech benodi cynrychiolydd cyfreithiol newydd."
     }
   },
   "multiples": {
