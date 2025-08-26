@@ -50,6 +50,9 @@ withPipeline(type, product, component) {
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
   enablePerformanceTestStages(timeout: 15)
+    // Add debug logging
+    echo "Debug: About to set Gatling branch to: add-buildpipeline-code"
+
   enableGatlingLoadTests([
     repo: 'https://github.com/hmcts/et-performance.git',
     branch: 'add-buildpipeline-code', //*SHould be master
