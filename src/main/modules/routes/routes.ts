@@ -20,6 +20,7 @@ import AllDocumentsController from '../../controllers/AllDocumentsController';
 import AllJudgmentsController from '../../controllers/AllJudgmentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
+import AppointLegalRepController from '../../controllers/AppointLegalRepController';
 import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
@@ -27,6 +28,7 @@ import BundlesCompletedController from '../../controllers/BundlesCompletedContro
 import BundlesDocsForHearingCYAController from '../../controllers/BundlesDocsForHearingCYAController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
+import ChangeLegalRepresentativeController from '../../controllers/ChangeLegalRepresentativeController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
 import ChecklistController from '../../controllers/ChecklistController';
 import ClaimDetailsCheckController from '../../controllers/ClaimDetailsCheckController';
@@ -450,6 +452,9 @@ export class Routes {
     app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
     app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
     app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
+    app.get(PageUrls.APPOINT_LEGAL_REPRESENTATIVE, new AppointLegalRepController().get);
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
+    app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
+    app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
   }
 }
