@@ -207,7 +207,7 @@ export const isNotPdfFileType = (value: Express.Multer.File): string => {
 
 export const isAcasNumberValid: Validator = value => {
   const valueAsString = value as string;
-  if (!/^[rR]\d{6}\/\d{2}\/\d{2}$/.test(valueAsString)) {
+  if (!/^(?:[rR]|[mM][uU])\d{6}\/\d{2}\/\d{2}$/.test(valueAsString)) {
     return 'invalidAcasNumber';
   }
 };
