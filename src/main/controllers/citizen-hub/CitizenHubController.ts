@@ -59,7 +59,7 @@ import {
   getClaimantTribunalResponseBannerContent,
   setNotificationBannerData,
   shouldShowNotificationsBanner,
-} from '../helpers/TribunalOrderOrRequestHelper';
+} from '../helpers/TribunalOrderOrRequestDetailsHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 import { getMultiplePanelData, showMutipleData } from '../helpers/multiples/MultiplePanelHelper';
 

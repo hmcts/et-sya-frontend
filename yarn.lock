@@ -4630,9 +4630,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"applicationinsights@npm:2.9.7":
-  version: 2.9.7
-  resolution: "applicationinsights@npm:2.9.7"
+"applicationinsights@npm:2.9.8":
+  version: 2.9.8
+  resolution: "applicationinsights@npm:2.9.8"
   dependencies:
     "@azure/core-auth": 1.7.2
     "@azure/core-rest-pipeline": 1.16.3
@@ -4651,7 +4651,7 @@ __metadata:
   peerDependenciesMeta:
     applicationinsights-native-metrics:
       optional: true
-  checksum: 03036b48048e9c98d62f76deea77fc3f518ba8472726e588459074646c18807603de5c5f4f89901aed3bbe064479212ab75e95c554667f114ba95c810481db92
+  checksum: 2d4155876a211ab30fe79dea5d6797f83bd173f3f36f23ba7c64b2b5d84e1db265a30ca64f7ae2579483b8d4378140bde99c28b4cd1ee6eca44c7299389f6d5e
   languageName: node
   linkType: hard
 
@@ -5599,13 +5599,13 @@ __metadata:
   linkType: hard
 
 "chai-as-promised@npm:^8.0.0":
-  version: 8.0.1
-  resolution: "chai-as-promised@npm:8.0.1"
+  version: 8.0.2
+  resolution: "chai-as-promised@npm:8.0.2"
   dependencies:
-    check-error: ^2.0.0
+    check-error: ^2.1.1
   peerDependencies:
-    chai: ">= 2.1.2 < 6"
-  checksum: 7fa517bc70fd355ec91b543c8c1a1cf545355224cf75063f93b3ed32bb562f1f23a850135737d6337fa4e098c8baffbb9c74b05b1fcb3c4d290985a8c3c4890d
+    chai: ">= 2.1.2 < 7"
+  checksum: b3c52e414c5d06b083e46fcc03a7abf8ae24cbd75416413f378c5499056a358c57426c2b26892f251a05bdb43dadaceb5115c0222137d35a4bdaab42eb4acaa0
   languageName: node
   linkType: hard
 
@@ -5717,7 +5717,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"check-error@npm:^2.0.0":
+"check-error@npm:^2.1.1":
   version: 2.1.1
   resolution: "check-error@npm:2.1.1"
   checksum: d785ed17b1d4a4796b6e75c765a9a290098cf52ff9728ce0756e8ffd4293d2e419dd30c67200aee34202463b474306913f2fcfaf1890641026d9fc6966fea27a
@@ -6169,11 +6169,11 @@ __metadata:
   linkType: hard
 
 "config@npm:^4.0.0":
-  version: 4.1.0
-  resolution: "config@npm:4.1.0"
+  version: 4.1.1
+  resolution: "config@npm:4.1.1"
   dependencies:
     json5: ^2.2.3
-  checksum: 5dd4273aed0ea636d68dd873388775c705de2416e615ab994c561f7770e3483713b41909e1c1b2361f5a7e6ff9ad12b7dd5499d26b2f8a12e5cd6134bc688fe2
+  checksum: 304e4e551886c78dfc9413cb3e7c44e3ac1a0219a5787c15343f5347623bea6452a5221ff5625dc361418f7add22a29a906da508b5a37dd7ef7924f844dfa641
   languageName: node
   linkType: hard
 
@@ -6256,8 +6256,8 @@ __metadata:
   linkType: hard
 
 "copy-webpack-plugin@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "copy-webpack-plugin@npm:13.0.0"
+  version: 13.0.1
+  resolution: "copy-webpack-plugin@npm:13.0.1"
   dependencies:
     glob-parent: ^6.0.1
     normalize-path: ^3.0.0
@@ -6266,7 +6266,7 @@ __metadata:
     tinyglobby: ^0.2.12
   peerDependencies:
     webpack: ^5.1.0
-  checksum: 668af779d5d29cbaff02b79588c3af03ab358fe6f8446859421f88cb857f3c7462366a1d02857667133238983ff4cdfb29427816f6959163b7639b94532c1153
+  checksum: 35673183e1e684ffa6ce85d463c14535296954d9ab7d46d487783a6a03c3e16b2c20070541b32e720eaddbfeaccf0abb193314f3a59dcc16778e414163f86205
   languageName: node
   linkType: hard
 
@@ -6581,9 +6581,9 @@ __metadata:
   linkType: hard
 
 "dayjs@npm:^1.11.7":
-  version: 1.11.13
-  resolution: "dayjs@npm:1.11.13"
-  checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
+  version: 1.11.14
+  resolution: "dayjs@npm:1.11.14"
+  checksum: 4924b8ca37b1c48b7042c18f7eaea5fd91b2951de7513bbcbf400e2c4d27bf6944d829498f661c39fc44956b97601e9b6ee5358ba2ec0e2725faeda29acbf9f7
   languageName: node
   linkType: hard
 
@@ -7960,7 +7960,7 @@ __metadata:
     "@types/supertest": ^6.0.0
     "@typescript-eslint/eslint-plugin": ^7.0.0
     "@typescript-eslint/parser": ^7.0.0
-    applicationinsights: 2.9.7
+    applicationinsights: 2.9.8
     autobind-decorator: ^2.4.0
     babel-loader: ^10.0.0
     chai: ^4.3.7
@@ -9215,9 +9215,9 @@ __metadata:
   linkType: hard
 
 "govuk-frontend@npm:^5.11.0":
-  version: 5.11.1
-  resolution: "govuk-frontend@npm:5.11.1"
-  checksum: cd334f91bc8bbaa4cd963fd19fe62f0dabb6e7be63c8ff37ea2efb7bf34423a4932b49ff75b36b37200ade93b61fdcf093921a7da1d6df290d7c3965ca6f25ec
+  version: 5.11.2
+  resolution: "govuk-frontend@npm:5.11.2"
+  checksum: d6d1485082d7953bad544fa3baba1f90f2c41a3cf2a100811540e86b9e3edd282160a2c5b48a59df2321a02cc4deedb7f52868836e7d32fa709432ef1394943c
   languageName: node
   linkType: hard
 
@@ -9433,8 +9433,8 @@ __metadata:
   linkType: hard
 
 "html-webpack-plugin@npm:^5.5.1":
-  version: 5.6.3
-  resolution: "html-webpack-plugin@npm:5.6.3"
+  version: 5.6.4
+  resolution: "html-webpack-plugin@npm:5.6.4"
   dependencies:
     "@types/html-minifier-terser": ^6.0.0
     html-minifier-terser: ^6.0.2
@@ -9449,7 +9449,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 59e7d971b0cfd9ba34c7acaa3c161e43c62596474dd8cd35d7b690498ff5891f21296de0aa1d2e7810348caa657e938461267155dda47913b5eeca7124406270
+  checksum: b486d99ce820d563dda215f8b6bbeb78127a738b88b419c95d577165e10dd29125e151010b5745ce933e8055f2445c2f9ad1c93024ad3b752db9ac613e84cfac
   languageName: node
   linkType: hard
 
@@ -11945,14 +11945,14 @@ __metadata:
   linkType: hard
 
 "mini-css-extract-plugin@npm:^2.7.5":
-  version: 2.9.3
-  resolution: "mini-css-extract-plugin@npm:2.9.3"
+  version: 2.9.4
+  resolution: "mini-css-extract-plugin@npm:2.9.4"
   dependencies:
     schema-utils: ^4.0.0
     tapable: ^2.2.1
   peerDependencies:
     webpack: ^5.0.0
-  checksum: a404565949c3601bf9e8363a2489ce41c6fd9b03a8d8e5f6b5ee49ba209357b07db05475f89ff1c4670f0fdde64d53637dc357d72519deabb2428ef53ccf8400
+  checksum: 4ec46ebdcb5dae4b1c012debca90fea27b1e8e7790d408154232d77d25f56f839e7b1ec5401a962d6356e7b9301c760d2ef62e1cb0d4d7b6ec8209f812733dda
   languageName: node
   linkType: hard
 

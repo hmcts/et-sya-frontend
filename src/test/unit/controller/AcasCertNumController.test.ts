@@ -122,4 +122,15 @@ describe('Acas Cert Num Controller', () => {
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual('R123456/12/34');
     expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.YES);
   });
+
+  it('should add MU acas number to the session userCase', async () => {
+    const body = { acasCert: YesOrNo.YES, acasCertNum: 'MU123456/12/34' };
+    const controller = new AcasCertNumController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+    expect(req.session.userCase.respondents[0].acasCertNum).toEqual('MU123456/12/34');
+    expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.YES);
+  });
 });
