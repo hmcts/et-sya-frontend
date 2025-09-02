@@ -2,7 +2,7 @@
 
 //@Library("Infrastructure")
 
-@Library("Infrastructure@add-perftest-vars") _
+@Library("Infrastructure@test-performance-repo") _   //add-perftest-vars
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
