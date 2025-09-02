@@ -54,8 +54,8 @@ withPipeline(type, product, component) {
     echo "Debug: About to set Gatling branch to: add-buildpipeline-code"
 
   enableGatlingLoadTests([
-    repo: 'https://github.com/hmcts/et-performance.git',
-    branch: 'add-buildpipeline-code', //*SHould be master 
+    repo: 'https://github.com/hmcts/performance-testing.git', //https://github.com/hmcts/et-performance.git
+    branch: 'master', //*SHould be master //add-buildpipeline-code
     simulation: 'ETCreateClaim',
     users: 5,
     rampDuration: '60s',
