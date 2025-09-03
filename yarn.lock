@@ -14872,12 +14872,12 @@ __metadata:
   linkType: hard
 
 "sinon-chai@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "sinon-chai@npm:4.0.0"
+  version: 4.0.1
+  resolution: "sinon-chai@npm:4.0.1"
   peerDependencies:
-    chai: ^5.0.0
+    chai: ^5.0.0 || ^6.0.0
     sinon: ">=4.0.0"
-  checksum: 3c2f4eddfff44497cb5097673c7cb174b8f05802a75472a8173b0c736db6a376bfbf2fc4eec3153ede85ea4c19ec06cae3df37abbb5c6823441b27e7e88a0e2e
+  checksum: e2aa656f96b071ad26c9af9ccbeb29ef3b2ae78d2db32fae79de79457815b1d5e4b650ed0808bea0c66e41fdb8fc6f4daaa9e2f7834a6d958988dc0ce0ef9188
   languageName: node
   linkType: hard
 
