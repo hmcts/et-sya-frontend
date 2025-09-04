@@ -5,11 +5,11 @@ import FormData from 'form-data';
 import { CaseApiDataResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
-import { UserDetails } from '../definitions/appRequest';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls } from '../definitions/constants';
+import { JavaApiUrls, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -395,6 +395,17 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error uploading document: ' + axiosErrorDetails(error));
+    }
+  };
+
+  removeClaimantRepresentative = async (req: AppRequest): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.post(
+        `${JavaApiUrls.REVOKE_CLAIMANT_SOLICITOR}?caseSubmissionReference=${req.session.userCase.id}`,
+        {}
+      );
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_REVOKING_USER_ROLE + axiosErrorDetails(error));
     }
   };
 }
