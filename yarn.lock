@@ -2441,24 +2441,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.16.1":
-  version: 2.16.1
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.16.1"
+"@launchdarkly/js-server-sdk-common@npm:2.16.2":
+  version: 2.16.2
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.16.2"
   dependencies:
     "@launchdarkly/js-sdk-common": 2.19.0
     semver: 7.5.4
-  checksum: 1e3e42308d5033b9c8fca1b5f007feb799aa78eb0a133604235958eb22237a2c764789794a2c9db072195cef9586a8c77f5c92ef207082b99522bbaaaf606fa8
+  checksum: e929b0d1590790335d0f1898c29af6d58a51fb3359bcea93ef796a0fe7de2ce80f3b28273467253280d1dc704b9ba9ad49c9bf6e5907f5e70708f1cf6e8b87a5
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.10.1
-  resolution: "@launchdarkly/node-server-sdk@npm:9.10.1"
+  version: 9.10.2
+  resolution: "@launchdarkly/node-server-sdk@npm:9.10.2"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": 2.16.1
+    "@launchdarkly/js-server-sdk-common": 2.16.2
     https-proxy-agent: ^7.0.6
     launchdarkly-eventsource: 2.2.0
-  checksum: b51c1be265fd9c1709303e159284f47224b9c9cedc589492e4e3e14b42d404fa8108e953c9720a8e10de3153cca118939d2c349000f899400e2ab7aa5fde77a3
+  checksum: 78c0b746b7e1e34146b0c608839b033d2ce9fc951933a27b705b9bd6376eefa2eccd3d6763b7d1caadd838592a756f10017963e1fdf799e6f49dc815d2638471
   languageName: node
   linkType: hard
 
@@ -6581,9 +6581,9 @@ __metadata:
   linkType: hard
 
 "dayjs@npm:^1.11.7":
-  version: 1.11.14
-  resolution: "dayjs@npm:1.11.14"
-  checksum: 4924b8ca37b1c48b7042c18f7eaea5fd91b2951de7513bbcbf400e2c4d27bf6944d829498f661c39fc44956b97601e9b6ee5358ba2ec0e2725faeda29acbf9f7
+  version: 1.11.18
+  resolution: "dayjs@npm:1.11.18"
+  checksum: cc90054bad30ab011417a7a474b2ffa70e7a28ca6f834d7e86fe53a408a40a14c174f26155072628670e9eda4c48c4ed0d847d2edf83d47c0bfb78be15bbf2dd
   languageName: node
   linkType: hard
 
@@ -14872,12 +14872,12 @@ __metadata:
   linkType: hard
 
 "sinon-chai@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "sinon-chai@npm:4.0.0"
+  version: 4.0.1
+  resolution: "sinon-chai@npm:4.0.1"
   peerDependencies:
-    chai: ^5.0.0
+    chai: ^5.0.0 || ^6.0.0
     sinon: ">=4.0.0"
-  checksum: 3c2f4eddfff44497cb5097673c7cb174b8f05802a75472a8173b0c736db6a376bfbf2fc4eec3153ede85ea4c19ec06cae3df37abbb5c6823441b27e7e88a0e2e
+  checksum: e2aa656f96b071ad26c9af9ccbeb29ef3b2ae78d2db32fae79de79457815b1d5e4b650ed0808bea0c66e41fdb8fc6f4daaa9e2f7834a6d958988dc0ce0ef9188
   languageName: node
   linkType: hard
 
@@ -15851,8 +15851,8 @@ __metadata:
   linkType: hard
 
 "ts-loader@npm:^9.4.2":
-  version: 9.5.2
-  resolution: "ts-loader@npm:9.5.2"
+  version: 9.5.4
+  resolution: "ts-loader@npm:9.5.4"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^5.0.0
@@ -15862,7 +15862,7 @@ __metadata:
   peerDependencies:
     typescript: "*"
     webpack: ^5.0.0
-  checksum: f4c117042e25434e733c4b70873adaa9a79b14c2b3d8e5db53bbfd42060289f8a3eb97cfff64c83123b735d954f0eaa0f60f093afb0682cd2d1d7fa17f81e223
+  checksum: ee8a6883d0f8c0db0ea254fe4e9247ab0f6747cbbbee987af80e69822b840bdc2b67cee267ed3a93af803aeed47790d64dbaf07c001322b9091671f51cbf12b2
   languageName: node
   linkType: hard
 
