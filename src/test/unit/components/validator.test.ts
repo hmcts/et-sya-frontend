@@ -320,7 +320,7 @@ describe('Validation', () => {
       expect(isValid).toStrictEqual('invalidAcasNumber');
     });
 
-    it('Should check if value starts with R', () => {
+    it('Should check if value starts with R or MU', () => {
       const beginsWithT = isAcasNumberValid('T123458/89/13');
       const beginsWithQ = isAcasNumberValid('q123456/78/12');
       const beginsWithDigit = isAcasNumberValid('1234556/79/12');
@@ -330,10 +330,12 @@ describe('Validation', () => {
       expect(beginsWithDigit).toStrictEqual('invalidAcasNumber');
     });
 
-    it('Should check if has any numeric or / character after R', () => {
-      const isValid = isAcasNumberValid('R12345/789a12');
+    it('Should check if has any numeric or / character after R or MU', () => {
+      const invalidAfterR = isAcasNumberValid('R12345/789a12');
+      const invalidAfterMU = isAcasNumberValid('MU12345/789a12');
 
-      expect(isValid).toStrictEqual('invalidAcasNumber');
+      expect(invalidAfterR).toStrictEqual('invalidAcasNumber');
+      expect(invalidAfterMU).toStrictEqual('invalidAcasNumber');
     });
 
     it('Should check if has any repeating / character like //', () => {
@@ -386,8 +388,31 @@ describe('Validation', () => {
       expect(isValid).toStrictEqual(undefined);
     });
 
-    it('Should validate corect RNNNNNN/NN/NN format', () => {
+    it('Should allow MU prefix in any case', () => {
+      const mu = isAcasNumberValid('MU123456/78/12');
+      const Mu = isAcasNumberValid('Mu123456/78/12');
+      const mU = isAcasNumberValid('mU123456/78/12');
+      const muLower = isAcasNumberValid('mu123456/78/12');
+      expect(mu).toStrictEqual(undefined);
+      expect(Mu).toStrictEqual(undefined);
+      expect(mU).toStrictEqual(undefined);
+      expect(muLower).toStrictEqual(undefined);
+    });
+
+    it('Should reject RU and RMU prefixes', () => {
+      const ru = isAcasNumberValid('RU123456/78/12');
+      const rmu = isAcasNumberValid('RMU123456/78/12');
+      expect(ru).toStrictEqual('invalidAcasNumber');
+      expect(rmu).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should validate correct RNNNNNN/NN/NN format', () => {
       const isValid = isAcasNumberValid('R123456/78/12');
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should validate correct MUNNNNNN/NN/NN format', () => {
+      const isValid = isAcasNumberValid('MU123456/78/12');
       expect(isValid).toStrictEqual(undefined);
     });
   });

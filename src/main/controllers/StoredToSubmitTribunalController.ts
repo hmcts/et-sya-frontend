@@ -17,7 +17,7 @@ import {
   findSelectedPseResponse,
   findSelectedSendNotification,
 } from './helpers/StoredToSubmitHelpers';
-import { getSinglePseResponseDisplay } from './helpers/TribunalOrderOrRequestHelper';
+import { getSinglePseResponseDisplay } from './helpers/TribunalOrderOrRequestDetailsHelper';
 
 const logger = getLogger('StoredToSubmitTribunalController');
 

@@ -42,7 +42,7 @@ export default class AcasCertNumController {
                 label: (l: AnyRecord): string => l.acasCertNum,
                 labelAsHint: true,
                 classes: 'govuk-textarea',
-                attributes: { maxLength: 13 },
+                attributes: { maxLength: 14 },
               },
             },
           },
