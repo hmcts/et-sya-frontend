@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import { TribunalOrdersAndRequestsController } from '../../../main/controllers/TribunalOrdersAndRequestsController';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   SendNotificationType,
   SendNotificationTypeItem,
@@ -58,11 +59,21 @@ describe('Tribunal orders and requests Controller', () => {
   const mockClient = jest.spyOn(CaseService, 'getCaseApi');
   mockClient.mockReturnValue(caseApi);
 
+  const user: UserDetails = {
+    accessToken: 'token',
+    id: '1234',
+    email: 'bobby@gmail.com',
+    givenName: 'Bobby',
+    familyName: 'Ryan',
+    isCitizen: true,
+  };
+
   it('should render tribunal orders and requests page with ECC flag', async () => {
     mockLdClient.mockResolvedValue(true);
 
     const tribunalOrdersAndRequestsController = new TribunalOrdersAndRequestsController();
     const request = mockRequest({});
+    request.session.user = user;
     const response = mockResponse();
 
     await tribunalOrdersAndRequestsController.get(request, response);
@@ -74,7 +85,7 @@ describe('Tribunal orders and requests Controller', () => {
 
     const tribunalOrdersAndRequestsController = new TribunalOrdersAndRequestsController();
     const request = mockRequest({});
-
+    request.session.user = user;
     const response = mockResponse();
 
     await tribunalOrdersAndRequestsController.get(request, response);
