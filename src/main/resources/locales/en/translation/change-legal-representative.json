@@ -9,6 +9,7 @@
   "submitBtn": "Submit",
   "errors": {
     "legalRep": {
+      "required": "Please select at least one of the options below",
       "backEndError": "There was an error while removing your legal representative. Please try again. If this error persists please contact support."
     }
   }

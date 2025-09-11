@@ -48,6 +48,11 @@ export default class ChangeLegalRepresentativeController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    req.session.errors = this.form.getValidatorErrors(formData);
+    if (req.session.errors.length > 0) {
+      return res.redirect(req.url);
+    }
     try {
       const redirectUrl = conditionalRedirect(
         req,
