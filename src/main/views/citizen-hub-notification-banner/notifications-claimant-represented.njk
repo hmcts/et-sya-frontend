@@ -17,10 +17,7 @@
 {% elif showNoLongerRepresentedNotification %}
   {% set htmlForClaimantNotRepresentedBanner %}
     <p class="govuk-body">
-      {{ notificationBanner.claimantNotRepresented.p1 }}
-    </p>
-    <p class="govuk-body">
-      {{ notificationBanner.claimantNotRepresented.p2 }}
+      <b>{{ notificationBanner.claimantNotRepresented.p1 }}</b>
     </p>
   {% endset %}
   {{ govukNotificationBanner({
