@@ -1,12 +1,10 @@
 {
   "title": "Penodi cynrychiolydd cyfreithiol",
-  "heading1": "Manylion Eich Hawliad",
   "heading2": "Lawrlwytho dogfennau",
-  "p1": "Rydych wedi dewis penodi cynrychiolydd cyfreithiol felly bydd angen i chi roi’r wybodaeth ganlynol i’ch cyfreithiwr er mwyn iddynt allu cyflwyno Hysbysiad o Newid.",
-  "p2a": "Efallai yr hoffech hefyd",
-  "p2b": "fel y gallwch eu rhannu gyda'ch cynrychiolydd cyfreithiol.",
-  "downloadDocuments": "lawrlwytho eich holl ddogfennau",
-  "caseReference": "Cyfeirnod yr achos",
+  "p1": "[W]To appoint a legal representative, you will need to give the following information to them so they can perform a Notice of Change",
+  "p2a": "[W]Documents relating to your claim can be downloaded",
+  "p2b": "[W]here.",
+  "caseReference": "[W]Online case reference number",
   "caseNumber": "Rhif Achos Tribiwnlys",
   "claimantName": "Enw’r hawlydd"
 }
