@@ -9,7 +9,7 @@
   "submitBtn": "Cyflwyno",
   "errors": {
     "legalRep": {
-      "required": "[W]Please select at least one of the options below",
+      "required": "Dewiswch o leiaf un o'r opsiynau isod",
       "backEndError": "Roedd gwall wrth ddileu eich cynrychiolydd cyfreithiol. Rhowch gynnig arall arni. Os yw'r gwall hwn yn parhau, cysylltwch â'r adran gymorth."
     }
   }
