@@ -199,7 +199,9 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
 };
 
 export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
-  return userCase.genericTseApplicationCollection?.filter(item => item.value.applicant === Applicant.CLAIMANT);
+  return userCase.genericTseApplicationCollection?.filter(
+    item => item.value.applicant === Applicant.CLAIMANT || item.value.applicant === Applicant.CLAIMANT_REP
+  );
 };
 
 export const getClaimantAppsAndUpdateStatusTag = (userCase: CaseWithId): void => {
@@ -234,7 +236,7 @@ export const updateYourApplicationsStatusTag = (
     // If claimant responds to tribunal request, hub link status set to 'In progress'
     // Only set if it is not already set to 'Updated', as 'Updated' is the higher priority status
     if (
-      lastItem.value.from === Applicant.CLAIMANT &&
+      (lastItem.value.from === Applicant.CLAIMANT || lastItem.value.from === Applicant.CLAIMANT_REP) &&
       isAdmin &&
       citizenHubHighestPriorityStatus !== HubLinkStatus.UPDATED
     ) {

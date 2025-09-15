@@ -51,7 +51,10 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
   const claimantItems = [];
   if (items?.length) {
     for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].value.applicant?.includes(Applicant.CLAIMANT)) {
+      if (
+        items[i].value.applicant?.includes(Applicant.CLAIMANT) ||
+        items[i].value.applicant?.includes(Applicant.CLAIMANT_REP)
+      ) {
         claimantItems[i] = items[i];
       }
     }
