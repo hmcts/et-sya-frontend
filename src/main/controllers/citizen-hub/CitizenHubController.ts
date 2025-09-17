@@ -53,7 +53,6 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterECCNotifications,
   filterOutSpecialNotifications,
   getClaimantTribunalResponseBannerContent,
   setNotificationBannerData,
@@ -156,7 +155,6 @@ export default class CitizenHubController {
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const generalNotifications = filterOutSpecialNotifications(notifications);
-    const eccNotifications = await filterECCNotifications(notifications);
 
     let respondentBannerContent = undefined;
 
@@ -213,7 +211,6 @@ export default class CitizenHubController {
       ),
       showHearingBanner: shouldShowHearingBanner(userCase?.sendNotificationCollection),
       notifications: generalNotifications,
-      eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
       showMultipleData,
