@@ -219,23 +219,6 @@
   }}
 {% endfor %}
 
-{% for notification in eccNotifications %}
-  {% if notification.showAlert %}
-    {% set htmlForEcc %}
-      <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.ecc.title + notification.value.sendNotificationTitle }}
-      </h3>
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ notification.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
-      </p>
-    {% endset %}
-  {{ govukNotificationBanner({
-      html: htmlForEcc,
-      titleText: important
-    }) }}
-  {% endif %}
-{% endfor %}
-
 {% for item in claimantTribunalResponseBannerContent %}
   {% set claimantTribunalResponseHtml %}
       {% if item.copyToOtherParty === "Yes" %}

@@ -120,10 +120,9 @@ export const getRedirectUrlForNotification = (
  * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
  */
 export const setNotificationBannerData = (
-  items: SendNotificationTypeItem[],
+  notifications: SendNotificationTypeItem[],
   url: string
 ): SendNotificationTypeItem[] => {
-  const notifications = filterSendNotifications(items);
   if (notifications?.length) {
     notifications.forEach(item => {
       const actionableNotification = isActionableNotification(item);
@@ -215,32 +214,14 @@ export const activateTribunalOrdersAndRequestsLink = async (
   }
 };
 
-export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  return items?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
-};
-
-export const filterECCNotifications = async (
-  items: SendNotificationTypeItem[]
-): Promise<SendNotificationTypeItem[]> => {
-  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
-  if (eccFlag) {
-    return items?.filter(it => it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
-  }
-  return [];
-};
-
 /**
- * Filter out ECC notifications or Hearing only notifications
+ * Filter out Hearing only notifications
  * @param notifications
  */
 export const filterOutSpecialNotifications = (
   notifications: SendNotificationTypeItem[]
 ): SendNotificationTypeItem[] => {
-  return notifications?.filter(
-    it =>
-      !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC) &&
-      it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING
-  );
+  return notifications?.filter(it => it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING);
 };
 
 /**
