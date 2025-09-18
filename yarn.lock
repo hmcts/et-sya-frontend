@@ -2514,6 +2514,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/hashes@npm:^1.1.5":
+  version: 1.8.0
+  resolution: "@noble/hashes@npm:1.8.0"
+  checksum: c94e98b941963676feaba62475b1ccfa8341e3f572adbb3b684ee38b658df44100187fa0ef4220da580b13f8d27e87d5492623c8a02ecc61f23fb9960c7918f5
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -2714,6 +2721,15 @@ __metadata:
     ramda: ^0.27.2
     randexp: ^0.5.3
   checksum: a20d958a239a10465e14028840eacdfa3bb5b1c68d60e59dc26a41080b300e366242b03120f5b2e2bce60075378565e0ddbe2407ce63767bbb9c1ac2f5b8d722
+  languageName: node
+  linkType: hard
+
+"@paralleldrive/cuid2@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@paralleldrive/cuid2@npm:2.2.2"
+  dependencies:
+    "@noble/hashes": ^1.1.5
+  checksum: f7f6ac70e0268ec2c72e555719240d5c2c9a859ce541ac1c637eed3f3ee971b42881d299dedafbded53e7365b9e98176c5a31c442c1112f7e9e7306f2fd0ecbb
   languageName: node
   linkType: hard
 
@@ -5015,14 +5031,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.4":
-  version: 1.11.0
-  resolution: "axios@npm:1.11.0"
+"axios@npm:^1.12.0":
+  version: 1.12.2
+  resolution: "axios@npm:1.12.2"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.4
     proxy-from-env: ^1.1.0
-  checksum: 0a33dc600b588bfd3111b198d5985527ed89f722817455d7cdb66c1d055e5f8859cc2bebb7320888957fc8458ebe77d5f83af02af9cd260217c91c4e92b6dfb6
+  checksum: f0331594fe053a4bbff04104edb073973a3aabfad2e56b0aa18de82428aa63f6f0839ca3d837258ec739cb4528014121793b1649a21e5115ffb2bf8237eadca3
   languageName: node
   linkType: hard
 
@@ -8701,14 +8717,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^3.2.4":
-  version: 3.5.2
-  resolution: "formidable@npm:3.5.2"
+"formidable@npm:^3.5.3":
+  version: 3.5.4
+  resolution: "formidable@npm:3.5.4"
   dependencies:
+    "@paralleldrive/cuid2": ^2.2.2
     dezalgo: ^1.0.4
-    hexoid: ^2.0.0
     once: ^1.4.0
-  checksum: 7c7972e8a15d45e6d2315a54d77f0900e5c610aff9b5730de326e2b34630604e1eff6c9d666e5504fba4c8818ccaed682d76a4fdb718b160c6afa2c250bf6a76
+  checksum: bdb8ecd8af16d40e7e4c06a9dbaf0394fe9cabb7a4cef6f68512ce6fe7933f5a9c588dfc5c1d92cbf83a9e4764f5216064d955669530d3d23ca816e93ea62989
   languageName: node
   linkType: hard
 
@@ -9418,13 +9434,6 @@ __metadata:
     glob: ^8.0.0
     readable-stream: ^3.6.0
   checksum: 6548acba10dd79ebfc93f0d739c4cb2f32f7932c8d87b091992f3a0f844706263415eab81be015aed4ab874154232beb666920d7e280502c6bba29a40cde343e
-  languageName: node
-  linkType: hard
-
-"hexoid@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "hexoid@npm:2.0.0"
-  checksum: 69a92b2bcd7c81c16557de017c59511643e3cb1f0d6e9e9b705859b798bfd059088e4d3cc85e9fe0a9e431007430f15393303c3e74320b5c4c28cb64fc7d8bb4
   languageName: node
   linkType: hard
 

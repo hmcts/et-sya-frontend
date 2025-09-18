@@ -163,7 +163,7 @@
   },
   "resolutions": {
     "@swc/core": "1.3.82",
-    "axios": "^1.7.4",
+    "axios": "^1.12.0",
     "@opentelemetry/instrumentation": "^0.203.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
@@ -176,7 +176,7 @@
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4",
     "es5-ext": "^0.10.63",
-    "formidable": "^3.2.4",
+    "formidable": "^3.5.3",
     "puppeteer": "^23.2.0",
     "ws": "^8.17.1",
     "ip": "^2.0.1",
