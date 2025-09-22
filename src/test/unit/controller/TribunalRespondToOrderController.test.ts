@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
+import * as DocumentHelpers from '../../../main/controllers/helpers/DocumentHelpers';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import {
@@ -180,5 +181,28 @@ describe('Tribunal Respond to Order Controller', () => {
     controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
+  });
+
+  it('should redirect to /not-found when getDocumentsAdditionalInformation throws an error', async () => {
+    const getDocumentsAdditionalInformationSpy = jest
+      .spyOn(DocumentHelpers, 'getDocumentsAdditionalInformation')
+      .mockRejectedValue(new Error('Document service error'));
+
+    const translationJsons = { ...respondJsonRaw, ...common };
+    const controller = new TribunalRespondToOrderController();
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+    userCase.sendNotificationCollection = [selectedRequestOrOrder];
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+    request.params.orderId = '123';
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, expect.anything());
+
+    getDocumentsAdditionalInformationSpy.mockRestore();
   });
 });
