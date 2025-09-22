@@ -190,13 +190,52 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const translationJsons = { ...respondJsonRaw, ...common };
     const controller = new TribunalRespondToOrderController();
-    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
-    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
-    userCase.sendNotificationCollection = [selectedRequestOrOrder];
+
+    const mockSelectedRequestOrOrder = {
+      id: '999',
+      value: {
+        number: '1',
+        sendNotificationTitle: 'title',
+        sendNotificationSubjectString: 'Order or request',
+        sendNotificationSelectHearing: {
+          selectedLabel: 'Hearing',
+        },
+        date: '2019-05-03',
+        sentBy: 'Tribunal',
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationResponseTribunal: 'required',
+        sendNotificationSelectParties: 'Both',
+        sendNotificationAdditionalInfo: 'additional info',
+        sendNotificationWhoCaseOrder: 'Legal officer',
+        sendNotificationFullName: 'Judge Dredd',
+        sendNotificationNotify: 'Both',
+        notificationState: 'notViewedYet',
+        sendNotificationUploadDocument: [
+          {
+            id: '1',
+            value: {
+              typeOfDocument: 'ACAS Certificate',
+              uploadedDocument: {
+                document_binary_url: 'http://dm-store:8080/documents/test.pdf/binary',
+                document_filename: 'test.pdf',
+                document_url: 'http://dm-store:8080/documents/test.pdf',
+              },
+            },
+          },
+        ],
+      },
+    };
+
+    const userCase: Partial<CaseWithId> = {
+      ...mockUserCaseComplete,
+      selectedRequestOrOrder: mockSelectedRequestOrOrder,
+      sendNotificationCollection: [mockSelectedRequestOrOrder],
+    };
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
-    request.params.orderId = '123';
+    request.params.orderId = '999';
+    request.session.userCase.sendNotificationCollection = [mockSelectedRequestOrOrder];
 
     await controller.get(request, response);
 
