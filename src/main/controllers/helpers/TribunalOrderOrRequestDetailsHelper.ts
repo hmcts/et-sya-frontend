@@ -426,6 +426,7 @@ export const getClaimantTribunalResponseBannerContent = (
         .map(response => ({
           redirectUrl: `/notification-details/${notification.id}${languageParam}`,
           copyToOtherParty: response.value.copyToOtherParty,
+          sendNotificationSubject: notification.value.sendNotificationSubject,
         })) ?? []
   );
 };

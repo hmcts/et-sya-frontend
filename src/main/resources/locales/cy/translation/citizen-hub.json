@@ -115,6 +115,9 @@
         "rule92No": {
           "p1": "Rydych wedi anfon ymateb i'r tribiwnlys ac wedi rhoi eich rhesymau dros beidio â'i gopïo i'r atebydd.",
           "p2": "Bydd y tribiwnlys yn ystyried eich rhesymau ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf."
+        },
+        "rule92NoEcc": {
+          "p1": "Rydych wedi anfon ymateb i'r tribiwnlys."
         }
       },
       "link": "Gweld eich ymateb"

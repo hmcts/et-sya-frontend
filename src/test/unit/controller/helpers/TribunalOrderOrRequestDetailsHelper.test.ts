@@ -266,6 +266,7 @@ describe('Tribunal order or request Details helper', () => {
         {
           copyToOtherParty: YesOrNo.YES,
           redirectUrl: '/notification-details/6423be5b-0b82-462a-af1d-5f1df39686ab?lng=en',
+          sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
         },
       ]);
     });
