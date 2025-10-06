@@ -64,26 +64,26 @@ const dynamicMatchers: ((path: string) => string)[] = [
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
   // if undefined use PageURLs
   validUrls = validUrls ?? Object.values(PageUrls);
+  // validUrls = [];
+  // validUrls.push(PageUrls.CITIZEN_HUB);
   validUrls.push(LegacyUrls.ET1);
   validUrls.push(LegacyUrls.ET1_BASE);
-  // split url, first part will always be the url (in a format similar to that in PageUrls)
+  // split url, first part will be the url (in a format similar to that in PageUrls)
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
 
-  // check static urls
-  for (let validUrl of validUrls) {
-    if (baseUrl === validUrl) {
-      // get parameters as an array of strings
+  for (const validUrl of validUrls) {
+    // Allow dynamic segment matching
+    if (baseUrl === validUrl || baseUrl.endsWith(validUrl) || baseUrl.startsWith(validUrl)) {
+      // Use the original baseUrl (with dynamic segment) for the redirect, not the template
+      let redirectBase = baseUrl;
       const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-
-      // add params to the validUrl
       for (const param of parameters) {
-        // Should never add clear selection parameter.
         if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          validUrl = addParameterToUrl(validUrl, param);
+          redirectBase = addParameterToUrl(redirectBase, param);
         }
       }
-      return validUrl;
+      return redirectBase;
     }
   }
   // check dynamic urls
