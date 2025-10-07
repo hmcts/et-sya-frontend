@@ -1,40 +1,40 @@
 {
-  "title": "Welsh translation required",
-  "h1": "Welsh translation required",
-  "headingCaption": "Welsh translation required",
-  "p1": "Welsh translation required",
-  "bullet1": "Welsh translation required",
-  "bullet2": "Welsh translation required",
-  "bullet3": "Welsh translation required",
-  "bullet4": "Welsh translation required",
-  "bullet5": "Welsh translation required",
-  "p2": "Welsh translation required",
-  "p3": "Welsh translation required <a href=\"http://test\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Welsh translation required</a>",
+  "title": "Uwchlwythwch eich ffeil o ddogfennau ",
+  "h1": "Uwchlwythwch eich ffeil o ddogfennau ",
+  "headingCaption": "Paratoi dogfennau ar gyfer gwrandawiad",
+  "p1": "Ar ôl ichi ddarllen y gorchmynion gan y tribiwnlys, gwnewch yn siŵr:",
+  "bullet1": "mae gennych y set o ddogfennau mewn un ffeil PDF",
+  "bullet2": "os gofynnir am fynegai, bod yr eitemau mewn trefn yn ôl dyddiad neu drefn y mae'r tribiwnlys wedi gofyn amdano",
+  "bullet3": "mae'r eitem mynegai yn cyfeirio at y dudalen gywir yn y ddogfen",
+  "bullet4": "rydych ond yn cynnwys dogfennau a deunydd perthnasol i'ch achos chi",
+  "bullet5": "mae'r ddogfen PDF yn dod o fewn unrhyw derfynau nifer y tudalennau a roddir gan y tribiwnlys",
+  "p2": "Os ydych chi'n cyfeirio at un adran o ddogfen fel contract cyflogaeth, dywedwch pa ran yn y mynegai.",
+  "p3": "If you need to refer to previous case documents, go to your <a href=\"/all-documents?lng=en\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">case documents (opens in new tab)</a>",
 
   "fileUpload": {
-    "linkText": "Welsh translation required",
-    "hint": " Welsh translation required",
-    "hintExisting": "Welsh translation required {{filename}}</p></b>"
+    "linkText": "Neu uwchlwythwch eich crynodeb fel dogfen ar wahân (dewisol)",
+    "hint": "<p>Gallwch ond uwchlwytho 1 ddogfen.</p><p>Os ydych eisiau uwchlwytho e-bost, dylech ei lawrlwytho a'i drosglwyddo o'ch cleient e-bost yn gyntaf. Bydd y rhan fwyaf o gleientiaid e-bost yn rhoi'r opsiwn i lawrlwytho fel pdf neu PostScript.</p><p>Uwchlwytho ffeil</p>",
+    "hintExisting": "<p>Gallwch ond uwchlwytho 1 ddogfen.</p><p>Os ydych eisiau uwchlwytho e-bost, dylech ei lawrlwytho a'i drosglwyddo o'ch cleient e-bost yn gyntaf. Bydd y rhan fwyaf o gleientiaid e-bost yn rhoi'r opsiwn i lawrlwytho fel pdf neu PostScript.</p><b><p>Rydych wedi uwchlwytho yn flaenorol: {{filename}}</p></b>"
   },
   "acceptedFormats": {
-    "label": "Welsh translation required",
-    "p1": "Welsh translation required pdf"
+    "label": "Fformatau derbyniol",
+    "p1": "Mae'r fformatau ffeil a dderbynir yn pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
-  "remove": "Welsh translation required",
-  "noFilesUpload": "<p class=\"govuk-body\">Welsh translation required</p>",
-  "uploadFileButton": "Welsh translation required",
+  "remove": "Dileu",
+  "noFilesUpload": "<p class=\"govuk-body\">Dim ffeiliau wedi'u huwchlwytho</p>",
+  "uploadFileButton": "Uwchlwytho ffeil",
   "files": {
-    "title": "Welsh translation required",
-    "button": "Welsh translation required",
-    "uploaded": "Welsh translation required"
+    "title": "Uwchlwytho ffeil",
+    "button": "Uwchlwytho ffeil",
+    "uploaded": "Ffeiliau wedi'u huwchlwytho"
   },
   "errors": {
     "hearingDocument": {
-      "required": "Welsh translation required",
-      "invalidFileFormat": "Welsh translation required",
-      "invalidFileName": "Welsh translation required",
-      "invalidFileSize": "Welsh translation required",
-      "backEndError": "Welsh translation required"
+      "required": "Rhaid ichi uwchlwytho ffeil PDF i barhau",
+      "invalidFileFormat": "Rhaid i'r ffeil a ddewiswyd fod ar ffurf PDF",
+      "invalidFileName": "Mae enw'r ffeil a ddarparwyd yn annilys. Ni all enw ffeil fod yn fwy na 150 o nodau na chynnwys unrhyw un o'r nodau canlynol: \\/:*?\"|<>",
+      "invalidFileSize": "Mae'r ffeil rydych chi'n ceisio ei huwchlwytho yn fwy na'r terfyn maint uchaf o 80MB, ceisiwch leihau maint y ffeil.",
+      "backEndError": "Roedd yna gwall wrth uwchlwytho eich ffeil. Rhowch gynnig arall arni. Os bydd y gwall hwn yn parhau cysylltwch â'r tîm cymorth."
     }
   }
 }
