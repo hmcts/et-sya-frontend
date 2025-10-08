@@ -9,7 +9,7 @@
   "bullet4": "rydych ond yn cynnwys dogfennau a deunydd perthnasol i'ch achos chi",
   "bullet5": "mae'r ddogfen PDF yn dod o fewn unrhyw derfynau nifer y tudalennau a roddir gan y tribiwnlys",
   "p2": "Os ydych chi'n cyfeirio at un adran o ddogfen fel contract cyflogaeth, dywedwch pa ran yn y mynegai.",
-  "p3": "Os oes angen i chi gyfeirio at ddogfennau achos blaenorol, ewch i <a href=\"/all-documents?lng=en\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">ddogfennau eich achos (yn agor mewn tab newydd)</a>",
+  "p3": "Os oes angen i chi gyfeirio at ddogfennau achos blaenorol, ewch i <a href=\"/all-documents?lng=cy\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">ddogfennau eich achos (yn agor mewn tab newydd)</a>",
 
   "fileUpload": {
     "linkText": "Neu uwchlwythwch eich crynodeb fel dogfen ar wahân (dewisol)",
