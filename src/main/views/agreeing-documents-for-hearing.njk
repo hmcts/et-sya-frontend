@@ -13,31 +13,32 @@
     {% include "error-summary.njk" %}
   {% endblock %}
 
- <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">{{ caption }}</span>
-      <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
-      {{ govukInsetText({
-      text: p1
-        }) }}
-         <h2 class="govuk-heading-m govuk-!-margin-bottom-4">{{ h2 }}</h2>
-      {% block form %}
-        {% include "form/form.njk"%}
-     {% endblock %}
-    </div>
-
-      <div class="govuk-grid-column-one-third-from-desktop">
-        {% set sideBarContent %}
-          {% include "./citizen-hub-sidebar.njk" %}
-        {% endset %}
-
-        <div class="govuk-!-margin-top-2">
-          {{ govukDetails({
-            summaryText: "Contact",
-            html: sideBarContent
-          }) }}
-      </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">{{ caption }}</span>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
+    {{ govukInsetText({
+    text: p1
+    }) }}
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-4">{{ h2 }}</h2>
+    {% block form %}
+    {% include "form/form.njk"%}
+    {% endblock %}
   </div>
+
+  <div class="govuk-grid-column-one-third-from-desktop">
+    {% set sideBarContent %}
+    {% include "./citizen-hub-sidebar.njk" %}
+    {% endset %}
+
+    <div class="govuk-!-margin-top-2">
+      {{ govukDetails({
+      summaryText: contact,
+      html: sideBarContent
+      }) }}
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block footer %}
