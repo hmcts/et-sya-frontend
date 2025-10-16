@@ -1,0 +1,16 @@
+{
+  "title": "Changing legal representative",
+  "pageTitle": "Changing legal representation",
+  "h1": "Do you want to change your legal representative?",
+  "contactTheTribunal": "contact the tribunal",
+  "returnToCaseOverview": "Return to case overview",
+  "legalRepresentativeChange": "Yes, I confirm I want to change my legal representative.",
+  "legalRepresentativeRemove": "Yes, I confirm I wish to remove my legal representative and continue my case representing myself.",
+  "submitBtn": "Submit",
+  "errors": {
+    "legalRep": {
+      "required": "Please select at least one of the options below",
+      "backEndError": "There was an error while removing your legal representative. Please try again. If this error persists please contact support."
+    }
+  }
+}
