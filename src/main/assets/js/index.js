@@ -11,6 +11,7 @@ import './set-focus';
 // import './submit-claim';
 import { initialize, ready } from './session/utils';
 import './data-layer';
+import './button-navigation';
 // Initialize GOV.UK Frontend components
 initAll();
 
