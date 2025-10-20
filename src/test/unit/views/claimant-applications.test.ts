@@ -174,7 +174,6 @@ describe('Claimant Applications page', () => {
   it('should have data-navigation-link property to trigger event handler double click protection', () => {
     const rowDataClassData = htmlRes.getElementsByClassName(rowDataClass);
 
-    // Check draft applications use simple href links with data-navigation-link
     expect(rowDataClassData[6].innerHTML).contains(
       'data-navigation-link',
       'Continue href link should have navigation link data attribute'
@@ -186,10 +185,9 @@ describe('Claimant Applications page', () => {
 
     expect(rowDataClassData[13].innerHTML).contains(
       'data-navigation-link',
-      'Second draft Continue should have navigation link data attribute'
+      'Second Continue should have navigation link data attribute'
     );
 
-    // Check submitted application uses simple href link with data-navigation-link
     expect(rowDataClassData[19].innerHTML).contains(
       'data-navigation-link',
       'Submitted View should have navigation link data attribute'
