@@ -7,7 +7,6 @@
   "notAgreed": "No, we have not agreed and I want to provide my own documents",
   "agreedTextLabel": "<b>Tell us which documents are disputed<b>",
   "notAgreedTextLabel": "<b>Tell us why you've not been able to agree with the other party<b>",
-  "cancelLink": "Cancel",
   "errors": {
     "bundlesRespondentAgreedDocWith": {
       "required": "Select if you have agreed with the other party"

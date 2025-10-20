@@ -1,13 +1,11 @@
 {
-  "pHead": "Welsh translation required",
-  "button": "Welsh translation required",
-  "p1": "Welsh translation required",
-  "p2": "Welsh translation required",
-  "p3": "Welsh translation required",
-  "p4": "Welsh translation required",
-  "p5": "Welsh translation required",
-  "p6": "Welsh translation required",
-  "p7": "Welsh translation required",
-  "insetText": "Welsh translation required",
-  "cancelLink": "Welsh translation required"
+  "pHead": "Paratoi a chyflwyno dogfennau ar gyfer gwrandawiad ",
+  "p1": "Dylai'r tribiwnlys fod wedi dweud wrthych mewn llythyr pa ddogfennau rydych angen eu cyflwyno i'r gwrandawiad.",
+  "p2": "Bydd y dogfennau hyn, a gytunwyd gan y ddau barti fel arfer, yn ffurfio rhan o'r dystiolaeth yn y gwrandawiad. Dylech gynnwys yr holl ddogfennau sy'n bwysig i'ch achos ac mae'r ddau barti eisiau cyfeirio atynt yn y gwrandawiad.",
+  "p3": "Rhaid i'r set gyfunol o ddogfennau fod mewn un dogfen PDF, a gyflwynir fer arfer gan un parti oni bai y rhoddwyd cyfarwyddyd fel arall gan y tribiwnlys.",
+  "p4": "Os gofynnir am fynegai, dylai eitemau fod mewn trefn yn Ùl dyddiad neu drefn y maeír tribiwnlys wedi gofyn amdano.",
+  "p5": "Dylai'r ddogfen PDF gael ei chreu all-lein cyn ei huwchlwytho drwy'r ffurflen hon.",
+  "p6": "Dylech gyflwyno dogfennau gwrandawiad yn Ùl unrhyw derfynau amser a nodwyd yn y gorchymyn gan y tribiwnlys.",
+  "p7": "Cyfeiriwch at y gorchmynion gan y tribiwnlys yngl?n ‚ pha un a ydych angen cynnwys eich datganiadau tyst yma neu ar wah‚n.",
+  "insetText": "Bydd darparu set briodol o ddogfennau yn sicrhau bod eich achos yn cael gwrandawiad tecach ac yn lleihau'r oedi i chi a'r tribiwnlys."
 }
