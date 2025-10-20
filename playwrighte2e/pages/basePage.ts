@@ -24,7 +24,7 @@ export abstract class BasePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.continueButton = page.getByRole('button', { name: 'Continue' });
+    this.continueButton = page.locator('button:has-text("Continue"), a:has-text("Continue")');
     this.signInButton = page.getByRole('button', { name: 'Sign in' });
     this.saveAsDraftButton = page.getByRole('button', { name: 'Save as draft' });
     this.closeAndReturnButton = this.page.getByRole('button', { name: 'Close and Return to case' });
