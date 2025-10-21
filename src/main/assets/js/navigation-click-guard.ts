@@ -17,7 +17,7 @@ navigationLinks.forEach((link: HTMLAnchorElement) => {
   });
 });
 
-// Clear blocked links when the page is shown again
+// Should clear automatically when new page is loaded. But this event will listen to back/forward nav BFcache restores.
 window.addEventListener('pageshow', () => {
   clickedLinks.clear();
 });

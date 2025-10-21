@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom';
 
-describe('button-navigation data-navigation-link double-click guard', () => {
+describe('data-navigation-link double-click guard', () => {
   const setupDomWithLink = () => {
     const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost/' });
     global.window = dom.window as unknown as Window & typeof globalThis;
@@ -22,7 +22,7 @@ describe('button-navigation data-navigation-link double-click guard', () => {
     jest.resetModules();
   });
 
-  it('prevents default on second click of the same link', async () => {
+  it('prevents default on second and third click of the same link', async () => {
     const { link } = setupDomWithLink();
 
     // Import after DOM is ready so listeners can bind
