@@ -26,7 +26,7 @@ describe('button-navigation data-navigation-link double-click guard', () => {
     const { link } = setupDomWithLink();
 
     // Import after DOM is ready so listeners can bind
-    await import('../../../main/assets/js/button-navigation');
+    await import('../../../main/assets/js/navigation-click-guard');
 
     const first = new window.MouseEvent('click', { bubbles: true, cancelable: true });
     const second = new window.MouseEvent('click', { bubbles: true, cancelable: true });
@@ -44,7 +44,7 @@ describe('button-navigation data-navigation-link double-click guard', () => {
 
   it('allows click again after pageshow clears the guard', async () => {
     const { link } = setupDomWithLink();
-    await import('../../../main/assets/js/button-navigation');
+    await import('../../../main/assets/js/navigation-click-guard');
 
     const first = new window.MouseEvent('click', { bubbles: true, cancelable: true });
     const second = new window.MouseEvent('click', { bubbles: true, cancelable: true });
