@@ -1,24 +1,24 @@
 {
-  "title": "Welsh translation required",
-  "h1": "Welsh translation required",
-  "headingCaption": "Welsh translation required",
-  "Question1": "Welsh translation required",
-  "Question2": "Welsh translation required",
-  "Question2Radio1": "Welsh translation required",
-  "Question2Radio2": "Welsh translation required",
-  "Question3": "Welsh translation required",
-  "Question3Radio1": "Welsh translation required",
-  "Question3Radio2": "Welsh translation required",
-  "Question3Radio3": "Welsh translation required",
+  "title": "Ynglŷn â dogfennau eich gwrandawiad",
+  "h1": "Ynglŷn â dogfennau eich gwrandawiad",
+  "headingCaption": "Paratoi dogfennau ar gyfer gwrandawiad",
+  "Question1": "Dewiswch y gwrandawiad y mae'r dogfennau hyn ar ei gyfer",
+  "Question2": "Dogfennau gwrandawiad pwy ydych yn uwchlwytho?",
+  "Question2Radio1": "Dogfennau fy ngwrandawiad i yn unig",
+  "Question2Radio2": "Dogfennau gwrandawiad y ddau barti wedi'u cyfuno",
+  "Question3": "Beth yw'r dogfennau hyn?",
+  "Question3Radio1": "Pob dogfen gwrandawiad",
+  "Question3Radio2": "Dogfennau atodol neu ddogfennau eraill",
+  "Question3Radio3": "Datganiadau tyst yn unig",
   "errors": {
     "hearingDocumentsAreFor": {
-      "required": "Welsh translation required"
+      "required": "Dewiswch pa wrandawiad y mae'r dogfennau hyn ar ei gyfer"
     },
     "whoseHearingDocumentsAreYouUploading": {
-      "required": "Welsh translation required"
+      "required": "Dewiswch dogfennau gwrandawiad pwy rydych yn eu huwchlwytho"
     },
     "whatAreTheseDocuments": {
-      "required": "Welsh translation required"
+      "required": "Dewiswch beth yw'r dogfennau hyn"
     }
   }
 }

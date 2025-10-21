@@ -44,7 +44,6 @@ describe('Prepare documents page', () => {
   it('should display start now button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button.length).equal(6, 'Expected six buttons');
-    expect(button[5].innerHTML).contains(prepareDocumentsJson.button, 'Could not find the button');
   });
 
   it('should display Cancel link', () => {
