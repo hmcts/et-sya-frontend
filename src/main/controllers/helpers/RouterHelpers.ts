@@ -6,7 +6,6 @@ import { LoggerInstance } from 'winston';
 import { AppRequest } from '../../definitions/appRequest';
 import { DefaultValues, ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
-import NumberUtils from '../../utils/NumberUtils';
 import StringUtils from '../../utils/StringUtils';
 import UrlUtils from '../../utils/UrlUtils';
 
@@ -29,110 +28,65 @@ export const conditionalRedirect = (
 };
 
 // Main function to redirect to the next page
-export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
+export const returnNextPage = (
+  req: AppRequest,
+  res: Response,
+  redirectUrl: string,
+  isDynamic: boolean = false
+): void => {
   let nextPage = redirectUrl;
   if (req.session.returnUrl) {
     nextPage = req.session.returnUrl;
     req.session.returnUrl = undefined;
   }
+  if (isDynamic) {
+    return res.redirect(nextPage);
+  }
   return res.redirect(returnValidUrl(nextPage));
 };
-
-const isRespondentWorkAddressPath = (path: string) => isDynamicPath(path, ['respondent', null, 'work-address'], 1);
-
-const isRespondentNoAcasPath = (path: string) => isDynamicPath(path, ['respondent', null, 'no-acas-reason'], 1);
-
-const isRespondentWorkPostcodePath = (path: string) =>
-  isDynamicPath(path, ['respondent', null, 'work-postcode-enter'], 1);
-
-const isRespondentAcasCertPath = (path: string) => isDynamicPath(path, ['respondent', null, 'acas-cert-num'], 1);
-
-const isRespondentPostcodeEnterPath = (path: string) =>
-  isDynamicPath(path, ['respondent', null, 'respondent-postcode-enter'], 1);
-
-const isCitizenHubPath = (path: string) => isDynamicPath(path, ['citizen-hub', null], 1);
-
-const dynamicMatchers: ((path: string) => string)[] = [
-  isRespondentWorkAddressPath, // /respondent/{id}/work-address
-  isRespondentNoAcasPath, // /respondent/{id}/no-acas-reason
-  isRespondentWorkPostcodePath, // /respondent/{id}/work-postcode-enter
-  isRespondentAcasCertPath, // /respondent/{id}/acas-cert-num
-  isRespondentPostcodeEnterPath, // /respondent/{id}/respondent-postcode-enter
-  isCitizenHubPath, // /citizen-hub/{id}
-];
 
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
   // if undefined use PageURLs
   validUrls = validUrls ?? Object.values(PageUrls);
-  // validUrls = [];
-  // validUrls.push(PageUrls.CITIZEN_HUB);
   validUrls.push(LegacyUrls.ET1);
   validUrls.push(LegacyUrls.ET1_BASE);
-  // split url, first part will be the url (in a format similar to that in PageUrls)
+  // split url, first part will always be the url (in a format similar to that in PageUrls)
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
 
-  for (const validUrl of validUrls) {
-    // Allow dynamic segment matching
-    if (baseUrl === validUrl || baseUrl.endsWith(validUrl) || baseUrl.startsWith(validUrl)) {
-      // Use the original baseUrl (with dynamic segment) for the redirect, not the template
-      let redirectBase = baseUrl;
+  for (let validUrl of validUrls) {
+    if (baseUrl === validUrl) {
+      // get parameters as an array of strings
       const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+
+      // add params to the validUrl
       for (const param of parameters) {
+        // Should never add clear selection parameter.
         if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          redirectBase = addParameterToUrl(redirectBase, param);
+          validUrl = addParameterToUrl(validUrl, param);
         }
       }
-      return redirectBase;
+      return validUrl;
     }
   }
-  // check dynamic urls
-  const matchedDynamic = dynamicMatchers.some(m => m(baseUrl));
-  if (matchedDynamic) {
-    // so temporarily include the dynamic baseUrl in the validUrls set for validation.
-    const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-    let rebuilt = baseUrl;
-
-    for (const param of parameters) {
-      if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-        rebuilt = addParameterToUrl(rebuilt, param);
-        if (rebuilt === ErrorPages.NOT_FOUND) {
-          // If any param fails validation, stop and return safe fallback.
-          return ErrorPages.NOT_FOUND;
-        }
-      }
-    }
-    return rebuilt;
-  }
-
   // Return a safe fallback if no validUrl is found
   return ErrorPages.NOT_FOUND;
 };
 
-function isDynamicPath(path: string, expectedSegments: (string | null)[], numericIndex: number | null = null): string {
-  const seg = toSegments(path);
-  if (seg.length !== expectedSegments.length) {
-    return null;
-  }
-  for (let i = 0; i < expectedSegments.length; i++) {
-    if (expectedSegments[i] !== null && seg[i] !== expectedSegments[i]) {
-      return null;
+export const returnValidDynamicUrl = (redirectUrl: string, validUrls: string[]): string => {
+  for (const url of validUrls) {
+    const welshUrl = url + languages.WELSH_URL_PARAMETER;
+    const englishUrl = url + languages.ENGLISH_URL_PARAMETER;
+    if (redirectUrl === url) {
+      return url;
+    } else if (redirectUrl === welshUrl) {
+      return welshUrl;
+    } else if (redirectUrl === englishUrl) {
+      return englishUrl;
     }
-    if (numericIndex === i && !NumberUtils.isNumericValue(seg[i])) {
-      return null;
-    }
   }
-  return '/' + seg.join('/');
-}
-
-function toSegments(path: string): string[] {
-  const p = path.split('?')[0].split('#')[0];
-  const trimmed = p.startsWith('/') ? p.slice(1) : p;
-  if (!trimmed) {
-    return [];
-  }
-  return trimmed.endsWith('/') && trimmed.length > 1 ? trimmed.slice(0, -1).split('/') : trimmed.split('/');
-}
+  return ErrorPages.NOT_FOUND;
+};
 
 export const addParameterToUrl = (url: string, parameter: string): string => {
   if (StringUtils.isBlank(url)) {
