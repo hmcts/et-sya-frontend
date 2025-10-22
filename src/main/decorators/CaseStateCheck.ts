@@ -57,16 +57,29 @@ export function CaseStateCheck() {
   };
 }
 
+// Define a whitelist of legitimate URLs for redirects using all values from PageUrls
+const allowedRedirectUrls: string[] = Object.values(PageUrls) as string[];
+
+// Helper to validate redirect URLs
+function isAllowedRedirectUrl(url: string): boolean {
+  // Only allow URLs that start with /citizen-hub/ or are in the whitelist
+  return url.startsWith('/citizen-hub/') || allowedRedirectUrls.includes(url);
+}
+
 export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boolean => {
   const userCase = req.session?.userCase;
-  const redirectUrl =
-    userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS
-      ? userCase?.id
-        ? `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`
-        : PageUrls.CLAIMANT_APPLICATIONS
-      : null;
+  let redirectUrl: string | null = null;
 
-  if (redirectUrl) {
+  if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    if (userCase?.id) {
+      redirectUrl = `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`;
+    } else {
+      redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
+    }
+  }
+
+  // Only redirect if the URL is allowed
+  if (redirectUrl && isAllowedRedirectUrl(redirectUrl)) {
     res.redirect(redirectUrl);
     return true;
   }
