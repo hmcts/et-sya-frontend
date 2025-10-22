@@ -4,7 +4,14 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { DefaultValues, ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
+import {
+  DefaultValues,
+  ErrorPages,
+  LegacyUrls,
+  PageUrls,
+  VALID_DYNAMIC_URL_PATTERNS,
+  languages,
+} from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
 import StringUtils from '../../utils/StringUtils';
 import UrlUtils from '../../utils/UrlUtils';
@@ -38,22 +45,17 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
 };
 
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
-  // if undefined use PageURLs
   validUrls = validUrls ?? Object.values(PageUrls);
-  validUrls.push(LegacyUrls.ET1);
-  validUrls.push(LegacyUrls.ET1_BASE);
-  // split url, first part will always be the url (in a format similar to that in PageUrls)
+  validUrls.push(LegacyUrls.ET1, LegacyUrls.ET1_BASE);
+
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
 
+  // Check static URLs
   for (let validUrl of validUrls) {
     if (baseUrl === validUrl) {
-      // get parameters as an array of strings
       const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-
-      // add params to the validUrl
       for (const param of parameters) {
-        // Should never add clear selection parameter.
         if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
           validUrl = addParameterToUrl(validUrl, param);
         }
@@ -61,7 +63,14 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
       return validUrl;
     }
   }
-  // Return a safe fallback if no validUrl is found
+
+  // Check dynamic patterns
+  for (const pattern of VALID_DYNAMIC_URL_PATTERNS) {
+    if (pattern.test(baseUrl)) {
+      return redirectUrl;
+    }
+  }
+
   return ErrorPages.NOT_FOUND;
 };
 

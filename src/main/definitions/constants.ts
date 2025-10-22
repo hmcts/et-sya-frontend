@@ -585,3 +585,11 @@ export const DefaultValues = {
   SELF_ASSIGNMENT_URL_PARAMETER: 'redirect=selfAssignment',
   DOCUMENT_CHARS_TO_REPLACE: ['@', '/', '\\', "'", ':', '(', ')', '#'],
 } as const;
+
+export const VALID_DYNAMIC_URL_PATTERNS = [
+  /^\/respondent\/\d+\/no-acas-reason$/,
+  /^\/respondent\/\d+\/work-postcode-enter$/,
+  /^\/respondent\/\d+\/acas-cert-num$/,
+  /^\/respondent\/\d+\/respondent-postcode-enter$/,
+  /^\/respondent\/\d+\/work-address$/,
+] as const;
