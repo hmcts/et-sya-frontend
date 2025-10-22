@@ -52,30 +52,33 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   const baseUrl = urlStr[0];
 
   // Check static URLs
-  for (const validUrl of validUrls) {
+  for (let validUrl of validUrls) {
     if (baseUrl === validUrl) {
-      return validateUrlParameter(validUrl, redirectUrl);
+      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+      for (const param of parameters) {
+        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+          validUrl = addParameterToUrl(validUrl, param);
+        }
+      }
+      return validUrl;
     }
   }
 
   // Check dynamic patterns
   for (const pattern of VALID_DYNAMIC_URL_PATTERNS) {
     if (pattern.test(baseUrl)) {
-      return validateUrlParameter(baseUrl, redirectUrl);
+      let validUrl = baseUrl;
+      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+      for (const param of parameters) {
+        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+          validUrl = addParameterToUrl(baseUrl, param);
+        }
+      }
+      return validUrl;
     }
   }
 
   return ErrorPages.NOT_FOUND;
-};
-
-const validateUrlParameter = (url: string, returnUrl: string): string => {
-  const parameters = UrlUtils.getRequestParamsFromUrl(url);
-  for (const param of parameters) {
-    if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-      returnUrl = addParameterToUrl(returnUrl, param);
-    }
-  }
-  return returnUrl;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {
