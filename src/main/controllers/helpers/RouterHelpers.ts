@@ -74,21 +74,6 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   return ErrorPages.NOT_FOUND;
 };
 
-export const returnValidDynamicUrl = (redirectUrl: string, validUrls: string[]): string => {
-  for (const url of validUrls) {
-    const welshUrl = url + languages.WELSH_URL_PARAMETER;
-    const englishUrl = url + languages.ENGLISH_URL_PARAMETER;
-    if (redirectUrl === url) {
-      return url;
-    } else if (redirectUrl === welshUrl) {
-      return welshUrl;
-    } else if (redirectUrl === englishUrl) {
-      return englishUrl;
-    }
-  }
-  return ErrorPages.NOT_FOUND;
-};
-
 export const addParameterToUrl = (url: string, parameter: string): string => {
   if (StringUtils.isBlank(url)) {
     return DefaultValues.STRING_EMPTY;
