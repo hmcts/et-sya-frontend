@@ -52,26 +52,30 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   const baseUrl = urlStr[0];
 
   // Check static URLs
-  for (let validUrl of validUrls) {
+  for (const validUrl of validUrls) {
     if (baseUrl === validUrl) {
-      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-      for (const param of parameters) {
-        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          validUrl = addParameterToUrl(validUrl, param);
-        }
-      }
-      return validUrl;
+      return validateUrlParameter(validUrl, redirectUrl);
     }
   }
 
   // Check dynamic patterns
   for (const pattern of VALID_DYNAMIC_URL_PATTERNS) {
     if (pattern.test(baseUrl)) {
-      return redirectUrl;
+      return validateUrlParameter(baseUrl, redirectUrl);
     }
   }
 
   return ErrorPages.NOT_FOUND;
+};
+
+const validateUrlParameter = (url: string, returnUrl: string): string => {
+  const parameters = UrlUtils.getRequestParamsFromUrl(url);
+  for (const param of parameters) {
+    if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+      returnUrl = addParameterToUrl(returnUrl, param);
+    }
+  }
+  return returnUrl;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {
