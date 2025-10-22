@@ -28,19 +28,11 @@ export const conditionalRedirect = (
 };
 
 // Main function to redirect to the next page
-export const returnNextPage = (
-  req: AppRequest,
-  res: Response,
-  redirectUrl: string,
-  isDynamic: boolean = false
-): void => {
+export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
   let nextPage = redirectUrl;
   if (req.session.returnUrl) {
     nextPage = req.session.returnUrl;
     req.session.returnUrl = undefined;
-  }
-  if (isDynamic) {
-    return res.redirect(nextPage);
   }
   return res.redirect(returnValidUrl(nextPage));
 };

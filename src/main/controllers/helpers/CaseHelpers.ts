@@ -238,11 +238,10 @@ export const handlePostLogic = async (
   form: Form,
   logger: LoggerInstance,
   redirectUrl: string,
-  shouldUseRedirectUrl?: boolean,
-  isDynamic?: boolean
+  shouldUseRedirectUrl?: boolean
 ): Promise<void> => {
   setUserCase(req, form);
-  await postLogic(req, res, form, logger, redirectUrl, shouldUseRedirectUrl, isDynamic);
+  await postLogic(req, res, form, logger, redirectUrl, shouldUseRedirectUrl);
 };
 
 export const handlePostLogicForRespondent = async (
@@ -251,11 +250,10 @@ export const handlePostLogicForRespondent = async (
   form: Form,
   logger: LoggerInstance,
   redirectUrl: string,
-  shouldUseRedirectUrl?: boolean,
-  isDynamic?: boolean
+  shouldUseRedirectUrl?: boolean
 ): Promise<void> => {
   setUserCaseForRespondent(req, form);
-  await postLogic(req, res, form, logger, redirectUrl, shouldUseRedirectUrl, isDynamic);
+  await postLogic(req, res, form, logger, redirectUrl, shouldUseRedirectUrl);
 };
 
 export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
@@ -275,8 +273,7 @@ export const postLogic = async (
   form: Form,
   logger: LoggerInstance,
   redirectUrl: string,
-  shouldUseRedirectUrl?: boolean,
-  isDynamic?: boolean
+  shouldUseRedirectUrl?: boolean
 ): Promise<void> => {
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
@@ -288,7 +285,7 @@ export const postLogic = async (
       return res.redirect(redirectUrl);
     } else {
       redirectUrl = setUrlLanguage(req, redirectUrl);
-      shouldUseRedirectUrl ? res.redirect(redirectUrl) : returnNextPage(req, res, redirectUrl, isDynamic);
+      shouldUseRedirectUrl ? res.redirect(redirectUrl) : returnNextPage(req, res, redirectUrl);
     }
   } else {
     handleErrors(req, res, errors);

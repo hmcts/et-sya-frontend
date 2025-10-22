@@ -107,7 +107,7 @@ export const handlePost = async (req: AppRequest, res: Response, form: Form): Pr
       ? PageUrls.ACAS_CERT_NUM
       : PageUrls.WORK_ADDRESS;
   const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
-  await handlePostLogicForRespondent(req, res, form, logger, redirectUrl, false, true);
+  await handlePostLogicForRespondent(req, res, form, logger, redirectUrl);
 };
 
 /**
