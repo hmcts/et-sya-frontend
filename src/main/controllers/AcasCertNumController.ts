@@ -81,7 +81,7 @@ export default class AcasCertNumController {
     } else {
       redirectUrl = PageUrls.ACAS_CERT_NUM;
     }
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, false, true);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

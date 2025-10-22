@@ -4,6 +4,7 @@ import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
+import NumberUtils from '../utils/NumberUtils';
 
 /**
  * A decorator function that wraps a method to check the case state and redirect if necessary.
@@ -57,29 +58,19 @@ export function CaseStateCheck() {
   };
 }
 
-// Define a whitelist of legitimate URLs for redirects using all values from PageUrls
-const allowedRedirectUrls: string[] = Object.values(PageUrls) as string[];
-
-// Helper to validate redirect URLs
-function isAllowedRedirectUrl(url: string): boolean {
-  // Only allow URLs that start with /citizen-hub/ or are in the whitelist
-  return url.startsWith('/citizen-hub/') || allowedRedirectUrls.includes(url);
-}
-
 export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boolean => {
   const userCase = req.session?.userCase;
   let redirectUrl: string | null = null;
 
   if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    if (userCase?.id) {
+    if (NumberUtils.isNumericValue(userCase?.id)) {
       redirectUrl = `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`;
     } else {
       redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
     }
   }
 
-  // Only redirect if the URL is allowed
-  if (redirectUrl && isAllowedRedirectUrl(redirectUrl)) {
+  if (redirectUrl) {
     res.redirect(redirectUrl);
     return true;
   }
