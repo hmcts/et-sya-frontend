@@ -9,7 +9,6 @@ import {
   ErrorPages,
   LegacyUrls,
   PageUrls,
-  VALID_DYNAMIC_URL_PATTERNS,
   languages,
 } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
@@ -61,22 +60,6 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
         }
       }
       return validUrl;
-    }
-  }
-
-  // Check dynamic patterns
-  for (const pattern of VALID_DYNAMIC_URL_PATTERNS) {
-    if (pattern.test(baseUrl)) {
-      let validUrl = baseUrl;
-      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-      for (const param of parameters) {
-        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          validUrl = addParameterToUrl(validUrl, param);
-        }
-      }
-      if (validUrl.length <= 2048) {
-        return validUrl;
-      }
     }
   }
 
