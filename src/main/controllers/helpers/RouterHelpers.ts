@@ -71,10 +71,12 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
       const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
       for (const param of parameters) {
         if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          validUrl = addParameterToUrl(baseUrl, param);
+          validUrl = addParameterToUrl(validUrl, param);
         }
       }
-      return validUrl;
+      if (validUrl.length <= 2048) {
+        return validUrl;
+      }
     }
   }
 
