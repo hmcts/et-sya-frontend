@@ -84,7 +84,7 @@
       "link": "Ymateb i’r cais"
     },
     "ecc": {
-      "title": "Welsh translation required: "
+      "title": "Mae’r tribiwnlys wedi anfon hysbysiad atoch: "
     },
     "hearingBanner": {
       "hearing": "Mae'r tribiwnlys wedi anfon hysbysiad atoch am eich gwrandawiad.",
@@ -133,13 +133,13 @@
     }
   },
   "multiples": {
-    "leadClaim": "Welsh Translation required",
-    "stayedCase": "Welsh Translation required",
-    "groupClaim": "Welsh Translation required",
-    "designated": "Welsh Translation required",
-    "stayed": "Welsh Translation required",
-    "nonLead": "Welsh Translation required",
-    "viewClaim": "Welsh Translation required"
+    "leadClaim": "PRIF HAWLIAD",
+    "stayedCase": "ACHOS WEDI'I ATAL",
+    "groupClaim": "Mae eich hawliad yn rhan o hawliad grŵp",
+    "designated": "Dynodwyd eich achos unigol yn brif achos mewn hawliad grŵp. Cewch eich hysbysu am gynnydd yr hawliad grŵp.",
+    "stayed": "Mae eich hawliad unigol yn cael ei atal. Bydd yr hawliad grŵp yn symud ymlaen. Cewch eich hysbysu am gynnydd yr hawliad grŵp.",
+    "nonLead": "Cewch eich hysbysu am gynnydd yr hawliad grŵp.",
+    "viewClaim": "Gweld yr hawliad grŵp"
   },
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
