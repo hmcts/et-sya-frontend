@@ -34,7 +34,7 @@ export default class ContactTheTribunalController {
     const allowBundlesFlow =
       bundlesEnabled && hearingCollection?.length && createRadioBtnsForHearings(hearingCollection)?.length;
 
-    if (claimantRepresented === YesOrNo.NO) {
+    if (claimantRepresented === YesOrNo.NO || claimantRepresented === undefined) {
       if (!allowBundlesFlow) {
         applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
       } else {

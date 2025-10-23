@@ -1,4 +1,5 @@
 import ContactTheTribunalController from '../../../main/controllers/ContactTheTribunalController';
+import { YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunal from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
@@ -23,7 +24,6 @@ describe('Contact Application Controller', () => {
     const controller = new ContactTheTribunalController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, contactTheTribunal);
-
     await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.CONTACT_THE_TRIBUNAL,
@@ -50,6 +50,7 @@ describe('Contact Application Controller', () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, contactTheTribunal);
     request.session.userCase.hearingCollection = mockHearingCollectionFutureDates;
+    request.session.userCase.claimantRepresentedQuestion = YesOrNo.NO;
 
     await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(
