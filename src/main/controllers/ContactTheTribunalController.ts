@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent } from '../definitions/form';
@@ -19,7 +20,7 @@ export default class ContactTheTribunalController {
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const DOCUMENTS = 'documents';
     const { hearingCollection } = req.session.userCase;
-    const claimantRepresented = req.session.userCase.claimantRepresentative;
+    const claimantRepresented = req.session.userCase.claimantRepresentedQuestion;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -33,7 +34,7 @@ export default class ContactTheTribunalController {
     const allowBundlesFlow =
       bundlesEnabled && hearingCollection?.length && createRadioBtnsForHearings(hearingCollection)?.length;
 
-    if (!claimantRepresented) {
+    if (claimantRepresented === YesOrNo.NO) {
       if (!allowBundlesFlow) {
         applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
       } else {
