@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
+import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
@@ -68,11 +68,12 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
     } else {
       redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
     }
+  } else {
+    redirectUrl = returnValidUrl(redirectUrl);
   }
 
   if (redirectUrl) {
     res.redirect(redirectUrl);
-    return true;
   }
   return false;
 };

@@ -4,13 +4,7 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
-import {
-  DefaultValues,
-  ErrorPages,
-  LegacyUrls,
-  PageUrls,
-  languages,
-} from '../../definitions/constants';
+import { DefaultValues, ErrorPages, LegacyUrls, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
 import StringUtils from '../../utils/StringUtils';
 import UrlUtils from '../../utils/UrlUtils';
