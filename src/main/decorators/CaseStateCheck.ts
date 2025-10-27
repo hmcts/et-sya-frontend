@@ -71,6 +71,7 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
   }
   if (redirectUrl) {
     res.redirect(returnValidUrl(redirectUrl));
+    return true;
   }
   return false;
 };
