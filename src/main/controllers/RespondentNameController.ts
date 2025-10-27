@@ -44,7 +44,7 @@ export default class RespondentNameController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_ENTER);
-    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl, false, true);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

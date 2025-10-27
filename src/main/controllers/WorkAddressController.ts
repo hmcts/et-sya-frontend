@@ -57,7 +57,7 @@ export default class WorkAddressController {
         return res.redirect(redirectUrl);
       } else {
         redirectUrl = setUrlLanguage(req, redirectUrl);
-        returnNextPage(req, res, redirectUrl, true);
+        returnNextPage(req, res, redirectUrl);
       }
     } else {
       handleErrors(req, res, errors);
