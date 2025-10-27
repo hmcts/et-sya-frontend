@@ -594,3 +594,13 @@ export const VALID_DYNAMIC_URL_PATTERNS = [
   /^\/respondent\/\d+\/work-address$/,
   /^\/citizen-hub\/\d+$/,
 ] as const;
+
+export const VALID_DYNAMIC_URL_BASES = [
+  'respondent',
+  'citizen-hub',
+  'no-acas-reason',
+  'work-postcode-enter',
+  'acas-cert-num',
+  'respondent-postcode-enter',
+  'work-address',
+];

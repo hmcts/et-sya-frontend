@@ -9,10 +9,11 @@ import {
   ErrorPages,
   LegacyUrls,
   PageUrls,
-  VALID_DYNAMIC_URL_PATTERNS,
+  VALID_DYNAMIC_URL_BASES,
   languages,
 } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
+import NumberUtils from '../../utils/NumberUtils';
 import StringUtils from '../../utils/StringUtils';
 import UrlUtils from '../../utils/UrlUtils';
 
@@ -65,12 +66,27 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
   }
 
   // Check dynamic patterns
-  for (const pattern of VALID_DYNAMIC_URL_PATTERNS) {
-    if (pattern.test(baseUrl)) {
-      if (baseUrl.length <= 2048) {
-        return baseUrl;
+  const urlParts = baseUrl.split('/');
+  let returnUrl = '';
+  for (const urlPart of urlParts) {
+    const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
+    if (matchedUrlPart) {
+      returnUrl += `/${matchedUrlPart}`;
+    } else {
+      if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+        returnUrl += `/${urlPart}`;
       }
     }
+  }
+
+  if (returnUrl) {
+    const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+    for (const param of parameters) {
+      if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+        returnUrl = addParameterToUrl(returnUrl, param);
+      }
+    }
+    return returnUrl;
   }
 
   return ErrorPages.NOT_FOUND;
