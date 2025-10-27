@@ -7,5 +7,7 @@
   "li2": "achos neu achosion a gafodd eu dwyn gerbron y tribiwnlys gan bobl eraill yn erbyn yr un cyflogwr gyda’r un amgylchiadau neu amgylchiadau tebyg",
   "p3": "Bydd hyn yn helpu’r tribiwnlys i ystyried a ddylid cysylltu’r achosion â’i gilydd mewn unrhyw ffordd.",
   "legend": "A oes yna unrhyw achosion sydd eisoes yn mynd rhagddo a allai fod yn gysylltiedig â’r hawliad newydd hwn? (Dewisol)",
-  "linkedCasesTextLabel": "Nodwch rifau’r achosion ac enwau’r bobl yn yr achos neu’r achosion sy’n mynd rhagddo. (Dewisol)"
+  "linkedCasesTextLabel": "Nodwch rifau’r achosion ac enwau’r bobl yn yr achos neu’r achosion sy’n mynd rhagddo. (Dewisol)",
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }

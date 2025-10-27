@@ -3,9 +3,11 @@
   "h1": "Linked cases",
   "p1": "Tell us if there are any existing cases this claim could be linked to.",
   "p2": "This could be:",
-  "li1": "a case or cases you have already brought",
+  "li1": "a case or cases you have already brought to the tribunal",
   "li2": "a case or cases brought by other people against the same employer with the same or similar circumstances",
   "p3": "This will help the tribunal consider whether the cases should be linked in any way.",
   "legend": "Are there are any existing cases which may be linked to this new claim? (Optional)",
-  "linkedCasesTextLabel": "Enter the case numbers and names of the people in the existing case or cases. (Optional)"
+  "linkedCasesTextLabel": "Enter the case numbers and names of the people in the existing case or cases. (Optional)",
+  "Yes": "Yes",
+  "No": "No"
 }

@@ -14,6 +14,7 @@ import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const logger = getLogger('ClaimDetailsController');
@@ -75,6 +76,7 @@ export default class ClaimDetailsController {
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
+      languageParam: getLanguageParam(req.url),
       claimDetailsSection: getClaimDetails(userCase, translations),
       et1Documents,
     });
