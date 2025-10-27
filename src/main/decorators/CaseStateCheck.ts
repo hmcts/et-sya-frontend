@@ -68,12 +68,9 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
     } else {
       redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
     }
-  } else {
-    redirectUrl = returnValidUrl(redirectUrl);
   }
-
   if (redirectUrl) {
-    res.redirect(redirectUrl);
+    res.redirect(returnValidUrl(redirectUrl));
   }
   return false;
 };
