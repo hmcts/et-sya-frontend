@@ -12,5 +12,7 @@
       "required": "Tell us the name of the relevant regulator or body. If you cannot find one enter as 'N/A' ",
       "invalidLength": "Name entered for regulator or body must be between 3 characters and 100 characters. If you cannot find one enter as 'N/A'"
     }
-  }
+  },
+  "Yes": "Yes",
+  "No": "No"
 }

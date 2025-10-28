@@ -2,7 +2,7 @@
   "title": "Enw’r atebydd",
   "h1": "Beth yw enw’r atebydd rydych yn gwneud yr hawliad yn ei erbyn?",
   "p1": "Rhowch enw’r sefydliad. Os nad yw’n sefydliad - er enghraifft, oherwydd roeddech yn cael eich cyflogi gan unigolyn a oedd yn gweithredu fel unig fasnachwr - rhowch enw’r unigolyn.",
-  "p2": "Dylai hyn fod yr un fath ag enw'r atebydd(atebwyr) ar y dystysgrif ACAS. Os nad ydyn nhw'r un fath efallai y bydd eich hawliad yn cael ei wrthod.",
+  "p2": "Dylai hyn fod yr un fath ag enw'r atebydd(atebwyr) ar y dystysgrif Acas. Os nad ydyn nhw'r un fath efallai y bydd eich hawliad yn cael ei wrthod.",
   "insetText": "Byddwch yn gallu ychwanegu rhagor o atebwyr yn hwyrach ymlaen os ydych angen.",
   "label": "Rhowch enw’r atebydd",
   "errors": {
