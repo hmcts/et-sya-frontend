@@ -41,7 +41,7 @@
   },
   "errors": {
     "claimSummaryText": {
-      "required": "Defnyddiwch y blwch testun neu’r cyfleuster llwytho ffeil i roi manylion",
+      "required": "Dywedwch wrthym beth ddigwyddodd i chi",
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai",
       "textAndFile": "Rhowch grynodeb neu lwytho fel dogfen ar wahân ni allwch wneud y ddau"
     },
