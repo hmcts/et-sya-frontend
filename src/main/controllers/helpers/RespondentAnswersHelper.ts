@@ -1,5 +1,5 @@
 import { CaseWithId, NoAcasNumberReason, Respondent, YesOrNo } from '../../definitions/case';
-import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { InterceptPaths, PageUrls, languages } from '../../definitions/constants';
 import { SummaryListRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -21,7 +21,7 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
 };
 
 const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
-  if (languageParam === '?lng=cy') {
+  if (languageParam === languages.WELSH_URL_PARAMETER) {
     return (
       translations.respondentDetails.details[0].toUpperCase() +
       translations.respondentDetails.details.slice(1) +

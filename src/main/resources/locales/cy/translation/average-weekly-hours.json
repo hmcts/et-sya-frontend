@@ -10,7 +10,7 @@
   },
   "p2": "Peidiwch â chynnwys unrhyw oriau goramser.",
   "notWorking": "Ddim yn gweithio mwyach",
-  "enterAverageHours": "Nodwch eich oriau’r wythnos ar gyfartaledd",
+  "enterAverageHours": "Nodwch eich oriau wythnosol ar gyfartaledd",
   "errors": {
     "avgWeeklyHrs": {
       "invalid": "Rhowch oriau wythnosol cyfartalog mewn fformat dilys, er enghraifft 0, 10, 35 ac ati",

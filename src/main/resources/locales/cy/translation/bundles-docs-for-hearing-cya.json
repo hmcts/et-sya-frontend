@@ -1,22 +1,22 @@
 {
-  "title": "Welsh Translation required",
-  "titleCya": "Welsh Translation required",
-  "q1": "Welsh Translation required",
-  "q2": "Welsh Translation required",
-  "q3": "Welsh Translation required",
-  "q4": "Welsh Translation required",
-  "q5": "Welsh Translation required",
+  "title": "Gwiriwch eich atebion",
+  "titleCya": "Gwiriwch eich atebion",
+  "q1": "Ydych chi wedi cytuno ar y dogfennau hyn?",
+  "q2": "Dewiswch y gwrandawiad y mae'r ddogfen hon ar ei gyfer",
+  "q3": "Dogfennau gwrandawiad pwy ydych chi'n eu huwchlwytho?",
+  "q4": "Beth yw'r ddogfen hon?",
+  "q5": "Eich dogfennau",
   "whoseHearingDocument": {
-    "My hearing documents only": "Welsh Translation required",
-    "Both parties’ hearing documents combined": "Welsh Translation required"
+    "My hearing documents only": "Dogfennau fy ngwrandawiad i yn unig",
+    "Both parties’ hearing documents combined": "Dogfennau gwrandawiad y ddau barti wedi'u cyfuno"
   },
   "whatAreTheHearingDocuments": {
-    "All hearing documents": "Welsh Translation required",
-    "Supplementary or other documents": "Welsh Translation required",
-    "Witness statements only": "Welsh Translation required"
+    "All hearing documents": "Pob dogfen gwrandawiad",
+    "Supplementary or other documents": "Dogfennau atodol neu ddogfennau eraill",
+    "Witness statements only": "Datganiadau tyst yn unig"
   },
-  "important": "Welsh Translation required",
-  "paragraphAboutSubmittingDocsInAdvance": "Welsh Translation required",
-  "submitBtn": "Welsh Translation required",
-  "cancelLink": "Welsh Translation required"
+  "important": "Pwysig:",
+  "paragraphAboutSubmittingDocsInAdvance": "Ni fyddwch yn gallu newid hwn unwaith y byddwch yn dewis \"Cyflwyno\". Os ydych angen cyflwyno dogfennau pellach yn ddiweddarach, rhaid i chi wneud hynny cyn dyddiad y gwrandawiad. Y tribiwnlys fydd yn penderfynu pa un a ellir eu cynnwys yn agenda'r gwrandawiad. Anfonir y ddogfen hon at y partion eraill hefyd. ",
+  "submitBtn": "Cyflwyno",
+  "cancelLink": "Canslo"
 }

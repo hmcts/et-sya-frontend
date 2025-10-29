@@ -1,24 +1,23 @@
 {
-  "title": "Welsh Translation required",
-  "caption": "Welsh Translation required",
-  "h2": "Welsh Translation required",
-  "p1": "Welsh Translation required",
-  "agreed": "Welsh Translation required",
-  "notAgreed": "Welsh Translation required",
-  "agreedTextLabel": "<b>Welsh Translation required<b>",
-  "notAgreedTextLabel": "<b>Welsh Translation required<b>",
-  "cancelLink": "Welsh Translation required",
+  "title": "Cytuno ar ddogfennau",
+  "caption": "Paratoi dogfennau ar gyfer gwrandawiad",
+  "h2": "A ydych wedi cytuno ar y dogfennau hyn gyda'r parti arall?",
+  "p1": "Efallai y dywedwyd wrthych mewn gorchymyn gan y tribiwnlys i weithio gyda'r parti arall i gytuno ar y dogfennau y dibynnir arnynt yn y gwrandawiad",
+  "agreed": "Rydym wedi cytuno ond mae rhai dogfennau yn destun anghydfod",
+  "notAgreed": "Na, nid ydym wedi cytuno ac rwyf eisiau darparu fy nogfennau fy hun",
+  "agreedTextLabel": "<b>Dywedwch wrthym pa ddogfennau sy'n destun anghydfod<b>",
+  "notAgreedTextLabel": "<b>Dywedwch wrthym pam nad ydych wedi gallu cytuno gyda'r parti arall<b>",
   "errors": {
     "bundlesRespondentAgreedDocWith": {
-      "required": "Welsh Translation required"
+      "required": "Dewiswch os ydych wedi cytuno gyda'r parti arall "
     },
     "bundlesRespondentAgreedDocWithBut": {
-      "required": "Welsh Translation required",
-      "exceeded": "Welsh Translation required"
+      "required": "Dywedwch wrthym pa ddogfennau sy'n destun anghydfod",
+      "exceeded": "Rhaid cofnodi manylion testun rhydd mewn llai na 2500 o nodau"
     },
     "bundlesRespondentAgreedDocWithNo": {
-      "required": "Welsh Translation required",
-      "exceeded": "Welsh Translation required"
+      "required": "Dywedwch wrthym pam nad ydych wedi gallu cytuno gyda'r parti arall",
+      "exceeded": "Rhaid cofnodi manylion testun rhydd mewn llai na 2500 o nodau"
     }
   }
 }

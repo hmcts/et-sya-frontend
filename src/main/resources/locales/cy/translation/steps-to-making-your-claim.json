@@ -1,7 +1,7 @@
 {
   "title": "Camau i wneud eich hawliad",
   "h1": "Camau i wneud eich hawliad",
-  "applicationDetails": "Manylion yr hawliad",
+  "applicationDetails": "Manylion y cais",
   "claimType": "Math o hawliad",
   "section1": {
     "title": "Eich manylion",
@@ -16,7 +16,7 @@
   },
   "section3": {
     "title": "Manylion yr hawliad",
-    "link1Text": "Disgrifiwch beth ddigwyddodd i chi",
+    "link1Text": "Dywedwch wrthym am eich hawliad",
     "link2Text": "Dywedwch wrthym beth yr ydych eisiau ei gael gan eich hawliad"
   },
   "section4": {

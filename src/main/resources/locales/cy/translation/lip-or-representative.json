@@ -56,11 +56,11 @@
       "t3": "Gwasanaeth Cyngor a Chymorth ar Gydraddoldeb",
       "t4": "helpu gyda hawliadau sy’n ymwneud â gwahaniaethu."
     },
-    "p4": "Efallai y gall rhai pobl hefyd gael cymorth i dalu am gyngor cyfreithiol drwy gymorth cyfreithiol.",
+    "p4": "Efallai y gall rhai pobl hefyd gael cymorth i dalu am gyngor cyfreithiol drwy'r cynllun cymorth cyfreithiol.",
     "opensInNewTab": "(yn agor mewn tab newydd)"
   },
-  "radio1": "Rwy’n fy nghynrychioli fy hun ac yn gwneud fy hawliad fy hun",
-  "radio2": "Rwy’n gwneud hawliad ar ran rhywun arall ac rwy’n gweithredu fel eu cynrychiolydd",
+  "radio1": "Rwy'n cghynrychioli fy hun ac yn gwneud fy hawliad fy hun",
+  "radio2": "Rwy'n gwneud hawliad ar ran rhywun arall ac rwy’n gweithredu fel eu cynrychiolydd",
   "radio3": "Rwy'n gynrychiolydd cyfreithiol sy'n gwneud hawliad unigol ar gyfer cleient",
   "radio4": "Rwy'n gynrychiolydd cyfreithiol sy'n gwneud hawliad grŵp",
   "errors": {
