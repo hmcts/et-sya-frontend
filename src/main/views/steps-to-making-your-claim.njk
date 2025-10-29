@@ -15,22 +15,6 @@
 
       <h2 class="govuk-heading-m govuk-!-margin-bottom-4">{{applicationDetails}} </h2>
 
-      <div class="govuk-grid-row">
-
-      <div class="govuk-grid-column-one-third">
-        <p class="govuk-body govuk-!-font-weight-bold">{{claimType}}</p>
-      </div>
-
-      <div class="govuk-grid-column-two-thirds">
-        <ul class="govuk-list">
-          {% for item in typeOfClaim %}
-          <li>{{getContent(claimTypes[item])}}</li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      </div>
-
       <ol class="app-task-list">
           {% for section in sections %}
 
