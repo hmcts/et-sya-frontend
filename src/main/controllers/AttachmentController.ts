@@ -30,8 +30,8 @@ export default class AttachmentController {
     }
 
     if (
-      docId === getDocId(userCase.contactApplicationFile?.document_url) ||
-      docId === getDocId(userCase.supportingMaterialFile?.document_url) ||
+      docId === getDocId(userCase?.contactApplicationFile?.document_url) ||
+      docId === getDocId(userCase?.supportingMaterialFile?.document_url) ||
       isDocOnApplicationPage(req, docId) ||
       isRequestDocId(req, docId) ||
       isRequestTribunalResponseDocId(req, docId) ||
