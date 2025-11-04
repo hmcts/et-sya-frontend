@@ -19,7 +19,6 @@ export default class ContactTheTribunalController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const DOCUMENTS = 'documents';
-    const { hearingCollection } = req.session.userCase;
     const claimantRepresented = req.session.userCase.claimantRepresentedQuestion;
     const { userCase } = req.session;
 
