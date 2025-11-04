@@ -18,7 +18,7 @@ export default class ContactTheTribunalController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const DOCUMENTS = 'documents';
-    const { hearingCollection } = req.session.userCase;
+    const { userCase } = req.session;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -27,9 +27,10 @@ export default class ContactTheTribunalController {
     const languageParam = getLanguageParam(req.url);
     let applicationsToDisplay;
 
-    // if bundles not enabled or no hearings in future then remove documents from displayed application types
     const allowBundlesFlow =
-      bundlesEnabled && hearingCollection?.length && createRadioBtnsForHearings(hearingCollection)?.length;
+      bundlesEnabled &&
+      userCase.hearingCollection?.length &&
+      createRadioBtnsForHearings(userCase.hearingCollection)?.length;
 
     if (!allowBundlesFlow) {
       applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
