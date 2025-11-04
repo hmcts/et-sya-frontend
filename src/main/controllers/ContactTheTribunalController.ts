@@ -21,6 +21,7 @@ export default class ContactTheTribunalController {
     const DOCUMENTS = 'documents';
     const { hearingCollection } = req.session.userCase;
     const claimantRepresented = req.session.userCase.claimantRepresentedQuestion;
+    const { userCase } = req.session;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -30,9 +31,10 @@ export default class ContactTheTribunalController {
     let applicationsToDisplay;
     let applicationsAccordionItems;
 
-    // if bundles not enabled or no hearings in future then remove documents from displayed application types
     const allowBundlesFlow =
-      bundlesEnabled && hearingCollection?.length && createRadioBtnsForHearings(hearingCollection)?.length;
+      bundlesEnabled &&
+      userCase.hearingCollection?.length &&
+      createRadioBtnsForHearings(userCase.hearingCollection)?.length;
 
     if (claimantRepresented === YesOrNo.NO || claimantRepresented === undefined) {
       if (!allowBundlesFlow) {
