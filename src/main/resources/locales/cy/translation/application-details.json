@@ -1,5 +1,5 @@
 {
-  "title": "Manylion y ceisydd ",
+  "title": "Manylion y cais",
   "applicationTo": "Cais i ",
   "applicant": "Ceisydd",
   "requestDate": "Dyddiad y cais",
@@ -51,8 +51,8 @@
   "tableTopWithSpace": "<br><br>",
   "decisionMadeBy": "Gwnaethpwyd y penderfyniad gan",
   "decisionType": "Math o benderfyniad",
-  "Yes": "Ydw",
-  "No": "Nac ydw",
+  "Yes": "Ydw/Oeddwn",
+  "No": "Nac ydw/Nac oeddwn",
   "Neither": "Dim un",
   "Both parties": "Y ddau barti",
   "Claimant only": "Hawlydd yn unig"

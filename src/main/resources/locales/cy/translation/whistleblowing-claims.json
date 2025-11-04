@@ -12,5 +12,7 @@
       "required": "Nodwch enw’r rheoleiddiwr neu’r corff perthnasol. Os na allwch ddod o hyd i un, rhowch ‘AMH’",
       "invalidLength": "Rhaid i’r enw a nodir ar gyfer y rheoleiddiwr neu’r corff fod rhwng 3 a 100 llythyren. Os na allwch ddod o hyd i un, rhowch ‘AMH’"
     }
-  }
+  },
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }

@@ -12,8 +12,8 @@
   "benefitsHelpTxt": "Buddion gweithwyr (a elwir hefyd yn ‘buddion ymarferol’) yw’r gwahanol fathau o fuddion ychwanegol rydych yn eu cael ar ben eich cyflog arferol.",
   "hint": "Dywedwch fwy wrthym am y buddion hynny",
   "noLongerWorking": "Ddim yn gweithio mwyach",
-  "yes": "Ydw",
-  "no": "Nac ydw",
+  "yes": "Ydw/Oeddwn",
+  "no": "Nac ydw/Nac oeddwn",
   "yesPast": "Oeddwn",
   "noPast": "Nac oeddwn",
   "errors": {
