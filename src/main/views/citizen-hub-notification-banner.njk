@@ -205,29 +205,30 @@
     }}
   {% endfor %}
 
-{% for item in claimantTribunalResponseBannerContent %}
-  {% set claimantTribunalResponseHtml %}
-    {% if item.copyToOtherParty === 'Yes' %}
+  {% for item in claimantTribunalResponseBannerContent %}
+    {% set claimantTribunalResponseHtml %}
+      {% if item.copyToOtherParty === 'Yes' %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.claimantResponseToTribunal.title.rule92Yes }}
+        </h3>
+      {% elif 'Employer Contract Claim' in item.sendNotificationSubject %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.claimantResponseToTribunal.title.rule92NoEcc.p1 }}
+        </h3>
+      {% else %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.claimantResponseToTribunal.title.rule92No.p1 }}<br><br>
+          {{ notificationBanner.claimantResponseToTribunal.title.rule92No.p2 }}
+        </h3>
+      {% endif %}
       <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.claimantResponseToTribunal.title.rule92Yes }}
+        <a class="govuk-link" href="{{ item.redirectUrl }}">{{ notificationBanner.claimantResponseToTribunal.link }}</a>
       </h3>
-    {% elif 'Employer Contract Claim' in item.sendNotificationSubject %}
-      <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.claimantResponseToTribunal.title.rule92NoEcc.p1 }}
-      </h3>
-    {% else %}
-      <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.claimantResponseToTribunal.title.rule92No.p1 }}<br><br>
-        {{ notificationBanner.claimantResponseToTribunal.title.rule92No.p2 }}
-      </h3>
-    {% endif %}
-    <h3 class="govuk-notification-banner__heading">
-      <a class="govuk-link" href="{{ item.redirectUrl }}">{{ notificationBanner.claimantResponseToTribunal.link }}</a>
-    </h3>
-  {% endset %}
-  {{ govukNotificationBanner({
-          html: claimantTribunalResponseHtml,
-          titleText: important
-      })
-  }}
-{% endfor %}
+    {% endset %}
+    {{ govukNotificationBanner({
+            html: claimantTribunalResponseHtml,
+            titleText: important
+        })
+    }}
+  {% endfor %}
+{% endif %}
