@@ -1,8 +1,6 @@
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterECCNotifications,
   filterOutSpecialNotifications,
-  filterSendNotifications,
   getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
@@ -31,7 +29,6 @@ import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/t
 import notificationSubjectsRaw from '../../../../main/resources/locales/en/translation/notification-subjects.json';
 import mockUserCaseWithCitizenHubLinks from '../../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import {
-  mockECCNotification,
   mockNotificationItem,
   mockNotificationItemOther,
   mockNotificationRespondOnlyReq,
@@ -54,7 +51,6 @@ describe('Tribunal order or request Details helper', () => {
   };
   const req = mockRequestWithTranslation({}, translationJsons);
   const notificationItem = mockNotificationItem;
-  const notificationItemOther = mockNotificationItemOther;
   const notificationItemWithResponses = mockNotificationWithResponses;
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
@@ -270,6 +266,7 @@ describe('Tribunal order or request Details helper', () => {
         {
           copyToOtherParty: YesOrNo.YES,
           redirectUrl: '/notification-details/6423be5b-0b82-462a-af1d-5f1df39686ab?lng=en',
+          sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
         },
       ]);
     });
@@ -288,52 +285,6 @@ describe('Tribunal order or request Details helper', () => {
         languages.ENGLISH_URL_PARAMETER
       );
       expect(result).toEqual([]);
-    });
-  });
-
-  describe('should filter notifications', () => {
-    it('should filter only orders, requests or Other (General correspondence)', () => {
-      // create a test subject as the only one which should be filtered OUT is ECC
-      const TEST_NOTIFICATION_SUBJECT = 'TEST SUBJECT';
-      const notificationWithoutOrderOrRequest = {
-        value: {
-          sendNotificationCaseManagement: undefined,
-          sendNotificationSubjectString: TEST_NOTIFICATION_SUBJECT,
-        } as SendNotificationType,
-      } as SendNotificationTypeItem;
-
-      const filteredNotifications = filterSendNotifications([
-        notificationWithoutOrderOrRequest,
-        notificationItem,
-        notificationItemOther,
-        mockECCNotification,
-      ]);
-      expect(filteredNotifications).toHaveLength(3);
-      expect(filteredNotifications[0].value.sendNotificationSubjectString).toStrictEqual(TEST_NOTIFICATION_SUBJECT);
-      expect(filteredNotifications[1].value.sendNotificationSubjectString).toStrictEqual(
-        NotificationSubjects.ORDER_OR_REQUEST
-      );
-      expect(filteredNotifications[2].value.sendNotificationSubjectString).toStrictEqual(
-        NotificationSubjects.GENERAL_CORRESPONDENCE
-      );
-    });
-
-    it('should filter only ECC notifications', async () => {
-      const eccNotifications = await filterECCNotifications([
-        notificationItem,
-        notificationItemOther,
-        mockECCNotification,
-      ]);
-
-      expect(eccNotifications).toHaveLength(1);
-      expect(eccNotifications[0].value.sendNotificationSubjectString).toStrictEqual(NotificationSubjects.ECC);
-    });
-
-    it('should return empty array when no ECC notifications', async () => {
-      mockLdClient.mockResolvedValue(false);
-      const eccNotifications = await filterECCNotifications([notificationItem, notificationItemOther]);
-
-      expect(eccNotifications).toHaveLength(0);
     });
   });
 
@@ -757,7 +708,7 @@ describe('Tribunal order or request Details helper', () => {
     });
   });
 
-  describe('filterOutEcc', () => {
+  describe('filterOutHearingOnlyNotifications', () => {
     test('should show filtered notification', async () => {
       const notifications: SendNotificationTypeItem[] = [
         {
@@ -773,7 +724,7 @@ describe('Tribunal order or request Details helper', () => {
           value: {
             date: '2 December 2023',
             sendNotificationSubjectString: 'Employer Contract Claim',
-            sendNotificationTitle: '2 Do not show',
+            sendNotificationTitle: '2 Show',
           },
         },
         {
@@ -781,7 +732,7 @@ describe('Tribunal order or request Details helper', () => {
           value: {
             date: '3 December 2023',
             sendNotificationSubjectString: 'Employer Contract Claim, Response (ET3)',
-            sendNotificationTitle: '3 Do not show',
+            sendNotificationTitle: '3 Show',
           },
         },
         {
@@ -802,9 +753,11 @@ describe('Tribunal order or request Details helper', () => {
         },
       ];
       const result = filterOutSpecialNotifications(notifications);
-      expect(result).toHaveLength(2);
+      expect(result).toHaveLength(4);
       expect(result[0].value.sendNotificationTitle).toEqual('1 Show');
-      expect(result[1].value.sendNotificationTitle).toEqual('5 Show');
+      expect(result[1].value.sendNotificationTitle).toEqual('2 Show');
+      expect(result[2].value.sendNotificationTitle).toEqual('3 Show');
+      expect(result[3].value.sendNotificationTitle).toEqual('5 Show');
     });
   });
 });
