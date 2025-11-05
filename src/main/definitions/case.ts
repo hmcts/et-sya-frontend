@@ -1,4 +1,5 @@
 import { HearingModel } from './api/caseApiResponse';
+import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { Et1Address } from './complexTypes/et1Address';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
@@ -216,6 +217,8 @@ export interface Case {
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;
+  claimantRepresentative?: ClaimantRepresentative;
+  claimantRepresentativeRemoved?: YesOrNo;
 }
 
 export const enum StillWorking {

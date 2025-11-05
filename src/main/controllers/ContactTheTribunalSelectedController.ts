@@ -149,6 +149,10 @@ export default class ContactTheTribunalSelectedController {
       return;
     }
 
+    if (req.session.userCase.claimantRepresentative !== undefined) {
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
+
     const userCase = req.session?.userCase;
     if (selectedApplication !== userCase.contactApplicationType) {
       clearTseFields(userCase);

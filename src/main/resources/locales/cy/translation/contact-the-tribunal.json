@@ -10,6 +10,10 @@
     "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at y parti arall a fydd yn cael cyfle i ymateb.",
     "p3": "Efallai y byddwch yn gallu gofyn nad yw rhai manylion yn cael eu rhannu gyda’r parti arall."
   },
+  "landing_text_when_represented": {
+    "p1": "Rydych bellach yn cael eich cynrychioli’n gyfreithiol gan",
+    "p2": "Byddwch yn cael eich diweddaru ond ni fyddwch yn gallu cyflwyno ceisiadau na chysylltu â’r Tribiwnlys yn uniongyrchol mwyach."
+  },
   "sections": {
     "withdraw": {
       "caption": "Tynnu fy hawliad yn ôl",
