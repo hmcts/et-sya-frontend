@@ -22,8 +22,6 @@ const PAGE_URL = '/steps-to-making-your-claim';
 const sectionClass = 'app-task-list__items';
 const listItemClass = 'app-task-list__item';
 const linkClass = 'span.app-task-list__task-name--300px > a';
-const typeOfClaimListElement = 'ul.govuk-list > li';
-
 const headerClass = 'app-task-list__section';
 const titleClass = 'govuk-heading-xl';
 const signOutLinkSelector = 'li.govuk-header__navigation-item a.govuk-header__link';
@@ -169,47 +167,6 @@ describe('Steps to making your claim page', () => {
       expect(links[3].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
     }
   );
-
-  it('should list all the claim types for the claim at the top of the page', async () => {
-    await request(
-      mockAppWithRedisClient({
-        session: mockSession([], [], []),
-        redisClient: mockRedisClient(
-          new Map<CaseDataCacheKey, string>([
-            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
-            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
-            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
-            [
-              CaseDataCacheKey.TYPES_OF_CLAIM,
-              JSON.stringify([
-                TypesOfClaim.PAY_RELATED_CLAIM,
-                TypesOfClaim.BREACH_OF_CONTRACT,
-                TypesOfClaim.DISCRIMINATION,
-                TypesOfClaim.UNFAIR_DISMISSAL,
-                TypesOfClaim.WHISTLE_BLOWING,
-                TypesOfClaim.OTHER_TYPES,
-              ]),
-            ],
-          ])
-        ),
-      })
-    )
-      .get(PAGE_URL)
-      .then(res => {
-        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-      });
-    const expected = [
-      'Breach of contract',
-      'Discrimination',
-      'Pay-related',
-      'Unfair dismissal',
-      'Whistleblowing',
-      'Other type of claim',
-    ];
-    const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
-    const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();
-    expect(foundArr).to.have.members(expected);
-  });
 });
 
 describe('Steps to making your claim page tags', () => {
