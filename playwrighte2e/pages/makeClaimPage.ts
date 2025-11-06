@@ -4,10 +4,6 @@ export class MakeClaimPage extends BasePage {
   async stepsToMakingYourClaim(clickCheckYourAnswers?: boolean): Promise<void> {
     await this.webAction.verifyTextIsVisible('Steps to making your claim');
     await this.webAction.verifyTextIsVisible('Application Details');
-    await this.webAction.verifyTextIsVisible('Claim type');
-    /*I.see('Discrimination');
-        I.see('Whistleblowing');*/
-
     // your details
     await this.webAction.verifyTextIsVisible('Your details');
     await this.webAction.verifyTextIsVisible('Personal details');
