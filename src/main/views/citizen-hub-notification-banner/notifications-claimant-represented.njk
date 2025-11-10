@@ -1,6 +1,10 @@
 {% if userCase.claimantRepresentedQuestion and userCase.claimantRepresentedQuestion === 'Yes' %}
   {% set htmlForClaimantRepresentedBanner %}
-    <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.title }} {{claimantRepresented.name_of_organisation}}. </h3>
+    {% if claimantRepresented.name_of_organisation %}
+      <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.titleWithName }} {{claimantRepresented.name_of_organisation}}. </h3>
+    {% else %}
+      <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.titleWithoutName }}. </h3>
+    {% endif %}
     <p class="govuk-body">
       {{ notificationBanner.claimantRepresented.p1 }}
     </p>
