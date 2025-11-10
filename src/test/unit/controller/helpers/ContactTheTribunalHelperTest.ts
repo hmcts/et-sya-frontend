@@ -109,5 +109,39 @@ describe('ContactTheTribunalHelper tests', () => {
       };
       expect(ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(userCase)).toBe(true);
     });
+    it('should return false when user case claimant representative organisation policy undefined and claimant representative does not have MyHmcts organisation', () => {
+      const userCase: CaseWithId = {
+        id: '1',
+        state: CaseState.SUBMITTED,
+        createdDate: DATE,
+        lastModified: DATE,
+        respondents: undefined,
+        et3ResponseReceived: true,
+        claimantRepresentedQuestion: YesOrNo.YES,
+        claimantRepresentativeOrganisationPolicy: undefined,
+        claimantRepresentative: {
+          myHmctsOrganisation: undefined,
+        },
+      };
+      expect(ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(userCase)).toBe(false);
+    });
+    it('should return false when user case claimant representative organisation policy undefined and claimant representative have MyHmcts organisation', () => {
+      const userCase: CaseWithId = {
+        id: '1',
+        state: CaseState.SUBMITTED,
+        createdDate: DATE,
+        lastModified: DATE,
+        respondents: undefined,
+        et3ResponseReceived: true,
+        claimantRepresentedQuestion: YesOrNo.YES,
+        claimantRepresentativeOrganisationPolicy: undefined,
+        claimantRepresentative: {
+          myHmctsOrganisation: {
+            OrganisationID: 'dummyId',
+          },
+        },
+      };
+      expect(ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(userCase)).toBe(true);
+    });
   });
 });

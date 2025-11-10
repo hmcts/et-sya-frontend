@@ -7,8 +7,10 @@ export class ContactTheTribunalHelper {
     return (
       userCase.claimantRepresentedQuestion !== undefined &&
       userCase.claimantRepresentedQuestion === YesOrNo.YES &&
-      ObjectUtils.isNotEmpty(userCase?.claimantRepresentativeOrganisationPolicy?.Organisation) &&
-      StringUtils.isNotBlank(userCase.claimantRepresentativeOrganisationPolicy.Organisation.OrganisationID)
+      ((ObjectUtils.isNotEmpty(userCase?.claimantRepresentativeOrganisationPolicy?.Organisation) &&
+        StringUtils.isNotBlank(userCase.claimantRepresentativeOrganisationPolicy.Organisation.OrganisationID)) ||
+        (ObjectUtils.isNotEmpty(userCase.claimantRepresentative) &&
+          ObjectUtils.isNotEmpty(userCase.claimantRepresentative.myHmctsOrganisation)))
     );
   }
 }
