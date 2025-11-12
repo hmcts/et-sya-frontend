@@ -21,7 +21,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=\"" + app.url + "\" aria-label=\"" + continue + " " + col2 + ": " + app.userCase.id + "\">" + continue + "</a>"
+        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>'
       }
     ]), draftApplications) %}
   {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -39,7 +39,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=\"" + app.url + "\" aria-label=\"" + continue + " " + col2 + ": " + app.userCase.id + "\">" + continue + "</a>"
+        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>'
       }
     ]), draftApplications) %}
   {% else %}
@@ -55,7 +55,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=\"" + app.url + "\" aria-label=\"" + view + " " + col2 + ": " + app.userCase.id + "\">" + view + "</a>"
+        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + view + '</a>'
       }
     ]), submittedApplications) %}
   {% endif %}
