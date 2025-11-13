@@ -1,5 +1,5 @@
 {
-  "title": "Manylion y ceisydd ",
+  "title": "Manylion y cais",
   "applicationTo": "Cais i ",
   "applicant": "Ceisydd",
   "requestDate": "Dyddiad y cais",
@@ -8,6 +8,7 @@
   "Claimant": "Hawlydd",
   "Respondent": "Atebydd",
   "Respondent Representative": "Cynrychiolydd yr Atebydd",
+  "Claimant Representative": "Cynrychiolydd yr Hawlydd",
   "legend": "Beth ydych chi eisiau ei ddweud neu ofyn i’rtribiwnlys?",
   "supportingMaterial": "Deunydd ategol",
   "copyCorrespondence": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y Parti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
@@ -50,8 +51,8 @@
   "tableTopWithSpace": "<br><br>",
   "decisionMadeBy": "Gwnaethpwyd y penderfyniad gan",
   "decisionType": "Math o benderfyniad",
-  "Yes": "Ydw",
-  "No": "Nac ydw",
+  "Yes": "Ydw/Oeddwn",
+  "No": "Nac ydw/Nac oeddwn",
   "Neither": "Dim un",
   "Both parties": "Y ddau barti",
   "Claimant only": "Hawlydd yn unig"

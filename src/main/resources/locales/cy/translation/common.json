@@ -87,7 +87,7 @@
   "workManualAddress": "Mae fy nghyfeiriad gwaith y tu allan i'r DU",
   "workAddressPageHeader": "Beth yw cod post y lle yr oeddech yn gweithio neu’r lle yr ydych yn gweithio?",
   "workAddressPageText1": "Bydd hyn fel arfer yn penderfynu pa swyddfa Tribiwnlys Cyflogaeth fydd yn ymdrin â’ch hawliad.  Os oeddech yn gweithio o adref, nodwch god post y cartref lle’r oeddech neu rydych yn gweithio.",
-  "workAddressPageText2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt, rhowch god post ble maent wedi’u lleoli.",
+  "workAddressPageText2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt, rhowch y cod post  ble maent wedi'u lleoli.",
   "errors": {
     "addressEnterPostcode": {
       "required": "Rhowch god post. Er enghraifft, SW1 1AA",

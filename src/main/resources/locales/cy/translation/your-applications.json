@@ -17,5 +17,17 @@
   "Strike out all/part of response": "Dileu’r ymateb cyfan neu ran o’r ymateb",
   "Vary/revoke an order": "Amrywio neu ddiddymu gorchymyn",
   "Withdraw all/part of claim": "Tynnu fy hawliad yn ôl",
-  "withdraw": "Dynnu fy hawliad yn ôl"
+  "withdraw": "Dynnu fy hawliad yn ôl",
+
+  "Amend claim": "Diwygio hawliad",
+  "Change personal details": "Newid manylion personol",
+  "Consider decision afresh": "Ystyried penderfyniad o'r newydd",
+  "Contact the tribunal": "Cysylltu â’r tribiwnlys",
+  "Order a witness to attend to give evidence": "Gorchymyn tyst i fynychu",
+  "Order other party": "Gorchymyn y parti arall",
+  "Reconsider judgment": "Ailystyried dyfarniad",
+  "Respondent not complied": "Nid yw’r parti arall wedi cydymffurfio",
+  "Strike out all or part of the response": "Diwygio fy ymateb",
+  "Vary or revoke an order": "Amrywio neu ddirymu gorchymyn",
+  "Withdraw all or part of claim": "Tynnu’r cyfan neu ran o’r hawliad yn ôl"
 }

@@ -20,12 +20,12 @@
     "p2": "Chwilio am weithwyr proffesiynol ym maes y gyfraith yng Nghymru a Lloegr (yn agor mewn tab newydd).",
     "p3": "Chwilio am weithwyr proffesiynol ym maes y gyfraith yn Yr Alban (yn agor mewn tab newydd)."
   },
-  "applicationTo": "Welsh Translation required ",
+  "applicationTo": "Cais i ",
   "applicant": "Ceisydd",
   "requestDate": "Dyddiad y cais",
   "applicationType": "Math o gais",
   "legend": "Beth ydych chi eisiau ei ddweud neu ofyn i’r tribiwnlys?",
-  "respond": "Welsh Translation required",
+  "respond": "Ymateb",
   "supportingMaterial": "Deunydd ategol",
   "copyCorrespondence": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
   "textInputLabel": "Beth yw eich ymateb i gais yr atebydd?",
@@ -54,7 +54,7 @@
       "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
   },
-  "Yes": "Ydw",
-  "No": "Nac ydw",
+  "Yes": "Ydw/Oeddwn",
+  "No": "Nac ydw/Nac oeddwn",
   "Respondent": "Atebydd"
 }

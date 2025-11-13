@@ -126,6 +126,10 @@ export function getResponseDocId(selectedApplication: GenericTseApplicationTypeI
 }
 
 export function isValidResponseDocId(docId: string, respondCollection: TseRespondTypeItem[]): boolean {
+  if (!Array.isArray(respondCollection) || respondCollection.length === 0) {
+    return false;
+  }
+
   for (const response of respondCollection) {
     if (response.value.from === Applicant.CLAIMANT || response.value.from === Applicant.RESPONDENT) {
       if (

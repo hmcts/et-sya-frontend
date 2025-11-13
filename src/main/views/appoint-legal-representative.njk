@@ -1,0 +1,58 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% set pageSection = "" %}
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">
+        {{ title }}
+      </h1>
+      <p class="govuk-body">
+        {{ p1 }}
+      </p>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ caseReference }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ userCase.id }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ claimantName }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ userCase.firstName + ' ' + userCase.lastName }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ caseNumber }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ userCase.ethosCaseReference }}
+          </dd>
+        </div>
+
+      </dl>
+      <h2 class="govuk-heading-m">{{ heading2 }}</h2>
+      <p class="govuk-body">
+        {{ p2a }}
+        <a href="{{ allDocumentsUrl }}" class="govuk-link">
+          {{ p2b }}
+        </a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

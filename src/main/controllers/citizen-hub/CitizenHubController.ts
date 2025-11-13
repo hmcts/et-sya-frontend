@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
+import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -53,7 +54,6 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterECCNotifications,
   filterOutSpecialNotifications,
   getClaimantTribunalResponseBannerContent,
   setNotificationBannerData,
@@ -156,7 +156,6 @@ export default class CitizenHubController {
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const generalNotifications = filterOutSpecialNotifications(notifications);
-    const eccNotifications = await filterECCNotifications(notifications);
 
     let respondentBannerContent = undefined;
 
@@ -167,6 +166,7 @@ export default class CitizenHubController {
 
     let judgmentBannerContent = undefined;
     let decisionBannerContent = undefined;
+    let showNoLongerRepresentedNotification: boolean = false;
     const claimantTribunalResponseBannerContent = getClaimantTribunalResponseBannerContent(
       notifications,
       languageParam
@@ -178,6 +178,9 @@ export default class CitizenHubController {
     }
 
     const showMultipleData = await showMutipleData(userCase);
+    if (YesOrNo.YES === userCase?.claimantRepresentativeRemoved) {
+      showNoLongerRepresentedNotification = true;
+    }
 
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -194,6 +197,7 @@ export default class CitizenHubController {
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
+      claimantRepresented: userCase.claimantRepresentative,
       showAcknowledgementAlert: getAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),
@@ -213,11 +217,11 @@ export default class CitizenHubController {
       ),
       showHearingBanner: shouldShowHearingBanner(userCase?.sendNotificationCollection),
       notifications: generalNotifications,
-      eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
       showMultipleData,
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
+      showNoLongerRepresentedNotification,
     });
   }
 }

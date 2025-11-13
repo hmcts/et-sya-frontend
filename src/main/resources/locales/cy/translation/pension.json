@@ -3,7 +3,7 @@
   "h1": "A wnaeth yr atebydd unrhyw gyfraniadau i’ch pensiwn? (dewisol)",
   "legend": "A wnaeth yr atebydd unrhyw gyfraniadau i’ch pensiwn? (dewisol)",
   "label": "A wnaeth yr atebydd unrhyw gyfraniadau i’ch pensiwn?",
-  "pensionContributions": "Nodwch eu cyfraniadau pensiwn - wedi’u cyfrifo ar sail wythnos",
+  "pensionContributions": "Nodwch eu cyfraniadau pensiwn - wedi’u cyfrifo ar sail wythnosol",
   "errors": {
     "claimantPensionWeeklyContribution": {
       "invalidCurrency": "Rhowch Cyfraniadau pensiwn yn y fformat cywir, er enghraifft £600 neu £193.54",
