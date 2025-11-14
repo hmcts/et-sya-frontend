@@ -349,6 +349,7 @@ describe('Format Case Data to Frontend Model', () => {
       multipleFlag: undefined,
       leadClaimant: undefined,
       caseStayed: undefined,
+      claimantRepresentativeOrganisationPolicy: undefined,
     });
   });
 

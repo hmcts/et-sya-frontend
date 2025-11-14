@@ -574,3 +574,8 @@ export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
 export const ServiceErrors = {
   ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
 } as const;
+
+export const DefaultValues = {
+  STRING_EMPTY: '',
+  STRING_SPACE: ' ',
+} as const;
