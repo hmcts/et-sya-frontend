@@ -1,6 +1,8 @@
 #!groovy
 
-@Library("Infrastructure")
+//@Library("Infrastructure")
+
+@Library("Infrastructure@performance-stages-tidy") _   //add-perftest-vars test-performance-repo
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
@@ -15,6 +17,10 @@ def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
+        //secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),  //**** GET RID OF THESE 
+	    //secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
+	    //secret('perf-event-token', 'PERF_EVENT_TOKEN'),
+        //secret('perf-synthetic-update-token', 'PERF_SYNTHETIC_UPDATE_TOKEN')
     ]
 ]
 
@@ -43,8 +49,23 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  enableSlackNotifications('#et-builds')
 
+  /*=====================================================
+    Dynatrace and Performance Configuration Method Calls
+  =======================================================*/
+  enablePerformanceTestStages(timeout: 60)
+  enableGatlingLoadTests([
+    repo: 'https://github.com/hmcts/performance-testing.git', //https://github.com/hmcts/et-performance.git
+    branch: 'add-et-tests', //*SHould be master //add-buildpipeline-code  //employmenttribunal-updates
+    simulation: 'et.simulations.EtCitizenSimulation', // ETCreateClaim
+    users: 5,
+    rampDuration: '60s',
+    testDuration: '300s',
+    timeout: 10
+  ])
+
+
+  //enableSlackNotifications('#et-builds')
   afterAlways('build') {
     yarnBuilder.yarn('build')
   }
@@ -90,34 +111,34 @@ withPipeline(type, product, component) {
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
-  afterAlways('smoketest:preview') {
-    loadVaultSecrets(inTestTrue)
-    publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'playwright-report',
-                    reportFiles          : 'index.html',
-                    reportName           : 'SYA Smoke Test Report'
-            ])
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-    stage('Accessibility') {
-          yarnBuilder.yarn('test:accessibility')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : 'playwright-report',
-              reportFiles          : 'index.html',
-              reportName           : 'Accessibility results'
-          ])
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-    }
-    loadVaultSecrets(inTestFalse)
-    sh """
-       yarn playwright install
-    """
-  }
+  // afterAlways('smoketest:preview') {
+    // loadVaultSecrets(inTestTrue)
+    // publishHTML([
+                    // allowMissing         : true,
+                    // alwaysLinkToLastBuild: true,
+                    // keepAll              : true,
+                    // reportDir            : 'playwright-report',
+                    // reportFiles          : 'index.html',
+                    // reportName           : 'SYA Smoke Test Report'
+            // ])
+    // steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    // stage('Accessibility') {
+          // yarnBuilder.yarn('test:accessibility')
+          // publishHTML([
+              // allowMissing         : true,
+              // alwaysLinkToLastBuild: true,
+              // keepAll              : true,
+              // reportDir            : 'playwright-report',
+              // reportFiles          : 'index.html',
+              // reportName           : 'Accessibility results'
+          // ])
+        // steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    // }
+    // loadVaultSecrets(inTestFalse)
+    // sh """
+      //  yarn playwright install
+    // """
+  // }
 
   afterAlways('functionalTest:preview') {
       publishHTML([
