@@ -5,13 +5,15 @@
     {% else %}
       <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.titleWithoutName }}. </h3>
     {% endif %}
-    <p class="govuk-body">
-      {{ notificationBanner.claimantRepresented.p1 }}
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>{{ notificationBanner.claimantRepresented.l1 }}</li>
-      <li>{{ notificationBanner.claimantRepresented.l2 }}</li>
-    </ul>
+    {% if claimantRepresentedByOrganisation %}
+      <p class="govuk-body">
+        {{ notificationBanner.claimantRepresented.p1 }}
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ notificationBanner.claimantRepresented.l1 }}</li>
+        <li>{{ notificationBanner.claimantRepresented.l2 }}</li>
+      </ul>
+    {% endif %}
   {% endset %}
   {{ govukNotificationBanner({
       html: htmlForClaimantRepresentedBanner,
