@@ -49,10 +49,11 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  enablePerformanceTestStages(timeout: 60)
-    // Add debug logging
-    echo "Debug: About to set Gatling branch to: add-buildpipeline-code"
 
+  /*=====================================================
+    Dynatrace and Performance Configuration Method Calls
+  =======================================================*/
+  enablePerformanceTestStages(timeout: 60)
   enableGatlingLoadTests([
     repo: 'https://github.com/hmcts/performance-testing.git', //https://github.com/hmcts/et-performance.git
     branch: 'add-et-tests', //*SHould be master //add-buildpipeline-code  //employmenttribunal-updates
@@ -62,8 +63,9 @@ withPipeline(type, product, component) {
     testDuration: '300s',
     timeout: 10
   ])
-  //enableSlackNotifications('#et-builds')
 
+
+  //enableSlackNotifications('#et-builds')
   afterAlways('build') {
     yarnBuilder.yarn('build')
   }
