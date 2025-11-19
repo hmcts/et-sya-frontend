@@ -63,6 +63,14 @@ withPipeline(type, product, component) {
     testDuration: '300s',
     timeout: 10
   ])
+  enableIdamTestUser([
+    email: 'et.synthetic.citizen@testmail.com',
+    forename: 'FirstSynthetic',
+    surname: 'Last',
+    password: 'Citizen1!',
+    roles: ['citizen']
+  ])
+
 
 
   //enableSlackNotifications('#et-builds')
