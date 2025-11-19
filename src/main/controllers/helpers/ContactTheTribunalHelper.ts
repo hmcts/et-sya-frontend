@@ -18,7 +18,7 @@ export class ContactTheTribunalHelper {
    */
   public static isClaimantRepresentedByOrganisation(userCase: CaseWithId): boolean {
     return (
-      ObjectUtils.isNotEmpty(userCase?.claimantRepresentedQuestion) &&
+      userCase?.claimantRepresentedQuestion !== undefined &&
       userCase.claimantRepresentedQuestion === YesOrNo.YES &&
       ((ObjectUtils.isNotEmpty(userCase?.claimantRepresentativeOrganisationPolicy?.Organisation) &&
         StringUtils.isNotBlank(userCase.claimantRepresentativeOrganisationPolicy.Organisation.OrganisationID)) ||

@@ -5,6 +5,9 @@ import { CaseState } from '../../../../main/definitions/definition';
 describe('ContactTheTribunalHelper tests', () => {
   describe('isClaimantRepresentedByOrganisation tests', () => {
     const DATE = 'August 19, 2022';
+    it('should return false when user case is undefined', () => {
+      expect(ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(undefined)).toBe(false);
+    });
     it('should return false when user case claimant represented question is undefined', () => {
       const userCase: CaseWithId = {
         id: '1',
