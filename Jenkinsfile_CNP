@@ -17,10 +17,6 @@ def secrets = [
     'et-${env}': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
-        //secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),  //**** GET RID OF THESE 
-	    //secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
-	    //secret('perf-event-token', 'PERF_EVENT_TOKEN'),
-        //secret('perf-synthetic-update-token', 'PERF_SYNTHETIC_UPDATE_TOKEN')
     ]
 ]
 
@@ -57,7 +53,7 @@ withPipeline(type, product, component) {
   enableGatlingLoadTests([
     repo: 'https://github.com/hmcts/performance-testing.git', //https://github.com/hmcts/et-performance.git
     branch: 'add-et-tests', //*SHould be master //add-buildpipeline-code  //employmenttribunal-updates
-    simulation: 'et.simulations.EtCitizenSimulation', // ETCreateClaim
+    simulation: 'et.simulations.EtSyaCitizenBuildSimulation', // ETCreateClaim
     users: 5,
     rampDuration: '60s',
     testDuration: '300s',
