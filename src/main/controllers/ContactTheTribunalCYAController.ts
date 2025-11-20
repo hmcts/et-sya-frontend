@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
@@ -11,6 +12,8 @@ import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+const logger = getLogger('ContactTheTribunalCYANotSystemUserController');
 
 export default class ContactTheTribunalCYAController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -35,6 +38,7 @@ export default class ContactTheTribunalCYAController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);
 
+    logger.info('Retrieve translation label for contactApplicationType for caseId: ' + userCase?.id);
     const cyaContent = getCyaContent(
       userCase,
       translations,
