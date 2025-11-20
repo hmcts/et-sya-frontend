@@ -30,6 +30,9 @@ module "et-frontend-session-storage" {
   sku_name                      = var.sku_name
   family                        = var.family
   capacity                      = var.capacity
+  rdb_backup_enabled            = var.rdb_backup_enabled
+  rdb_backup_frequency          = var.redis_backup_frequency
+  rdb_backup_max_snapshot_count = var.rdb_backup_max_snapshot_count
 
 }
 
