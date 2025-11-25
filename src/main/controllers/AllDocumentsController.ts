@@ -33,7 +33,7 @@ export default class AllDocumentsController {
     ]);
 
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
-
+    logger.info('Retrieved documentCollection for caseId: ' + userCase?.id);
     const docCollection = userCase.documentCollection?.length ? userCase.documentCollection : [];
     const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
     const allDocs = [...docCollection, ...bundleDocuments];

@@ -24,6 +24,10 @@ export default class ContactTheTribunalController {
     );
     const { userCase } = req.session;
 
+    // Set flag to indicate user has visited the selection page
+    // This allows FormSubmissionCheck to verify proper flow
+    req.session.visitedContactTribunalSelection = true;
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
