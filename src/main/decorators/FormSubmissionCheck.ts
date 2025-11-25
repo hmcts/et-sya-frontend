@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 
+import { createCheckDecorator } from './BaseDecorator';
+
 /**
  * A decorator function that prevents access to form pages after submission and validates proper form flow.
  * If the `checkFormSubmissionAndRedirect` function determines a redirect is needed, the original method will not be executed.
@@ -16,49 +18,9 @@ import { AppRequest } from '../definitions/appRequest';
  *
  * A decorator function that can be applied to methods or properties.
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function FormSubmissionCheck() {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  return (target: any, propertyKey: string | symbol, descriptor?: PropertyDescriptor): any => {
-    /**
-     * Wraps the original method to include form submission checking and redirection logic.
-     *
-     * @param {Function} method - The original method to be wrapped.
-     * @returns {Function} A new function that includes the form submission checking logic.
-     */
-    const wrapMethod = (method: any) => {
-      return function (req: AppRequest, res: Response, ...args: any[]): void | Promise<void> {
-        if (checkFormSubmissionAndRedirect(req, res)) {
-          return; // Redirect occurred, do not execute the original method.
-        }
-        return method.apply(this, [req, res, ...args]); // Execute the original method.
-      };
-    };
-
-    // If a descriptor is provided, wrap the method directly.
-    if (descriptor) {
-      descriptor.value = wrapMethod(descriptor.value);
-      return descriptor;
-    }
-
-    // Handle cases where no descriptor is provided (e.g., property decorators).
-    const originalDescriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    };
-
-    let originalMethod: any;
-
-    // Define a getter and setter to wrap the method dynamically.
-    Object.defineProperty(target, propertyKey, {
-      get: () => wrapMethod(originalMethod),
-      set: (newValue: any) => {
-        originalMethod = newValue;
-      },
-      enumerable: originalDescriptor.enumerable,
-      configurable: originalDescriptor.configurable,
-    });
-  };
+  return createCheckDecorator(checkFormSubmissionAndRedirect);
 }
 
 /**
