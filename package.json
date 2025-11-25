@@ -25,6 +25,7 @@
     "test:coverage": "jest --coverage",
     "test:routes": "jest -c jest.routes.config.js",
     "test:translations": "jest ./src/test/unit/translations.spec.ts",
+    "test:mutation": "yarn stryker run --configFile stryker.config.json",
     "test:a11y": "echo 'a11y tests are ran through GitHub actions as a mandatory step in order to save time on the main pipeline and unable to mock at the moment. Story RET-2038 created for same'",
     "tests:a11y": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_ENV=test LOG_LEVEL=ERROR mocha --exit --reporter mochawesome --require ts-node/register --require tsconfig-paths/register src/test/a11y/a11y.ts --timeout 60000 --reporter-options reportDir=functional-output/accessibility-report,reportFilename=a11y,inlineAssets=true,reportTitle=et-sya-frontend",
     "test:accessibility": "yarn playwright install && yarn playwright test --project=chromium --grep @Accessibility",
