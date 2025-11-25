@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { FormSubmissionCheck } from '../decorators/FormSubmissionCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
@@ -16,6 +17,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 const logger = getLogger('ContactTheTribunalCYANotSystemUserController');
 
 export default class ContactTheTribunalCYAController {
+  @FormSubmissionCheck()
   public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
 
