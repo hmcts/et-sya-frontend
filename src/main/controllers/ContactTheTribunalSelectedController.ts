@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { FormSubmissionCheck } from '../decorators/FormSubmissionCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import applications, { applicationTypes } from '../definitions/contact-applications';
@@ -67,6 +68,7 @@ export default class ContactTheTribunalSelectedController {
     this.form = new Form(<FormFields>this.contactApplicationContent.fields);
   }
 
+  @FormSubmissionCheck()
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.body.url) {
       logger.warn('Potential bot activity detected from IP: ' + req.ip);
@@ -139,6 +141,7 @@ export default class ContactTheTribunalSelectedController {
     return res.redirect(redirectUrl);
   };
 
+  @FormSubmissionCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { FormSubmissionCheck } from '../decorators/FormSubmissionCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
@@ -61,6 +62,7 @@ export default class CopyToOtherPartyController {
     this.form = new Form(<FormFields>this.CopyToOtherPartyContent.fields);
   }
 
+  @FormSubmissionCheck()
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.body.copyToOtherPartyYesOrNo === YesOrNo.YES) {
       req.body.copyToOtherPartyText = undefined;
@@ -85,6 +87,7 @@ export default class CopyToOtherPartyController {
     return res.redirect(redirectPage);
   };
 
+  @FormSubmissionCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
 
