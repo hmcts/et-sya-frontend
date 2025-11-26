@@ -379,7 +379,7 @@ export class CaseApi {
   submitCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       // Intentional monitoring delay =====================================================
-      await new Promise(resolve => setTimeout(resolve, 3000)); // 3 second delay
+      //await new Promise(resolve => setTimeout(resolve, 3000)); // 3 second delay
       //===================================================================================
       return await this.axios.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
     } catch (error) {
