@@ -44,3 +44,6 @@ src/test/end-to-end/functional-output/*
 !.yarn/versions
 
 .swc/*
+# stryker temp files
+.stryker-tmp
+/reports/*
