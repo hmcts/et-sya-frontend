@@ -22,7 +22,7 @@ export class CaseApi {
   createCase = async (caseData: string, userDetails: UserDetails): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       // Intentional monitoring delay =====================================================
-      await new Promise(resolve => setTimeout(resolve, 9000)); // 3 second delay
+      await new Promise(resolve => setTimeout(resolve, 5000)); // 3 second delay
 //===================================================================================
       return await this.axios.post(
         JavaApiUrls.INITIATE_CASE_DRAFT,
