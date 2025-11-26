@@ -6,11 +6,10 @@
 
   "testRunner": "jest",
   "testRunner_comment": "Take a look at https://stryker-mutator.io/docs/stryker-js/jest-runner for information about the jest plugin.",
-  "coverageAnalysis": "perTest",
-  "timeoutFactor": 3,
-  "timeoutMS": 10000,
-  "incremental": true,
-  "maxTestRunnerReuse": 25,
+  "coverageAnalysis": "off",
+  "incremental": false,
+  "maxTestRunnerReuse": 100,
+  "concurrency": 2,
   "mutate": [
     "src/main/assets/**/*.ts",
     "src/main/components/**/*.ts",
