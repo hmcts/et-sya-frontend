@@ -275,6 +275,8 @@ describe('Format Case Data to Frontend Model', () => {
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,
+      claimantRepresentative: undefined,
+      claimantRepresentativeRemoved: undefined,
       employeeBenefits: undefined,
       endDate: undefined,
       newJob: undefined,
@@ -347,6 +349,7 @@ describe('Format Case Data to Frontend Model', () => {
       multipleFlag: undefined,
       leadClaimant: undefined,
       caseStayed: undefined,
+      claimantRepresentativeOrganisationPolicy: undefined,
     });
   });
 

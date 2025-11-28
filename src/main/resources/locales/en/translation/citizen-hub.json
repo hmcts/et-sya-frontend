@@ -10,6 +10,8 @@
   "iWantTo": "I want to...",
   "contactTribunalMyCase": "Contact the tribunal about my case",
   "findLegalAdvice": "Find legal advice (opens in new tab)",
+  "appointLegalRepresentative": "Appoint a legal representative",
+  "changeLegalRepresentative": "Change my legal representative",
   "section1": "Your claim",
   "section2": "The response",
   "section3": "Your hearings",
@@ -115,9 +117,23 @@
         "rule92No": {
           "p1": "You have sent a response to the tribunal and given your reasons not to copy it to the respondent.",
           "p2": "The tribunal will consider your reasons and let you know what happens next."
+        },
+        "rule92NoEcc": {
+          "p1": "You have sent a reply to the tribunal."
         }
       },
       "link": "View your response"
+    },
+    "claimantRepresented": {
+      "titleWithName": "You are now being legally represented by",
+      "titleWithoutName": "You are now being legally represented",
+      "p1": "You will be kept updated with case communication but will no longer be able to",
+      "l1": "Submit applications",
+      "l2": "Directly respond to applications or notifications"
+    },
+    "claimantNotRepresented": {
+      "p1": "You are no longer legally represented.",
+      "p2": "You may continue to represent yourself or you may wish to appoint a new legal representative."
     }
   },
   "multiples": {

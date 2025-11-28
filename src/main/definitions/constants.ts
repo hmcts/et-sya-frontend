@@ -104,6 +104,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  APPOINT_LEGAL_REPRESENTATIVE: 'appoint-legal-representative',
   RESPONDENT_CONTACT_DETAILS: 'respondent-contact-details',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
@@ -152,6 +153,7 @@ export const TranslationKeys = {
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
 } as const;
 
 export const PageUrls = {
@@ -290,7 +292,9 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
 } as const;
 
 export const InterceptPaths = {
@@ -350,6 +354,8 @@ export const JavaApiUrls = {
   SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
+  REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
+  REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
 } as const;
 
 export const Urls = {
@@ -474,6 +480,7 @@ export const Applicant = {
   CLAIMANT: 'Claimant',
   RESPONDENT: 'Respondent',
   ADMIN: 'Admin',
+  CLAIMANT_REP: 'Claimant Representative',
 } as const;
 
 export const AllDocumentTypes = {
@@ -604,3 +611,16 @@ export const VALID_DYNAMIC_URL_BASES = [
   'respondent-postcode-enter',
   'work-address',
 ];
+export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
+  change: 'change',
+  remove: 'remove',
+} as const;
+
+export const ServiceErrors = {
+  ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
+} as const;
+
+export const DefaultValues = {
+  STRING_EMPTY: '',
+  STRING_SPACE: ' ',
+} as const;

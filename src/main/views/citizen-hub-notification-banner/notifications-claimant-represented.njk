@@ -1,0 +1,34 @@
+{% if userCase.claimantRepresentedQuestion and userCase.claimantRepresentedQuestion === 'Yes' %}
+  {% set htmlForClaimantRepresentedBanner %}
+    {% if claimantRepresented.name_of_organisation %}
+      <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.titleWithName }} {{claimantRepresented.name_of_organisation}}. </h3>
+    {% else %}
+      <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.titleWithoutName }}. </h3>
+    {% endif %}
+    {% if claimantRepresentedByOrganisation %}
+      <p class="govuk-body">
+        {{ notificationBanner.claimantRepresented.p1 }}
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ notificationBanner.claimantRepresented.l1 }}</li>
+        <li>{{ notificationBanner.claimantRepresented.l2 }}</li>
+      </ul>
+    {% endif %}
+  {% endset %}
+  {{ govukNotificationBanner({
+      html: htmlForClaimantRepresentedBanner,
+      titleText: important
+    })
+  }}
+{% elif showNoLongerRepresentedNotification %}
+  {% set htmlForClaimantNotRepresentedBanner %}
+    <p class="govuk-body">
+      <b>{{ notificationBanner.claimantNotRepresented.p1 }}</b>
+    </p>
+  {% endset %}
+  {{ govukNotificationBanner({
+    html: htmlForClaimantNotRepresentedBanner,
+    titleText: important
+  })
+  }}
+{% endif %}

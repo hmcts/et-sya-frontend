@@ -8,8 +8,10 @@
   "details": "Manylion eich gwrandawiad",
   "decision": "Y penderfyniad ar eich hawliad",
   "iWantTo": "Rwyf eisiau...",
-  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
+  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â fy achos",
   "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
+  "appointLegalRepresentative": "Penodi cynrychiolydd cyfreithiol",
+  "changeLegalRepresentative": "Newid fy nghynrychiolydd cyfreithiol",
   "section1": "Eich hawliad",
   "section2": "Yr ymateb",
   "section3": "Eich gwrandawiadau",
@@ -115,9 +117,23 @@
         "rule92No": {
           "p1": "Rydych wedi anfon ymateb i'r tribiwnlys ac wedi rhoi eich rhesymau dros beidio â'i gopïo i'r atebydd.",
           "p2": "Bydd y tribiwnlys yn ystyried eich rhesymau ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf."
+        },
+        "rule92NoEcc": {
+          "p1": "Rydych chi wedi anfon ateb i'r tribiwnlys."
         }
       },
       "link": "Gweld eich ymateb"
+    },
+    "claimantRepresented": {
+      "titleWithName": "Rydych chi bellach yn cael eich cynrychioli’n gyfreithiol gan",
+      "titleWithoutName": "Rydych chi bellach yn cael eich cynrychioli’n gyfreithiol",
+      "p1": "Byddwch yn cael eich diweddaru gyda gohebiaeth ynghylch yr achos ond ni fyddwch yn gallu gwneud y canlynol mwyach",
+      "l1": "Cyflwyno ceisiadau",
+      "l2": "Ymateb yn uniongyrchol i geisiadau a hysbysiadau"
+    },
+    "claimantNotRepresented": {
+      "p1": "Nid ydych bellach yn cael eich cynrychioli'n gyfreithiol.",
+      "p2": "Gallwch barhau i gynrychioli'ch hun neu efallai yr hoffech benodi cynrychiolydd cyfreithiol newydd."
     }
   },
   "multiples": {

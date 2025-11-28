@@ -114,6 +114,8 @@ export default {
   avgWeeklyHrs: 5,
   claimantPensionContribution: YesOrNoOrNotSure.YES,
   claimantPensionWeeklyContribution: 15,
+  claimantRepresentative: undefined,
+  claimantRepresentativeRemoved: undefined,
   employeeBenefits: YesOrNo.YES,
   jobTitle: 'Developer',
   noticePeriod: YesOrNo.YES,
@@ -303,4 +305,5 @@ export default {
   multipleFlag: YesOrNo.YES,
   leadClaimant: YesOrNo.YES,
   caseStayed: YesOrNo.YES,
+  claimantRepresentativeOrganisationPolicy: undefined,
 };

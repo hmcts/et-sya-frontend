@@ -31,7 +31,7 @@
       </dl>
 
       {% if userCase.acknowledgementOfClaimLetterDetail.length or userCase.rejectionOfClaimDocumentDetail.length or userCase.genericTseApplicationCollection.length %}
-        <div class="govuk-summary-list__key govuk-heading-m">Claim related information</div>
+        <div class="govuk-summary-list__key govuk-heading-m">{{ claimRelatedInfo }}</div>
       {% endif %}
 
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
@@ -132,7 +132,7 @@
 
       {% for respondent in userCase.respondents %}
         {{ govukSummaryList({
-          rows: getRespondentSection(userCase, respondent, loop.index, translations, '', false)
+          rows: getRespondentSection(userCase, respondent, loop.index, translations, languageParam, false)
         }) }}
       {% endfor %}
 

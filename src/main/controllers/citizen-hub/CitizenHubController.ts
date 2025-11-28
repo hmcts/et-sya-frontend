@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
+import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -41,6 +42,7 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
+import { ContactTheTribunalHelper } from '../helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
@@ -53,7 +55,6 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterECCNotifications,
   filterOutSpecialNotifications,
   getClaimantTribunalResponseBannerContent,
   setNotificationBannerData,
@@ -68,6 +69,9 @@ export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
     const welshEnabled = await getFlagValue('welsh-language', null);
+    const claimantRepresentedByOrganisation = ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(
+      req.session.userCase
+    );
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {
@@ -156,7 +160,6 @@ export default class CitizenHubController {
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const generalNotifications = filterOutSpecialNotifications(notifications);
-    const eccNotifications = await filterECCNotifications(notifications);
 
     let respondentBannerContent = undefined;
 
@@ -167,6 +170,7 @@ export default class CitizenHubController {
 
     let judgmentBannerContent = undefined;
     let decisionBannerContent = undefined;
+    let showNoLongerRepresentedNotification: boolean = false;
     const claimantTribunalResponseBannerContent = getClaimantTribunalResponseBannerContent(
       notifications,
       languageParam
@@ -178,6 +182,9 @@ export default class CitizenHubController {
     }
 
     const showMultipleData = await showMutipleData(userCase);
+    if (YesOrNo.YES === userCase?.claimantRepresentativeRemoved) {
+      showNoLongerRepresentedNotification = true;
+    }
 
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -194,6 +201,7 @@ export default class CitizenHubController {
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
+      claimantRepresented: userCase.claimantRepresentative,
       showAcknowledgementAlert: getAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),
@@ -213,11 +221,12 @@ export default class CitizenHubController {
       ),
       showHearingBanner: shouldShowHearingBanner(userCase?.sendNotificationCollection),
       notifications: generalNotifications,
-      eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
       showMultipleData,
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
+      showNoLongerRepresentedNotification,
+      claimantRepresentedByOrganisation,
     });
   }
 }
