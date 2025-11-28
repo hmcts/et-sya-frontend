@@ -229,6 +229,7 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
+  CITIZEN_HUB_BASE: '/citizen-hub/',
   CLAIM_DETAILS: '/claim-details',
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document-response-from-respondent',
@@ -566,6 +567,50 @@ export const FEATURE_FLAGS = {
   MUL2: 'MUL2',
 } as const;
 
+export const DefaultValues = {
+  STRING_AMPERSAND: '&',
+  STRING_EMPTY: '',
+  STRING_DASH: '-',
+  STRING_HASH: '#',
+  STRING_QUESTION_MARK: '?',
+  STRING_EQUALS: '=',
+  STRING_SPACE: ' ',
+  STRING_NEW_LINE: '\n',
+  STRING_SLASH: '/',
+  STRING_SLASH_REGEX: /\//gi,
+  STRING_UNDERSCORE: '_',
+  HTML_NEWLINE: '</br>',
+  HTML_SPACE: '&nbsp;',
+  COLLECTION_EMPTY: [],
+  NUMBER_ZERO: 0,
+  CONTEST_CLAIM_REASON_MAX_LENGTH: 3000,
+  EMPLOYERS_CLAIM_DETAILS_MAX_LENGTH: 3000,
+  FILE_ID_PARAMETER: 'fileId=',
+  CLEAR_SELECTION: 'clearSelection',
+  CLEAR_SELECTION_URL_PARAMETER: 'redirect=clearSelection',
+  SELF_ASSIGNMENT: 'selfAssignment',
+  SELF_ASSIGNMENT_URL_PARAMETER: 'redirect=selfAssignment',
+  DOCUMENT_CHARS_TO_REPLACE: ['@', '/', '\\', "'", ':', '(', ')', '#'],
+} as const;
+
+export const VALID_DYNAMIC_URL_PATTERNS = [
+  /^\/respondent\/\d+\/no-acas-reason$/,
+  /^\/respondent\/\d+\/work-postcode-enter$/,
+  /^\/respondent\/\d+\/acas-cert-num$/,
+  /^\/respondent\/\d+\/respondent-postcode-enter$/,
+  /^\/respondent\/\d+\/work-address$/,
+  /^\/citizen-hub\/\d+$/,
+] as const;
+
+export const VALID_DYNAMIC_URL_BASES = [
+  'respondent',
+  'citizen-hub',
+  'no-acas-reason',
+  'work-postcode-enter',
+  'acas-cert-num',
+  'respondent-postcode-enter',
+  'work-address',
+];
 export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
   change: 'change',
   remove: 'remove',
