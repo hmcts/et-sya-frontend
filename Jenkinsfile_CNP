@@ -1,6 +1,8 @@
 #!groovy
 
-@Library("Infrastructure")
+//@Library("Infrastructure")
+
+@Library("Infrastructure@performance-stages-tidy") _   //add-perftest-vars test-performance-repo
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
@@ -43,8 +45,31 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-  enableSlackNotifications('#et-builds')
 
+  /*=====================================================
+    Dynatrace and Performance Configuration
+  =======================================================*/
+  enablePerformanceTestStages(timeout: 60)
+  enableGatlingLoadTests([
+    repo: 'https://github.com/hmcts/performance-testing.git', //https://github.com/hmcts/et-performance.git
+    branch: 'add-et-tests', //*SHould be master //add-buildpipeline-code  //employmenttribunal-updates
+    simulation: 'et.simulations.EtSyaCitizenBuildSimulation', // ETCreateClaim
+    users: 5,
+    rampDuration: '60s',
+    testDuration: '300s',
+    timeout: 10
+  ])
+  //enableIdamTestUser([
+  //  email: 'et.synthetic.citizen@testmail.com',
+  //  forename: 'FirstSynthetic',
+  //  surname: 'Last',
+  //  password: 'Citizen1!',
+  //  roles: ['citizen']
+  //])
+
+
+
+  //enableSlackNotifications('#et-builds')
   afterAlways('build') {
     yarnBuilder.yarn('build')
   }
@@ -90,34 +115,34 @@ withPipeline(type, product, component) {
       steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
   }
 
-  afterAlways('smoketest:preview') {
-    loadVaultSecrets(inTestTrue)
-    publishHTML([
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : 'playwright-report',
-                    reportFiles          : 'index.html',
-                    reportName           : 'SYA Smoke Test Report'
-            ])
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-    stage('Accessibility') {
-          yarnBuilder.yarn('test:accessibility')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : 'playwright-report',
-              reportFiles          : 'index.html',
-              reportName           : 'Accessibility results'
-          ])
-        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
-    }
-    loadVaultSecrets(inTestFalse)
-    sh """
-       yarn playwright install
-    """
-  }
+  // afterAlways('smoketest:preview') {
+    // loadVaultSecrets(inTestTrue)
+    // publishHTML([
+                    // allowMissing         : true,
+                    // alwaysLinkToLastBuild: true,
+                    // keepAll              : true,
+                    // reportDir            : 'playwright-report',
+                    // reportFiles          : 'index.html',
+                    // reportName           : 'SYA Smoke Test Report'
+            // ])
+    // steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    // stage('Accessibility') {
+          // yarnBuilder.yarn('test:accessibility')
+          // publishHTML([
+              // allowMissing         : true,
+              // alwaysLinkToLastBuild: true,
+              // keepAll              : true,
+              // reportDir            : 'playwright-report',
+              // reportFiles          : 'index.html',
+              // reportName           : 'Accessibility results'
+          // ])
+        // steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    // }
+    // loadVaultSecrets(inTestFalse)
+    // sh """
+      //  yarn playwright install
+    // """
+  // }
 
   afterAlways('functionalTest:preview') {
       publishHTML([
