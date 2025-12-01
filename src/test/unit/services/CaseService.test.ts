@@ -574,14 +574,17 @@ describe('Rethrowing errors when axios requests fail', () => {
     },
     {
       serviceMethod: api.downloadClaimPdf,
+      parameters: ['caseId123'],
       errorMessage: 'Error downloading claim pdf: ' + error.message,
     },
     {
       serviceMethod: api.getCaseDocument,
+      parameters: ['docId456'],
       errorMessage: 'Error fetching document: ' + error.message,
     },
     {
       serviceMethod: api.getDocumentDetails,
+      parameters: ['docId789'],
       errorMessage: 'Error fetching document details: ' + error.message,
     },
     {
@@ -596,6 +599,7 @@ describe('Rethrowing errors when axios requests fail', () => {
     },
     {
       serviceMethod: api.getUserCase,
+      parameters: ['caseId999'],
       errorMessage: 'Error getting user case: ' + error.message,
     },
     {
@@ -634,6 +638,59 @@ describe('Rethrowing errors when axios requests fail', () => {
       errorMessage: 'Error uploading document: ' + error.message,
     },
   ])('should rethrow error if service method number $# fails', async ({ serviceMethod, parameters, errorMessage }) => {
-    await expect(serviceMethod.apply(this, parameters)).rejects.toThrow(errorMessage);
+    await expect(serviceMethod.apply(api, parameters)).rejects.toThrow(errorMessage);
+  });
+
+  it.each([
+    {
+      serviceMethod: api.downloadClaimPdf,
+      parameters: ['caseId123'],
+    },
+    {
+      serviceMethod: api.getCaseDocument,
+      parameters: ['docId456'],
+    },
+    {
+      serviceMethod: api.getDocumentDetails,
+      parameters: ['docId789'],
+    },
+    {
+      serviceMethod: api.updateDraftCase,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.updateHubLinksStatuses,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.getUserCase,
+      parameters: ['caseId999'],
+    },
+    {
+      serviceMethod: api.submitClaimantTse,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.respondToApplication,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.addResponseSendNotification,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.changeApplicationStatus,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.updateSendNotificationState,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.submitCase,
+      parameters: [caseItem],
+    },
+  ])('should include action context in error for method number $#', async ({ serviceMethod, parameters }) => {
+    await expect(serviceMethod.apply(api, parameters)).rejects.toThrow(/action=/);
   });
 });
