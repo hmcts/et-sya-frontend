@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { clone } from 'lodash';
 
-import { UserDetails } from '../../../main/definitions/appRequest';
+import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import {
+  AgreedDocuments,
   CaseType,
   CaseTypeId,
   CaseWithId,
@@ -14,9 +15,13 @@ import {
   Sex,
   StillWorking,
   WeeksOrMonths,
+  WhatAreTheHearingDocuments,
+  WhoseHearingDocument,
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
+import { TseAdminDecisionItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { CcdDataModel, JavaApiUrls, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
@@ -336,6 +341,198 @@ describe('update case', () => {
       },
     });
   });
+
+  it('should store claimant tse', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+    };
+
+    await api.storeClaimantTse(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.STORE_CLAIMANT_APPLICATION);
+  });
+
+  it('should store respond to application', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedGenericTseApplication: { id: '12345', value: {} },
+      responseText: 'Not for me',
+      hasSupportingMaterial: YesOrNo.NO,
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+    };
+
+    await api.storeRespondToApplication(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.STORE_RESPOND_TO_APPLICATION);
+  });
+
+  it('should store response send notification', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedRequestOrOrder: { id: '12345', value: {} },
+      responseText: 'Not for me',
+      hasSupportingMaterial: YesOrNo.NO,
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+    };
+
+    await api.storeResponseSendNotification(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.STORE_RESPOND_TO_TRIBUNAL);
+  });
+
+  it('should submit bundles hearing doc', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      bundlesRespondentAgreedDocWith: AgreedDocuments.YES,
+      hearingDocumentsAreFor: 'hearing1',
+      formattedSelectedHearing: 'Jan 15, 2023',
+      whatAreTheseDocuments: WhatAreTheHearingDocuments.ALL,
+      whoseHearingDocumentsAreYouUploading: WhoseHearingDocument.MINE,
+      hearingDocument: {
+        document_url: '12345',
+        document_filename: 'hearing.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+    };
+
+    await api.submitBundlesHearingDoc(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.SUBMIT_BUNDLES);
+  });
+
+  it('should update judgment notification state', async () => {
+    const selectedJudgment: SendNotificationTypeItem = { id: '111', value: {} };
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+
+    await api.updateJudgmentNotificationState(selectedJudgment, caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_NOTIFICATION_STATE);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: caseItem.id,
+      send_notification_id: '111',
+      notification_state: HubLinkStatus.VIEWED,
+    });
+  });
+
+  it('should update decision state', async () => {
+    const selectedDecision: TseAdminDecisionItem = { id: '222', value: {} };
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+
+    await api.updateDecisionState('appId123', selectedDecision, caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_ADMIN_DECISION_STATE);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: caseItem.id,
+      app_id: 'appId123',
+      admin_decision_id: '222',
+    });
+  });
+
+  it('should update response as viewed', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+
+    await api.updateResponseAsViewed(caseItem, 'appId', 'responseId');
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.TRIBUNAL_RESPONSE_VIEWED);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: caseItem.id,
+      appId: 'appId',
+      responseId: 'responseId',
+    });
+  });
+});
+
+describe('removeClaimantRepresentative', () => {
+  beforeAll(() => {
+    // Reset mock before this describe block
+    jest.clearAllMocks();
+  });
+
+  it('should remove claimant representative', async () => {
+    const mockRequest = {
+      session: {
+        userCase: {
+          id: 'case123',
+        },
+      },
+    } as unknown as AppRequest;
+
+    await api.removeClaimantRepresentative(mockRequest);
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      `${JavaApiUrls.REVOKE_CLAIMANT_SOLICITOR}?caseSubmissionReference=case123`,
+      {}
+    );
+  });
+});
+
+describe('Rethrowing errors for removeClaimantRepresentative', () => {
+  const revokErrorMock = { message: 'error message' };
+
+  beforeAll(() => {
+    mockedAxios.post.mockRejectedValue(revokErrorMock);
+  });
+
+  afterAll(() => {
+    mockedAxios.post.mockReset();
+  });
+
+  it('should rethrow error when removeClaimantRepresentative fails', async () => {
+    const mockRequest = {
+      session: {
+        userCase: {
+          id: 'case123',
+        },
+      },
+    } as unknown as AppRequest;
+
+    await expect(api.removeClaimantRepresentative(mockRequest)).rejects.toThrow(/action=removeClaimantRepresentative/);
+  });
 });
 
 describe('update case from claimant actions', () => {
@@ -548,6 +745,8 @@ describe('Rethrowing errors when axios requests fail', () => {
     id: 123,
     selectedRequestOrOrder: { id: '12345', value: {} },
     selectedGenericTseApplication: { id: '12345', value: {} },
+    selectedStoredTseResponse: { id: '12346', value: {} },
+    selectedStoredPseResponse: { id: '12347', value: {} },
   };
 
   beforeAll(() => {
@@ -637,6 +836,56 @@ describe('Rethrowing errors when axios requests fail', () => {
       parameters: [mockFile, mockType],
       errorMessage: 'Error uploading document: ' + error.message,
     },
+    {
+      serviceMethod: api.storeClaimantTse,
+      parameters: [caseItem],
+      errorMessage: 'Error store claimant tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.storedToSubmitClaimantTse,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting stored claimant tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.submitBundlesHearingDoc,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting bundles: ' + error.message,
+    },
+    {
+      serviceMethod: api.storeRespondToApplication,
+      parameters: [caseItem],
+      errorMessage: 'Error responding to tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.storedToSubmitRespondToApp,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting stored respond to application: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateJudgmentNotificationState,
+      parameters: [{ id: '111', value: {} }, caseItem],
+      errorMessage: 'Error updating judgment notification state: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateDecisionState,
+      parameters: ['appId', { id: '222', value: {} }, caseItem],
+      errorMessage: 'Error updating judgment notification state: ' + error.message,
+    },
+    {
+      serviceMethod: api.storeResponseSendNotification,
+      parameters: [caseItem],
+      errorMessage: 'Error adding store response to sendNotification: ' + error.message,
+    },
+    {
+      serviceMethod: api.storedToSubmitRespondToTribunal,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting stored respond to tribunal: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateResponseAsViewed,
+      parameters: [caseItem, 'appId', 'responseId'],
+      errorMessage: 'Error updating response to viewed: ' + error.message,
+    },
   ])('should rethrow error if service method number $# fails', async ({ serviceMethod, parameters, errorMessage }) => {
     await expect(serviceMethod.apply(api, parameters)).rejects.toThrow(errorMessage);
   });
@@ -689,6 +938,46 @@ describe('Rethrowing errors when axios requests fail', () => {
     {
       serviceMethod: api.submitCase,
       parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.storeClaimantTse,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.storedToSubmitClaimantTse,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.submitBundlesHearingDoc,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.storeRespondToApplication,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.storedToSubmitRespondToApp,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.updateJudgmentNotificationState,
+      parameters: [{ id: '111', value: {} }, caseItem],
+    },
+    {
+      serviceMethod: api.updateDecisionState,
+      parameters: ['appId', { id: '222', value: {} }, caseItem],
+    },
+    {
+      serviceMethod: api.storeResponseSendNotification,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.storedToSubmitRespondToTribunal,
+      parameters: [caseItem],
+    },
+    {
+      serviceMethod: api.updateResponseAsViewed,
+      parameters: [caseItem, 'appId', 'responseId'],
     },
   ])('should include action context in error for method number $#', async ({ serviceMethod, parameters }) => {
     await expect(serviceMethod.apply(api, parameters)).rejects.toThrow(/action=/);
