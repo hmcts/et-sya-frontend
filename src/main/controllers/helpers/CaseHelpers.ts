@@ -285,7 +285,11 @@ export const postLogic = async (
       return res.redirect(redirectUrl);
     } else {
       redirectUrl = setUrlLanguage(req, redirectUrl);
-      shouldUseRedirectUrl ? res.redirect(redirectUrl) : returnNextPage(req, res, redirectUrl);
+      if (shouldUseRedirectUrl) {
+        res.redirect(redirectUrl);
+      } else {
+        returnNextPage(req, res, redirectUrl);
+      }
     }
   } else {
     handleErrors(req, res, errors);

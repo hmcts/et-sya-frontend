@@ -67,7 +67,7 @@ export const isValidUKTelNumber: Validator = value => {
     ) {
       return 'invalid';
     }
-  } catch (e) {
+  } catch {
     return 'invalid';
   }
 };

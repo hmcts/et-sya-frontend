@@ -24,7 +24,11 @@ export class Oidc {
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
       const languageParam = req.cookies.i18next === languages.WELSH ? languages.WELSH : languages.ENGLISH;
-      req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
+      if (req.session.guid) {
+        stateParam = req.session.guid;
+      } else {
+        stateParam = EXISTING_USER;
+      }
       stateParam = stateParam + '-' + languageParam;
 
       // Set the i18next cookie with HttpOnly flag
