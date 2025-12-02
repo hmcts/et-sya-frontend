@@ -1,7 +1,5 @@
 import * as path from 'path';
 
-// eslint-disable-next-line import/no-unresolved
-import { HTTPError } from 'HttpError';
 import * as bodyParser from 'body-parser';
 import config from 'config';
 import cookieParser from 'cookie-parser';
@@ -21,6 +19,8 @@ import { Oidc } from './modules/oidc';
 import { PropertiesVolume } from './modules/properties-volume';
 import { Routes } from './modules/routes/routes';
 import { Session } from './modules/session';
+
+import { HTTPError } from 'HttpError';
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';

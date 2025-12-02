@@ -9,7 +9,7 @@ const fileUploadId = 'hearingDocument';
 const expectedTitle = 'Upload your file of documents';
 
 let htmlRes: Document;
-// eslint-disable-next-line jest/valid-title
+
 describe('Hearing Document Upload', () => {
   beforeAll(async () => {
     await request(mockApp({}))

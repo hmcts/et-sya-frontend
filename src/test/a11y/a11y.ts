@@ -1,4 +1,4 @@
-/* eslint-disable jest/no-done-callback,jest/expect-expect */
+/* eslint-disable jest/expect-expect */
 
 import { PageUrls } from '../../main/definitions/constants';
 

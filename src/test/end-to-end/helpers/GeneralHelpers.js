@@ -3,9 +3,9 @@ function prettifyAddress(address) {
 }
 
 function getOtherJurisdictionConnections(connections) {
-  let connectionsList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  const connectionsList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   connections.forEach(connection => {
-    let index = connectionsList.indexOf(connection);
+    const index = connectionsList.indexOf(connection);
     if (index > -1) {
       connectionsList.splice(index, 1);
     }

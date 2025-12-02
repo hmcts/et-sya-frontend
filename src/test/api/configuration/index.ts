@@ -19,7 +19,7 @@ propertiesVolume.addTo(config);
  * @see Readme
  * @returns {string} ie. - development / preview / aat / ithc, prod
  */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 export const getEnvironment = (): string => process.env.NODE_CONFIG_ENV;
 
 /**
@@ -40,7 +40,7 @@ export const getConfigValue = (reference: string) => config.get(reference);
  * We generate text to be used for debugging purposes, so as the person attempting to initialise the application knows
  * what the NODE_CONFIG_ENV is set as and what config file is being used.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export const environmentCheckText = () =>
   `NODE_CONFIG_ENV is set as ${process.env.NODE_CONFIG_ENV} therefore we are using the ${config.get(
     ENVIRONMENT
@@ -53,5 +53,5 @@ export const environmentCheckText = () =>
  *
  * @returns {string | string}
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export const getProtocol = () => (getEnvironment() === DEVELOPMENT ? HTTP : getConfigValue(PROTOCOL));

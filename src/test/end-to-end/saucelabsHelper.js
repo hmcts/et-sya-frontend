@@ -17,8 +17,8 @@ class MyHelper extends Helper {
     // any helper method should return a value in order to be added to promise chain
     const res = await browser.cookie();
     // get values
-    let cookies = res.value;
-    for (let k in cookies) {
+    const cookies = res.value;
+    for (const k in cookies) {
       // check for a cookie
       if (cookies[k].name !== 'logged_in') {
         continue;

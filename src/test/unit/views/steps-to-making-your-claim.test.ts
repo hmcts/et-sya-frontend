@@ -1,4 +1,3 @@
-/* eslint-disable jest/valid-expect */
 //  using chai expect, rather than global jest expect
 
 import fs from 'fs';
