@@ -1,5 +1,5 @@
+'use strict';
 const contactUs = require('../../helpers/contactUsForCitizenHub');
-('use strict');
 
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias

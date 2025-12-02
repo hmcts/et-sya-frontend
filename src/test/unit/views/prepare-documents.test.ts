@@ -48,9 +48,10 @@ describe('Prepare documents page', () => {
 
   it('should display Cancel link', () => {
     const allLinks = htmlRes.getElementsByClassName(link);
-    const actual = Array.prototype.slice.call(allLinks).map((element: any) => {
+    const actual = Array.prototype.slice.call(allLinks).map((element: Element) => {
       return element.innerHTML;
     });
-    expect(actual.some((el: string) => el === 'Cancel')).to.be.true;
+    const hasCancel = actual.some((el: string) => el === 'Cancel');
+    expect(hasCancel).to.equal(true);
   });
 });
