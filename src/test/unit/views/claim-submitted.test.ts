@@ -155,14 +155,15 @@ describe('Claim Submitted Confirmation page', () => {
       const element = blackBox[0].children[1];
 
       expect(element.classList[0]).equals(bodyClass);
-      expect(element.innerHTML.trim()).equal(pageJson.survey.text);
+      expect(element.innerHTML.trim()).equal(pageJson.survey.text.replace(/&/g, '&amp;'));
     });
 
-    it('should have "Give feedback" link', () => {
-      const element = blackBox[0].children[2];
+    it('should have "Complete this short survey" link', () => {
+      const paragraph = blackBox[0].children[1];
+      const link = paragraph.querySelector('a');
 
-      expect(element.classList[0]).equals(linkClass);
-      expect(element.innerHTML.trim()).equal(pageJson.survey.linkText);
+      expect(link).to.not.be.null;
+      expect(link?.classList.contains(linkClass)).to.be.true;
     });
   });
 });
