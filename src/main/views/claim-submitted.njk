@@ -89,7 +89,7 @@
           {{ survey.titleText }}
         </h2>
         <p class="govuk-body">
-          {{ survey.text | safe}}
+          <a href="{{ survey.url }}" class="govuk-link">{{ survey.linkText }}</a> {{ survey.text }}
         </p>
       </div>
     </div>

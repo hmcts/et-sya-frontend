@@ -26,7 +26,9 @@
   "contactAppend": "Monday to Friday, 9am to 5pm <a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out more about call charges</a>",
   "survey": {
     "titleText": "Give us your feedback",
-    "text": "<a href=\"https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt\" class=\"govuk-link\">Complete this short survey</a> to help improve this service for you and others."
+    "text": "to help improve this service for you and others.",
+    "linkText": "Complete this short survey",
+    "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Wales",
   "Unassigned": "Unassigned - We will notify you once your claim has been assigned to a tribunal office"

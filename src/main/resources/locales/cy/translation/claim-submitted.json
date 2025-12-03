@@ -26,7 +26,9 @@
   "contactAppend": "Dydd Llun i ddydd Gwener, 9am - 5pm <a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
   "survey": {
     "titleText": "Rhowch eich adborth i ni",
-    "text": "<a href=\"https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt\" class=\"govuk-link\">Llenwch yr arolwg</a> byr hwn i helpu i wella'r gwasanaeth hwn i chi ac eraill."
+    "text": "byr hwn i helpu i wella'r gwasanaeth hwn i chi ac eraill.",
+    "linkText": "Llenwch yr arolwg",
+    "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Cymru",
   "Unassigned": "Heb ei aseinio – Byddwn yn rhoi gwybod i chi unwaith y bydd eich hawliad wedi’i aseinio i swyddfa dribiwnlys"
