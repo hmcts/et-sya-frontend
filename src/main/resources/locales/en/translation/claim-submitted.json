@@ -25,9 +25,9 @@
   "contactScotland": "Telephone: 0300 790 6234 (Scotland)",
   "contactAppend": "Monday to Friday, 9am to 5pm <a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out more about call charges</a>",
   "survey": {
-    "titleText": "Would you like to help us improve our online services?",
-    "text": "We'd like to ask you a couple of questions about whether you needed any help making your claim through our online form.",
-    "linkText": "Give feedback",
+    "titleText": "Give us your feedback",
+    "text": "to help improve this service for you and others.",
+    "linkText": "Complete this short survey",
     "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Wales",
