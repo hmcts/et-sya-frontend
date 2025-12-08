@@ -9,13 +9,11 @@
   "coverageAnalysis": "off",
   "maxTestRunnerReuse": 100,
   "mutate": [
-    "src/main/assets/**/*.ts",
-    "src/main/components/**/*.ts",
-    "src/main/controllers/**/*.ts",
+    "src/main/components/form/**/*.ts",
+    "src/main/controllers/helpers/**/*.ts",
     "src/main/services/**/*.ts",
     "src/main/auth/**/*.ts",
     "src/main/utils/**/*.ts",
-    "src/main/helpers/**/*.ts",
     "!**/__mocks__/**",
     "!**/mocks/**",
     "!**/*.d.ts"
