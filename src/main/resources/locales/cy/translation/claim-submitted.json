@@ -25,9 +25,9 @@
   "contactScotland": "Rhif Ffôn: 0300 790 6234 (Yr Alban)",
   "contactAppend": "Dydd Llun i ddydd Gwener, 9am - 5pm <a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
   "survey": {
-    "titleText": "A hoffech ein helpu i wella ein gwasanaethau ar-lein?",
-    "text": "Hoffem ofyn ambell gwestiwn i chi am p’un a oedd arnoch angen unrhyw gymorth i wneud eich hawliad wrth ddefnyddio ein ffurflen ar-lein.",
-    "linkText": "Rhoi adborth",
+    "titleText": "Rhowch eich adborth i ni",
+    "text": "byr hwn i helpu i wella'r gwasanaeth hwn i chi ac eraill.",
+    "linkText": "Llenwch yr arolwg",
     "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Cymru",
