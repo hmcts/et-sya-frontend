@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { CaseType } from '../../main/definitions/case';
-import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
+import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
@@ -29,7 +29,9 @@ describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
       .send({ caseType: CaseType.MULTIPLE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(LegacyUrls.ET1);
+        expect(res.header['location']).toStrictEqual(
+          'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number'
+        );
       });
   });
 });

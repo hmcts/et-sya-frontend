@@ -1,6 +1,5 @@
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
 import { YesOrNo, claimantRepresented } from '../../../main/definitions/case';
-import { LegacyUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -39,7 +38,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
+    expect(res.redirect).toHaveBeenCalledWith('https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number');
   });
 
   it("should render the 'Making a claim as a legal representative' page - they are 'a legal representative making a single claim' option is selected", () => {
@@ -61,7 +60,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
+    expect(res.redirect).toHaveBeenCalledWith('https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number');
   });
 
   it('should render same page if errors are present when nothing is selected', () => {
