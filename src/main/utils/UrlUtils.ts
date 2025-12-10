@@ -1,8 +1,7 @@
 import _ from 'lodash';
 
-import { DefaultValues, LegacyUrls, PageUrls } from '../definitions/constants';
+import { DefaultValues } from '../definitions/constants';
 
-import CollectionUtils from './CollectionUtils';
 import StringUtils from './StringUtils';
 
 export default class UrlUtils {
@@ -64,37 +63,5 @@ export default class UrlUtils {
       url = StringUtils.removeFirstOccurrence(url, DefaultValues.STRING_AMPERSAND + parameter);
     }
     return url;
-  }
-
-  /**
-   * Checks if the given string has any of the PageURLs or equal to any of the Legacy Urls.
-   * For legacy URLs checks with an If clause and for {@PageURLs} check by validating with regexPattern.
-   * @param url url string that should be checked.
-   * @param validUrls optional parameter to check if URL exists in valid urls. If this parameter is empty checks URL
-   *                  with the {@PageUrls} constant values.
-   * @result true if string contains any of the PageURls
-   */
-  public static isValidUrl(url: string, validUrls?: string[]): boolean {
-    const urlStr: string[] = url.split('?');
-    const baseUrl: string = urlStr[0];
-    if (
-      baseUrl === LegacyUrls.ET1_BASE ||
-      baseUrl === LegacyUrls.ET1 ||
-      baseUrl === LegacyUrls.ACAS_EC_URL ||
-      baseUrl === '/' ||
-      baseUrl === '#'
-    ) {
-      return true;
-    }
-    validUrls = CollectionUtils.isNotEmpty(validUrls) ? validUrls : Object.values(PageUrls);
-    for (const validUrl of validUrls) {
-      if (validUrl === '/' || validUrl === '#') {
-        continue;
-      }
-      if (baseUrl.includes(validUrl)) {
-        return true;
-      }
-    }
-    return false;
   }
 }

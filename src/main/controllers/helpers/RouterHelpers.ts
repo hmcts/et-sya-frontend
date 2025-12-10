@@ -1,5 +1,6 @@
 import * as urlModule from 'url';
 
+import config from 'config';
 import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
@@ -47,10 +48,16 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
 
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
   validUrls = validUrls ?? Object.values(PageUrls);
-  validUrls.push(LegacyUrls.ET1, LegacyUrls.ET1_BASE);
+  const et1BaseUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
+  validUrls.push(et1BaseUrl, LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH);
 
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
+
+  // Check if URL is a full ET1 legacy URL
+  if (baseUrl.startsWith(et1BaseUrl)) {
+    return redirectUrl;
+  }
 
   // Check static URLs
   for (let validUrl of validUrls) {
