@@ -540,7 +540,7 @@ export const getFileExtension = (fileName: string): string => {
 
 const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   if (caseData?.respondentCollection) {
-    return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
+    return caseData.respondentCollection.some(r => r.value?.responseReceived === YesOrNo.YES);
   }
 
   return false;
