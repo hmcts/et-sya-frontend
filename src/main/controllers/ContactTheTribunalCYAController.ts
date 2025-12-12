@@ -47,7 +47,7 @@ export default class ContactTheTribunalCYAController {
       languageParam,
       PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', userCase.contactApplicationType),
       downloadLink,
-      translations.sections[userCase.contactApplicationType].label
+      translations.sections[userCase.contactApplicationType]?.label
     );
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
