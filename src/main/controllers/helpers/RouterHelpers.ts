@@ -51,15 +51,16 @@ function isFullEt1LegacyUrl(baseUrl: string, et1BaseUrl: string): boolean {
 }
 
 function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: string[]): string | undefined {
-  for (let validUrl of validUrls) {
+  for (const validUrl of validUrls) {
     if (baseUrl === validUrl) {
       const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+      let updatedUrl = validUrl;
       for (const param of parameters) {
         if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          validUrl = addParameterToUrl(validUrl, param);
+          updatedUrl = addParameterToUrl(validUrl, param);
         }
       }
-      return validUrl;
+      return updatedUrl;
     }
   }
   return undefined;
@@ -72,10 +73,8 @@ function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | unde
     const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
     if (matchedUrlPart) {
       returnUrl += `/${matchedUrlPart}`;
-    } else {
-      if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
-        returnUrl += `/${urlPart}`;
-      }
+    } else if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+      returnUrl += `/${urlPart}`;
     }
   }
   if (returnUrl) {
