@@ -40,7 +40,7 @@ export default class StringUtils {
     if (this.isBlank(text) || this.isBlank(oldValue) || this.isBlank(newValue) || !text.includes(oldValue)) {
       return text;
     }
-    return text.replace(oldValue, newValue);
+    return text.replace(new RegExp(`(${oldValue})|(${oldValue})`), newValue);
   }
 
   /**
@@ -49,7 +49,7 @@ export default class StringUtils {
    * @param valueToRemove value to be removed from the text
    */
   public static removeFirstOccurrence(text: string, valueToRemove: string): string {
-    if (this.isBlank(text) || this.isBlank(valueToRemove) || text.indexOf(valueToRemove) === -1) {
+    if (this.isBlank(text) || this.isBlank(valueToRemove) || !text.includes(valueToRemove)) {
       return text;
     }
     const e = new RegExp(`(${valueToRemove})|(${valueToRemove})`);
