@@ -33,15 +33,16 @@ export default class UrlUtils {
    *                  name of the parameter, equals sign and value of the parameter.
    */
   public static removeParameterFromUrl(url: string, parameter: string): string {
-    if (StringUtils.isBlank(url) || StringUtils.isBlank(parameter)) {
+    if (
+      StringUtils.isBlank(url) ||
+      StringUtils.isBlank(parameter) ||
+      !url.includes(DefaultValues.STRING_QUESTION_MARK)
+    ) {
       return url;
     }
-    if (url.indexOf(DefaultValues.STRING_QUESTION_MARK) === -1) {
-      return url;
-    }
-    if (url.indexOf(DefaultValues.STRING_QUESTION_MARK + parameter) !== -1) {
+    if (url.includes(DefaultValues.STRING_QUESTION_MARK + parameter)) {
       url = url.replace(DefaultValues.STRING_QUESTION_MARK + parameter, DefaultValues.STRING_EMPTY);
-      if (url.indexOf(DefaultValues.STRING_AMPERSAND) !== -1) {
+      if (url.includes(DefaultValues.STRING_AMPERSAND)) {
         url = StringUtils.replaceFirstOccurrence(
           url,
           DefaultValues.STRING_AMPERSAND,
@@ -49,7 +50,7 @@ export default class UrlUtils {
         );
       }
     }
-    if (url.indexOf(DefaultValues.STRING_AMPERSAND + parameter) !== -1) {
+    if (url.includes(DefaultValues.STRING_AMPERSAND + parameter)) {
       url = StringUtils.removeFirstOccurrence(url, DefaultValues.STRING_AMPERSAND + parameter);
     }
     return url;
