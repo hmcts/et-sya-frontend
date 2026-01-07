@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 
 import { UserDetails } from '../definitions/appRequest';
 import { CITIZEN_ROLE } from '../definitions/constants';
+import { axiosErrorDetails } from '../services/AxiosErrorAdapter';
 
 export const getRedirectUrl = (
   serviceUrl: string,
@@ -34,17 +35,21 @@ export const getUserDetails = async (
     'Content-Type': 'application/x-www-form-urlencoded',
   };
 
-  const response = await axios.post(tokenUrl, data, { headers });
-  const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
+  try {
+    const response = await axios.post(tokenUrl, data, { headers });
+    const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
 
-  return {
-    accessToken: response.data.access_token,
-    id: jwt.uid,
-    email: jwt.sub,
-    givenName: jwt.given_name,
-    familyName: jwt.family_name,
-    isCitizen: jwt.roles ? jwt.roles.includes(CITIZEN_ROLE) : false,
-  };
+    return {
+      accessToken: response.data.access_token,
+      id: jwt.uid,
+      email: jwt.sub,
+      givenName: jwt.given_name,
+      familyName: jwt.family_name,
+      isCitizen: jwt.roles ? jwt.roles.includes(CITIZEN_ROLE) : false,
+    };
+  } catch (error) {
+    throw new Error('Error getting user details from IDAM: ' + axiosErrorDetails(error));
+  }
 };
 
 export interface IdTokenJwtPayload {
