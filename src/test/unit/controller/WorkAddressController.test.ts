@@ -28,7 +28,7 @@ describe('Update Work Address Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.WORK_ADDRESS, expect.anything());
   });
 
-  it('should redirect to acas cert num page when yes is selected', () => {
+  it('should redirect to acas cert num page when yes is selected', async () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.YES };
 
     const controller = new WorkAddressController();
@@ -37,14 +37,14 @@ describe('Update Work Address Controller', () => {
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
     // TODO Test respondent address is copied to work address
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('Yes');
   });
 
-  it('should redirect to place of work page when no is selected', () => {
+  it('should redirect to place of work page when no is selected', async () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO };
 
     const controller = new WorkAddressController();
@@ -53,13 +53,13 @@ describe('Update Work Address Controller', () => {
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/work-postcode-enter');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
 
-  it('should redirect WORK_POSTCODE_ENTER when returnUrl is cya and yes is selected', () => {
+  it('should redirect WORK_POSTCODE_ENTER when returnUrl is cya and yes is selected', async () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.YES };
 
     const controller = new WorkAddressController();
@@ -69,12 +69,12 @@ describe('Update Work Address Controller', () => {
     req.session.userCase = userCaseWithRespondent;
     req.session.returnUrl = PageUrls.CHECK_ANSWERS;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/check-your-answers');
   });
 
-  it('should redirect CHECK_ANSWERS when returnUrl is cya and no is selected', () => {
+  it('should redirect CHECK_ANSWERS when returnUrl is cya and no is selected', async () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO };
 
     const controller = new WorkAddressController();
@@ -84,12 +84,12 @@ describe('Update Work Address Controller', () => {
     req.session.userCase = userCaseWithRespondent;
     req.session.returnUrl = PageUrls.CHECK_ANSWERS;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/work-postcode-enter');
   });
 
-  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
+  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', async () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO, saveForLater: true };
 
     const controller = new WorkAddressController();
@@ -98,12 +98,12 @@ describe('Update Work Address Controller', () => {
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', () => {
+  it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', async () => {
     const body = { saveForLater: true };
 
     const controller = new WorkAddressController();
@@ -112,12 +112,12 @@ describe('Update Work Address Controller', () => {
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it('should redirect to undefined when save as draft not clicked and no answer selected', () => {
+  it('should redirect to undefined when save as draft not clicked and no answer selected', async () => {
     const body = { saveForLater: false };
 
     const controller = new WorkAddressController();
@@ -126,13 +126,13 @@ describe('Update Work Address Controller', () => {
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(undefined);
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
 
-  it('should redirect to undefined when save as draft not selected and no answer', () => {
+  it('should redirect to undefined when save as draft not selected and no answer', async () => {
     const body = {};
 
     const controller = new WorkAddressController();
@@ -141,9 +141,19 @@ describe('Update Work Address Controller', () => {
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
+  });
+
+  it('should add work address question answer to the session userCase', async () => {
+    const body = { claimantWorkAddressQuestion: YesOrNo.NO };
+    const controller = new WorkAddressController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
 
@@ -158,18 +168,8 @@ describe('Update Work Address Controller', () => {
     });
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
-    expect(function () {
-      controller.post(req, res);
+    expect(async function () {
+      await controller.post(req, res);
     }).toThrow(err);
-  });
-
-  it('should add work address question answer to the session userCase', () => {
-    const body = { claimantWorkAddressQuestion: YesOrNo.NO };
-    const controller = new WorkAddressController();
-    const req = mockRequest({ body });
-    const res = mockResponse();
-
-    controller.post(req, res);
-    expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
 });

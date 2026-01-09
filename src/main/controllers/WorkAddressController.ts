@@ -35,12 +35,11 @@ export default class WorkAddressController {
     this.form = new Form(<FormFields>this.workAddressFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { saveForLater } = req.body;
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
-      handleUpdateDraftCase(req, logger);
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       let redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
@@ -49,10 +48,17 @@ export default class WorkAddressController {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
+      const isCya = isReturnUrlIsCheckAnswers(req);
+
+      await handleUpdateDraftCase(req, logger);
+
       if (saveForLater) {
         redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
         return res.redirect(redirectUrl);
-      } else if (isReturnUrlIsCheckAnswers(req) && !isRespondentAndWorkAddressSame) {
+      } else if (isCya) {
+        if (isRespondentAndWorkAddressSame) {
+          redirectUrl = PageUrls.CHECK_ANSWERS;
+        }
         redirectUrl = setUrlLanguage(req, redirectUrl);
         return res.redirect(redirectUrl);
       } else {
