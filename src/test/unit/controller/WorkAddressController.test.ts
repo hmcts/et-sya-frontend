@@ -40,8 +40,13 @@ describe('Update Work Address Controller', () => {
     await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
-    // TODO Test respondent address is copied to work address
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('Yes');
+    const respondent = req.session.userCase.respondents[0];
+    expect(req.session.userCase.workAddress1).toEqual(respondent.respondentAddress1);
+    expect(req.session.userCase.workAddress2).toEqual(respondent.respondentAddress2);
+    expect(req.session.userCase.workAddressTown).toEqual(respondent.respondentAddressTown);
+    expect(req.session.userCase.workAddressCountry).toEqual(respondent.respondentAddressCountry);
+    expect(req.session.userCase.workAddressPostcode).toEqual(respondent.respondentAddressPostcode);
   });
 
   it('should redirect to place of work page when no is selected', async () => {
@@ -157,7 +162,7 @@ describe('Update Work Address Controller', () => {
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
 
-  it('should throw error, when session errors exists and unable to save session', () => {
+  it('should throw error, when session errors exists and unable to save session', async () => {
     const body = { saveForLater: false };
 
     const controller = new WorkAddressController();
@@ -168,8 +173,7 @@ describe('Update Work Address Controller', () => {
     });
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
-    expect(async function () {
-      await controller.post(req, res);
-    }).toThrow(err);
+
+    await expect(controller.post(req, res)).rejects.toThrow(err);
   });
 });
