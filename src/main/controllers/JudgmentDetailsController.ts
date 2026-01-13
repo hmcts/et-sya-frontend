@@ -60,14 +60,9 @@ export default class JudgmentDetailsController {
       if (selectedDecision.value?.decisionState !== HubLinkStatus.VIEWED) {
         await updateDecisionState(selectedDecisionApplication.id, selectedDecision, req, logger);
       }
-      const accessToken = req.session.user?.accessToken;
-
       let selectedApplicationDocDownloadLink;
       try {
-        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
-          selectedDecisionApplication,
-          accessToken
-        );
+        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(selectedDecisionApplication);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
@@ -75,7 +70,7 @@ export default class JudgmentDetailsController {
 
       let responseDocDownloadLink;
       try {
-        responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, accessToken);
+        responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
@@ -85,7 +80,7 @@ export default class JudgmentDetailsController {
 
       let decisionAttachments;
       try {
-        decisionAttachments = await getDecisionAttachments(selectedDecision, req);
+        decisionAttachments = await getDecisionAttachments(selectedDecision);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
@@ -112,7 +107,7 @@ export default class JudgmentDetailsController {
 
       let judgmentAttachments;
       try {
-        judgmentAttachments = await getJudgmentAttachments(selectedJudgment, req);
+        judgmentAttachments = await getJudgmentAttachments(selectedJudgment);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);

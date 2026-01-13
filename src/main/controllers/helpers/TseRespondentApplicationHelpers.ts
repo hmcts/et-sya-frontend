@@ -13,7 +13,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
 import { retrieveCurrentLocale } from './ApplicationTableRecordTranslationHelper';
 import { clearTseFields } from './CaseHelpers';
-import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
+import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -113,10 +113,7 @@ export const setSelectedTseApplication = (
   }
 };
 
-export const getResponseDocDownloadLink = async (
-  selectedApplication: GenericTseApplicationTypeItem,
-  accessToken: string
-): Promise<string> => {
+export const getResponseDocDownloadLink = (selectedApplication: GenericTseApplicationTypeItem): string => {
   const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
   if (!selectedApplicationRespondCollection?.length) {
     return '';
@@ -128,28 +125,22 @@ export const getResponseDocDownloadLink = async (
     return '';
   }
 
-  await populateDocumentMetadata(responseDoc, accessToken);
   return createDownloadLink(responseDoc);
 };
 
-export const getApplicationDocDownloadLink = async (
-  selectedApplication: GenericTseApplicationTypeItem,
-  accessToken: string
-): Promise<string> => {
+export const getApplicationDocDownloadLink = (selectedApplication: GenericTseApplicationTypeItem): string => {
   const applicationDocDownload = selectedApplication?.value?.documentUpload;
 
   if (!applicationDocDownload) {
     return '';
   }
 
-  await populateDocumentMetadata(applicationDocDownload, accessToken);
   return createDownloadLink(applicationDocDownload);
 };
 
 export const getDecisionContent = async (
   selectedApplication: GenericTseApplicationTypeItem,
-  translations: AnyRecord,
-  accessToken: string
+  translations: AnyRecord
 ): Promise<any[] | void> => {
   const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
   let decisionContent = undefined;
@@ -159,7 +150,6 @@ export const getDecisionContent = async (
   if (decisionDocDownload.length > 0) {
     for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
       if (decisionDocDownload[i]) {
-        await populateDocumentMetadata(decisionDocDownload[i], accessToken);
         decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
       }
     }

@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
+import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { handlePost } from './helpers/RespondToApplicationHelper';
@@ -76,14 +76,6 @@ export default class RespondToApplicationController {
     const applicant = translations[selectedApplication.value.applicant];
     const document = selectedApplication.value?.documentUpload;
 
-    if (document) {
-      try {
-        await populateDocumentMetadata(document, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect('/not-found');
-      }
-    }
     const downloadLink = createDownloadLink(document);
 
     const content = getPageContent(req, this.respondToApplicationContent, [

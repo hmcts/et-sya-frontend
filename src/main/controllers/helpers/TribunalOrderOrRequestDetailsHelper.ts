@@ -364,8 +364,7 @@ const populateAdminResponse = async (
       value: {
         html: await getSupportingMaterialDownloadLink(
           response.value.respondNotificationUploadDocument?.find(element => element !== undefined).value
-            .uploadedDocument,
-          req.session.user?.accessToken
+            .uploadedDocument
         ),
       },
     },

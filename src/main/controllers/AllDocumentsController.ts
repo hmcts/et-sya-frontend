@@ -9,7 +9,7 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { compareUploadDates } from './helpers/AllDocumentsHelper';
-import { createDownloadLink, getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
+import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -38,13 +38,14 @@ export default class AllDocumentsController {
     const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
     const allDocs = [...docCollection, ...bundleDocuments];
     if (allDocs?.length) {
-      try {
-        await getDocumentsAdditionalInformation(allDocs, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        res.redirect('/not-found');
-      }
-      allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+      allDocs.forEach(it => {
+        // Set shortDescription if not already set
+        if (!it.value?.shortDescription && it.value?.typeOfDocument) {
+          it.value.shortDescription = it.value.typeOfDocument;
+        }
+        // Create download link (no longer needs size/mime type)
+        it.downloadLink = createDownloadLink(it.value.uploadedDocument);
+      });
     }
     const allDocsSorted: DocumentTypeItem[] = Array.from(allDocs).sort(compareUploadDates);
     res.render(TranslationKeys.ALL_DOCUMENTS, {

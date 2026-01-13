@@ -34,8 +34,6 @@ export default class RespondentApplicationDetailsController {
     );
     setSelectedTseApplication(req, userCase, selectedApplication);
 
-    const accessToken = req.session.user?.accessToken;
-
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
@@ -50,7 +48,7 @@ export default class RespondentApplicationDetailsController {
     }
     let decisionContent;
     try {
-      decisionContent = await getDecisionContent(selectedApplication, translations, accessToken);
+      decisionContent = await getDecisionContent(selectedApplication, translations);
     } catch (e) {
       logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
@@ -65,7 +63,7 @@ export default class RespondentApplicationDetailsController {
 
     let supportingMaterialDownloadLink;
     try {
-      supportingMaterialDownloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
+      supportingMaterialDownloadLink = await getApplicationDocDownloadLink(selectedApplication);
     } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
