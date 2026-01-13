@@ -5,8 +5,10 @@ import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
+import { getCaseApi } from '../services/CaseService';
 
 import { compareUploadDates } from './helpers/AllDocumentsHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
@@ -37,15 +39,28 @@ export default class AllDocumentsController {
     const docCollection = userCase.documentCollection?.length ? userCase.documentCollection : [];
     const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
     const allDocs = [...docCollection, ...bundleDocuments];
+
     if (allDocs?.length) {
-      allDocs.forEach(it => {
-        // Set shortDescription if not already set
-        if (!it.value?.shortDescription && it.value?.typeOfDocument) {
-          it.value.shortDescription = it.value.typeOfDocument;
-        }
-        // Create download link (no longer needs size/mime type)
-        it.downloadLink = createDownloadLink(it.value.uploadedDocument);
-      });
+      const caseApi = getCaseApi(req.session.user?.accessToken);
+
+      await Promise.all(
+        allDocs.map(async it => {
+          if (!it.value?.shortDescription && it.value?.typeOfDocument) {
+            it.value.shortDescription = it.value.typeOfDocument;
+          }
+          it.downloadLink = createDownloadLink(it.value.uploadedDocument);
+
+          try {
+            const docId = getDocId(it.value.uploadedDocument.document_url);
+            const docDetails = await caseApi.getDocumentDetails(docId);
+            it.value.uploadedDocument.createdOn = new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'long',
+            }).format(new Date(docDetails.data.createdOn));
+          } catch (err) {
+            logger.error(`Failed to fetch metadata for document: ${err.message}`);
+          }
+        })
+      );
     }
     const allDocsSorted: DocumentTypeItem[] = Array.from(allDocs).sort(compareUploadDates);
     res.render(TranslationKeys.ALL_DOCUMENTS, {

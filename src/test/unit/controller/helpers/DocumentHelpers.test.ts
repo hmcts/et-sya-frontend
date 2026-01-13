@@ -8,7 +8,6 @@ import {
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
-  getDocumentsAdditionalInformation,
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
@@ -19,7 +18,6 @@ import {
   populateDocumentMetadata,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
-import { DocumentType, DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { DecisionAndApplicationDetails, DocumentDetail } from '../../../../main/definitions/definition';
@@ -290,13 +288,11 @@ it('should return empty string if document filename or url is missing', () => {
   expect(createDownloadLink(docWithoutUrl)).toStrictEqual('');
 });
 
-it('should update document size and mime type values', async () => {
+it('should update document createdOn value', async () => {
   const doc: Document = {
     document_url: 'test.url',
     document_filename: 'test.pdf',
     document_binary_url: 'test.binary.url',
-    document_size: undefined,
-    document_mime_type: undefined,
   };
   const testRawId = 'http://test/qweqweqw-qweqweqwe';
 
@@ -307,8 +303,7 @@ it('should update document size and mime type values', async () => {
 
   const modifiedDoc = await populateDocumentMetadata(doc, testRawId);
 
-  expect(modifiedDoc.document_size).toEqual(10575);
-  expect(modifiedDoc.document_mime_type).toEqual('pdf');
+  expect(modifiedDoc.createdOn).toEqual('8 September 2022');
 });
 
 it('should combine user case documents correctly', () => {
@@ -946,49 +941,5 @@ describe('getRequestResponseDocId', () => {
 
     const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
     expect(result).toBeFalsy();
-  });
-});
-
-describe('get documents additional information tests', () => {
-  const uploadedDocumentConstant: Document = {
-    document_url: 'test.url',
-    document_filename: 'test.pdf',
-    document_binary_url: 'test.binary.url',
-    document_size: undefined,
-    document_mime_type: undefined,
-  };
-  const documentTypeConstantWithShortDescription: DocumentType = {
-    uploadedDocument: uploadedDocumentConstant,
-    typeOfDocument: 'testType',
-    shortDescription: 'testShortDescription',
-    creationDate: 'testCreationDate',
-  };
-
-  const documentTypeConstantWithoutShortDescription: DocumentType = {
-    uploadedDocument: uploadedDocumentConstant,
-    typeOfDocument: 'testType',
-    creationDate: 'testCreationDate',
-  };
-
-  const documentTypeItem1: DocumentTypeItem = {
-    id: '1',
-    value: documentTypeConstantWithShortDescription,
-  };
-
-  const documentTypeItem2: DocumentTypeItem = {
-    id: '1',
-    value: documentTypeConstantWithoutShortDescription,
-  };
-
-  const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
-  const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-  getCaseApiClientMock.mockReturnValue(caseApi);
-  caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
-
-  it('should return additional information of the document for the given document type item', async () => {
-    const docList: DocumentTypeItem[] = [documentTypeItem1, documentTypeItem2];
-    await getDocumentsAdditionalInformation(docList, 'accToken');
-    expect(docList[0].value.shortDescription).toStrictEqual('testShortDescription');
-    expect(docList[1].value.shortDescription).toStrictEqual('testType');
   });
 });

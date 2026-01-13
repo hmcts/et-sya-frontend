@@ -2,7 +2,6 @@ import { AxiosResponse } from 'axios';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document } from '../../definitions/case';
-import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
@@ -13,47 +12,56 @@ import { getDocId } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
-  for await (const document of documents) {
-    const docDetails = await getCaseApi(accessToken).getDocumentDetails(document.id);
-    const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
-    const retrievedValues = {
-      size: (size / 1000000).toFixed(3),
-      mimeType,
-      originalDocumentName,
-      createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
-      description: document.description,
-    };
-    Object.assign(
-      documents.find(doc => doc.id === document.id),
-      retrievedValues
-    );
+  if (!documents?.length) {
+    return;
   }
+
+  // Reuse single CaseApi instance for all requests (more efficient)
+  const caseApi = getCaseApi(accessToken);
+
+  // Fetch all documents in parallel for better performance
+  const detailsPromises = documents.map(async document => {
+    try {
+      const docDetails = await caseApi.getDocumentDetails(document.id);
+      const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
+      return {
+        id: document.id,
+        retrievedValues: {
+          size: (size / 1000000).toFixed(3),
+          mimeType,
+          originalDocumentName,
+          createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
+          description: document.description,
+        },
+      };
+    } catch (error) {
+      console.error(`Failed to fetch details for document ${document.id}:`, error);
+      return { id: document.id, retrievedValues: null };
+    }
+  });
+
+  const results = await Promise.all(detailsPromises);
+
+  results.forEach(({ id, retrievedValues }) => {
+    if (retrievedValues) {
+      Object.assign(
+        documents.find(doc => doc.id === id),
+        retrievedValues
+      );
+    }
+  });
 };
 
 export const populateDocumentMetadata = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
-  const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
-  const { createdOn, size, mimeType } = docDetails.data;
+  // Reuse CaseApi instance - caller should batch multiple calls
+  const caseApi = getCaseApi(accessToken);
+  const docDetails = await caseApi.getDocumentDetails(docId);
+  const { createdOn } = docDetails.data;
   doc.createdOn = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'long',
   }).format(new Date(createdOn));
-  doc.document_mime_type = mimeType;
-  doc.document_size = size;
   return doc;
-};
-
-export const getDocumentsAdditionalInformation = async (
-  documents: DocumentTypeItem[],
-  accessToken: string
-): Promise<void> => {
-  if (documents?.length) {
-    for (const doc of documents) {
-      await populateDocumentMetadata(doc.value.uploadedDocument, accessToken);
-      if (!doc.value?.shortDescription && doc.value?.typeOfDocument) {
-        doc.value.shortDescription = doc.value.typeOfDocument;
-      }
-    }
-  }
 };
 
 // merge arrays but make sure they are not undefined
