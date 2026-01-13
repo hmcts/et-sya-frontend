@@ -15,6 +15,7 @@ export class PropertiesVolume {
       this.setSecret('secrets.et.os-places-token', 'services.addressLookup.token');
       this.setSecret('secrets.et.pcq-token-key', 'services.pcq.token');
       this.setSecret('secrets.et.launch-darkly-sdk-key', 'services.launchDarkly.key');
+      this.setSecret('secrets.et.csrf-token-secret', 'csrf.secret');
     }
   }
 
