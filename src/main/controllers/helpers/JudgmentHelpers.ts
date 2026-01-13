@@ -50,9 +50,7 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
   }
 };
 
-export const getJudgmentAttachments = async (
-  selectedJudgment: SendNotificationTypeItem
-): Promise<DocumentTypeItem[]> => {
+export const getJudgmentAttachments = (selectedJudgment: SendNotificationTypeItem): DocumentTypeItem[] => {
   const judgmentAttachments = [];
   if (selectedJudgment?.value?.sendNotificationUploadDocument) {
     for (let i = 0; i < selectedJudgment?.value?.sendNotificationUploadDocument?.length; i++) {
@@ -74,7 +72,7 @@ export const getJudgmentAttachments = async (
   return judgmentAttachments;
 };
 
-export const getDecisionAttachments = async (selectedDecision: TseAdminDecisionItem): Promise<DocumentTypeItem[]> => {
+export const getDecisionAttachments = (selectedDecision: TseAdminDecisionItem): DocumentTypeItem[] => {
   const decisionAttachments = [];
   for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
     if (selectedDecision?.value?.responseRequiredDoc[i]?.value?.uploadedDocument) {

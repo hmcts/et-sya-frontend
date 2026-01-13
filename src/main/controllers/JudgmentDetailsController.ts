@@ -62,7 +62,7 @@ export default class JudgmentDetailsController {
       }
       let selectedApplicationDocDownloadLink;
       try {
-        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(selectedDecisionApplication);
+        selectedApplicationDocDownloadLink = getApplicationDocDownloadLink(selectedDecisionApplication);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
@@ -70,7 +70,7 @@ export default class JudgmentDetailsController {
 
       let responseDocDownloadLink;
       try {
-        responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication);
+        responseDocDownloadLink = getResponseDocDownloadLink(selectedDecisionApplication);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
@@ -80,7 +80,7 @@ export default class JudgmentDetailsController {
 
       let decisionAttachments;
       try {
-        decisionAttachments = await getDecisionAttachments(selectedDecision);
+        decisionAttachments = getDecisionAttachments(selectedDecision);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
@@ -107,7 +107,7 @@ export default class JudgmentDetailsController {
 
       let judgmentAttachments;
       try {
-        judgmentAttachments = await getJudgmentAttachments(selectedJudgment);
+        judgmentAttachments = getJudgmentAttachments(selectedJudgment);
       } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);

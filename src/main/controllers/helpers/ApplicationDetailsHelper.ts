@@ -269,7 +269,7 @@ export const addNonAdminResponse = async (
   accessToken: string,
   responseDate: string
 ): Promise<any> => {
-  const supportingMaterial = await getSupportingMaterialDownloadLink(
+  const supportingMaterial = getSupportingMaterialDownloadLink(
     response.value.supportingMaterial?.find(e => e).value.uploadedDocument
   );
 

@@ -63,7 +63,7 @@ export default class RespondentApplicationDetailsController {
 
     let supportingMaterialDownloadLink;
     try {
-      supportingMaterialDownloadLink = await getApplicationDocDownloadLink(selectedApplication);
+      supportingMaterialDownloadLink = getApplicationDocDownloadLink(selectedApplication);
     } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
