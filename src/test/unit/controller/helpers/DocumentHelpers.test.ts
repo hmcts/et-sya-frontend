@@ -263,18 +263,31 @@ it('should combine documents correctly', () => {
   ]);
 });
 
-it('should create proper download link for TSE CYA', () => {
+it('should create download link with just filename (no size or type)', () => {
   const doc: Document = {
     document_url: 'uuid',
     document_filename: 'test.pdf',
     document_binary_url: '',
-    document_size: 1000,
-    document_mime_type: 'pdf',
   };
-  const mockLink =
-    "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>";
+  const mockLink = "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf</a>";
   const createdLink = createDownloadLink(doc);
   expect(mockLink).toStrictEqual(createdLink);
+});
+
+it('should return empty string if document filename or url is missing', () => {
+  const docWithoutFilename: Document = {
+    document_url: 'uuid',
+    document_filename: '',
+    document_binary_url: '',
+  };
+  expect(createDownloadLink(docWithoutFilename)).toStrictEqual('');
+
+  const docWithoutUrl: Document = {
+    document_url: '',
+    document_filename: 'test.pdf',
+    document_binary_url: '',
+  };
+  expect(createDownloadLink(docWithoutUrl)).toStrictEqual('');
 });
 
 it('should update document size and mime type values', async () => {

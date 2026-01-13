@@ -222,13 +222,6 @@ $lightgrey-panel: #d3d3d3;
   text-transform: none;
 }
 
-.scrollableTable {
-  .govuk-table {
-    display: block;
-    overflow-x: auto;
-  }
-}
-
 @media (min-width: 48.0625em) {
   .govuk-header__logo {
     width: fit-content;
