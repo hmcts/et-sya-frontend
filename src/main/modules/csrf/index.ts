@@ -25,6 +25,10 @@ export default class CSRFToken {
     // Middleware to generate and store CSRF token for all requests
     app.use((req: AppRequest, res, next) => {
       if (req.session) {
+        // Ensure session is initialized by touching it
+        if (!req.session.csrfInitialized) {
+          req.session.csrfInitialized = true;
+        }
         res.locals.csrfToken = generateCsrfToken(req, res);
       }
       next();
