@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { FormSubmissionCheck } from '../decorators/FormSubmissionCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import applications, { applicationTypes } from '../definitions/contact-applications';
@@ -11,6 +12,7 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
+import { ContactTheTribunalHelper } from './helpers/ContactTheTribunalHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -66,6 +68,7 @@ export default class ContactTheTribunalSelectedController {
     this.form = new Form(<FormFields>this.contactApplicationContent.fields);
   }
 
+  @FormSubmissionCheck()
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.body.url) {
       logger.warn('Potential bot activity detected from IP: ' + req.ip);
@@ -138,6 +141,7 @@ export default class ContactTheTribunalSelectedController {
     return res.redirect(redirectUrl);
   };
 
+  @FormSubmissionCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);
@@ -149,7 +153,7 @@ export default class ContactTheTribunalSelectedController {
       return;
     }
 
-    if (req.session.userCase.claimantRepresentative !== undefined) {
+    if (ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(req.session.userCase)) {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 

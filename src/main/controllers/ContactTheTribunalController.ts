@@ -1,13 +1,13 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
+import { ContactTheTribunalHelper } from './helpers/ContactTheTribunalHelper';
 import { createRadioBtnsForHearings, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -19,8 +19,14 @@ export default class ContactTheTribunalController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const DOCUMENTS = 'documents';
-    const claimantRepresented = req.session.userCase.claimantRepresentedQuestion;
+    const claimantRepresentedByOrganisation = ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(
+      req.session.userCase
+    );
     const { userCase } = req.session;
+
+    // Set flag to indicate user has visited the selection page
+    // This allows FormSubmissionCheck to verify proper flow
+    req.session.visitedContactTribunalSelection = true;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -35,7 +41,7 @@ export default class ContactTheTribunalController {
       userCase.hearingCollection?.length &&
       createRadioBtnsForHearings(userCase.hearingCollection)?.length;
 
-    if (claimantRepresented === YesOrNo.NO || claimantRepresented === undefined) {
+    if (!claimantRepresentedByOrganisation) {
       if (!allowBundlesFlow) {
         applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
       } else {
@@ -71,7 +77,7 @@ export default class ContactTheTribunalController {
       ...content,
       hideContactUs: true,
       applicationsAccordionItems,
-      claimantRepresented,
+      claimantRepresentedByOrganisation,
       welshEnabled,
     });
   }

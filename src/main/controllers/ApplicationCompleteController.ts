@@ -9,6 +9,9 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ApplicationCompleteController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    // Clear flag so user can start new applications
+    req.session.visitedContactTribunalSelection = false;
+
     const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
     const languageParam = getLanguageParam(req.url);

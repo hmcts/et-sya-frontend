@@ -222,6 +222,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     caseStayed: fromApiCaseData?.case_data?.batchCaseStayed,
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
+    claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
   };
 }
 
@@ -539,7 +540,7 @@ export const getFileExtension = (fileName: string): string => {
 
 const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   if (caseData?.respondentCollection) {
-    return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
+    return caseData.respondentCollection.some(r => r.value?.responseReceived === YesOrNo.YES);
   }
 
   return false;

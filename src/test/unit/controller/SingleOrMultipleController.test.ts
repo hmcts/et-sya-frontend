@@ -1,6 +1,6 @@
 import SingleOrMultipleController from '../../../main/controllers/SingleOrMultipleController';
 import { CaseType } from '../../../main/definitions/case';
-import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -40,7 +40,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
+    expect(res.redirect).toHaveBeenCalledWith('https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number');
   });
 
   it('should render same page if nothing selected', () => {

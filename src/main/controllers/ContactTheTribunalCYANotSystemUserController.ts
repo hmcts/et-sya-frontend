@@ -41,6 +41,7 @@ export default class ContactTheTribunalCYANotSystemUserController {
 
     const welshEnabled = await getFlagValue('welsh-language', null);
 
+    logger.info('Retrieve translation label for contactApplicationType for caseId: ' + userCase?.id);
     const cyaContent = getCyaContent(
       userCase,
       translations,
