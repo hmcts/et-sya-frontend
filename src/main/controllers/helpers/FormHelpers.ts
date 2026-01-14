@@ -114,7 +114,7 @@ export const createLabelForHearing = (hearing: HearingModel): string => {
   // hearings can have multiple dates set so
   // reduce to find the earliest date set for that particular hearing
   const hearingsInFuture = hearing.value.hearingDateCollection.filter(
-    item => new Date(item.value.listedDate) > new Date()
+    item => new Date(item.value.listedDate) > new Date() && item.value.Hearing_status === 'Listed'
   );
 
   if (!hearingsInFuture.length) {
