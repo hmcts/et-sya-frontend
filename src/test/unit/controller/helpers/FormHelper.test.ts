@@ -195,8 +195,6 @@ describe('createRadioBtnsForHearings - create radio buttons for selecting a hear
             selectedCode: 'Field House',
             selectedLabel: 'Field House',
           },
-          hearingTimingStart: new Date('2023-11-13T11:00:00.000'),
-          hearingTimingFinish: new Date('2023-11-13T11:00:00.000'),
         },
       });
       const label = createLabelForHearing(collection[0]);
