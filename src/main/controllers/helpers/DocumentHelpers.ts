@@ -11,7 +11,11 @@ import { DocumentDetail } from '../../definitions/definition';
 import { getDocId } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
-export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
+export const getDocumentDetails = async (
+  documents: DocumentDetail[],
+  submissionReference: string,
+  accessToken: string
+): Promise<void> => {
   if (!documents?.length) {
     return;
   }
@@ -35,7 +39,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
         },
       };
     } catch (error) {
-      console.error(`Failed to fetch details for document ${document.id}:`, error);
+      console.error(`Error for: ${submissionReference} - failed to fetch details for document ${document.id}:`, error);
       return { id: document.id, retrievedValues: null };
     }
   });

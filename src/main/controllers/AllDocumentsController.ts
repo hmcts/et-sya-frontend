@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
-import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
+import { DefaultValues, FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
@@ -50,14 +50,20 @@ export default class AllDocumentsController {
           }
           it.downloadLink = createDownloadLink(it.value.uploadedDocument);
 
+          const dateOfCorrespondence = it.value.dateOfCorrespondence;
+          const uploadedDocument = it.value.uploadedDocument;
+
           try {
-            const docId = getDocId(it.value.uploadedDocument.document_url);
-            const docDetails = await caseApi.getDocumentDetails(docId);
-            it.value.uploadedDocument.createdOn = new Intl.DateTimeFormat('en-GB', {
-              dateStyle: 'long',
-            }).format(new Date(docDetails.data.createdOn));
+            const createdOnDate = dateOfCorrespondence
+              ? new Date(dateOfCorrespondence)
+              : new Date((await caseApi.getDocumentDetails(getDocId(uploadedDocument.document_url))).data.createdOn);
+
+            uploadedDocument.createdOn = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(createdOnDate);
           } catch (err) {
-            logger.error(`Failed to fetch metadata for document: ${err.message}`);
+            uploadedDocument.createdOn = DefaultValues.STRING_DASH;
+            logger.error(
+              `Error for: ${userCase.ethosCaseReference} - failed to fetch metadata for document: ${userCase.ethosCaseReference} ${err.message}`
+            );
           }
         })
       );
