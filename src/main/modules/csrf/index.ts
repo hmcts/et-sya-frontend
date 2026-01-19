@@ -15,9 +15,17 @@ const { invalidCsrfTokenError, doubleCsrfProtection, generateCsrfToken } = doubl
     return (req as AppRequest).sessionID || 'no-session';
   },
   getCsrfTokenFromRequest: (req: Request) => {
-    return (req.body as Record<string, unknown>)?._csrf as string | undefined;
+    // Check body first (for regular form posts and after Multer parsing)
+    const bodyToken = (req.body as Record<string, unknown>)?._csrf as string | undefined;
+    if (bodyToken) {
+      return bodyToken;
+    }
+    // Check headers as fallback
+
+    return req.headers['x-csrf-token'] as string | undefined;
   },
   size: 64,
+  ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
 });
 
 export default class CSRFToken {
@@ -25,17 +33,43 @@ export default class CSRFToken {
     // Middleware to generate and store CSRF token for all requests
     app.use((req: AppRequest, res, next) => {
       if (req.session) {
-        // Ensure session is initialized by touching it
-        if (!req.session.csrfInitialized) {
-          req.session.csrfInitialized = true;
+        try {
+          // Ensure session is initialized by touching it
+          if (!req.session.csrfInitialized) {
+            req.session.csrfInitialized = true;
+          }
+          res.locals.csrfToken = generateCsrfToken(req, res);
+        } catch (error) {
+          logger.error('Failed to generate CSRF token:', error);
+          // Continue without CSRF token - protection will be skipped for this request
         }
-        res.locals.csrfToken = generateCsrfToken(req, res);
       }
       next();
     });
 
     // Apply CSRF protection to POST/PUT/DELETE/PATCH requests
-    app.use(doubleCsrfProtection);
+    // Skip routes with file uploads - they will apply CSRF after Multer parses the body
+    app.use((req: AppRequest, res, next) => {
+      // Skip CSRF if disabled (e.g., in tests)
+      if (req.app.locals.CSRF_DISABLED) {
+        return next();
+      }
+
+      // Skip CSRF validation for multipart/form-data routes
+      // These routes will apply CSRF protection after Multer middleware
+      const skipCsrfPaths = [
+        '/describe-what-happened',
+        '/tribunal-contact-selected',
+        '/respondent-supporting-material',
+        '/hearing-document-upload',
+      ];
+
+      if (skipCsrfPaths.includes(req.path) && req.method !== 'GET') {
+        return next();
+      }
+
+      doubleCsrfProtection(req, res, next);
+    });
 
     // Error handler for CSRF validation failures
     app.use((error: Error | HTTPError, req: AppRequest, res: express.Response, next: NextFunction) => {
@@ -52,3 +86,12 @@ export default class CSRFToken {
     });
   }
 }
+
+// Export CSRF protection middleware for use after Multer in specific routes
+// This wrapper respects the CSRF_DISABLED flag for testing
+export const csrfProtection = (req: AppRequest, res: express.Response, next: NextFunction): void => {
+  if (req.app.locals.CSRF_DISABLED) {
+    return next();
+  }
+  doubleCsrfProtection(req, res, next);
+};
