@@ -61,9 +61,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
       req.session.userCase = fromApiFormat(response.data);
-      if (req.session.userCase.workEnterPostcode === undefined) {
-        req.session.userCase.workEnterPostcode = workEnterPostcode;
-      }
+      req.session.userCase.workEnterPostcode = workEnterPostcode;
       if (req.session.userCase.addressEnterPostcode === undefined) {
         req.session.userCase.addressEnterPostcode = addressEnterPostcode;
       }

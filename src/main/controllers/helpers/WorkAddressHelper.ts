@@ -5,6 +5,9 @@ import { PageUrls } from '../../definitions/constants';
 import { getRespondentRedirectUrl } from './RespondentHelpers';
 
 export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent): void => {
+  userCase.workEnterPostcode = undefined;
+  userCase.workAddresses = undefined;
+  userCase.workAddressTypes = undefined;
   userCase.workAddress1 = respondent.respondentAddress1;
   userCase.workAddress2 = respondent.respondentAddress2;
   userCase.workAddressTown = respondent.respondentAddressTown;
