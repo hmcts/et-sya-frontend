@@ -27,7 +27,7 @@
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell"> {{ iterator }} </td>
                       <td class="govuk-table__cell"> {{ doc.downloadLink | safe }} </td>
-                      <td class="govuk-table__cell"> {{ doc.value.shortDescription }} </td>
+                      <td class="govuk-table__cell"> {{ doc.value.documentType }} </td>
                       <td class="govuk-table__cell"> {{ doc.value.uploadedDocument.createdOn }} </td>
                       {% set iterator = iterator + 1 %}
                     </tr>

@@ -45,9 +45,6 @@ export default class AllDocumentsController {
 
       await Promise.all(
         allDocs.map(async it => {
-          if (!it.value?.shortDescription && it.value?.typeOfDocument) {
-            it.value.shortDescription = it.value.typeOfDocument;
-          }
           it.downloadLink = createDownloadLink(it.value.uploadedDocument);
 
           const dateOfCorrespondence = it.value.dateOfCorrespondence;
