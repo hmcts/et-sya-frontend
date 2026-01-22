@@ -19,7 +19,7 @@
         </thead>
         <tbody class="govuk-table__body">
         {% for app in tseGenericApps %}
-         {% if app.value.applicant === "Claimant" %}
+          {% if app.value.applicant === "Claimant" or app.value.applicant === "Claimant Representative" %}
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               {{ dateToLocale(app.value.date) }}

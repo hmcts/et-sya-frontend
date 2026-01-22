@@ -1,4 +1,6 @@
+import { OrganisationPolicy } from '../OrganisationPolicy';
 import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
+import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -76,6 +78,9 @@ export interface CaseData {
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   batchCaseStayed?: YesOrNo;
+  representativeClaimantType?: ClaimantRepresentative;
+  claimantRepresentativeRemoved?: YesOrNo;
+  claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
 }
 
 export type HearingBundleType = {
@@ -159,6 +164,7 @@ export interface DocumentApiModel {
   id: string;
   value: {
     typeOfDocument?: string;
+    documentType?: string;
     shortDescription?: string;
     uploadedDocument: {
       document_url: string;

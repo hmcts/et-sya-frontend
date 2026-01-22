@@ -15,6 +15,9 @@ src/main/public/js/lib/**/*.js
 src/main/public/stylesheets/lib/*
 src/main/resources/localhost-ssl
 
+playwright-report/
+test-results/
+
 node-rpm-packaging/
 mochawesome-report/
 npm-debug.log.*
@@ -41,3 +44,6 @@ src/test/end-to-end/functional-output/*
 !.yarn/versions
 
 .swc/*
+# stryker temp files
+.stryker-tmp
+/reports/*

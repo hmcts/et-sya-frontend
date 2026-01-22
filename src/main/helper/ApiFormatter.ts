@@ -30,6 +30,7 @@ import {
   AllDocumentTypeValue,
   AllDocumentTypes,
   CcdDataModel,
+  ET3_SUPPORTING,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
@@ -219,6 +220,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     multipleFlag: fromApiCaseData?.case_data?.multipleFlag,
     leadClaimant: fromApiCaseData?.case_data?.leadClaimant,
     caseStayed: fromApiCaseData?.case_data?.batchCaseStayed,
+    claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
+    claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
+    claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
   };
 }
 
@@ -512,12 +516,12 @@ export const setDocumentValues = (
   }
 
   const foundDocuments = documentCollection
-    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
+    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument) || docType.includes(doc.value.documentType))
     .map(doc => {
       return {
         id: getDocId(doc.value?.uploadedDocument?.document_url),
         description: !docType ? '' : doc.value?.shortDescription,
-        type: isEt3Supporting ? 'et3Supporting' : doc.value.typeOfDocument,
+        type: isEt3Supporting ? ET3_SUPPORTING : doc.value.typeOfDocument || doc.value.documentType,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;
@@ -536,7 +540,7 @@ export const getFileExtension = (fileName: string): string => {
 
 const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   if (caseData?.respondentCollection) {
-    return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
+    return caseData.respondentCollection.some(r => r.value?.responseReceived === YesOrNo.YES);
   }
 
   return false;

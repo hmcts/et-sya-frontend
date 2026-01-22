@@ -18,7 +18,7 @@ import {
   ResponseRequired,
 } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
-import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
@@ -120,10 +120,9 @@ export const getRedirectUrlForNotification = (
  * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
  */
 export const setNotificationBannerData = (
-  items: SendNotificationTypeItem[],
+  notifications: SendNotificationTypeItem[],
   url: string
 ): SendNotificationTypeItem[] => {
-  const notifications = filterSendNotifications(items);
   if (notifications?.length) {
     notifications.forEach(item => {
       const actionableNotification = isActionableNotification(item);
@@ -181,27 +180,28 @@ export const activateTribunalOrdersAndRequestsLink = async (
   items: SendNotificationTypeItem[],
   userCase: CaseWithId
 ): Promise<void> => {
-  if (!items?.length) {
-    return;
-  }
   let notices: SendNotificationTypeItem[];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
 
   if (eccFlag) {
-    notices = items.filter(
+    notices = items?.filter(
       notice =>
         notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY ||
         notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
     );
   } else {
-    notices = items.filter(notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY);
+    notices = items?.filter(notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY);
   }
 
   if (!notices?.length) {
-    return;
-  }
-
-  if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
+    if (
+      userCase.acknowledgementOfClaimLetterDetail?.length ||
+      userCase.responseAcknowledgementDocumentDetail?.length ||
+      userCase.responseRejectionDocumentDetail?.length
+    ) {
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.READY_TO_VIEW;
+    }
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_VIEWED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
@@ -214,32 +214,14 @@ export const activateTribunalOrdersAndRequestsLink = async (
   }
 };
 
-export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
-  return items?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
-};
-
-export const filterECCNotifications = async (
-  items: SendNotificationTypeItem[]
-): Promise<SendNotificationTypeItem[]> => {
-  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
-  if (eccFlag) {
-    return items?.filter(it => it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
-  }
-  return [];
-};
-
 /**
- * Filter out ECC notifications or Hearing only notifications
+ * Filter out Hearing only notifications
  * @param notifications
  */
 export const filterOutSpecialNotifications = (
   notifications: SendNotificationTypeItem[]
 ): SendNotificationTypeItem[] => {
-  return notifications?.filter(
-    it =>
-      !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC) &&
-      it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING
-  );
+  return notifications?.filter(it => it.value.sendNotificationSubjectString !== NotificationSubjects.HEARING);
 };
 
 /**
@@ -444,42 +426,9 @@ export const getClaimantTribunalResponseBannerContent = (
         .map(response => ({
           redirectUrl: `/notification-details/${notification.id}${languageParam}`,
           copyToOtherParty: response.value.copyToOtherParty,
+          sendNotificationSubject: notification.value.sendNotificationSubject,
         })) ?? []
   );
-};
-
-export async function getSendNotifications(
-  sendNotificationCollection: SendNotificationTypeItem[],
-  translations: AnyRecord,
-  languageParam: string
-): Promise<SendNotificationTypeItem[]> {
-  let notifications: SendNotificationTypeItem[];
-  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
-  if (eccFlag) {
-    notifications = sendNotificationCollection?.filter(
-      it => it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
-    );
-  } else {
-    notifications = sendNotificationCollection?.filter(
-      it =>
-        it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-        !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
-    );
-  }
-  notifications.forEach(item => {
-    item.redirectUrl = getRedirectUrl(item, languageParam);
-    item.displayStatus = translations[item.value.notificationState];
-    item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
-  });
-  return notifications;
-}
-
-const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): string => {
-  const storedRespond = item.value.respondStoredCollection?.find(r => r.value.from === Applicant.CLAIMANT);
-  return storedRespond
-    ? PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', storedRespond.id) +
-        languageParam
-    : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
 const sortResponsesByDate = (

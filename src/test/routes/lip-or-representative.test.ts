@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../main/definitions/case';
-import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
+import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
@@ -31,7 +31,9 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
       .send({ claimantRepresentedQuestion: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(LegacyUrls.ET1);
+        expect(res.header['location']).toStrictEqual(
+          'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number'
+        );
       });
   });
 });

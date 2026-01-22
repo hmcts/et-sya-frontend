@@ -3,6 +3,9 @@ import { Response } from 'express';
 import { AppRequest } from '../../definitions/appRequest';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import {
+  ET3_ATTACHMENT,
+  ET3_FORM,
+  ET3_SUPPORTING,
   ErrorPages,
   FEATURE_FLAGS,
   PageUrls,
@@ -61,9 +64,9 @@ export default class CitizenHubResponseFromRespondentController {
       hideContactUs: true,
       docs: documents,
       // TODO: remove this once EEC Flag is live
-      et3Forms: documents.filter(d => d.type === 'ET3'),
-      et3Attachments: documents.filter(d => d.type === 'ET3 Attachment'),
-      et3SupportingDocs: documents.filter(d => d.type === 'et3Supporting'),
+      et3Forms: documents.filter(d => d.type === ET3_FORM),
+      et3Attachments: documents.filter(d => d.type === ET3_ATTACHMENT),
+      et3SupportingDocs: documents.filter(d => d.type === ET3_SUPPORTING),
       et3AcceptedDocs: documents.filter(d => responseAcceptedDocTypes.includes(d.type)),
       et3RejectionDocs: documents.filter(d => responseRejectedDocTypes.includes(d.type)),
       // End TODO
@@ -75,9 +78,9 @@ export default class CitizenHubResponseFromRespondentController {
 
 function getDocumentRows(translations: Record<string, string>, documents: DocumentDetail[]) {
   const documentTypes: Record<string, string[]> = {
-    [translations.et3FormText]: ['ET3'],
-    [translations.et3AttachmentText]: ['ET3 Attachment'],
-    [translations.supportingMaterials]: ['et3Supporting'],
+    [translations.et3FormText]: [ET3_FORM],
+    [translations.et3AttachmentText]: [ET3_ATTACHMENT],
+    [translations.supportingMaterials]: [ET3_SUPPORTING],
     [translations.acceptanceLetter]: responseAcceptedDocTypes,
     [translations.rejectionLetter]: responseRejectedDocTypes,
   };

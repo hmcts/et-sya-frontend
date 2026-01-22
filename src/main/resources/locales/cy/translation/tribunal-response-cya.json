@@ -9,6 +9,6 @@
   "storeApplication": "Gwneud cais i storio’r wybodaeth",
   "submitBtn": "Cyflwyno",
   "cancelLink": "Canslo",
-  "Yes": "Ydw",
-  "No": "Nac ydw"
+  "Yes": "Ydw/Oeddwn",
+  "No": "Nac ydw/Nac oeddwn"
 }

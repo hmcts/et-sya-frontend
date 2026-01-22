@@ -104,6 +104,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  APPOINT_LEGAL_REPRESENTATIVE: 'appoint-legal-representative',
   RESPONDENT_CONTACT_DETAILS: 'respondent-contact-details',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
@@ -152,6 +153,7 @@ export const TranslationKeys = {
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
 } as const;
 
 export const PageUrls = {
@@ -227,6 +229,7 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
+  CITIZEN_HUB_BASE: '/citizen-hub/',
   CLAIM_DETAILS: '/claim-details',
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document-response-from-respondent',
@@ -289,7 +292,9 @@ export const PageUrls = {
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
+  APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
+  CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
 } as const;
 
 export const InterceptPaths = {
@@ -349,6 +354,8 @@ export const JavaApiUrls = {
   SUBMIT_STORED_RESPOND_TO_TRIBUNAL: 'store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
+  REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
+  REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
 } as const;
 
 export const Urls = {
@@ -428,6 +435,8 @@ export const inScopeLocations = [].concat(
 );
 
 export const ET3_FORM = 'ET3';
+export const ET3_ATTACHMENT = 'ET3 Attachment';
+export const ET3_SUPPORTING = 'et3Supporting';
 
 export const et1DocTypes = ['ET1'];
 export const acknowledgementOfClaimDocTypes = ['1.1', 'Acknowledgement of Claim'];
@@ -436,7 +445,7 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', 'Letter 10', 'Letter 11'];
 export const et3FormDocTypes = [ET3_FORM];
-export const et3AttachmentDocTypes = ['ET3 Attachment'];
+export const et3AttachmentDocTypes = [ET3_ATTACHMENT];
 
 export const CHANGE = 'Change';
 
@@ -471,6 +480,7 @@ export const Applicant = {
   CLAIMANT: 'Claimant',
   RESPONDENT: 'Respondent',
   ADMIN: 'Admin',
+  CLAIMANT_REP: 'Claimant Representative',
 } as const;
 
 export const AllDocumentTypes = {
@@ -555,4 +565,57 @@ export const FEATURE_FLAGS = {
   BUNDLES: 'bundles',
   ECC: 'ecc',
   MUL2: 'MUL2',
+} as const;
+
+export const DefaultValues = {
+  STRING_AMPERSAND: '&',
+  STRING_EMPTY: '',
+  STRING_DASH: '-',
+  STRING_HASH: '#',
+  STRING_QUESTION_MARK: '?',
+  STRING_EQUALS: '=',
+  STRING_SPACE: ' ',
+  STRING_NEW_LINE: '\n',
+  STRING_SLASH: '/',
+  STRING_SLASH_REGEX: /\//gi,
+  STRING_UNDERSCORE: '_',
+  HTML_NEWLINE: '</br>',
+  HTML_SPACE: '&nbsp;',
+  COLLECTION_EMPTY: [],
+  NUMBER_ZERO: 0,
+  CONTEST_CLAIM_REASON_MAX_LENGTH: 3000,
+  EMPLOYERS_CLAIM_DETAILS_MAX_LENGTH: 3000,
+  FILE_ID_PARAMETER: 'fileId=',
+  CLEAR_SELECTION: 'clearSelection',
+  CLEAR_SELECTION_URL_PARAMETER: 'redirect=clearSelection',
+  SELF_ASSIGNMENT: 'selfAssignment',
+  SELF_ASSIGNMENT_URL_PARAMETER: 'redirect=selfAssignment',
+  DOCUMENT_CHARS_TO_REPLACE: ['@', '/', '\\', "'", ':', '(', ')', '#'],
+} as const;
+
+export const VALID_DYNAMIC_URL_PATTERNS = [
+  /^\/respondent\/\d+\/no-acas-reason$/,
+  /^\/respondent\/\d+\/work-postcode-enter$/,
+  /^\/respondent\/\d+\/acas-cert-num$/,
+  /^\/respondent\/\d+\/respondent-postcode-enter$/,
+  /^\/respondent\/\d+\/work-address$/,
+  /^\/citizen-hub\/\d+$/,
+] as const;
+
+export const VALID_DYNAMIC_URL_BASES = [
+  'respondent',
+  'citizen-hub',
+  'no-acas-reason',
+  'work-postcode-enter',
+  'acas-cert-num',
+  'respondent-postcode-enter',
+  'work-address',
+];
+export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
+  change: 'change',
+  remove: 'remove',
+} as const;
+
+export const ServiceErrors = {
+  ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
 } as const;

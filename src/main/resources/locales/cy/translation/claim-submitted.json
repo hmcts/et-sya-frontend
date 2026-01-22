@@ -8,8 +8,8 @@
   "whatHappensNext": "Beth fydd yn digwydd nesaf",
   "whatHappensNextItemOne": "Byddwn yn gwirio eich hawliad ac efallai byddwn yn cysylltu â chi os bydd gennym unrhyw gwestiynau",
   "whatHappensNextItemTwo": "Byddwn yn cysylltu â chi pan fyddwn wedi anfon eich hawliad at yr atebwyr i esbonio beth fydd yn digwydd nesaf",
-  "submissionDetails": "Manylion yr hawliad",
-  "submissionReference": "Cyfeirnod yr hawliad",
+  "submissionDetails": "Manylion yr hawliad a gyflwynwyd",
+  "submissionReference": "Cyfeirnod yr hawliad a gyflwynwyd",
   "claimSubmitted": "Hawliad wedi’i gyflwyno",
   "none": "Dim",
   "attachments": "Atodiadau wedi’u cynnwys",
@@ -25,9 +25,9 @@
   "contactScotland": "Rhif Ffôn: 0300 790 6234 (Yr Alban)",
   "contactAppend": "Dydd Llun i ddydd Gwener, 9am - 5pm <a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
   "survey": {
-    "titleText": "A hoffech ein helpu i wella ein gwasanaethau ar-lein?",
-    "text": "Hoffem ofyn ambell gwestiwn i chi am p’un a oedd arnoch angen unrhyw gymorth i wneud eich hawliad wrth ddefnyddio ein ffurflen ar-lein.",
-    "linkText": "Rhoi adborth",
+    "titleText": "Rhowch eich adborth i ni",
+    "text": "byr hwn i helpu i wella'r gwasanaeth hwn i chi ac eraill.",
+    "linkText": "Llenwch yr arolwg",
     "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Cymru",
