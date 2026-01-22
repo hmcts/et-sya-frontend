@@ -1,5 +1,5 @@
-import express, { NextFunction, Request, Response } from 'express';
-import i18next, { InitOptions, Resource, use } from 'i18next';
+import express, { NextFunction, Request, RequestHandler, Response } from 'express';
+import i18next, { InitOptions, Resource } from 'i18next';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import requireDir from 'require-directory';
 
@@ -21,11 +21,11 @@ export class I18Next {
         httpOnly: true,
       },
     };
-    use(i18nextMiddleware.LanguageDetector).init(options);
+    i18next.use(i18nextMiddleware.LanguageDetector).init(options);
   }
 
   public enableFor(app: express.Express): void {
-    app.use(i18nextMiddleware.handle(i18next));
+    app.use(i18nextMiddleware.handle(i18next) as unknown as RequestHandler);
     app.use((req: Request, res: Response, next: NextFunction) => {
       Object.assign(res.locals, req.t('template', { returnObjects: true }));
       next();
