@@ -28,6 +28,7 @@ const expectedP3 = 'Don\'t have these details <a href="/checklist?lng=en" class=
 const buttonClass = 'govuk-button';
 const expectedRadioLabel1 = returnToClaimJson.optionText1;
 const expectedRadioLabel2 = returnToClaimJson.optionText2;
+const expectedRadioLabel3 = returnToClaimJson.optionText3;
 const expectedButtonText = commonJsonRawJson.continue;
 
 let htmlRes: Document;
@@ -57,9 +58,9 @@ describe('Return to existing claim page', () => {
     expect(button[5].innerHTML).contains(expectedButtonText, 'Could not find the button');
   });
 
-  it('should display 2 radio buttons', () => {
+  it('should display 3 radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons.length).equal(2, '2 radio buttons not found');
+    expect(radioButtons.length).equal(3, '3 radio buttons not found');
   });
 
   it('should display radio buttons with valid text', () => {
@@ -71,6 +72,10 @@ describe('Return to existing claim page', () => {
     expect(radioButtons[1].innerHTML).contains(
       expectedRadioLabel2,
       'Could not find the radio button with label ' + expectedRadioLabel2
+    );
+    expect(radioButtons[2].innerHTML).contains(
+      expectedRadioLabel3,
+      'Could not find the radio button with label ' + expectedRadioLabel3
     );
   });
 });

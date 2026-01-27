@@ -1,0 +1,12 @@
+{
+  "title": "[W] Case Number Check",
+  "pageTitle": "[W] Case Number",
+  "label": "[W] What is your case number?",
+  "hint": "[W] This will appear on the letter sent to you from the employment tribunal.",
+  "errors": {
+    "ethosCaseReference": {
+      "required": "[W] Enter case number. Sample case number format is 1111111/2020",
+      "invalid": "[W] Invalid case number. Sample Case number format is 1111111/2020"
+    }
+  }
+}

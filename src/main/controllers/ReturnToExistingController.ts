@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { ReturnToExistingOption } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -27,13 +27,19 @@ export default class ReturnToExistingController {
           {
             name: 'have_return_number',
             label: (l: AnyRecord): string => l.optionText1,
-            value: YesOrNo.YES,
+            value: ReturnToExistingOption.RETURN_NUMBER,
             selected: false,
           },
           {
             name: 'have_account',
             label: (l: AnyRecord): string => l.optionText2,
-            value: YesOrNo.NO,
+            value: ReturnToExistingOption.HAVE_ACCOUNT,
+            selected: false,
+          },
+          {
+            name: 'have_submission_reference',
+            label: (l: AnyRecord): string => l.optionText3,
+            value: ReturnToExistingOption.CLAIM_BUT_NO_ACCOUNT,
             selected: false,
           },
         ],
@@ -51,9 +57,12 @@ export default class ReturnToExistingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`
-      : PageUrls.CLAIMANT_APPLICATIONS;
+    let redirectUrl: string = PageUrls.CASE_NUMBER_CHECK;
+    if (conditionalRedirect(req, this.form.getFormFields(), ReturnToExistingOption.HAVE_ACCOUNT)) {
+      redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
+    } else if (conditionalRedirect(req, this.form.getFormFields(), ReturnToExistingOption.RETURN_NUMBER)) {
+      redirectUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
+    }
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 

@@ -154,6 +154,7 @@ export const TranslationKeys = {
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
+  CASE_NUMBER_CHECK: 'case-number-check',
 } as const;
 
 export const PageUrls = {
@@ -163,6 +164,7 @@ export const PageUrls = {
   CLAIM_STEPS: '/steps-to-making-your-claim',
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
+  CASE_NUMBER_CHECK: '/case-number-check',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
   MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE: '/making-claim-as-legal-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',

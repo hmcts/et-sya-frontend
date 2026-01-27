@@ -27,6 +27,7 @@ import BenefitsController from '../../controllers/BenefitsController';
 import BundlesCompletedController from '../../controllers/BundlesCompletedController';
 import BundlesDocsForHearingCYAController from '../../controllers/BundlesDocsForHearingCYAController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
+import CaseNumberController from '../../controllers/CaseNumberController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import ChangeLegalRepresentativeController from '../../controllers/ChangeLegalRepresentativeController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
@@ -227,6 +228,8 @@ export class Routes {
     app.get(PageUrls.CLAIM_SAVED, new ClaimSavedController().get);
     app.get(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().get);
     app.post(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().post);
+    app.get(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().get);
+    app.post(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().post);
     app.get(PageUrls.UPDATE_PREFERENCES, new UpdatePreferenceController().get);
     app.post(PageUrls.UPDATE_PREFERENCES, new UpdatePreferenceController().post);
     app.get(PageUrls.JOB_TITLE, new JobTitleController().get);
