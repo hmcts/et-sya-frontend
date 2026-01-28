@@ -1,5 +1,10 @@
 {% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -10,10 +15,10 @@
   {% block errorSummary %}
     {% include "error-summary.njk" %}
   {% endblock %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ pageTitle }}</h1>
+      <p class="govuk-body">{{ p1 }}</p>
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}

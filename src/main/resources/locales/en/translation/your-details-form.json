@@ -1,0 +1,19 @@
+{
+  "pageTitle": "Enter your details",
+  "title": "Enter your details",
+  "p1": "You must enter your details exactly as they're written on the case, including any mistakes. For example, if your last name is Smyth but it has been spelled 'Smith', you should enter Smith.",
+  "submissionReference": {
+    "label": "Submission Reference"
+  },
+  "claimantName": {
+    "label": "Full name"
+  },
+  "errors": {
+    "submissionReference": {
+      "required": "Enter your submission reference exactly as it's written on the ET1 claim form"
+    },
+    "claimantName": {
+      "required": "Enter your full name exactly as it's written on the ET1 claim form"
+    }
+  }
+}

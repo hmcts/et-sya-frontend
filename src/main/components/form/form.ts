@@ -12,9 +12,8 @@ export class Form {
   /**
    * Pass the form body to any fields with a parser and return mutated body;
    */
-  public getParsedBody(body: AnyRecord, checkFields?: FormContent['fields']): Partial<CaseWithId> {
+  public getParsedBody<T = CaseWithId>(body: AnyRecord, checkFields?: FormContent['fields']): Partial<T> {
     const fields = checkFields || this.fields;
-
     const parsedBody = Object.entries(fields)
       .map(setupCheckboxParser(!!body?.saveForLater))
       .filter(([, field]) => typeof field?.parser === 'function')
