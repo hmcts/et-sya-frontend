@@ -9,7 +9,6 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
-import { populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getCorrespondenceNotificationDetails } from './helpers/GeneralCorrespondenceHelper';
 
@@ -28,18 +27,6 @@ export default class GeneralCorrespondenceNotificationDetailsController {
       }
     }
     req.session.documentDownloadPage = PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS;
-
-    const documents = selectedCorrespondence.value.sendNotificationUploadDocument;
-    if (documents?.length) {
-      for (const it of documents) {
-        try {
-          await populateDocumentMetadata(it.value.uploadedDocument, req.session.user?.accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          res.redirect('/not-found');
-        }
-      }
-    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.NOTIFICATION_SUBJECTS, { returnObjects: true }),

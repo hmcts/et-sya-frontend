@@ -8,7 +8,6 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
-import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { findSelectedSendNotification } from './helpers/StoredToSubmitHelpers';
@@ -41,16 +40,6 @@ export default class TribunalOrderOrRequestDetailsController {
       PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
 
     const respondButton = anyResponseRequired(selectedRequestOrOrder);
-
-    try {
-      await getDocumentsAdditionalInformation(
-        selectedRequestOrOrder.value.sendNotificationUploadDocument,
-        req.session.user?.accessToken
-      );
-    } catch (err) {
-      logger.error(err.message);
-      res.redirect('/not-found');
-    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

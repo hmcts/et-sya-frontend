@@ -11,5 +11,7 @@ export interface DocumentType {
   shortDescription?: string;
   uploadedDocument?: Document;
   typeOfDocument?: string;
+  documentType?: string;
   creationDate?: string;
+  dateOfCorrespondence?: string;
 }
