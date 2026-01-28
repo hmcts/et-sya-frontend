@@ -296,6 +296,7 @@ export const PageUrls = {
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
+  DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
 } as const;
 
 export const InterceptPaths = {

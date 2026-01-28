@@ -457,7 +457,7 @@ export class Routes {
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
-    app.get('/claimant-application/:id/delete', new DeleteDraftClaimController().get);
-    app.post('/claimant-application/:id/delete', new DeleteDraftClaimController().post);
+    app.get(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().get);
+    app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
   }
 }
