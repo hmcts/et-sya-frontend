@@ -21,7 +21,8 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>'
+        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + continue1 + ' ' + col2 + ': ' + app.userCase.id + '">' + continue1 + '</a>' +
+              ' <a href="' + app.url2 + '" data-navigation-link aria-label="' + extraLink + ' ' + col2 + ': ' + app.userCase.id + '">' + extraLink + '</a>'
       }
     ]), draftApplications) %}
   {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -39,7 +40,8 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>'
+        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + continue2 + ' ' + col2 + ': ' + app.userCase.id + '">' + continue2 + '</a>' +
+              ' <a href="' + app.url2 + '" data-navigation-link aria-label="' + extraLink + ' ' + col2 + ': ' + app.userCase.id + '">' + extraLink + '</a>'
       }
     ]), draftApplications) %}
   {% else %}
