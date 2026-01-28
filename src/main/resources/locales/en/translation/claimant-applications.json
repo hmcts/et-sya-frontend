@@ -1,7 +1,7 @@
 {
   "title": "ET1 Claims",
   "h1": "Draft Claims",
-  "h2": "Submitted claims",
+  "h2": "Submitted Claims",
   "p1": "<a href='/claimant-application/newClaim?lng=en' class=\"govuk-link\">Start a new claim</a>",
   "noRespondents": "Not yet provided",
   "col1": "Date created",
