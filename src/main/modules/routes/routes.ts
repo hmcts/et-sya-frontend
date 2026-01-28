@@ -49,6 +49,7 @@ import ContactTheTribunalSelectedController from '../../controllers/ContactTheTr
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
+import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -456,5 +457,7 @@ export class Routes {
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
+    app.get('/claimant-application/:id/delete', new DeleteDraftClaimController().get);
+    app.post('/claimant-application/:id/delete', new DeleteDraftClaimController().post);
   }
 }

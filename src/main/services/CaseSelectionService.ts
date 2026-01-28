@@ -32,7 +32,7 @@ export const getUserApplications = (
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
       url: getRedirectUrl(uCase, languageParam),
-      url2: `/claimant-application/${uCase.id}/delete`,
+      deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}`,
     };
     translateTypesOfClaims(rec, translations);
     apps.push(rec);

@@ -154,6 +154,7 @@ export const TranslationKeys = {
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
+  DELETE_DRAFT_CLAIM: 'delete-draft-claim',
 } as const;
 
 export const PageUrls = {
