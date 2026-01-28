@@ -2,7 +2,15 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { PageUrls } from '../../main/definitions/constants';
+import { CaseApi } from '../../main/services/CaseService';
+import * as caseService from '../../main/services/CaseService';
 import { mockApp } from '../unit/mocks/mockApp';
+
+jest.spyOn(caseService, 'getCaseApi').mockImplementation(() => {
+  return {
+    checkEthosCaseReference: jest.fn().mockResolvedValue({ data: 'true' }),
+  } as unknown as CaseApi;
+});
 
 describe(`GET ${PageUrls.CASE_NUMBER_CHECK}`, () => {
   it('should go to the case number check page', async () => {
@@ -19,7 +27,7 @@ describe(`on POST ${PageUrls.CASE_NUMBER_CHECK}`, () => {
       .send({ ethosCaseReference: '1234567/2023' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toContain('/');
+        expect(res.header['location']).toContain(PageUrls.YOUR_DETAILS_FORM);
       });
   });
 
