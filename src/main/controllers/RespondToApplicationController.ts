@@ -63,6 +63,7 @@ export default class RespondToApplicationController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
     req.session.contactType = Rule92Types.RESPOND;
+    req.session.visitedContactTribunalSelection = true;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
