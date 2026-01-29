@@ -478,7 +478,7 @@ export class CaseApi {
           ethosCaseReference
       );
     } catch (error) {
-      throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
+      throw new Error('Error finding case by ethos reference: ' + axiosErrorDetails(error));
     }
   };
 }

@@ -13,7 +13,7 @@
       "required": "[W] Enter the submission reference"
     },
     "claimantName": {
-      "required": "[W] Enter the your full name"
+      "required": "[W] Enter your full name"
     }
   }
 }
