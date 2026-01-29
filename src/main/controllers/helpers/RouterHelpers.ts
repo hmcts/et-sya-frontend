@@ -46,46 +46,37 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
   return res.redirect(returnValidUrl(nextPage));
 };
 
-export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
-  validUrls = validUrls ?? Object.values(PageUrls);
-  const et1BaseUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
-  validUrls.push(et1BaseUrl, LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH);
+function isFullEt1LegacyUrl(baseUrl: string, et1BaseUrl: string): boolean {
+  return baseUrl.startsWith(et1BaseUrl);
+}
 
-  const urlStr = redirectUrl.split('?');
-  const baseUrl = urlStr[0];
-
-  // Check if URL is a full ET1 legacy URL
-  if (baseUrl.startsWith(et1BaseUrl)) {
-    return redirectUrl;
-  }
-
-  // Check static URLs
-  for (let validUrl of validUrls) {
+function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: string[]): string | undefined {
+  for (const validUrl of validUrls) {
     if (baseUrl === validUrl) {
       const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+      let updatedUrl = validUrl;
       for (const param of parameters) {
         if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          validUrl = addParameterToUrl(validUrl, param);
+          updatedUrl = addParameterToUrl(validUrl, param);
         }
       }
-      return validUrl;
+      return updatedUrl;
     }
   }
+  return undefined;
+}
 
-  // Check dynamic patterns
+function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | undefined {
   const urlParts = baseUrl.split('/');
   let returnUrl = '';
   for (const urlPart of urlParts) {
     const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
     if (matchedUrlPart) {
       returnUrl += `/${matchedUrlPart}`;
-    } else {
-      if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
-        returnUrl += `/${urlPart}`;
-      }
+    } else if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+      returnUrl += `/${urlPart}`;
     }
   }
-
   if (returnUrl) {
     const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
     for (const param of parameters) {
@@ -94,6 +85,30 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
       }
     }
     return returnUrl;
+  }
+  return undefined;
+}
+
+export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
+  validUrls = validUrls ?? Object.values(PageUrls);
+  const et1BaseUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
+  validUrls.push(et1BaseUrl, LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH);
+
+  const urlStr = redirectUrl.split('?');
+  const baseUrl = urlStr[0];
+
+  if (isFullEt1LegacyUrl(baseUrl, et1BaseUrl)) {
+    return redirectUrl;
+  }
+
+  const staticUrl = getStaticValidUrl(baseUrl, redirectUrl, validUrls);
+  if (staticUrl) {
+    return staticUrl;
+  }
+
+  const dynamicUrl = getDynamicValidUrl(baseUrl, redirectUrl);
+  if (dynamicUrl) {
+    return dynamicUrl;
   }
 
   return ErrorPages.NOT_FOUND;
