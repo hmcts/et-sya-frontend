@@ -26,6 +26,9 @@ export default class DeleteDraftClaimController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       await deleteDraftCase(req, logger);
+      // Redirect to claimant applications page after successful deletion
+      const languageParam = getLanguageParam(req.url);
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS + languageParam);
     } catch (err) {
       logger.error(err.message);
       return res.redirect(ErrorPages.NOT_FOUND);
