@@ -142,6 +142,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
+import YourDetailsFormController from '../../controllers/YourDetailsFormController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
@@ -230,6 +231,8 @@ export class Routes {
     app.post(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().post);
     app.get(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().get);
     app.post(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().post);
+    app.get(PageUrls.YOUR_DETAILS_FORM, new YourDetailsFormController().get);
+    app.post(PageUrls.YOUR_DETAILS_FORM, new YourDetailsFormController().post);
     app.get(PageUrls.UPDATE_PREFERENCES, new UpdatePreferenceController().get);
     app.post(PageUrls.UPDATE_PREFERENCES, new UpdatePreferenceController().post);
     app.get(PageUrls.JOB_TITLE, new JobTitleController().get);
