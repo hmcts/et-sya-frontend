@@ -2,14 +2,16 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
-import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
+import { DefaultValues, FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
+import { getCaseApi } from '../services/CaseService';
 
 import { compareUploadDates } from './helpers/AllDocumentsHelper';
-import { createDownloadLink, getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
+import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -37,14 +39,31 @@ export default class AllDocumentsController {
     const docCollection = userCase.documentCollection?.length ? userCase.documentCollection : [];
     const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
     const allDocs = [...docCollection, ...bundleDocuments];
+
     if (allDocs?.length) {
-      try {
-        await getDocumentsAdditionalInformation(allDocs, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        res.redirect('/not-found');
-      }
-      allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+      const caseApi = getCaseApi(req.session.user?.accessToken);
+
+      await Promise.all(
+        allDocs.map(async it => {
+          it.downloadLink = createDownloadLink(it.value.uploadedDocument);
+
+          const dateOfCorrespondence = it.value.dateOfCorrespondence;
+          const uploadedDocument = it.value.uploadedDocument;
+
+          try {
+            const createdOnDate = dateOfCorrespondence
+              ? new Date(dateOfCorrespondence)
+              : new Date((await caseApi.getDocumentDetails(getDocId(uploadedDocument.document_url))).data.createdOn);
+
+            uploadedDocument.createdOn = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(createdOnDate);
+          } catch (err) {
+            uploadedDocument.createdOn = DefaultValues.STRING_DASH;
+            logger.error(
+              `Error for: ${userCase.ethosCaseReference} - failed to fetch metadata for document: ${userCase.ethosCaseReference} ${err.message}`
+            );
+          }
+        })
+      );
     }
     const allDocsSorted: DocumentTypeItem[] = Array.from(allDocs).sort(compareUploadDates);
     res.render(TranslationKeys.ALL_DOCUMENTS, {

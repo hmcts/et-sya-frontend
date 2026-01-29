@@ -14,7 +14,7 @@ import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/h
 import { AnyRecord } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
-import { createDownloadLink, getDocumentsAdditionalInformation } from './DocumentHelpers';
+import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const activateJudgmentsLink = (
@@ -50,10 +50,7 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
   }
 };
 
-export const getJudgmentAttachments = async (
-  selectedJudgment: SendNotificationTypeItem,
-  req: AppRequest
-): Promise<DocumentTypeItem[]> => {
+export const getJudgmentAttachments = (selectedJudgment: SendNotificationTypeItem): DocumentTypeItem[] => {
   const judgmentAttachments = [];
   if (selectedJudgment?.value?.sendNotificationUploadDocument) {
     for (let i = 0; i < selectedJudgment?.value?.sendNotificationUploadDocument?.length; i++) {
@@ -63,17 +60,19 @@ export const getJudgmentAttachments = async (
     }
 
     if (judgmentAttachments.length) {
-      await getDocumentsAdditionalInformation(judgmentAttachments, req.session.user?.accessToken);
-      judgmentAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+      judgmentAttachments.forEach(it => {
+        // Set shortDescription if not already set
+        if (!it.value?.shortDescription && it.value?.typeOfDocument) {
+          it.value.shortDescription = it.value.typeOfDocument;
+        }
+        it.downloadLink = createDownloadLink(it.value.uploadedDocument);
+      });
     }
   }
   return judgmentAttachments;
 };
 
-export const getDecisionAttachments = async (
-  selectedDecision: TseAdminDecisionItem,
-  req: AppRequest
-): Promise<DocumentTypeItem[]> => {
+export const getDecisionAttachments = (selectedDecision: TseAdminDecisionItem): DocumentTypeItem[] => {
   const decisionAttachments = [];
   for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
     if (selectedDecision?.value?.responseRequiredDoc[i]?.value?.uploadedDocument) {
@@ -82,8 +81,13 @@ export const getDecisionAttachments = async (
   }
 
   if (decisionAttachments.length) {
-    await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
-    decisionAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+    decisionAttachments.forEach(it => {
+      // Set shortDescription if not already set
+      if (!it.value?.shortDescription && it.value?.typeOfDocument) {
+        it.value.shortDescription = it.value.typeOfDocument;
+      }
+      it.downloadLink = createDownloadLink(it.value.uploadedDocument);
+    });
   }
   return decisionAttachments;
 };

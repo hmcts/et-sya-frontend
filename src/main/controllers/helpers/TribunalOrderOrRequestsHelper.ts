@@ -41,7 +41,7 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
   notifications?.forEach(item => notificationList.push(buildSendNotification(item, translations, languageParam)));
 
   // acknowledgementOfClaimLetterDetail
-  const servingDocs = await getDocsInfo(acknowledgementOfClaimLetterDetail, accessToken);
+  const servingDocs = await getDocsInfo(acknowledgementOfClaimLetterDetail, userCase.ethosCaseReference, accessToken);
   const servingState: string =
     hubLinksStatuses && hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.SUBMITTED_AND_VIEWED
       ? HubLinkStatus.VIEWED
@@ -51,13 +51,17 @@ export async function getSendNotifications(req: AppRequest): Promise<TribunalNot
   );
 
   // responseAcknowledgementDocumentDetail
-  const responseAckDocs = await getDocsInfo(responseAcknowledgementDocumentDetail, accessToken);
+  const responseAckDocs = await getDocsInfo(
+    responseAcknowledgementDocumentDetail,
+    userCase.ethosCaseReference,
+    accessToken
+  );
   responseAckDocs?.forEach(item =>
     notificationList.push(buildResponseAckNotification(item, translations, languageParam))
   );
 
   // responseRejectionDocumentDetail
-  const responseRejDocs = await getDocsInfo(responseRejectionDocumentDetail, accessToken);
+  const responseRejDocs = await getDocsInfo(responseRejectionDocumentDetail, userCase.ethosCaseReference, accessToken);
   responseRejDocs?.forEach(item =>
     notificationList.push(buildResponseRejNotification(item, translations, languageParam))
   );
@@ -102,11 +106,15 @@ const getRedirectUrl = (item: SendNotificationTypeItem, languageParam: string): 
     : PageUrls.NOTIFICATION_DETAILS.replace(':orderId', item.id) + languageParam;
 };
 
-const getDocsInfo = async (documents: DocumentDetail[], accessToken: string): Promise<DocumentDetail[]> => {
+const getDocsInfo = async (
+  documents: DocumentDetail[],
+  ethosCaseReference: string,
+  accessToken: string
+): Promise<DocumentDetail[]> => {
   if (!documents?.length) {
     return [];
   }
-  await getDocumentDetails(documents, accessToken);
+  await getDocumentDetails(documents, ethosCaseReference, accessToken);
   return documents;
 };
 

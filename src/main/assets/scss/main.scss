@@ -222,10 +222,12 @@ $lightgrey-panel: #d3d3d3;
   text-transform: none;
 }
 
-.scrollableTable {
-  .govuk-table {
-    display: block;
-    overflow-x: auto;
+@media (max-width: 48.0625em) {
+  .scrollableTable {
+    .govuk-table {
+      display: block;
+      overflow-x: auto;
+    }
   }
 }
 

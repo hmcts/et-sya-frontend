@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
-import * as DocumentHelpers from '../../../main/controllers/helpers/DocumentHelpers';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import {
   NoticeOfECC,
   NotificationSubjects,
   PageUrls,
+  Rule92Types,
   TranslationKeys,
   languages,
 } from '../../../main/definitions/constants';
@@ -48,6 +48,20 @@ describe('Tribunal Respond to Order Controller', () => {
     request.params.orderId = '123';
     await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, expect.anything());
+  });
+
+  it('should set contactType and visitedContactTribunalSelection on GET request', async () => {
+    const translationJsons = { ...respondJsonRaw, ...common };
+    const controller = new TribunalRespondToOrderController();
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+    request.params.orderId = '123';
+    await controller.get(request, response);
+    expect(request.session.contactType).toBe(Rule92Types.TRIBUNAL);
+    expect(request.session.visitedContactTribunalSelection).toBe(true);
   });
 
   it('should post and redirect to the Rule92', () => {
@@ -181,67 +195,5 @@ describe('Tribunal Respond to Order Controller', () => {
     controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
-  });
-
-  it('should redirect to /not-found when getDocumentsAdditionalInformation throws an error', async () => {
-    const getDocumentsAdditionalInformationSpy = jest
-      .spyOn(DocumentHelpers, 'getDocumentsAdditionalInformation')
-      .mockRejectedValue(new Error('Document service error'));
-
-    const translationJsons = { ...respondJsonRaw, ...common };
-    const controller = new TribunalRespondToOrderController();
-
-    const mockSelectedRequestOrOrder = {
-      id: '999',
-      value: {
-        number: '1',
-        sendNotificationTitle: 'title',
-        sendNotificationSubjectString: 'Order or request',
-        sendNotificationSelectHearing: {
-          selectedLabel: 'Hearing',
-        },
-        date: '2019-05-03',
-        sentBy: 'Tribunal',
-        sendNotificationCaseManagement: 'Order',
-        sendNotificationResponseTribunal: 'required',
-        sendNotificationSelectParties: 'Both',
-        sendNotificationAdditionalInfo: 'additional info',
-        sendNotificationWhoCaseOrder: 'Legal officer',
-        sendNotificationFullName: 'Judge Dredd',
-        sendNotificationNotify: 'Both',
-        notificationState: 'notViewedYet',
-        sendNotificationUploadDocument: [
-          {
-            id: '1',
-            value: {
-              typeOfDocument: 'ACAS Certificate',
-              uploadedDocument: {
-                document_binary_url: 'http://dm-store:8080/documents/test.pdf/binary',
-                document_filename: 'test.pdf',
-                document_url: 'http://dm-store:8080/documents/test.pdf',
-              },
-            },
-          },
-        ],
-      },
-    };
-
-    const userCase: Partial<CaseWithId> = {
-      ...mockUserCaseComplete,
-      selectedRequestOrOrder: mockSelectedRequestOrOrder,
-      sendNotificationCollection: [mockSelectedRequestOrOrder],
-    };
-
-    const response = mockResponse();
-    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
-    request.params.orderId = '999';
-    request.session.userCase.sendNotificationCollection = [mockSelectedRequestOrOrder];
-
-    await controller.get(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/not-found');
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, expect.anything());
-
-    getDocumentsAdditionalInformationSpy.mockRestore();
   });
 });
