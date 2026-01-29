@@ -26,6 +26,7 @@ export interface AppSession extends Session {
   contactType?: string;
   contactTribunalSelection?: string;
   documentDownloadPage?: string;
+  caseNumberChecked?: boolean;
 }
 
 export interface UserDetails {

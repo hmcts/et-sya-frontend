@@ -154,6 +154,8 @@ export const TranslationKeys = {
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
+  CASE_NUMBER_CHECK: 'case-number-check',
+  YOUR_DETAILS_FORM: 'your-details-form',
 } as const;
 
 export const PageUrls = {
@@ -163,6 +165,8 @@ export const PageUrls = {
   CLAIM_STEPS: '/steps-to-making-your-claim',
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
+  CASE_NUMBER_CHECK: '/case-number-check',
+  YOUR_DETAILS_FORM: '/your-details-form',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
   MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE: '/making-claim-as-legal-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',
@@ -334,6 +338,7 @@ export const JavaApiUrls = {
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
   DOCUMENT_DETAILS: '/document/details/',
+  FIND_CASE_BY_ETHOS_CASE_REFERENCE: '/et3/findCaseByEthosCaseReference',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
@@ -356,6 +361,7 @@ export const JavaApiUrls = {
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
   REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
   REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
+  FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME: 'ethosCaseReference',
 } as const;
 
 export const Urls = {
