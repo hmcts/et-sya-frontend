@@ -167,7 +167,7 @@
   "resolutions": {
     "@swc/core": "1.3.82",
     "axios": "^1.13.2",
-    "@opentelemetry/instrumentation": "^0.203.0",
+    "@opentelemetry/instrumentation": "^0.211.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",
