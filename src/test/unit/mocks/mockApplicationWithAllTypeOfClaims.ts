@@ -18,4 +18,5 @@ export const mockApplicationWithAllTypeOfClaims: ApplicationTableRecord = {
   respondents: 'undefined',
   completionStatus: '0 of 4 tasks completed',
   url: '/claimant-application/123456',
+  deleteDraftUrl: '/claimant-applications',
 };

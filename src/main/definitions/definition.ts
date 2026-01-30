@@ -71,6 +71,7 @@ export interface ApplicationTableRecord {
   respondents: string;
   completionStatus: string;
   url: string;
+  deleteDraftUrl: string;
 }
 
 export interface DocumentDetail {
