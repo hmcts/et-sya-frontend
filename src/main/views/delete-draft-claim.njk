@@ -1,9 +1,11 @@
 {% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="post" action="">
+      <form action="{{ deleteButtonUrl }}" method="post">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
         <h1 class="govuk-heading-l">{{ h1 }}</h1>
         <p class="govuk-body">
           {{ p1 }} <strong>{{ caseReference }}</strong>.
@@ -11,9 +13,18 @@
         <p class="govuk-body">
           {{ p2 }}
         </p>
-        <button class="govuk-button govuk-button--warning" data-module="govuk-button" type="submit">
-          {{ deleteButtonText }}
-        </button>
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: deleteButtonText,
+            type: submit,
+            classes: "govuk-button--warning",
+            preventDoubleClick: true,
+            disabled: false,
+            attributes: {
+                id: 'delete-draft-claim-button'
+            }
+        }) }}
+        </div>
       </form>
       <p class="govuk-body">
         <a href="{{ backToCaseUrl }}" class="govuk-link">{{ cancelButtonText }}</a>
@@ -21,4 +32,3 @@
     </div>
   </div>
 {% endblock %}
-

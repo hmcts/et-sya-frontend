@@ -19,6 +19,7 @@ export default class DeleteDraftClaimController {
       ...req.t(TranslationKeys.APPOINT_LEGAL_REPRESENTATIVE, { returnObjects: true }),
       ...content,
       caseReference: req.params.id,
+      deleteButtonUrl: PageUrls.DELETE_DRAFT_CLAIM.replace(':id', req.params.id) + languageParam,
       backToCaseUrl: PageUrls.CLAIMANT_APPLICATIONS + languageParam,
     });
   };
