@@ -3,6 +3,7 @@ import { nextTick } from 'process';
 import axios, { AxiosResponse } from 'axios';
 
 import {
+  deleteDraftCase,
   getSectionStatus,
   getSectionStatusForEmployment,
   handleUpdateDraftCase,
@@ -333,5 +334,52 @@ describe('add response to send notification', () => {
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     submitClaimantTse(req, mockLogger);
     expect(req.session.userCase).toBeDefined();
+  });
+});
+
+describe('deleteDraftCase', () => {
+  it('should delete draft case and log info', async () => {
+    const mockDeleteDraftCase = jest.fn().mockResolvedValueOnce(undefined);
+    caseApi.deleteDraftCase = mockDeleteDraftCase;
+    const req = mockRequest({ session: mockSession([], [], []) });
+    req.session.user = {
+      accessToken: 'token',
+      id: 'userId',
+      email: 'user@example.com',
+      givenName: 'Test',
+      familyName: 'User',
+      isCitizen: true,
+    };
+    req.session.userCase = {
+      id: 'caseId',
+      state: 'DRAFT',
+      createdDate: '2022-01-01',
+      lastModified: '2022-01-02',
+    } as unknown as import('../../../../main/definitions/case').CaseWithId;
+    await deleteDraftCase(req, mockLogger);
+    expect(mockDeleteDraftCase).toHaveBeenCalledWith(req.session.userCase);
+    expect(mockLogger.info).toHaveBeenCalledWith('Deleted draft case id: caseId');
+  });
+
+  it('should log error and throw if delete fails', async () => {
+    const error = new Error('delete failed');
+    caseApi.deleteDraftCase = jest.fn().mockRejectedValueOnce(error);
+    const req = mockRequest({ session: mockSession([], [], []) });
+    req.session.user = {
+      accessToken: 'token',
+      id: 'userId',
+      email: 'user@example.com',
+      givenName: 'Test',
+      familyName: 'User',
+      isCitizen: true,
+    };
+    req.session.userCase = {
+      id: 'caseId',
+      state: 'DRAFT',
+      createdDate: '2022-01-01',
+      lastModified: '2022-01-02',
+    } as unknown as import('../../../../main/definitions/case').CaseWithId;
+    await expect(deleteDraftCase(req, mockLogger)).rejects.toThrow(error);
+    expect(mockLogger.error).toHaveBeenCalledWith('delete failed');
   });
 });
