@@ -8469,20 +8469,23 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^29.0.0":
-  version: 29.0.1
-  resolution: "eslint-plugin-jest@npm:29.0.1"
+  version: 29.12.2
+  resolution: "eslint-plugin-jest@npm:29.12.2"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.0.0"
   peerDependencies:
     "@typescript-eslint/eslint-plugin": ^8.0.0
     eslint: ^8.57.0 || ^9.0.0
     jest: "*"
+    typescript: ">=4.8.4 <6.0.0"
   peerDependenciesMeta:
     "@typescript-eslint/eslint-plugin":
       optional: true
     jest:
       optional: true
-  checksum: 10/d7b0a3fbdbf795225fbbff2c69c7711bb6502a3d4444d857c95a9d6578a65c80fd8a9fcd3ebc3d0634fe1cc70b4b77e887943945fadab6a974a736d2ffc5babf
+    typescript:
+      optional: true
+  checksum: 10/fb54ec7ae166c9838075cbd3c1f0b210ca6e81501126b1a08230ddc92d1efebb529cbfba569ea02b837313d9378c9165440319ca8a84bd13d37364c98fe83e80
   languageName: node
   linkType: hard
 
