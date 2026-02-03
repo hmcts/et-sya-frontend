@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { TseRespondTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
-import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { datesStringToDateInLocale } from '../helper/dateInLocale';
@@ -38,8 +38,13 @@ export default class ApplicationDetailsController {
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
       getAllTseApplicationCollection(userCase),
-      req.params.appId
+      req.params?.appId
     );
+    if (!selectedApplication) {
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
+
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
     userCase.selectedGenericTseApplication = selectedApplication;
 

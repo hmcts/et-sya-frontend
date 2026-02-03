@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls } from '../definitions/constants';
+import { ErrorPages, PageUrls, ServiceErrors } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
@@ -28,8 +28,8 @@ export default class StoreRespondentController {
       req.session.userCase.genericTseApplicationCollection,
       req.session.userCase.selectedGenericTseApplication.id
     );
-    if (selectedApplication === undefined) {
-      logger.error('Selected application not found');
+    if (!selectedApplication) {
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 

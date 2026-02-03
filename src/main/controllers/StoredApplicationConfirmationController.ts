@@ -28,7 +28,7 @@ export default class StoredApplicationConfirmationController {
 
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.tseApplicationStoredCollection,
-      req.params.appId
+      req.params?.appId
     );
     if (selectedApplication === undefined) {
       logger.error('Latest application not found');

@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
-import { ErrorPages, PageUrls } from '../../definitions/constants';
+import { ErrorPages, PageUrls, ServiceErrors } from '../../definitions/constants';
 import { Logger } from '../../logger';
 
 import { setUserCase } from './CaseHelpers';
@@ -24,10 +24,10 @@ export const handlePost = async (
 
   const selectedApplication = findSelectedGenericTseApplication(
     req.session.userCase.genericTseApplicationCollection,
-    req.params.appId
+    req.params?.appId
   );
-  if (selectedApplication === undefined) {
-    logger.error('Selected application not found');
+  if (!selectedApplication) {
+    logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
     return res.redirect(ErrorPages.NOT_FOUND + languageParam);
   }
 

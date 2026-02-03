@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, Rule92Types, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -16,6 +16,7 @@ import { createDownloadLink, findSelectedGenericTseApplication } from './helpers
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { handlePost } from './helpers/RespondToApplicationHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
 
@@ -60,10 +61,16 @@ export default class RespondToTribunalResponseController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
-      req.params.appId
+      req.params?.appId
     );
+    if (!selectedApplication) {
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
+      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
+    }
+
     userCase.selectedGenericTseApplication = selectedApplication;
     req.session.contactType = Rule92Types.TRIBUNAL;
 

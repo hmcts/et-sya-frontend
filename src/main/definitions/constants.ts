@@ -409,6 +409,11 @@ export const CaseApiErrors = {
   FAILED_TO_RETRIEVE_CASE: 'Error when attempting to retrieve draft case from sya-api',
 } as const;
 
+export const ServiceErrors = {
+  ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
+  ERROR_APPLICATION_NOT_FOUND: 'Selected application not found: ',
+} as const;
+
 export const CcdDataModel = {
   CASE_SOURCE: 'ET1 Online',
 } as const;
@@ -614,8 +619,4 @@ export const VALID_DYNAMIC_URL_BASES = [
 export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
   change: 'change',
   remove: 'remove',
-} as const;
-
-export const ServiceErrors = {
-  ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
 } as const;

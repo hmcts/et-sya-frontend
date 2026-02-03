@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -33,10 +33,10 @@ export default class StoredToSubmitResponseController {
 
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
-      req.params.appId
+      req.params?.appId
     );
-    if (selectedApplication === undefined) {
-      logger.error('Selected application not found');
+    if (!selectedApplication) {
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
     userCase.selectedGenericTseApplication = selectedApplication;
@@ -82,10 +82,10 @@ export default class StoredToSubmitResponseController {
 
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
-      req.params.appId
+      req.params?.appId
     );
-    if (selectedApplication === undefined) {
-      logger.error('Selected application not found');
+    if (!selectedApplication) {
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
     userCase.selectedGenericTseApplication = selectedApplication;
