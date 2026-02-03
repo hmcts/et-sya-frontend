@@ -18,11 +18,7 @@ import {
   getTseApplicationDetails,
 } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
-import {
-  createDownloadLink,
-  findSelectedGenericTseApplication,
-  populateDocumentMetadata,
-} from './helpers/DocumentHelpers';
+import { createDownloadLink, findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getDecisionContent } from './helpers/TseRespondentApplicationHelpers';
@@ -52,24 +48,14 @@ export default class ApplicationDetailsController {
 
     const languageParam = getLanguageParam(req.url);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
-    const accessToken = req.session.user?.accessToken;
     const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 
     let decisionContent;
     try {
-      decisionContent = await getDecisionContent(selectedApplication, translations, accessToken);
+      decisionContent = await getDecisionContent(selectedApplication, translations);
     } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
-    }
-
-    if (document) {
-      try {
-        await populateDocumentMetadata(document, accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
-      }
     }
 
     const downloadLink = createDownloadLink(document);

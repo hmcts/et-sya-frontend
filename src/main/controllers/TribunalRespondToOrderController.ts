@@ -11,7 +11,6 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
-import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
@@ -95,6 +94,7 @@ export default class TribunalRespondToOrderController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     req.session.contactType = Rule92Types.TRIBUNAL;
+    req.session.visitedContactTribunalSelection = true;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -120,16 +120,6 @@ export default class TribunalRespondToOrderController {
       await updateSendNotificationState(req, logger);
     } catch (error) {
       logger.info(error.message);
-    }
-
-    try {
-      await getDocumentsAdditionalInformation(
-        selectedRequestOrOrder.value.sendNotificationUploadDocument,
-        req.session.user?.accessToken
-      );
-    } catch (err) {
-      logger.error('Error getting document additional information: ' + err.message);
-      res.redirect('/not-found');
     }
 
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {

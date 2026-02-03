@@ -2,58 +2,70 @@ import { AxiosResponse } from 'axios';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document } from '../../definitions/case';
-import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, DOCUMENT_CONTENT_TYPES, PageUrls } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
-import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
+import { getDocId } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
-export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
-  for await (const document of documents) {
-    const docDetails = await getCaseApi(accessToken).getDocumentDetails(document.id);
-    const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
-    const retrievedValues = {
-      size: (size / 1000000).toFixed(3),
-      mimeType,
-      originalDocumentName,
-      createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
-      description: document.description,
-    };
-    Object.assign(
-      documents.find(doc => doc.id === document.id),
-      retrievedValues
-    );
+export const getDocumentDetails = async (
+  documents: DocumentDetail[],
+  submissionReference: string,
+  accessToken: string
+): Promise<void> => {
+  if (!documents?.length) {
+    return;
   }
+
+  // Reuse single CaseApi instance for all requests (more efficient)
+  const caseApi = getCaseApi(accessToken);
+
+  // Fetch all documents in parallel for better performance
+  const detailsPromises = documents.map(async document => {
+    try {
+      const docDetails = await caseApi.getDocumentDetails(document.id);
+      const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
+      return {
+        id: document.id,
+        retrievedValues: {
+          size: (size / 1000000).toFixed(3),
+          mimeType,
+          originalDocumentName,
+          createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
+          description: document.description,
+        },
+      };
+    } catch (error) {
+      console.error(`Error for: ${submissionReference} - failed to fetch details for document ${document.id}:`, error);
+      return { id: document.id, retrievedValues: null };
+    }
+  });
+
+  const results = await Promise.all(detailsPromises);
+
+  results.forEach(({ id, retrievedValues }) => {
+    if (retrievedValues) {
+      Object.assign(
+        documents.find(doc => doc.id === id),
+        retrievedValues
+      );
+    }
+  });
 };
 
 export const populateDocumentMetadata = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
-  const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
-  const { createdOn, size, mimeType } = docDetails.data;
+  // Reuse CaseApi instance - caller should batch multiple calls
+  const caseApi = getCaseApi(accessToken);
+  const docDetails = await caseApi.getDocumentDetails(docId);
+  const { createdOn } = docDetails.data;
   doc.createdOn = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'long',
   }).format(new Date(createdOn));
-  doc.document_mime_type = mimeType;
-  doc.document_size = size;
   return doc;
-};
-
-export const getDocumentsAdditionalInformation = async (
-  documents: DocumentTypeItem[],
-  accessToken: string
-): Promise<void> => {
-  if (documents?.length) {
-    for (const doc of documents) {
-      await populateDocumentMetadata(doc.value.uploadedDocument, accessToken);
-      if (!doc.value?.shortDescription && doc.value?.typeOfDocument) {
-        doc.value.shortDescription = doc.value.typeOfDocument;
-      }
-    }
-  }
 };
 
 // merge arrays but make sure they are not undefined
@@ -61,32 +73,21 @@ export const combineDocuments = <T>(...arrays: T[][]): T[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
-  if (!file?.document_size || !file.document_mime_type || !file.document_filename) {
+  if (!file?.document_filename || !file?.document_url) {
     return '';
   }
 
-  const mimeType = getFileExtension(file.document_filename);
   const href = `/getSupportingMaterial/${getDocId(file.document_url)}`;
-  const size = formatBytes(file.document_size);
-  return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename} (${mimeType}, ${size})</a>`;
+  return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename}</a>`;
 };
 
 export const createDownloadLinkForHearingDoc = (file: Document): string => {
-  const mimeType = getFileExtension(file?.document_filename);
-  let downloadLink = '';
-  if (file?.document_size && file.document_mime_type && file.document_filename) {
-    const href = '/getSupportingMaterial/' + getDocId(file.document_url);
-    downloadLink =
-      `<a href='${href}' target='_blank' class='govuk-link'>` +
-      file.document_filename +
-      '(' +
-      mimeType +
-      ', ' +
-      formatBytes(file.document_size) +
-      ')' +
-      '</a>';
+  if (!file?.document_filename || !file?.document_url) {
+    return '';
   }
-  return downloadLink;
+
+  const href = `/getSupportingMaterial/${getDocId(file.document_url)}`;
+  return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename}</a>`;
 };
 
 export const findSelectedGenericTseApplication = (
@@ -95,20 +96,6 @@ export const findSelectedGenericTseApplication = (
 ): GenericTseApplicationTypeItem => {
   return items?.find(it => it.id === param);
 };
-
-export function formatBytes(bytes: number, decimals = 2): string {
-  if (!+bytes) {
-    return '0 Bytes';
-  }
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))}${sizes[i]}`;
-}
 
 export function getResponseDocId(selectedApplication: GenericTseApplicationTypeItem): string {
   let responseDocId = undefined;

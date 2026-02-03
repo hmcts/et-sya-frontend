@@ -5,11 +5,7 @@ import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import {
-  findSelectedGenericTseApplication,
-  getDocumentLink,
-  populateDocumentMetadata,
-} from './helpers/DocumentHelpers';
+import { findSelectedGenericTseApplication, getDocumentLink } from './helpers/DocumentHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -19,7 +15,6 @@ export default class StoredApplicationConfirmationController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
-    const accessToken = req.session.user?.accessToken;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -41,14 +36,6 @@ export default class StoredApplicationConfirmationController {
     }
 
     const document = selectedApplication.value.documentUpload;
-    if (document) {
-      try {
-        await populateDocumentMetadata(document, accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-      }
-    }
 
     res.render(TranslationKeys.STORED_APPLICATION_CONFIRMATION, {
       ...translations,
