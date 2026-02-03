@@ -61,16 +61,14 @@ export default class RespondToTribunalResponseController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
-    const languageParam = getLanguageParam(req.url);
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
       req.params?.appId
     );
     if (!selectedApplication) {
       logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
-      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
+      return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
     }
-
     userCase.selectedGenericTseApplication = selectedApplication;
     req.session.contactType = Rule92Types.TRIBUNAL;
 
