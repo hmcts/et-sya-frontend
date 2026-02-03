@@ -1,0 +1,19 @@
+{
+  "pageTitle": "[W] Your Details",
+  "title": "[W] Your Details",
+  "p1": "[W] You must enter your details exactly as they're written on the case, including any mistakes. For example, if the client's last name is Smyth but it has been spelled 'Smith', you should enter Smith.",
+  "submissionReference": {
+    "label": "[W] Submission Reference"
+  },
+  "claimantName": {
+    "label": "[W] Full name"
+  },
+  "errors": {
+    "submissionReference": {
+      "required": "[W] Enter the submission reference"
+    },
+    "claimantName": {
+      "required": "[W] Enter your full name"
+    }
+  }
+}

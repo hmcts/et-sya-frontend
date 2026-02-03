@@ -15,7 +15,8 @@
     "t3": ""
   },
   "optionText1": "I’ve got a <span class=\"govuk-!-font-weight-bold\">‘save and return number’</span>",
-  "optionText2": "I’ve got a new <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
+  "optionText2": "I’ve got an <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
+  "optionText3": "I’ve got a claim but no <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
   "errors": {
     "returnToExisting": {
       "required": "Tell us if you have a save and return number or an Employment Tribunal account"

@@ -15,7 +15,8 @@
     "t3": "os nad yw'r manylion hyn gennych."
   },
   "optionText1": "Mae gen i <span class=\"govuk-!-font-weight-bold\">‘rif cadw a dychwelyd’</span>",
-  "optionText2": "Mae gen i <span class=\"govuk-!-font-weight-bold\">‘Gyfrif Tribiwnlys Cyflogaeth’</span> newydd",
+  "optionText2": "[W] I’ve got an <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
+  "optionText3": "[W] I’ve got a claim but no <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
   "errors": {
     "returnToExisting": {
       "required": "Dywedwch wrthym a oes gennych rif cadw a dychwelyd neu gyfrif Tribiwnlys Cyflogaeth"

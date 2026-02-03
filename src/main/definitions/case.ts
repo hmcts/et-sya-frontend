@@ -363,3 +363,9 @@ export const enum Et3ResponseStatus {
   NOT_ACCEPTED = 'Not Accepted',
   REJECTED = 'Rejected',
 }
+
+export const enum ReturnToExistingOption {
+  RETURN_NUMBER = 'Return number',
+  HAVE_ACCOUNT = 'Have an account',
+  CLAIM_BUT_NO_ACCOUNT = 'Claim but no account',
+}

@@ -9,7 +9,7 @@ import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls, ServiceErrors } from '../definitions/constants';
+import { DefaultValues, JavaApiUrls, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -465,6 +465,20 @@ export class CaseApi {
         ServiceErrors.ERROR_REVOKING_USER_ROLE +
           axiosErrorDetails(error, { action: 'removeClaimantRepresentative', caseId: req.session.userCase.id })
       );
+    }
+  };
+
+  checkEthosCaseReference = async (ethosCaseReference: string): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.get<string>(
+        JavaApiUrls.FIND_CASE_BY_ETHOS_CASE_REFERENCE +
+          DefaultValues.STRING_QUESTION_MARK +
+          JavaApiUrls.FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME +
+          DefaultValues.STRING_EQUALS +
+          ethosCaseReference
+      );
+    } catch (error) {
+      throw new Error('Error finding case by ethos reference: ' + axiosErrorDetails(error));
     }
   };
 }
