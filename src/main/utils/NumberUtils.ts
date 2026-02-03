@@ -26,7 +26,7 @@ export default class NumberUtils {
       : acasNumber.trim().replace(DefaultValues.STRING_SLASH_REGEX, DefaultValues.STRING_EMPTY);
   }
   public static isNumericValue(stringValue: string): boolean {
-    return !(!stringValue || isNaN(Number(stringValue)) || !Number(stringValue));
+    return !(!stringValue || Number.isNaN(Number(stringValue)) || !Number(stringValue));
   }
   public static isNonNumericValue(stringValue: string): boolean {
     return !this.isNumericValue(stringValue);
