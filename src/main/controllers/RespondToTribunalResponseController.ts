@@ -60,7 +60,7 @@ export default class RespondToTribunalResponseController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
     const languageParam = getLanguageParam(req.url);
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,

@@ -25,7 +25,7 @@ const logger = getLogger('RespondentApplicationDetailsController');
 
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
     const languageParam = getLanguageParam(req.url);
     req.session.documentDownloadPage = PageUrls.RESPONDENT_APPLICATION_DETAILS;
 
