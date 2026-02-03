@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -32,11 +32,11 @@ export default class StoredToSubmitTribunalController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
 
-    const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params.orderId);
-    if (selectedNotification === undefined) {
-      logger.error('Selected send notification not found');
+    const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params?.orderId);
+    if (!selectedNotification) {
+      logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND + req.params?.orderId);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
     userCase.selectedRequestOrOrder = selectedNotification;
@@ -80,9 +80,9 @@ export default class StoredToSubmitTribunalController {
     const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
 
-    const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params.orderId);
-    if (selectedNotification === undefined) {
-      logger.error('Selected send notification not found');
+    const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params?.orderId);
+    if (!selectedNotification) {
+      logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND + req.params?.orderId);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
     userCase.selectedRequestOrOrder = selectedNotification;

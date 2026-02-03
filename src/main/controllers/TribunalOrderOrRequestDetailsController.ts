@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -21,11 +21,15 @@ const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
     const selectedRequestOrOrder = findSelectedSendNotification(
       userCase.sendNotificationCollection,
-      req.params.orderId
+      req.params?.orderId
     );
+    if (!selectedRequestOrOrder) {
+      logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND + req.params?.orderId);
+      return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
+    }
     req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
