@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
@@ -13,8 +13,9 @@ import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect, isReturnUrlIsCheckAnswers, returnNextPage } from './helpers/RouterHelpers';
+import { getRespondentIndex } from './helpers/RespondentHelpers';
+import { conditionalRedirect, isReturnUrlIsCheckAnswers } from './helpers/RouterHelpers';
+import { getRedirectUrl, updateWorkAddress } from './helpers/WorkAddressHelper';
 
 const logger = getLogger('WorkAddressController');
 
@@ -35,30 +36,21 @@ export default class WorkAddressController {
     this.form = new Form(<FormFields>this.workAddressFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    const { saveForLater } = req.body;
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
-      handleUpdateDraftCase(req, logger);
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
-      let redirectUrl = isRespondentAndWorkAddressSame
-        ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
-        : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.WORK_POSTCODE_ENTER);
+      const isCya = isReturnUrlIsCheckAnswers(req);
       if (isRespondentAndWorkAddressSame) {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
-      if (saveForLater) {
-        redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
-        return res.redirect(redirectUrl);
-      } else if (isReturnUrlIsCheckAnswers(req) && !isRespondentAndWorkAddressSame) {
-        redirectUrl = setUrlLanguage(req, redirectUrl);
-        return res.redirect(redirectUrl);
-      } else {
-        redirectUrl = setUrlLanguage(req, redirectUrl);
-        returnNextPage(req, res, redirectUrl);
-      }
+
+      await handleUpdateDraftCase(req, logger);
+
+      const redirectUrl = getRedirectUrl(req, isRespondentAndWorkAddressSame, isCya);
+      return res.redirect(setUrlLanguage(req, redirectUrl));
     } else {
       handleErrors(req, res, errors);
     }

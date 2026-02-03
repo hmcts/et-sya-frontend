@@ -227,6 +227,7 @@ export default {
     id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
     description: 'Case Details - Sunday Ayeni',
     type: 'ET1',
+    dateOfCorrespondence: '2025-07-25',
   },
   genericTseApplicationCollection: [
     {
@@ -275,6 +276,7 @@ export default {
           document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
         },
         shortDescription: 'Case Details - Sunday Ayeni',
+        dateOfCorrespondence: '2025-07-25',
       },
     },
     {
@@ -287,6 +289,7 @@ export default {
           document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
         },
         shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
+        dateOfCorrespondence: '2025-07-25',
       },
     },
   ],

@@ -522,6 +522,7 @@ export const setDocumentValues = (
         id: getDocId(doc.value?.uploadedDocument?.document_url),
         description: !docType ? '' : doc.value?.shortDescription,
         type: isEt3Supporting ? ET3_SUPPORTING : doc.value.typeOfDocument || doc.value.documentType,
+        dateOfCorrespondence: doc.value?.dateOfCorrespondence,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;

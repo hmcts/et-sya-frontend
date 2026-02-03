@@ -44,6 +44,7 @@ export default class ClaimDetailsController {
     try {
       await getDocumentDetails(
         combineDocuments(userCase?.acknowledgementOfClaimLetterDetail, userCase?.rejectionOfClaimDocumentDetail),
+        req.session.userCase.ethosCaseReference,
         req.session.user?.accessToken
       );
     } catch (err) {
@@ -97,7 +98,7 @@ async function getET1Documents(userCase: CaseWithId, accessToken: string) {
   }
 
   try {
-    await getDocumentDetails(et1DocumentDetails, accessToken);
+    await getDocumentDetails(et1DocumentDetails, userCase.ethosCaseReference, accessToken);
   } catch (err) {
     logger.error(err.message);
   }
