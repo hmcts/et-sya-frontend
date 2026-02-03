@@ -35,7 +35,7 @@ export default class ApplicationDetailsController {
 
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
 
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
     const selectedApplication = findSelectedGenericTseApplication(
       getAllTseApplicationCollection(userCase),
       req.params?.appId

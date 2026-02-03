@@ -14,7 +14,7 @@ const logger = getLogger('StoredApplicationConfirmationController');
 export default class StoredApplicationConfirmationController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const languageParam = getLanguageParam(req.url);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

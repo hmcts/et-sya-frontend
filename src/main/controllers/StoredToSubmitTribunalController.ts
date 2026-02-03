@@ -78,7 +78,7 @@ export default class StoredToSubmitTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
     const languageParam = getLanguageParam(req.url);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
 
     const selectedNotification = findSelectedSendNotification(userCase.sendNotificationCollection, req.params?.orderId);
     if (!selectedNotification) {

@@ -92,7 +92,7 @@ export default class TribunalRespondToOrderController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const welshEnabled = await getFlagValue('welsh-language', null);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
     req.session.contactType = Rule92Types.TRIBUNAL;
     req.session.visitedContactTribunalSelection = true;
     const translations: AnyRecord = {

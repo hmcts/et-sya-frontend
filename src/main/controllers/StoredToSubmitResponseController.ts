@@ -29,7 +29,7 @@ export default class StoredToSubmitResponseController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
 
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
@@ -77,7 +77,7 @@ export default class StoredToSubmitResponseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
     const languageParam = getLanguageParam(req.url);
-    const userCase = req.session.userCase;
+    const { userCase } = req.session;
     const accessToken = req.session.user?.accessToken;
 
     const selectedApplication = findSelectedGenericTseApplication(
