@@ -31,7 +31,7 @@ export default class CitizenHubResponseFromRespondentController {
     }
 
     try {
-      await getDocumentDetails(documents, req.session.user?.accessToken);
+      await getDocumentDetails(documents, req.session.userCase.ethosCaseReference, req.session.user?.accessToken);
     } catch (err) {
       logger.error(err.message);
       return res.redirect(ErrorPages.NOT_FOUND);

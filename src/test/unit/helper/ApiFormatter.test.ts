@@ -681,6 +681,7 @@ describe('set Serving Document Values()', () => {
         id: 'abc123',
         description: 'ET3 form English version',
         type: 'ET3',
+        dateOfCorrespondence: '2025-07-25',
       },
     ]);
   });
