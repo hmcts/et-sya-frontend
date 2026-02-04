@@ -17,6 +17,7 @@ import {
 } from '../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import mockUserCase from '../mocks/mockUserCase';
 import { clone } from '../test-helpers/clone';
 
 jest.mock('axios');
@@ -141,5 +142,15 @@ describe('Respondent application details controller', () => {
 
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_APPLICATIONS);
     expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('notViewedYet');
+  });
+
+  it('should redirect error page when appId invalid', async () => {
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ userCase: mockUserCase }, respondentApplicationDetailsRaw);
+    request.params.appId = 'invalid-app-id';
+
+    await new RespondentApplicationDetailsController().get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 });
