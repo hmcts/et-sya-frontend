@@ -27,6 +27,8 @@ export interface AppSession extends Session {
   contactTribunalSelection?: string;
   documentDownloadPage?: string;
   caseNumberChecked?: boolean;
+  claimantFirstName?: string;
+  claimantLastName?: string;
 }
 
 export interface UserDetails {

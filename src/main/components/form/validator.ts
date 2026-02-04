@@ -222,3 +222,12 @@ export const isValidEthosCaseReference: Validator = value => {
     return ValidationErrors.INVALID_VALUE;
   }
 };
+
+export const isValidCaseReferenceId: Validator = value => {
+  if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
+    return ValidationErrors.REQUIRED;
+  }
+  if (!(value as string).match(/^[0-9]{16}$/) && !(value as string).match(/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/)) {
+    return ValidationErrors.INVALID_VALUE;
+  }
+};

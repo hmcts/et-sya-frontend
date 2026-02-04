@@ -1,7 +1,7 @@
 {
-  "pageTitle": "[W] Your Details",
-  "title": "[W] Your Details",
-  "p1": "[W] You must enter your details exactly as they're written on the case, including any mistakes. For example, if the client's last name is Smyth but it has been spelled 'Smith', you should enter Smith.",
+  "pageTitle": "[W] Enter your details",
+  "title": "[W] Enter your details",
+  "p1": "[W] You must enter your details exactly as they're written on the case, including any mistakes. For example, if your last name is Smyth but it has been spelled 'Smith', you should enter Smith",
   "submissionReference": {
     "label": "[W] Submission Reference"
   },
@@ -9,11 +9,17 @@
     "label": "[W] Full name"
   },
   "errors": {
-    "submissionReference": {
-      "required": "[W] Enter the submission reference"
+    "id": {
+      "required": "[W] Enter your submission reference exactly as it's written on the ET1 claim form",
+      "invalid": "[W] You entered an invalid submission reference. Submission reference should be 16 numeric characters in 123456789123456 or 1234-5678-9123-4567 formats",
+      "submissionReferenceNotFound": "[W] Submission Reference not found. The entered submission reference does not match our records"
     },
     "claimantName": {
-      "required": "[W] Enter your full name"
+      "required": "[W] Enter your full name exactly as it's written on the ET1 claim form"
+    },
+    "hiddenErrorField": {
+      "api": "[W] Unable to assign you to your case. Please try again later",
+      "invalidCaseDetails": "[W] Please enter the details exactly as they are written on the case, including any mistakes"
     }
   }
 }
