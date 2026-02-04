@@ -57,14 +57,19 @@ export default class CSRFToken {
 
       // Skip CSRF validation for multipart/form-data routes
       // These routes will apply CSRF protection after Multer middleware
-      const skipCsrfPaths = [
-        '/describe-what-happened',
-        '/tribunal-contact-selected',
-        '/respondent-supporting-material',
-        '/hearing-document-upload',
+      const skipCsrfPaths = ['/describe-what-happened'];
+
+      // Check if path starts with these prefixes (for routes with parameters)
+      const skipCsrfPathPrefixes = [
+        '/contact-the-tribunal/',
+        '/respondent-supporting-material/',
+        '/hearing-document-upload/',
       ];
 
-      if (skipCsrfPaths.includes(req.path) && req.method !== 'GET') {
+      const shouldSkip =
+        skipCsrfPaths.includes(req.path) || skipCsrfPathPrefixes.some(prefix => req.path.startsWith(prefix));
+
+      if (shouldSkip && req.method !== 'GET') {
         return next();
       }
 

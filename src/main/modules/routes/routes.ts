@@ -324,7 +324,6 @@ export class Routes {
       new ContactTheTribunalSelectedController().post
     );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
-    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
     app.get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE, new RespondToApplicationCompleteController().get);
     app.get(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().get);
     app.post(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().post);
