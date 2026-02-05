@@ -424,6 +424,7 @@ export const CcdDataModel = {
 } as const;
 
 export const EXISTING_USER = 'existingUser';
+export const ASSIGN_CLAIM_USER = 'assignClaimUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';

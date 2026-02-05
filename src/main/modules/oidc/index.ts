@@ -5,7 +5,15 @@ import { Application, NextFunction, Request, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
+import {
+  ASSIGN_CLAIM_USER,
+  AuthUrls,
+  EXISTING_USER,
+  HTTPS_PROTOCOL,
+  PageUrls,
+  RedisErrors,
+  languages,
+} from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
@@ -24,7 +32,13 @@ export class Oidc {
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
       const languageParam = req.cookies.i18next === languages.WELSH ? languages.WELSH : languages.ENGLISH;
-      req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
+      if (req.session.guid) {
+        stateParam = req.session.guid;
+      } else if (req.session.isAssignClaim) {
+        stateParam = ASSIGN_CLAIM_USER;
+      } else {
+        stateParam = EXISTING_USER;
+      }
       stateParam = stateParam + '-' + languageParam;
 
       // Set the i18next cookie with HttpOnly flag
@@ -102,7 +116,9 @@ export const idamCallbackHandler = async (
   const langPrefix = '?lng=';
   const lang = langPrefix + langSuffix;
 
-  if (guid === EXISTING_USER) {
+  if (guid === ASSIGN_CLAIM_USER) {
+    return res.redirect(PageUrls.YOUR_DETAILS_FORM + lang);
+  } else if (guid === EXISTING_USER) {
     if (!redisClient) {
       const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
       err.name = RedisErrors.FAILED_TO_CONNECT;

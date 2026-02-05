@@ -59,6 +59,7 @@ export default class CaseNumberController {
 
     if ((isReformCase?.data && isReformCase.data !== 'false') || isReformCase?.data === 'true') {
       req.session.caseNumberChecked = true;
+      req.session.isAssignClaim = true;
       return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM + languageParam)));
     } else {
       req.session.errors.push({ propertyName: 'ethosCaseReference', errorType: 'caseNotFound' });

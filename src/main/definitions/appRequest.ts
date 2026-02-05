@@ -29,6 +29,7 @@ export interface AppSession extends Session {
   caseNumberChecked?: boolean;
   claimantFirstName?: string;
   claimantLastName?: string;
+  isAssignClaim?: boolean;
 }
 
 export interface UserDetails {
