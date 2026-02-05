@@ -77,4 +77,21 @@ describe('CaseNumberController', () => {
 
     expect(req.session.isAssignClaim).toBe(true);
   });
+
+  it('should redirect back to self with error when case is not found', async () => {
+    mockGetCaseApi.mockReturnValue({
+      checkEthosCaseReference: jest.fn().mockResolvedValue({ data: 'false' }),
+    });
+
+    const body = { ethosCaseReference: '1234567/2023' };
+    const controller = new CaseNumberController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalled();
+    expect(req.session.errors).toContainEqual({ propertyName: 'ethosCaseReference', errorType: 'caseNotFound' });
+  });
 });
