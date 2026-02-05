@@ -702,6 +702,93 @@ describe('submitCase', () => {
   });
 });
 
+describe('checkEthosCaseReference', () => {
+  beforeEach(() => {
+    mockedAxios.get.mockClear();
+  });
+
+  it('should send get request to find case by ethos reference', async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: 'true' });
+    const ethosCaseReference = '1234567/2023';
+
+    const result = await api.checkEthosCaseReference(ethosCaseReference);
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      `${JavaApiUrls.FIND_CASE_BY_ETHOS_CASE_REFERENCE}?${JavaApiUrls.FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME}=${ethosCaseReference}`
+    );
+    expect(result.data).toBe('true');
+  });
+});
+
+describe('checkIdAndState', () => {
+  beforeEach(() => {
+    mockedAxios.get.mockClear();
+  });
+
+  it('should send get request to find case by id', async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: 'true' });
+    const caseId = '1234567890123456';
+
+    const result = await api.checkIdAndState(caseId);
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${JavaApiUrls.FIND_CASE_BY_ID}?id=${caseId}`);
+    expect(result.data).toBe('true');
+  });
+});
+
+describe('getCaseByApplicationRequest', () => {
+  beforeEach(() => {
+    mockedAxios.post.mockClear();
+  });
+
+  it('should send post request to find case for role modification', async () => {
+    mockedAxios.post.mockResolvedValueOnce({ data: { id: '1234' } });
+    const mockRequest = {
+      session: {
+        userCase: {
+          id: '1234567890123456',
+          firstName: 'John',
+          lastName: 'Doe',
+        },
+      },
+    } as unknown as AppRequest;
+
+    await api.getCaseByApplicationRequest(mockRequest);
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION,
+      expect.objectContaining({
+        caseSubmissionReference: '1234567890123456',
+        claimantFirstNames: 'John',
+        claimantLastName: 'Doe',
+        applicationName: 'et-sya-frontend',
+      })
+    );
+  });
+
+  it('should remove first dash from case submission reference', async () => {
+    mockedAxios.post.mockResolvedValueOnce({ data: { id: '1234' } });
+    const mockRequest = {
+      session: {
+        userCase: {
+          id: '1234-567890123456',
+          firstName: 'John',
+          lastName: 'Doe',
+        },
+      },
+    } as unknown as AppRequest;
+
+    await api.getCaseByApplicationRequest(mockRequest);
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION,
+      expect.objectContaining({
+        caseSubmissionReference: '1234567890123456',
+      })
+    );
+  });
+});
+
 describe('Axios post to retrieve pdf', () => {
   it('should send post request to the correct api endpoint with the case id passed in the request body', async () => {
     await api.downloadClaimPdf(mockUserDetails.id);
@@ -886,8 +973,31 @@ describe('Rethrowing errors when axios requests fail', () => {
       parameters: [caseItem, 'appId', 'responseId'],
       errorMessage: 'Error updating response to viewed: ' + error.message,
     },
+    {
+      serviceMethod: api.checkEthosCaseReference,
+      parameters: ['1234567/2023'],
+      errorMessage: 'Error finding case by ethos reference: ' + error.message,
+    },
+    {
+      serviceMethod: api.checkIdAndState,
+      parameters: ['1234567890123456'],
+      errorMessage: 'Error getting user cases: ' + error.message,
+    },
   ])('should rethrow error if service method number $# fails', async ({ serviceMethod, parameters, errorMessage }) => {
     await expect(serviceMethod.apply(api, parameters)).rejects.toThrow(errorMessage);
+  });
+
+  it('should rethrow error when getCaseByApplicationRequest fails', async () => {
+    const mockAppRequest = {
+      session: {
+        userCase: {
+          id: '1234567890123456',
+          firstName: 'John',
+          lastName: 'Doe',
+        },
+      },
+    } as unknown as AppRequest;
+    await expect(api.getCaseByApplicationRequest(mockAppRequest)).rejects.toThrow(/Error getting user case/);
   });
 
   it.each([

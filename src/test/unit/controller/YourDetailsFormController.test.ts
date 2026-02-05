@@ -83,4 +83,68 @@ describe('YourDetailsFormController', () => {
 
     expect(req.session.userCase.claimantName).toEqual('John Doe');
   });
+
+  it('should redirect back to self with error when submission reference is not found', async () => {
+    mockGetCaseApi.mockReturnValue({
+      checkIdAndState: jest.fn().mockResolvedValue({ data: 'false' }),
+    });
+
+    const body = {
+      id: '1234567890123456',
+      claimantName: 'John Doe',
+    };
+    const controller = new YourDetailsFormController();
+
+    const req = mockRequest({ body });
+    req.url = PageUrls.YOUR_DETAILS_FORM;
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_FORM);
+    expect(req.session.errors).toContainEqual({ propertyName: 'id', errorType: 'submissionReferenceNotFound' });
+  });
+
+  it('should redirect back to self with api error when checkIdAndState throws', async () => {
+    mockGetCaseApi.mockReturnValue({
+      checkIdAndState: jest.fn().mockRejectedValue(new Error('API Error')),
+    });
+
+    const body = {
+      id: '1234567890123456',
+      claimantName: 'John Doe',
+    };
+    const controller = new YourDetailsFormController();
+
+    const req = mockRequest({ body });
+    req.url = PageUrls.YOUR_DETAILS_FORM;
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_FORM);
+    expect(req.session.errors).toContainEqual({ propertyName: 'hiddenErrorField', errorType: 'api' });
+  });
+
+  it('should redirect back to self with invalid case details error when case data is not found', async () => {
+    mockGetCaseApi.mockReturnValue({
+      checkIdAndState: jest.fn().mockResolvedValue({ data: 'true' }),
+      getCaseByApplicationRequest: jest.fn().mockResolvedValue({ data: null }),
+    });
+
+    const body = {
+      id: '1234567890123456',
+      claimantName: 'John Doe',
+    };
+    const controller = new YourDetailsFormController();
+
+    const req = mockRequest({ body });
+    req.url = PageUrls.YOUR_DETAILS_FORM;
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_FORM);
+    expect(req.session.errors).toContainEqual({ propertyName: 'hiddenErrorField', errorType: 'invalidCaseDetails' });
+  });
 });
