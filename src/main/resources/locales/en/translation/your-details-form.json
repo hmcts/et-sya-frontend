@@ -1,7 +1,7 @@
 {
   "pageTitle": "Enter your details",
   "title": "Enter your details",
-  "p1": "You must enter your details exactly as they're written on the case, including any mistakes. For example, if your last name is Smyth but it has been spelled 'Smith', you should enter Smith.",
+  "p1": "You must enter your details exactly as they're written on the case, including any mistakes. For example, if your last name is Smyth but it has been spelled 'Smith', you should enter Smith",
   "submissionReference": {
     "label": "Submission Reference"
   },
@@ -9,11 +9,17 @@
     "label": "Full name"
   },
   "errors": {
-    "submissionReference": {
-      "required": "Enter your submission reference exactly as it's written on the ET1 claim form"
+    "id": {
+      "required": "Enter your submission reference exactly as it's written on the ET1 claim form",
+      "invalid": "You entered an invalid submission reference. Submission reference should be 16 numeric characters in 123456789123456 or 1234-5678-9123-4567 formats",
+      "submissionReferenceNotFound": "Submission Reference not found. The entered submission reference does not match our records"
     },
     "claimantName": {
       "required": "Enter your full name exactly as it's written on the ET1 claim form"
+    },
+    "hiddenErrorField": {
+      "api": "Unable to assign you to your case. Please try again later",
+      "invalidCaseDetails": "Please enter the details exactly as they are written on the case, including any mistakes"
     }
   }
 }

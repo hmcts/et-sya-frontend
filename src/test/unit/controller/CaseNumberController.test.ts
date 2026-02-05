@@ -65,4 +65,16 @@ describe('CaseNumberController', () => {
 
     expect(req.session.userCase.ethosCaseReference).toBe('1234567/2023');
   });
+
+  it('should set isAssignClaim flag when case number is valid', async () => {
+    const body = { ethosCaseReference: '1234567/2023' };
+    const controller = new CaseNumberController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(req.session.isAssignClaim).toBe(true);
+  });
 });

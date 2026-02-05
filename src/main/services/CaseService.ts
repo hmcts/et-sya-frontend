@@ -481,6 +481,49 @@ export class CaseApi {
       throw new Error('Error finding case by ethos reference: ' + axiosErrorDetails(error));
     }
   };
+
+  checkIdAndState = async (id: string): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.get<string>(
+        JavaApiUrls.FIND_CASE_BY_ID + DefaultValues.STRING_QUESTION_MARK + 'id' + DefaultValues.STRING_EQUALS + id
+      );
+    } catch (error) {
+      throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
+    }
+  };
+
+  /**
+   * Retrieves case data by userCase value of the session(req.session.userCase).
+   * throws an exception when there is no value of userCase in the session.
+   * @param request receives userCase from request object's session field. Fields that we use from userCase are:
+   *                id Case id, usually referred as case submission reference entered to the form by respondent.
+   *                id value can be only 16 digit decimal or 16 digit divided by dash like 1234-5678-1234-5678.
+   *                If it is divided by dash, this method automatically removes dash values with empty string.
+   *                respondentName Name of the respondent entered to the form by respondent.
+   *                firstName First Name of the claimant entered to the form by respondent.
+   *                lastName Last name of the claimant entered to the form by respondent.
+   */
+  getCaseByApplicationRequest = async (request: AppRequest): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      const caseWithId: CaseWithId = request.session.userCase;
+      let caseSubmissionReference = caseWithId.id;
+      if (caseSubmissionReference?.includes(DefaultValues.STRING_DASH)) {
+        caseSubmissionReference = caseSubmissionReference.replace(
+          DefaultValues.STRING_DASH,
+          DefaultValues.STRING_EMPTY
+        );
+      }
+
+      return await this.axios.post(JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION, {
+        caseSubmissionReference,
+        claimantFirstNames: caseWithId.firstName,
+        claimantLastName: caseWithId.lastName,
+        applicationName: 'et-sya-frontend',
+      });
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_GETTING_USER_CASE + axiosErrorDetails(error));
+    }
+  };
 }
 
 export const getCaseApi = (token: string): CaseApi => {

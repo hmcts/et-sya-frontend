@@ -156,6 +156,7 @@ export const TranslationKeys = {
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
   CASE_NUMBER_CHECK: 'case-number-check',
   YOUR_DETAILS_FORM: 'your-details-form',
+  YOUR_DETAILS_CYA: 'your-details-cya',
 } as const;
 
 export const PageUrls = {
@@ -299,6 +300,7 @@ export const PageUrls = {
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
+  YOUR_DETAILS_CYA: '/your-details-cya',
 } as const;
 
 export const InterceptPaths = {
@@ -339,6 +341,7 @@ export const JavaApiUrls = {
   DOCUMENT_DOWNLOAD: '/document/download/',
   DOCUMENT_DETAILS: '/document/details/',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE: '/et3/findCaseByEthosCaseReference',
+  FIND_CASE_BY_ID: '/et3/findCaseById',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
@@ -361,6 +364,7 @@ export const JavaApiUrls = {
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
   REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
   REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
+  FIND_CASE_FOR_ROLE_MODIFICATION: '/manageCaseRole/findCaseForRoleModification',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME: 'ethosCaseReference',
 } as const;
 
@@ -420,6 +424,7 @@ export const CcdDataModel = {
 } as const;
 
 export const EXISTING_USER = 'existingUser';
+export const ASSIGN_CLAIM_USER = 'assignClaimUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
@@ -624,4 +629,5 @@ export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
 
 export const ServiceErrors = {
   ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
+  ERROR_GETTING_USER_CASE: 'Error getting user case: ',
 } as const;

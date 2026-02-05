@@ -222,6 +222,7 @@ export interface Case {
   claimantRepresentativeRemoved?: YesOrNo;
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
+  claimantName?: string;
 }
 
 export const enum StillWorking {

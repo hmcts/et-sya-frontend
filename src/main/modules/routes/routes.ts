@@ -142,6 +142,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
+import YourDetailsCYAController from '../../controllers/YourDetailsCYAController';
 import YourDetailsFormController from '../../controllers/YourDetailsFormController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
@@ -462,5 +463,6 @@ export class Routes {
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
+    app.get(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().get);
   }
 }

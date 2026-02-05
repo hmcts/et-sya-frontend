@@ -39,7 +39,7 @@ describe('Your details form page', () => {
   });
 
   it('should display submission reference input', () => {
-    const input = htmlRes.getElementById('submissionReference');
+    const input = htmlRes.getElementById('caseReferenceId');
     expect(input).to.exist;
   });
 
