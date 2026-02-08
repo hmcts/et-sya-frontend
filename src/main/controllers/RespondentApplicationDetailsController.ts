@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, ErrorPages, PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { datesStringToDateInLocale } from '../helper/dateInLocale';
@@ -26,12 +26,17 @@ const logger = getLogger('RespondentApplicationDetailsController');
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     req.session.documentDownloadPage = PageUrls.RESPONDENT_APPLICATION_DETAILS;
 
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
       req.params.appId
     );
+    if (!selectedApplication) {
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
+      return res.redirect(ErrorPages.NOT_FOUND + languageParam);
+    }
     setSelectedTseApplication(req, userCase, selectedApplication);
 
     const translations: AnyRecord = {
@@ -55,7 +60,6 @@ export default class RespondentApplicationDetailsController {
     }
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
-    const languageParam = getLanguageParam(req.url);
     const redirectUrl =
       PageUrls.RESPOND_TO_APPLICATION_SELECTED.replace(':appId', selectedApplication.id) + languageParam;
     const adminRespondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
