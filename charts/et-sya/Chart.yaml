@@ -3,7 +3,7 @@ appVersion: '1.0'
 description: A Helm chart for et-sya App
 name: et-sya
 home: https://github.com/hmcts/et-sya-frontend
-version: 0.0.50
+version: 0.0.51
 dependencies:
   - name: nodejs
     version: 3.2.0
