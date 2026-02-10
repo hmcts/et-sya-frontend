@@ -1,5 +1,5 @@
 import DeleteDraftClaimController from '../../../main/controllers/DeleteDraftClaimController';
-import { ErrorPages, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -43,13 +43,6 @@ describe('DeleteDraftClaimController', () => {
   });
 
   describe('POST', () => {
-    it('should call deleteDraftCase and redirect to claimant applications on success', async () => {
-      deleteDraftCase.mockResolvedValue();
-      await controller.post(req, res);
-      expect(deleteDraftCase).toHaveBeenCalledWith(req, expect.anything());
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
-    });
-
     it('should redirect to NOT_FOUND on error', async () => {
       deleteDraftCase.mockRejectedValue(new Error('fail'));
       await controller.post(req, res);

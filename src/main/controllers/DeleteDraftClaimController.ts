@@ -2,7 +2,9 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
+import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
 import { deleteDraftCase } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -26,6 +28,10 @@ export default class DeleteDraftClaimController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     try {
+      req.session.userCase = fromApiFormat(
+        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.id)).data
+      );
+
       await deleteDraftCase(req, logger);
       // Redirect to claimant applications page after successful deletion
       const languageParam = getLanguageParam(req.url);
