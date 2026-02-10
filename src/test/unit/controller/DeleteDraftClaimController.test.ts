@@ -1,5 +1,10 @@
+import AxiosInstance, { AxiosResponse } from 'axios';
+
 import DeleteDraftClaimController from '../../../main/controllers/DeleteDraftClaimController';
-import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { ErrorPages, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -9,6 +14,23 @@ jest.mock('../../../main/controllers/helpers/CaseHelpers', () => ({
 jest.mock('../../../main/controllers/helpers/RouterHelpers', () => ({
   getLanguageParam: jest.fn(() => ''),
 }));
+
+jest.mock('axios');
+const mockCaseApi = {
+  axios: AxiosInstance,
+  getUserCase: jest.fn(),
+};
+const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+caseApi.getUserCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      id: '1234',
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
 
 const { deleteDraftCase } = require('../../../main/controllers/helpers/CaseHelpers');
 
@@ -43,6 +65,13 @@ describe('DeleteDraftClaimController', () => {
   });
 
   describe('POST', () => {
+    it('should call deleteDraftCase and redirect to claimant applications on success', async () => {
+      deleteDraftCase.mockResolvedValue();
+      await controller.post(req, res);
+      expect(deleteDraftCase).toHaveBeenCalledWith(req, expect.anything());
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+    });
+
     it('should redirect to NOT_FOUND on error', async () => {
       deleteDraftCase.mockRejectedValue(new Error('fail'));
       await controller.post(req, res);
