@@ -23,7 +23,7 @@
       }, {
         html:
           '<a class="govuk-link govuk-!-margin-right-3" href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' +
-          '<a href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '">' + delete + '</a>'
+          '<a class="govuk-link" href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '">' + delete + '</a>'
       }
     ]), draftApplications) %}
   {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -42,8 +42,8 @@
         text: app.userCase.lastModified
       }, {
         html:
-                '<a href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' + '&nbsp' + '&nbsp' +
-                ' <a href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '" style="margin-left: 1em;">' + delete + '</a>'
+                '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' + '&nbsp' + '&nbsp' +
+                ' <a class="govuk-link" href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '" style="margin-left: 1em;">' + delete + '</a>'
       }
     ]), draftApplications) %}
   {% else %}
@@ -59,7 +59,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: '<a href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + view + '</a>'
+        html: '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + view + '</a>'
       }
     ]), submittedApplications) %}
   {% endif %}
