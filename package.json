@@ -166,7 +166,7 @@
   },
   "resolutions": {
     "@swc/core": "1.3.82",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "@opentelemetry/instrumentation": "^0.211.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
@@ -185,8 +185,7 @@
     "brace-expansion": "^4.0.0",
     "form-data": "^4.0.4",
     "qs": "^6.14.1",
-    "tar": "^7.5.7",
-    "glob": "^10.2.7"
+    "tar": "^7.5.7"
   },
   "packageManager": "yarn@4.12.0"
 }
