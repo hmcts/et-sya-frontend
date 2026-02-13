@@ -618,4 +618,6 @@ export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
 
 export const ServiceErrors = {
   ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
+  ERROR_APPLICATION_NOT_FOUND: 'Selected application not found: ',
+  ERROR_NOTIFICATION_NOT_FOUND: 'Selected order not found: ',
 } as const;

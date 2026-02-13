@@ -8,6 +8,7 @@ import commonRaw from '../../../main/resources/locales/en/translation/common.jso
 import respondentOrderOrRequestDetailsRaw from '../../../main/resources/locales/en/translation/notification-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import mockUserCase from '../mocks/mockUserCase';
 
 describe('Respondent order or request details Controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
@@ -99,5 +100,15 @@ describe('Respondent order or request details Controller', () => {
         respondButton: false,
       })
     );
+  });
+
+  it('should redirect error page when appId invalid', async () => {
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ userCase: mockUserCase }, translationJsons);
+    request.params.orderId = 'invalid-order-id';
+
+    await new TribunalOrderOrRequestDetailsController().get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 });
