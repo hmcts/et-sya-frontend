@@ -164,7 +164,7 @@
     "@faker-js/faker": "^5.5.3 || ^8.0.0 || ^9.0.0"
   },
   "resolutions": {
-    "@swc/core": "1.3.82",
+    "@swc/core": "1.15.11",
     "axios": "^1.13.5",
     "@opentelemetry/instrumentation": "^0.211.0",
     "pino-std-serializers": "^7.0.0",
