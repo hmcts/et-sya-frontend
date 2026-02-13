@@ -29,5 +29,8 @@
     "redis": {
       "host": "127.0.0.1"
     }
+  },
+  "csrf": {
+    "secret": "0123456789abcdef0123456789abcdef"
   }
 }

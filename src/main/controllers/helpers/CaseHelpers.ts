@@ -259,7 +259,9 @@ export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Fo
   const errors = returnSessionErrors(req, form);
   if (errors.length === 0) {
     req.session.errors = [];
-    returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
+    req.session.save(() => {
+      returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
+    });
   } else {
     handleErrors(req, res, errors);
   }
