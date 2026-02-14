@@ -31,6 +31,7 @@ export const mockApplications: ApplicationTableRecord[] = [
     respondents: 'Globo Corp<br />Mega Globo Corp',
     completionStatus: '4 of 4 tasks completed',
     url: '/claimant-application/12345?lng=en',
+    deleteDraftUrl: '/claimant-application/12345/delete?lng=en',
   },
   {
     userCase: {
@@ -44,6 +45,7 @@ export const mockApplications: ApplicationTableRecord[] = [
     respondents: 'undefined',
     completionStatus: '0 of 4 tasks completed',
     url: '/claimant-application/123456?lng=en',
+    deleteDraftUrl: '/claimant-application/123456/delete?lng=en',
   },
   {
     userCase: {
@@ -68,6 +70,7 @@ export const mockApplications: ApplicationTableRecord[] = [
     respondents: 'Globo Corp',
     completionStatus: '0 of 4 tasks completed',
     url: '/citizen-hub/1234567?lng=en',
+    deleteDraftUrl: '/claimant-application/1234567/delete?lng=en',
   },
 ];
 
