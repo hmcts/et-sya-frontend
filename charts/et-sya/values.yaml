@@ -10,7 +10,7 @@ nodejs:
       secrets:
         - app-insights-connection-string
         - idam-secret
-        - redis-access-key
+        - et-redis-access-key
         - os-places-token
         - pcq-token-key
         - launch-darkly-sdk-key
@@ -18,7 +18,7 @@ nodejs:
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
-    REDIS_HOST: 'et-sya-session-storage-{{ .Values.global.environment }}.redis.cache.windows.net'
+    REDIS_HOST: 'et-session-storage-{{ .Values.global.environment }}.redis.cache.windows.net'
     ET_SYA_API_HOST: 'http://et-sya-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
     PCQ_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/service-endpoint'
     PCQ_HEALTH_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/health'
