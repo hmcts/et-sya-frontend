@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { Response as ExpressResponse } from 'express';
 
 import { Form } from '../components/form/form';
@@ -13,6 +12,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getRespondentIndex } from './helpers/RespondentHelpers';
 import { getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
 import YourDetailsFormControllerHelper from './helpers/YourDetailsFormControllerHelper';
 
@@ -53,23 +53,16 @@ export default class YourDetailsFormController {
     req.session.errors = [];
     req.session.userCase = YourDetailsFormControllerHelper.generateBasicUserCaseByYourDetailsFormData(formData);
     const errors = this.form.getValidatorErrors(formData);
-    let isReformCase: AxiosResponse<string> = undefined;
     if (errors.length === 0) {
-      try {
-        isReformCase = await getCaseApi(req.session.user?.accessToken).checkIdAndState(formData.id);
-      } catch (error) {
-        logger.error('Unable to check reform case' + error.message);
-        req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'api' });
-        return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM)));
-      }
-      if (isReformCase?.data.toString() === 'false') {
-        logger.info(`Submission reference ${formData.id} not found`);
-        req.session.errors.push({ propertyName: 'id', errorType: 'submissionReferenceNotFound' });
-        return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM)));
-      }
       const caseData = (await getCaseApi(req.session.user?.accessToken)?.getCaseByApplicationRequest(req))?.data;
       if (caseData) {
         logger.info(`Details have been found and match, redirect to CYA for Submission reference: ${formData.id}`);
+        const respondentCollection = caseData.case_data.respondentCollection || [];
+        req.session.respondentNames = respondentCollection.map(item => item.value?.respondent_name);
+
+        const respondentIndex = getRespondentIndex(req) || 0;
+        req.session.respondentName = respondentCollection[respondentIndex]?.value?.respondent_name;
+
         return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_CYA)));
       } else {
         logger.info(`Invalid case details. Submission reference: ${formData.id}`);

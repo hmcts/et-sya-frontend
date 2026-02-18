@@ -1,7 +1,20 @@
 {
   "title": "Check and submit",
+  "caseNumber": "Case number",
+  "claimantName": "Claimant's name",
+  "respondentName": "Respondent's name",
+  "confirmation": "I confirm all these details are accurate and match what is written on the case.",
   "submitBtn": "Submit",
-  "cancelLink": "Cancel",
   "findLegalAdvice": "Find legal advice",
-  "contact": "Contact us"
+  "contact": "Contact us",
+  "errors": {
+    "yourDetailsCya": {
+      "required": "Please confirm the details are accurate."
+    },
+    "hiddenErrorField": {
+      "api": "Unable to assign role. Please try again later",
+      "caseAlreadyAssignedToSameUser": "You have already assigned to this case",
+      "caseAlreadyAssigned": "Case has already assigned to a respondent"
+    }
+  }
 }

@@ -3,6 +3,7 @@
   "h1": "Ceisiadau drafft",
   "h2": "Ceisiadau a gyflwynwyd",
   "p1": "<a href='/claimant-application/newClaim?lng=cy' class=\"govuk-link\">Dechrau hawliad newydd</a>",
+  "p2": "[W] <a href='/case-number-check?lng=en' class=\"govuk-link\">Add an existing claim</a>",
   "noRespondents": "Heb ei ddarparu eto",
   "col1": "Dyddiad creu",
   "col2": "Cyfeirnod",
@@ -11,5 +12,5 @@
   "col5": "Statws cwblhau",
   "col6": "Dyddiad a addaswyd diwethaf",
   "col7": "Opsiynau",
-  "p2": "At ddibenion preifatrwydd, bydd hawliad drafft yn cael ei ddileu 12 mis ar ôl y dyddiad y mae wedi'i greu."
+  "p3": "At ddibenion preifatrwydd, bydd hawliad drafft yn cael ei ddileu 12 mis ar ôl y dyddiad y mae wedi'i greu."
 }

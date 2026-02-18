@@ -68,10 +68,11 @@
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h1>
     </br>
     <p class="govuk-body">{{ p1 | safe }}</p>
+    <p class="govuk-body">{{ p2 | safe }}</p>
 
     {% if draftApplications.length != 0 %}
       <h2 class="govuk-heading-l">{{ h1 }}</h2>
-      <p class="govuk-body">{{ p2 }}</p>
+      <p class="govuk-body">{{ p3 }}</p>
 
       <div class="scrollableTable">
       {{ govukTable({

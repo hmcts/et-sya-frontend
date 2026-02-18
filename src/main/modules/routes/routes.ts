@@ -464,5 +464,6 @@ export class Routes {
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
     app.get(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().get);
+    app.post(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().post);
   }
 }

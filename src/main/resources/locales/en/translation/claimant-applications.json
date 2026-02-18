@@ -3,6 +3,7 @@
   "h1": "Draft applications",
   "h2": "Submitted applications",
   "p1": "<a href='/claimant-application/newClaim?lng=en' class=\"govuk-link\">Start a new claim</a>",
+  "p2": "<a href='/case-number-check?lng=en' class=\"govuk-link\">Add an existing claim</a>",
   "noRespondents": "Not yet provided",
   "col1": "Date created",
   "col2": "Reference",
@@ -11,5 +12,5 @@
   "col5": "Completion status",
   "col6": "Date last modified",
   "col7": "Options",
-  "p2": "For privacy purposes, a draft claim will be deleted 12 months after the date it's created."
+  "p3": "For privacy purposes, a draft claim will be deleted 12 months after the date it's created."
 }
