@@ -3,13 +3,23 @@ import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import yourDetailsCyaRaw from '../../../main/resources/locales/en/translation/your-details-cya.json';
+import { getCaseApi } from '../../../main/services/CaseService';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.mock('../../../main/services/CaseService');
+const mockGetCaseApi = getCaseApi as jest.Mock;
 
 describe('YourDetailsCYAController', () => {
   const translationJsons = { ...yourDetailsCyaRaw };
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
+
+  beforeAll(() => {
+    mockGetCaseApi.mockReturnValue({
+      assignCaseUserRole: jest.fn().mockResolvedValue({ data: {} }),
+    });
+  });
 
   describe('get()', () => {
     it('should render the Check and submit page', async () => {
@@ -20,7 +30,7 @@ describe('YourDetailsCYAController', () => {
       expect(response.render).toHaveBeenCalledWith(TranslationKeys.YOUR_DETAILS_CYA, expect.anything());
     });
 
-    it('should include cancelPage in render context', async () => {
+    it('should include cancelLink in render context', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
       const request = mockRequestWithTranslation({}, translationJsons);
@@ -28,7 +38,7 @@ describe('YourDetailsCYAController', () => {
       expect(response.render).toHaveBeenCalledWith(
         TranslationKeys.YOUR_DETAILS_CYA,
         expect.objectContaining({
-          cancelPage: expect.any(String),
+          cancelLink: expect.any(String),
         })
       );
     });
@@ -74,7 +84,7 @@ describe('YourDetailsCYAController', () => {
       expect(request.session.errors).toEqual([{ propertyName: 'yourDetailsCya', errorType: 'required' }]);
     });
 
-    it('should redirect to citizen hub when yourDetailsCya value is Yes', async () => {
+    it('should redirect to claimant applications when yourDetailsCya value is Yes', async () => {
       const body = { yourDetailsCya: YesOrNo.YES };
       const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
       const controller = new YourDetailsCYAController();
@@ -84,7 +94,7 @@ describe('YourDetailsCYAController', () => {
 
       await controller.post(request, response);
 
-      expect(response.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS + '?lng=en');
     });
   });
 });
