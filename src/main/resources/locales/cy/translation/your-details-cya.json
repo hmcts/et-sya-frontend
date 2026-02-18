@@ -14,7 +14,7 @@
     "hiddenErrorField": {
       "api": "[W] Unable to assign role. Please try again later",
       "caseAlreadyAssignedToSameUser": "[W] You have already assigned to this case",
-      "caseAlreadyAssigned": "[W] Case has already assigned to a respondent"
+      "caseAlreadyAssigned": "[W] Case has already assigned to a claimant"
     }
   }
 }
