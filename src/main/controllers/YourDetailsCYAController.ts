@@ -16,7 +16,7 @@ import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
 
-const logger = getLogger('YourDetailsFormController');
+const logger = getLogger('YourDetailsCYAController');
 
 export default class YourDetailsCYAController {
   private readonly form: Form;
