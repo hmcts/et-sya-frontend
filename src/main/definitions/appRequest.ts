@@ -30,6 +30,7 @@ export interface AppSession extends Session {
   claimantFirstName?: string;
   claimantLastName?: string;
   isAssignClaim?: boolean;
+  csrfInitialized?: boolean;
 }
 
 export interface UserDetails {

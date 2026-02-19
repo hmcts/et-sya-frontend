@@ -89,6 +89,16 @@ export class CaseApi {
     }
   };
 
+  deleteDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.post(JavaApiUrls.DELETE_DRAFT_CASE, toApiFormat(caseItem));
+    } catch (error) {
+      throw new Error(
+        'Error deleting draft case: ' + axiosErrorDetails(error, { action: 'deleteDraftCase', caseId: caseItem.id })
+      );
+    }
+  };
+
   updateHubLinksStatuses = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, {
