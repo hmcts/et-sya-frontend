@@ -32,6 +32,7 @@ export interface AppSession extends Session {
   isAssignClaim?: boolean;
   respondentNames?: string[];
   respondentName?: string;
+  csrfInitialized?: boolean;
 }
 
 export interface UserDetails {

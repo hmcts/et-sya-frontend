@@ -7,6 +7,7 @@ import {
   NoticeOfECC,
   NotificationSubjects,
   PageUrls,
+  Rule92Types,
   TranslationKeys,
   languages,
 } from '../../../main/definitions/constants';
@@ -47,6 +48,20 @@ describe('Tribunal Respond to Order Controller', () => {
     request.params.orderId = '123';
     await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, expect.anything());
+  });
+
+  it('should set contactType and visitedContactTribunalSelection on GET request', async () => {
+    const translationJsons = { ...respondJsonRaw, ...common };
+    const controller = new TribunalRespondToOrderController();
+    const userCase: Partial<CaseWithId> = mockUserCaseComplete;
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+    request.params.orderId = '123';
+    await controller.get(request, response);
+    expect(request.session.contactType).toBe(Rule92Types.TRIBUNAL);
+    expect(request.session.visitedContactTribunalSelection).toBe(true);
   });
 
   it('should post and redirect to the Rule92', () => {

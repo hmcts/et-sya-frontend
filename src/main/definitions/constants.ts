@@ -157,6 +157,7 @@ export const TranslationKeys = {
   CASE_NUMBER_CHECK: 'case-number-check',
   YOUR_DETAILS_FORM: 'your-details-form',
   YOUR_DETAILS_CYA: 'your-details-cya',
+  DELETE_DRAFT_CLAIM: 'delete-draft-claim',
 } as const;
 
 export const PageUrls = {
@@ -301,6 +302,7 @@ export const PageUrls = {
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
   YOUR_DETAILS_CYA: '/your-details-cya',
+  DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
 } as const;
 
 export const InterceptPaths = {
@@ -367,6 +369,7 @@ export const JavaApiUrls = {
   ASSIGN_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Assignment',
   FIND_CASE_FOR_ROLE_MODIFICATION: '/manageCaseRole/findCaseForRoleModification',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME: 'ethosCaseReference',
+  DELETE_DRAFT_CASE: 'cases/delete-draft-case',
 } as const;
 
 export const Urls = {

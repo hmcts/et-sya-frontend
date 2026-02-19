@@ -54,7 +54,6 @@
     "@types/config": "^3.3.0",
     "@types/connect-redis": "^0.0.23",
     "@types/cookie-parser": "^1.4.3",
-    "@types/csurf": "^1.11.2",
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.17.7",
     "@types/lodash": "^4.14.194",
@@ -70,7 +69,7 @@
     "config": "^4.0.0",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
-    "csurf": "^1.11.0",
+    "csrf-csrf": "^4.0.3",
     "dayjs": "^1.11.7",
     "eslint-plugin-codeceptjs": "1.3.0",
     "express": "^4.20.0",
@@ -103,7 +102,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.10.2",
+    "@axe-core/playwright": "4.11.1",
     "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.21.4",
@@ -166,8 +165,8 @@
   },
   "resolutions": {
     "@swc/core": "1.3.82",
-    "axios": "^1.13.2",
-    "@opentelemetry/instrumentation": "^0.203.0",
+    "axios": "^1.13.5",
+    "@opentelemetry/instrumentation": "^0.211.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",
@@ -184,7 +183,8 @@
     "tar-fs": "^3.1.1",
     "brace-expansion": "^4.0.0",
     "form-data": "^4.0.4",
-    "qs": "^6.14.1"
+    "qs": "^6.14.1",
+    "tar": "^7.5.7"
   },
   "packageManager": "yarn@4.12.0"
 }
