@@ -94,6 +94,7 @@ export default class TribunalRespondToOrderController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     req.session.contactType = Rule92Types.TRIBUNAL;
+    req.session.visitedContactTribunalSelection = true;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
