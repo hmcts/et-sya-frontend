@@ -90,6 +90,7 @@ export default class YourDetailsCYAController {
     try {
       caseAssignmentResponse = await getCaseApi(req.session.user?.accessToken)?.assignCaseUserRole(req);
     } catch (error) {
+      logger.info('Error creating caseAssignmentResponse', error.message.toString());
       if (
         StringUtils.isNotBlank(error?.message) &&
         error.message
