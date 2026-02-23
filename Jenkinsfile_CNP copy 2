@@ -1,0 +1,325 @@
+#!groovy
+
+//@Library("Infrastructure")
+@Library('Infrastructure@add-perftest-vars') _
+
+import uk.gov.hmcts.contino.AppPipelineDsl
+
+
+def type = "nodejs"
+def product = "et"
+def component = "sya"
+def branchesToSync = ['demo', 'ithc']
+def config
+def utils
+
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+
+def secrets = [
+    'et-${env}': [
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD'),
+        secret('perf-synthetic-monitor-token', 'PERF_SYNTHETIC_MONITOR_TOKEN'),
+        secret('perf-metrics-token', 'PERF_METRICS_TOKEN'),
+        secret('perf-event-token', 'PERF_EVENT_TOKEN'),
+    ]
+]
+
+def inTestTrue = [
+    'et-${env}': [
+        secret('true', 'IN_TEST')
+    ]
+]
+
+def inTestFalse = [
+    'et-${env}': [
+        secret('', 'IN_TEST')
+    ]
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withPipeline(type, product, component) {
+  loadVaultSecrets(secrets)
+  disableLegacyDeployment()
+  syncBranchesWithMaster(branchesToSync)
+  //enableSlackNotifications('#et-builds') // temp removal whilst wip
+
+  afterAlways('build') {
+    yarnBuilder.yarn('build')
+  }
+
+  afterAlways('smoketest:aat') {
+     loadVaultSecrets(inTestTrue)
+     publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'SYA Smoke Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+      stage('Accessibility') {
+          yarnBuilder.yarn('test:accessibility')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : 'playwright-report',
+              reportFiles          : 'index.html',
+              reportName           : 'Accessibility results'
+          ])
+          steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+      }
+    loadVaultSecrets(inTestFalse)
+    sh """
+       yarn playwright install
+    """
+  }
+
+  afterAlways('functionalTest:aat') {
+      publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'ET Functional UI Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+  }
+
+  afterSuccess('functionalTest:aat') {
+    stage("Performance Test") {
+        loadVaultSecrets(secrets) // Load Perf secrets
+        echo "Starting performance test stage..."
+        // Log details of the build
+        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+        //debug
+        echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+    }
+  }
+
+  afterAlways('smoketest:preview') {
+    loadVaultSecrets(inTestTrue)
+    publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'SYA Smoke Test Report'
+            ])
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    stage('Accessibility') {
+          yarnBuilder.yarn('test:accessibility')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : 'playwright-report',
+              reportFiles          : 'index.html',
+              reportName           : 'Accessibility results'
+          ])
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+    }
+    loadVaultSecrets(inTestFalse)
+    sh """
+       yarn playwright install
+    """
+  }
+
+  afterAlways('functionalTest:preview') {
+      publishHTML([
+                    allowMissing         : true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll              : true,
+                    reportDir            : 'playwright-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'ET Functional UI Test Report'
+            ])
+      steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+  }
+
+  afterAlways('functionalTest:preview') {
+
+        // //************** TEST **********
+        stage('Performance Test - Load Config & Utils') {
+
+            echo "Loading Performance test configuration and utilities from the test/performance directory..."
+
+            script {
+                try {
+                    config = load 'src/test/performance/config/config.groovy'
+                    utils = load 'src/test/performance/utils/utils.groovy'
+                } catch (Exception e) {
+                    echo "Error Message: ${e.message}"
+                }
+
+                if (utils?.Test) {
+                    echo "API Host: ${utils.Test}"
+                } else {
+                echo "utils is null or Test is not defined"
+                }
+                echo "API Host: ${utils.Test}"
+            }
+        }
+        stage('Performance Test') {
+
+        loadVaultSecrets(secrets) // Load Perf secrets
+
+        //echo "DT API Host config.var = ${config.dynatraceApiHost}"
+
+        //Perf Vars (*Need to add to config file)
+        //def dynatraceApiHost = "https://yrk32651.live.dynatrace.com/"
+        def dynatraceEventIngestEndpoint = "api/v2/events/ingest"
+        def dynatraceMetricIngestEndpoint = "api/v2/metrics/ingest"
+        def dynatraceTriggerSynthticEndpoint = "api/v2/synthetic/executions/batch"
+        def dynatraceSyntheticPerfTest = "SYNTHETIC_TEST-008CAF328F244320"
+        def dynatraceDashboardId = "a4576442-06a9-4a76-baa5-5342a525679f"
+
+        echo "Starting performance test stage..."
+        // Log details of the build
+        echo "Workspace: ${env.WORKSPACE}\nBranch: ${env.BRANCH_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nDate/Time: ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+        //Check token:
+        echo "Token: ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"
+        // try {
+            // def config = load 'src/test/performance/config/config.groovy'
+            // echo "Loaded Config Succesfully.."
+        // } catch (Exception e) {
+            // echo "Error while loading the config file: ${e.message}"
+        // }
+        // echo "API Host: ${config.dynatraceApiHost}"
+        
+        // Print the loaded config
+        // echo "Dynatrace API URL: ${config.dynatraceApiHost}"
+        //echo "Dynatrace Endpoint: ${config.dynatraceEventIngestEndpoint}"
+        //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+
+        //Load Config
+        //def config = load '.\src\test\performance\config\config.groovy'
+        // Accessing the entitySelector from the config map
+        //echo "Entity Selector: ${config.eventIngestDetails.entitySelector}"
+
+        //==========================================
+        //Trigger Custom DT Event with Info:
+        //==========================================
+        script {
+            //config = load 'src/test/performance/config/config.groovy'
+            echo "CONFIG\n DT Host: ${config.dynatraceApiHost}\nEventEndpoint: ${config.dynatraceEventIngestEndpoint}\nDashboard: ${config.dynatraceDashboardId}"
+            try {
+                def postDTEvent = utils.postDynatraceEvent (
+                            config.dynatraceApiHost,
+                            config.dynatraceSyntheticPerfTest,
+                            config.dynatraceDashboardId,
+                            config.dynatraceEntitySelector
+                )
+            } catch (Exception e)
+            {
+                echo "Error Message: ${e.message}"
+            }
+            // if (postDTEvent != null) {
+                // echo "Dynatrace Response: ${postDTEvent}"
+            // } else {
+                // echo "No Dynatrace response available."
+            // }
+        }
+            
+            // def postDTEvent = httpRequest(
+            // acceptType: 'APPLICATION_JSON',
+            // contentType: 'APPLICATION_JSON',
+            // httpMode: 'POST',
+            // quiet: true,
+            // customHeaders: [
+                // [name: 'Authorization', value: "Api-Token ${env.PERF_EVENT_TOKEN}"]
+            // ],
+            // url: "${config.dynatraceApiHost}api/v2/events/ingest",
+            // requestBody: """{
+                // "entitySelector": "type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PERF\\"),entityId(\\"SERVICE-894163B308FBDD78\\")",
+                // "eventType": "CUSTOM_INFO",
+                // "properties": {
+                        // "Workspace": "${env.WORKSPACE}",
+                        // "Branch": "${env.BRANCH_NAME}",
+                        // "Build Number": "${env.BUILD_NUMBER}",
+                        // "Synthetic Performance Test": "${dynatraceSyntheticPerfTest}",
+                        // "Performance Dashboard": "${dynatraceApiHost}#dashboard;id=${dynatraceDashboardId};applyDashboardDefaults=true"
+                // },
+                // "timeout": 1,
+                // "title": "ET-SYA-Frontend Performance Event"
+                //   }"""
+            // ) }
+            // catch (Exception e) {
+            // echo "Error while sending Request: ${e.message}"
+            // }
+            // echo "${env.postDTEvent}"
+
+        //==========================================    
+        /// POST Metric to highlight a deployment
+        //==========================================
+        try {
+        def postDTMetric = httpRequest(
+            acceptType: 'APPLICATION_JSON',
+            contentType: 'TEXT_PLAIN',
+            httpMode: 'POST',
+            quiet: true,
+            customHeaders: [
+                [name: 'Authorization', value: "Api-Token ${env.PERF_METRICS_TOKEN}"]
+            ],
+            url: "${dynatraceApiHost}${dynatraceMetricIngestEndpoint}",
+            requestBody: 'env.release.value,type=service,tag=namespace:et,env=testenv 3'
+        ) }
+        catch (Exception e) {
+            echo "Error while sending Request: ${e.message}"
+        }
+        echo "${env.postDTMetric}"
+
+        //==========================================   
+        //Trigger Dynatrace Synthetic Test
+        //==========================================
+        try {
+        def triggerResponse = httpRequest(
+            acceptType: 'APPLICATION_JSON',
+            contentType: 'APPLICATION_JSON',
+            httpMode: 'POST',
+            quiet: true,
+            customHeaders: [
+                [name: 'Authorization', value: "Api-Token ${env.PERF_SYNTHETIC_MONITOR_TOKEN}"]
+            ],
+            url: "${dynatraceApiHost}${dynatraceTriggerSyntheticEndpoint}",
+            requestBody: """{
+                "monitors": [
+                    {
+                        "monitorId": "${dynatraceSyntheticPerfTest}"
+                    }
+                ]
+            }"""
+        ) }
+        catch (Exception e) {
+            echo "Error while sending Request: ${e.message}"
+        }
+        echo "${env.triggerResponse}"
+    }
+    //} //End of script
+
+      echo 'Waiting 5 minutes for Synthetic tests to complete before terminating preview pods...'
+      sleep 300 // seconds
+
+  //}
+
+            
+    
+    
+
+  enablePactAs([
+    AppPipelineDsl.PactRoles.CONSUMER
+   ])
+} // end of perf stage
+}
