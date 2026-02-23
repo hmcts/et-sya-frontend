@@ -347,3 +347,13 @@ export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[])
     return newObj;
   });
 };
+
+export const deleteDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).deleteDraftCase(req.session.userCase);
+    logger.info(`Deleted draft case id: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+    throw error;
+  }
+};

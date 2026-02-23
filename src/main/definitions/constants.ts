@@ -154,6 +154,7 @@ export const TranslationKeys = {
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
+  DELETE_DRAFT_CLAIM: 'delete-draft-claim',
 } as const;
 
 export const PageUrls = {
@@ -295,6 +296,7 @@ export const PageUrls = {
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
+  DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
 } as const;
 
 export const InterceptPaths = {
@@ -356,6 +358,7 @@ export const JavaApiUrls = {
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
   REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
   REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
+  DELETE_DRAFT_CASE: 'cases/delete-draft-case',
 } as const;
 
 export const Urls = {
