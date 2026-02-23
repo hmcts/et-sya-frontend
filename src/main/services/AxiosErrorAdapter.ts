@@ -10,12 +10,16 @@ export const axiosErrorDetails = (
   context?: { action?: string; caseId?: string; [key: string]: any }
 ): string => {
   let errorMessage = axiosError.message;
-  logger.info('Axios message: ' + errorMessage);
-  if (axiosError.response?.data?.error) {
-    const errorDetail: string = axiosError.response.data.message
-      ? axiosError.response.data.message
-      : axiosError.response.data.trace;
-    errorMessage += `, ${errorDetail}`;
+  logger.info('AXIOS axiosError.response?.data: ' + axiosError.response?.data);
+  const data = axiosError.response?.data;
+
+  if (typeof data === 'string') {
+    errorMessage += `, ${data}`;
+  } else if (data) {
+    const errorDetail = data.message || data.trace || data.error;
+    if (errorDetail) {
+      errorMessage += `, ${errorDetail}`;
+    }
   }
   logger.info('Axios message BEFORE CONTEXT: ' + errorMessage);
   if (context) {
