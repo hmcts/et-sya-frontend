@@ -97,13 +97,25 @@ export default class YourDetailsCYAController {
           .toString()
           .includes(ServiceErrors.ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE)
       ) {
-        logger.error(ServiceErrors.ERROR_ASSIGNING_USER_ROLE + 'caseId: ' + req.session?.userCase?.id + ', ' + error);
+        logger.error(
+          ServiceErrors.ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE +
+            'caseId: ' +
+            req.session?.userCase?.id +
+            ', ' +
+            error
+        );
         req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssignedToSameUser' });
       } else if (
         StringUtils.isNotBlank(error?.message) &&
         error.message.toString().includes(ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE)
       ) {
-        logger.error(ServiceErrors.ERROR_ASSIGNING_USER_ROLE + 'caseId: ' + req.session?.userCase?.id + ', ' + error);
+        logger.error(
+          ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE +
+            'caseId: ' +
+            req.session?.userCase?.id +
+            ', ' +
+            error
+        );
         req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssigned' });
       } else {
         logger.error(ServiceErrors.ERROR_ASSIGNING_USER_ROLE + 'caseId: ' + req.session?.userCase?.id + ', ' + error);
