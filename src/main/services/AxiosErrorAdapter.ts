@@ -11,13 +11,10 @@ export const axiosErrorDetails = (
   if (typeof data === 'string') {
     errorMessage += `, ${data}`;
   } else if (data?.message || data?.error) {
-    console.log(`Axios Standard: ${errorMessage}`);
     errorMessage += `, ${data.message || data.error}`;
   } else if (data) {
-    console.log(`Axios JSON Stringify: ${errorMessage}`);
     errorMessage += `, ${JSON.stringify(data)}`;
   }
-  console.log(`Axios error details: ${errorMessage}`);
   if (context) {
     const contextStr = Object.entries(context)
       .filter(([, v]) => v !== undefined)
