@@ -1,17 +1,23 @@
 import { AxiosError } from 'axios';
 
-// Get details from an axios error
+// Extract details from an Axios error
 export const axiosErrorDetails = (
-  axiosError: AxiosError<{ error: string; message: string; trace: string }>,
-  context?: { action?: string; caseId?: string; [key: string]: any }
+  axiosError: AxiosError<{ error: string; message: string }>,
+  context?: Record<string, any>
 ): string => {
   let errorMessage = axiosError.message;
-  if (axiosError.response?.data?.error) {
-    const errorDetail: string = axiosError.response.data.message
-      ? axiosError.response.data.message
-      : axiosError.response.data.trace;
-    errorMessage += `, ${errorDetail}`;
+  const data = axiosError.response?.data;
+
+  if (typeof data === 'string') {
+    errorMessage += `, ${data}`;
+  } else if (data?.message || data?.error) {
+    console.log(`Axios Standard: ${errorMessage}`);
+    errorMessage += `, ${data.message || data.error}`;
+  } else if (data) {
+    console.log(`Axios JSON Stringify: ${errorMessage}`);
+    errorMessage += `, ${JSON.stringify(data)}`;
   }
+  console.log(`Axios error details: ${errorMessage}`);
   if (context) {
     const contextStr = Object.entries(context)
       .filter(([, v]) => v !== undefined)
