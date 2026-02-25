@@ -26,6 +26,9 @@
       <li>
         {{whatHappensNextItemTwo}}
       </li>
+      <li>
+        {{whatHappensNextItemThree}}
+      </li>
     </ul>
 
     <h2 class="govuk-heading-m">
@@ -80,6 +83,13 @@
     <p class="govuk-body">
       {{ contactAppend | safe}}
     </p>
+
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: button,
+        href: redirectUrl
+      }) }}
+    </div>
    </div>
 </div>
 
