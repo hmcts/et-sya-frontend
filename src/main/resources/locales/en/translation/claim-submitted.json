@@ -8,6 +8,7 @@
   "whatHappensNext": "What happens next",
   "whatHappensNextItemOne": "We'll check your claim and may contact you if we have any questions",
   "whatHappensNextItemTwo": "We'll contact you once we've sent your claim to the respondents and explain what happens next",
+  "whatHappensNextItemThree": "Please be advised that the current processing time is approximately 20 working days. This may extend during busy periods.",
   "submissionDetails": "Submission details",
   "submissionReference": "Submission reference",
   "claimSubmitted": "Claim submitted",
@@ -31,5 +32,6 @@
     "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Wales",
-  "Unassigned": "Unassigned - We will notify you once your claim has been assigned to a tribunal office"
+  "Unassigned": "Unassigned - We will notify you once your claim has been assigned to a tribunal office",
+  "button": "Close and return to case overview"
 }

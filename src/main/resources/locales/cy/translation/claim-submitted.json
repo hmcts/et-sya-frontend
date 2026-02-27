@@ -8,6 +8,7 @@
   "whatHappensNext": "Beth fydd yn digwydd nesaf",
   "whatHappensNextItemOne": "Byddwn yn gwirio eich hawliad ac efallai byddwn yn cysylltu â chi os bydd gennym unrhyw gwestiynau",
   "whatHappensNextItemTwo": "Byddwn yn cysylltu â chi pan fyddwn wedi anfon eich hawliad at yr atebwyr i esbonio beth fydd yn digwydd nesaf",
+  "whatHappensNextItemThree": "Noder bod yr amser prosesu presennol tua 20 diwrnod gwaith. Gall hyn gynyddu yn ystod cyfnodau prysur.",
   "submissionDetails": "Manylion yr hawliad a gyflwynwyd",
   "submissionReference": "Cyfeirnod yr hawliad a gyflwynwyd",
   "claimSubmitted": "Hawliad wedi’i gyflwyno",
@@ -31,5 +32,6 @@
     "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
   },
   "Wales": "Cymru",
-  "Unassigned": "Heb ei aseinio – Byddwn yn rhoi gwybod i chi unwaith y bydd eich hawliad wedi’i aseinio i swyddfa dribiwnlys"
+  "Unassigned": "Heb ei aseinio – Byddwn yn rhoi gwybod i chi unwaith y bydd eich hawliad wedi’i aseinio i swyddfa dribiwnlys",
+  "button": "Cau a dychwelyd i drosolwg o’r achos"
 }

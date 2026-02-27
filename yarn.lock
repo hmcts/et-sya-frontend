@@ -3053,31 +3053,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.20.0":
-  version: 2.20.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.20.0"
-  checksum: 10/9997bfb517aa9edaa689b6f44eb86a4847f45d798d8a32c8bd6614af42f5ab432acac989d755578137db2892aad43c32eb8ad61330ced24ecfbf001855349116
+"@launchdarkly/js-sdk-common@npm:2.22.0":
+  version: 2.22.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.22.0"
+  checksum: 10/e9412a5728619a94731f770761c93a19c9d4383190a2e9c860a21c4d71be8fdae77862d5ebbd3157bda7ae72e748511a97eed57d5146ca5d10cd25e4d0252397
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.17.2":
-  version: 2.17.2
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.17.2"
+"@launchdarkly/js-server-sdk-common@npm:2.18.1":
+  version: 2.18.1
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.18.1"
   dependencies:
-    "@launchdarkly/js-sdk-common": "npm:2.20.0"
+    "@launchdarkly/js-sdk-common": "npm:2.22.0"
     semver: "npm:7.5.4"
-  checksum: 10/8a4bcc57276d7f17f6f90737de2b2e0b570c49ccf15b5e086efcb14e8c03205aa13005fd5e159a000ad883e3ac114b6b045bba65fd773ae21a97364022742e3d
+  checksum: 10/936936ae531caae469995c34346c6d7ca210fc5d0a0da94c624adaab2ce3bd516323742a7b873968e1fad0c382999819e2f73e112f834c7a79c9e675fd47ad61
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.10.6
-  resolution: "@launchdarkly/node-server-sdk@npm:9.10.6"
+  version: 9.10.8
+  resolution: "@launchdarkly/node-server-sdk@npm:9.10.8"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": "npm:2.17.2"
+    "@launchdarkly/js-server-sdk-common": "npm:2.18.1"
     https-proxy-agent: "npm:^7.0.6"
     launchdarkly-eventsource: "npm:2.2.0"
-  checksum: 10/02e5ffdcbfde97883e22bfb81a7c8287f97a21f7c16c11bc5bba3ed1f586a9ba38701bd5adcb5fc621d81756bc5fbabc82902ab7ad2e9f4bd5f805a582611f68
+  checksum: 10/2cd092573f15d167f9023829dc0c7a7a5dbec623835fd15d100202dc3db129248aa183dad8cab34427fa8acb6081235efda812b4e6990cfcf9bbca29182ed563
   languageName: node
   linkType: hard
 
@@ -4226,9 +4226,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.194":
-  version: 4.17.23
-  resolution: "@types/lodash@npm:4.17.23"
-  checksum: 10/05935534a44aadef67c2158b2fb4a042a226970088106a40ddc67e4f063783149fe5cf02279d7dd4a1e72c98d9189b9430face659645dbf77270f8c4c3e387f5
+  version: 4.17.24
+  resolution: "@types/lodash@npm:4.17.24"
+  checksum: 10/0f2082565f60f9787eefc046edc38458054512be5a8b3584ef0bad5fd9e85d0ab55ec5a1fbfae1ed6ba015cf1f9e837d5fb4da1f99fc60b8f74b2a46146fb00f
   languageName: node
   linkType: hard
 
@@ -10434,8 +10434,8 @@ __metadata:
   linkType: hard
 
 "i18next@npm:^25.0.0":
-  version: 25.8.10
-  resolution: "i18next@npm:25.8.10"
+  version: 25.8.13
+  resolution: "i18next@npm:25.8.13"
   dependencies:
     "@babel/runtime": "npm:^7.28.4"
   peerDependencies:
@@ -10443,7 +10443,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/cc763e9e2adff6adf44de7bf6af2b9f2bc72706d91179af6f20ec69bd452c05a54fa2bd32a0d222c8d51c24bdbf9424b07d1b6e4d111d22a1b4444e4219f05c1
+  checksum: 10/69d1277587810b86d2cc0c36240004151f1ed696a5c6bb8ced9ffbc0addd9f9f5a0a13b35459a322ffa52ea177b2602cad2a39c11025adb81f4df93510b6a46a
   languageName: node
   linkType: hard
 
