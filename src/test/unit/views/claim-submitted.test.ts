@@ -66,9 +66,10 @@ describe('Claim Submitted Confirmation page', () => {
     });
 
     it('should contain correct bullet points', () => {
-      expect(lists[0].children).length(2);
+      expect(lists[0].children).length(3);
       expect(getLiTextFromUl(lists[0], 0)).equals(pageJson.whatHappensNextItemOne);
       expect(getLiTextFromUl(lists[0], 1)).equals(pageJson.whatHappensNextItemTwo);
+      expect(getLiTextFromUl(lists[0], 2)).equals(pageJson.whatHappensNextItemThree);
     });
   });
 

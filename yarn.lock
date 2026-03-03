@@ -2632,11 +2632,11 @@ __metadata:
   linkType: hard
 
 "@isaacs/brace-expansion@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@isaacs/brace-expansion@npm:5.0.0"
+  version: 5.0.1
+  resolution: "@isaacs/brace-expansion@npm:5.0.1"
   dependencies:
     "@isaacs/balanced-match": "npm:^4.0.1"
-  checksum: 10/cf3b7f206aff12128214a1df764ac8cdbc517c110db85249b945282407e3dfc5c6e66286383a7c9391a059fc8e6e6a8ca82262fc9d2590bd615376141fbebd2d
+  checksum: 10/aec226065bc4285436a27379e08cc35bf94ef59f5098ac1c026495c9ba4ab33d851964082d3648d56d63eb90f2642867bd15a3e1b810b98beb1a8c14efce6a94
   languageName: node
   linkType: hard
 
@@ -3053,31 +3053,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.20.0":
-  version: 2.20.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.20.0"
-  checksum: 10/9997bfb517aa9edaa689b6f44eb86a4847f45d798d8a32c8bd6614af42f5ab432acac989d755578137db2892aad43c32eb8ad61330ced24ecfbf001855349116
+"@launchdarkly/js-sdk-common@npm:2.22.0":
+  version: 2.22.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.22.0"
+  checksum: 10/e9412a5728619a94731f770761c93a19c9d4383190a2e9c860a21c4d71be8fdae77862d5ebbd3157bda7ae72e748511a97eed57d5146ca5d10cd25e4d0252397
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.17.2":
-  version: 2.17.2
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.17.2"
+"@launchdarkly/js-server-sdk-common@npm:2.18.1":
+  version: 2.18.1
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.18.1"
   dependencies:
-    "@launchdarkly/js-sdk-common": "npm:2.20.0"
+    "@launchdarkly/js-sdk-common": "npm:2.22.0"
     semver: "npm:7.5.4"
-  checksum: 10/8a4bcc57276d7f17f6f90737de2b2e0b570c49ccf15b5e086efcb14e8c03205aa13005fd5e159a000ad883e3ac114b6b045bba65fd773ae21a97364022742e3d
+  checksum: 10/936936ae531caae469995c34346c6d7ca210fc5d0a0da94c624adaab2ce3bd516323742a7b873968e1fad0c382999819e2f73e112f834c7a79c9e675fd47ad61
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.10.6
-  resolution: "@launchdarkly/node-server-sdk@npm:9.10.6"
+  version: 9.10.8
+  resolution: "@launchdarkly/node-server-sdk@npm:9.10.8"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": "npm:2.17.2"
+    "@launchdarkly/js-server-sdk-common": "npm:2.18.1"
     https-proxy-agent: "npm:^7.0.6"
     launchdarkly-eventsource: "npm:2.2.0"
-  checksum: 10/02e5ffdcbfde97883e22bfb81a7c8287f97a21f7c16c11bc5bba3ed1f586a9ba38701bd5adcb5fc621d81756bc5fbabc82902ab7ad2e9f4bd5f805a582611f68
+  checksum: 10/2cd092573f15d167f9023829dc0c7a7a5dbec623835fd15d100202dc3db129248aa183dad8cab34427fa8acb6081235efda812b4e6990cfcf9bbca29182ed563
   languageName: node
   linkType: hard
 
@@ -4226,9 +4226,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.194":
-  version: 4.17.23
-  resolution: "@types/lodash@npm:4.17.23"
-  checksum: 10/05935534a44aadef67c2158b2fb4a042a226970088106a40ddc67e4f063783149fe5cf02279d7dd4a1e72c98d9189b9430face659645dbf77270f8c4c3e387f5
+  version: 4.17.24
+  resolution: "@types/lodash@npm:4.17.24"
+  checksum: 10/0f2082565f60f9787eefc046edc38458054512be5a8b3584ef0bad5fd9e85d0ab55ec5a1fbfae1ed6ba015cf1f9e837d5fb4da1f99fc60b8f74b2a46146fb00f
   languageName: node
   linkType: hard
 
@@ -6024,9 +6024,9 @@ __metadata:
   linkType: hard
 
 "bn.js@npm:^4.0.0":
-  version: 4.12.1
-  resolution: "bn.js@npm:4.12.1"
-  checksum: 10/07f22df8880b423c4890648e95791319898b96712b6ebc5d6b1082b34074f09dedb8601e717d67f905ce29bb1a5313f9a2b1a2015a679e42c9eed94392c0d379
+  version: 4.12.3
+  resolution: "bn.js@npm:4.12.3"
+  checksum: 10/57ed5a055f946f3e009f1589c45a5242db07f3dddfc72e4506f0dd9d8b145f0dbee4edabc2499288f3fc338eb712fb96a1c623a2ed2bcd49781df1a64db64dd1
   languageName: node
   linkType: hard
 
@@ -10434,8 +10434,8 @@ __metadata:
   linkType: hard
 
 "i18next@npm:^25.0.0":
-  version: 25.8.10
-  resolution: "i18next@npm:25.8.10"
+  version: 25.8.13
+  resolution: "i18next@npm:25.8.13"
   dependencies:
     "@babel/runtime": "npm:^7.28.4"
   peerDependencies:
@@ -10443,7 +10443,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/cc763e9e2adff6adf44de7bf6af2b9f2bc72706d91179af6f20ec69bd452c05a54fa2bd32a0d222c8d51c24bdbf9424b07d1b6e4d111d22a1b4444e4219f05c1
+  checksum: 10/69d1277587810b86d2cc0c36240004151f1ed696a5c6bb8ced9ffbc0addd9f9f5a0a13b35459a322ffa52ea177b2602cad2a39c11025adb81f4df93510b6a46a
   languageName: node
   linkType: hard
 
@@ -12861,11 +12861,11 @@ __metadata:
   linkType: hard
 
 "minimatch@npm:2 || 3, minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "minimatch@npm:3.1.2"
+  version: 3.1.4
+  resolution: "minimatch@npm:3.1.4"
   dependencies:
     brace-expansion: "npm:^1.1.7"
-  checksum: 10/e0b25b04cd4ec6732830344e5739b13f8690f8a012d73445a4a19fbc623f5dd481ef7a5827fde25954cd6026fede7574cc54dc4643c99d6c6b653d6203f94634
+  checksum: 10/8d679c9df6caad31465c7681ae72b5e0f5d3b4fda6235c4473b14819f4d72ff8924ebd73ce991cc50be4b370daca51cc4d8c7fea6a3aa05108702ede115ab4c9
   languageName: node
   linkType: hard
 
@@ -12879,20 +12879,20 @@ __metadata:
   linkType: hard
 
 "minimatch@npm:^5.0.1, minimatch@npm:^5.1.0, minimatch@npm:^5.1.6":
-  version: 5.1.6
-  resolution: "minimatch@npm:5.1.6"
+  version: 5.1.8
+  resolution: "minimatch@npm:5.1.8"
   dependencies:
     brace-expansion: "npm:^2.0.1"
-  checksum: 10/126b36485b821daf96d33b5c821dac600cc1ab36c87e7a532594f9b1652b1fa89a1eebcaad4dff17c764dce1a7ac1531327f190fed5f97d8f6e5f889c116c429
+  checksum: 10/bb855556efcf21efd096ccd96c448e0eef80d418221e5c315686c67fb7ef9ee02e3ee40f71763b7cbaa3d6e29ca61c2aa692b485e158069d19e8e2a61d0a11ce
   languageName: node
   linkType: hard
 
 "minimatch@npm:^9.0.0, minimatch@npm:^9.0.4":
-  version: 9.0.5
-  resolution: "minimatch@npm:9.0.5"
+  version: 9.0.7
+  resolution: "minimatch@npm:9.0.7"
   dependencies:
-    brace-expansion: "npm:^2.0.1"
-  checksum: 10/dd6a8927b063aca6d910b119e1f2df6d2ce7d36eab91de83167dd136bb85e1ebff97b0d3de1cb08bd1f7e018ca170b4962479fefab5b2a69e2ae12cb2edc8348
+    brace-expansion: "npm:^5.0.2"
+  checksum: 10/72b9ba4af39f6a89934d56c9cc3bf1d86fb004b00c5e5b3d7f48b004f224005fd2919f52785643b7a18d53fc86f7befc7f25c85ef194cc06708b078682f8c9e5
   languageName: node
   linkType: hard
 
@@ -15648,7 +15648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"send@npm:^0.19.0":
+"send@npm:~0.19.0, send@npm:~0.19.1":
   version: 0.19.2
   resolution: "send@npm:0.19.2"
   dependencies:
