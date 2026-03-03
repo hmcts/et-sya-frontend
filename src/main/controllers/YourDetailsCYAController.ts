@@ -1,20 +1,55 @@
 import { Response } from 'express';
 
+import { Form } from '../components/form/form';
+import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent } from '../definitions/form';
+import { CaseWithId, YesOrNo } from '../definitions/case';
+import { PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
+import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
+import { getCaseApi } from '../services/CaseService';
+import StringUtils from '../utils/StringUtils';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
+
+const logger = getLogger('YourDetailsCYAController');
 
 export default class YourDetailsCYAController {
-  public async get(req: AppRequest, res: Response): Promise<void> {
+  private readonly form: Form;
+  private readonly detailsCheckContent: FormContent = {
+    fields: {
+      yourDetailsCya: {
+        id: 'yourDetailsCya',
+        type: 'checkboxes',
+        labelHidden: true,
+        validator: atLeastOneFieldIsChecked,
+        values: [
+          {
+            id: 'confirmation',
+            name: 'yourDetailsCya',
+            label: (l: AnyRecord) => l.confirmation,
+            value: YesOrNo.YES,
+          },
+        ],
+      },
+    },
+    submit: {
+      text: (l: AnyRecord): string => l.submitBtn,
+    },
+  } as never;
+
+  constructor() {
+    this.form = new Form(<FormFields>this.detailsCheckContent.fields);
+  }
+
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
 
-    const content = getPageContent(req, <FormContent>{}, [
+    const content = getPageContent(req, this.detailsCheckContent, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
       TranslationKeys.YOUR_DETAILS_CYA,
@@ -25,7 +60,7 @@ export default class YourDetailsCYAController {
       ...req.t(TranslationKeys.YOUR_DETAILS_CYA, { returnObjects: true }),
     };
 
-    const cancelPage = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
+    const cancelLink = setUrlLanguage(req, PageUrls.HOME);
     const welshEnabled = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);
 
@@ -34,9 +69,67 @@ export default class YourDetailsCYAController {
       ...translations,
       PageUrls,
       userCase,
-      cancelPage,
+      respondentNames: req.session.respondentNames || [],
+      cancelLink,
       welshEnabled,
       languageParam,
+      form: this.detailsCheckContent,
+      sessionErrors: req.session?.errors || [],
     });
-  }
+  };
+
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const formData = this.form.getParsedBody<CaseWithId>(req.body, this.form.getFormFields());
+    const errors = this.form.getValidatorErrors(formData);
+    if (errors.length !== 0) {
+      req.session.errors = errors;
+      return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_CYA)));
+    }
+
+    let caseAssignmentResponse;
+    try {
+      caseAssignmentResponse = await getCaseApi(req.session.user?.accessToken)?.assignCaseUserRole(req);
+    } catch (error) {
+      logger.info('Error creating caseAssignmentResponse', error.message.toString());
+      if (
+        StringUtils.isNotBlank(error?.message) &&
+        error.message
+          .toString()
+          .includes(ServiceErrors.ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE)
+      ) {
+        logger.error(
+          ServiceErrors.ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE +
+            'caseId: ' +
+            req.session?.userCase?.id +
+            ', ' +
+            error
+        );
+        req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssignedToSameUser' });
+      } else if (
+        StringUtils.isNotBlank(error?.message) &&
+        error.message.toString().includes(ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE)
+      ) {
+        logger.error(
+          ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE +
+            'caseId: ' +
+            req.session?.userCase?.id +
+            ', ' +
+            error
+        );
+        req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssigned' });
+      } else {
+        logger.error(ServiceErrors.ERROR_ASSIGNING_USER_ROLE + 'caseId: ' + req.session?.userCase?.id + ', ' + error);
+        req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'api' });
+      }
+      return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_CYA)));
+    }
+
+    if (!caseAssignmentResponse?.data) {
+      logger.error('Case assignment response data is null or undefined. caseId: ' + req.session?.userCase?.id);
+      req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'api' });
+      return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_CYA)));
+    }
+
+    return res.redirect(`${PageUrls.CLAIMANT_APPLICATIONS}${getLanguageParam(req.url)}`);
+  };
 }

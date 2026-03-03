@@ -1,6 +1,6 @@
 {
-  "title": "Case Number Check",
-  "pageTitle": "Case Number",
+  "title": "Case number check",
+  "pageTitle": "Case number",
   "label": "What is your case number?",
   "hint": "This will appear on the letter sent to you from the employment tribunal.",
   "errors": {

@@ -366,6 +366,7 @@ export const JavaApiUrls = {
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
   REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
   REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
+  ASSIGN_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Assignment',
   FIND_CASE_FOR_ROLE_MODIFICATION: '/manageCaseRole/findCaseForRoleModification',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME: 'ethosCaseReference',
   DELETE_DRAFT_CASE: 'cases/delete-draft-case',
@@ -633,4 +634,12 @@ export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
 export const ServiceErrors = {
   ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
   ERROR_GETTING_USER_CASE: 'Error getting user case: ',
+  ERROR_ASSIGNING_USER_ROLE: 'Error assigning user role: ',
+  ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE: 'already been assigned to this case',
+  ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE: 'case has already been assigned',
+} as const;
+
+export const Roles = {
+  CREATOR_ROLE_WITH_BRACKETS: '[CREATOR]',
+  CREATOR_ROLE_WITHOUT_BRACKETS: 'CREATOR',
 } as const;

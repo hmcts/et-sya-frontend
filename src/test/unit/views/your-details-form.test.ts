@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const yourDetailsFormJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/your-details-form.json'),
@@ -21,7 +21,7 @@ let htmlRes: Document;
 
 describe('Your details form page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.YOUR_DETAILS_FORM)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

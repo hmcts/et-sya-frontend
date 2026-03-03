@@ -2,14 +2,14 @@ import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
-import { CaseApiDataResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, CaseAssignmentResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { DefaultValues, JavaApiUrls, ServiceErrors } from '../definitions/constants';
+import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -532,6 +532,24 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error(ServiceErrors.ERROR_GETTING_USER_CASE + axiosErrorDetails(error));
+    }
+  };
+
+  assignCaseUserRole = async (request: AppRequest): Promise<AxiosResponse<CaseAssignmentResponse>> => {
+    try {
+      return await this.axios.post<CaseAssignmentResponse>(JavaApiUrls.ASSIGN_CASE_USER_ROLES, {
+        case_users: [
+          {
+            case_id: request.session.userCase.id,
+            user_id: request.session.user.id,
+            case_role: Roles.CREATOR_ROLE_WITH_BRACKETS,
+            case_type_id: request.session.userCase.caseTypeId,
+            respondent_name: request.session.respondentName,
+          },
+        ],
+      });
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_ASSIGNING_USER_ROLE + axiosErrorDetails(error));
     }
   };
 }
