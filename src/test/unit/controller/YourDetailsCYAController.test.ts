@@ -1,6 +1,6 @@
 import YourDetailsCYAController from '../../../main/controllers/YourDetailsCYAController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, ServiceErrors, TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import yourDetailsCyaRaw from '../../../main/resources/locales/en/translation/your-details-cya.json';
 import { getCaseApi } from '../../../main/services/CaseService';
@@ -68,6 +68,47 @@ describe('YourDetailsCYAController', () => {
         })
       );
     });
+
+    it('should include respondentNames from session in render context', async () => {
+      const controller = new YourDetailsCYAController();
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({}, translationJsons);
+      request.session.respondentNames = ['Respondent One', 'Respondent Two'];
+      await controller.get(request, response);
+      expect(response.render).toHaveBeenCalledWith(
+        TranslationKeys.YOUR_DETAILS_CYA,
+        expect.objectContaining({
+          respondentNames: ['Respondent One', 'Respondent Two'],
+        })
+      );
+    });
+
+    it('should default respondentNames to empty array when not set', async () => {
+      const controller = new YourDetailsCYAController();
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({}, translationJsons);
+      delete (request.session as any).respondentNames;
+      await controller.get(request, response);
+      expect(response.render).toHaveBeenCalledWith(
+        TranslationKeys.YOUR_DETAILS_CYA,
+        expect.objectContaining({
+          respondentNames: [],
+        })
+      );
+    });
+
+    it('should include sessionErrors in render context defaulting to empty array', async () => {
+      const controller = new YourDetailsCYAController();
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({}, translationJsons);
+      await controller.get(request, response);
+      expect(response.render).toHaveBeenCalledWith(
+        TranslationKeys.YOUR_DETAILS_CYA,
+        expect.objectContaining({
+          sessionErrors: [],
+        })
+      );
+    });
   });
 
   describe('post()', () => {
@@ -95,6 +136,111 @@ describe('YourDetailsCYAController', () => {
       await controller.post(request, response);
 
       expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS + '?lng=en');
+    });
+
+    it('should redirect with caseAlreadyAssignedToSameUser error when user already has role', async () => {
+      mockGetCaseApi.mockReturnValueOnce({
+        assignCaseUserRole: jest
+          .fn()
+          .mockRejectedValue(
+            new Error(
+              `Some prefix ${ServiceErrors.ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE} suffix`
+            )
+          ),
+      });
+      const body = { yourDetailsCya: YesOrNo.YES };
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({ body });
+      request.session.errors = [];
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+
+      await controller.post(request, response);
+
+      expect(request.session.errors).toEqual(
+        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssignedToSameUser' }])
+      );
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
+    });
+
+    it('should redirect with caseAlreadyAssigned error when case already assigned to another user', async () => {
+      mockGetCaseApi.mockReturnValueOnce({
+        assignCaseUserRole: jest
+          .fn()
+          .mockRejectedValue(
+            new Error(`Some prefix ${ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE} suffix`)
+          ),
+      });
+      const body = { yourDetailsCya: YesOrNo.YES };
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({ body });
+      request.session.errors = [];
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+
+      await controller.post(request, response);
+
+      expect(request.session.errors).toEqual(
+        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssigned' }])
+      );
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
+    });
+
+    it('should redirect with generic api error when assignCaseUserRole throws an unrecognised error', async () => {
+      mockGetCaseApi.mockReturnValueOnce({
+        assignCaseUserRole: jest.fn().mockRejectedValue(new Error('Unexpected server failure')),
+      });
+      const body = { yourDetailsCya: YesOrNo.YES };
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({ body });
+      request.session.errors = [];
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+
+      await controller.post(request, response);
+
+      expect(request.session.errors).toEqual(
+        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'api' }])
+      );
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
+    });
+
+    it('should redirect with api error when caseAssignmentResponse.data is null', async () => {
+      mockGetCaseApi.mockReturnValueOnce({
+        assignCaseUserRole: jest.fn().mockResolvedValue({ data: null }),
+      });
+      const body = { yourDetailsCya: YesOrNo.YES };
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({ body });
+      request.session.errors = [];
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+
+      await controller.post(request, response);
+
+      expect(request.session.errors).toEqual(
+        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'api' }])
+      );
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
+    });
+
+    it('should redirect with api error when caseAssignmentResponse is undefined', async () => {
+      mockGetCaseApi.mockReturnValueOnce({
+        assignCaseUserRole: jest.fn().mockResolvedValue(undefined),
+      });
+      const body = { yourDetailsCya: YesOrNo.YES };
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({ body });
+      request.session.errors = [];
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+
+      await controller.post(request, response);
+
+      expect(request.session.errors).toEqual(
+        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'api' }])
+      );
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
     });
   });
 });
