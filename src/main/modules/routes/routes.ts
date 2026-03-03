@@ -27,6 +27,7 @@ import BenefitsController from '../../controllers/BenefitsController';
 import BundlesCompletedController from '../../controllers/BundlesCompletedController';
 import BundlesDocsForHearingCYAController from '../../controllers/BundlesDocsForHearingCYAController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
+import CaseNumberController from '../../controllers/CaseNumberController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import ChangeLegalRepresentativeController from '../../controllers/ChangeLegalRepresentativeController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
@@ -142,6 +143,8 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
+import YourDetailsCYAController from '../../controllers/YourDetailsCYAController';
+import YourDetailsFormController from '../../controllers/YourDetailsFormController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
@@ -229,6 +232,10 @@ export class Routes {
     app.get(PageUrls.CLAIM_SAVED, new ClaimSavedController().get);
     app.get(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().get);
     app.post(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().post);
+    app.get(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().get);
+    app.post(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().post);
+    app.get(PageUrls.YOUR_DETAILS_FORM, new YourDetailsFormController().get);
+    app.post(PageUrls.YOUR_DETAILS_FORM, new YourDetailsFormController().post);
     app.get(PageUrls.UPDATE_PREFERENCES, new UpdatePreferenceController().get);
     app.post(PageUrls.UPDATE_PREFERENCES, new UpdatePreferenceController().post);
     app.get(PageUrls.JOB_TITLE, new JobTitleController().get);
@@ -461,6 +468,8 @@ export class Routes {
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
+    app.get(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().get);
+    app.post(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().post);
     app.get(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().get);
     app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
   }

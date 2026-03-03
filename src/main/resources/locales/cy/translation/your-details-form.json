@@ -1,0 +1,25 @@
+{
+  "pageTitle": "Rhowch eich manylion",
+  "title": "Rhowch eich manylion",
+  "p1": "Mae’n rhaid i chi nodi eich manylion yn union fel y maent wedi'u hysgrifennu ar yr achos, gan gynnwys unrhyw gamgymeriadau. Er enghraifft, os mai eich enw olaf yw Smyth ond ei fod wedi’i sillafu fel ‘Smith’, dylech nodi Smith.",
+  "submissionReference": {
+    "label": "Y Cyfeirnod ar gyfer Cyflwyno"
+  },
+  "claimantName": {
+    "label": "Enw llawn"
+  },
+  "errors": {
+    "id": {
+      "required": "Rhowch eich cyfeirnod cyflwyno yn union fel y mae wedi'i ysgrifennu ar y ffurflen hawlio ET1",
+      "invalid": "Rydych chi wedi rhoi cyfeirnod cyflwyno annilys. Dylai’r cyfeirnod cyflwyno fod yn 16 o nodau mewn fformatau 123456789123456 neu 1234-5678-9123-4567",
+      "submissionReferenceNotFound": "Cyfeirnod cyflwyno heb ei ganfod. Nid yw'r cyfeirnod cyflwyno a nodwyd yn cyfateb i'n cofnodion"
+    },
+    "claimantName": {
+      "required": "Rhowch eich enw llawn yn union fel y mae wedi'i ysgrifennu ar y ffurflen hawlio ET1"
+    },
+    "hiddenErrorField": {
+      "api": "Methu eich neilltuo chi i'ch achos. Rhowch gynnig arall arni'n hwyrach ymlaen.",
+      "invalidCaseDetails": "Rhowch y manylion yn union fel y maent wedi'u hysgrifennu ar yr achos, gan gynnwys unrhyw gamgymeriadau"
+    }
+  }
+}

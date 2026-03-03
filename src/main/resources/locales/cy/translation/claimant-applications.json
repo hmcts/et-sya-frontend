@@ -2,7 +2,10 @@
   "title": "Hawliadau ET1",
   "h1": "Hawliadau drafft",
   "h2": "Hawliadau sydd wedi’u cyflwyno",
-  "p1": "<a href='/claimant-application/newClaim?lng=cy' class=\"govuk-link\">Dechrau hawliad newydd</a>",
+  "p1": "Dechrau hawliad newydd",
+  "p1Link": "/claimant-application/newClaim?lng=cy",
+  "p2": "Ychwanegu hawliad sydd eisoes yn bodoli.",
+  "p2Link": "/case-number-check?lng=cy",
   "noRespondents": "Heb ei ddarparu eto",
   "col1": "Dyddiad creu",
   "col2": "Cyfeirnod",
@@ -11,5 +14,5 @@
   "col5": "Statws cwblhau",
   "col6": "Dyddiad a addaswyd diwethaf",
   "col7": "Opsiynau",
-  "p2": "At ddibenion preifatrwydd, bydd hawliad drafft yn cael ei ddileu 12 mis ar ôl y dyddiad y mae wedi'i greu."
+  "p3": "At ddibenion preifatrwydd, bydd hawliad drafft yn cael ei ddileu 12 mis ar ôl y dyddiad y mae wedi'i greu."
 }

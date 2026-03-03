@@ -26,6 +26,12 @@ export interface AppSession extends Session {
   contactType?: string;
   contactTribunalSelection?: string;
   documentDownloadPage?: string;
+  caseNumberChecked?: boolean;
+  claimantFirstName?: string;
+  claimantLastName?: string;
+  isAssignClaim?: boolean;
+  respondentNames?: string[];
+  respondentName?: string;
   csrfInitialized?: boolean;
 }
 

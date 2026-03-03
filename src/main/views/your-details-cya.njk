@@ -1,0 +1,54 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: getErrors(form.fields)
+    }) if form and form.fields and getErrors(form.fields).length > 0
+  }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
+      <div class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class = "govuk-summary-list__row">
+          <div class = "govuk-summary-list__key">
+            {{ caseNumber }}
+          </div>
+          <div class = "govuk-summary-list__value">
+            {{ userCase.id }}
+          </div>
+        </div>
+        <div class = "govuk-summary-list__row">
+          <div class = "govuk-summary-list__key">
+            {{ claimantName }}
+          </div>
+          <div class = "govuk-summary-list__value">
+            {{ userCase.claimantName }}
+          </div>
+        </div>
+        <div class = "govuk-summary-list__row">
+          <div class = "govuk-summary-list__key">
+            {{ respondentName }}
+          </div>
+          <div class = "govuk-summary-list__value">
+            {{ respondentNames.join(', ') }}
+          </div>
+        </div>
+      </div>
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
+     </div>
+    </div>
+{% endblock %}

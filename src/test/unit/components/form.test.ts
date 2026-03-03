@@ -229,6 +229,7 @@ describe('Form', () => {
             year: '2000',
           },
           checkboxes: ['checkbox1'],
+          hiddenErrorField: '',
         },
         expected: true,
       },
@@ -266,6 +267,14 @@ describe('Form', () => {
           label: 'custom',
           type: 'text',
           name: 'custom',
+        },
+        hiddenErrorField: {
+          id: 'hiddenErrorField',
+          name: 'hiddenErrorField',
+          hidden: true,
+          type: 'text',
+          label: expect.any(Function),
+          labelHidden: true,
         },
       },
     });
