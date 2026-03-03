@@ -1,13 +1,13 @@
 {
-  "title": "[W] Case number check",
-  "pageTitle": "[W] Case number",
-  "label": "[W] What is your case number?",
-  "hint": "[W] This will appear on the letter sent to you from the employment tribunal.",
+  "title": "Gwirio Rhif yr Achos",
+  "pageTitle": "Rhif yr Achos",
+  "label": "Beth yw eich rhif achos?",
+  "hint": "Bydd hwn yn ymddangos ar y llythyr a anfonwyd atoch gan y tribiwnlys cyflogaeth.",
   "errors": {
     "ethosCaseReference": {
-      "required": "[W] Enter case number. Sample case number format is 1111111/2020",
-      "invalid": "[W] Invalid case number. Sample Case number format is 1111111/2020",
-      "caseNotFound": "[W] Case Not Found. The entered case number does not match our records."
+      "required": "Nodwch rif yr achos. Sampl o fformat rhif achos yw 1111111/2020",
+      "invalid": "Rhif achos annilys. Sampl fformat rhif achos yw 1111111/2020",
+      "caseNotFound": "Ni ddaethpwyd o hyn i'r achos. Nid yw'r rhif achos a nodwyd gennych yn cyfateb i'n cofnodion."
     }
   }
 }

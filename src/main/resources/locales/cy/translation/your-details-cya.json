@@ -1,20 +1,20 @@
 {
-  "title": "[W] Check and submit",
-  "caseNumber": "[W] Case number",
-  "claimantName": "[W] Claimant's name",
-  "respondentName": "[W] Respondent's name",
-  "confirmation": "[W] I confirm all these details are accurate and match what is written on the case.",
-  "submitBtn": "[W] Submit",
-  "findLegalAdvice": "[W] Find legal advice",
-  "contact": "[W] Contact us",
+  "title": "Gwirio a chyflwyno",
+  "caseNumber": "Rhif yr achos",
+  "claimantName": "Enw’r hawlydd",
+  "respondentName": "Enw’r atebydd",
+  "confirmation": "Gallaf gadarnhau bod yr holl fanylion hyn yn gywir ac yn cyd-fynd â’r hyn sydd wedi’i ysgrifennu ar yr achos.",
+  "submitBtn": "Cyflwyno",
+  "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol",
+  "contact": "Cysylltu â ni",
   "errors": {
     "yourDetailsCya": {
-      "required": "[W] Please confirm the details are accurate."
+      "required": "Cadarnhewch fod y manylion yn gywir."
     },
     "hiddenErrorField": {
-      "api": "[W] Unable to assign role. Please try again later",
-      "caseAlreadyAssignedToSameUser": "[W] You have already assigned to this case",
-      "caseAlreadyAssigned": "[W] Case has already assigned to a claimant"
+      "api": "Rydym yn methu â neilltuo rôl. Rhowch gynnig arall arni'n hwyrach ymlaen.",
+      "caseAlreadyAssignedToSameUser": "Rydych eisoes wedi eich neilltuo i’r achos hwn",
+      "caseAlreadyAssigned": "Mae’r achos eisoes wedi’i neilltuo i atebydd"
     }
   }
 }
