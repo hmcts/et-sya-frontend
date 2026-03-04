@@ -98,7 +98,7 @@
     "session-file-store": "^1.5.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.1.6",
+    "typescript": "5.9.3",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
