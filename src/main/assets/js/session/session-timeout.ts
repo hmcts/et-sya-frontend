@@ -19,7 +19,7 @@ export default class SessionTimeout {
   private modalElement: HTMLElement = null;
   private modalOverlayElement: HTMLElement = null;
   private modalCountdownElement: HTMLElement = null;
-  private atTimerElement: HTMLElement = null;
+  private srAnnouncerElement: HTMLElement = null;
   private focusableElements: NodeListOf<Element> = null;
   private firstFocusableElement: HTMLElement = null;
   private lastFocusableElement: HTMLElement = null;
@@ -32,8 +32,8 @@ export default class SessionTimeout {
     this.modalElement = document.querySelector('#timeout-modal');
     this.modalOverlayElement = document.querySelector('#modal-overlay');
     this.modalCountdownElement = document.querySelector('#timer');
-    this.atTimerElement = document.querySelector('#at-timer');
     this.extendSessionElement = document.querySelector('#extend-session');
+    this.srAnnouncerElement = document.querySelector('#sr-announcer');
     this.isLoggedIn = document.querySelector('#isLoggedIn');
     this.body = document.querySelector('body');
     this.focusableElements = this.modalElement.querySelectorAll(
@@ -69,8 +69,8 @@ export default class SessionTimeout {
       this.signOut();
     }, this.sessionTimeoutCountdown);
     this.modalTimeout = window.setTimeout(() => {
-      this.openModal();
       this.startModalCountdown();
+      this.openModal();
     }, this.sessionTimeoutCountdown - (this.bufferSessionExtension + 1));
   };
 
@@ -84,10 +84,8 @@ export default class SessionTimeout {
   resetModalMessage = (): void => {
     if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
       this.modalCountdownElement.innerHTML = i18nWelsh.sessionTimeout.modal.info;
-      this.atTimerElement.innerHTML = i18nWelsh.sessionTimeout.modal.info;
     } else {
       this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
-      this.atTimerElement.innerHTML = i18n.sessionTimeout.modal.info;
     }
   };
 
@@ -97,12 +95,28 @@ export default class SessionTimeout {
     this.resetModalMessage();
   };
 
+  buildAtTimerMessage = (translations: typeof i18n, minutes: number): string => {
+    return `${translations.sessionTimeout.modal.title}. ${translations.sessionTimeout.modal.body[0]} ${minutes} ${translations.sessionTimeout.modal.body[1]} ${translations.sessionTimeout.modal.instruction}`;
+  };
+
+  announceToScreenReader = (message: string): void => {
+    // Clear the live region first, then set new content after a short delay.
+    // This forces screen readers to detect a change and announce the updated message.
+    this.srAnnouncerElement.textContent = '';
+    window.setTimeout(() => {
+      this.srAnnouncerElement.textContent = message;
+    }, 200);
+  };
+
   startModalCountdown = (): void => {
     let count = 0;
-    let minutes = 2;
+    let minutes = 5;
     let seconds = '00';
     const isWelsh = this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend);
     const translations = isWelsh ? i18nWelsh : i18n;
+
+    // Set the initial screen reader message on the dialog
+    this.modalElement.setAttribute('aria-label', this.buildAtTimerMessage(translations, minutes));
 
     this.modalCountdown = window.setInterval(() => {
       minutes = moment.duration(this.bufferSessionExtension - count).minutes();
@@ -110,19 +124,14 @@ export default class SessionTimeout {
         .duration(this.bufferSessionExtension - count)
         .seconds()
         .toLocaleString('en-GB', { minimumIntegerDigits: 2 });
-      this.modalCountdownElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${translations.sessionTimeout.modal.body[1]}`;
+      this.modalCountdownElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes} ${translations.sessionTimeout.modal.minuteLabel} ${seconds} ${translations.sessionTimeout.modal.secondLabel}`;
       count += 1000;
     }, 1000);
 
-    // AT-friendly timer updates every 60 seconds to avoid excessive announcements
-    this.atTimerElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${translations.sessionTimeout.modal.body[1]}`;
+    // Screen reader announces every minute to keep users informed
     this.atTimerCountdown = window.setInterval(() => {
       minutes = moment.duration(this.bufferSessionExtension - count).minutes();
-      seconds = moment
-        .duration(this.bufferSessionExtension - count)
-        .seconds()
-        .toLocaleString('en-GB', { minimumIntegerDigits: 2 });
-      this.atTimerElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${translations.sessionTimeout.modal.body[1]}`;
+      this.announceToScreenReader(this.buildAtTimerMessage(translations, minutes));
     }, 60000);
   };
 
@@ -130,9 +139,17 @@ export default class SessionTimeout {
     this.modalElement.removeAttribute('aria-hidden');
     this.modalOverlayElement.removeAttribute('aria-hidden');
     this.previousFocusedElement = document.activeElement as HTMLElement;
-    this.firstFocusableElement.focus();
     this.disableScroll();
     this.body.addEventListener('keydown', this.keyDownEventListener);
+    // Delay focus to give Safari VoiceOver time to process aria-hidden removal
+    window.setTimeout(() => {
+      this.modalElement.focus();
+    }, 100);
+    // Also announce via live region as a fallback for Safari
+    const ariaLabel = this.modalElement.getAttribute('aria-label');
+    if (ariaLabel) {
+      this.announceToScreenReader(ariaLabel);
+    }
   };
 
   disableScroll = (): void => {

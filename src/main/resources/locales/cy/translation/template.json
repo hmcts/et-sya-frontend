@@ -36,9 +36,12 @@
   "sessionTimeout": {
     "modal": {
       "title": "Rydych ar fin allgofnodi",
-      "body": ["Am resymau diogelwch, byddwch yn cael eich allgofnodi o’r gwasanaeth hwn mewn ", "funudau."],
-      "info": "Allgofnodi’n awtomatig",
-      "extend": "Parhau i ddefnyddio’r gwasanaeth",
+      "body": ["Am resymau diogelwch, byddwch yn cael eich allgofnodi o'r gwasanaeth hwn mewn ", "funudau."],
+      "minuteLabel": "munud",
+      "secondLabel": "eiliad",
+      "instruction": "Dewiswch y botwm 'Parhau i ddefnyddio'r gwasanaeth' i ymestyn eich sesiwn.",
+      "info": "Allgofnodi'n awtomatig",
+      "extend": "Parhau i ddefnyddio'r gwasanaeth",
       "cancel": "Allgofnodi"
     }
   }

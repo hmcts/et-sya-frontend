@@ -37,6 +37,9 @@
     "modal": {
       "title": "You're about to be signed out",
       "body": ["For security reasons, you will be signed out of this service in ", "minutes."],
+      "minuteLabel": "minutes",
+      "secondLabel": "seconds",
+      "instruction": "Please select the 'Stay signed in' button to extend your session.",
       "info": "Automatic timeout",
       "extend": "Stay signed in ",
       "cancel": "Sign out"
