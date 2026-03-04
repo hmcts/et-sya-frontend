@@ -1,7 +1,8 @@
 {% macro timeoutModal() %}
-  <div class="timeout-modal" id="timeout-modal" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description" aria-hidden="true">
+  <div class="timeout-modal" id="timeout-modal" role="dialog" aria-live="polite" aria-labelledby="dialog-title" aria-describedby="at-timer" aria-hidden="true">
     <h2 class="govuk-heading-m" id="dialog-title"> {{sessionTimeout.modal.title}} </h2>
-     <p class="govuk-body" id="dialog-description"> </p> 
+    <p class="govuk-visually-hidden" id="at-timer" role="status"> </p>
+    <p class="govuk-body" id="timer" aria-hidden="true" aria-relevant="additions"> </p>
 
     {{ govukButton({
       text: sessionTimeout.modal.extend,

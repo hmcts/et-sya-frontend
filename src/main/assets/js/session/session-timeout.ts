@@ -13,11 +13,13 @@ export default class SessionTimeout {
   private sessionTimeout: number;
   private modalTimeout: number;
   private modalCountdown: number;
+  private atTimerCountdown: number;
   private isLoggedIn: HTMLInputElement = null;
   private extendSessionElement: HTMLElement = null;
   private modalElement: HTMLElement = null;
   private modalOverlayElement: HTMLElement = null;
   private modalCountdownElement: HTMLElement = null;
+  private atTimerElement: HTMLElement = null;
   private focusableElements: NodeListOf<Element> = null;
   private firstFocusableElement: HTMLElement = null;
   private lastFocusableElement: HTMLElement = null;
@@ -29,7 +31,8 @@ export default class SessionTimeout {
     this.init = this.init.bind(this);
     this.modalElement = document.querySelector('#timeout-modal');
     this.modalOverlayElement = document.querySelector('#modal-overlay');
-    this.modalCountdownElement = document.querySelector('#dialog-description');
+    this.modalCountdownElement = document.querySelector('#timer');
+    this.atTimerElement = document.querySelector('#at-timer');
     this.extendSessionElement = document.querySelector('#extend-session');
     this.isLoggedIn = document.querySelector('#isLoggedIn');
     this.body = document.querySelector('body');
@@ -75,15 +78,16 @@ export default class SessionTimeout {
     clearTimeout(this.sessionTimeout);
     clearTimeout(this.modalTimeout);
     clearInterval(this.modalCountdown);
+    clearInterval(this.atTimerCountdown);
   };
 
   resetModalMessage = (): void => {
-    this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
-
     if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
       this.modalCountdownElement.innerHTML = i18nWelsh.sessionTimeout.modal.info;
+      this.atTimerElement.innerHTML = i18nWelsh.sessionTimeout.modal.info;
     } else {
       this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
+      this.atTimerElement.innerHTML = i18n.sessionTimeout.modal.info;
     }
   };
 
@@ -97,19 +101,29 @@ export default class SessionTimeout {
     let count = 0;
     let minutes = 2;
     let seconds = '00';
+    const isWelsh = this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend);
+    const translations = isWelsh ? i18nWelsh : i18n;
+
     this.modalCountdown = window.setInterval(() => {
       minutes = moment.duration(this.bufferSessionExtension - count).minutes();
       seconds = moment
         .duration(this.bufferSessionExtension - count)
         .seconds()
         .toLocaleString('en-GB', { minimumIntegerDigits: 2 });
-      if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
-        this.modalCountdownElement.innerHTML = `${i18nWelsh.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${i18nWelsh.sessionTimeout.modal.body[1]}`;
-      } else {
-        this.modalCountdownElement.innerHTML = `${i18n.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${i18n.sessionTimeout.modal.body[1]}`;
-      }
+      this.modalCountdownElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${translations.sessionTimeout.modal.body[1]}`;
       count += 1000;
     }, 1000);
+
+    // AT-friendly timer updates every 60 seconds to avoid excessive announcements
+    this.atTimerElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${translations.sessionTimeout.modal.body[1]}`;
+    this.atTimerCountdown = window.setInterval(() => {
+      minutes = moment.duration(this.bufferSessionExtension - count).minutes();
+      seconds = moment
+        .duration(this.bufferSessionExtension - count)
+        .seconds()
+        .toLocaleString('en-GB', { minimumIntegerDigits: 2 });
+      this.atTimerElement.innerHTML = `${translations.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${translations.sessionTimeout.modal.body[1]}`;
+    }, 60000);
   };
 
   openModal = (): void => {
@@ -148,11 +162,9 @@ export default class SessionTimeout {
   };
 
   signOut(): void {
-    let redirectUrl = '';
+    let redirectUrl = PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;
     if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
       redirectUrl = PageUrls.HOME + languages.WELSH_URL_PARAMETER;
-    } else {
-      redirectUrl = PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;
     }
     window.location.assign('/logout?redirectUrl=' + redirectUrl);
   }
