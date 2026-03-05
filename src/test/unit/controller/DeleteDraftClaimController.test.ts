@@ -58,7 +58,7 @@ describe('DeleteDraftClaimController', () => {
         expect.objectContaining({
           caseReference: '1234',
           deleteButtonUrl: expect.any(String),
-          backToCaseUrl: expect.any(String),
+          cancelLink: expect.any(String),
         })
       );
     });
