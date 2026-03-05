@@ -24,6 +24,7 @@ export default class ClaimantApplicationsController {
     } else {
       const languageParam = getLanguageParam(req.url);
       const usersApplications = getUserApplications(userCases, translations, languageParam);
+      req.session.returnUrl = PageUrls.CLAIMANT_APPLICATIONS;
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,
