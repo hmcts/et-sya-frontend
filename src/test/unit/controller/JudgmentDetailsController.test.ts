@@ -3,14 +3,12 @@ import axios from 'axios';
 import JudgmentDetailsController from '../../../main/controllers/JudgmentDetailsController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { SendNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { ErrorPages, PageUrls, ResponseRequired, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, Parties, ResponseRequired, TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import commonRaw from '../../../main/resources/locales/en/translation/common.json';
 import judgmentDetailsRaw from '../../../main/resources/locales/en/translation/judgment-details.json';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
-import { mockDocumentDetailsResponseData } from '../mocks/mockDocumentDetailsResponse';
-import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -18,8 +16,6 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const getCaseApiMock = jest.spyOn(caseService, 'getCaseApi');
 const api = new CaseApi(mockedAxios);
-
-const documentRejection = Promise.reject(new Error('Mocked failure to get document metadata'));
 
 describe('Judgment Details Controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
@@ -51,28 +47,55 @@ describe('Judgment Details Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.JUDGMENT_DETAILS, expect.anything());
   });
 
-  it.each([
-    { name: 'application', url: 'uuid1' },
-    { name: 'response', url: 'uuid2' },
-    { name: 'decision', url: 'uuid3' },
-  ])('should redirect to not found page when $type document cannot be resolved', async args => {
-    api.getDocumentDetails = jest
-      .fn()
-      .mockImplementation(docId =>
-        docId === args.url ? documentRejection : Promise.resolve(mockDocumentDetailsResponseData)
-      );
-
+  it('should get judgment details page with attachments', async () => {
     const userCase: Partial<CaseWithId> = {
-      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+      sendNotificationCollection: [
+        {
+          id: '1',
+          value: {
+            sendNotificationSubjectString: 'Judgment',
+            sendNotificationResponseTribunal: ResponseRequired.YES,
+            sendNotificationTitle: 'Test Judgment',
+            sendNotificationDecision: 'Granted',
+            sendNotificationSentBy: 'Judge',
+            sendNotificationWhoMadeJudgement: 'Employment Judge',
+            sendNotificationFullName2: 'Judge Smith',
+            sendNotificationNotify: Parties.BOTH_PARTIES,
+            date: '2023-05-05',
+            sendNotificationUploadDocument: [
+              {
+                id: '1',
+                value: {
+                  typeOfDocument: 'Judgment document',
+                  uploadedDocument: {
+                    document_filename: 'judgment.pdf',
+                    document_url: 'http://test.com/judgment.pdf',
+                    document_binary_url: 'http://test.com/binary/judgment.pdf',
+                  },
+                },
+              },
+            ],
+          } as SendNotificationType,
+        },
+      ],
     };
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ userCase }, translationJsons);
     request.url = PageUrls.JUDGMENT_DETAILS;
-    request.params.id = '1';
+    request.params.appId = '1';
 
     const controller = new JudgmentDetailsController();
     await controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.JUDGMENT_DETAILS,
+      expect.objectContaining({
+        selectedJudgment: expect.objectContaining({
+          id: '1',
+        }),
+        pageContent: expect.any(Array),
+      })
+    );
   });
 });

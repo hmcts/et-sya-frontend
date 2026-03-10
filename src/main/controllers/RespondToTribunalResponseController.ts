@@ -12,11 +12,7 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import {
-  createDownloadLink,
-  findSelectedGenericTseApplication,
-  populateDocumentMetadata,
-} from './helpers/DocumentHelpers';
+import { createDownloadLink, findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { handlePost } from './helpers/RespondToApplicationHelper';
@@ -86,14 +82,6 @@ export default class RespondToTribunalResponseController {
     }
 
     const document = selectedApplication.value?.documentUpload;
-    if (document) {
-      try {
-        await populateDocumentMetadata(document, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
-      }
-    }
     const downloadLink = createDownloadLink(document);
     const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 

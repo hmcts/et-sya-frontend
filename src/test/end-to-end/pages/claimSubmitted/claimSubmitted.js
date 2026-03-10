@@ -5,7 +5,10 @@ module.exports = async function () {
   const I = this;
 
   //Application Details Section
-  await I.waitForVisible("//a[contains(text(),'Give feedback')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.waitForVisible(
+    "//a[contains(text(),'Complete this short survey')]",
+    testConfig.TestWaitForVisibilityTimeLimit
+  );
   I.see('Your claim has been submitted');
   I.see('What happens next');
   I.see('Submission details');

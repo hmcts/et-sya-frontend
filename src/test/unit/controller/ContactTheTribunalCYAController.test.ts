@@ -19,6 +19,8 @@ describe('Contact Application Check Your Answers Controller', () => {
     const res = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
     request.session.userCase = userCaseWithRespondent;
+    request.session.visitedContactTribunalSelection = true;
+    request.get = jest.fn();
 
     request.session.userCase.contactApplicationType = 'withdraw';
 

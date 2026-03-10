@@ -2,8 +2,10 @@ import { createDownloadLink } from '../../../../main/controllers/helpers/Documen
 import {
   activateJudgmentsLink,
   getAllAppsWithDecisions,
+  getDecisionAttachments,
   getDecisionDetails,
   getDecisions,
+  getJudgmentAttachments,
   populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors,
   populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/JudgmentHelpers';
@@ -158,7 +160,7 @@ describe('Judgment helper', () => {
     expect(pageContent[0][3].value).toEqual({ text: 'Test application details text' });
     expect(pageContent[0][4].key).toEqual({ classes: summaryListClass, text: translations.supportingMaterial });
     expect(pageContent[0][4].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid1' target='_blank' class='govuk-link'>mockApplicationDocumentUpload (mockApplicationDocumentUpload, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid1' target='_blank' class='govuk-link'>mockApplicationDocumentUpload</a>",
     });
     expect(pageContent[0][5].key).toEqual({ classes: summaryListClass, text: translations.copyCorrespondence });
     expect(pageContent[0][5].value).toEqual({ text: YesOrNo.YES });
@@ -174,7 +176,7 @@ describe('Judgment helper', () => {
     expect(pageContent[1][2].value).toEqual({ html: 'Test respondent response text' });
     expect(pageContent[1][3].key).toEqual({ classes: summaryListClass, text: translations.supportingMaterial });
     expect(pageContent[1][3].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid2' target='_blank' class='govuk-link'>mockResponseDocumentUpload (mockResponseDocumentUpload, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid2' target='_blank' class='govuk-link'>mockResponseDocumentUpload</a>",
     });
     expect(pageContent[1][4].key).toEqual({ classes: summaryListClass, text: translations.copyCorrespondence });
     expect(pageContent[1][4].value).toEqual({ text: YesOrNo.YES });
@@ -189,13 +191,13 @@ describe('Judgment helper', () => {
     expect(pageContent[2][3].value).toEqual({ html: 'Decision document 1' });
     expect(pageContent[2][4].key).toEqual({ classes: summaryListClass, text: translations.document });
     expect(pageContent[2][4].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid3' target='_blank' class='govuk-link'>mockDecisionDocumentUpload1 (mockDecisionDocumentUpload1, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid3' target='_blank' class='govuk-link'>mockDecisionDocumentUpload1</a>",
     });
     expect(pageContent[2][5].key).toEqual({ classes: summaryListClass, text: translations.description });
     expect(pageContent[2][5].value).toEqual({ html: 'Decision document 2' });
     expect(pageContent[2][6].key).toEqual({ classes: summaryListClass, text: translations.document });
     expect(pageContent[2][6].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid4' target='_blank' class='govuk-link'>mockDecisionDocumentUpload2 (mockDecisionDocumentUpload2, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid4' target='_blank' class='govuk-link'>mockDecisionDocumentUpload2</a>",
     });
     expect(pageContent[2][7].key).toEqual({ classes: summaryListClass, text: translations.decisionMadeBy });
     expect(pageContent[2][7].value).toEqual({ text: 'Judge' });
@@ -203,5 +205,93 @@ describe('Judgment helper', () => {
     expect(pageContent[2][8].value).toEqual({ text: 'Mr Test Judge' });
     expect(pageContent[2][9].key).toEqual({ classes: summaryListClass, text: translations.sentTo });
     expect(pageContent[2][9].value).toEqual({ text: 'Both parties' });
+  });
+
+  it('should get judgment attachments with download links', () => {
+    const judgment: SendNotificationTypeItem = {
+      id: '1',
+      value: {
+        sendNotificationUploadDocument: [
+          {
+            id: '1',
+            value: {
+              typeOfDocument: 'Judgment document',
+              uploadedDocument: decisionUploadedDoc1,
+            },
+          },
+          {
+            id: '2',
+            value: {
+              typeOfDocument: 'Supporting document',
+              shortDescription: 'Already has description',
+              uploadedDocument: decisionUploadedDoc2,
+            },
+          },
+        ],
+      } as SendNotificationType,
+    };
+
+    const attachments = getJudgmentAttachments(judgment);
+
+    expect(attachments).toHaveLength(2);
+    expect(attachments[0].value.shortDescription).toBe('Judgment document');
+    expect(attachments[0].downloadLink).toContain('mockDecisionDocumentUpload1');
+    expect(attachments[1].value.shortDescription).toBe('Already has description');
+    expect(attachments[1].downloadLink).toContain('mockDecisionDocumentUpload2');
+  });
+
+  it('should return empty array when judgment has no attachments', () => {
+    const judgment: SendNotificationTypeItem = {
+      id: '1',
+      value: {} as SendNotificationType,
+    };
+
+    const attachments = getJudgmentAttachments(judgment);
+
+    expect(attachments).toEqual([]);
+  });
+
+  it('should get decision attachments with download links', () => {
+    const decision: TseAdminDecisionItem = {
+      id: '1',
+      value: {
+        responseRequiredDoc: [
+          {
+            id: '1',
+            value: {
+              typeOfDocument: 'Decision doc',
+              uploadedDocument: decisionUploadedDoc1,
+            },
+          },
+        ],
+      } as TseAdminDecision,
+    };
+
+    const attachments = getDecisionAttachments(decision);
+
+    expect(attachments).toHaveLength(1);
+    expect(attachments[0].value.shortDescription).toBe('Decision doc');
+    expect(attachments[0].downloadLink).toContain('mockDecisionDocumentUpload1');
+  });
+
+  it('should handle decision attachments without shortDescription', () => {
+    const decision: TseAdminDecisionItem = {
+      id: '1',
+      value: {
+        responseRequiredDoc: [
+          {
+            id: '1',
+            value: {
+              typeOfDocument: 'My Type',
+              uploadedDocument: decisionUploadedDoc1,
+            },
+          },
+        ],
+      } as TseAdminDecision,
+    };
+
+    const attachments = getDecisionAttachments(decision);
+
+    expect(attachments[0].value.shortDescription).toBe('My Type');
   });
 });

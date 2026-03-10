@@ -61,9 +61,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
       req.session.userCase = fromApiFormat(response.data);
-      if (req.session.userCase.workEnterPostcode === undefined) {
-        req.session.userCase.workEnterPostcode = workEnterPostcode;
-      }
+      req.session.userCase.workEnterPostcode = workEnterPostcode;
       if (req.session.userCase.addressEnterPostcode === undefined) {
         req.session.userCase.addressEnterPostcode = addressEnterPostcode;
       }
@@ -261,7 +259,9 @@ export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Fo
   const errors = returnSessionErrors(req, form);
   if (errors.length === 0) {
     req.session.errors = [];
-    returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
+    req.session.save(() => {
+      returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
+    });
   } else {
     handleErrors(req, res, errors);
   }
@@ -346,4 +346,14 @@ export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[])
     }
     return newObj;
   });
+};
+
+export const deleteDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).deleteDraftCase(req.session.userCase);
+    logger.info(`Deleted draft case id: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+    throw error;
+  }
 };

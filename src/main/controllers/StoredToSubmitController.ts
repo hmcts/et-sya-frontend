@@ -11,12 +11,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import {
-  createDownloadLink,
-  findSelectedGenericTseApplication,
-  getDocumentLink,
-  populateDocumentMetadata,
-} from './helpers/DocumentHelpers';
+import { createDownloadLink, findSelectedGenericTseApplication, getDocumentLink } from './helpers/DocumentHelpers';
 import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
@@ -92,15 +87,6 @@ export default class StoredToSubmitController {
     userCase.selectedGenericTseApplication = selectedApplication;
 
     const document = selectedApplication.value?.documentUpload;
-    const accessToken = req.session.user?.accessToken;
-    if (document) {
-      try {
-        await populateDocumentMetadata(document, accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-      }
-    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),

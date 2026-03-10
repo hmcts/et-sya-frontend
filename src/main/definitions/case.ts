@@ -1,3 +1,4 @@
+import { OrganisationPolicy } from './OrganisationPolicy';
 import { HearingModel } from './api/caseApiResponse';
 import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
@@ -219,6 +220,8 @@ export interface Case {
   caseStayed?: YesOrNo;
   claimantRepresentative?: ClaimantRepresentative;
   claimantRepresentativeRemoved?: YesOrNo;
+  // Claimant Organisation Policy
+  claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
 }
 
 export const enum StillWorking {

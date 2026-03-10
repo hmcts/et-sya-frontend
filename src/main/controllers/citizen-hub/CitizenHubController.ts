@@ -11,7 +11,7 @@ import {
   statusColorMap,
 } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
-import { formatDate, fromApiFormat, getDueDate } from '../../helper/ApiFormatter';
+import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
@@ -42,6 +42,7 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
+import { ContactTheTribunalHelper } from '../helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
@@ -63,11 +64,13 @@ import { getRespondentApplications, getRespondentBannerContent } from '../helper
 import { getMultiplePanelData, showMutipleData } from '../helpers/multiples/MultiplePanelHelper';
 
 const logger = getLogger('CitizenHubController');
-const DAYS_FOR_PROCESSING = 7;
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
     const welshEnabled = await getFlagValue('welsh-language', null);
+    const claimantRepresentedByOrganisation = ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(
+      req.session.userCase
+    );
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {
@@ -195,7 +198,6 @@ export default class CitizenHubController {
       decisionBannerContent,
       claimantTribunalResponseBannerContent,
       hideContactUs: true,
-      processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
       claimantRepresented: userCase.claimantRepresentative,
       showAcknowledgementAlert: getAcknowledgementAlert(userCase, hubLinksStatuses),
@@ -222,6 +224,7 @@ export default class CitizenHubController {
       showMultipleData,
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
       showNoLongerRepresentedNotification,
+      claimantRepresentedByOrganisation,
     });
   }
 }

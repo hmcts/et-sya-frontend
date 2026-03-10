@@ -132,5 +132,27 @@ describe('claimDetailsValidator', () => {
       const userCase = { typeOfClaim: ['Type1'], claimSummaryText: 'Summary' };
       expect(validateClaimCheckDetails(userCase)).toBe(true);
     });
+
+    it('should return true if claimSummaryFile is an object with required properties', () => {
+      const userCase = {
+        typeOfClaim: ['discrimination'],
+        claimSummaryFile: {
+          document_binary_url: 'http://example.com/binary',
+          document_filename: 'file.pdf',
+          document_url: 'http://example.com/document',
+        },
+      };
+      expect(validateClaimCheckDetails(userCase)).toBe(true);
+    });
+
+    it('should return true if claimSummaryFile is a non-empty string', () => {
+      const userCase = { typeOfClaim: ['discrimination'], claimSummaryFile: 'file-url' };
+      expect(validateClaimCheckDetails(userCase)).toBe(true);
+    });
+
+    it('should return false if claimSummaryFile and claimSummaryText are both missing', () => {
+      const userCase = { typeOfClaim: ['discrimination'] };
+      expect(validateClaimCheckDetails(userCase)).toBe(false);
+    });
   });
 });

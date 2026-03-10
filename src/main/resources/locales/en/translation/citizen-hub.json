@@ -44,8 +44,7 @@
   "readyToView": "Ready to view",
   "stored": "Stored",
   "submittedAlert": "You have submitted your claim to the tribunal",
-  "processClaim": "We aim to process your claim by",
-  "busyPeriod": ". In busy periods it may take longer.",
+  "submittedBannerText": "The current processing time is approximately 20 working days. This may extend during busy periods.",
   "tribunalRespondedP1": "The tribunal has responded to ",
   "tribunalRespondedP2": " application to ",
   "respondToTribunal": "Respond to the tribunal",
@@ -125,7 +124,8 @@
       "link": "View your response"
     },
     "claimantRepresented": {
-      "title": "You are now being legally represented by",
+      "titleWithName": "You are now being legally represented by",
+      "titleWithoutName": "You are now being legally represented",
       "p1": "You will be kept updated with case communication but will no longer be able to",
       "l1": "Submit applications",
       "l2": "Directly respond to applications or notifications"

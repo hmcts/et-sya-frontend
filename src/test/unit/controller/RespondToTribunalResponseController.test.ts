@@ -3,7 +3,7 @@ import axios from 'axios';
 import RespondToTribunalResponseController from '../../../main/controllers/RespondToTribunalResponseController';
 import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
@@ -15,7 +15,6 @@ import { safeUrlMock } from '../mocks/mockUrl';
 
 jest.mock('axios');
 const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
-const documentRejection = Promise.reject(new Error('Mocked failure to get document metadata'));
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
 const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
@@ -178,20 +177,5 @@ describe('Respond to tribunal response Controller', () => {
     const controller = new RespondToTribunalResponseController();
     await controller.post(request, res);
     expect(res.redirect).toHaveBeenCalledWith('/not-found?lng=en');
-  });
-
-  it('should redirect to not found page when response document cannot be resolved', async () => {
-    caseApi.getDocumentDetails = jest.fn().mockReturnValue(documentRejection);
-
-    const userCase: Partial<CaseWithId> = {
-      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
-    };
-
-    const response = mockResponse();
-    const request = mockRequestWithTranslation({ userCase }, translationJsons);
-
-    const controller = new RespondToTribunalResponseController();
-    await controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });

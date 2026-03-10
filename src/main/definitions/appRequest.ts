@@ -12,6 +12,7 @@ export interface AppRequest<T = Partial<AnyRecord>> extends Request {
 }
 
 export interface AppSession extends Session {
+  visitedContactTribunalSelection?: boolean;
   returnUrl: string;
   lang: string | undefined;
   errors: FormError[] | undefined;
@@ -25,6 +26,7 @@ export interface AppSession extends Session {
   contactType?: string;
   contactTribunalSelection?: string;
   documentDownloadPage?: string;
+  csrfInitialized?: boolean;
 }
 
 export interface UserDetails {

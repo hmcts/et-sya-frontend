@@ -56,7 +56,9 @@ export class CaseApi {
         }
       );
     } catch (error) {
-      throw new Error('Error downloading claim pdf: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error downloading claim pdf: ' + axiosErrorDetails(error, { action: 'downloadClaimPdf', caseId })
+      );
     }
   };
 
@@ -66,7 +68,7 @@ export class CaseApi {
         responseType: 'arraybuffer',
       });
     } catch (error) {
-      throw new Error('Error fetching document: ' + axiosErrorDetails(error));
+      throw new Error('Error fetching document: ' + axiosErrorDetails(error, { action: 'getCaseDocument', docId }));
     }
   };
 
@@ -74,7 +76,9 @@ export class CaseApi {
     try {
       return await this.axios.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
     } catch (error) {
-      throw new Error('Error fetching document details: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error fetching document details: ' + axiosErrorDetails(error, { action: 'getDocumentDetails', docId })
+      );
     }
   };
 
@@ -82,7 +86,19 @@ export class CaseApi {
     try {
       return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
     } catch (error) {
-      throw new Error('Error updating draft case: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error updating draft case: ' + axiosErrorDetails(error, { action: 'updateDraftCase', caseId: caseItem.id })
+      );
+    }
+  };
+
+  deleteDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.post(JavaApiUrls.DELETE_DRAFT_CASE, toApiFormat(caseItem));
+    } catch (error) {
+      throw new Error(
+        'Error deleting draft case: ' + axiosErrorDetails(error, { action: 'deleteDraftCase', caseId: caseItem.id })
+      );
     }
   };
 
@@ -94,7 +110,10 @@ export class CaseApi {
         hub_links_statuses: caseItem.hubLinksStatuses,
       });
     } catch (error) {
-      throw new Error('Error updating hub links statuses: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error updating hub links statuses: ' +
+          axiosErrorDetails(error, { action: 'updateHubLinksStatuses', caseId: caseItem.id })
+      );
     }
   };
 
@@ -113,13 +132,16 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error submitting claimant tse application: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error submitting claimant tse application: ' +
+          axiosErrorDetails(error, { action: 'submitClaimantTse', caseId: caseItem.id })
+      );
     }
   };
 
   storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axios
-      .put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
+    try {
+      return await this.axios.put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
@@ -130,15 +152,18 @@ export class CaseApi {
           copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
           copyToOtherPartyText: caseItem.copyToOtherPartyText,
         },
-      })
-      .catch(function (error) {
-        throw new Error('Error store tse application status: ' + error);
       });
+    } catch (error) {
+      throw new Error(
+        'Error store claimant tse application: ' +
+          axiosErrorDetails(error, { action: 'storeClaimantTse', caseId: caseItem.id })
+      );
+    }
   };
 
   storedToSubmitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axios
-      .put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
+    try {
+      return await this.axios.put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
@@ -150,10 +175,13 @@ export class CaseApi {
           copyToOtherPartyText: caseItem.copyToOtherPartyText,
           storedApplicationId: caseItem.selectedGenericTseApplication.id,
         },
-      })
-      .catch(function (error) {
-        throw new Error('Error submitting stored tse application status: ' + error);
       });
+    } catch (error) {
+      throw new Error(
+        'Error submitting stored claimant tse application: ' +
+          axiosErrorDetails(error, { action: 'storedToSubmitClaimantTse', caseId: caseItem.id })
+      );
+    }
   };
 
   submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
@@ -182,7 +210,10 @@ export class CaseApi {
       };
       return await this.axios.put(JavaApiUrls.SUBMIT_BUNDLES, data);
     } catch (error) {
-      throw new Error('Error submitting bundles: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error submitting bundles: ' +
+          axiosErrorDetails(error, { action: 'submitBundlesHearingDoc', caseId: caseItem.id })
+      );
     }
   };
 
@@ -202,7 +233,10 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error responding to tse application: ' +
+          axiosErrorDetails(error, { action: 'respondToApplication', caseId: caseItem.id })
+      );
     }
   };
 
@@ -222,21 +256,27 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error responding to tse application: ' +
+          axiosErrorDetails(error, { action: 'storeRespondToApplication', caseId: caseItem.id })
+      );
     }
   };
 
   storedToSubmitRespondToApp = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axios
-      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_APPLICATION, {
+    try {
+      return await this.axios.put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         application_id: caseItem.selectedGenericTseApplication.id,
         stored_response_id: caseItem.selectedStoredTseResponse.id,
-      })
-      .catch(function (error) {
-        throw new Error('Error submitting stored tse application respond status: ' + error);
       });
+    } catch (error) {
+      throw new Error(
+        'Error submitting stored respond to application: ' +
+          axiosErrorDetails(error, { action: 'storedToSubmitRespondToApp', caseId: caseItem.id })
+      );
+    }
   };
 
   changeApplicationStatus = async (
@@ -251,7 +291,10 @@ export class CaseApi {
         new_status: newStatus,
       });
     } catch (error) {
-      throw new Error('Error changing tse application status: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error changing tse application status: ' +
+          axiosErrorDetails(error, { action: 'changeApplicationStatus', caseId: caseItem.id })
+      );
     }
   };
 
@@ -263,7 +306,10 @@ export class CaseApi {
         send_notification_id: caseItem.selectedRequestOrOrder.id,
       });
     } catch (error) {
-      throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error updating sendNotification state: ' +
+          axiosErrorDetails(error, { action: 'updateSendNotificationState', caseId: caseItem.id })
+      );
     }
   };
 
@@ -279,7 +325,10 @@ export class CaseApi {
         notification_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
-      throw new Error('Error updating judgment notification state: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error updating judgment notification state: ' +
+          axiosErrorDetails(error, { action: 'updateJudgmentNotificationState', caseId: caseItem.id })
+      );
     }
   };
 
@@ -296,7 +345,10 @@ export class CaseApi {
         admin_decision_id: selectedDecision.id,
       });
     } catch (error) {
-      throw new Error('Error updating judgment notification state: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error updating judgment notification state: ' +
+          axiosErrorDetails(error, { action: 'updateDecisionState', caseId: caseItem.id })
+      );
     }
   };
 
@@ -315,7 +367,10 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error adding response to sendNotification: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error adding response to sendNotification: ' +
+          axiosErrorDetails(error, { action: 'addResponseSendNotification', caseId: caseItem.id })
+      );
     }
   };
 
@@ -334,21 +389,27 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error adding store response to sendNotification: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error adding store response to sendNotification: ' +
+          axiosErrorDetails(error, { action: 'storeResponseSendNotification', caseId: caseItem.id })
+      );
     }
   };
 
   storedToSubmitRespondToTribunal = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axios
-      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_TRIBUNAL, {
+    try {
+      return await this.axios.put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_TRIBUNAL, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         order_id: caseItem.selectedRequestOrOrder.id,
         stored_response_id: caseItem.selectedStoredPseResponse.id,
-      })
-      .catch(function (error) {
-        throw new Error('Error submitting stored tse application respond status: ' + error);
       });
+    } catch (error) {
+      throw new Error(
+        'Error submitting stored respond to tribunal: ' +
+          axiosErrorDetails(error, { action: 'storedToSubmitRespondToTribunal', caseId: caseItem.id })
+      );
+    }
   };
 
   updateResponseAsViewed = async (
@@ -364,7 +425,10 @@ export class CaseApi {
         responseId,
       });
     } catch (error) {
-      throw new Error('Error updating response to viewed: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error updating response to viewed: ' +
+          axiosErrorDetails(error, { action: 'updateResponseAsViewed', caseId: caseItem.id })
+      );
     }
   };
 
@@ -372,7 +436,7 @@ export class CaseApi {
     try {
       return await this.axios.post(JavaApiUrls.GET_CASE, { case_id: id });
     } catch (error) {
-      throw new Error('Error getting user case: ' + axiosErrorDetails(error));
+      throw new Error('Error getting user case: ' + axiosErrorDetails(error, { action: 'getUserCase', caseId: id }));
     }
   };
 
@@ -383,7 +447,9 @@ export class CaseApi {
       //===================================================================================
       return await this.axios.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
     } catch (error) {
-      throw new Error('Error submitting case: ' + axiosErrorDetails(error));
+      throw new Error(
+        'Error submitting case: ' + axiosErrorDetails(error, { action: 'submitCase', caseId: caseItem.id })
+      );
     }
   };
 
@@ -411,7 +477,10 @@ export class CaseApi {
         {}
       );
     } catch (error) {
-      throw new Error(ServiceErrors.ERROR_REVOKING_USER_ROLE + axiosErrorDetails(error));
+      throw new Error(
+        ServiceErrors.ERROR_REVOKING_USER_ROLE +
+          axiosErrorDetails(error, { action: 'removeClaimantRepresentative', caseId: req.session.userCase.id })
+      );
     }
   };
 }

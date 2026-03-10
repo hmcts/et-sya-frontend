@@ -1,3 +1,4 @@
+import { OrganisationPolicy } from '../OrganisationPolicy';
 import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
@@ -79,6 +80,7 @@ export interface CaseData {
   batchCaseStayed?: YesOrNo;
   representativeClaimantType?: ClaimantRepresentative;
   claimantRepresentativeRemoved?: YesOrNo;
+  claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
 }
 
 export type HearingBundleType = {
@@ -169,6 +171,7 @@ export interface DocumentApiModel {
       document_filename: string;
       document_binary_url: string;
     };
+    dateOfCorrespondence?: string;
   };
 }
 

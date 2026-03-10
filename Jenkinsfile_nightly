@@ -96,6 +96,20 @@ withNightlyPipeline(type, product, component) {
       alertFilters: alertFilters
     )
     enableFortifyScan('et-aat')
+    enableMutationTest()
+
+    afterAlways('mutationTest') {
+        publishHTML([
+                allowMissing         : true,
+                alwaysLinkToLastBuild: true,
+                keepAll              : true,
+                reportDir            : 'reports/mutation',
+                reportFiles          : 'mutation.html',
+                reportName           : 'Stryker Mutation Report'
+        ])
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/mutation/**'
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/stryker-incremental.json'
+    }
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT

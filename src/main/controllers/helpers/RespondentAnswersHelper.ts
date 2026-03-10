@@ -119,7 +119,7 @@ export const getRespondentSection = (
     },
   });
 
-  if (index === 1 && userCase.pastEmployer === YesOrNo.YES) {
+  if (index === 1 && userCase.pastEmployer !== YesOrNo.NO) {
     respondentSections.push({
       key: {
         text: translations.respondentDetails.workedAtRespondent,

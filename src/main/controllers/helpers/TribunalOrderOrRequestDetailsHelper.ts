@@ -362,10 +362,9 @@ const populateAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        html: await getSupportingMaterialDownloadLink(
+        html: getSupportingMaterialDownloadLink(
           response.value.respondNotificationUploadDocument?.find(element => element !== undefined).value
-            .uploadedDocument,
-          req.session.user?.accessToken
+            .uploadedDocument
         ),
       },
     },

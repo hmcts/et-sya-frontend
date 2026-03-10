@@ -47,12 +47,11 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
     return false;
   }
 
-  if (
-    (!claimSummaryFile || typeof claimSummaryFile !== 'string' || claimSummaryFile.trim() === '') &&
-    (!claimSummaryText || typeof claimSummaryText !== 'string' || claimSummaryText.trim() === '')
-  ) {
-    return false;
-  }
+  const hasClaimSummaryFile =
+    claimSummaryFile &&
+    (typeof claimSummaryFile === 'object' || (typeof claimSummaryFile === 'string' && claimSummaryFile.trim() !== ''));
+  const hasClaimSummaryText =
+    claimSummaryText && typeof claimSummaryText === 'string' && claimSummaryText.trim() !== '';
 
-  return true;
+  return !(!hasClaimSummaryFile && !hasClaimSummaryText);
 };

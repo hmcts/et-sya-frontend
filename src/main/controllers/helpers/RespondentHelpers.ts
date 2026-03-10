@@ -113,14 +113,6 @@ export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: numbe
   }
 };
 
-export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent): void => {
-  userCase.workAddress1 = respondent.respondentAddress1;
-  userCase.workAddress2 = respondent.respondentAddress2;
-  userCase.workAddressTown = respondent.respondentAddressTown;
-  userCase.workAddressCountry = respondent.respondentAddressCountry;
-  userCase.workAddressPostcode = respondent.respondentAddressPostcode;
-};
-
 export const getRespondentsWithRemoved = (respondents: Respondent[], selectedRespondentIndex: number): Respondent[] => {
   return respondents.filter(r => respondents.indexOf(r) !== selectedRespondentIndex);
 };

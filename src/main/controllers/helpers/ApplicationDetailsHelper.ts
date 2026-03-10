@@ -13,7 +13,7 @@ import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
-import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
+import { createDownloadLink } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
@@ -152,16 +152,11 @@ export const getAllStoredClaimantResponses = async (
   return allResponses;
 };
 
-export const getSupportingMaterialDownloadLink = async (
-  responseDoc: Document,
-  accessToken: string
-): Promise<string> => {
-  let responseDocDownload;
+export const getSupportingMaterialDownloadLink = (responseDoc: Document): string | undefined => {
   if (responseDoc !== undefined) {
-    await populateDocumentMetadata(responseDoc, accessToken);
-    responseDocDownload = createDownloadLink(responseDoc);
+    return createDownloadLink(responseDoc);
   }
-  return responseDocDownload;
+  return undefined;
 };
 
 const addAdminResponse = async (
@@ -234,9 +229,8 @@ const addAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        html: await getSupportingMaterialDownloadLink(
-          response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken
+        html: getSupportingMaterialDownloadLink(
+          response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument
         ),
       },
     },
@@ -275,9 +269,8 @@ export const addNonAdminResponse = async (
   accessToken: string,
   responseDate: string
 ): Promise<any> => {
-  const supportingMaterial = await getSupportingMaterialDownloadLink(
-    response.value.supportingMaterial?.find(e => e).value.uploadedDocument,
-    accessToken
+  const supportingMaterial = getSupportingMaterialDownloadLink(
+    response.value.supportingMaterial?.find(e => e).value.uploadedDocument
   );
 
   const rows = [

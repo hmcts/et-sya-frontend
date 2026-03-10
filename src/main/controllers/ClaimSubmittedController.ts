@@ -4,6 +4,8 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 
+import { getLanguageParam } from './helpers/RouterHelpers';
+
 export default class ClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
     if (req.session && req.session.userCase) {
@@ -33,6 +35,7 @@ export default class ClaimSubmittedController {
       emailText: returnEmailText(submittedCase.tribunalCorrespondenceEmail, submittedCase.managingOffice),
       telephoneText: submittedCase.tribunalCorrespondenceTelephone,
       PageUrls,
+      redirectUrl: `/citizen-hub/${submittedCase.id}${getLanguageParam(req.url)}`,
     });
   }
 }
