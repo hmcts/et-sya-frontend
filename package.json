@@ -178,7 +178,7 @@
     "formidable": "^3.5.4",
     "immutable": "^5.1.5",
     "lodash": "^4.17.23",
-    "minimatch": "^9.0.9",
+    "editorconfig/minimatch": "^9.0.9",
     "puppeteer": "^24.38.0",
     "tmp": "^0.2.4",
     "ws": "^8.17.1",
