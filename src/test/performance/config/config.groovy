@@ -6,7 +6,8 @@
 	this.dynatraceSyntheticTestPreview = "SYNTHETIC_TEST-58D99F542AAB721C"
 	this.dynatraceDashboardIdPreview = "a4576442-06a9-4a76-baa5-5342a525679f"
 	this.dynatraceDashboardURLPreview = "https://yrk32651.live.dynatrace.com/#dashboard;id=a4576442-06a9-4a76-baa5-5342a525679f;applyDashboardDefaults=true"
-	this.dynatraceEntitySelectorPreview = 'type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PREVIEW\\"),entityId(\\"SERVICE-85A65FBFF3C9F37E\\")'
+	//this.dynatraceEntitySelectorPreview = 'type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PREVIEW\\"),entityId(\\"SERVICE-85A65FBFF3C9F37E\\")'
+	this.dynatraceEntitySelectorPreview = 'type(service),tag(\\"[Kubernetes]namespace:et\\"),tag(\\"Environment:PREVIEW\\"),entityName.equals(\\"PREVIEW et - et-sya \\")'
 
 	//AAT Config
 	this.dynatraceSyntheticTestAAT = "SYNTHETIC_TEST-5EEFBE93947768B3"
