@@ -7,7 +7,7 @@ import uk.gov.hmcts.contino.AppPipelineDsl
 def type = "nodejs"
 def product = "et"
 def component = "sya"
-def branchesToSync = ['demo', 'ithc']
+def branchesToSync = ['demo', 'ithc', 'perftest']
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
@@ -44,6 +44,17 @@ withPipeline(type, product, component) {
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
   enableSlackNotifications('#et-builds')
+
+  /*=====================================================
+  Dynatrace and Performance Configuration
+  =======================================================*/
+  enablePerformanceTestStages(timeout: 60)
+  enableGatlingLoadTests([
+    repo: 'https://github.com/hmcts/performance-testing.git', 
+    branch: 'add-et-tests', 
+    simulation: 'et.simulations.EtSyaCitizenBuildSimulation',
+    timeout: 10
+  ])
 
   afterAlways('build') {
     yarnBuilder.yarn('build')
