@@ -49,6 +49,7 @@ import ContactTheTribunalSelectedController from '../../controllers/ContactTheTr
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
+import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -146,6 +147,7 @@ import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenH
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import { csrfProtection } from '../csrf';
 
 const handleUploads = multer({
   limits: {
@@ -277,6 +279,7 @@ export class Routes {
       PageUrls.DESCRIBE_WHAT_HAPPENED,
       describeWhatHappenedLimiter,
       handleUploads.single('claimSummaryFileName'),
+      csrfProtection,
       describeWhatHappenedController.post
     );
     app.get(PageUrls.TELL_US_WHAT_YOU_WANT, new TellUsWhatYouWantController().get);
@@ -318,10 +321,10 @@ export class Routes {
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
       handleUploads.single('contactApplicationFile'),
+      csrfProtection,
       new ContactTheTribunalSelectedController().post
     );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
-    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
     app.get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE, new RespondToApplicationCompleteController().get);
     app.get(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().get);
     app.post(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().post);
@@ -414,6 +417,7 @@ export class Routes {
     app.post(
       PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
       handleUploads.single('supportingMaterialFile'),
+      csrfProtection,
       new RespondentSupportingMaterialController().post
     );
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
@@ -422,6 +426,7 @@ export class Routes {
     app.post(
       PageUrls.HEARING_DOCUMENT_UPLOAD,
       handleUploads.single('hearingDocument'),
+      csrfProtection,
       new HearingDocumentUploadController().post
     );
     app.get(PageUrls.HEARING_DOCUMENT_REMOVE, new HearingDocumentFileController().get);
@@ -456,5 +461,7 @@ export class Routes {
     app.get(PageUrls.HEARING_DETAILS, new HearingDetailsController().get);
     app.get(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().get);
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
+    app.get(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().get);
+    app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
   }
 }

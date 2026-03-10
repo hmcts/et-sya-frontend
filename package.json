@@ -54,7 +54,6 @@
     "@types/config": "^3.3.0",
     "@types/connect-redis": "^0.0.23",
     "@types/cookie-parser": "^1.4.3",
-    "@types/csurf": "^1.11.2",
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.17.7",
     "@types/lodash": "^4.14.194",
@@ -70,7 +69,7 @@
     "config": "^4.0.0",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
-    "csurf": "^1.11.0",
+    "csrf-csrf": "^4.0.3",
     "dayjs": "^1.11.7",
     "eslint-plugin-codeceptjs": "1.3.0",
     "express": "^4.20.0",
@@ -86,7 +85,7 @@
     "mocha": "^10.2.0",
     "mocha-multi": "1.1.7",
     "mochawesome": "7.1.4",
-    "multer": "^2.0.2",
+    "multer": "^2.1.0",
     "nunjucks": "^3.2.4",
     "postcode": "^5.1.0",
     "prettier": "^2.8.7",
@@ -103,7 +102,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.11.0",
+    "@axe-core/playwright": "4.11.1",
     "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.21.4",
@@ -166,7 +165,7 @@
   },
   "resolutions": {
     "@swc/core": "1.3.82",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "@opentelemetry/instrumentation": "^0.211.0",
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
@@ -178,14 +177,15 @@
     "formidable": "^3.2.4",
     "puppeteer": "^23.2.0",
     "ws": "^8.17.1",
-    "send": "^0.19.0",
     "cookie": "^1.0.0",
     "path-to-regexp": "^1.9.0",
     "tar-fs": "^3.1.1",
     "brace-expansion": "^4.0.0",
     "form-data": "^4.0.4",
     "qs": "^6.14.1",
-    "tar": "^7.5.7"
+    "tar": "^7.5.7",
+    "serialize-javascript": "^7.0.4",
+    "underscore": "^1.13.8"
   },
   "packageManager": "yarn@4.12.0"
 }

@@ -10,6 +10,7 @@ export default class StringUtils {
   public static isBlank(value: string): boolean {
     return !value || String(value).trim().length === 0;
   }
+
   /**
    * Checks if the given string value is not blank. It first checks if value is not undefined or null.
    * Then checks value has length greater than 0 when trimmed. If checked value's length is
@@ -19,6 +20,7 @@ export default class StringUtils {
   public static isNotBlank(value: string): boolean {
     return !this.isBlank(value);
   }
+
   /**
    * Checks if the given string value has length more than the given maxLength.
    * @param value to be checked if blank or not.
@@ -35,18 +37,19 @@ export default class StringUtils {
    * @param newValue is the value to be replaced with the first occurrence of the old value.
    */
   public static replaceFirstOccurrence(text: string, oldValue: string, newValue: string): string {
-    if (this.isBlank(text) || this.isBlank(oldValue) || this.isBlank(newValue) || text.indexOf(oldValue) === -1) {
+    if (this.isBlank(text) || this.isBlank(oldValue) || this.isBlank(newValue) || !text.includes(oldValue)) {
       return text;
     }
     return text.replace(new RegExp(`(${oldValue})|(${oldValue})`), newValue);
   }
+
   /**
    * Removes the first occurrence of the value from the given text.
    * @param text to be searched for the value to be removed
    * @param valueToRemove value to be removed from the text
    */
   public static removeFirstOccurrence(text: string, valueToRemove: string): string {
-    if (this.isBlank(text) || this.isBlank(valueToRemove) || text.indexOf(valueToRemove) === -1) {
+    if (this.isBlank(text) || this.isBlank(valueToRemove) || !text.includes(valueToRemove)) {
       return text;
     }
     const e = new RegExp(`(${valueToRemove})|(${valueToRemove})`);
