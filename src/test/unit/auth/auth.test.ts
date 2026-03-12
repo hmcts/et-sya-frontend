@@ -61,4 +61,13 @@ describe('getUserDetails', () => {
       isCitizen: true,
     });
   });
+
+  test('should throw an error if the exchange for a token fails', async () => {
+    const error = new Error('Network Error');
+    mockedAxios.post.mockRejectedValue(error);
+
+    await expect(getUserDetails('http://localhost', '123', AuthUrls.CALLBACK)).rejects.toThrow(
+      'Error getting user details from IDAM: Network Error'
+    );
+  });
 });

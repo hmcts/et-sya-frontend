@@ -84,9 +84,13 @@ export const idamCallbackHandler = async (
 ): Promise<void> => {
   const redisClient = req.app.locals?.redisClient;
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
-    // eslint-disable-next-line prettier/prettier
-    req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
-    req.session.save();
+    try {
+      req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
+      req.session.save();
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(AuthUrls.LOGIN);
+    }
   } else {
     return res.redirect(AuthUrls.LOGIN);
   }
