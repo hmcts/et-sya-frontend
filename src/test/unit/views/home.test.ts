@@ -62,6 +62,6 @@ describe('Onboarding (home) page', () => {
   });
   it('should display return to a draft or existing claim button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[6].innerHTML).contains('Return to a draft or an existing claim', 'Could not find the button');
+    expect(button[6].innerHTML).contains('Return to a draft or existing claim', 'Could not find the button');
   });
 });
