@@ -2,14 +2,14 @@ import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
-import { CaseApiDataResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, CaseAssignmentResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls, ServiceErrors } from '../definitions/constants';
+import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -475,6 +475,81 @@ export class CaseApi {
         ServiceErrors.ERROR_REVOKING_USER_ROLE +
           axiosErrorDetails(error, { action: 'removeClaimantRepresentative', caseId: req.session.userCase.id })
       );
+    }
+  };
+
+  checkEthosCaseReference = async (ethosCaseReference: string): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.get<string>(
+        JavaApiUrls.FIND_CASE_BY_ETHOS_CASE_REFERENCE +
+          DefaultValues.STRING_QUESTION_MARK +
+          JavaApiUrls.FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME +
+          DefaultValues.STRING_EQUALS +
+          ethosCaseReference
+      );
+    } catch (error) {
+      throw new Error('Error finding case by ethos reference: ' + axiosErrorDetails(error));
+    }
+  };
+
+  checkIdAndState = async (id: string): Promise<AxiosResponse<string>> => {
+    try {
+      return await this.axios.get<string>(
+        JavaApiUrls.FIND_CASE_BY_ID + DefaultValues.STRING_QUESTION_MARK + 'id' + DefaultValues.STRING_EQUALS + id
+      );
+    } catch (error) {
+      throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
+    }
+  };
+
+  /**
+   * Retrieves case data by userCase value of the session(req.session.userCase).
+   * throws an exception when there is no value of userCase in the session.
+   * @param request receives userCase from request object's session field. Fields that we use from userCase are:
+   *                id Case id, usually referred as case submission reference entered to the form by respondent.
+   *                id value can be only 16 digit decimal or 16 digit divided by dash like 1234-5678-1234-5678.
+   *                If it is divided by dash, this method automatically removes dash values with empty string.
+   *                respondentName Name of the respondent entered to the form by respondent.
+   *                firstName First Name of the claimant entered to the form by respondent.
+   *                lastName Last name of the claimant entered to the form by respondent.
+   */
+  getCaseByApplicationRequest = async (request: AppRequest): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      const caseWithId: CaseWithId = request.session.userCase;
+      let caseSubmissionReference = caseWithId.id;
+      if (caseSubmissionReference?.includes(DefaultValues.STRING_DASH)) {
+        caseSubmissionReference = caseSubmissionReference.replace(
+          DefaultValues.STRING_DASH,
+          DefaultValues.STRING_EMPTY
+        );
+      }
+
+      return await this.axios.post(JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION, {
+        caseSubmissionReference,
+        claimantFirstNames: caseWithId.firstName,
+        claimantLastName: caseWithId.lastName,
+        applicationName: 'et-sya-frontend',
+      });
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_GETTING_USER_CASE + axiosErrorDetails(error));
+    }
+  };
+
+  assignCaseUserRole = async (request: AppRequest): Promise<AxiosResponse<CaseAssignmentResponse>> => {
+    try {
+      return await this.axios.post<CaseAssignmentResponse>(JavaApiUrls.ASSIGN_CASE_USER_ROLES, {
+        case_users: [
+          {
+            case_id: request.session.userCase.id,
+            user_id: request.session.user.id,
+            case_role: Roles.CREATOR_ROLE_WITH_BRACKETS,
+            case_type_id: request.session.userCase.caseTypeId,
+            respondent_name: request.session.respondentName,
+          },
+        ],
+      });
+    } catch (error) {
+      throw new Error(ServiceErrors.ERROR_ASSIGNING_USER_ROLE + axiosErrorDetails(error));
     }
   };
 }

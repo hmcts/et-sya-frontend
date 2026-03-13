@@ -31,6 +31,7 @@ const redisClient = redis.createClient();
 const serviceUrl = 'serviceUrl';
 const guid = '04a7a170-55aa-4882-8a62-e3c418fa804d';
 const existingUser = 'existingUser';
+const assignClaimUser = 'assignClaimUser';
 const englishGuidParam = '-en';
 const welshGuidParam = '-cy';
 
@@ -104,5 +105,21 @@ describe('Test responds to /oauth2/callback', function () {
     await idamCallbackHandler(req, res, next, serviceUrl);
 
     expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.WELSH_URL_PARAMETER);
+  });
+
+  test('Should redirect to Your Details Form page in English language when assign claim user logs in', async () => {
+    req.query = { code: 'testCode', state: assignClaimUser + englishGuidParam };
+
+    await idamCallbackHandler(req, res, next, serviceUrl);
+
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.YOUR_DETAILS_FORM + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('Should redirect to Your Details Form page in Welsh language when assign claim user logs in', async () => {
+    req.query = { code: 'testCode', state: assignClaimUser + welshGuidParam };
+
+    await idamCallbackHandler(req, res, next, serviceUrl);
+
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.YOUR_DETAILS_FORM + languages.WELSH_URL_PARAMETER);
   });
 });

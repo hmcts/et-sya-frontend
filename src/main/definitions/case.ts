@@ -222,6 +222,7 @@ export interface Case {
   claimantRepresentativeRemoved?: YesOrNo;
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
+  claimantName?: string;
 }
 
 export const enum StillWorking {
@@ -362,4 +363,10 @@ export const enum Et3ResponseStatus {
   NOT_RECEIVED = 'Not Received',
   NOT_ACCEPTED = 'Not Accepted',
   REJECTED = 'Rejected',
+}
+
+export const enum ReturnToExistingOption {
+  RETURN_NUMBER = 'Return number',
+  HAVE_ACCOUNT = 'Have an account',
+  CLAIM_BUT_NO_ACCOUNT = 'Claim but no account',
 }
