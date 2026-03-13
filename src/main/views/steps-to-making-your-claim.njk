@@ -73,9 +73,14 @@
     </div>
   </div>
 
-  {{ govukButton({
-    text: saveForLater,
-    classes: "govuk-button--secondary",
-    href: PageUrls.CLAIM_SAVED
-  }) }}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: saveForLater,
+      classes: "govuk-button--secondary",
+      href: PageUrls.CLAIM_SAVED
+    }) }}
+
+    <a href="{{ deleteDraftUrl }}" class="govuk-button govuk-button--warning">{{ delete }}</a>
+  </div>
+
 {% endblock %}

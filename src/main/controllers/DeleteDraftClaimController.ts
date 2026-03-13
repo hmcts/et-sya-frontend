@@ -22,7 +22,7 @@ export default class DeleteDraftClaimController {
       ...content,
       caseReference: req.params.id,
       deleteButtonUrl: PageUrls.DELETE_DRAFT_CLAIM.replace(':id', req.params.id) + languageParam,
-      backToCaseUrl: PageUrls.CLAIMANT_APPLICATIONS + languageParam,
+      cancelLink: req.session.returnUrl + languageParam,
     });
   };
 
