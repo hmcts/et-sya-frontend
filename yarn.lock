@@ -3046,31 +3046,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.22.0":
-  version: 2.22.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.22.0"
-  checksum: 10/e9412a5728619a94731f770761c93a19c9d4383190a2e9c860a21c4d71be8fdae77862d5ebbd3157bda7ae72e748511a97eed57d5146ca5d10cd25e4d0252397
+"@launchdarkly/js-sdk-common@npm:2.23.0":
+  version: 2.23.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.23.0"
+  checksum: 10/5e874cdf7a4810c7c52da78521bc18f90253447e939c20fe2f5544cd19f40b872e42800cfff998832b4de0f9e7f68396d898e49cb1c34e0e17669f5fdfeaf6f9
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.18.1":
-  version: 2.18.1
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.18.1"
+"@launchdarkly/js-server-sdk-common@npm:2.18.2":
+  version: 2.18.2
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.18.2"
   dependencies:
-    "@launchdarkly/js-sdk-common": "npm:2.22.0"
+    "@launchdarkly/js-sdk-common": "npm:2.23.0"
     semver: "npm:7.5.4"
-  checksum: 10/936936ae531caae469995c34346c6d7ca210fc5d0a0da94c624adaab2ce3bd516323742a7b873968e1fad0c382999819e2f73e112f834c7a79c9e675fd47ad61
+  checksum: 10/bd308d08e8bc50669568cf3c3dd9aadd2256168c557d3dc0b086d64a5ece59ff1ddf7cf8bd0ef54a840a0e2e13d269e3c9ec9dc10e0df73b614147789e212624
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.10.8
-  resolution: "@launchdarkly/node-server-sdk@npm:9.10.8"
+  version: 9.10.9
+  resolution: "@launchdarkly/node-server-sdk@npm:9.10.9"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": "npm:2.18.1"
+    "@launchdarkly/js-server-sdk-common": "npm:2.18.2"
     https-proxy-agent: "npm:^7.0.6"
     launchdarkly-eventsource: "npm:2.2.0"
-  checksum: 10/2cd092573f15d167f9023829dc0c7a7a5dbec623835fd15d100202dc3db129248aa183dad8cab34427fa8acb6081235efda812b4e6990cfcf9bbca29182ed563
+  checksum: 10/2febf2f3e3e5837be02fdbdb60b77eb533443d77ef17a538ba47479cc6e0a6c1c607840962dc2c375ddc617b50193f4c8f7336e973dc293528cfeb015cdbd09b
   languageName: node
   linkType: hard
 
@@ -4256,20 +4256,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 25.3.3
-  resolution: "@types/node@npm:25.3.3"
+  version: 25.5.0
+  resolution: "@types/node@npm:25.5.0"
   dependencies:
     undici-types: "npm:~7.18.0"
-  checksum: 10/883e8942b0ddf89f9aae56c4205af8d9a368acd6cab83aa052447a6c5e69ce2bc8ab3f54e549233ada160ba9216dad7f30c62c35867c584fe844ae99f7dea2e0
+  checksum: 10/b1e8116bd8c9ff62e458b76d28a59cf7631537bb17e8961464bf754dd5b07b46f1620f568b2f89970505af9eef478dd74c614651b454c1ea95949ec472c64fcb
   languageName: node
   linkType: hard
 
 "@types/node@npm:^22.0.0, @types/node@npm:^22.2.0":
-  version: 22.19.13
-  resolution: "@types/node@npm:22.19.13"
+  version: 22.19.15
+  resolution: "@types/node@npm:22.19.15"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10/b2d1d0cff2f0e283cbd5a3b60226b8a938c59d868c5c4715d52be619b1e57386c3ce043abc28a833e21c86fa33aaa2d00181e76d23600953f18c9aa69e3d654b
+  checksum: 10/c75bc9a8dbc49a61f3e6f49304cf7b1c05e818a1071b46e9effd1a51af7a1b5c10fd2e04f314b74ce78f4ca7e3ddc1d6e61c94c2e3354c8be9f9f7ee5e79e23c
   languageName: node
   linkType: hard
 
@@ -5658,13 +5658,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.13.5":
-  version: 1.13.5
-  resolution: "axios@npm:1.13.5"
+  version: 1.13.6
+  resolution: "axios@npm:1.13.6"
   dependencies:
     follow-redirects: "npm:^1.15.11"
     form-data: "npm:^4.0.5"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/db726d09902565ef9a0632893530028310e2ec2b95b727114eca1b101450b00014133dfc3871cffc87983fb922bca7e4874d7e2826d1550a377a157cdf3f05b6
+  checksum: 10/a7ed83c2af3ef21d64609df0f85e76893a915a864c5934df69241001d0578082d6521a0c730bf37518ee458821b5695957cb10db9fc705f2a8996c8686ea7a89
   languageName: node
   linkType: hard
 
@@ -7260,9 +7260,9 @@ __metadata:
   linkType: hard
 
 "dayjs@npm:^1.11.7":
-  version: 1.11.19
-  resolution: "dayjs@npm:1.11.19"
-  checksum: 10/185b820d68492b83a3ce2b8ddc7543034edc1dfd1423183f6ae4707b29929a3cc56503a81826309279f9084680c15966b99456e74cf41f7d1f6a2f98f9c7196f
+  version: 1.11.20
+  resolution: "dayjs@npm:1.11.20"
+  checksum: 10/5347533f21a55b8bb1b1ef559be9b805514c3a8fb7e68b75fb7e73808131c59e70909c073aa44ce8a0d159195cd110cdd4081cf87ab96cb06fee3edacae791c6
   languageName: node
   linkType: hard
 
@@ -9105,15 +9105,6 @@ __metadata:
   dependencies:
     bser: "npm:2.1.1"
   checksum: 10/4f95d336fb805786759e383fd7fff342ceb7680f53efcc0ef82f502eb479ce35b98e8b207b6dfdfeea0eba845862107dc73813775fc6b56b3098c6e90a2dad77
-  languageName: node
-  linkType: hard
-
-"fd-slicer@npm:~1.1.0":
-  version: 1.1.0
-  resolution: "fd-slicer@npm:1.1.0"
-  dependencies:
-    pend: "npm:~1.2.0"
-  checksum: 10/db3e34fa483b5873b73f248e818f8a8b59a6427fd8b1436cd439c195fdf11e8659419404826059a642b57d18075c856d06d6a50a1413b714f12f833a9341ead3
   languageName: node
   linkType: hard
 
@@ -17696,13 +17687,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yauzl@npm:^2.10.0":
-  version: 2.10.0
-  resolution: "yauzl@npm:2.10.0"
+"yauzl@npm:3.2.1":
+  version: 3.2.1
+  resolution: "yauzl@npm:3.2.1"
   dependencies:
     buffer-crc32: "npm:~0.2.3"
-    fd-slicer: "npm:~1.1.0"
-  checksum: 10/1e4c311050dc0cf2ee3dbe8854fe0a6cde50e420b3e561a8d97042526b4cf7a0718d6c8d89e9e526a152f4a9cec55bcea9c3617264115f48bd6704cf12a04445
+    pend: "npm:~1.2.0"
+  checksum: 10/15dfae75fbfe59c6a1b7a2cb27a995cda0ee70549d32d6b19937e84897436170f169f6bbefc34b9e9beb9c9114a1b8a8a40e7687a907909a19681ebcbf35a1f3
   languageName: node
   linkType: hard
 
