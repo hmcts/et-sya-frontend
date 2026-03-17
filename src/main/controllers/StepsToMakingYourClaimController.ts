@@ -126,12 +126,17 @@ export default class StepsToMakingYourClaimController {
       req.session.userCase.pastEmployer = YesOrNo.YES;
       sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
     }
-    req.session.returnUrl = PageUrls.CLAIM_STEPS;
+    const paramId = req.params.id;
+    const caseReference = paramId && paramId !== 'undefined' ? paramId : req.session.userCase?.id;
+
+    const languageParam = getLanguageParam(req.url);
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
       sections,
       typeOfClaim: userCase?.typeOfClaim,
-      deleteDraftUrl: `/claimant-application/${userCase.id}/delete${getLanguageParam(req.url)}`,
+      deleteDraftUrl: `/claimant-application/${caseReference}/delete${languageParam}${
+        languageParam ? '&' : '?'
+      }redirect=claim-steps`,
       redirectUrl,
     });
   }

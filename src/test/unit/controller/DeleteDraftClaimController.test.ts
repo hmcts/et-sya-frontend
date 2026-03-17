@@ -69,6 +69,8 @@ describe('DeleteDraftClaimController', () => {
       deleteDraftCase.mockResolvedValue();
       await controller.post(req, res);
       expect(deleteDraftCase).toHaveBeenCalledWith(req, expect.anything());
+      expect(req.session.deletedCaseIds).toContain('1234');
+      expect(req.session.save).toHaveBeenCalled();
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
     });
 

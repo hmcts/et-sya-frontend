@@ -27,6 +27,7 @@ export interface AppSession extends Session {
   contactTribunalSelection?: string;
   documentDownloadPage?: string;
   csrfInitialized?: boolean;
+  deletedCaseIds?: string[];
 }
 
 export interface UserDetails {
