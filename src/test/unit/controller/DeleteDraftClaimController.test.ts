@@ -62,6 +62,42 @@ describe('DeleteDraftClaimController', () => {
         })
       );
     });
+
+    it('should set cancelLink to CLAIMANT_APPLICATIONS if redirect query param is claimant-applications', async () => {
+      req.query = { redirect: 'claimant-applications' };
+      await controller.get(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        TranslationKeys.DELETE_DRAFT_CLAIM,
+        expect.objectContaining({
+          cancelLink: PageUrls.CLAIMANT_APPLICATIONS,
+        })
+      );
+    });
+
+    it('should set cancelLink to CLAIM_STEPS if redirect query param is claim-steps', async () => {
+      req.query = { redirect: 'claim-steps' };
+      req.params = { id: 'undefined' };
+      req.session.userCase = { id: '12345' } as never;
+      await controller.get(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        TranslationKeys.DELETE_DRAFT_CLAIM,
+        expect.objectContaining({
+          cancelLink: PageUrls.CLAIM_STEPS,
+          caseReference: '12345',
+        })
+      );
+    });
+
+    it('should fall back to undefined for cancelLink if redirect parameter is not provided', async () => {
+      req.query = {};
+      await controller.get(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        TranslationKeys.DELETE_DRAFT_CLAIM,
+        expect.objectContaining({
+          cancelLink: 'undefined',
+        })
+      );
+    });
   });
 
   describe('POST', () => {
