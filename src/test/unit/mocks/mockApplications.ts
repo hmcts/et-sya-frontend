@@ -18,6 +18,7 @@ export const mockApplications: ApplicationTableRecord[] = [
       typeOfClaim: ['discrimination'],
       createdDate: 'September 1, 2022',
       lastModified: 'September 1, 2022',
+      submittedDate: { year: '2022', month: '09', day: '01' },
       respondents: [
         {
           respondentName: 'Globo Corp',
@@ -32,6 +33,7 @@ export const mockApplications: ApplicationTableRecord[] = [
     completionStatus: '4 of 4 tasks completed',
     url: '/claimant-application/12345?lng=en',
     deleteDraftUrl: '/claimant-application/12345/delete?lng=en',
+    claimSubmittedDate: '2022-09-01',
   },
   {
     userCase: {
@@ -40,12 +42,14 @@ export const mockApplications: ApplicationTableRecord[] = [
       typeOfClaim: ['discrimination'],
       createdDate: 'September 1, 2022',
       lastModified: 'September 1, 2022',
+      submittedDate: { year: '2022', month: '09', day: '01' },
       typeOfClaimString: 'discrimination',
     },
     respondents: 'undefined',
     completionStatus: '0 of 4 tasks completed',
     url: '/claimant-application/123456?lng=en',
     deleteDraftUrl: '/claimant-application/123456/delete?lng=en',
+    claimSubmittedDate: '2022-09-01',
   },
   {
     userCase: {
@@ -54,6 +58,7 @@ export const mockApplications: ApplicationTableRecord[] = [
       typeOfClaim: ['discrimination'],
       createdDate: 'September 1, 2022',
       lastModified: 'September 1, 2022',
+      submittedDate: { year: '2022', month: '09', day: '01' },
       ethosCaseReference: '654321/2022',
       respondents: [
         {
@@ -71,6 +76,7 @@ export const mockApplications: ApplicationTableRecord[] = [
     completionStatus: '0 of 4 tasks completed',
     url: '/citizen-hub/1234567?lng=en',
     deleteDraftUrl: '/claimant-application/1234567/delete?lng=en',
+    claimSubmittedDate: '2022-09-01',
   },
 ];
 
