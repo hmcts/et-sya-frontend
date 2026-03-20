@@ -32,7 +32,9 @@ export const getUserApplications = (
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
       url: getRedirectUrl(uCase, languageParam),
-      deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}`,
+      deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}${
+        languageParam ? '&' : '?'
+      }redirect=claimant-applications`,
     };
     translateTypesOfClaims(rec, translations);
     apps.push(rec);
@@ -96,7 +98,12 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
       return [];
     } else {
       logger.info(`Retrieving cases for ${req.session.user?.id}`);
-      const casesByLastModified: CaseApiDataResponse[] = sortCasesByLastModified(cases);
+      let casesByLastModified: CaseApiDataResponse[] = sortCasesByLastModified(cases);
+
+      if (req.session?.deletedCaseIds?.length > 0) {
+        const deletedIds = new Set(req.session.deletedCaseIds.map(id => String(id).trim()));
+        casesByLastModified = casesByLastModified.filter(app => !deletedIds.has(String(app.id).trim()));
+      }
       return casesByLastModified.map(app => fromApiFormat(app, req));
     }
   } catch (err) {

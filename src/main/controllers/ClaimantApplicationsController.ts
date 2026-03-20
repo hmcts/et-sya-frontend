@@ -18,6 +18,8 @@ export default class ClaimantApplicationsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
+    //reset return url to prevent redirect loop after deleting a draft claim
+    req.session.returnUrl = undefined;
     const userCases = await getUserCasesByLastModified(req);
     if (userCases.length === 0) {
       return res.redirect(PageUrls.HOME);
