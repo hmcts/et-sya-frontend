@@ -11159,8 +11159,8 @@ __metadata:
   linkType: hard
 
 "i18next@npm:^25.0.0":
-  version: 25.8.18
-  resolution: "i18next@npm:25.8.18"
+  version: 25.8.20
+  resolution: "i18next@npm:25.8.20"
   dependencies:
     "@babel/runtime": "npm:^7.28.6"
   peerDependencies:
@@ -11168,7 +11168,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/a5b9be29bd664dc12002f200b6c01dc6436c1a014f46b9f97e11c0733511328d3063409829af7dfd88cd744b5e0bd3575be71bb39c0955c6cfe747ae78274269
+  checksum: 10/6b9a4b25a603b019104b0bf198c5e39ac7426d70891ed85785e0074943f7c3b757f0f18590e193bdc0ee264abeab6391e980fa9fe8c180fc4a2f8433ee4f1db8
   languageName: node
   linkType: hard
 
