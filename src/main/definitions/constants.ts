@@ -154,6 +154,9 @@ export const TranslationKeys = {
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
+  CASE_NUMBER_CHECK: 'case-number-check',
+  YOUR_DETAILS_FORM: 'your-details-form',
+  YOUR_DETAILS_CYA: 'your-details-cya',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
 } as const;
 
@@ -164,6 +167,8 @@ export const PageUrls = {
   CLAIM_STEPS: '/steps-to-making-your-claim',
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
+  CASE_NUMBER_CHECK: '/case-number-check',
+  YOUR_DETAILS_FORM: '/your-details-form',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
   MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE: '/making-claim-as-legal-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',
@@ -296,6 +301,7 @@ export const PageUrls = {
   APPOINT_LEGAL_REPRESENTATIVE: '/appoint-legal-representative',
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
+  YOUR_DETAILS_CYA: '/your-details-cya',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
 } as const;
 
@@ -336,6 +342,8 @@ export const JavaApiUrls = {
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
   DOCUMENT_DETAILS: '/document/details/',
+  FIND_CASE_BY_ETHOS_CASE_REFERENCE: '/et3/findCaseByEthosCaseReference',
+  FIND_CASE_BY_ID: '/et3/findCaseById',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
@@ -358,6 +366,9 @@ export const JavaApiUrls = {
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
   REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
   REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
+  ASSIGN_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Assignment',
+  FIND_CASE_FOR_ROLE_MODIFICATION: '/manageCaseRole/findCaseForRoleModification',
+  FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME: 'ethosCaseReference',
   DELETE_DRAFT_CASE: 'cases/delete-draft-case',
 } as const;
 
@@ -417,6 +428,7 @@ export const CcdDataModel = {
 } as const;
 
 export const EXISTING_USER = 'existingUser';
+export const ASSIGN_CLAIM_USER = 'assignClaimUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
@@ -621,4 +633,13 @@ export const LEGAL_REPRESENTATIVE_CHANGE_OPTIONS = {
 
 export const ServiceErrors = {
   ERROR_REVOKING_USER_ROLE: 'Error revoking user role: ',
+  ERROR_GETTING_USER_CASE: 'Error getting user case: ',
+  ERROR_ASSIGNING_USER_ROLE: 'Error assigning user role: ',
+  ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE: 'already been assigned to this case',
+  ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE: 'case has already been assigned',
+} as const;
+
+export const Roles = {
+  CREATOR_ROLE_WITH_BRACKETS: '[CREATOR]',
+  CREATOR_ROLE_WITHOUT_BRACKETS: 'CREATOR',
 } as const;

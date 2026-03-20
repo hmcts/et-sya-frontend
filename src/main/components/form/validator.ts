@@ -1,5 +1,6 @@
-import { ALLOWED_FILE_FORMATS } from '../../definitions/constants';
+import { ALLOWED_FILE_FORMATS, ValidationErrors } from '../../definitions/constants';
 import { Logger } from '../../logger';
+import StringUtils from '../../utils/StringUtils';
 
 export type Validator = (value: string | string[] | undefined) => void | string;
 
@@ -209,5 +210,24 @@ export const isAcasNumberValid: Validator = value => {
   const valueAsString = value as string;
   if (!/^(?:[rR]|[mM][uU])\d{6}\/\d{2}\/\d{2}$/.test(valueAsString)) {
     return 'invalidAcasNumber';
+  }
+};
+
+export const isValidEthosCaseReference: Validator = value => {
+  const valueAsString = value as string;
+  if (StringUtils.isBlank(valueAsString)) {
+    return ValidationErrors.REQUIRED;
+  }
+  if (!/^\d{7}\/\d{4}$/.test(valueAsString)) {
+    return ValidationErrors.INVALID_VALUE;
+  }
+};
+
+export const isValidCaseReferenceId: Validator = value => {
+  if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
+    return ValidationErrors.REQUIRED;
+  }
+  if (!(value as string).match(/^[0-9]{16}$/) && !(value as string).match(/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/)) {
+    return ValidationErrors.INVALID_VALUE;
   }
 };
