@@ -72,6 +72,7 @@ export interface ApplicationTableRecord {
   completionStatus: string;
   url: string;
   deleteDraftUrl: string;
+  claimSubmittedDate: string;
 }
 
 export interface DocumentDetail {

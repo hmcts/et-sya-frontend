@@ -310,6 +310,7 @@ describe('get User applications', () => {
         claimDetailsCheck: YesOrNo.YES,
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
+        submittedDate: { year: '2022', month: '09', day: '01' },
         typeOfClaim: ['discrimination'],
         respondents: [
           {
@@ -326,12 +327,14 @@ describe('get User applications', () => {
         typeOfClaim: ['discrimination'],
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
+        submittedDate: { year: '2022', month: '09', day: '01' },
       },
       {
         id: '1234567',
         state: CaseState.SUBMITTED,
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
+        submittedDate: { year: '2022', month: '09', day: '01' },
         typeOfClaim: ['discrimination'],
         ethosCaseReference: '654321/2022',
         respondents: [

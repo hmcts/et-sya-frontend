@@ -14,9 +14,11 @@ export const mockApplicationWithAllTypeOfClaims: ApplicationTableRecord = {
     ],
     createdDate: 'September 1, 2022',
     lastModified: 'September 1, 2022',
+    submittedDate: { year: '2022', month: '09', day: '01' },
   },
   respondents: 'undefined',
   completionStatus: '0 of 4 tasks completed',
   url: '/claimant-application/123456',
   deleteDraftUrl: '/claimant-application/1234567/delete?lng=en',
+  claimSubmittedDate: '2022-09-01',
 };

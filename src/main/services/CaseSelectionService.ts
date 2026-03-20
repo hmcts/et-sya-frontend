@@ -12,7 +12,7 @@ import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
 import { PageUrls, languages } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
-import { fromApiFormat } from '../helper/ApiFormatter';
+import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { getCaseApi } from './CaseService';
@@ -33,6 +33,7 @@ export const getUserApplications = (
       completionStatus: getOverallStatus(uCase, translations),
       url: getRedirectUrl(uCase, languageParam),
       deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}`,
+      claimSubmittedDate: formatDate(uCase.submittedDate),
     };
     translateTypesOfClaims(rec, translations);
     apps.push(rec);

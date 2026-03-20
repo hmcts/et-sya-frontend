@@ -90,12 +90,11 @@ describe('Claimant Applications page', () => {
   it('should display submitted applications column headings', () => {
     const columnHeaders = htmlRes.getElementsByClassName(columnHeaderClass);
 
-    expect(columnHeaders[7].innerHTML).contains(claimantApplicationsJSON.col1, 'Date created does not exist');
-    expect(columnHeaders[8].innerHTML).contains(claimantApplicationsJSON.col2, 'Reference does not exist');
+    expect(columnHeaders[7].innerHTML).contains(claimantApplicationsJSON.dateSubmitted, 'Date created does not exist');
+    expect(columnHeaders[8].innerHTML).contains(claimantApplicationsJSON.caseNumber, 'Reference does not exist');
     expect(columnHeaders[9].innerHTML).contains(claimantApplicationsJSON.col3, 'Type of claim does not exist');
     expect(columnHeaders[10].innerHTML).contains(claimantApplicationsJSON.col4, 'Respondents does not exist');
     expect(columnHeaders[11].innerHTML).contains(claimantApplicationsJSON.col6, 'Date last modified does not exist');
-    expect(columnHeaders[12].innerHTML).contains(claimantApplicationsJSON.col7, 'Options caption does not exist');
   });
 
   it('should display draft applications first row data', () => {
@@ -154,11 +153,11 @@ describe('Claimant Applications page', () => {
   it('should display submitted applications row data', () => {
     const rowDataClassData = htmlRes.getElementsByClassName(rowDataClass);
 
-    expect(rowDataClassData[14].innerHTML).contains(
-      mockApplications[2].userCase.createdDate,
-      'Date created does not exist'
+    expect(rowDataClassData[14].innerHTML).contains('1 September 2022', 'Date created does not exist');
+    expect(rowDataClassData[15].innerHTML).contains(
+      mockApplications[2].userCase.ethosCaseReference,
+      'Reference does not exist'
     );
-    expect(rowDataClassData[15].innerHTML).contains(mockApplications[2].userCase.id, 'Reference does not exist');
     expect(rowDataClassData[16].innerHTML).contains(
       mockApplications[2].userCase.typeOfClaim[0],
       'Type of claim does not exist'
@@ -168,8 +167,6 @@ describe('Claimant Applications page', () => {
       mockApplications[2].userCase.lastModified,
       'Date last modified does not exist'
     );
-    expect(rowDataClassData[19].innerHTML).contains(mockApplications[2].url, 'Options link does not exist');
-    expect(rowDataClassData[19].innerHTML).contains('View', 'Options caption does not exist');
   });
   it('should have data-navigation-link property to trigger event handler double click protection', () => {
     const rowDataClassData = htmlRes.getElementsByClassName(rowDataClass);
@@ -188,10 +185,10 @@ describe('Claimant Applications page', () => {
       'Second Continue should have navigation link data attribute'
     );
 
-    expect(rowDataClassData[19].innerHTML).contains(
+    expect(rowDataClassData[15].innerHTML).contains(
       'data-navigation-link',
       'Submitted View should have navigation link data attribute'
     );
-    expect(rowDataClassData[19].innerHTML).contains(mockApplications[2].url, 'Submitted View should pass correct URL');
+    expect(rowDataClassData[15].innerHTML).contains(mockApplications[2].url, 'Submitted View should pass correct URL');
   });
 });
