@@ -2250,31 +2250,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cucumber/cucumber-expressions@npm:18":
-  version: 18.1.0
-  resolution: "@cucumber/cucumber-expressions@npm:18.1.0"
+"@cucumber/cucumber-expressions@npm:19":
+  version: 19.0.0
+  resolution: "@cucumber/cucumber-expressions@npm:19.0.0"
   dependencies:
     regexp-match-indices: "npm:1.0.2"
-  checksum: 10/a9b3893005a98cc1afacc236879f6722246abb36b9b9e0da0219dd918a3dcab4250998958c1578bd4f5b4008c582b8ce619e3b68063e3bbe8701806eb5476e66
+  checksum: 10/cf27ac33fae2a24c9b6634439bd2aa48c7a02d3fc2ce8c2c27afdfb1a1add4689d5d90c9cc51f464cf51f7273cfd8e16b9b89321050a2a24b4f86fcf15b975b9
   languageName: node
   linkType: hard
 
-"@cucumber/gherkin@npm:35.1.0":
-  version: 35.1.0
-  resolution: "@cucumber/gherkin@npm:35.1.0"
+"@cucumber/gherkin@npm:39.0.0":
+  version: 39.0.0
+  resolution: "@cucumber/gherkin@npm:39.0.0"
   dependencies:
-    "@cucumber/messages": "npm:>=19.1.4 <30"
-  checksum: 10/c8a5a7e04b5032466e18611ad5702acb8a4e84b4ee63494d1133cff845fe298512753c91dbed6c639af44677beac2a0030c75ac1b643b069f7083a00c53255ed
+    "@cucumber/messages": "npm:>=31.0.0 <33"
+  checksum: 10/979581d6a154a322022ccbfa236a855c8aaf2ec75a3afd137201b8ef97c43ad52794e522210feca6aad57469aba685682c9ff8b50eeb12401a8c6f3a8e198ef5
   languageName: node
   linkType: hard
 
-"@cucumber/messages@npm:29.0.1, @cucumber/messages@npm:>=19.1.4 <30":
-  version: 29.0.1
-  resolution: "@cucumber/messages@npm:29.0.1"
+"@cucumber/messages@npm:32.2.0, @cucumber/messages@npm:>=31.0.0 <33":
+  version: 32.2.0
+  resolution: "@cucumber/messages@npm:32.2.0"
   dependencies:
     class-transformer: "npm:0.5.1"
     reflect-metadata: "npm:0.2.2"
-  checksum: 10/b8e10c4bb5adb6109cdae3034fc38656a89328a455b00894a24de70f2f1491bb00ce6eba6305e0e3ff6e3d3e3ec0142799a0b97ada4eb5b9cb4d4bdbb868a85f
+  checksum: 10/b041c144977caee48be45c1418923db7ec80395701f0d91c6c6b0491889980941dcbfd82b184e5b3678a8726ca4ab91b77aff19d1ee2b718b4c2d20d597cc5d3
   languageName: node
   linkType: hard
 
@@ -5373,12 +5373,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:8.15.0, acorn@npm:^8.15.0":
-  version: 8.15.0
-  resolution: "acorn@npm:8.15.0"
+"acorn@npm:8.16.0":
+  version: 8.16.0
+  resolution: "acorn@npm:8.16.0"
   bin:
     acorn: bin/acorn
-  checksum: 10/77f2de5051a631cf1729c090e5759148459cdb76b5f5c70f890503d629cf5052357b0ce783c0f976dd8a93c5150f59f6d18df1def3f502396a20f81282482fa4
+  checksum: 10/690c673bb4d61b38ef82795fab58526471ad7f7e67c0e40c4ff1e10ecd80ce5312554ef633c9995bfc4e6d170cef165711f9ca9e49040b62c0c66fbf2dd3df2b
   languageName: node
   linkType: hard
 
@@ -5406,6 +5406,15 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 10/d1379bbee224e8d44c3c3946e6ba6973e999fbdd4e22e41c3455d7f9b6f72f7ce18d3dc218002e1e48eea789539cf1cb6d1430c81838c6744799c712fb557d92
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.15.0":
+  version: 8.15.0
+  resolution: "acorn@npm:8.15.0"
+  bin:
+    acorn: bin/acorn
+  checksum: 10/77f2de5051a631cf1729c090e5759148459cdb76b5f5c70f890503d629cf5052357b0ce783c0f976dd8a93c5150f59f6d18df1def3f502396a20f81282482fa4
   languageName: node
   linkType: hard
 
@@ -7137,20 +7146,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codeceptjs@npm:3.7.6":
-  version: 3.7.6
-  resolution: "codeceptjs@npm:3.7.6"
+"codeceptjs@npm:3.7.7":
+  version: 3.7.7
+  resolution: "codeceptjs@npm:3.7.7"
   dependencies:
     "@codeceptjs/configure": "npm:1.0.6"
     "@codeceptjs/detox-helper": "npm:1.1.14"
     "@codeceptjs/helper": "npm:2.0.4"
-    "@cucumber/cucumber-expressions": "npm:18"
-    "@cucumber/gherkin": "npm:35.1.0"
-    "@cucumber/messages": "npm:29.0.1"
+    "@cucumber/cucumber-expressions": "npm:19"
+    "@cucumber/gherkin": "npm:39.0.0"
+    "@cucumber/messages": "npm:32.2.0"
     "@xmldom/xmldom": "npm:0.9.8"
-    acorn: "npm:8.15.0"
+    acorn: "npm:8.16.0"
     arrify: "npm:3.0.0"
-    axios: "npm:1.13.2"
+    axios: "npm:1.13.6"
     chalk: "npm:4.1.2"
     cheerio: "npm:^1.0.0"
     chokidar: "npm:^4.0.3"
@@ -7158,11 +7167,11 @@ __metadata:
     cross-spawn: "npm:7.0.6"
     css-to-xpath: "npm:0.1.0"
     csstoxpath: "npm:1.6.0"
-    envinfo: "npm:7.15.0"
+    envinfo: "npm:7.21.0"
     escape-string-regexp: "npm:4.0.0"
     figures: "npm:3.2.0"
     fn-args: "npm:4.0.0"
-    fs-extra: "npm:11.3.3"
+    fs-extra: "npm:11.3.4"
     fuse.js: "npm:^7.0.0"
     glob: "npm:>=9.0.0 <12"
     html-minifier-terser: "npm:7.2.0"
@@ -7189,7 +7198,7 @@ __metadata:
       optional: true
   bin:
     codeceptjs: bin/codecept.js
-  checksum: 10/4c7d0c9b693e972258f8c8e67c686d6d09aa62d145d4e6ad7deef1ff5d51a8dc1f0b163d559bfde9005c684f605dbbe88d54281b9259c20f25cd38a19cbc487a
+  checksum: 10/432b77aa33ffe157d5221dae52dd57781c3f44136895ff8598fad33d8194772be6d6c2665d5306e7bb6f0f78f2443d6af1e712737dca47b10be057718ecb4286
   languageName: node
   linkType: hard
 
@@ -8612,12 +8621,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"envinfo@npm:7.15.0":
-  version: 7.15.0
-  resolution: "envinfo@npm:7.15.0"
+"envinfo@npm:7.21.0":
+  version: 7.21.0
+  resolution: "envinfo@npm:7.21.0"
   bin:
     envinfo: dist/cli.js
-  checksum: 10/6e8bdea0965418a552eeb3d2505edbe7c4870946e30f18f1fd4627108dc23961a21506f53342a9eb58d97b510d046237701d1cd2311c73881f3c081c4fcc1658
+  checksum: 10/2469a72802ded4e43c007dcd1c5dd44d8049b7d18276874dcc3f3f14a54bc72806fa35e82760974ca1442d82f5f9df3651048204e72791f81bcdd5f07422a561
   languageName: node
   linkType: hard
 
@@ -9392,7 +9401,7 @@ __metadata:
     babel-loader: "npm:^10.0.0"
     chai: "npm:^4.3.7"
     chai-as-promised: "npm:^8.0.0"
-    codeceptjs: "npm:3.7.6"
+    codeceptjs: "npm:3.7.7"
     config: "npm:^4.0.0"
     connect-redis: "npm:^6.1.3"
     cookie-parser: "npm:^1.4.6"
@@ -10153,14 +10162,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:11.3.3":
-  version: 11.3.3
-  resolution: "fs-extra@npm:11.3.3"
+"fs-extra@npm:11.3.4, fs-extra@npm:^11.0.0":
+  version: 11.3.4
+  resolution: "fs-extra@npm:11.3.4"
   dependencies:
     graceful-fs: "npm:^4.2.0"
     jsonfile: "npm:^6.0.1"
     universalify: "npm:^2.0.0"
-  checksum: 10/daeaefafbebe8fa6efd2fb96fc926f2c952be5877811f00a6794f0d64e0128e3d0d93368cd328f8f063b45deacf385c40e3d931aa46014245431cd2f4f89c67a
+  checksum: 10/1b8deea9c540a2efe63c750bc9e1ba6238115579d1571d67fe8fb58e3fb6df19aba29fd4ebb81217cf0bf5bce0df30ca68dbc3e06f6652b856edd385ce0ff649
   languageName: node
   linkType: hard
 
@@ -10172,17 +10181,6 @@ __metadata:
     jsonfile: "npm:^6.0.1"
     universalify: "npm:^2.0.0"
   checksum: 10/05ce2c3b59049bcb7b52001acd000e44b3c4af4ec1f8839f383ef41ec0048e3cfa7fd8a637b1bddfefad319145db89be91f4b7c1db2908205d38bf91e7d1d3b7
-  languageName: node
-  linkType: hard
-
-"fs-extra@npm:^11.0.0":
-  version: 11.3.4
-  resolution: "fs-extra@npm:11.3.4"
-  dependencies:
-    graceful-fs: "npm:^4.2.0"
-    jsonfile: "npm:^6.0.1"
-    universalify: "npm:^2.0.0"
-  checksum: 10/1b8deea9c540a2efe63c750bc9e1ba6238115579d1571d67fe8fb58e3fb6df19aba29fd4ebb81217cf0bf5bce0df30ca68dbc3e06f6652b856edd385ce0ff649
   languageName: node
   linkType: hard
 
