@@ -48,6 +48,10 @@ export class Nunjucks {
         return false;
       }
 
+      if (!errors?.[fieldName]) {
+        return false;
+      }
+
       return { text: errors[fieldName][fieldError.errorType] };
     });
 
