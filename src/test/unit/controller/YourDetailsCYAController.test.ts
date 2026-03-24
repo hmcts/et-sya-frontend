@@ -116,7 +116,10 @@ describe('YourDetailsCYAController', () => {
       const body = { yourDetailsCya: YesOrNo.YES };
       const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body, userCase });
+      const request = mockRequest({ body });
+      request.session.caseAssignmentFields = userCase;
+      request.session.visitedAssignClaimFlow = true;
+      request.session.yourDetailsVerified = true;
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
 
@@ -138,6 +141,8 @@ describe('YourDetailsCYAController', () => {
       const body = { yourDetailsCya: YesOrNo.YES };
       const controller = new YourDetailsCYAController();
       const request = mockRequest({ body });
+      request.session.visitedAssignClaimFlow = true;
+      request.session.yourDetailsVerified = true;
       request.session.errors = [];
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
@@ -171,6 +176,29 @@ describe('YourDetailsCYAController', () => {
         expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssigned' }])
       );
       expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
+    });
+
+    it('should redirect to citizen hub when case is already assigned', async () => {
+      const caseAssignmentResponse = {
+        data: {
+          status: 'ALREADY_ASSIGNED',
+          message: 'User was already assigned to this case',
+        },
+      };
+      mockGetCaseApi.mockReturnValueOnce({
+        assignCaseUserRole: jest.fn().mockResolvedValue(caseAssignmentResponse),
+      });
+      const body = { yourDetailsCya: YesOrNo.YES };
+      const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({ body });
+      request.session.caseAssignmentFields = userCase;
+      request.session.visitedAssignClaimFlow = true;
+      request.session.yourDetailsVerified = true;
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+      await controller.post(request, response);
+      expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1234?lng=en');
     });
 
     it('should redirect with generic api error when assignCaseUserRole throws an unrecognised error', async () => {
