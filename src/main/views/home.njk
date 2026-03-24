@@ -20,15 +20,20 @@
         html: warningTxt2,
         iconFallbackText: warningTxt
       }) }}
-      {{ govukButton({
-        text: startNow,
-        href: redirectUrl,
-        isStartButton: true
-      }) }}
-      <ul class="govuk-list">
-        <li><b>{{ claimStartedTxt }}</b></li>
-        <li><a href="{{PageUrls.RETURN_TO_EXISTING + languageParam}}" class="govuk-link">{{ returnClaimTxt }}</a></li>
-      </ul>
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: startANewClaim,
+          href: redirectUrl
+        }) }}
+
+        {{ govukButton({
+          text: returnToDraftOrExistingClaim,
+          classes: "govuk-button--secondary",
+          href: returnToExistingUrl
+        }) }}
+      </div>
+
       <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
       <div class="govuk-body">
           {{ contactUsForeword }}
