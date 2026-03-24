@@ -16,12 +16,14 @@ describe('Onboarding Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
     const redirectUrl = setUrlLanguage(request, PageUrls.CHECKLIST);
+    const returnToExistingUrl = setUrlLanguage(request, PageUrls.RETURN_TO_EXISTING);
     homeController.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('home', {
       ...(<AnyRecord>request.t('home', { returnObjects: true })),
       PageUrls,
       redirectUrl,
+      returnToExistingUrl,
       languageParam: '?lng=en',
     });
   });
