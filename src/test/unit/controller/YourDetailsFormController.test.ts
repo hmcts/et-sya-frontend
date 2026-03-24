@@ -80,7 +80,7 @@ describe('YourDetailsFormController', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_FORM);
     expect(req.session.errors).toEqual(errors);
-    expect(req.session.userCase.claimantName).toEqual('');
+    expect(req.session.caseAssignmentFields.claimantName).toEqual('');
   });
 
   it('should preserve claimantName when there are errors', async () => {
@@ -93,7 +93,7 @@ describe('YourDetailsFormController', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase.claimantName).toEqual('John Doe');
+    expect(req.session.caseAssignmentFields.claimantName).toEqual('John Doe');
   });
 
   it('should redirect back to self with invalid case details error when case data is not found', async () => {

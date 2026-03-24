@@ -745,7 +745,7 @@ describe('getCaseByApplicationRequest', () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { id: '1234' } });
     const mockRequest = {
       session: {
-        userCase: {
+        caseAssignmentFields: {
           id: '1234567890123456',
           firstName: 'John',
           lastName: 'Doe',
@@ -770,8 +770,8 @@ describe('getCaseByApplicationRequest', () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { id: '1234' } });
     const mockRequest = {
       session: {
-        userCase: {
-          id: '1234-567890123456',
+        caseAssignmentFields: {
+          id: '1234567890-123456',
           firstName: 'John',
           lastName: 'Doe',
         },
@@ -990,7 +990,7 @@ describe('Rethrowing errors when axios requests fail', () => {
   it('should rethrow error when getCaseByApplicationRequest fails', async () => {
     const mockAppRequest = {
       session: {
-        userCase: {
+        caseAssignmentFields: {
           id: '1234567890123456',
           firstName: 'John',
           lastName: 'Doe',

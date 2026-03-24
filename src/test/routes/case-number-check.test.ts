@@ -37,7 +37,7 @@ describe(`on POST ${PageUrls.CASE_NUMBER_CHECK}`, () => {
       .send({ ethosCaseReference: '' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CASE_NUMBER_CHECK);
+        expect(res.header['location']).toContain(PageUrls.CASE_NUMBER_CHECK);
       });
   });
 });

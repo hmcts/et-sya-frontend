@@ -11,6 +11,11 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.caseAssignmentFields = {}; // Clear case assignment flow fields
+    req.session.visitedAssignClaimFlow = true; // Allow navigation to CaseNumberController
+    req.session.caseNumberChecked = false;
+    req.session.yourDetailsVerified = false;
+
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_APPLICATIONS,

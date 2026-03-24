@@ -30,6 +30,9 @@ export interface AppSession extends Session {
   claimantFirstName?: string;
   claimantLastName?: string;
   isAssignClaim?: boolean;
+  visitedAssignClaimFlow?: boolean;
+  yourDetailsVerified?: boolean;
+  caseAssignmentFields?: Partial<CaseWithId>;
   respondentNames?: string[];
   respondentName?: string;
   csrfInitialized?: boolean;

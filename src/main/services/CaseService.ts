@@ -515,7 +515,7 @@ export class CaseApi {
    */
   getCaseByApplicationRequest = async (request: AppRequest): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      const caseWithId: CaseWithId = request.session.userCase;
+      const caseWithId: Partial<CaseWithId> = request.session.caseAssignmentFields;
       let caseSubmissionReference = caseWithId.id;
       if (caseSubmissionReference?.includes(DefaultValues.STRING_DASH)) {
         caseSubmissionReference = caseSubmissionReference.replace(
@@ -540,10 +540,10 @@ export class CaseApi {
       return await this.axios.post<CaseAssignmentResponse>(JavaApiUrls.ASSIGN_CASE_USER_ROLES, {
         case_users: [
           {
-            case_id: request.session.userCase.id,
+            case_id: request.session.caseAssignmentFields?.id,
             user_id: request.session.user.id,
             case_role: Roles.CREATOR_ROLE_WITH_BRACKETS,
-            case_type_id: request.session.userCase.caseTypeId,
+            case_type_id: request.session.caseAssignmentFields?.caseTypeId,
             respondent_name: request.session.respondentName,
           },
         ],

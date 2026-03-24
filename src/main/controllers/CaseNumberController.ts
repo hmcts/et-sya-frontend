@@ -3,17 +3,21 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isValidEthosCaseReference } from '../components/form/validator';
+import { AssignClaimCheck } from '../decorators/AssignClaimCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
+
+const logger = getLogger('CaseNumberController');
 
 export default class CaseNumberController {
   private readonly form: Form;
@@ -39,20 +43,26 @@ export default class CaseNumberController {
     this.form = new Form(<FormFields>this.caseNumberContent.fields);
   }
 
+  @AssignClaimCheck()
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
     const formData = this.form.getParsedBody<CaseWithId>(req.body, this.form.getFormFields());
-    if (!req.session.userCase) {
-      req.session.userCase = { createdDate: '', id: '', lastModified: '', state: undefined };
+
+    if (!req.session.caseAssignmentFields) {
+      req.session.caseAssignmentFields = {};
     }
+
     const errors = this.form.getValidatorErrors(formData);
+    req.session.caseAssignmentFields.ethosCaseReference = formData.ethosCaseReference;
+
     if (errors.length > 0) {
       req.session.errors = errors;
       return handlePostLogicPreLogin(req, res, this.form, PageUrls.CASE_NUMBER_CHECK + languageParam);
     }
+
     req.session.errors = [];
     req.session.caseNumberChecked = false;
-    req.session.userCase.ethosCaseReference = formData.ethosCaseReference;
+
     const isReformCase: AxiosResponse<string> = await getCaseApi(req.session.user?.accessToken).checkEthosCaseReference(
       formData.ethosCaseReference
     );
@@ -60,6 +70,7 @@ export default class CaseNumberController {
     if ((isReformCase?.data && isReformCase.data !== 'false') || isReformCase?.data === 'true') {
       req.session.caseNumberChecked = true;
       req.session.isAssignClaim = true;
+      logger.info(`Case Ethos Reference exists: ${formData.ethosCaseReference}`);
       return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM + languageParam)));
     } else {
       req.session.errors.push({ propertyName: 'ethosCaseReference', errorType: 'caseNotFound' });
@@ -67,14 +78,19 @@ export default class CaseNumberController {
     }
   };
 
+  @AssignClaimCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.caseNumberContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CASE_NUMBER_CHECK,
     ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
+    if (!req.session.caseAssignmentFields) {
+      req.session.caseAssignmentFields = {};
+    }
+    assignFormData(req.session.caseAssignmentFields as CaseWithId, this.form.getFormFields());
     res.render(TranslationKeys.CASE_NUMBER_CHECK, {
       ...content,
+      userCase: req.session.caseAssignmentFields,
     });
   };
 }

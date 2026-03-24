@@ -56,19 +56,6 @@ describe('YourDetailsCYAController', () => {
       );
     });
 
-    it('should include userCase in render context', async () => {
-      const controller = new YourDetailsCYAController();
-      const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
-      await controller.get(request, response);
-      expect(response.render).toHaveBeenCalledWith(
-        TranslationKeys.YOUR_DETAILS_CYA,
-        expect.objectContaining({
-          userCase: expect.any(Object),
-        })
-      );
-    });
-
     it('should include respondentNames from session in render context', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();

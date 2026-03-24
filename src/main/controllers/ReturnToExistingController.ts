@@ -62,12 +62,18 @@ export default class ReturnToExistingController {
       redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
     } else if (conditionalRedirect(req, this.form.getFormFields(), ReturnToExistingOption.RETURN_NUMBER)) {
       redirectUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
+    } else {
+      req.session.visitedAssignClaimFlow = true;
     }
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     req.session.guid = undefined;
+    req.session.caseAssignmentFields = {}; // Clear case assignment flow fields
+    req.session.visitedAssignClaimFlow = false;
+    req.session.caseNumberChecked = false;
+    req.session.yourDetailsVerified = false;
     const content = getPageContent(req, this.returnToExistingContent, [
       TranslationKeys.COMMON,
       TranslationKeys.RETURN_TO_EXISTING,

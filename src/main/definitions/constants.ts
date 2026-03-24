@@ -639,6 +639,11 @@ export const ServiceErrors = {
   ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE: 'case has already been assigned',
 } as const;
 
+export const CaseAssignmentResponse = {
+  ALREADY_ASSIGNED: 'ALREADY_ASSIGNED',
+  USER_ALREADY_ASSIGNED_TO_THE_CASE: 'User was already assigned to this case',
+} as const;
+
 export const Roles = {
   CREATOR_ROLE_WITH_BRACKETS: '[CREATOR]',
   CREATOR_ROLE_WITHOUT_BRACKETS: 'CREATOR',

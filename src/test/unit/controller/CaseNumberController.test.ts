@@ -1,4 +1,5 @@
 import CaseNumberController from '../../../main/controllers/CaseNumberController';
+import { PageUrls } from '../../../main/definitions/constants';
 import { getCaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -34,10 +35,12 @@ describe('CaseNumberController', () => {
     const controller = new CaseNumberController();
 
     const req = mockRequest({ body });
+    req.session.visitedAssignClaimFlow = true;
+    req.url = PageUrls.CASE_NUMBER_CHECK;
     const res = mockResponse();
 
     await controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CASE_NUMBER_CHECK);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -63,7 +66,7 @@ describe('CaseNumberController', () => {
 
     await controller.post(req, res);
 
-    expect(req.session.userCase.ethosCaseReference).toBe('1234567/2023');
+    expect(req.session.caseAssignmentFields.ethosCaseReference).toBe('1234567/2023');
   });
 
   it('should set isAssignClaim flag when case number is valid', async () => {
