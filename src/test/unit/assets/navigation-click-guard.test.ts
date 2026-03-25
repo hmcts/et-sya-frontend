@@ -1,30 +1,24 @@
-import { JSDOM } from 'jsdom';
+/**
+ * @jest-environment ./jest.environment.jsdom.js
+ */
 
 describe('data-navigation-link double-click guard', () => {
-  const setupDomWithLink = () => {
-    const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost/' });
-    global.window = dom.window as unknown as Window & typeof globalThis;
-    global.document = dom.window.document as unknown as Document;
+  let link: HTMLAnchorElement;
 
-    const link = document.createElement('a');
+  beforeEach(() => {
+    link = document.createElement('a');
     link.setAttribute('href', '/somewhere');
     link.setAttribute('data-navigation-link', '');
     link.textContent = 'view';
     document.body.appendChild(link);
-
-    return { dom, link } as const;
-  };
+  });
 
   afterEach(() => {
-    // Cleanup globals and reset module between tests
-    delete global.window;
-    delete global.document;
+    document.body.innerHTML = '';
     jest.resetModules();
   });
 
   it('prevents default on second and third click of the same link', async () => {
-    const { link } = setupDomWithLink();
-
     // Import after DOM is ready so listeners can bind
     await import('../../../main/assets/js/navigation-click-guard');
 
@@ -43,7 +37,6 @@ describe('data-navigation-link double-click guard', () => {
   });
 
   it('allows click again after pageshow clears the guard', async () => {
-    const { link } = setupDomWithLink();
     await import('../../../main/assets/js/navigation-click-guard');
 
     const first = new window.MouseEvent('click', { bubbles: true, cancelable: true });
