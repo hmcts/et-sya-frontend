@@ -13,7 +13,7 @@ export class ClaimStartPage extends BasePage {
       'Make a claim to an employment tribunal'
     );
     await this.verifyMakeAClaimToAnEmploymentTribunal();
-    await this.webAction.clickElementByText('Start now');
+    await this.webAction.clickElementByText('Start a new claim');
 
     await this.webAction.verifyElementContainsText(this.page.locator('h1.govuk-heading-l'), 'Before you continue');
     await this.verifyBeforeYouContinueGuidanceText();
@@ -47,8 +47,7 @@ export class ClaimStartPage extends BasePage {
     await this.webAction.verifyTextPresentOnPage(
       'text=late, you must explain why. A judge will then decide what happens next.'
     );
-    await this.webAction.verifyTextPresentOnPage('text=Have you already started a claim?');
-    await this.webAction.verifyTextPresentOnPage('text=Return to an existing claim');
+    await this.webAction.verifyTextPresentOnPage('text=Return to a draft or existing claim');
     await this.webAction.verifyTextPresentOnPage('text=Help using the service');
     await this.webAction.verifyTextPresentOnPage(
       'text=Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.'
