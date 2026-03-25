@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { DeleteClaimCheck } from '../decorators/DeleteClaimCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
@@ -11,6 +12,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('DeleteDraftClaimController');
 export default class DeleteDraftClaimController {
+  @DeleteClaimCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (req.query?.redirect === 'claimant-applications') {
@@ -35,6 +37,7 @@ export default class DeleteDraftClaimController {
     });
   };
 
+  @DeleteClaimCheck()
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       req.session.userCase = fromApiFormat(

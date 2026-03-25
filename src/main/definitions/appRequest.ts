@@ -17,6 +17,7 @@ export interface AppSession extends Session {
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;
+  userCases: CaseWithId[];
   submittedCase?: CaseWithId;
   user: UserDetails;
   guid: string | undefined;
