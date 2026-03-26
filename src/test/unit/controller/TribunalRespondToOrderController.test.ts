@@ -64,6 +64,17 @@ describe('Tribunal Respond to Order Controller', () => {
     expect(request.session.visitedContactTribunalSelection).toBe(true);
   });
 
+  it('should redirect error page when appId invalid', async () => {
+    const translationJsons = { ...respondJsonRaw, ...common };
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase: mockUserCaseComplete }, translationJsons);
+    request.params.orderId = 'invalid-app-id';
+
+    await new TribunalRespondToOrderController().get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
+  });
+
   it('should set documentDownloadPage to NOTIFICATION_DETAILS on GET request', async () => {
     const translationJsons = { ...respondJsonRaw, ...common };
     const controller = new TribunalRespondToOrderController();
