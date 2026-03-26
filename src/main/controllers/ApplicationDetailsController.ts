@@ -40,7 +40,7 @@ export default class ApplicationDetailsController {
 
     const selectedApplication = findSelectedGenericTseApplication(
       getAllTseApplicationCollection(userCase),
-      req.params?.appId
+      req.params.appId
     );
     if (!selectedApplication) {
       logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
