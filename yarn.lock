@@ -3203,31 +3203,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-sdk-common@npm:2.23.0":
-  version: 2.23.0
-  resolution: "@launchdarkly/js-sdk-common@npm:2.23.0"
-  checksum: 10/5e874cdf7a4810c7c52da78521bc18f90253447e939c20fe2f5544cd19f40b872e42800cfff998832b4de0f9e7f68396d898e49cb1c34e0e17669f5fdfeaf6f9
+"@launchdarkly/js-sdk-common@npm:2.24.0":
+  version: 2.24.0
+  resolution: "@launchdarkly/js-sdk-common@npm:2.24.0"
+  checksum: 10/f5ae269c3678fcbcb4b819700baf250c15a29b5cde9254dd6be8debfb45c56d234ab10dc98d17713005971a06d611f25bcc62333835714a7b0014175efb33e2d
   languageName: node
   linkType: hard
 
-"@launchdarkly/js-server-sdk-common@npm:2.18.2":
-  version: 2.18.2
-  resolution: "@launchdarkly/js-server-sdk-common@npm:2.18.2"
+"@launchdarkly/js-server-sdk-common@npm:2.18.3":
+  version: 2.18.3
+  resolution: "@launchdarkly/js-server-sdk-common@npm:2.18.3"
   dependencies:
-    "@launchdarkly/js-sdk-common": "npm:2.23.0"
+    "@launchdarkly/js-sdk-common": "npm:2.24.0"
     semver: "npm:7.5.4"
-  checksum: 10/bd308d08e8bc50669568cf3c3dd9aadd2256168c557d3dc0b086d64a5ece59ff1ddf7cf8bd0ef54a840a0e2e13d269e3c9ec9dc10e0df73b614147789e212624
+  checksum: 10/56599373dc6d1b5995fd396f0def50a80e29f8ed463b3a86be1db67b87270106e4945f59c06635bceb661466dac76983d7eeb6ec84a7aed92742f13771ce7a60
   languageName: node
   linkType: hard
 
 "@launchdarkly/node-server-sdk@npm:^9.0.0":
-  version: 9.10.9
-  resolution: "@launchdarkly/node-server-sdk@npm:9.10.9"
+  version: 9.10.10
+  resolution: "@launchdarkly/node-server-sdk@npm:9.10.10"
   dependencies:
-    "@launchdarkly/js-server-sdk-common": "npm:2.18.2"
+    "@launchdarkly/js-server-sdk-common": "npm:2.18.3"
     https-proxy-agent: "npm:^7.0.6"
     launchdarkly-eventsource: "npm:2.2.0"
-  checksum: 10/2febf2f3e3e5837be02fdbdb60b77eb533443d77ef17a538ba47479cc6e0a6c1c607840962dc2c375ddc617b50193f4c8f7336e973dc293528cfeb015cdbd09b
+  checksum: 10/11b946e8e8f4c0801b1faa6739bf39f8c970321512a6539b584d51eff268f0fb64cc3081ba0213764051d05e3cc7ee130567613e73c87dd1f3aec42c65b18c2e
   languageName: node
   linkType: hard
 
@@ -13912,7 +13912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.0.0, minimatch@npm:^10.1.1, minimatch@npm:^10.2.2":
+"minimatch@npm:^10.0.0, minimatch@npm:^10.1.1, minimatch@npm:^10.2.1, minimatch@npm:^10.2.2":
   version: 10.2.4
   resolution: "minimatch@npm:10.2.4"
   dependencies:
@@ -14593,13 +14593,13 @@ __metadata:
   linkType: hard
 
 "nodemon@npm:^3.0.0":
-  version: 3.1.11
-  resolution: "nodemon@npm:3.1.11"
+  version: 3.1.14
+  resolution: "nodemon@npm:3.1.14"
   dependencies:
     chokidar: "npm:^3.5.2"
     debug: "npm:^4"
     ignore-by-default: "npm:^1.0.1"
-    minimatch: "npm:^3.1.2"
+    minimatch: "npm:^10.2.1"
     pstree.remy: "npm:^1.1.8"
     semver: "npm:^7.5.3"
     simple-update-notifier: "npm:^2.0.0"
@@ -14608,7 +14608,7 @@ __metadata:
     undefsafe: "npm:^2.0.5"
   bin:
     nodemon: bin/nodemon.js
-  checksum: 10/0f43d2c70abe0764e26e438dbe0c78bc429746a558dabf5dd94b13f6f3a79b4bd7d5793347acafddaee5eab594a806c2ad43efc999d342e28d185661718da8dc
+  checksum: 10/187aa93fc461bb001bac5de63df49a38a7b1cb3c60a5fd6a3b0f2b15da68fe5adfd0f91244be2fd1f57263cbd351e3113cb04c4edf4af23699dd95b2782fbf9b
   languageName: node
   linkType: hard
 
@@ -17867,15 +17867,15 @@ __metadata:
   linkType: hard
 
 "tar@npm:^7.5.10":
-  version: 7.5.11
-  resolution: "tar@npm:7.5.11"
+  version: 7.5.13
+  resolution: "tar@npm:7.5.13"
   dependencies:
     "@isaacs/fs-minipass": "npm:^4.0.0"
     chownr: "npm:^3.0.0"
     minipass: "npm:^7.1.2"
     minizlib: "npm:^3.1.0"
     yallist: "npm:^5.0.0"
-  checksum: 10/fb2e77ee858a73936c68e066f4a602d428d6f812e6da0cc1e14a41f99498e4f7fd3535e355fa15157240a5538aa416026cfa6306bb0d1d1c1abf314b1f878e9a
+  checksum: 10/2bc2b6f0349038a6621dbba1c4522d45752d5071b2994692257113c2050cd23fafc30308f820e5f8ad6fda3f7d7f92adc9a432aa733daa04c42af2061c021c3f
   languageName: node
   linkType: hard
 
