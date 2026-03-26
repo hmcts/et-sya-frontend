@@ -1,7 +1,7 @@
 import { Response as ExpressResponse } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn, isValidCaseReferenceId } from '../components/form/validator';
+import { isFieldFilledIn, isValidCaseReferenceId, isValidEthosCaseReference } from '../components/form/validator';
 import { AssignClaimCheck } from '../decorators/AssignClaimCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
@@ -22,6 +22,15 @@ export default class YourDetailsFormController {
   private readonly form: Form;
   private readonly caseReferenceIdContent: FormContent = {
     fields: {
+      ethosCaseReference: {
+        id: 'ethosCaseReference',
+        name: 'ethosCaseReference',
+        type: 'text',
+        validator: isValidEthosCaseReference,
+        label: (l: AnyRecord): string => l.ethosCaseReference.label,
+        attributes: { maxLength: 16 },
+        classes: 'govuk-!-width-one-half',
+      },
       id: {
         id: 'caseReferenceId',
         name: 'caseReferenceId',
@@ -58,6 +67,7 @@ export default class YourDetailsFormController {
 
     req.session.caseAssignmentFields = {
       ...req.session.caseAssignmentFields,
+      ethosCaseReference: formData.ethosCaseReference,
       id: formData.id,
       claimantName: formData.claimantName,
       firstName: formData.claimantName.split(' ')[0],

@@ -84,13 +84,15 @@ export default class CaseNumberController {
       TranslationKeys.COMMON,
       TranslationKeys.CASE_NUMBER_CHECK,
     ]);
-    if (!req.session.caseAssignmentFields) {
+    if (req.session?.caseAssignmentFields?.ethosCaseReference === undefined) {
       req.session.caseAssignmentFields = {};
+      req.session.errors = [];
     }
     assignFormData(req.session.caseAssignmentFields as CaseWithId, this.form.getFormFields());
     res.render(TranslationKeys.CASE_NUMBER_CHECK, {
       ...content,
       userCase: req.session.caseAssignmentFields,
+      sessionErrors: req.session.errors,
     });
   };
 }

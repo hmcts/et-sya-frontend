@@ -23,6 +23,7 @@ describe('YourDetailsFormController', () => {
       }),
       getCaseByApplicationRequest: jest.fn().mockResolvedValue({
         data: {
+          ethosCaseReference: '123456/2025',
           id: '1234',
           case_data: {
             respondentCollection: [
@@ -50,6 +51,7 @@ describe('YourDetailsFormController', () => {
 
   it('should redirect to your details cya page when form is valid', async () => {
     const body = {
+      ethosCaseReference: '1234567/2025',
       id: '1234567890123456',
       claimantName: 'John Doe',
     };
@@ -66,10 +68,11 @@ describe('YourDetailsFormController', () => {
 
   it('should redirect back to self if there are errors', async () => {
     const errors = [
+      { propertyName: 'ethosCaseReference', errorType: 'required' },
       { propertyName: 'id', errorType: 'required' },
       { propertyName: 'claimantName', errorType: 'required' },
     ];
-    const body = { caseReferenceId: '', claimantName: '' };
+    const body = { ethosCaseReference: '', id: '', claimantName: '' };
     const controller = new YourDetailsFormController();
 
     const req = mockRequest({ body });
@@ -80,11 +83,13 @@ describe('YourDetailsFormController', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_FORM);
     expect(req.session.errors).toEqual(errors);
+    expect(req.session.caseAssignmentFields.ethosCaseReference).toEqual('');
+    expect(req.session.caseAssignmentFields.id).toEqual('');
     expect(req.session.caseAssignmentFields.claimantName).toEqual('');
   });
 
   it('should preserve claimantName when there are errors', async () => {
-    const body = { caseReferenceId: '', claimantName: 'John Doe' };
+    const body = { ethosCaseReference: '', id: '', claimantName: 'John Doe' };
     const controller = new YourDetailsFormController();
 
     const req = mockRequest({ body });
@@ -93,6 +98,8 @@ describe('YourDetailsFormController', () => {
 
     await controller.post(req, res);
 
+    expect(req.session.caseAssignmentFields.ethosCaseReference).toEqual('');
+    expect(req.session.caseAssignmentFields.id).toEqual('');
     expect(req.session.caseAssignmentFields.claimantName).toEqual('John Doe');
   });
 
@@ -102,6 +109,7 @@ describe('YourDetailsFormController', () => {
     });
 
     const body = {
+      ethosCaseReference: '1234567/2025',
       id: '1234567890123456',
       claimantName: 'John Doe',
     };

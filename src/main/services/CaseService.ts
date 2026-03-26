@@ -526,6 +526,7 @@ export class CaseApi {
 
       return await this.axios.post(JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION, {
         caseSubmissionReference,
+        ethosCaseReference: caseWithId.ethosCaseReference,
         claimantFirstNames: caseWithId.firstName,
         claimantLastName: caseWithId.lastName,
         applicationName: 'et-sya-frontend',

@@ -79,11 +79,13 @@ export default class YourDetailsCYAController {
         error.message.toString().includes(ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE)
       ) {
         logger.error(
-          ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE +
+          '--- CASE ALREADY ASSIGNED ERROR ---' +
+            ServiceErrors.ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE +
             'caseId: ' +
             req.session?.caseAssignmentFields?.id +
             ', ' +
-            error
+            'userId: ' +
+            req.session?.user?.id
         );
         req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'caseAlreadyAssigned' });
       } else {
@@ -143,7 +145,7 @@ export default class YourDetailsCYAController {
       ...req.t(TranslationKeys.YOUR_DETAILS_CYA, { returnObjects: true }),
     };
 
-    const cancelLink = setUrlLanguage(req, PageUrls.HOME);
+    const cancelLink = setUrlLanguage(req, PageUrls.CLAIMANT_APPLICATIONS);
     const welshEnabled = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);
 

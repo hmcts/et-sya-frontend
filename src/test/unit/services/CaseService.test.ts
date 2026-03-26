@@ -747,6 +747,7 @@ describe('getCaseByApplicationRequest', () => {
       session: {
         caseAssignmentFields: {
           id: '1234567890123456',
+          ethosCaseReference: '60000003/2025',
           firstName: 'John',
           lastName: 'Doe',
         },
@@ -759,6 +760,7 @@ describe('getCaseByApplicationRequest', () => {
       JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION,
       expect.objectContaining({
         caseSubmissionReference: '1234567890123456',
+        ethosCaseReference: '60000003/2025',
         claimantFirstNames: 'John',
         claimantLastName: 'Doe',
         applicationName: 'et-sya-frontend',
@@ -772,6 +774,7 @@ describe('getCaseByApplicationRequest', () => {
       session: {
         caseAssignmentFields: {
           id: '1234567890-123456',
+          ethosCaseReference: '60000003/2025',
           firstName: 'John',
           lastName: 'Doe',
         },
@@ -992,6 +995,7 @@ describe('Rethrowing errors when axios requests fail', () => {
       session: {
         caseAssignmentFields: {
           id: '1234567890123456',
+          ethosCaseReference: '60000003/2025',
           firstName: 'John',
           lastName: 'Doe',
         },

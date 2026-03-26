@@ -1,6 +1,7 @@
 {
   "title": "Check and submit",
   "caseNumber": "Case number",
+  "submissionReference": "Submission reference",
   "claimantName": "Claimant's name",
   "respondentName": "Respondent's name",
   "confirmation": "I confirm all these details are accurate and match what is written on the case.",
@@ -14,7 +15,7 @@
     "hiddenErrorField": {
       "api": "Unable to assign role. Please try again later",
       "caseAlreadyAssignedToSameUser": "You have already assigned to this case",
-      "caseAlreadyAssigned": "Case has already assigned to a claimant"
+      "caseAlreadyAssigned": "The case you entered is already linked to another claimant. Even if the details you entered are correct, you cannot access a case that belongs to someone else. If you believe this is wrong, please contact the Employment Tribunal."
     }
   }
 }
