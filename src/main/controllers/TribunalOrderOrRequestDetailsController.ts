@@ -24,7 +24,7 @@ export default class TribunalOrderOrRequestDetailsController {
     const userCase = req.session.userCase;
     const selectedRequestOrOrder = findSelectedSendNotification(
       userCase.sendNotificationCollection,
-      req.params?.orderId
+      req.params.orderId
     );
     if (!selectedRequestOrOrder) {
       logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND + req.params?.orderId);
