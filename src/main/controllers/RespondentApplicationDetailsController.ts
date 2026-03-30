@@ -34,7 +34,7 @@ export default class RespondentApplicationDetailsController {
       req.params.appId
     );
     if (!selectedApplication) {
-      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND, req.session.userCase?.id, req.params?.appId);
       return res.redirect(ErrorPages.NOT_FOUND + languageParam);
     }
     setSelectedTseApplication(req, userCase, selectedApplication);

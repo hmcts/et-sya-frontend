@@ -43,7 +43,7 @@ export default class ApplicationDetailsController {
       req.params.appId
     );
     if (!selectedApplication) {
-      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND + req.params?.appId);
+      logger.error(ServiceErrors.ERROR_APPLICATION_NOT_FOUND, req.session.userCase?.id, req.params?.appId);
       return res.redirect(ErrorPages.NOT_FOUND + languageParam);
     }
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')

@@ -113,7 +113,7 @@ export default class TribunalRespondToOrderController {
       req.params.orderId
     );
     if (!selectedRequestOrOrder) {
-      logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND + req.params?.orderId);
+      logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND, req.session.userCase?.id, req.params?.orderId);
       return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
     }
     req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
