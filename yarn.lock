@@ -3317,12 +3317,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.211.0":
-  version: 0.211.0
-  resolution: "@opentelemetry/api-logs@npm:0.211.0"
+"@opentelemetry/api-logs@npm:0.214.0":
+  version: 0.214.0
+  resolution: "@opentelemetry/api-logs@npm:0.214.0"
   dependencies:
     "@opentelemetry/api": "npm:^1.3.0"
-  checksum: 10/d2e7ac9d9985bec924cbb5b2ef4bd66cb59a3b13e53133a0d975d847f579580ec0cd7612e8bc6b780268dae9b094b8c7571ef4354c150b0a54904442e4a8f456
+  checksum: 10/6213a42f52df25ed06cf178ae79a5926592bf2e5ddaa3abfe8c657d0e9c2df51914818808b7e762bce9380a2f67f0818781745f8985717755ba63375f2acb21b
   languageName: node
   linkType: hard
 
@@ -3344,16 +3344,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation@npm:^0.211.0":
-  version: 0.211.0
-  resolution: "@opentelemetry/instrumentation@npm:0.211.0"
+"@opentelemetry/instrumentation@npm:^0.214.0":
+  version: 0.214.0
+  resolution: "@opentelemetry/instrumentation@npm:0.214.0"
   dependencies:
-    "@opentelemetry/api-logs": "npm:0.211.0"
-    import-in-the-middle: "npm:^2.0.0"
+    "@opentelemetry/api-logs": "npm:0.214.0"
+    import-in-the-middle: "npm:^3.0.0"
     require-in-the-middle: "npm:^8.0.0"
   peerDependencies:
     "@opentelemetry/api": ^1.3.0
-  checksum: 10/d9efa3bf9108fec3869194cb52b0761ca4d003629c7458ac006c04a81991744d7b836bf5ec2cb153142934d446e3d2304c2b5aa7248ba17f667a680839836e39
+  checksum: 10/fd4451e4e535f21530346a0b161b18928ed56d3bd56fce452b0598fdbfd97da7c1c58a65119a6827db59e4dec384fade579ebee860de5dd6d9aa94abbef49d37
   languageName: node
   linkType: hard
 
@@ -11280,15 +11280,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-in-the-middle@npm:^2.0.0":
-  version: 2.0.6
-  resolution: "import-in-the-middle@npm:2.0.6"
+"import-in-the-middle@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "import-in-the-middle@npm:3.0.0"
   dependencies:
     acorn: "npm:^8.15.0"
     acorn-import-attributes: "npm:^1.9.5"
     cjs-module-lexer: "npm:^2.2.0"
     module-details-from-path: "npm:^1.0.4"
-  checksum: 10/8be80d7f2d4ad34e5eb1082925ee2e90844edb65359cad0f5d8e934a09fafeca10e66f50d0b07570bd6b877ff678755d3c2d36d05258cc3541e39fa6aae6ae56
+  checksum: 10/0bf1f22d00a080e7f651db8c5d136aa4aca6829397769f22fb544a67d9117b1c78590f180a690eb19eb0cfb4a558beac66b6508d346cccc91e1e5f75c934e9de
   languageName: node
   linkType: hard
 
