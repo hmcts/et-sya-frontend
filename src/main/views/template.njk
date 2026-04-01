@@ -121,29 +121,31 @@ if isLoggedIn %}
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
 
-  {% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
-    {% set queryStringConcat = "" %}
+{% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
+  {# 1. Define what we are looking for and what we want to change it to #}
+  {% set currentLangPart = "lng=" + i18n.language %}
+  {% set targetLangCode = "cy" if i18n.language == "en" else "en" %}
+  {% set targetLangPart = "lng=" + targetLangCode %}
 
-    {% if "lng=" in currentUrl %}
-      {% set currentUrl = currentUrl | replace("?lng=en", "") | replace("&lng=en", "") | replace("?lng=cy", "") | replace("&lng=cy", "") %}
-    {% endif %}
-
-    {% if "?" not in currentUrl %}
-      {% set queryStringConcat = "?" %}
-    {% else %}
-      {% set queryStringConcat = "&" %}
-    {% endif %}
-
-    {% set languageFlag = "" %}
-    {% if i18n.language == "en" %}
-      {% set languageFlag = queryStringConcat + "lng=cy" %}
-    {% else %}
-      {% set languageFlag = queryStringConcat + "lng=en" %}
-    {% endif %}
-
-    {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
+  {# 2. Logic to update the URL #}
+  {% if "lng=" in currentUrl %}
+    {# If lng exists, just swap the value in place #}
+    {% set finalUrl = currentUrl | replace(currentLangPart, targetLangPart) %}
+    {% set languageFlag = "" %} {# No need to append anything #}
   {% else %}
+    {# If lng doesn't exist, use your original appending logic #}
+    {% set separator = "&" if "?" in currentUrl else "?" %}
+    {% set finalUrl = currentUrl %}
+    {% set languageFlag = separator + "lng=" + targetLangCode %}
   {% endif %}
+
+  {# 3. Apply to your link #}
+  {% set langLabel = "Cymraeg" if i18n.language == "en" else "English" %}
+  {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle
+    | replace("{currentUrl}", finalUrl)
+    | replace("{languageFlag}", languageFlag)
+    | replace("English", langLabel)) %}
+{% endif %}
 
   {{ timeoutModal() }}
 

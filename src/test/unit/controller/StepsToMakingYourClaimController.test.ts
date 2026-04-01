@@ -186,7 +186,7 @@ describe('Steps to Making your claim Controller', () => {
     redisClient.quit();
   });
 
-  it('should render page with all claim types', () => {
+  it('should render page with all claim types', async () => {
     const response = mockResponse();
     const request = mockRequest({
       session: mockSession(
@@ -202,7 +202,8 @@ describe('Steps to Making your claim Controller', () => {
         []
       ),
     });
-    stepsToMakingYourClaimController.get(request, response);
+    request.session.userCase.id = '12345';
+    await stepsToMakingYourClaimController.get(request, response);
     expect(request.session.userCase.typeOfClaim).toEqual([
       TypesOfClaim.PAY_RELATED_CLAIM,
       TypesOfClaim.DISCRIMINATION,
@@ -211,5 +212,23 @@ describe('Steps to Making your claim Controller', () => {
       TypesOfClaim.WHISTLE_BLOWING,
       TypesOfClaim.OTHER_TYPES,
     ]);
+  });
+
+  it('should handle all sections completed', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
+    request.session.userCase.personalDetailsCheck = YesOrNo.YES;
+    request.session.userCase.employmentAndRespondentCheck = YesOrNo.YES;
+    request.session.userCase.claimDetailsCheck = YesOrNo.YES;
+    await stepsToMakingYourClaimController.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
+  });
+
+  it('should clear updateDraftCaseError if it exists', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
+    request.session.userCase.updateDraftCaseError = 'Some error';
+    await stepsToMakingYourClaimController.get(request, response);
+    expect(request.session.userCase.updateDraftCaseError).toBeUndefined();
   });
 });
