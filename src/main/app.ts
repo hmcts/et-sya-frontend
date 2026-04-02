@@ -41,6 +41,12 @@ new Helmet(config.get('security'), [
 
 new I18Next().enableFor(app);
 new Session().enableFor(app);
+
+app.use((req, res, next) => {
+  res.locals.hasUserCases = !!(req as AppRequest).session?.hasUserCases;
+  next();
+});
+
 new HealthCheck().enableFor(app);
 app.enable('trust proxy');
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
