@@ -112,6 +112,7 @@ export default class TribunalRespondToOrderController {
       userCase.sendNotificationCollection,
       req.params.orderId
     );
+    req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
     const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);

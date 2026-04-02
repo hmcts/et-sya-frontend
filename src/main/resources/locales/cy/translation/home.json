@@ -6,8 +6,8 @@
   "warningTxt1": "I wneud hawliad mae angen i chi gysylltu ag Acas a chael ‘tystysgrif cymodi cynnar’ ganddynt neu roi rheswm dilys i ni pam nad oes gennych un. <br><br>Os nad oes gennych dystysgrif neu reswm mae angen i chi <a href=\"https://www.acas.org.uk/early-conciliation\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"> gysylltu ag Acas (yn agor mewn tab newydd)</a>",
   "saveInfo": "Nid oes rhaid i chi wneud yr hawliad i gyd ar unwaith. Gallwch ei gadw a dychwelyd ar unrhyw adeg cyn i chi ei gyflwyno.",
   "warningTxt2": "Fel arfer  mae’n rhaid gwneud hawliad o fewn 3 mis i gyflogaeth ddod i ben neu i adeg y problemau a gododd.  Os yw hawliad yn hwyr, rhaid i chi egluro pam. Bydd barnwr wedyn yn penderfynu beth fydd yn digwydd nesaf.",
-  "claimStartedTxt": "Ydych chi eisoes wedi dechrau hawliad?",
-  "returnClaimTxt": "Dychwelyd i hawliad presennol",
+  "startANewClaim": "Dechrau hawliad newydd",
+  "returnToDraftOrExistingClaim": "Dychwelyd at ddrafft neu hawliad sy’n bodoli",
   "contactUsHelpTitle": "Help i ddefnyddio’r gwasanaeth",
   "contactUsHelpTxt": "Ffoniwch un o Ganolfannau Cyswllt Cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi."
 }

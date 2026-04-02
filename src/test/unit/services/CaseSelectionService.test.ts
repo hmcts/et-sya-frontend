@@ -82,6 +82,52 @@ describe('Case Selection Service using Case Api', () => {
     expect(userCases[1].lastModified).toStrictEqual('12 February 2019');
   });
 
+  test('Should Return user cases by last modified date and filter out deleted cases', async () => {
+    const response: AxiosResponse<CaseApiDataResponse[]> = {
+      data: [
+        {
+          id: '12234',
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          last_modified: '2019-02-12T14:25:39.015',
+          created_date: '2019-02-12T14:25:39.015',
+          case_data: {
+            caseType: CaseType.SINGLE,
+            typesOfClaim: ['discrimination', 'payRelated'],
+            claimantRepresentedQuestion: YesOrNo.YES,
+            caseSource: 'ET1 Online',
+          },
+        },
+        {
+          id: '122345',
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          last_modified: '2019-02-13T14:25:39.015',
+          created_date: '2019-02-12T14:25:39.015',
+          case_data: {
+            caseType: CaseType.SINGLE,
+            typesOfClaim: ['discrimination', 'payRelated'],
+            claimantRepresentedQuestion: YesOrNo.YES,
+            caseSource: 'ET1 Online',
+          },
+        },
+      ],
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+    const req = mockRequest({ session: { deletedCaseIds: ['12234'] } });
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCases = jest.fn().mockResolvedValue(response);
+
+    mockApiClient.getUserCases.mockResolvedValue(response);
+    const userCases = await getUserCasesByLastModified(req);
+
+    expect(userCases).toHaveLength(1);
+    expect(userCases[0].id).toStrictEqual('122345');
+    expect(userCases[0].lastModified).toStrictEqual('13 February 2019');
+  });
+
   test('Should return empty array', async () => {
     const response: AxiosResponse<CaseApiDataResponse[]> = {
       data: [],
