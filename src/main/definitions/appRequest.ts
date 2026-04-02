@@ -17,6 +17,7 @@ export interface AppSession extends Session {
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;
+  userCases: CaseWithId[];
   submittedCase?: CaseWithId;
   user: UserDetails;
   guid: string | undefined;
@@ -36,6 +37,7 @@ export interface AppSession extends Session {
   respondentNames?: string[];
   respondentName?: string;
   csrfInitialized?: boolean;
+  deletedCaseIds?: string[];
 }
 
 export interface UserDetails {
