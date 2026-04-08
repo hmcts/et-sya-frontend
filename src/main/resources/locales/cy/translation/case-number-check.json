@@ -7,7 +7,7 @@
     "ethosCaseReference": {
       "required": "Nodwch rif yr achos. Sampl o fformat rhif achos yw 1111111/2020",
       "invalid": "Rhif achos annilys. Sampl fformat rhif achos yw 1111111/2020",
-      "caseNotFound": "Ni ddaethpwyd o hyn i'r achos. Nid yw'r rhif achos a nodwyd gennych yn cyfateb i'n cofnodion."
+      "caseNotFound": "[W]This case is not available online. Contact the tribunal if you want to kknow more about this case."
     }
   }
 }

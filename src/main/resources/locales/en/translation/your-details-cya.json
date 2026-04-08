@@ -15,7 +15,7 @@
     "hiddenErrorField": {
       "api": "Unable to assign role. Please try again later",
       "caseAlreadyAssignedToSameUser": "You have already assigned to this case",
-      "caseAlreadyAssigned": "The case you entered is already linked to another claimant. Even if the details you entered are correct, you cannot access a case that belongs to someone else. If you believe this is wrong, please contact the Employment Tribunal."
+      "caseAlreadyAssigned": "You cannot access this case because the details you have entered are linked to another claimant. Contact the Employment Tribunal if you think this is wrong."
     }
   }
 }

@@ -15,7 +15,7 @@
     "hiddenErrorField": {
       "api": "Rydym yn methu â neilltuo rôl. Rhowch gynnig arall arni'n hwyrach ymlaen.",
       "caseAlreadyAssignedToSameUser": "Rydych eisoes wedi eich neilltuo i’r achos hwn",
-      "caseAlreadyAssigned": "[W]The case you entered is already linked to another claimant. Even if the details you entered are correct, you cannot access a case that belongs to someone else. If you believe this is wrong, please contact the Employment Tribunal."
+      "caseAlreadyAssigned": "[W]You cannot access this case because the details you have entered are linked to another claimant. Contact the Employment Tribunal if you think this is wrong."
     }
   }
 }
