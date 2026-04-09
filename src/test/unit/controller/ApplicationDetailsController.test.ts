@@ -13,20 +13,21 @@ import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import mockUserCase from '../mocks/mockUserCase';
 
-jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-
 describe('Claimant Applications Controller', () => {
+  jest.mock('axios');
+  const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
+  const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+  mockClient.mockReturnValue(caseApi);
+
   const translationJsons = { ...applicationDetails, ...common };
   const t = {
     common: {},
   };
 
   it('should render the claimant application details page', async () => {
-    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
-    mockLdClient.mockResolvedValue(true);
-    const mockClient = jest.spyOn(CaseService, 'getCaseApi');
-    mockClient.mockReturnValue(caseApi);
     const controller = new ApplicationDetailsController();
 
     const userCase: Partial<CaseWithId> = mockUserCase;
@@ -38,5 +39,18 @@ describe('Claimant Applications Controller', () => {
     await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.APPLICATION_DETAILS, expect.anything());
+  });
+
+  it('should redirect error page when appId invalid', async () => {
+    const userCase: Partial<CaseWithId> = mockUserCase;
+    userCase.genericTseApplicationCollection = mockGenericTseCollection;
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+    request.params.appId = 'invalid-app-id';
+
+    await new ApplicationDetailsController().get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 });
