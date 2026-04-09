@@ -196,7 +196,7 @@ export const mockedApiData: CaseApiDataResponse = {
     hubLinksStatuses: new HubLinksStatuses(),
     managingOffice: 'Leeds',
     tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
-    tribunalCorrespondenceTelephone: '0300 123 1024',
+    tribunalCorrespondenceTelephone: '0300 323 0196',
     documentCollection: [
       {
         id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
