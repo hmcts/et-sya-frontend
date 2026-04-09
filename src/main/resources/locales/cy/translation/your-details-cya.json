@@ -15,7 +15,7 @@
     "hiddenErrorField": {
       "api": "Rydym yn methu â neilltuo rôl. Rhowch gynnig arall arni'n hwyrach ymlaen.",
       "caseAlreadyAssignedToSameUser": "Rydych eisoes wedi eich neilltuo i’r achos hwn",
-      "caseAlreadyAssigned": "[W]You cannot access this case because the details you have entered are linked to another claimant. Contact the Employment Tribunal if you think this is wrong."
+      "caseAlreadyAssigned": "Ni allwch gael mynediad at yr achos hwn oherwydd bod y manylion rydych chi wedi'u nodi yn gysylltiedig â hawlydd arall. Cysylltwch â'r Tribiwnlys Cyflogaeth os ydych chi'n credu bod hyn yn anghywir."
     }
   }
 }
