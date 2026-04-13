@@ -647,4 +647,6 @@ export const CaseAssignmentResponse = {
 export const Roles = {
   CREATOR_ROLE_WITH_BRACKETS: '[CREATOR]',
   CREATOR_ROLE_WITHOUT_BRACKETS: 'CREATOR',
+  ERROR_APPLICATION_NOT_FOUND: 'Selected application not found, userCase.id: %s, appId: %s',
+  ERROR_NOTIFICATION_NOT_FOUND: 'Selected order not found, userCase.id: %s, orderId: %s',
 } as const;

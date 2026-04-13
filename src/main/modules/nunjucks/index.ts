@@ -119,7 +119,7 @@ export class Nunjucks {
           hint: i.hint && {
             html: this.env.globals.getContent.call(this, i.hint),
           },
-          divider: this.env.globals.currentUrl.includes('lng=cy') ? i.divider && 'neu' : i.divider && 'or',
+          divider: this.ctx.currentUrl?.includes('lng=cy') ? i.divider && 'neu' : i.divider && 'or',
           behaviour: i.exclusive && 'exclusive',
           conditional: ((): { html: string | undefined } => {
             let innerHtml = '';
@@ -143,20 +143,19 @@ export class Nunjucks {
     );
 
     app.use((req: AppRequest, res, next) => {
-      nunEnv.addGlobal('isLoggedIn', !!res.locals.isLoggedIn);
+      res.locals.isLoggedIn = !!res.locals.isLoggedIn;
       next();
     });
 
     app.use((req, res, next) => {
       res.locals.host = req.headers['x-forwarded-host'] || req.hostname;
       res.locals.pagePath = req.path;
-      nunEnv.addGlobal('currentUrl', req.url);
-      nunEnv.addGlobal('currentHost', req?.headers?.host?.toLowerCase());
-      nunEnv.addGlobal('dateToLocale', (dateToTransform: Date) => dateInLocale(dateToTransform, req.url));
-      nunEnv.addGlobal('dateTimeInLocale', (dateToTransform: Date) => dateTimeInLocale(dateToTransform, req.url));
-      nunEnv.addGlobal('dateStringToLocale', (dateToTransform: string) =>
-        datesStringToDateInLocale(dateToTransform, req.url)
-      );
+      res.locals.currentUrl = req.url;
+      res.locals.currentHost = req?.headers?.host?.toLowerCase();
+      res.locals.dateToLocale = (dateToTransform: Date) => dateInLocale(dateToTransform, req.url);
+      res.locals.dateTimeInLocale = (dateToTransform: Date) => dateTimeInLocale(dateToTransform, req.url);
+      res.locals.dateStringToLocale = (dateToTransform: string) =>
+        datesStringToDateInLocale(dateToTransform, req.url);
       nunEnv.addGlobal('govukRebrand', true);
       next();
     });

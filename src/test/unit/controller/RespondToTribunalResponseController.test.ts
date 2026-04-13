@@ -12,6 +12,7 @@ import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { safeUrlMock } from '../mocks/mockUrl';
+import mockUserCase from '../mocks/mockUserCase';
 
 jest.mock('axios');
 const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
@@ -177,5 +178,15 @@ describe('Respond to tribunal response Controller', () => {
     const controller = new RespondToTribunalResponseController();
     await controller.post(request, res);
     expect(res.redirect).toHaveBeenCalledWith('/not-found?lng=en');
+  });
+
+  it('should redirect error page when appId invalid', async () => {
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase: mockUserCase }, translationJsons);
+    request.params.appId = 'invalid-app-id';
+
+    await new RespondToTribunalResponseController().get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found?lng=en');
   });
 });

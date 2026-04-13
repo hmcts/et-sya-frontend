@@ -132,7 +132,7 @@ export default {
   hubLinksStatuses: new HubLinksStatuses(),
   managingOffice: 'Leeds',
   tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
-  tribunalCorrespondenceTelephone: '0300 123 1024',
+  tribunalCorrespondenceTelephone: '0300 323 0196',
   submittedDate: { day: '03', month: '10', year: '2022' },
   acknowledgementOfClaimLetterDetail: undefined,
   respondentResponseDeadline: undefined,
