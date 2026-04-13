@@ -32,6 +32,7 @@ export const mockRequest = ({
   req.headers = {
     host: 'http://localhost:3002',
   };
+  req.query = {};
   req.cookies = {
     i18next: languages.ENGLISH,
   };
