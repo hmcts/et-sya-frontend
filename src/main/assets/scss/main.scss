@@ -237,6 +237,8 @@ $lightgrey-panel: #d3d3d3;
   }
 }
 
-.govuk-service-navigation__item:last-child {
-  margin-left: auto;
+.govuk-service-navigation__item {
+  &:last-child {
+    margin-left: auto;
+  }
 }
