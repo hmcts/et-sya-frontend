@@ -30,6 +30,8 @@ describe('Claimant Applications Controller', () => {
 
     await claimantApplicationsController.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.HOME);
+    expect(request.session.hasUserCases).toBe(false);
+    expect(request.session.returnUrl).toBeUndefined();
   });
 
   it('should render claimant applications page', async () => {
@@ -40,6 +42,38 @@ describe('Claimant Applications Controller', () => {
     const response = mockResponse();
     const mockHelper = jest.spyOn(translateTypesOfClaim, 'translateTypeOfClaim');
     mockHelper.mockReturnValue(undefined);
+
+    await claimantApplicationsController.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.CLAIMANT_APPLICATIONS,
+      expect.objectContaining({
+        usersApplications: mockApplications,
+        currentUrl: PageUrls.CLAIMANT_APPLICATIONS,
+      })
+    );
+    expect(request.session.hasUserCases).toBe(true);
+    expect(request.session.userCases).toEqual(userCases);
+  });
+
+  it('should log and render claimant applications page when accessed via nav-link', async () => {
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue(mockApplications);
+    const claimantApplicationsController = new ClaimantApplicationsController();
+    const request = mockRequest({});
+    request.query = { src: 'nav-link' };
+    const response = mockResponse();
+
+    await claimantApplicationsController.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_APPLICATIONS, expect.anything());
+  });
+
+  it('should log and render claimant applications page when accessed via side-bar-link', async () => {
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue(mockApplications);
+    const claimantApplicationsController = new ClaimantApplicationsController();
+    const request = mockRequest({});
+    request.query = { src: 'side-bar-link' };
+    const response = mockResponse();
 
     await claimantApplicationsController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_APPLICATIONS, expect.anything());

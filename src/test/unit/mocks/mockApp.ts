@@ -18,6 +18,7 @@ export function mockSession(
   errorList: FormError[]
 ): AppSession {
   return {
+    userCases: [],
     id: 'testSessionId',
     lang: 'en',
     regenerate: this,
@@ -40,16 +41,6 @@ export function mockSession(
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
     },
-    userCases: [
-      {
-        id: 'testUserCaseId',
-        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-        typeOfClaim: typeOfClaimList,
-        tellUsWhatYouWant: tellUsWhatYouWantList,
-        createdDate: 'August 19, 2022',
-        lastModified: 'August 19, 2022',
-      },
-    ],
     submittedCase: {
       id: 'testUserCaseId',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
