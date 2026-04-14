@@ -1,25 +1,23 @@
 {
-  "title": "Dychwelyd i hawliad presennol",
-  "h1": "Dychwelyd i hawliad presennol",
-  "p1": {
-    "t1": "Bydd arnoch angen defnyddio",
-    "t2": "‘rhif cadw a dychwelyd’",
-    "t3": "neu eich",
-    "t4": "‘cyfrif Tribiwnlys Cyflogaeth’",
-    "t5": "newydd i ddychwelyd i hawliad presennol."
-  },
-  "p2": "A oes gennych chi rif cadw a dychwelyd neu gyfrif Tribiwnlys Cyflogaeth newydd?",
-  "p3": {
-    "t1": "Bydd rhaid i chi",
-    "t2": "gychwyn hawliad newydd",
-    "t3": "os nad yw'r manylion hyn gennych."
-  },
-  "optionText1": "Mae gen i <span class=\"govuk-!-font-weight-bold\">‘rif cadw a dychwelyd’</span>",
-  "optionText2": "Mae gennyf 'gyfrif <span class=\"govuk-!-font-weight-bold\">‘gyfrif Tribiwnlys Cyflogaeth’</span>",
-  "optionText3": "Mae gennyf hawliad ond nid oes gennyf <span class=\"govuk-!-font-weight-bold\">‘gyfrif Tribiwnlys Cyflogaeth’</span>",
+  "title": "[W]Return to a draft or submitted claim",
+  "h1": "[W]Return to a draft or submitted claim",
+  "intro": "[W]You can return to a draft claim using either:",
+  "bullet1": "[W]your 'save and return number', for example A7F9-K3P2",
+  "bullet2": "[W]the account details you used when you started the claim",
+  "draftNote": "[W]A save and return number only works for draft claims that have not been submitted.",
+  "submittedHeading": "[W]Return to a submitted claim",
+  "submittedP1": "[W]To access a submitted claim, sign in using the account details you used when you submitted it.",
+  "submittedP2": "[W]Most claims that you can view in an online account have a case number starting with a 6 or 8, for example 6000034/2025 or 8000034/2025.",
+  "submittedP3": "[W]If your case number starts with another number, it is unlikely to be available online.",
+  "p2": "[W]How do you want to access your claim?",
+  "optionText1": "[W]I have a save and return number",
+  "optionHint1": "[W]for draft claims only",
+  "optionText2": "[W]I have an employment tribunal account",
+  "optionText3": "[W]I've got a claim but no employment tribunal account",
+  "optionHint3": "[W]you can only access it online if the case number starts with 6 or 8",
   "errors": {
     "returnToExisting": {
-      "required": "Dywedwch wrthym a oes gennych rif cadw a dychwelyd neu gyfrif Tribiwnlys Cyflogaeth"
+      "required": "[W]Select how you want to access your claim"
     }
   }
 }

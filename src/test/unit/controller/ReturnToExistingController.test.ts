@@ -1,5 +1,4 @@
 import ReturnToExistingController from '../../../main/controllers/ReturnToExistingController';
-import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
 import { ReturnToExistingOption } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -73,7 +72,7 @@ describe('Return To Existing Controller', () => {
     expect(req.session.errors).toHaveLength(0);
   });
 
-  it('should pass startNewClaimUrl to the view', () => {
+  it('should render page content without startNewClaimUrl', () => {
     const controller = new ReturnToExistingController();
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -82,8 +81,8 @@ describe('Return To Existing Controller', () => {
 
     expect(response.render).toHaveBeenCalledWith(
       'return-to-claim',
-      expect.objectContaining({
-        startNewClaimUrl: PageUrls.CHECKLIST + getLanguageParam(request.url),
+      expect.not.objectContaining({
+        startNewClaimUrl: expect.anything(),
       })
     );
   });

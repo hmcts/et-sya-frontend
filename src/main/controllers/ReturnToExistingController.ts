@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class ReturnToExistingController {
   private readonly form: Form;
@@ -22,11 +22,12 @@ export default class ReturnToExistingController {
         type: 'radios',
         classes: 'govuk-date-input',
         label: (l: AnyRecord): string => l.p2,
-        labelHidden: true,
+        labelSize: 'l',
         values: [
           {
             name: 'have_return_number',
             label: (l: AnyRecord): string => l.optionText1,
+            hint: (l: AnyRecord): string => l.optionHint1,
             value: ReturnToExistingOption.RETURN_NUMBER,
             selected: false,
           },
@@ -39,6 +40,7 @@ export default class ReturnToExistingController {
           {
             name: 'have_submission_reference',
             label: (l: AnyRecord): string => l.optionText3,
+            hint: (l: AnyRecord): string => l.optionHint3,
             value: ReturnToExistingOption.CLAIM_BUT_NO_ACCOUNT,
             selected: false,
           },
@@ -79,10 +81,8 @@ export default class ReturnToExistingController {
       TranslationKeys.RETURN_TO_EXISTING,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const languageParam = getLanguageParam(req.url);
     res.render('return-to-claim', {
       ...content,
-      startNewClaimUrl: PageUrls.CHECKLIST + languageParam,
     });
   };
 }
