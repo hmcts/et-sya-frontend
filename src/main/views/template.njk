@@ -87,12 +87,56 @@
   <!-- End of hidden session object for user already logged in check-->
 {% endblock %}
 
+{% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
+
+{% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
+
+{% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
+  {# 1. Determine the correct prefix (? or &) and set the full param #}
+  {% set languagePrefix = "&" if "?" in currentUrl else "?" %}
+  {% set languageParam = "?lng=" + i18n.language %}
+
+  {# 2. Logic for the Toggle (Swapping languages) #}
+  {% set currentLangPart = "lng=" + i18n.language %}
+  {% set targetLangCode = "cy" if i18n.language == "en" else "en" %}
+  {% set targetLangPart = "lng=" + targetLangCode %}
+
+  {% if "lng=" in currentUrl %}
+    {# If lng exists, swap the value #}
+    {% set finalUrl = currentUrl | replace(currentLangPart, targetLangPart) %}
+    {% set languageFlag = "" %}
+  {% else %}
+    {# If lng doesn't exist, use the calculated prefix #}
+    {% set finalUrl = currentUrl %}
+    {% set languageFlag = languagePrefix + "lng=" + targetLangCode %}
+  {% endif %}
+
+  {# 3. Apply to your link #}
+  {% set langLabel = "Cymraeg" if i18n.language == "en" else "English" %}
+  {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle
+    | replace("{currentUrl}", finalUrl)
+    | replace("{languageFlag}", languageFlag)
+    | replace("English", langLabel)) %}
+{% endif %}
+
 {% set logInOrOut = {
   href: "/logout",
   text: signOut,
-  active: false
+  active: true
 }
 if isLoggedIn %}
+
+{% set claimantAppsNav = {
+  href: "/claimant-applications" ~ languageParam ~ "&src=nav-link",
+  text: yourClaims,
+  active: false
+}
+if isLoggedIn and hasUserCases and "/claimant-applications" not in currentUrl %}
+
+{% set headerNavigation = [logInOrOut] %}
+{% if claimantAppsNav %}
+  {% set headerNavigation = [claimantAppsNav, logInOrOut] %}
+{% endif %}
 
 {% block header %}
   {% include "cookie-banner.njk" %}
@@ -101,7 +145,7 @@ if isLoggedIn %}
     homepageUrl: "/",
     productName: serviceName,
     navigationClasses: 'govuk-header__navigation--end',
-    navigation: [logInOrOut],
+    navigation: headerNavigation,
     rebrand: true
   }) }}
 {% endblock %}
@@ -115,35 +159,6 @@ if isLoggedIn %}
 {% endblock %}
 
 {% block beforeContent %}
-
-  {% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
-
-  {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
-
-
-  {% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
-    {% set queryStringConcat = "" %}
-
-    {% if "lng=" in currentUrl %}
-      {% set currentUrl = currentUrl | replace("?lng=en", "") | replace("&lng=en", "") | replace("?lng=cy", "") | replace("&lng=cy", "") %}
-    {% endif %}
-
-    {% if "?" not in currentUrl %}
-      {% set queryStringConcat = "?" %}
-    {% else %}
-      {% set queryStringConcat = "&" %}
-    {% endif %}
-
-    {% set languageFlag = "" %}
-    {% if i18n.language == "en" %}
-      {% set languageFlag = queryStringConcat + "lng=cy" %}
-    {% else %}
-      {% set languageFlag = queryStringConcat + "lng=en" %}
-    {% endif %}
-
-    {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
-  {% else %}
-  {% endif %}
 
   {{ timeoutModal() }}
 

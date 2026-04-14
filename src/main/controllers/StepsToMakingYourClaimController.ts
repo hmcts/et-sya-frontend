@@ -14,6 +14,7 @@ import { getCaseApi } from '../services/CaseService';
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StepsToMakingYourClaimController');
 
@@ -125,10 +126,17 @@ export default class StepsToMakingYourClaimController {
       req.session.userCase.pastEmployer = YesOrNo.YES;
       sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
     }
+    const paramId = req.params.id;
+    const caseReference = paramId && paramId !== 'undefined' ? paramId : req.session.userCase?.id;
+
+    const languageParam = getLanguageParam(req.url);
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
       sections,
       typeOfClaim: userCase?.typeOfClaim,
+      deleteDraftUrl: `/claimant-application/${caseReference}/delete${languageParam}${
+        languageParam ? '&' : '?'
+      }redirect=claim-steps`,
       redirectUrl,
     });
   }

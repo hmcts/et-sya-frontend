@@ -18,6 +18,7 @@ export function mockSession(
   errorList: FormError[]
 ): AppSession {
   return {
+    userCases: [],
     id: 'testSessionId',
     lang: 'en',
     regenerate: this,

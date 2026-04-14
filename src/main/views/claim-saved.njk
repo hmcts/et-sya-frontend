@@ -18,14 +18,14 @@
   <div class="govuk-button-group">
     {{ govukButton({
         text: continueWithClaim,
-        href: redirectUrl,
+        href: PageUrls.CLAIM_STEPS ~ languageParam,
         preventDoubleClick: true
       }) }}
     {{ govukButton({
-        text: signOut,
-        href: AuthUrls.LOGOUT + languageParam,
-        classes: "govuk-button--secondary"
-      }) }}
+      text: viewEt1Claims,
+      href: PageUrls.CLAIMANT_APPLICATIONS ~ languageParam,
+      classes: "govuk-button--secondary"
+    }) }}
   </div>
 
 {% endblock %}

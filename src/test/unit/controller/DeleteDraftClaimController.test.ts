@@ -58,7 +58,43 @@ describe('DeleteDraftClaimController', () => {
         expect.objectContaining({
           caseReference: '1234',
           deleteButtonUrl: expect.any(String),
-          backToCaseUrl: expect.any(String),
+          cancelLink: expect.any(String),
+        })
+      );
+    });
+
+    it('should set cancelLink to CLAIMANT_APPLICATIONS if redirect query param is claimant-applications', async () => {
+      req.query = { redirect: 'claimant-applications' };
+      await controller.get(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        TranslationKeys.DELETE_DRAFT_CLAIM,
+        expect.objectContaining({
+          cancelLink: PageUrls.CLAIMANT_APPLICATIONS,
+        })
+      );
+    });
+
+    it('should set cancelLink to CLAIM_STEPS if redirect query param is claim-steps', async () => {
+      req.query = { redirect: 'claim-steps' };
+      req.params = { id: 'undefined' };
+      req.session.userCase = { id: '12345' } as never;
+      await controller.get(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        TranslationKeys.DELETE_DRAFT_CLAIM,
+        expect.objectContaining({
+          cancelLink: PageUrls.CLAIM_STEPS,
+          caseReference: '12345',
+        })
+      );
+    });
+
+    it('should fall back to undefined for cancelLink if redirect parameter is not provided', async () => {
+      req.query = {};
+      await controller.get(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        TranslationKeys.DELETE_DRAFT_CLAIM,
+        expect.objectContaining({
+          cancelLink: 'undefined',
         })
       );
     });
@@ -69,6 +105,8 @@ describe('DeleteDraftClaimController', () => {
       deleteDraftCase.mockResolvedValue();
       await controller.post(req, res);
       expect(deleteDraftCase).toHaveBeenCalledWith(req, expect.anything());
+      expect(req.session.deletedCaseIds).toContain('1234');
+      expect(req.session.save).toHaveBeenCalled();
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
     });
 

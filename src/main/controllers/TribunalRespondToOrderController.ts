@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, Rule92Types, ServiceErrors, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -112,6 +112,11 @@ export default class TribunalRespondToOrderController {
       userCase.sendNotificationCollection,
       req.params.orderId
     );
+    if (!selectedRequestOrOrder) {
+      logger.error(ServiceErrors.ERROR_NOTIFICATION_NOT_FOUND, req.session.userCase?.id, req.params?.orderId);
+      return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
+    }
+    req.session.documentDownloadPage = PageUrls.NOTIFICATION_DETAILS;
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
     const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);
