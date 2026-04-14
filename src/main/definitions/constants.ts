@@ -637,6 +637,8 @@ export const ServiceErrors = {
   ERROR_ASSIGNING_USER_ROLE: 'Error assigning user role: ',
   ERROR_ASSIGNING_USER_ROLE_USER_ALREADY_HAS_ROLE_EXCEPTION_CHECK_VALUE: 'already been assigned to this case',
   ERROR_ASSIGNING_USER_ROLE_ALREADY_ASSIGNED_CHECK_VALUE: 'case has already been assigned',
+  ERROR_APPLICATION_NOT_FOUND: 'Selected application not found, userCase.id: %s, appId: %s',
+  ERROR_NOTIFICATION_NOT_FOUND: 'Selected order not found, userCase.id: %s, orderId: %s',
 } as const;
 
 export const CaseAssignmentResponse = {
