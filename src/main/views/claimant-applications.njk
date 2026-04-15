@@ -49,17 +49,15 @@
   {% else %}
     {% set submittedApplications = (submittedApplications.push([
       {
-        text: app.userCase.createdDate
+        text: dateStringToLocale(app.claimSubmittedDate)
       }, {
-        text: app.userCase.id
+        html: '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + app.userCase.ethosCaseReference + '</a>'
       }, {
         text: app.userCase.typeOfClaimString
       }, {
         text: app.respondents | safe
       }, {
         text: app.userCase.lastModified
-      }, {
-        html: '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + view + '</a>'
       }
     ]), submittedApplications) %}
   {% endif %}
@@ -121,10 +119,10 @@
           firstCellIsHeader: false,
           head: [
             {
-              text: col1
+              text: dateSubmitted
             },
             {
-              text: col2
+              text: caseNumber
             },
             {
               text: col3
@@ -134,9 +132,6 @@
             },
             {
               text: col6
-            },
-            {
-              text: col7
             }
           ],
           rows: submittedApplications
