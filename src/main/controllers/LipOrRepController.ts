@@ -57,10 +57,9 @@ export default class LipOrRepController {
     let redirectUrl;
     if (req.body.claimantRepresentedQuestion === claimantRepresented.NO) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    } else if (
-      req.body.claimantRepresentedQuestion === claimantRepresented.YES ||
-      req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP_GROUP_CLAIM
-    ) {
+    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.YES) {
+      redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
+    } else if (req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP_GROUP_CLAIM) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else if (req.body.claimantRepresentedQuestion === claimantRepresented.LEGAL_REP_SINGLE_CLAIM) {
       redirectUrl = PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
