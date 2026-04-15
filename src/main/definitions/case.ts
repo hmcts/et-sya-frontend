@@ -369,4 +369,6 @@ export const enum ReturnToExistingOption {
   RETURN_NUMBER = 'Return number',
   HAVE_ACCOUNT = 'Have an account',
   CLAIM_BUT_NO_ACCOUNT = 'Claim but no account',
+  DRAFT_CLAIM = 'Draft claim',
+  SUBMITTED_CLAIM = 'Submitted claim',
 }

@@ -15,5 +15,12 @@ import './navigation-click-guard';
 // Initialize GOV.UK Frontend components
 initAll();
 
+// govuk-frontend sets aria-expanded on conditional radio/checkbox inputs, which
+// is not a valid ARIA attribute for the radio role (WCAG 4.1.2 / axe aria-allowed-attr).
+// Remove it from all radio and checkbox inputs after initialisation.
+document.querySelectorAll('input[type="radio"][aria-expanded], input[type="checkbox"][aria-expanded]').forEach(function (el) {
+  el.removeAttribute('aria-expanded');
+});
+
 // Initialize other components or modules
 ready(initialize);

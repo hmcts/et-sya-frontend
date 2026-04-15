@@ -18,6 +18,7 @@ export const LegacyUrls = {
   ET1_BASE: 'https://et-pet-et1.aat.platform.hmcts.net',
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
+  ET1_SIGN_IN: '/apply/users/sign_in',
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',
 } as const;
 

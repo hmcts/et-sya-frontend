@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-	 {{
+  {{
     govukErrorSummary({
       titleText: errorSummaryTitle,
       errorList: getErrors(form.fields)
@@ -17,16 +17,18 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
-      <p class="govuk-body">{{ intro }}</p>
+      <p class="govuk-body govuk-!-font-weight-bold">{{ draftHeading }}</p>
+      <p class="govuk-body">{{ draftIntro }}</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>{{ bullet1 }}</li>
-        <li>{{ bullet2 }}</li>
+        <li>{{ draftBullet1 }}</li>
+        <li>{{ draftBullet2 }}</li>
       </ul>
-      <p class="govuk-body">{{ draftNote }}</p>
       <p class="govuk-body govuk-!-font-weight-bold">{{ submittedHeading }}</p>
-      <p class="govuk-body">{{ submittedP1 }}</p>
-      <p class="govuk-body">{{ submittedP2 }}</p>
-      <p class="govuk-body">{{ submittedP3 }}</p>
+      <p class="govuk-body">{{ submittedIntro }}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ submittedBullet1 }}</li>
+        <li>{{ submittedBullet2 }}</li>
+      </ul>
 
       {% block form %}
         {% include "form/form.njk"%}
