@@ -21,13 +21,12 @@ const titleClass = 'govuk-heading-xl';
 const radioClass = 'govuk-radios__item';
 const expectedTitle = returnToClaimJson.h1;
 const pClass = 'govuk-body';
-const expectedIntro = returnToClaimJson.intro;
-const expectedDraftNote = returnToClaimJson.draftNote;
+const expectedDraftHeading = returnToClaimJson.draftHeading;
+const expectedDraftIntro = returnToClaimJson.draftIntro;
 const expectedSubmittedHeading = returnToClaimJson.submittedHeading;
 const buttonClass = 'govuk-button';
 const expectedRadioLabel1 = returnToClaimJson.optionText1;
 const expectedRadioLabel2 = returnToClaimJson.optionText2;
-const expectedRadioLabel3 = returnToClaimJson.optionText3;
 const expectedButtonText = commonJsonRawJson.continue;
 
 let htmlRes: Document;
@@ -45,14 +44,14 @@ describe('Return to existing claim page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display intro paragraph', () => {
+  it('should display draft heading paragraph', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p[6].innerHTML).contains(expectedIntro, 'Intro paragraph does not exist');
+    expect(p[6].innerHTML).contains(expectedDraftHeading, 'Draft heading does not exist');
   });
 
-  it('should display draft note paragraph', () => {
+  it('should display draft intro paragraph', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p[7].innerHTML).contains(expectedDraftNote, 'Draft note paragraph does not exist');
+    expect(p[7].innerHTML).contains(expectedDraftIntro, 'Draft intro paragraph does not exist');
   });
 
   it('should display submitted claim heading', () => {
@@ -65,24 +64,20 @@ describe('Return to existing claim page', () => {
     expect(button[5].innerHTML).contains(expectedButtonText, 'Could not find the button');
   });
 
-  it('should display 3 radio buttons', () => {
+  it('should display 6 radio buttons (2 top-level and 2 sub-options each)', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons.length).equal(3, '3 radio buttons not found');
+    expect(radioButtons.length).equal(6, '6 radio buttons not found');
   });
 
-  it('should display radio buttons with valid text', () => {
+  it('should display top-level radio buttons with valid text', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
     expect(radioButtons[0].innerHTML).contains(
       expectedRadioLabel1,
       'Could not find the radio button with label ' + expectedRadioLabel1
     );
-    expect(radioButtons[1].innerHTML).contains(
+    expect(radioButtons[3].innerHTML).contains(
       expectedRadioLabel2,
       'Could not find the radio button with label ' + expectedRadioLabel2
-    );
-    expect(radioButtons[2].innerHTML).contains(
-      expectedRadioLabel3,
-      'Could not find the radio button with label ' + expectedRadioLabel3
     );
   });
 });

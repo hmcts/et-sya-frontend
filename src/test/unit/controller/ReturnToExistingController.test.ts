@@ -6,7 +6,7 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Return To Existing Controller', () => {
   const t = {
-    'return-to-claim': {},
+    'return-to-existing': {},
     common: {},
   };
 
@@ -33,21 +33,11 @@ describe('Return To Existing Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to case number check page when user has claim but no account', () => {
-    const body = { returnToExisting: ReturnToExistingOption.CLAIM_BUT_NO_ACCOUNT };
-    const controller = new ReturnToExistingController();
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-
-    controller.post(req, res);
-
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CASE_NUMBER_CHECK);
-    expect(req.session.errors).toHaveLength(0);
-  });
-
-  it('should redirect to claimant applications page when user has an account', () => {
-    const body = { returnToExisting: ReturnToExistingOption.HAVE_ACCOUNT };
+  it('should redirect to claimant applications when draft claim and user has an account', () => {
+    const body = {
+      returnToExisting: ReturnToExistingOption.DRAFT_CLAIM,
+      draftClaimOption: ReturnToExistingOption.HAVE_ACCOUNT,
+    };
     const controller = new ReturnToExistingController();
 
     const req = mockRequest({ body });
@@ -59,8 +49,11 @@ describe('Return To Existing Controller', () => {
     expect(req.session.errors).toHaveLength(0);
   });
 
-  it('should redirect to legacy ET1 when user has return number', () => {
-    const body = { returnToExisting: ReturnToExistingOption.RETURN_NUMBER };
+  it('should redirect to legacy ET1 sign-in when draft claim and user has a save and return number', () => {
+    const body = {
+      returnToExisting: ReturnToExistingOption.DRAFT_CLAIM,
+      draftClaimOption: ReturnToExistingOption.RETURN_NUMBER,
+    };
     const controller = new ReturnToExistingController();
 
     const req = mockRequest({ body });
@@ -68,7 +61,40 @@ describe('Return To Existing Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
+    expect(res.redirect).toHaveBeenCalledWith(`${LegacyUrls.ET1_BASE}${LegacyUrls.ET1_SIGN_IN}`);
+    expect(req.session.errors).toHaveLength(0);
+  });
+
+  it('should redirect to claimant applications when submitted claim and user has an account', () => {
+    const body = {
+      returnToExisting: ReturnToExistingOption.SUBMITTED_CLAIM,
+      submittedClaimOption: ReturnToExistingOption.HAVE_ACCOUNT,
+    };
+    const controller = new ReturnToExistingController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(req.session.errors).toHaveLength(0);
+  });
+
+  it('should redirect to case number check when submitted claim and user has no account', () => {
+    const body = {
+      returnToExisting: ReturnToExistingOption.SUBMITTED_CLAIM,
+      submittedClaimOption: ReturnToExistingOption.CLAIM_BUT_NO_ACCOUNT,
+    };
+    const controller = new ReturnToExistingController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CASE_NUMBER_CHECK);
+    expect(req.session.visitedAssignClaimFlow).toBe(true);
     expect(req.session.errors).toHaveLength(0);
   });
 

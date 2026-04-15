@@ -1,23 +1,26 @@
 {
-  "title": "[W]Return to a draft or submitted claim",
-  "h1": "[W]Return to a draft or submitted claim",
-  "intro": "[W]You can return to a draft claim using either:",
-  "bullet1": "[W]your 'save and return number', for example A7F9-K3P2",
-  "bullet2": "[W]the account details you used when you started the claim",
-  "draftNote": "[W]A save and return number only works for draft claims that have not been submitted.",
+  "title": "Dychwelyd at ddrafft neu hawliad sy'n bodoli",
+  "h1": "Dychwelyd at ddrafft neu hawliad sy'n bodoli",
+  "draftHeading": "[W]Return to a draft claim",
+  "draftIntro": "[W]You can return to a draft claim by using:",
+  "draftBullet1": "[W]the account details you used when you started the claim",
+  "draftBullet2": "[W]your 'save and return number', for example A7F9-K3P2",
   "submittedHeading": "[W]Return to a submitted claim",
-  "submittedP1": "[W]To access a submitted claim, sign in using the account details you used when you submitted it.",
-  "submittedP2": "[W]Most claims that you can view in an online account have a case number starting with a 6 or 8, for example 6000034/2025 or 8000034/2025.",
-  "submittedP3": "[W]If your case number starts with another number, it is unlikely to be available online.",
-  "p2": "[W]How do you want to access your claim?",
-  "optionText1": "[W]I have a save and return number",
-  "optionHint1": "[W]for draft claims only",
-  "optionText2": "[W]I have an employment tribunal account",
-  "optionText3": "[W]I've got a claim but no employment tribunal account",
-  "optionHint3": "[W]you can only access it online if the case number starts with 6 or 8",
+  "submittedIntro": "[W]You can return to a submitted claim by:",
+  "submittedBullet1": "[W]using the account details you used when you submitted the claim",
+  "submittedBullet2": "[W]creating an account. You can only access the claim if the case number starts with 6 or 8",
+  "p2": "[W]What type of claim do you want to return to?",
+  "optionText1": "[W]I want to return to a draft claim",
+  "optionText2": "[W]I want to return to a submitted claim",
+  "subQuestion": "[W]How do you want to access the claim?",
+  "draftSubOptionText1": "[W]I have an employment tribunal account",
+  "draftSubOptionText2": "[W]I have a save and return number",
+  "submittedSubOptionText1": "[W]I have an employment tribunal account",
+  "submittedSubOptionText2": "[W]I have a claim but no employment tribunal account",
+  "submittedSubOptionHint2": "[W]You will be able to create an account and access the claim if the case number starts with a 6 or 8",
   "errors": {
     "returnToExisting": {
-      "required": "[W]Select how you want to access your claim"
+      "required": "[W]Select what type of claim you want to return to"
     }
   }
 }
