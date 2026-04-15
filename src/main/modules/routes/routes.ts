@@ -83,6 +83,7 @@ import PersonalDetailsCheckController from '../../controllers/PersonalDetailsChe
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RepresentativeDetailsController from '../../controllers/RepresentativeDetailsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
@@ -463,5 +464,7 @@ export class Routes {
     app.post(PageUrls.CHANGE_LEGAL_REPRESENTATIVE, new ChangeLegalRepresentativeController().post);
     app.get(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().get);
     app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
+    app.get(PageUrls.REPRESENTATIVE_DETAILS, new RepresentativeDetailsController().get);
+    app.post(PageUrls.REPRESENTATIVE_DETAILS, new RepresentativeDetailsController().post);
   }
 }
