@@ -11,5 +11,7 @@
   "col5": "Completion status",
   "col6": "Date last modified",
   "col7": "Options",
+  "caseNumber": "Case number",
+  "dateSubmitted": "Date submitted",
   "p2": "For privacy purposes, a draft claim will be deleted 12 months after the date it's created."
 }
