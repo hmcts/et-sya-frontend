@@ -1,0 +1,30 @@
+{
+  "title": "Steps to making your claim",
+  "h1": "Steps to making your claim",
+  "applicationDetails": "Application Details",
+  "claimType": "Claim type",
+  "section1": {
+    "title": "Your details",
+    "link1Text": "Personal details",
+    "link2Text": "Contact details",
+    "link3Text": "Your preferences"
+  },
+  "section2": {
+    "title": "Employment and respondent details",
+    "link1Text": "Employment status",
+    "link2Text": "Respondent details"
+  },
+  "section3": {
+    "title": "Claim details",
+    "link1Text": "Tell us about your claim",
+    "link2Text": "Tell us what you want from your claim"
+  },
+  "section4": {
+    "title": "Check and submit",
+    "link1Text": "Check your answers"
+  },
+  "completed": "Completed",
+  "notStarted": "Not started yet",
+  "inProgress": "In progress",
+  "cannotStartYet": "Cannot start yet"
+}
