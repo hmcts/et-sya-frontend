@@ -1,0 +1,30 @@
+{
+  "title": "Camau i wneud eich hawliad",
+  "h1": "Camau i wneud eich hawliad",
+  "applicationDetails": "Manylion y cais",
+  "claimType": "Math o hawliad",
+  "section1": {
+    "title": "Eich manylion",
+    "link1Text": "Manylion personol",
+    "link2Text": "Manylion cyswllt",
+    "link3Text": "Eich dewisiadau"
+  },
+  "section2": {
+    "title": "Manylion cyflogaeth a manylion yr Atebydd",
+    "link1Text": "Statws Cyflogaeth",
+    "link2Text": "Manylion yr Atebydd"
+  },
+  "section3": {
+    "title": "Manylion yr hawliad",
+    "link1Text": "Dywedwch wrthym am eich hawliad",
+    "link2Text": "Dywedwch wrthym beth yr ydych eisiau ei gael gan eich hawliad"
+  },
+  "section4": {
+    "title": "Gwirio a chyflwyno",
+    "link1Text": "Gwirio'ch atebion"
+  },
+  "completed": "Wedi’i gwblhau",
+  "notStarted": "Heb ddechrau eto",
+  "inProgress": "Yn mynd rhagddo",
+  "cannotStartYet": "Methu dechrau eto"
+}
