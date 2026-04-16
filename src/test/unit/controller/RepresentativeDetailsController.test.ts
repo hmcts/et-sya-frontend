@@ -42,7 +42,7 @@ describe('Representative Details Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to the representative details page when all required fields are valid', async () => {
+    it('should redirect to the representative postcode enter page when all required fields are valid', async () => {
       const body = {
         representativeType: 'Solicitor',
         representativeOrgName: 'Smith & Co',
@@ -54,7 +54,7 @@ describe('Representative Details Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_DETAILS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
       expect(req.session.errors).toHaveLength(0);
     });
 
@@ -159,7 +159,7 @@ describe('Representative Details Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_DETAILS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
       expect(req.session.errors).toHaveLength(0);
     });
 
