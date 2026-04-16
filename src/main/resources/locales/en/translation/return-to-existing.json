@@ -11,13 +11,13 @@
   "submittedBullet2": "creating an account. You can only access the claim if the case number starts with 6 or 8",
   "p2": "What type of claim do you want to return to?",
   "optionText1": "I want to return to a draft claim",
-  "optionText2": "I want to return to a submitted claim",
+  "optionText2": "I want to access or return to a submitted claim",
   "subQuestion": "How do you want to access the claim?",
   "draftSubOptionText1": "I have an employment tribunal account",
   "draftSubOptionText2": "I have a save and return number",
   "submittedSubOptionText1": "I have an employment tribunal account",
   "submittedSubOptionText2": "I have a claim but no employment tribunal account",
-  "submittedSubOptionHint2": "You will be able to create an account and access the claim if the case number starts with a 6 or 8",
+  "submittedSubOptionHint2": "you will be able to create an account and access the claim if the case number starts with a 6 or 8",
   "errors": {
     "returnToExisting": {
       "required": "Select what type of claim you want to return to"
