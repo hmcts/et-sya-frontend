@@ -1,5 +1,6 @@
 {% extends "govuk/template.njk" %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/timeout-modal.njk" import timeoutModal with context %}
@@ -9,24 +10,16 @@
 
 {% block head %}
   {% include "webpack/css.njk" %}
-    <link rel="icon" sizes="48x48" href="/assets/rebrand/images/favicon.ico">
-    <link rel="icon" sizes="any" href="/assets/rebrand/images/favicon.svg" type="image/svg+xml">
-    <link rel="mask-icon" href="/assets/rebrand/images/govuk-icon-mask.svg" color="#1d70b8">
-    <link rel="apple-touch-icon" href="/assets/rebrand/images/govuk-icon-180.png">
-    <link rel="manifest" href="/assets/rebrand/manifest.json">
-    <meta property="og:image" content="/assets/rebrand/images/govuk-opengraph-image.png">
-    <meta name="theme-color" content="#1d70b8">
   <script>
     window.dataLayer = window.dataLayer || [];
   </script>
   {% if "perftest" in currentHost %}
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-M8XNFRG');</script>
-    <!-- End Google Tag Manager -->
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-M8XNFRG');</script>
   {% else %}
     <!-- Google Tag Manager -->
     <script>
@@ -87,19 +80,20 @@
   <!-- End of hidden session object for user already logged in check-->
 {% endblock %}
 
-{% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
+  {% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
 
-{% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
+  {# Use ~ for concatenation #}
+  {% set phaseBarHtml = '<a class="govuk-link" href="' ~ phaseBanner.smartSurveyFeedbackUrl ~ smartSurveyPageInfo ~ '" target="_blank">' ~ phaseBanner.feedback ~ "</a> " ~ phaseBanner.additionalText %}
 
 {% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
   {# 1. Determine the correct prefix (? or &) and set the full param #}
   {% set languagePrefix = "&" if "?" in currentUrl else "?" %}
   {% set languageParam = "?lng=" + i18n.language %}
 
-  {# 2. Logic for the Toggle (Swapping languages) #}
-  {% set currentLangPart = "lng=" + i18n.language %}
-  {% set targetLangCode = "cy" if i18n.language == "en" else "en" %}
-  {% set targetLangPart = "lng=" + targetLangCode %}
+    {# Logic for the Toggle (Swapping languages) #}
+    {% set currentLangPart = "lng=" ~ i18n.language %}
+    {% set targetLangCode = "cy" if i18n.language == "en" else "en" %}
+    {% set targetLangPart = "lng=" ~ targetLangCode %}
 
   {% if "lng=" in currentUrl %}
     {# If lng exists, swap the value #}
@@ -119,64 +113,64 @@
     | replace("English", langLabel)) %}
 {% endif %}
 
-{% set logInOrOut = {
-  href: "/logout",
-  text: signOut,
-  active: true
-}
-if isLoggedIn %}
+  {% set logInOrOut = {
+    href: "/logout",
+    text: signOut,
+    active: false
+  } if isLoggedIn %}
 
-{% set claimantAppsNav = {
-  href: "/claimant-applications" ~ languageParam ~ "&src=nav-link",
-  text: yourClaims,
-  active: false
-}
-if isLoggedIn and hasUserCases and "/claimant-applications" not in currentUrl %}
+  {% set claimantAppsNav = {
+    href: "/claimant-applications" ~ languageParam ~ "&src=nav-link",
+    text: yourClaims,
+    active: false
+  } if isLoggedIn and hasUserCases and "/claimant-applications" not in currentUrl %}
 
-{% set headerNavigation = [logInOrOut] %}
-{% if claimantAppsNav %}
-  {% set headerNavigation = [claimantAppsNav, logInOrOut] %}
-{% endif %}
+  {% set headerNavigation = [logInOrOut] %}
+  {% if claimantAppsNav %}
+    {% set headerNavigation = [claimantAppsNav, logInOrOut] %}
+  {% endif %}
 
-{% block header %}
-  {% include "cookie-banner.njk" %}
-  {{ govukHeader({
-    classes: "govuk-header--full-width-border",
-    homepageUrl: "/",
-    productName: serviceName,
-    navigationClasses: 'govuk-header__navigation--end',
-    navigation: headerNavigation,
-    rebrand: true
-  }) }}
-{% endblock %}
+  {% block headerStart %}
+    {% include "cookie-banner.njk" %}
+  {% endblock %}
 
-{% block pageTitle %}
-  {{ title }}
-  -
-  {{ serviceName }}
-  -
-  {{ govUk }}
-{% endblock %}
+  {% block govukHeader %}
+    {{ govukHeader({
+      classes: "govuk-header--full-width-border",
+      homepageUrl: "/",
+      productName: serviceName
+    }) }}
+  {% endblock %}
+
+  {% block govukServiceNavigation %}
+    {{ govukServiceNavigation({
+      navigationClasses: 'govuk-header__navigation--end',
+      navigation: headerNavigation
+    }) }}
+  {% endblock %}
+
+  {% block pageTitle %}
+    {{ title }} - {{ serviceName }} - {{ govUk }}
+  {% endblock %}
 
 {% block beforeContent %}
 
   {{ timeoutModal() }}
 
-  {{ govukPhaseBanner({
+    {{ govukPhaseBanner({
       tag: {
-          text: beta
+        text: beta
       },
-      html: phaseBarHtml,
-      rebrand: true
-  }) }}
-{% endblock %}
+      html: phaseBarHtml
+    }) }}
+  {% endblock %}
 
 {% block bodyEnd %}
   {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
   {% include "webpack/js.njk" %}
 {% endblock %}
 
-{% block footer %}
+{% block footerStart %}
   {% if "/" !== currentUrl and "/?lng=en" != currentUrl and "/?lng=cy" != currentUrl and hideContactUs === undefined %}
     <div class="govuk-width-container">
       <details class="govuk-details" data-module="govuk-details">
@@ -202,6 +196,8 @@ if isLoggedIn and hasUserCases and "/claimant-applications" not in currentUrl %}
       </details>
     </div>
   {% endif %}
+{% endblock %}
 
+{% block govukFooter %}
   {% include "./footer.njk" %}
 {% endblock %}

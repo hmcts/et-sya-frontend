@@ -28,7 +28,7 @@ const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
 const detailsSummary1 = 'Who can act as a representative?';
 const detailsSummary2 = 'How to find and get a representative?';
-const signOutLinkSelector = 'li.govuk-header__navigation-item a.govuk-header__link';
+const signOutLinkSelector = 'li.govuk-service-navigation__item a.govuk-service-navigation__link';
 
 let htmlRes: Document;
 describe('LiP or Representative page', () => {

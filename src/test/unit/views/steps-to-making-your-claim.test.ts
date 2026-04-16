@@ -24,7 +24,7 @@ const listItemClass = 'app-task-list__item';
 const linkClass = 'span.app-task-list__task-name--300px > a';
 const headerClass = 'app-task-list__section';
 const titleClass = 'govuk-heading-xl';
-const signOutLinkSelector = 'li.govuk-header__navigation-item a.govuk-header__link';
+const signOutLinkSelector = 'li.govuk-service-navigation__item a.govuk-service-navigation__link';
 
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
 const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
