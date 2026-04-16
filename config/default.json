@@ -50,6 +50,10 @@
     },
     "launchDarkly": {
       "key": "TO BE PICKED UP FROM ENV"
+    },
+    "s2s": {
+      "secret": "TO BE PICKED UP FROM ENV",
+      "url": "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
     }
   },
   "pact": {
