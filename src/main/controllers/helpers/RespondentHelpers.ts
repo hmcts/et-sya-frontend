@@ -88,6 +88,17 @@ export const fillWorkAddressFields = (x: unknown, userCase: CaseWithId): void =>
   }
 };
 
+export const fillRepresentativeAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.representativeAddresses?.at(x as number);
+  if (!x.toString().includes('object')) {
+    userCase.repAddress1 = address?.street1;
+    userCase.repAddress2 = address?.street2;
+    userCase.repAddressTown = address?.town;
+    userCase.repAddressCountry = address?.country;
+    userCase.repAddressPostcode = address?.postcode;
+  }
+};
+
 export const fillRespondentAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const address = userCase.respondentAddresses?.at(x as number);
   if (!x.toString().includes('object')) {
