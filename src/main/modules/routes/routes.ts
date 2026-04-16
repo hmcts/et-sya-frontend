@@ -83,11 +83,7 @@ import PersonalDetailsCheckController from '../../controllers/PersonalDetailsChe
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
-import RepresentativeAddressDetailsController from '../../controllers/RepresentativeAddressDetailsController';
 import RepresentativeDetailsController from '../../controllers/RepresentativeDetailsController';
-import RepresentativePhoneNumberController from '../../controllers/RepresentativePhoneNumberController';
-import RepresentativePostCodeEnterController from '../../controllers/RepresentativePostCodeEnterController';
-import RepresentativePostCodeSelectController from '../../controllers/RepresentativePostCodeSelectController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
@@ -470,13 +466,5 @@ export class Routes {
     app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
     app.get(PageUrls.REPRESENTATIVE_DETAILS, new RepresentativeDetailsController().get);
     app.post(PageUrls.REPRESENTATIVE_DETAILS, new RepresentativeDetailsController().post);
-    app.get(PageUrls.REPRESENTATIVE_POSTCODE_ENTER, new RepresentativePostCodeEnterController().get);
-    app.post(PageUrls.REPRESENTATIVE_POSTCODE_ENTER, new RepresentativePostCodeEnterController().post);
-    app.get(PageUrls.REPRESENTATIVE_POSTCODE_SELECT, new RepresentativePostCodeSelectController().get);
-    app.post(PageUrls.REPRESENTATIVE_POSTCODE_SELECT, new RepresentativePostCodeSelectController().post);
-    app.get(PageUrls.REPRESENTATIVE_ADDRESS_DETAILS, new RepresentativeAddressDetailsController().get);
-    app.post(PageUrls.REPRESENTATIVE_ADDRESS_DETAILS, new RepresentativeAddressDetailsController().post);
-    app.get(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().get);
-    app.post(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().post);
   }
 }

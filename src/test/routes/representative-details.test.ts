@@ -15,7 +15,7 @@ describe(`GET ${PageUrls.REPRESENTATIVE_DETAILS}`, () => {
 describe(`POST ${PageUrls.REPRESENTATIVE_DETAILS}`, () => {
   jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
-  it('should redirect to the representative postcode enter page on valid submission', async () => {
+  it('should redirect to the representative details page on valid submission', async () => {
     await request(mockApp({}))
       .post(PageUrls.REPRESENTATIVE_DETAILS)
       .send({
@@ -25,7 +25,7 @@ describe(`POST ${PageUrls.REPRESENTATIVE_DETAILS}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
+        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_DETAILS);
       });
   });
 
@@ -67,7 +67,7 @@ describe(`POST ${PageUrls.REPRESENTATIVE_DETAILS}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
+        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_DETAILS);
       });
   });
 });

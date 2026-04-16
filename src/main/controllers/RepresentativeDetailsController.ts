@@ -73,7 +73,7 @@ export default class RepresentativeDetailsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_DETAILS);
   };
 
   @CaseStateCheck()
