@@ -74,6 +74,7 @@ export default class CaseNumberController {
       return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM + languageParam)));
     } else {
       req.session.errors.push({ propertyName: 'ethosCaseReference', errorType: 'caseNotFound' });
+      logger.info(`Case is not available online. : ${formData.ethosCaseReference}`);
       return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.CASE_NUMBER_CHECK + languageParam)));
     }
   };
