@@ -225,6 +225,15 @@ export interface Case {
   representativeType?: string;
   representativeOrgName?: string;
   representativeName?: string;
+  representativeEnterPostcode?: string;
+  representativeAddresses?: Record<string, string>[];
+  representativeAddressTypes?: AddressType[];
+  repAddress1?: string;
+  repAddress2?: string;
+  repAddressTown?: string;
+  repAddressCountry?: string;
+  repAddressPostcode?: string;
+  representativePhoneNumber?: string;
 }
 
 export const enum StillWorking {
