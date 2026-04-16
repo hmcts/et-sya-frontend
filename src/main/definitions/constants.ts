@@ -156,6 +156,10 @@ export const TranslationKeys = {
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
   REPRESENTATIVE_DETAILS: 'representative-details',
+  REPRESENTATIVE_POSTCODE_ENTER: 'representative-postcode-enter',
+  REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
+  REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
+  REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
 } as const;
 
 export const PageUrls = {
@@ -300,6 +304,10 @@ export const PageUrls = {
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
   REPRESENTATIVE_DETAILS: '/representative-details',
+  REPRESENTATIVE_POSTCODE_ENTER: '/representative-postcode-enter',
+  REPRESENTATIVE_POSTCODE_SELECT: '/representative-postcode-select',
+  REPRESENTATIVE_ADDRESS_DETAILS: '/representative-address-details',
+  REPRESENTATIVE_PHONE_NUMBER: '/representative-phone-number',
 } as const;
 
 export const InterceptPaths = {
