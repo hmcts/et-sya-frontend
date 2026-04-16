@@ -1,6 +1,6 @@
 {
-  "title": "Representative's phone number",
-  "h1": "What is the representative's phone number? (optional)",
+  "title": "Representative's telephone number (optional)",
+  "h1": "Representative's telephone number (optional)",
   "phoneNumber": "Enter the representative's phone number",
   "errors": {
     "representativePhoneNumber": {

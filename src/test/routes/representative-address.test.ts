@@ -91,13 +91,13 @@ describe(`GET ${PageUrls.REPRESENTATIVE_PHONE_NUMBER}`, () => {
 });
 
 describe(`POST ${PageUrls.REPRESENTATIVE_PHONE_NUMBER}`, () => {
-  it('should redirect to phone number page on a valid number', async () => {
+  it('should redirect to communications preference page on a valid number', async () => {
     await request(mockApp({}))
       .post(PageUrls.REPRESENTATIVE_PHONE_NUMBER)
       .send({ representativePhoneNumber: '07700 900 983' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+        expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
       });
   });
 

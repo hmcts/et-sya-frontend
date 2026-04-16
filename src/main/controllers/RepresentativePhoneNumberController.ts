@@ -45,7 +45,7 @@ export default class RepresentativePhoneNumberController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.UPDATE_PREFERENCES);
   };
 
   @CaseStateCheck()

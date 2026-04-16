@@ -25,7 +25,7 @@ describe('Representative Phone Number Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to the representative phone number page on a valid phone number', async () => {
+    it('should redirect to the communications preference page on a valid phone number', async () => {
       const body = { representativePhoneNumber: '07700 900 983' };
       const controller = new RepresentativePhoneNumberController();
       const req = mockRequestEmpty({ body });
@@ -33,11 +33,11 @@ describe('Representative Phone Number Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.UPDATE_PREFERENCES);
       expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should redirect to the representative phone number page when phone number is blank (optional)', async () => {
+    it('should redirect to the communications preference page when phone number is blank (optional)', async () => {
       const body = { representativePhoneNumber: '' };
       const controller = new RepresentativePhoneNumberController();
       const req = mockRequestEmpty({ body });
@@ -45,7 +45,7 @@ describe('Representative Phone Number Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.UPDATE_PREFERENCES);
       expect(req.session.errors).toHaveLength(0);
     });
 
