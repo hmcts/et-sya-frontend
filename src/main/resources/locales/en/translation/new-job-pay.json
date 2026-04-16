@@ -1,7 +1,8 @@
 {
   "title": "New job pay",
   "h1": "What's your new job pay? (optional)",
-  "p1": "Tell us your gross pay - before tax and other deductions. You'll find this on your new payslips or ask your employer for details.",
+  "p1": "This page is optional but if you choose to tell us your pay then you will have to tell us if you are paid weekly, monthly or annually.",
+  "p2": "Tell us your gross pay - before tax and other deductions. You'll find this on your new payslips or ask your employer for details.",
   "payBeforeTax": "Enter your pay BEFORE tax and National Insurance",
   "weeklyMonthlyAnnual": "Is this your weekly, monthly or annual pay?",
   "errors": {
