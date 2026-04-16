@@ -538,7 +538,7 @@ export class CaseApi {
 
   assignCaseUserRole = async (request: AppRequest): Promise<AxiosResponse<CaseAssignmentResponse>> => {
     try {
-      return await this.axios.post<CaseAssignmentResponse>(JavaApiUrls.ASSIGN_CASE_USER_ROLES, {
+      return await this.axios.post<CaseAssignmentResponse>(JavaApiUrls.ASSIGN_CREATOR_USER_ROLE, {
         case_users: [
           {
             case_id: request.session.caseAssignmentFields?.id,

@@ -367,7 +367,7 @@ export const JavaApiUrls = {
   SUBMIT_BUNDLES: 'bundles/submit-bundles',
   REVOKE_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Revoke',
   REVOKE_CLAIMANT_SOLICITOR: '/manageCaseRole/revokeClaimantSolicitorRole',
-  ASSIGN_CASE_USER_ROLES: '/manageCaseRole/modifyCaseUserRoles?modificationType=Assignment',
+  ASSIGN_CREATOR_USER_ROLE: '/manageCaseRole/assignCreatorRole',
   FIND_CASE_FOR_ROLE_MODIFICATION: '/manageCaseRole/findCaseForRoleModification',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE_PARAM_NAME: 'ethosCaseReference',
   DELETE_DRAFT_CASE: 'cases/delete-draft-case',
