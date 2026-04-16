@@ -26,5 +26,6 @@ nodejs:
     ET1_BASE_URL: 'https://et-pet-et1.{{ .Values.global.environment }}.platform.hmcts.net'
     MANAGE_ORG_URL: 'https://manage-org.{{ .Values.global.environment }}.platform.hmcts.net'
     MANAGE_CASE_URL: 'https://manage-case.{{ .Values.global.environment }}.platform.hmcts.net'
+    S2S_URL: 'http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
 idam-pr:
   enabled: false
