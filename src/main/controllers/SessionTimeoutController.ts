@@ -3,10 +3,13 @@ import { Response } from 'express';
 import moment from 'moment';
 
 import { AppRequest } from '../definitions/appRequest';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 export default class SessionTimeoutController {
-  public getExtendSession = (req: AppRequest, res: Response): void => {
-    const timeout = moment().add(config.get('session.maxAgeInMs'), 'milliseconds');
+  public getExtendSession = async (req: AppRequest, res: Response): Promise<void> => {
+    const defaultMaxAge = Number(config.get('session.maxAgeInMs'));
+    const maxAgeInMs = ((await getFlagValue('et-sya-session-max-age', null)) as number) || defaultMaxAge;
+    const timeout = moment().add(maxAgeInMs, 'milliseconds');
     res.send({ timeout });
   };
 }
