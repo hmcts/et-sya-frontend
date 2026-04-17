@@ -1,0 +1,1 @@
+{"value":"basic-ftp","children":{"ID":1116720,"Issue":"basic-ftp vulnerable to denial of service via unbounded memory consumption in Client.list()","URL":"https://github.com/advisories/GHSA-rp42-5vxx-qpwr","Severity":"high","Vulnerable Versions":"<=5.2.2","Tree Versions":["5.2.2"],"Dependents":["get-uri@npm:6.0.4"]}}
