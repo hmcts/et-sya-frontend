@@ -12,7 +12,10 @@ export const getRedirectUrl = (
   languageParam: string
 ): string => {
   const clientID: string = process.env.IDAM_CLIENT_ID ?? config.get('services.idam.clientID');
-  const loginUrl: string = process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL');
+  const hmctsAccess: boolean = (process.env.HMCTS_ACCESS ?? String(config.get('services.idam.hmctsAccess'))) === 'true';
+  const loginUrl: string = hmctsAccess
+    ? process.env.IDAM_WEB_URL_HMCTS_ACCESS ?? config.get('services.idam.hmctsAccessURL')
+    : process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
   return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}`;
 };
