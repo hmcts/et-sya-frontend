@@ -1,13 +1,19 @@
 import { AxiosError } from 'axios';
 
-// Get details from an axios error
+// Extract details from an Axios error
 export const axiosErrorDetails = (
-  axiosError: AxiosError<{ error: string }>,
-  context?: { action?: string; caseId?: string; [key: string]: any }
+  axiosError: AxiosError<{ error: string; message: string }>,
+  context?: Record<string, any>
 ): string => {
   let errorMessage = axiosError.message;
-  if (axiosError.response?.data?.error) {
-    errorMessage += `, ${axiosError.response.data.error}`;
+  const data = axiosError.response?.data;
+
+  if (typeof data === 'string') {
+    errorMessage += `, ${data}`;
+  } else if (data?.message || data?.error) {
+    errorMessage += `, ${data.message || data.error}`;
+  } else if (data) {
+    errorMessage += `, ${JSON.stringify(data)}`;
   }
   if (context) {
     const contextStr = Object.entries(context)

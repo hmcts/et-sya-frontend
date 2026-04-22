@@ -1,0 +1,13 @@
+{
+  "title": "Gwirio Rhif yr Achos",
+  "pageTitle": "Rhif yr Achos",
+  "label": "Beth yw eich rhif achos?",
+  "hint": "Bydd hwn yn ymddangos ar y llythyr a anfonwyd atoch gan y tribiwnlys cyflogaeth.",
+  "errors": {
+    "ethosCaseReference": {
+      "required": "Nodwch rif yr achos. Sampl o fformat rhif achos yw 1111111/2020",
+      "invalid": "Rhif achos annilys. Sampl fformat rhif achos yw 1111111/2020",
+      "caseNotFound": "Nid yw'r achos hwn ar gael ar-lein. Cysylltwch â'r tribiwnlys os ydych chi eisiau rhagor o wybodaeth am yr achos hwn."
+    }
+  }
+}
