@@ -45,9 +45,9 @@ describe('Whistleblowing Claims page', () => {
     expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 
-  it('should have 1 input field', () => {
+  it('should have 2 input fields', () => {
     const inputFields = htmlRes.getElementsByClassName(inputs);
-    expect(inputFields.length).equal(1, `only ${inputFields.length} found`);
+    expect(inputFields.length).equal(2, `only ${inputFields.length} found`);
   });
 
   it('should display save and continue button', () => {

@@ -60,8 +60,8 @@ describe('Onboarding (home) page', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[5].innerHTML).contains('Start a new claim', 'Could not find the button');
   });
-  it('should display return to a draft or existing claim button', () => {
+  it('should display return to a draft or submitted claim button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[6].innerHTML).contains('Return to a draft or existing claim', 'Could not find the button');
+    expect(button[6].innerHTML).contains('Return to a draft or submitted claim', 'Could not find the button');
   });
 });
