@@ -26,6 +26,8 @@
     "idam": {
       "clientID": "et-sya",
       "authorizationURL": "https://idam-web-public.aat.platform.hmcts.net/login",
+      "hmctsAccessURL": "https://idam-web-public.aat.platform.hmcts.net/o/authorize",
+      "hmctsAccess": false,
       "clientSecret": "TO BE PICKED UP FROM ENV",
       "tokenURL": "https://idam-api.aat.platform.hmcts.net/o/token"
     },
