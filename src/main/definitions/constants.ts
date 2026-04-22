@@ -155,6 +155,11 @@ export const TranslationKeys = {
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
+  REPRESENTATIVE_DETAILS: 'representative-details',
+  REPRESENTATIVE_POSTCODE_ENTER: 'representative-postcode-enter',
+  REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
+  REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
+  REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
 } as const;
 
 export const PageUrls = {
@@ -162,6 +167,7 @@ export const PageUrls = {
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
+  CLAIM_STEPS_NON_HMCTS: '/steps-to-making-your-claim-non-hmcts',
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
@@ -297,6 +303,11 @@ export const PageUrls = {
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
+  REPRESENTATIVE_DETAILS: '/representative-details',
+  REPRESENTATIVE_POSTCODE_ENTER: '/representative-postcode-enter',
+  REPRESENTATIVE_POSTCODE_SELECT: '/representative-postcode-select',
+  REPRESENTATIVE_ADDRESS_DETAILS: '/representative-address-details',
+  REPRESENTATIVE_PHONE_NUMBER: '/representative-phone-number',
 } as const;
 
 export const InterceptPaths = {

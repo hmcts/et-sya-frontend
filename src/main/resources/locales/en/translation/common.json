@@ -110,6 +110,13 @@
     },
     "respondentAddressTypes": {
       "notSelected": "Select an address"
+    },
+    "representativeEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "representativeAddressTypes": {
+      "notSelected": "Select an address"
     }
   },
   "selectAddress": "Select an address",
@@ -123,6 +130,9 @@
   "addressPostcodeSelectTitle": "Address postcode select",
   "respondentPostcodeEnterTitle": "Respondent postcode enter",
   "respondentPostcodeSelectTitle": "Respondent postcode select",
+  "representativePostcodeEnterTitle": "Representative's contact address",
+  "representativePostcodeSelectTitle": "Select an address",
+  "representativeManualAddress": "The representative's address is outside the UK",
   "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details.",
   "beta": "beta",
   "Legal officer": "Legal officer",
