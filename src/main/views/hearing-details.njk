@@ -4,11 +4,14 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
-{% block beforeContent %}
+{% block containerStart %}
     {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            {% include "back-link.njk" %}
             <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
             {% for hearing in hearingDetailsCollection %}
