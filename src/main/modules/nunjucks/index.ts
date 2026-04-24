@@ -48,6 +48,10 @@ export class Nunjucks {
         return false;
       }
 
+      if (!errors?.[fieldName]) {
+        return false;
+      }
+
       return { text: errors[fieldName][fieldError.errorType] };
     });
 
@@ -150,8 +154,7 @@ export class Nunjucks {
       res.locals.currentHost = req?.headers?.host?.toLowerCase();
       res.locals.dateToLocale = (dateToTransform: Date) => dateInLocale(dateToTransform, req.url);
       res.locals.dateTimeInLocale = (dateToTransform: Date) => dateTimeInLocale(dateToTransform, req.url);
-      res.locals.dateStringToLocale = (dateToTransform: string) =>
-        datesStringToDateInLocale(dateToTransform, req.url);
+      res.locals.dateStringToLocale = (dateToTransform: string) => datesStringToDateInLocale(dateToTransform, req.url);
       next();
     });
   }

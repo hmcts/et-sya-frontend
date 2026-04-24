@@ -1,4 +1,4 @@
-import { PageUrls, Urls, languages } from '../../definitions/constants';
+import { PageUrls, languages } from '../../definitions/constants';
 
 export const noSignInRequiredEndpoints: string[] = [
   PageUrls.HOME,
@@ -12,8 +12,8 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.CONTACT_ACAS,
   PageUrls.COOKIE_PREFERENCES,
   PageUrls.RETURN_TO_EXISTING,
+  PageUrls.CASE_NUMBER_CHECK,
   PageUrls.ACCESSIBILITY_STATEMENT,
-  Urls.INFO,
 ];
 
 export const validateNoSignInEndpoints = (url: string): boolean => {

@@ -1,0 +1,21 @@
+{
+  "title": "Check and submit",
+  "caseNumber": "Case number",
+  "submissionReference": "Submission reference",
+  "claimantName": "Claimant's name",
+  "respondentName": "Respondent's name",
+  "confirmation": "I confirm all these details are accurate and match what is written on the case.",
+  "submitBtn": "Submit",
+  "findLegalAdvice": "Find legal advice",
+  "contact": "Contact us",
+  "errors": {
+    "yourDetailsCya": {
+      "required": "Please confirm the details are accurate."
+    },
+    "hiddenErrorField": {
+      "api": "Unable to assign role. Please try again later",
+      "caseAlreadyAssignedToSameUser": "You have already assigned to this case",
+      "caseAlreadyAssigned": "You cannot access this case because the details you have entered are linked to another claimant. Contact the Employment Tribunal if you think this is wrong."
+    }
+  }
+}

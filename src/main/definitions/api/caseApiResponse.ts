@@ -179,3 +179,9 @@ export interface RepresentativeApiModel {
   value?: RepresentativeType;
   id?: string;
 }
+
+export interface CaseAssignmentResponse {
+  caseDetails?: CaseApiDataResponse[];
+  status: 'ASSIGNED' | 'ALREADY_ASSIGNED' | 'PROFESSIONAL_USER';
+  message?: string;
+}

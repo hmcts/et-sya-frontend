@@ -1,0 +1,13 @@
+{
+  "title": "Case number check",
+  "pageTitle": "Case number",
+  "label": "What is your case number?",
+  "hint": "This will appear on the letter sent to you from the employment tribunal.",
+  "errors": {
+    "ethosCaseReference": {
+      "required": "Enter case number. Sample case number format is 1111111/2020",
+      "invalid": "Invalid case number. Sample Case number format is 1111111/2020",
+      "caseNotFound": "This case is not available online. Contact the tribunal if you want to know more about this case."
+    }
+  }
+}
