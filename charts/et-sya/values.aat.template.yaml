@@ -6,6 +6,7 @@ nodejs:
   devmemoryRequests: 512Mi
   environment:
     OAUTH_CLIENT_REDIRECT: https://${SERVICE_FQDN}/oauth2/callback
+    CUI_URL: 'https://cui-ra.{{ .Values.global.environment }}.platform.hmcts.net'
   keyVaults:
     et:
       resourceGroup: et

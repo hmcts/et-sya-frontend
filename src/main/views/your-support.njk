@@ -1,0 +1,44 @@
+{% extends "template.njk" %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
+      
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+{{ govukInsetText({
+  text: p
+}) }}
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      {{detailsSummary.heading}}
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ detailsSummary.bullet1 }} </li>
+        <li>{{ detailsSummary.bullet2 }} </li>        
+        <li>{{ detailsSummary.bullet3 }} </li>
+      </ul>
+      <p class="govuk-body ">{{ detailsSummary.p }}</p>
+      {% for item in details %}
+        <h2 class="govuk-heading-m">{{ item.header }}</h2>
+        {% for paragraph in item.paragraphs %}
+          <p class="govuk-body">{{ paragraph.text }}</p>
+        {% endfor %}
+      {% endfor %}
+  </div>
+</details>
+  {% block form %}
+    {% include "form/form.njk"%}
+  {% endblock %}
+{% endblock %}

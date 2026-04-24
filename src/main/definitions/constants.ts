@@ -155,6 +155,7 @@ export const TranslationKeys = {
   HEARING_DETAILS: 'hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: 'change-legal-representative',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
+  YOUR_SUPPORT: 'your-support',
 } as const;
 
 export const PageUrls = {
@@ -297,6 +298,9 @@ export const PageUrls = {
   HEARING_DETAILS: '/hearing-details',
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
+  YOUR_SUPPORT: '/your-support',
+  YOUR_SUPPORT_CALLBACK: '/your-support/:id',
+  YOUR_SUPPORT_CONFIRMATION: '/your-support-confirmation',
 } as const;
 
 export const InterceptPaths = {
