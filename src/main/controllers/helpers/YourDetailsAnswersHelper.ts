@@ -155,7 +155,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         createChangeAction(
           PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
-          translations.personalDetails.howToBeContacted
+          translations.personalDetails.languageLabel
         )
       ),
       addSummaryRow(
@@ -164,7 +164,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         createChangeAction(
           PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
-          translations.personalDetails.howToBeContacted
+          translations.personalDetails.hearingLabel
         )
       )
     );
