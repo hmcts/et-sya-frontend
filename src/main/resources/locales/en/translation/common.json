@@ -117,6 +117,13 @@
     },
     "representativeAddressTypes": {
       "notSelected": "Select an address"
+    },
+    "representedClaimantEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "representedClaimantAddressTypes": {
+      "notSelected": "Select an address"
     }
   },
   "selectAddress": "Select an address",
