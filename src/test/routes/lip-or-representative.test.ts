@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../main/definitions/case';
+import { claimantRepresented } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -18,22 +18,20 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
   test("should return the Single or Multiple claims page when (no) 'representing myself' is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
-      .send({ claimantRepresentedQuestion: YesOrNo.NO })
+      .send({ claimantRepresentedQuestion: claimantRepresented.CLAIMING_FOR_MYSELF })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_JURISDICTION_SELECTION);
       });
   });
 
   test("should return the legacy ET1 service when (yes) the 'making a claim for someone else' option is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
-      .send({ claimantRepresentedQuestion: YesOrNo.YES })
+      .send({ claimantRepresentedQuestion: claimantRepresented.LEGAL_REP })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(
-          'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number'
-        );
+        expect(res.header['location']).toStrictEqual(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE);
       });
   });
 });

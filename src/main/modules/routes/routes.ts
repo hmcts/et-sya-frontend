@@ -106,7 +106,6 @@ import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageCont
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
-import SingleOrMultipleController from '../../controllers/SingleOrMultipleController';
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
@@ -182,8 +181,6 @@ export class Routes {
     app.get(PageUrls.LIP_OR_REPRESENTATIVE, new LipOrRepController().get);
     app.post(PageUrls.LIP_OR_REPRESENTATIVE, new LipOrRepController().post);
     app.get(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE, new MakingClaimAsLegalRepController().get);
-    app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().get);
-    app.post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().post);
     app.get(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().get);
     app.post(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().post);
     app.get(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().get);
