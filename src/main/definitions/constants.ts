@@ -160,6 +160,11 @@ export const TranslationKeys = {
   REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
   REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
+  // Represented Claimant
+  REPRESENTED_CLAIMANT_ENTER_POSTCODE: '/represented-claimant-enter-postcode',
+  REPRESENTED_CLAIMANT_POSTCODE_SELECT: '/represented-claimant-postcode-select',
+  REPRESENTED_CLAIMANT_ADDRESS_DETAILS: '/represented-claimant-address-details',
+  REPRESENTED_CLAIMANT_ENTER_EMAIL: 'represented-claimant-phone-email',
 } as const;
 
 export const PageUrls = {
@@ -308,6 +313,11 @@ export const PageUrls = {
   REPRESENTATIVE_POSTCODE_SELECT: '/representative-postcode-select',
   REPRESENTATIVE_ADDRESS_DETAILS: '/representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: '/representative-phone-number',
+
+  REPRESENTED_CLAIMANT_ENTER_POSTCODE: '/represented-claimant-enter-postcode',
+  REPRESENTED_CLAIMANT_POSTCODE_SELECT: '/represented-claimant-postcode-select',
+  REPRESENTED_CLAIMANT_ADDRESS_DETAILS: '/represented-claimant-address-details',
+  REPRESENTED_CLAIMANT_ENTER_EMAIL: '/represented-claimant-enter-email',
 } as const;
 
 export const InterceptPaths = {

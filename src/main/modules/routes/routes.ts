@@ -150,6 +150,10 @@ import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTrib
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
+import RepresentedClaimantAddressDetailsController from '../../controllers/represented-claimant/RepresentedClaimantAddressDetailsController';
+import RepresentedClaimantEnterEmailController from '../../controllers/represented-claimant/RepresentedClaimantEnterEmailController';
+import RepresentedClaimantEnterPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantEnterPostcodeController';
+import RepresentedClaimantPostcodeSelectController from '../../controllers/represented-claimant/RepresentedClaimantPostcodeSelectController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import { csrfProtection } from '../csrf';
@@ -478,5 +482,14 @@ export class Routes {
     app.post(PageUrls.REPRESENTATIVE_ADDRESS_DETAILS, new RepresentativeAddressDetailsController().post);
     app.get(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().get);
     app.post(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().post);
+
+    app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_POSTCODE_SELECT, new RepresentedClaimantPostcodeSelectController().post);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_POSTCODE_SELECT, new RepresentedClaimantPostcodeSelectController().get);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().post);
   }
 }
