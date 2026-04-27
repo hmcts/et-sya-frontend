@@ -140,6 +140,10 @@
   "representativePostcodeEnterTitle": "Representative's contact address",
   "representativePostcodeSelectTitle": "Select an address",
   "representativeManualAddress": "The representative's address is outside the UK",
+
+  "representedClaimantPostcodeEnterTitle": "What is the claimant's address",
+  "representedClaimantPostcodeSelectTitle": "Select an address",
+
   "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details.",
   "beta": "beta",
   "Legal officer": "Legal officer",

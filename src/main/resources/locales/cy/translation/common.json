@@ -133,6 +133,10 @@
   "representativePostcodeEnterTitle": "Cyfeiriad cyswllt y cynrychiolydd",
   "representativePostcodeSelectTitle": "Dewiswch gyfeiriad",
   "representativeManualAddress": "Mae cyfeiriad y cynrychiolydd y tu allan i'r DU",
+
+  "representedClaimantPostcodeEnterTitle": "place holder for represented claimant postcode enter title",
+  "representedClaimantPostcodeSelectTitle": "place holder for represented claimant postcode select title",
+
   "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
   "beta": "beta",
   "Legal officer": "Swyddog Cyfreithiol",

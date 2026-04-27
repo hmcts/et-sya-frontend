@@ -10,7 +10,11 @@ import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 import { convertJsonArrayToTitleCase, handlePostLogic } from '../helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from '../helpers/FormHelpers';
-import { getLink, getRepresentativeAddressTypes, getSelectTitle } from '../helpers/RepresentativePostCodeHelper';
+import {
+  getLink,
+  getRepresentedClaimantAddressTypes,
+  getSelectTitle,
+} from '../helpers/RepresentedClaimantPostcodeHelper';
 
 const logger = getLogger('RepresentedClaimantPostcodeSelectController');
 
@@ -18,7 +22,7 @@ export default class RepresentedClaimantPostcodeSelectController {
   private readonly form: Form;
   private readonly postCodeSelectContent: FormContent = {
     fields: {
-      representativeAddressTypes: {
+      representedClaimantAddressTypes: {
         type: 'option',
         classes: 'govuk-select',
         id: 'representativeAddressTypes',
@@ -45,7 +49,7 @@ export default class RepresentedClaimantPostcodeSelectController {
       await getAddressesForPostcode(req.session.userCase.representedClaimantEnterPostcode)
     );
     req.session.userCase.representedClaimantAddresses = response;
-    req.session.userCase.representedClaimantAddressTypes = getRepresentativeAddressTypes(response, req);
+    req.session.userCase.representedClaimantAddressTypes = getRepresentedClaimantAddressTypes(response, req);
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     assignFormData(req.session.userCase, this.form.getFormFields());

@@ -95,22 +95,22 @@ export default class RepresentedClaimantAddressDetailsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const representativeAddressTypes = req.session.userCase.representativeAddressTypes;
+    const representedClaimantAddressTypes = req.session.userCase.representedClaimantAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.REPRESENTATIVE_ADDRESS_DETAILS,
+      TranslationKeys.REPRESENTED_CLAIMANT_ADDRESS_DETAILS,
       TranslationKeys.ENTER_ADDRESS,
     ]);
-    if (representativeAddressTypes !== undefined) {
-      fillRepresentativeAddressFields(representativeAddressTypes, req.session.userCase);
+    if (representedClaimantAddressTypes !== undefined) {
+      fillRepresentativeAddressFields(representedClaimantAddressTypes, req.session.userCase);
     }
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.REPRESENTATIVE_ADDRESS_DETAILS, {
+    res.render(TranslationKeys.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, {
       ...content,
     });
   };
