@@ -1,12 +1,20 @@
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
-import { YesOrNo, claimantRepresented } from '../../../main/definitions/case';
+import { claimantRepresented } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Litigation in Person or Representative Controller', () => {
   const t = {
-    claimantRepresentedQuestion: {},
-    common: {},
+    question: {
+      legend: 'legend',
+      radio1: 'radio1',
+      radio2: 'radio2',
+      radio3: 'radio3',
+    },
+    common: {
+      continue: 'Continue',
+    },
   };
 
   it("should render the 'representing myself (LiP) or using a representative choice' page", () => {
@@ -19,51 +27,41 @@ describe('Litigation in Person or Representative Controller', () => {
     expect(response.render).toHaveBeenCalledWith('lip-or-representative', expect.anything());
   });
 
-  it("should render the Single or Multiple claims page when (No) 'representing myself' is selected", () => {
-    const body = { claimantRepresentedQuestion: YesOrNo.NO };
+  it("should redirect to Jurisdiction Selection when 'CLAIMING_FOR_MYSELF' is selected", () => {
+    const body = { claimantRepresentedQuestion: claimantRepresented.CLAIMING_FOR_MYSELF };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/single-or-multiple-claim');
+    // Matching the controller logic: CLAIM_JURISDICTION_SELECTION
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_JURISDICTION_SELECTION);
   });
 
-  it("should render the legacy ET1 service when - yes - they are 'making a claim for someone else' option is selected", () => {
-    const body = { claimantRepresentedQuestion: YesOrNo.YES };
+  it("should redirect to Jurisdiction Selection when 'CLAIMING_FOR_SOMEONE_ELSE' is selected", () => {
+    const body = { claimantRepresentedQuestion: claimantRepresented.CLAIMING_FOR_SOMEONE_ELSE };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number');
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_JURISDICTION_SELECTION);
   });
 
-  it("should render the 'Making a claim as a legal representative' page - they are 'a legal representative making a single claim' option is selected", () => {
-    const body = { claimantRepresentedQuestion: claimantRepresented.LEGAL_REP_SINGLE_CLAIM };
+  it("should redirect to 'Making a claim as a legal representative' when 'LEGAL_REP' is selected", () => {
+    const body = { claimantRepresentedQuestion: claimantRepresented.LEGAL_REP };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/making-claim-as-legal-representative');
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE);
   });
 
-  it("should render the legacy ET1 service when - they are 'a legal representative making a group claim' option is selected", () => {
-    const body = { claimantRepresentedQuestion: claimantRepresented.LEGAL_REP_GROUP_CLAIM };
-    const controller = new LipOrRepController();
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-
-    expect(res.redirect).toHaveBeenCalledWith('https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number');
-  });
-
-  it('should render same page if errors are present when nothing is selected', () => {
+  it('should render same page (redirect to self) if errors are present when nothing is selected', () => {
     const errors = [{ propertyName: 'claimantRepresentedQuestion', errorType: 'required' }];
     const body = { claimantRepresentedQuestion: '' };
     const controller = new LipOrRepController();
