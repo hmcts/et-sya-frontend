@@ -73,7 +73,7 @@
   "CookieAnalytics": "Rydym hefyd yn defnyddio cwcis dadansoddol fel y gallwn ddeall sut rydych yn defnyddio'r gwasanaeth a pha welliannau y gallwn eu gwneud.",
   "CookieAccept": "Derbyn cwcis ychwanegol",
   "CookieReject": "Gwrthod cwcis ychwanegol",
-  "CookieHide": "Cuddio'r neges cwcihon",
+  "CookieHide": "[W]Hide cookie message",
   "CookieView": "Gweld cwcis",
   "CookieAccepted": "Rydych wedi derbyn cwcis ychwanegol. Gallwch <a class=\"govuk-link\" href=\"/cookies\">newid gosodiadau eich cwcis ar</a> unrhyw adeg.",
   "CookieRejected": "Rydych chi wedi gwrthod cwcis ychwanegol. Gallwch <a class=\"govuk-link\" href=\"/cookies\">newid gosodiadau eich cwcis ar</a> unrhyw adeg.",
