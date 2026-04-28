@@ -5,6 +5,7 @@ nodejs:
   devmemoryLimits: 1024Mi
   devmemoryRequests: 512Mi
   environment:
+    ET_SYA_API_HOST: http://et-cos-aat.service.core-compute-aat.internal
     OAUTH_CLIENT_REDIRECT: https://${SERVICE_FQDN}/oauth2/callback
   keyVaults:
     et:
