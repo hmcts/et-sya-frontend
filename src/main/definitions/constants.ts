@@ -161,9 +161,9 @@ export const TranslationKeys = {
   REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
   // Represented Claimant
-  REPRESENTED_CLAIMANT_ENTER_POSTCODE: '/represented-claimant-enter-postcode',
-  REPRESENTED_CLAIMANT_POSTCODE_SELECT: '/represented-claimant-postcode-select',
-  REPRESENTED_CLAIMANT_ADDRESS_DETAILS: '/represented-claimant-address-details',
+  REPRESENTED_CLAIMANT_ENTER_POSTCODE: 'represented-claimant-enter-postcode',
+  REPRESENTED_CLAIMANT_POSTCODE_SELECT: 'represented-claimant-postcode-select',
+  REPRESENTED_CLAIMANT_ADDRESS_DETAILS: 'represented-claimant-address-details',
   REPRESENTED_CLAIMANT_ENTER_EMAIL: 'represented-claimant-phone-email',
 } as const;
 
