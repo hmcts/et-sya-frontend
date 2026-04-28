@@ -9,6 +9,7 @@ describe('Form', () => {
   const mockForm: FormContent = {
     fields: {
       field: {
+        id: 'fieldId',
         type: 'radios',
         values: [
           { label: l => l.no, value: YesOrNo.YES },
@@ -17,6 +18,7 @@ describe('Form', () => {
         validator: jest.fn().mockImplementation(isFieldFilledIn),
       },
       dateField: {
+        id: 'dateFieldId',
         type: 'date',
         values: [
           { label: l => l.dateFormat['day'], name: 'day' },
@@ -27,6 +29,7 @@ describe('Form', () => {
         validator: value => areDateFieldsFilledIn(value as CaseDate),
       },
       checkboxes: {
+        id: 'checkboxId',
         type: 'checkboxes',
         validator: isFieldFilledIn,
         values: [
@@ -104,6 +107,7 @@ describe('Form', () => {
     const mockSubFieldForm: FormContent = {
       fields: {
         field: {
+          id: 'field',
           type: 'radios',
           values: [
             {
@@ -117,6 +121,7 @@ describe('Form', () => {
                   values: [],
                 },
                 checkboxes: {
+                  id: 'checkboxesId',
                   type: 'checkboxes',
                   validator: isFieldFilledIn,
                   values: [

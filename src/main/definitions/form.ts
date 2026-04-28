@@ -34,7 +34,7 @@ export type FormFields = Record<string, FormField>;
 export type FormFieldsFn = (userCase: Partial<Case>) => FormFields;
 
 export interface FormOptions {
-  id?: string;
+  id: string;
   type: string;
   label?: Label;
   labelHidden?: boolean;

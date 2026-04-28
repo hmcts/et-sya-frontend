@@ -54,7 +54,7 @@ describe('getCustomStartDateError', () => {
         mockRequest({
           session: { ...mockSession([], [], []), userCase: { dobDate: { year: '1966', month: '1', day: '6' } } },
         }),
-        mockForm({ startDate: StartDateFormFields }),
+        mockForm({ startDate: { id: 'startDate', ...StartDateFormFields } }),
         { startDate: { year: '1000', month: '6', day: '27' } }
       )
     ).toStrictEqual({ errorType: 'invalidDateBeforeDOB', propertyName: 'startDate' });

@@ -22,6 +22,7 @@ describe('Parser', () => {
     it('correctly sets up checkbox parser when type is a checkbox', () => {
       const mockFormWithCheckbox = {
         checkboxField: {
+          id: 'checkboxId',
           type: 'checkboxes',
           values: [
             { name: 'checkboxField', value: 'checked1' },
@@ -42,6 +43,7 @@ describe('Parser', () => {
     it('correctly sets up checkbox parser when type is a checkbox and only 1 checkbox is present', () => {
       const mockFormWithCheckbox = {
         checkboxField: {
+          id: 'checkboxId',
           type: 'checkboxes',
           values: [{ name: 'checkboxField', value: 'checked' }],
         } as FormField,
@@ -61,6 +63,7 @@ describe('Parser', () => {
     ])('correctly handles unchecked checkboxes when saving & signing out', ({ isSaveAndSignOut, expectedEmpty }) => {
       const mockFormWithCheckbox = {
         checkboxField: {
+          id: 'checkboxId',
           type: 'checkboxes',
           values: [{ value: 'checked' }],
         } as FormField,
