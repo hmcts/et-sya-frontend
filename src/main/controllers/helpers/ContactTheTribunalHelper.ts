@@ -36,6 +36,12 @@ export const isClaimantRepresentedByOrganisation = (userCase: CaseWithId): boole
   );
 };
 
+/**
+ * Get applications accordion items to display on contact the tribunal page.
+ * @param req
+ * @param bundlesEnabled
+ * @param claimantRepresentedByOrganisation
+ */
 export const getApplicationsAccordionItems = (
   req: AppRequest,
   bundlesEnabled: LaunchDarkly.LDFlagValue,
@@ -45,6 +51,8 @@ export const getApplicationsAccordionItems = (
   if (!claimantRepresentedByOrganisation) {
     const applicationsToDisplay = getApplicationsToDisplay(bundlesEnabled, userCase);
     return applicationsToDisplay.map(application => getApplicationsAccordionItem(req, application));
+  } else {
+    return [];
   }
 };
 
@@ -78,7 +86,6 @@ const getApplicationsAccordionItem = (req: AppRequest, application: string): Acc
     '<p class="govuk-body">' +
     translations.sections[application].body +
     '</p>' +
-    '<br>' +
     '<p class="govuk-body"><a class="govuk-link" href="' +
     link +
     '">' +

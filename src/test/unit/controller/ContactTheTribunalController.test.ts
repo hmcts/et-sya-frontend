@@ -30,13 +30,11 @@ describe('Contact Application Controller', () => {
       expect.objectContaining({
         applicationsAccordionItems: expect.arrayContaining([
           {
-            heading: { text: expect.any(String) },
+            heading: {
+              text: 'I want to change my personal details',
+            },
             content: {
-              bodyText: expect.any(String),
-              link: {
-                href: '/contact-the-tribunal/change-details?lng=en',
-                text: expect.any(String),
-              },
+              html: expect.stringContaining('/contact-the-tribunal/change-details?lng=en'),
             },
           },
         ]),
@@ -58,13 +56,11 @@ describe('Contact Application Controller', () => {
       expect.objectContaining({
         applicationsAccordionItems: expect.arrayContaining([
           {
-            heading: { text: expect.any(String) },
+            heading: {
+              text: 'Submit documents for a hearing',
+            },
             content: {
-              bodyText: expect.any(String),
-              link: {
-                href: '/prepare-documents?lng=en',
-                text: expect.any(String),
-              },
+              html: expect.any(String),
             },
           },
         ]),
@@ -83,13 +79,11 @@ describe('Contact Application Controller', () => {
       expect.objectContaining({
         applicationsAccordionItems: expect.not.arrayContaining([
           {
-            heading: { text: expect.any(String) },
+            heading: {
+              text: 'Submit documents for a hearing',
+            },
             content: {
-              bodyText: expect.any(String),
-              link: {
-                href: '/prepare-documents?lng=en',
-                text: expect.any(String),
-              },
+              html: expect.any(String),
             },
           },
         ]),
