@@ -25,7 +25,7 @@ export default class ClaimTypePayController {
         labelHidden: false,
         labelSize: 'l',
         type: 'checkboxes',
-        isPageHeading: true,
+        isPageHeading: false,
         hint: l => l.selectAllHint,
         validator: atLeastOneFieldIsChecked,
         values: [
