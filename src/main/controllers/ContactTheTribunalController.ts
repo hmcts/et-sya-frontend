@@ -1,15 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
-import applications from '../definitions/contact-applications';
+import { FEATURE_FLAGS, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { ContactTheTribunalHelper } from './helpers/ContactTheTribunalHelper';
-import { createRadioBtnsForHearings, getPageContent } from './helpers/FormHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getApplicationsAccordionItems, isClaimantRepresentedByOrganisation } from './helpers/ContactTheTribunalHelper';
+import { getPageContent } from './helpers/FormHelpers';
 
 /**
  * Controller for contact-the-tribunal page with a list of applications to start
@@ -18,62 +15,17 @@ export default class ContactTheTribunalController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
-    const DOCUMENTS = 'documents';
-    const claimantRepresentedByOrganisation = ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(
-      req.session.userCase
-    );
-    const { userCase } = req.session;
+    const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(req.session.userCase);
 
     // Set flag to indicate user has visited the selection page
     // This allows FormSubmissionCheck to verify proper flow
     req.session.visitedContactTribunalSelection = true;
 
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-    };
-
-    const languageParam = getLanguageParam(req.url);
-    let applicationsToDisplay;
-    let applicationsAccordionItems;
-
-    const allowBundlesFlow =
-      bundlesEnabled &&
-      userCase.hearingCollection?.length &&
-      createRadioBtnsForHearings(userCase.hearingCollection)?.length;
-
-    if (!claimantRepresentedByOrganisation) {
-      if (!allowBundlesFlow) {
-        applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
-      } else {
-        applicationsToDisplay = applications;
-      }
-
-      applicationsAccordionItems = applicationsToDisplay.map(application => {
-        const label = translations.sections[application].label;
-        const link =
-          application === DOCUMENTS
-            ? PageUrls.PREPARE_DOCUMENTS + languageParam
-            : `/contact-the-tribunal/${application}${languageParam}`;
-        const html =
-          "<p class='govuk-body'>" +
-          translations.sections[application].body +
-          '</p>' +
-          '<br>' +
-          "<p class='govuk-body'><a class='govuk-link govuk-body' href=\"" +
-          link +
-          '">' +
-          label +
-          '</a></p>';
-        return {
-          heading: {
-            text: label,
-          },
-          content: {
-            html,
-          },
-        };
-      });
-    }
+    const applicationsAccordionItems = getApplicationsAccordionItems(
+      req,
+      bundlesEnabled,
+      claimantRepresentedByOrganisation
+    );
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
