@@ -6,13 +6,13 @@
     idPrefix: field.id,
     name: fieldName,
     fieldset: {
+      attributes: {
+        id: field.id + "-fieldset"
+      },
       legend: {
         text: getContent(field.label),
         classes: "hidden" if field.labelHidden else legendClasses,
-        isPageHeading: field.isPageHeading,
-        attributes: {
-          id: field.id + "-fieldset"
-        }
+        isPageHeading: field.isPageHeading
       }
     },
     hint: {
