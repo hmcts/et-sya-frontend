@@ -54,16 +54,22 @@ export default class ContactTheTribunalController {
           application === DOCUMENTS
             ? PageUrls.PREPARE_DOCUMENTS + languageParam
             : `/contact-the-tribunal/${application}${languageParam}`;
+        const html =
+          "<p class='govuk-body'>" +
+          translations.sections[application].body +
+          '</p>' +
+          '<br>' +
+          "<p class='govuk-body'><a class='govuk-link govuk-body' href=\"" +
+          link +
+          '">' +
+          label +
+          '</a></p>';
         return {
           heading: {
             text: label,
           },
           content: {
-            bodyText: translations.sections[application].body,
-            link: {
-              href: link,
-              text: label,
-            },
+            html,
           },
         };
       });
