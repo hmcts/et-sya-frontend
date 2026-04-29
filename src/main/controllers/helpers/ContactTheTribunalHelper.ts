@@ -3,7 +3,7 @@ import * as LaunchDarkly from '@launchdarkly/node-server-sdk';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import applications from '../../definitions/contact-applications';
+import applications, { DOCUMENTS } from '../../definitions/contact-applications';
 import { AccordionItem } from '../../definitions/govuk/accordion';
 import { AnyRecord } from '../../definitions/util-types';
 import ObjectUtils from '../../utils/ObjectUtils';
@@ -55,7 +55,7 @@ const getApplicationsToDisplay = (bundlesEnabled: LaunchDarkly.LDFlagValue, user
     createRadioBtnsForHearings(userCase.hearingCollection)?.length;
 
   if (!allowBundlesFlow) {
-    return applications.filter(app => app !== 'documents');
+    return applications.filter(app => app !== DOCUMENTS);
   } else {
     return applications;
   }
@@ -70,7 +70,7 @@ const getApplicationsAccordionItem = (req: AppRequest, application: string): Acc
   const label = translations.sections[application].label;
 
   const link =
-    application === 'documents'
+    application === DOCUMENTS
       ? PageUrls.PREPARE_DOCUMENTS + languageParam
       : `/contact-the-tribunal/${application}${languageParam}`;
 
