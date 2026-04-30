@@ -1,24 +1,26 @@
 {
-  "title": "Return to an existing claim",
-  "h1": "Return to an existing claim",
-  "p1": {
-    "t1": "You’ll need to use either a",
-    "t2": "‘save and return number’",
-    "t3": "or your new",
-    "t4": "‘Employment Tribunal account’",
-    "t5": "to return to an existing claim."
-  },
-  "p2": "Have you got a ‘save and return number’ or a new ‘Employment Tribunal account’? ",
-  "p3": {
-    "t1": "Don't have these details",
-    "t2": "Start a new claim.",
-    "t3": ""
-  },
-  "optionText1": "I’ve got a <span class=\"govuk-!-font-weight-bold\">‘save and return number’</span>",
-  "optionText2": "I’ve got a new <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
+  "title": "Return to a draft or submitted claim",
+  "h1": "Return to a draft or submitted claim",
+  "draftHeading": "Return to a draft claim",
+  "draftIntro": "You can return to a draft claim by using:",
+  "draftBullet1": "the account details you used when you started the claim",
+  "draftBullet2": "your 'save and return number', for example A7F9-K3P2",
+  "submittedHeading": "Return to a submitted claim",
+  "submittedIntro": "You can return to a submitted claim by:",
+  "submittedBullet1": "using the account details you used when you submitted the claim",
+  "submittedBullet2": "creating an account. You can only access the claim if the case number starts with 6 or 8",
+  "p2": "What type of claim do you want to return to?",
+  "optionText1": "I want to return to a draft claim",
+  "optionText2": "I want to access or return to a submitted claim",
+  "subQuestion": "How do you want to access the claim?",
+  "draftSubOptionText1": "I have an employment tribunal account",
+  "draftSubOptionText2": "I have a save and return number",
+  "submittedSubOptionText1": "I have an employment tribunal account",
+  "submittedSubOptionText2": "I have a claim but no employment tribunal account",
+  "submittedSubOptionHint2": "you will be able to create an account and access the claim if the case number starts with a 6 or 8",
   "errors": {
     "returnToExisting": {
-      "required": "Tell us if you have a save and return number or an Employment Tribunal account"
+      "required": "Select what type of claim you want to return to"
     }
   }
 }

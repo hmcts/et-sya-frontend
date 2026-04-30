@@ -30,7 +30,7 @@ const caseNumberSelector = '#caseNumber';
 const currElementSelector = '.hmcts-progress-bar__list-item[aria-current=step]';
 
 const greenTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
-const turquoiseTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--turquoise';
+const tealTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--teal';
 const greyTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--grey';
 const blueTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--blue';
 
@@ -197,8 +197,8 @@ describe('Citizen hub page', () => {
 
     it.each([
       { selector: greenTagSelector, expectedText: 'Completed', expectedCount: 1 },
-      { selector: turquoiseTagSelector, expectedText: 'Viewed', expectedCount: 1 },
-      { selector: turquoiseTagSelector, expectedText: 'Submitted', expectedCount: 1 },
+      { selector: tealTagSelector, expectedText: 'Viewed', expectedCount: 1 },
+      { selector: tealTagSelector, expectedText: 'Submitted', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Not available yet', expectedCount: 2 },
       { selector: greyTagSelector, expectedText: 'Waiting for the tribunal', expectedCount: 1 },
       { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 5 },
@@ -210,7 +210,7 @@ describe('Citizen hub page', () => {
     it.each([
       { selector: greyTagSelector, tagText: 'Not available yet', showLink: false },
       { selector: greyTagSelector, tagText: 'Waiting for the tribunal', showLink: false },
-      { selector: turquoiseTagSelector, tagText: 'Submitted', showLink: true },
+      { selector: tealTagSelector, tagText: 'Submitted', showLink: true },
     ])('should not show link iff tag is "Not available yet"', ({ selector, tagText, showLink }) => {
       const links = Array.from(htmlRes.querySelectorAll(selector))
         .filter(el => el.textContent.trim() === tagText)

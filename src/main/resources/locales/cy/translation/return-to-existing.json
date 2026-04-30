@@ -1,24 +1,26 @@
 {
-  "title": "Dychwelyd i hawliad presennol",
-  "h1": "Dychwelyd i hawliad presennol",
-  "p1": {
-    "t1": "Bydd arnoch angen defnyddio",
-    "t2": "‘rhif cadw a dychwelyd’",
-    "t3": "neu eich",
-    "t4": "‘cyfrif Tribiwnlys Cyflogaeth’",
-    "t5": "newydd i ddychwelyd i hawliad presennol."
-  },
-  "p2": "A oes gennych chi rif cadw a dychwelyd neu gyfrif Tribiwnlys Cyflogaeth newydd?",
-  "p3": {
-    "t1": "Bydd rhaid i chi",
-    "t2": "gychwyn hawliad newydd",
-    "t3": "os nad yw'r manylion hyn gennych."
-  },
-  "optionText1": "Mae gen i <span class=\"govuk-!-font-weight-bold\">‘rif cadw a dychwelyd’</span>",
-  "optionText2": "Mae gen i <span class=\"govuk-!-font-weight-bold\">‘Gyfrif Tribiwnlys Cyflogaeth’</span> newydd",
+  "title": "Dychwelyd i hawliad drafft neu un a gyflwynwyd",
+  "h1": "Dychwelyd i hawliad drafft neu un a gyflwynwyd",
+  "draftHeading": "Dychwelyd i hawliad drafft",
+  "draftIntro": "Gallwch ddychwelyd i hawliad drafft drwy ddefnyddio:",
+  "draftBullet1": "manylion y cyfrif a ddefnyddiwyd gennych pan wnaethoch ddechrau'r hawliad",
+  "draftBullet2": "eich 'rhif cadw a dychwelyd’, er enghraifft A7F9-K3P2",
+  "submittedHeading": "Dychwelyd i hawliad a gyflwynwyd",
+  "submittedIntro": "Gallwch ddychwelyd i hawliad a gyflwynwyd drwy ddefnyddio:",
+  "submittedBullet1": "manylion y cyfrif a ddefnyddiwyd gennych pan wnaethoch gyflwyno'r hawliad",
+  "submittedBullet2": "creu cyfrif. Gallwch ond cael mynediad i'r hawliad os yw rhif yr achos yn dechrau gyda 6 neu 8",
+  "p2": "Pa fath o hawliad ydych chi eisiau dychwelyd ato?",
+  "optionText1": "Rwyf am ddychwelyd at hawliad drafft",
+  "optionText2": "Rwyf am gael mynediad at hawliad a gyflwynwyd neu ddychwelyd iddo",
+  "subQuestion": "Sut ydych chi eisiau cael mynediad i'r hawliad?",
+  "draftSubOptionText1": "Mae gennyf gyfrif tribiwnlys cyflogaeth",
+  "draftSubOptionText2": "Mae gennyf rif cadw a dychwelyd",
+  "submittedSubOptionText1": "Mae gennyf gyfrif tribiwnlys cyflogaeth",
+  "submittedSubOptionText2": "Mae gennyf hawliad ond nid oes gennyf gyfrif tribiwnlys cyflogaeth",
+  "submittedSubOptionHint2": "Byddwch yn gallu creu cyfrif a chael mynediad i'r hawliad os yw rhif yr achos yn dechrau gyda 6 neu 8",
   "errors": {
     "returnToExisting": {
-      "required": "Dywedwch wrthym a oes gennych rif cadw a dychwelyd neu gyfrif Tribiwnlys Cyflogaeth"
+      "required": "Dewiswch pa fath o hawliad ydych chi eisiau dychwelyd ato?"
     }
   }
 }
