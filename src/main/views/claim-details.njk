@@ -102,9 +102,7 @@
         {% endfor %}
       {% endif %}
 
-      <h2 class="govuk-heading-l">
-        {{ applicationDetails.header }}
-      </h2>
+      <h2 class="govuk-heading-l">{{ applicationDetails.header }}</h2>
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
@@ -120,23 +118,24 @@
         </div>
       </dl>
 
-      <h2 class="govuk-heading-l">
-        {{ personalDetails.header }}
-      </h2>
+      <h2 class="govuk-heading-l">{{ personalDetails.header }}</h2>
       {{ govukSummaryList({
         rows: yourDetails
       }) }}
 
+      <h2 class="govuk-heading-l">{{ employmentDetails.header }}</h2>
       {{ govukSummaryList({
         rows: employmentSection
       }) }}
 
       {% for respondent in userCase.respondents %}
+        <h2 class="govuk-heading-l">{{ respondentTitle(loop.index, translations, languageParam) }}</h2>
         {{ govukSummaryList({
-          rows: getRespondentSection(userCase, respondent, loop.index, translations, languageParam, false)
+          rows: getRespondentSection(userCase, respondent, loop.index, translations)
         }) }}
       {% endfor %}
 
+      <h2 class="govuk-heading-l">{{ claimDetails.header }}</h2>
       {{ govukSummaryList({
         rows: claimDetailsSection
       }) }}

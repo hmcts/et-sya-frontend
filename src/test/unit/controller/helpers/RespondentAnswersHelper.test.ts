@@ -62,7 +62,7 @@ describe('getRespondentSection', () => {
   const userCase = mockUserCase;
 
   it('should include remove link if index > 1 and addRemoveButton is true', () => {
-    const result = getRespondentSection(userCase, respondent, 2, translations, '?lang=en', true);
+    const result = getRespondentSection(userCase, respondent, 2, translations);
     expect(result).toStrictEqual([
       {
         actions: {
@@ -144,7 +144,7 @@ describe('getRespondentSection', () => {
     userCase.claimantWorkAddressQuestion = YesOrNo.NO;
     respondent.acasCert = YesOrNo.NO;
     respondent.noAcasReason = NoAcasNumberReason.ANOTHER;
-    const result = getRespondentSection(userCase, respondent, 1, translations, '?lang=en', true);
+    const result = getRespondentSection(userCase, respondent, 1, translations);
     expect(result).toStrictEqual([
       {
         key: {

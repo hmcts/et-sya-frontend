@@ -46,14 +46,6 @@ const getTranslationsLinkedCases = (linkedCases: YesOrNo, translations: AnyRecor
 export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const claimDetails = [];
 
-  claimDetails.push({
-    key: {
-      text: translations.claimDetails.header,
-      classes: 'govuk-summary-list__key govuk-heading-m',
-    },
-    value: {},
-  });
-
   if (userCase.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION)) {
     claimDetails.push(
       addSummaryHtmlRow(
