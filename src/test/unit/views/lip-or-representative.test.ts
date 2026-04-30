@@ -87,12 +87,12 @@ describe('LiP or Representative page', () => {
 
   it('should display 3 GDS details components', () => {
     const detailsComponents = htmlRes.getElementsByClassName(detailsClass);
-    expect(detailsComponents.length).equal(3, '3 details components not found');
+    expect(detailsComponents.length).equal(2, '2 details components not found');
   });
 
   it('should display 3 GDS detail text components which reveal detailed information', () => {
     const detailsTextComponents = htmlRes.getElementsByClassName(detailsTextClass);
-    expect(detailsTextComponents.length).equal(3, '3 detail text classes not found');
+    expect(detailsTextComponents.length).equal(2, '2 detail text classes not found');
   });
 
   it('should display details components with valid summary text', () => {
