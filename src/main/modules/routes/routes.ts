@@ -495,7 +495,7 @@ export class Routes {
     app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().post);
-    app.post(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().get);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().get);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().get);
