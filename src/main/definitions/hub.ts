@@ -46,7 +46,7 @@ export const enum HubLinkStatus {
 }
 
 const COLORS = {
-  TURQUOISE: '--turquoise',
+  TEAL: '--teal',
   GREEN: '--green',
   BLUE: '--blue',
   RED: '--red',
@@ -56,13 +56,13 @@ const COLORS = {
 
 export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, COLORS.GREEN],
-  [HubLinkStatus.SUBMITTED, COLORS.TURQUOISE],
+  [HubLinkStatus.SUBMITTED, COLORS.TEAL],
   [HubLinkStatus.OPTIONAL, COLORS.BLUE],
-  [HubLinkStatus.VIEWED, COLORS.TURQUOISE],
+  [HubLinkStatus.VIEWED, COLORS.TEAL],
   [HubLinkStatus.NOT_VIEWED, COLORS.RED],
   [HubLinkStatus.NOT_YET_AVAILABLE, COLORS.GREY],
   [HubLinkStatus.WAITING_FOR_TRIBUNAL, COLORS.GREY],
-  [HubLinkStatus.SUBMITTED_AND_VIEWED, COLORS.TURQUOISE],
+  [HubLinkStatus.SUBMITTED_AND_VIEWED, COLORS.TEAL],
   [HubLinkStatus.IN_PROGRESS, COLORS.YELLOW],
   [HubLinkStatus.STORED, COLORS.YELLOW],
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],

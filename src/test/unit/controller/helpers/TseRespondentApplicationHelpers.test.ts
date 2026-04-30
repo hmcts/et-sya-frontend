@@ -126,7 +126,7 @@ describe('Respondent application details', () => {
 
       populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
 
-      expect(item.statusColor).toEqual('--turquoise');
+      expect(item.statusColor).toEqual('--teal');
       expect(item.displayStatus).toEqual('Viewed');
     });
   });

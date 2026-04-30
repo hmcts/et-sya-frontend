@@ -222,6 +222,8 @@ export interface Case {
   claimantRepresentativeRemoved?: YesOrNo;
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
+  claimantName?: string;
+  // non-MyHMCTS Claimant rep
   representativeType?: string;
   representativeOrgName?: string;
   representativeName?: string;
@@ -374,4 +376,12 @@ export const enum Et3ResponseStatus {
   NOT_RECEIVED = 'Not Received',
   NOT_ACCEPTED = 'Not Accepted',
   REJECTED = 'Rejected',
+}
+
+export const enum ReturnToExistingOption {
+  RETURN_NUMBER = 'Return number',
+  HAVE_ACCOUNT = 'Have an account',
+  CLAIM_BUT_NO_ACCOUNT = 'Claim but no account',
+  DRAFT_CLAIM = 'Draft claim',
+  SUBMITTED_CLAIM = 'Submitted claim',
 }

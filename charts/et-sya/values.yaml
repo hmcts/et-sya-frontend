@@ -17,6 +17,8 @@ nodejs:
         - csrf-token-secret
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
+    IDAM_WEB_URL_HMCTS_ACCESS: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/o/authorize'
+    HMCTS_ACCESS: 'false'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
     REDIS_HOST: 'et-session-storage-{{ .Values.global.environment }}.redis.cache.windows.net'
     ET_SYA_API_HOST: 'http://et-sya-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
@@ -26,5 +28,6 @@ nodejs:
     ET1_BASE_URL: 'https://et-pet-et1.{{ .Values.global.environment }}.platform.hmcts.net'
     MANAGE_ORG_URL: 'https://manage-org.{{ .Values.global.environment }}.platform.hmcts.net'
     MANAGE_CASE_URL: 'https://manage-case.{{ .Values.global.environment }}.platform.hmcts.net'
+    S2S_URL: 'http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
 idam-pr:
   enabled: false
