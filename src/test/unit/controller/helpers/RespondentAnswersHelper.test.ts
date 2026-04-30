@@ -61,27 +61,9 @@ describe('getRespondentSection', () => {
 
   const userCase = mockUserCase;
 
-  it('should include remove link if index > 1 and addRemoveButton is true', () => {
+  it('should render respondent details when index > 1', () => {
     const result = getRespondentSection(userCase, respondent, 2, translations);
     expect(result).toStrictEqual([
-      {
-        actions: {
-          items: [
-            {
-              href: '/respondent/2/respondent-remove?lang=en&redirect=answers',
-              text: 'Remove respondent',
-              visuallyHiddenText: 'Remove respondent',
-            },
-          ],
-        },
-        key: {
-          classes: 'govuk-heading-m',
-          text: 'Respondent 2 details',
-        },
-        value: {
-          text: '',
-        },
-      },
       {
         actions: {
           items: [
@@ -139,22 +121,13 @@ describe('getRespondentSection', () => {
     ]);
   });
 
-  it('should include remove link if index = 1 and addRemoveButton is true', () => {
+  it('should render respondent details when index = 1', () => {
     userCase.pastEmployer = YesOrNo.YES;
     userCase.claimantWorkAddressQuestion = YesOrNo.NO;
     respondent.acasCert = YesOrNo.NO;
     respondent.noAcasReason = NoAcasNumberReason.ANOTHER;
     const result = getRespondentSection(userCase, respondent, 1, translations);
     expect(result).toStrictEqual([
-      {
-        key: {
-          classes: 'govuk-heading-m',
-          text: 'Respondent 1 details',
-        },
-        value: {
-          text: '',
-        },
-      },
       {
         actions: {
           items: [

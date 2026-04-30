@@ -9,7 +9,7 @@ const PAGE_URL = '/claim-details';
 const expectedTitle = 'Your claim details';
 const titleClass = 'govuk-heading-xl';
 const summaryListClass = 'govuk-summary-list';
-const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
+const heading2Class = 'govuk-heading-l';
 
 const et1FormUrlSelector = 'govuk-link';
 
@@ -65,7 +65,7 @@ describe('ET1 details', () => {
   });
 
   it('should display correct headings in the summary lists', () => {
-    const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
+    const summaryLists = htmlRes.getElementsByClassName(heading2Class);
 
     expect(summaryLists[0].innerHTML).toMatch('Claim related information');
     expect(summaryLists[1].innerHTML).toMatch('Application details');
