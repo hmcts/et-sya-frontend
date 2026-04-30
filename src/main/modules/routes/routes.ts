@@ -377,7 +377,7 @@ export class Routes {
     );
 
     app.get(PageUrls.YOUR_SUPPORT, new YourSupportController().get);
-    app.post(PageUrls.YOUR_SUPPORT, new YourSupportController().post);
+    app.get(PageUrls.YOUR_SUPPORT_REDIRECT, new YourSupportController().redirectToCuiJourney);
     app.get(PageUrls.YOUR_SUPPORT_CALLBACK, new YourSupportController().callback);
     app.get(PageUrls.YOUR_SUPPORT_CONFIRMATION, new YourSupportController().confirmation);
 

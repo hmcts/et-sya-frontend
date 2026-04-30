@@ -1,6 +1,8 @@
 {% extends "template.njk" %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -10,35 +12,50 @@
 {% block content %}
 
   {% block errorSummary %}
-   {% include "error-summary.njk" %}
+    {% set yourSupportRedirectError = getError('yourSupportRedirect') %}
+    {{
+      govukErrorSummary({
+        titleText: errorSummaryTitle,
+        errorList: [
+          {
+            text: yourSupportRedirectError.text,
+            href: '#start-support-request'
+          }
+        ]
+      }) if yourSupportRedirectError
+    }}
   {% endblock %}
       
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-{{ govukInsetText({
-  text: p
-}) }}
-<details class="govuk-details" data-module="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      {{detailsSummary.heading}}
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>{{ detailsSummary.bullet1 }} </li>
-        <li>{{ detailsSummary.bullet2 }} </li>        
-        <li>{{ detailsSummary.bullet3 }} </li>
-      </ul>
-      <p class="govuk-body ">{{ detailsSummary.p }}</p>
-      {% for item in details %}
-        <h2 class="govuk-heading-m">{{ item.header }}</h2>
-        {% for paragraph in item.paragraphs %}
-          <p class="govuk-body">{{ paragraph.text }}</p>
-        {% endfor %}
+<p class="govuk-body">{{ p }}</p>
+<div>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ detailsSummary.bullet1 }} </li>
+      <li>{{ detailsSummary.bullet2 }} </li>        
+      <li>{{ detailsSummary.bullet3 }} </li>
+    </ul>
+    <p class="govuk-body ">{{ detailsSummary.p }}</p>
+    {% for item in details %}
+      <h2 class="govuk-heading-m">{{ item.header }}</h2>
+      {% for paragraph in item.paragraphs %}
+        <p class="govuk-body">{{ paragraph.text }}</p>
       {% endfor %}
-  </div>
-</details>
-  {% block form %}
-    {% include "form/form.njk"%}
-  {% endblock %}
+    {% endfor %}
+</div>
+
+<div class="govuk-button-group">
+  {{ govukButton({
+    text: startNow,
+    preventDoubleClick: true,
+    href: startLink,
+    isStartButton: true,
+    attributes: {
+      id: 'start-support-request'
+    }
+  })  }}
+
+  {% if cancelLink %}
+    <a class="govuk-link" href={{ cancelLink }}>{{ cancel }}</a>
+  {% endif %}
+</div>
 {% endblock %}

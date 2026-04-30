@@ -223,6 +223,12 @@ export interface Case {
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
   claimantName?: string;
+
+  caseFlags?: CaseFlags;
+  claimantFlags?: CaseFlags;
+  claimantExternalFlags?: CaseFlags;
+  respondentFlags?: CaseFlags;
+  respondentExternalFlags?: CaseFlags;
 }
 
 export const enum StillWorking {
@@ -371,4 +377,32 @@ export const enum ReturnToExistingOption {
   CLAIM_BUT_NO_ACCOUNT = 'Claim but no account',
   DRAFT_CLAIM = 'Draft claim',
   SUBMITTED_CLAIM = 'Submitted claim',
+}
+
+export interface CaseFlags {
+  partyName?: string;
+  roleOnCase?: string;
+  groupId?: string;
+  visibility?: 'Internal' | 'External' | string;
+  details?: TypeItem<FlagDetail>[];
+}
+
+export interface FlagDetail {
+  name?: string;
+  name_cy?: string;
+  subTypeValue?: string;
+  subTypeValue_cy?: string;
+  subTypeKey?: string;
+  otherDescription?: string;
+  otherDescription_cy?: string;
+  flagComment?: string;
+  flagComment_cy?: string;
+  dateTimeModified?: string;
+  dateTimeCreated?: string;
+  path?: TypeItem<string>[];
+  hearingRelevant?: string;
+  flagCode?: string;
+  status?: 'Active' | 'Inactive' | string;
+  requestReason?: string;
+  availableExternally?: string;
 }

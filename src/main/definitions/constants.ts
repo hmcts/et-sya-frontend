@@ -306,6 +306,7 @@ export const PageUrls = {
   YOUR_DETAILS_CYA: '/your-details-cya',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
   YOUR_SUPPORT: '/your-support',
+  YOUR_SUPPORT_REDIRECT: '/your-support-redirect',
   YOUR_SUPPORT_CALLBACK: '/your-support/:id',
   YOUR_SUPPORT_CONFIRMATION: '/your-support-confirmation',
 } as const;

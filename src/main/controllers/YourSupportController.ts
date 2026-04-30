@@ -1,11 +1,10 @@
 import { Response } from 'express';
 
-import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { AuthUrls, PageUrls, TranslationKeys, languages } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { CaseWithId } from '../definitions/case';
+import { AuthUrls, PageUrls, TranslationKeys } from '../definitions/constants';
+import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 //import { handlePostLogic } from './helpers/CaseHelpers';
@@ -18,60 +17,67 @@ import {
 } from './../services/CuiService';
 import { IS2SService, getS2SService } from './../services/S2SService';
 import { getServiceUrl } from './../utils/getServiceUrl';
-import { getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getLanguageCode } from './helpers/RouterHelpers';
 
 const logger = getLogger('YourSupportController');
 
 export default class YourSupportController {
-  private readonly form: Form;
   private readonly s2sService: IS2SService;
 
-  private readonly yourSupportContent: FormContent = {
-    fields: {},
-    submit: submitButton,
-    saveForLater: saveForLaterButton,
-  };
-
   constructor() {
-    this.form = new Form(<FormFields>this.yourSupportContent.fields);
     this.s2sService = getS2SService();
   }
 
-  @CaseStateCheck()
+  //@CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const content = getPageContent(req, this.yourSupportContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.YOUR_SUPPORT,
-    ]);
-    res.render('reasonable-adjustments', {
-      ...content,
+    const userCase = req.session?.userCase;
+    const cancelLink = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
+    const startLink = setUrlLanguage(req, PageUrls.YOUR_SUPPORT_REDIRECT);
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_SUPPORT, { returnObjects: true }),
+    };
+    const sessionErrors = req.session?.errors || [];
+    req.session.errors = [];
+
+    res.render('your-support', {
+      ...translations,
+      cancelLink,
+      sessionErrors,
+      startLink,
     });
   };
 
-  @CaseStateCheck()
-  public post = async (req: AppRequest, res: Response): Promise<void> => {
+  //@CaseStateCheck()
+  public redirectToCuiJourney = async (req: AppRequest, res: Response): Promise<void> => {
+    const userCase = req.session?.userCase;
     const logoutUrl = getServiceUrl(req, AuthUrls.LOGOUT);
     const cuiService = getCuiService(logoutUrl);
-
-    //get claimantFlags from ccd and pass to cui journey
-    //currently setting fake data
+    req.session.errors = [];
+    const claimantFlags = userCase?.claimantFlags;
+    const existingFlags = {
+      ...claimantFlags,
+      partyName: claimantFlags?.partyName || userCase?.claimantName || '',
+      roleOnCase:
+        claimantFlags?.roleOnCase ||
+        (userCase?.claimantRepresentativeOrganisationPolicy ? 'Representative' : 'Claimant'),
+      details: claimantFlags?.details ?? [],
+    } as unknown as CUIStartJourneyRequest['existingFlags'];
 
     try {
       const results = await cuiService.startJourney(
         {
           callbackUrl: getServiceUrl(req, PageUrls.YOUR_SUPPORT_CALLBACK),
-          correlationId: req.session?.userCase.id,
-          existingFlags: {
-            partyName: '',
-            roleOnCase: '',
-            details: [],
-          },
-          language: req.i18n?.language || languages.ENGLISH,
+          correlationId: userCase?.id,
+          existingFlags,
+          language: getLanguageCode(req.url),
           masterFlagCode: 'RA0001',
         } as CUIStartJourneyRequest,
         {
           serviceToken: await this.s2sService.getToken(),
-          idamToken: '',
+          idamToken: req.session.user?.accessToken,
         } as CUIStartJourneyAuth
       );
 
@@ -83,14 +89,16 @@ export default class YourSupportController {
       //redirect to cui journey
       return res.redirect(results.url);
     } catch (error) {
+      req.session.errors.push({ propertyName: 'yourSupportRedirect', errorType: 'required' });
       logger.error('Error starting CUI journey', error);
-      return res.redirect(PageUrls.HOME);
+      return res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
     }
   };
 
-  @CaseStateCheck()
+  //@CaseStateCheck()
   public callback = async (req: AppRequest, res: Response): Promise<void> => {
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const userCase = req.session?.userCase;
 
     const logoutUrl = getServiceUrl(req, AuthUrls.LOGOUT);
     const cuiService = getCuiService(logoutUrl);
@@ -99,11 +107,18 @@ export default class YourSupportController {
       const result = await cuiService.getJourneyData(id, {
         serviceToken: await this.s2sService.getToken(),
       } as CUIClientAuth);
-      if (result.correlationId) {
-        //this is a blank if just to avoid eslint error about unused variable, but in future we will use the correlationId to link the data to the case in CCD
+      if (result.correlationId !== userCase?.id) {
+        // throw an error the data does not match the case
+        throw new Error('Correlation ID does not match case ID');
       }
-      // save data to ccd
-      //redirect to the confirmation page
+      req.session.userCase.claimantFlags = {
+        ...userCase.claimantFlags,
+        details: {
+          ...userCase.claimantFlags?.details,
+          ...result.replacementFlags,
+        },
+      } as unknown as CaseWithId['claimantFlags'];
+      return res.redirect(PageUrls.YOUR_SUPPORT_CONFIRMATION);
     } catch (error) {
       logger.error('Error retrieving CUI journey data', error);
       return res.redirect(PageUrls.HOME);

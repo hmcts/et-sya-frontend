@@ -56,7 +56,7 @@ export class S2SService implements IS2SService {
 }
 
 export const getS2SService = (): IS2SService => {
-  const endpoint = config.get<string>('services.s2s.endpoint');
+  const endpoint = config.get<string>('services.s2s.url');
   const secret = config.get<string>('services.s2s.secret');
   const serviceName = config.get<string>('services.s2s.serviceName');
   if (!endpoint || !secret || !serviceName) {
