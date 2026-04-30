@@ -1,14 +1,16 @@
 import { Response } from 'express';
 
-import { CaseStateCheck } from '../decorators/CaseStateCheck';
+//import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId } from '../definitions/case';
+//import { CaseFlags } from '../definitions/case';
 import { AuthUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
+//import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 //import { handlePostLogic } from './helpers/CaseHelpers';
 
+//import { getCaseApi } from './../services/CaseService';
 import {
   type CUIClientAuth,
   type CUIStartJourneyAuth,
@@ -53,6 +55,7 @@ export default class YourSupportController {
   //@CaseStateCheck()
   public redirectToCuiJourney = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
+    const caseId = String(userCase?.id ?? '');
     const logoutUrl = getServiceUrl(req, AuthUrls.LOGOUT);
     const cuiService = getCuiService(logoutUrl);
     req.session.errors = [];
@@ -70,7 +73,7 @@ export default class YourSupportController {
       const results = await cuiService.startJourney(
         {
           callbackUrl: getServiceUrl(req, PageUrls.YOUR_SUPPORT_CALLBACK),
-          correlationId: userCase?.id,
+          correlationId: caseId,
           existingFlags,
           language: getLanguageCode(req.url),
           masterFlagCode: 'RA0001',
@@ -99,6 +102,7 @@ export default class YourSupportController {
   public callback = async (req: AppRequest, res: Response): Promise<void> => {
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     const userCase = req.session?.userCase;
+    const caseId = String(userCase?.id ?? '');
 
     const logoutUrl = getServiceUrl(req, AuthUrls.LOGOUT);
     const cuiService = getCuiService(logoutUrl);
@@ -107,17 +111,37 @@ export default class YourSupportController {
       const result = await cuiService.getJourneyData(id, {
         serviceToken: await this.s2sService.getToken(),
       } as CUIClientAuth);
-      if (result.correlationId !== userCase?.id) {
+      if (result.correlationId !== caseId) {
         // throw an error the data does not match the case
         throw new Error('Correlation ID does not match case ID');
       }
-      req.session.userCase.claimantFlags = {
-        ...userCase.claimantFlags,
-        details: {
-          ...userCase.claimantFlags?.details,
-          ...result.replacementFlags,
-        },
-      } as unknown as CaseWithId['claimantFlags'];
+      if (result.action !== 'submit') {
+        // if the user did not complete the journey, redirect them back to the case page without updating anything
+        logger.info(
+          `CUI journey completed with action "${result.action}", redirecting back to case page without updating flags`
+        );
+        return res.redirect(PageUrls.CITIZEN_HUB.replace(':caseId', caseId));
+      }
+
+      console.log('CUI journey result:', JSON.stringify(result, null, 2));
+
+      if (!result.replacementFlags) {
+        throw new Error('CUI journey completed without replacement flags');
+      }
+
+      // const claimantFlags = {
+      //   ...userCase.claimantFlags,
+      //   ...result.replacementFlags,
+      //   details: result.replacementFlags.details ?? [],
+      // } as unknown as CaseFlags;
+
+      // req.session.userCase = {
+      //   ...userCase,
+      //   claimantFlags,
+      // };
+      //const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
+      //req.session.userCase = fromApiFormat(response.data);
+      //await this.saveSession(req);
       return res.redirect(PageUrls.YOUR_SUPPORT_CONFIRMATION);
     } catch (error) {
       logger.error('Error retrieving CUI journey data', error);
@@ -125,24 +149,34 @@ export default class YourSupportController {
     }
   };
 
-  @CaseStateCheck()
+  //@CaseStateCheck()
   public confirmation = async (req: AppRequest, res: Response): Promise<void> => {
-    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const userCase = req.session?.userCase;
+    const link = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
 
-    const logoutUrl = getServiceUrl(req, AuthUrls.LOGOUT);
-    const cuiService = getCuiService(logoutUrl);
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_SUPPORT_CONFIRMATION, { returnObjects: true }),
+    };
+    const sessionErrors = req.session?.errors || [];
+    req.session.errors = [];
 
-    try {
-      const result = await cuiService.getJourneyData(id, {
-        serviceToken: await this.s2sService.getToken(),
-      } as CUIClientAuth);
-      // save data to ccd
-      if (result) {
-        //this is a blank if just to avoid eslint error about unused variable, but in future we will use the correlationId to link the data to the case in CCD
-      }
-    } catch (error) {
-      logger.error('Error retrieving CUI journey data', error);
-      return res.redirect(PageUrls.HOME);
-    }
+    res.render('your-support-confirmation', {
+      ...translations,
+      sessionErrors,
+      link,
+    });
   };
+
+  /*   private saveSession(req: AppRequest): Promise<void> {
+    return new Promise((resolve, reject) => {
+      req.session.save(error => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
+      });
+    });
+  } */
 }

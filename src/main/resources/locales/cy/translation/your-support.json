@@ -1,7 +1,7 @@
 {
   "title": "Tell us if you need support",
   "h1": "Tell us if you need support",
-  "legend": "",
+  "legend": "Your Support",
   "p": "Some people need support to use HMCTS service. You can ask for:",
   "detailsSummary": {
     "p": "You can also tell us if you're able to attend a remote hearing.",
@@ -50,12 +50,10 @@
   "noSupport": "No - I do not need any extra support at this time",
   "adjustmentDetailTextLabel": "Tell us what support you need to request",
   "textAreaHint": "You can describe to us what you need",
+  "startNow": "Start now",
   "errors": {
     "yourSupportRedirect": {
       "required": "There was a problem starting your support request. Try again later."
-    },
-    "reasonableAdjustmentsDetail": {
-      "required": "Give details of the support you need"
     }
   }
 }

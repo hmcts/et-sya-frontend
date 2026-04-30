@@ -1,3 +1,4 @@
+import { CaseFlags } from '../case';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
@@ -31,6 +32,7 @@ interface CaseDataApiBody {
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
   claimantTse?: ClaimantTse;
+  claimantFlags?: CaseFlags;
 }
 
 export interface CreateCaseBody {

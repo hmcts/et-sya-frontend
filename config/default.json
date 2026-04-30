@@ -56,7 +56,7 @@
     "s2s": {
       "secret": "TO BE PICKED UP FROM ENV",
       "url": "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal",
-      "serviceName": "et-sya"
+      "serviceName": "et_sya"
     },
     "cui": {
       "endpoint": "https://cui-ra.aat.platform.hmcts.net",

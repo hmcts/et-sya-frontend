@@ -160,6 +160,7 @@ export const TranslationKeys = {
   YOUR_DETAILS_CYA: 'your-details-cya',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
   YOUR_SUPPORT: 'your-support',
+  YOUR_SUPPORT_CONFIRMATION: 'your-support-confirmation',
 } as const;
 
 export const PageUrls = {
