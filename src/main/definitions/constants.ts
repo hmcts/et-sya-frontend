@@ -60,6 +60,7 @@ export const TranslationKeys = {
   NOTICE_PERIOD_WORKING: 'notice-period-working',
   NOTICE_PERIOD_NO_LONGER_WORKING: 'notice-period-no-longer-working',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
+  STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS: 'steps-to-making-your-claim-non-hmcts',
   TYPE_OF_CLAIM: 'type-of-claim',
   REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
   DOCUMENTS: 'documents',
@@ -164,6 +165,7 @@ export const TranslationKeys = {
   REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
   REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
+  REPRESENTATIVE_COMMS_PREFERENCE: 'representative-comms-preference',
 } as const;
 
 export const PageUrls = {
@@ -315,6 +317,7 @@ export const PageUrls = {
   REPRESENTATIVE_POSTCODE_SELECT: '/representative-postcode-select',
   REPRESENTATIVE_ADDRESS_DETAILS: '/representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: '/representative-phone-number',
+  REPRESENTATIVE_COMMS_PREFERENCE: '/representative-comms-preference',
 } as const;
 
 export const InterceptPaths = {

@@ -97,7 +97,7 @@ describe(`POST ${PageUrls.REPRESENTATIVE_PHONE_NUMBER}`, () => {
       .send({ representativePhoneNumber: '07700 900 983' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
       });
   });
 
