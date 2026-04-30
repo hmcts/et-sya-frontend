@@ -16,7 +16,7 @@ const PAGE_URL = '/making-claim-as-legal-representative';
 const titleClass = 'govuk-heading-xl';
 const pClass = 'govuk-body';
 const expectedTitle = makingClaimAsLegalRepJson.title;
-const signOutLinkSelector = 'li.govuk-header__navigation-item a.govuk-header__link';
+const signOutLinkSelector = 'li.govuk-service-navigation__item a.govuk-service-navigation__link';
 
 let htmlRes: Document;
 describe('Making a claim as a legal representative page', () => {

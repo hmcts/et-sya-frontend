@@ -14,9 +14,15 @@ const logger = getLogger('ClaimantApplicationsController');
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.caseAssignmentFields = {}; // Clear case assignment flow fields
+    req.session.visitedAssignClaimFlow = true; // Allow navigation to CaseNumberController
+    req.session.caseNumberChecked = false;
+    req.session.yourDetailsVerified = false;
+
     if (req.query.src === 'nav-link' || req.query.src === 'side-bar-link') {
       logger.info('Navigate to Claimant applications page accessed via ' + req.query.src);
     }
+
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_APPLICATIONS,

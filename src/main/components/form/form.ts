@@ -7,14 +7,22 @@ import { setupCheckboxParser } from './parser';
 const WHITELISTED_FIELDS: string[] = ['_csrf'];
 
 export class Form {
-  constructor(private readonly fields: FormFields) {}
+  constructor(private readonly fields: FormFields) {
+    fields.hiddenErrorField = {
+      id: 'hiddenErrorField',
+      name: 'hiddenErrorField',
+      hidden: true,
+      type: 'text',
+      label: (l: AnyRecord): string => l.hiddenErrorFieldLabel,
+      labelHidden: true,
+    };
+  }
 
   /**
    * Pass the form body to any fields with a parser and return mutated body;
    */
-  public getParsedBody(body: AnyRecord, checkFields?: FormContent['fields']): Partial<CaseWithId> {
+  public getParsedBody<T = CaseWithId>(body: AnyRecord, checkFields?: FormContent['fields']): Partial<T> {
     const fields = checkFields || this.fields;
-
     const parsedBody = Object.entries(fields)
       .map(setupCheckboxParser(!!body?.saveForLater))
       .filter(([, field]) => typeof field?.parser === 'function')

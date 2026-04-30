@@ -5,17 +5,20 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
-{% block beforeContent %}
+{% block containerStart %}
   {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% include "back-link.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
       {% if selectedDecision !== undefined %}
         {{ govukSummaryList({
             rows: pageContent[0]
-           }) 
+           })
           }}
       {% endif %}
 
@@ -23,7 +26,7 @@
         <h1 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponseHeader }}</h1>
         {{ govukSummaryList({
                 rows: pageContent[1]
-                  }) 
+                  })
                 }}
       {% endif %}
 
@@ -31,14 +34,14 @@
         <h1 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h1>
         {{ govukSummaryList({
              rows: pageContent[2]
-               }) 
+               })
              }}
       {% endif %}
 
       {% if selectedJudgment !== undefined %}
         {{ govukSummaryList({
             rows: pageContent
-              }) 
+              })
             }}
       {% endif %}
 
