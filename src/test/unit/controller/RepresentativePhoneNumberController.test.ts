@@ -33,7 +33,7 @@ describe('Representative Phone Number Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
       expect(req.session.errors).toHaveLength(0);
     });
 
@@ -45,7 +45,7 @@ describe('Representative Phone Number Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
       expect(req.session.errors).toHaveLength(0);
     });
 
