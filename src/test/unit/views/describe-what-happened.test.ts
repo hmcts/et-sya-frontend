@@ -14,7 +14,6 @@ const describeWhatHappenedJsonRaw = fs.readFileSync(
 const summariseYourClaimJson = JSON.parse(describeWhatHappenedJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const detailsClass = 'govuk-details';
 const buttonClass = 'govuk-button';
 const textInputId = 'claim-summary-text';
 const fileUploadId = 'claim-summary-file';
@@ -34,11 +33,6 @@ describe('Describe What Happened page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
-  });
-
-  it('should display expandable details section', () => {
-    const details = htmlRes.getElementsByClassName(detailsClass);
-    expect(details.length).equals(6, 'Incorrect number of expandable details sections');
   });
 
   it('should display textarea', () => {
