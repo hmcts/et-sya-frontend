@@ -14,7 +14,8 @@ import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
-import { fillRepresentativeAddressFields } from '../helpers/RespondentHelpers';
+import { getEnterTitle } from '../helpers/RepresentedClaimantPostcodeHelper';
+import { fillRepresentedClaimantAddressFields } from '../helpers/RespondentHelpers';
 
 const logger = getLogger('RepresentedClaimantAddressDetailsController');
 
@@ -107,11 +108,12 @@ export default class RepresentedClaimantAddressDetailsController {
       TranslationKeys.ENTER_ADDRESS,
     ]);
     if (representedClaimantAddressTypes !== undefined) {
-      fillRepresentativeAddressFields(representedClaimantAddressTypes, req.session.userCase);
+      fillRepresentedClaimantAddressFields(representedClaimantAddressTypes, req.session.userCase);
     }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, {
       ...content,
+      title: getEnterTitle(req),
     });
   };
 }

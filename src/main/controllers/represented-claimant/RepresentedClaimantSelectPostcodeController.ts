@@ -16,16 +16,16 @@ import {
   getSelectTitle,
 } from '../helpers/RepresentedClaimantPostcodeHelper';
 
-const logger = getLogger('RepresentedClaimantPostcodeSelectController');
+const logger = getLogger('RepresentedClaimantSelectPostcodeController');
 
-export default class RepresentedClaimantPostcodeSelectController {
+export default class RepresentedClaimantSelectPostcodeController {
   private readonly form: Form;
   private readonly postCodeSelectContent: FormContent = {
     fields: {
       representedClaimantAddressTypes: {
         type: 'option',
         classes: 'govuk-select',
-        id: 'representativeAddressTypes',
+        id: 'representedClaimantAddressTypes',
         label: l => l.selectAddress,
         labelSize: 'xl',
         isPageHeading: true,
@@ -53,7 +53,7 @@ export default class RepresentedClaimantPostcodeSelectController {
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.REPRESENTED_CLAIMANT_POSTCODE_SELECT, {
+    res.render(TranslationKeys.REPRESENTED_CLAIMANT_SELECT_POSTCODE, {
       ...content,
       link: getLink(req),
       title: getSelectTitle(req),

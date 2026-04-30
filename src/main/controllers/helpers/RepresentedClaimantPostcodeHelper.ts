@@ -46,12 +46,12 @@ export const getLink = (req: AppRequest): string => {
 
 export const getEnterTitle = (req: AppRequest): string => {
   return req.url?.includes(languages.WELSH_URL_POSTFIX)
-    ? localesCy.representedClaimantPostcodeEnterTitle
-    : locales.representedClaimantPostcodeEnterTitle;
+    ? localesCy.representedClaimantEnterPostcodeTitle
+    : locales.representedClaimantEnterPostcodeTitle;
 };
 
 export const getSelectTitle = (req: AppRequest): string => {
   return req.url?.includes(languages.WELSH_URL_POSTFIX)
-    ? localesCy.representativePostcodeSelectTitle
-    : locales.representativePostcodeSelectTitle;
+    ? localesCy.representedClaimantSelectPostcodeTitle
+    : locales.representedClaimantSelectPostcodeTitle;
 };

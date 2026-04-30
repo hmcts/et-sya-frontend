@@ -234,7 +234,7 @@ export interface Case {
   repAddressCountry?: string;
   repAddressPostcode?: string;
   representativePhoneNumber?: string;
-  //Represented Claimant
+  // Represented Claimant
   representedClaimantEnterPostcode?: string;
   representedClaimantAddresses?: Record<string, string>[];
   representedClaimantAddressTypes?: AddressType[];
@@ -243,7 +243,7 @@ export interface Case {
   representedClaimantAddressTown?: string;
   representedClaimantAddressCountry?: string;
   representedClaimantAddressPostcode?: string;
-  representedClaimantPhoneNumber?: string;
+  representedClaimantEmail?: string;
 }
 
 export const enum StillWorking {

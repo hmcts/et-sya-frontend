@@ -153,7 +153,7 @@ import CitizenHubResponseFromRespondentController from '../../controllers/citize
 import RepresentedClaimantAddressDetailsController from '../../controllers/represented-claimant/RepresentedClaimantAddressDetailsController';
 import RepresentedClaimantEnterEmailController from '../../controllers/represented-claimant/RepresentedClaimantEnterEmailController';
 import RepresentedClaimantEnterPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantEnterPostcodeController';
-import RepresentedClaimantPostcodeSelectController from '../../controllers/represented-claimant/RepresentedClaimantPostcodeSelectController';
+import RepresentedClaimantSelectPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantSelectPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import { csrfProtection } from '../csrf';
@@ -485,8 +485,8 @@ export class Routes {
 
     app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().get);
-    app.post(PageUrls.REPRESENTED_CLAIMANT_POSTCODE_SELECT, new RepresentedClaimantPostcodeSelectController().post);
-    app.post(PageUrls.REPRESENTED_CLAIMANT_POSTCODE_SELECT, new RepresentedClaimantPostcodeSelectController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().post);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().get);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().get);

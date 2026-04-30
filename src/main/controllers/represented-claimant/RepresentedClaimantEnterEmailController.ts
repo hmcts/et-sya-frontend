@@ -49,7 +49,7 @@ export default class RepresentedClaimantEnterEmailController {
     const content = getPageContent(req, this.claimantEnterEmailContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.REPRESENTED_CLAIMANT_POSTCODE_SELECT, {
+    res.render(TranslationKeys.REPRESENTED_CLAIMANT_SELECT_POSTCODE, {
       ...content,
       link: getLink(req),
       title: getSelectTitle(req),

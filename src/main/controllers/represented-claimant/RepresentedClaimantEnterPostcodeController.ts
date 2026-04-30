@@ -11,7 +11,7 @@ import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 import { convertJsonArrayToTitleCase, handlePostLogic } from '../helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from '../helpers/FormHelpers';
-import { getLink, getSelectTitle } from '../helpers/RepresentedClaimantPostcodeHelper';
+import { getEnterTitle, getLink } from '../helpers/RepresentedClaimantPostcodeHelper';
 
 const logger = getLogger('RepresentedClaimantEnterPostcodeController');
 
@@ -40,7 +40,7 @@ export default class RepresentedClaimantEnterPostcodeController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE);
   };
 
   @CaseStateCheck()
@@ -54,7 +54,7 @@ export default class RepresentedClaimantEnterPostcodeController {
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ENTER_POSTCODE, {
       ...content,
       link: getLink(req),
-      title: getSelectTitle(req),
+      title: getEnterTitle(req),
     });
   };
 }
