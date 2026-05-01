@@ -9,7 +9,7 @@ const PAGE_URL = '/claim-details';
 const expectedTitle = 'Your claim details';
 const titleClass = 'govuk-heading-xl';
 const summaryListClass = 'govuk-summary-list';
-const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
+const heading2Class = 'govuk-heading-m';
 
 const et1FormUrlSelector = 'govuk-link';
 
@@ -65,15 +65,15 @@ describe('ET1 details', () => {
   });
 
   it('should display correct headings in the summary lists', () => {
-    const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
+    const summaryLists = htmlRes.getElementsByClassName(heading2Class);
 
-    expect(summaryLists[0].innerHTML).toMatch('Claim related information');
-    expect(summaryLists[1].innerHTML).toMatch('Application details');
-    expect(summaryLists[2].innerHTML).toMatch('Your details');
-    expect(summaryLists[3].innerHTML).toMatch('Employment details');
-    expect(summaryLists[4].innerHTML).toMatch('Respondent 1 details');
-    expect(summaryLists[5].innerHTML).toMatch('Respondent 2 details');
-    expect(summaryLists[6].innerHTML).toMatch('Claim details');
+    expect(summaryLists[2].innerHTML).toMatch('Claim related information');
+    expect(summaryLists[3].innerHTML).toMatch('Application details');
+    expect(summaryLists[4].innerHTML).toMatch('Your details');
+    expect(summaryLists[5].innerHTML).toMatch('Employment details');
+    expect(summaryLists[6].innerHTML).toMatch('Respondent 1 details');
+    expect(summaryLists[7].innerHTML).toMatch('Respondent 2 details');
+    expect(summaryLists[8].innerHTML).toMatch('Claim details');
   });
 });
 
