@@ -2,6 +2,8 @@ import RepresentativeCommsPrefController from '../../../main/controllers/Represe
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { FormFields, FormOptions, Label } from '../../../main/definitions/form';
+import { AnyRecord } from '../../../main/definitions/util-types';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -108,6 +110,42 @@ describe('RepresentativeCommsPrefController', () => {
       const controller = new RepresentativeCommsPrefController();
       const content = controller.getFormContent(CaseTypeId.SCOTLAND);
       expect(content.fields).not.toHaveProperty('claimantContactLanguagePreference');
+    });
+
+    it('should invoke Scotland field label and value lambdas', () => {
+      const controller = new RepresentativeCommsPrefController();
+      const content = controller.getFormContent(CaseTypeId.SCOTLAND);
+      const fields = content.fields as FormFields;
+      const field = fields['claimantContactPreference'] as FormOptions;
+      const l: AnyRecord = { label: 'Contact Preference', email: 'Email', post: 'Post' };
+      const callLabel = (lbl: Label): string => (typeof lbl === 'function' ? lbl(l) : lbl);
+      expect(callLabel(field.label)).toEqual('Contact Preference');
+      expect(callLabel(field.values[0].label)).toEqual('Email');
+      expect(callLabel(field.values[1].label)).toEqual('Post');
+    });
+
+    it('should invoke England/Wales additional field label and hint lambdas', () => {
+      const controller = new RepresentativeCommsPrefController();
+      const content = controller.getFormContent(CaseTypeId.ENGLAND_WALES);
+      const fields = content.fields as FormFields;
+      type RadioField = { label?: Label; hint?: Label; values: { label: Label }[] };
+      const langField = fields['claimantContactLanguagePreference'] as unknown as RadioField;
+      const hearingField = fields['claimantHearingLanguagePreference'] as unknown as RadioField;
+      const l: AnyRecord = {
+        languageLabel: 'Language',
+        languageHint: 'Choose',
+        hearingLabel: 'Hearing',
+        welsh: 'Welsh',
+        english: 'English',
+      };
+      const callLabel = (lbl: Label): string => (typeof lbl === 'function' ? lbl(l) : lbl);
+      expect(callLabel(langField.label)).toEqual('Language');
+      expect(callLabel(langField.hint)).toEqual('Choose');
+      expect(callLabel(langField.values[0].label)).toEqual('Welsh');
+      expect(callLabel(langField.values[1].label)).toEqual('English');
+      expect(callLabel(hearingField.label)).toEqual('Hearing');
+      expect(callLabel(hearingField.values[0].label)).toEqual('Welsh');
+      expect(callLabel(hearingField.values[1].label)).toEqual('English');
     });
   });
 
