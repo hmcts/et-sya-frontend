@@ -168,7 +168,7 @@ export const TranslationKeys = {
   REPRESENTED_CLAIMANT_ENTER_POSTCODE: 'represented-claimant-enter-postcode',
   REPRESENTED_CLAIMANT_SELECT_POSTCODE: 'represented-claimant-select-postcode',
   REPRESENTED_CLAIMANT_ADDRESS_DETAILS: 'represented-claimant-address-details',
-  REPRESENTED_CLAIMANT_ENTER_EMAIL: 'represented-claimant-phone-email',
+  REPRESENTED_CLAIMANT_ENTER_EMAIL: 'represented-claimant-enter-email',
 } as const;
 
 export const PageUrls = {

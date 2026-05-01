@@ -23,8 +23,8 @@ export default class RepresentedClaimantAddressDetailsController {
   private readonly form: Form;
   private readonly addressDetailsContent: FormContent = {
     fields: {
-      repAddress1: {
-        id: 'repAddress1',
+      representedClaimantAddress1: {
+        id: 'representedClaimantAddress1',
         name: 'address-line1',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -36,8 +36,8 @@ export default class RepresentedClaimantAddressDetailsController {
           maxLength: 150,
         },
       },
-      repAddress2: {
-        id: 'repAddress2',
+      representedClaimantAddress2: {
+        id: 'representedClaimantAddress2',
         name: 'address-line2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -49,8 +49,8 @@ export default class RepresentedClaimantAddressDetailsController {
         },
         validator: isValidAddressSecondLine,
       },
-      repAddressTown: {
-        id: 'repAddressTown',
+      representedClaimantAddressTown: {
+        id: 'representedClaimantAddressTown',
         name: 'address-town',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -62,8 +62,8 @@ export default class RepresentedClaimantAddressDetailsController {
         },
         validator: isValidCountryTownOrCity,
       },
-      repAddressCountry: {
-        id: 'repAddressCountry',
+      representedClaimantAddressCountry: {
+        id: 'representedClaimantAddressCountry',
         name: 'address-country',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -74,8 +74,8 @@ export default class RepresentedClaimantAddressDetailsController {
         },
         validator: isValidCountryTownOrCity,
       },
-      repAddressPostcode: {
-        id: 'repAddressPostcode',
+      representedClaimantAddressPostcode: {
+        id: 'representedClaimantAddressPostcode',
         name: 'address-postcode',
         type: 'text',
         classes: 'govuk-label govuk-input--width-10',
@@ -96,7 +96,7 @@ export default class RepresentedClaimantAddressDetailsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, true);
   };
 
   @CaseStateCheck()

@@ -1,0 +1,27 @@
+{
+  "title": "<place-holder>",
+  "pageHeader": "<place-holder>",
+  "addressLine1": "<place-holder>",
+  "addressLine2": "<place-holder>",
+  "town": "<place-holder>",
+  "country": "<place-holder>",
+  "postcode": "<place-holder>",
+  "errors": {
+    "representedClaimantAddress1": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "representedClaimantAddress2": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "representedClaimantAddressTown": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "representedClaimantAddressCountry": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
+}

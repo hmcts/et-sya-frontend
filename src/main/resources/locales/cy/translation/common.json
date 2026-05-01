@@ -117,6 +117,13 @@
     },
     "representativeAddressTypes": {
       "notSelected": "Dewiswch gyfeiriad"
+    },
+    "representedClaimantEnterPostcode": {
+      "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA",
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA"
+    },
+    "representedClaimantAddressTypes": {
+      "notSelected": "Dewiswch gyfeiriad"
     }
   },
   "selectAddress": "Dewiswch gyfeiriad",
