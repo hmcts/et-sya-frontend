@@ -54,12 +54,15 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workEnterPostcode = req.session.userCase.workEnterPostcode;
       const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
       const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
+      const representativeEnterPostcode = req.session.userCase.representativeEnterPostcode;
       const addressAddresses = req.session.userCase.addressAddresses;
       const workAddresses = req.session.userCase.workAddresses;
       const respondentAddresses = req.session.userCase.respondentAddresses;
+      const representativeAddresses = req.session.userCase.representativeAddresses;
       const workAddressTypes = req.session.userCase.workAddressTypes;
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
+      const representativeAddressTypes = req.session.userCase.representativeAddressTypes;
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       if (req.session.userCase.addressEnterPostcode === undefined) {
@@ -68,12 +71,17 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       if (req.session.userCase.respondentEnterPostcode === undefined) {
         req.session.userCase.respondentEnterPostcode = respondentEnterPostcode;
       }
+      if (req.session.userCase.representativeEnterPostcode === undefined) {
+        req.session.userCase.representativeEnterPostcode = representativeEnterPostcode;
+      }
       req.session.userCase.addressAddresses = addressAddresses;
       req.session.userCase.workAddresses = workAddresses;
       req.session.userCase.respondentAddresses = respondentAddresses;
+      req.session.userCase.representativeAddresses = representativeAddresses;
       req.session.userCase.workAddressTypes = workAddressTypes;
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
+      req.session.userCase.representativeAddressTypes = representativeAddressTypes;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {

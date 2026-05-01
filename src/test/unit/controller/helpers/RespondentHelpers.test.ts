@@ -1,10 +1,17 @@
 import {
   fillAddressAddressFields,
+  fillRepresentativeAddressFields,
   fillRespondentAddressFields,
   fillWorkAddressFields,
+  getRespondentIndex,
+  getRespondentRedirectUrl,
+  getRespondentsWithRemoved,
+  mapSelectedRespondentValuesToCase,
+  setNumbersToRespondents,
   setUserCaseForRespondent,
 } from '../../../../main/controllers/helpers/RespondentHelpers';
-import { CaseWithId } from '../../../../main/definitions/case';
+import { CaseWithId, Respondent } from '../../../../main/definitions/case';
+import { ErrorPages, PageUrls } from '../../../../main/definitions/constants';
 import { mockSession } from '../../mocks/mockApp';
 import { mockForm, mockFormField, mockValidationCheckWithOutError } from '../../mocks/mockForm';
 import { mockRequest } from '../../mocks/mockRequest';
@@ -104,5 +111,141 @@ describe('fillRespondentAddressFields', () => {
     expect(userCase.respondentAddressTown).toStrictEqual('London');
     expect(userCase.respondentAddressCountry).toStrictEqual('England');
     expect(userCase.respondentAddressPostcode).toStrictEqual('SW1A 1AA');
+  });
+});
+
+describe('fillRepresentativeAddressFields', () => {
+  const addresses = [
+    {
+      fullAddress: '10 Rep Lane, Bristol, BS1 1AA',
+      street1: '10 Rep Lane',
+      street2: 'Floor 2',
+      town: 'Bristol',
+      county: 'Avon',
+      postcode: 'BS1 1AA',
+      country: 'England',
+    },
+  ];
+
+  it('should map representative address fields to userCase', () => {
+    const userCase = { representativeAddresses: addresses } as unknown as CaseWithId;
+    fillRepresentativeAddressFields(0, userCase);
+    expect(userCase.repAddress1).toStrictEqual('10 Rep Lane');
+    expect(userCase.repAddress2).toStrictEqual('Floor 2');
+    expect(userCase.repAddressTown).toStrictEqual('Bristol');
+    expect(userCase.repAddressCountry).toStrictEqual('England');
+    expect(userCase.repAddressPostcode).toStrictEqual('BS1 1AA');
+  });
+
+  it('should not map fields when x is an object', () => {
+    const userCase = { representativeAddresses: addresses } as unknown as CaseWithId;
+    fillRepresentativeAddressFields({} as unknown, userCase);
+    expect(userCase.repAddress1).toBeUndefined();
+  });
+});
+
+describe('mapSelectedRespondentValuesToCase', () => {
+  it('should copy respondent values to userCase top-level fields', () => {
+    const userCase = {
+      respondents: [
+        {
+          respondentName: 'Acme Corp',
+          respondentAddress1: '1 Corp St',
+          respondentAddress2: 'Suite 1',
+          respondentAddressTown: 'London',
+          respondentAddressCountry: 'England',
+          respondentAddressPostcode: 'EC1A 1BB',
+          acasCert: 'Yes',
+          acasCertNum: 'A123456/20/12345',
+          noAcasReason: undefined,
+        },
+      ],
+    } as unknown as CaseWithId;
+
+    mapSelectedRespondentValuesToCase(0, userCase);
+
+    expect(userCase.respondentName).toStrictEqual('Acme Corp');
+    expect(userCase.respondentAddress1).toStrictEqual('1 Corp St');
+    expect(userCase.acasCert).toStrictEqual('Yes');
+    expect(userCase.acasCertNum).toStrictEqual('A123456/20/12345');
+  });
+
+  it('should not throw when userCase is undefined', () => {
+    expect(() => mapSelectedRespondentValuesToCase(0, undefined)).not.toThrow();
+  });
+
+  it('should not throw when respondents is undefined', () => {
+    const userCase = {} as CaseWithId;
+    expect(() => mapSelectedRespondentValuesToCase(0, userCase)).not.toThrow();
+  });
+});
+
+describe('getRespondentsWithRemoved', () => {
+  it('should remove the respondent at the given index', () => {
+    const respondents: Respondent[] = [
+      { respondentNumber: 1, respondentName: 'First' },
+      { respondentNumber: 2, respondentName: 'Second' },
+      { respondentNumber: 3, respondentName: 'Third' },
+    ] as Respondent[];
+
+    const result = getRespondentsWithRemoved(respondents, 1);
+    expect(result).toHaveLength(2);
+    expect(result[0].respondentName).toStrictEqual('First');
+    expect(result[1].respondentName).toStrictEqual('Third');
+  });
+});
+
+describe('setNumbersToRespondents', () => {
+  it('should assign sequential respondent numbers starting from 1', () => {
+    const respondents: Respondent[] = [{} as Respondent, {} as Respondent, {} as Respondent];
+    setNumbersToRespondents(respondents);
+    expect(respondents[0].respondentNumber).toBe(1);
+    expect(respondents[1].respondentNumber).toBe(2);
+    expect(respondents[2].respondentNumber).toBe(3);
+  });
+
+  it('should not throw when respondents is empty', () => {
+    expect(() => setNumbersToRespondents([])).not.toThrow();
+  });
+
+  it('should not throw when respondents is undefined', () => {
+    expect(() => setNumbersToRespondents(undefined)).not.toThrow();
+  });
+});
+
+describe('getRespondentIndex', () => {
+  it('should return zero-based index from respondentNumber param', () => {
+    const req = mockRequest({});
+    req.params = { respondentNumber: '3' };
+    expect(getRespondentIndex(req)).toBe(2);
+  });
+
+  it('should return 0 for respondentNumber "1"', () => {
+    const req = mockRequest({});
+    req.params = { respondentNumber: '1' };
+    expect(getRespondentIndex(req)).toBe(0);
+  });
+});
+
+describe('getRespondentRedirectUrl', () => {
+  it('should return a valid respondent URL for respondent 1 with respondent-name page', () => {
+    const result = getRespondentRedirectUrl(1, PageUrls.RESPONDENT_NAME);
+    expect(result).toContain('/respondent/1');
+    expect(result).toContain(PageUrls.RESPONDENT_NAME);
+  });
+
+  it('should return NOT_FOUND for an invalid combination', () => {
+    const result = getRespondentRedirectUrl(99, '/nonexistent-page');
+    expect(result).toEqual(ErrorPages.NOT_FOUND);
+  });
+
+  it('should return Welsh URL when Welsh language parameter is appended', () => {
+    const result = getRespondentRedirectUrl(1, PageUrls.RESPONDENT_NAME + '?lng=cy');
+    expect(result).toContain('lng=cy');
+  });
+
+  it('should return English URL when English language parameter is appended', () => {
+    const result = getRespondentRedirectUrl(1, PageUrls.RESPONDENT_NAME + '?lng=en');
+    expect(result).toContain('lng=en');
   });
 });
