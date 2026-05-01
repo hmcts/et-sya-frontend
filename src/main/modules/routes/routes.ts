@@ -85,6 +85,7 @@ import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RepresentativeAddressDetailsController from '../../controllers/RepresentativeAddressDetailsController';
+import RepresentativeCommsPrefController from '../../controllers/RepresentativeCommsPrefController';
 import RepresentativeDetailsController from '../../controllers/RepresentativeDetailsController';
 import RepresentativePhoneNumberController from '../../controllers/RepresentativePhoneNumberController';
 import RepresentativePostCodeEnterController from '../../controllers/RepresentativePostCodeEnterController';
@@ -114,6 +115,7 @@ import SexAndTitleController from '../../controllers/SexAndTitleController';
 import SingleOrMultipleController from '../../controllers/SingleOrMultipleController';
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
+import StepsToMakingYourClaimNonHmctsController from '../../controllers/StepsToMakingYourClaimNonHmctsController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import StoreRespondentController from '../../controllers/StoreRespondentController';
 import StoreTseController from '../../controllers/StoreTseController';
@@ -238,6 +240,7 @@ export class Routes {
     app.get(PageUrls.VIDEO_HEARINGS, new VideoHearingsController().get);
     app.post(PageUrls.VIDEO_HEARINGS, new VideoHearingsController().post);
     app.get(PageUrls.CLAIM_STEPS, new StepsToMakingYourClaimController().get);
+    app.get(PageUrls.CLAIM_STEPS_NON_HMCTS, new StepsToMakingYourClaimNonHmctsController().get);
     app.get(PageUrls.CLAIM_SAVED, new ClaimSavedController().get);
     app.get(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().get);
     app.post(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().post);
@@ -491,7 +494,6 @@ export class Routes {
     app.post(PageUrls.REPRESENTATIVE_ADDRESS_DETAILS, new RepresentativeAddressDetailsController().post);
     app.get(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().get);
     app.post(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().post);
-
     app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().post);
@@ -500,5 +502,7 @@ export class Routes {
     app.post(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().post);
+    app.get(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().get);
+    app.post(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().post);
   }
 }

@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
+import { YesOrNo } from '../../definitions/case';
 import {
   DefaultValues,
   ErrorPages,
@@ -166,4 +167,10 @@ export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery 
 
 export const isReturnUrlIsCheckAnswers = (req: AppRequest): boolean => {
   return req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS);
+};
+
+export const getClaimStepsUrl = (req: AppRequest): string => {
+  return req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+    ? PageUrls.CLAIM_STEPS_NON_HMCTS
+    : PageUrls.CLAIM_STEPS;
 };
