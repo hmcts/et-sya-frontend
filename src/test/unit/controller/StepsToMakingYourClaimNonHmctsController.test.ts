@@ -1,8 +1,9 @@
 import StepsToMakingYourClaimNonHmctsController from '../../../main/controllers/StepsToMakingYourClaimNonHmctsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
+import { EmailOrPost, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { TypesOfClaim } from '../../../main/definitions/definition';
+import { TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import { AnyRecord } from '../../../main/definitions/util-types';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -215,6 +216,62 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
       const section4 = renderArgs.sections[3];
       expect(section4.links[0].url).toContain(PageUrls.TYPE_OF_CLAIM);
       expect(section4.links[1].url).toContain(PageUrls.TELL_US_WHAT_YOU_WANT);
+    });
+
+    it('should invoke title and linkTxt lambdas for all sections', () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const response = mockResponse();
+      const request = mockRequest({ t });
+      controller.get(request, response);
+      const { sections } = (response.render as jest.Mock).mock.calls[0][1];
+      const l = {
+        section1: { title: 'S1', link1Text: 'L1', link2Text: 'L2' },
+        section2: { title: 'S2', link1Text: 'L3' },
+        section3: { title: 'S3', link1Text: 'L4', link2Text: 'L5' },
+        section4: { title: 'S4', link1Text: 'L6', link2Text: 'L7' },
+        section5: { title: 'S5', link1Text: 'L8' },
+      };
+      type SectionLink = { linkTxt: (l: AnyRecord) => string };
+      type Section = { title: (l: AnyRecord) => string; links: SectionLink[] };
+      (sections as Section[]).forEach(section => {
+        expect(section.title(l)).toBeTruthy();
+        section.links.forEach(link => expect(link.linkTxt(l)).toBeTruthy());
+      });
+    });
+
+    it('should invoke status lambdas for all section links', () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const response = mockResponse();
+      const request = mockRequest({
+        t,
+        userCase: {
+          representativeName: 'Jane',
+          claimantContactPreference: EmailOrPost.EMAIL,
+          dobDate: { year: '1990', month: '01', day: '01' },
+          respondents: [{ respondentName: 'Acme' }],
+          claimSummaryText: 'summary',
+          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+        },
+      });
+      controller.get(request, response);
+      const { sections } = (response.render as jest.Mock).mock.calls[0][1];
+      type StatusLink = { status: () => string };
+      type StatusSection = { links: StatusLink[] };
+      (sections as StatusSection[]).forEach(section =>
+        section.links.forEach(link => expect(link.status()).toBeDefined())
+      );
+    });
+
+    it('should invoke section 3 respondents length status lambda', () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const response = mockResponse();
+      const request = mockRequest({
+        t,
+        userCase: { respondents: [{ respondentName: 'Acme' }, { respondentName: 'Beta' }] },
+      });
+      controller.get(request, response);
+      const { sections } = (response.render as jest.Mock).mock.calls[0][1];
+      expect(sections[2].links[1].status()).toBeDefined();
     });
   });
 });

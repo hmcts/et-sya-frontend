@@ -18,6 +18,76 @@ import { mockRequest } from '../../mocks/mockRequest';
 import { userCaseWith4Respondents } from '../../mocks/mockUserCaseWithRespondent';
 
 describe('setUserCaseForRespondent', () => {
+  const makeField = (name: string) =>
+    mockFormField(name, name, 'text', 'value', mockValidationCheckWithOutError(), name);
+
+  it('should initialise userCase when it is undefined', () => {
+    const req = mockRequest({ body: { testFormField: 'value' } });
+    req.session.userCase = undefined;
+    req.params = { respondentNumber: '1' };
+    const form = mockForm({ testFormField: makeField('testFormField') });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase).toBeDefined();
+  });
+
+  it('should create first respondent when respondents array is undefined', () => {
+    const req = mockRequest({ body: { testFormField: 'value' } });
+    req.session.userCase.respondents = undefined;
+    req.params = { respondentNumber: '1' };
+    const form = mockForm({ testFormField: makeField('testFormField') });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.respondents).toHaveLength(1);
+    expect(req.session.userCase.respondents[0].respondentNumber).toEqual(1);
+  });
+
+  it('should clear acasCertNum when acasCert is NO', () => {
+    const req = mockRequest({ body: { acasCert: 'No', acasCertNum: 'A123' } });
+    req.session.userCase.respondents = [{ respondentNumber: 1 }] as Respondent[];
+    req.params = { respondentNumber: '1' };
+    const acasCertField = makeField('acasCert');
+    const acasCertNumField = makeField('acasCertNum');
+    const form = mockForm({ acasCert: acasCertField, acasCertNum: acasCertNumField });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.respondents[0].acasCertNum).toBeUndefined();
+  });
+
+  it('should clear noAcasReason when acasCert is YES', () => {
+    const req = mockRequest({ body: { acasCert: 'Yes', noAcasReason: 'Reason' } });
+    req.session.userCase.respondents = [{ respondentNumber: 1 }] as Respondent[];
+    req.params = { respondentNumber: '1' };
+    const acasCertField = makeField('acasCert');
+    const noAcasReasonField = makeField('noAcasReason');
+    const form = mockForm({ acasCert: acasCertField, noAcasReason: noAcasReasonField });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.respondents[0].noAcasReason).toBeUndefined();
+  });
+
+  it('should set workAddressTypes and workEnterPostcode when present in body', () => {
+    const req = mockRequest({ body: { workAddressTypes: '1', workEnterPostcode: 'SW1A 1AA' } });
+    req.session.userCase.respondents = [{ respondentNumber: 1 }] as Respondent[];
+    req.params = { respondentNumber: '1' };
+    const form = mockForm({
+      workAddressTypes: makeField('workAddressTypes'),
+      workEnterPostcode: makeField('workEnterPostcode'),
+    });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.workAddressTypes).toEqual('1');
+    expect(req.session.userCase.workEnterPostcode).toEqual('SW1A 1AA');
+  });
+
+  it('should set respondentAddressTypes and respondentEnterPostcode when present in body', () => {
+    const req = mockRequest({ body: { respondentAddressTypes: '0', respondentEnterPostcode: 'EC1A 1BB' } });
+    req.session.userCase.respondents = [{ respondentNumber: 1 }] as Respondent[];
+    req.params = { respondentNumber: '1' };
+    const form = mockForm({
+      respondentAddressTypes: makeField('respondentAddressTypes'),
+      respondentEnterPostcode: makeField('respondentEnterPostcode'),
+    });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.respondentAddressTypes).toEqual('0');
+    expect(req.session.userCase.respondentEnterPostcode).toEqual('EC1A 1BB');
+  });
+
   it('should add new respondent to request when number of respondents is less than selectedRespondentIndex', () => {
     const req = mockRequest({
       session: mockSession([], [], []),

@@ -5,6 +5,7 @@ import {
   conditionalRedirect,
   getClaimStepsUrl,
   getLanguageParam,
+  getParsedUrl,
   handleSaveAsDraft,
   isReturnUrlIsCheckAnswers,
   returnNextPage,
@@ -180,6 +181,40 @@ describe('Router Helpers - returnValidUrl', () => {
     const result = returnValidUrl(PageUrls.CLAIM_SAVED + '?lng=en');
     expect(result).toContain(PageUrls.CLAIM_SAVED);
     expect(result).toContain('lng=en');
+  });
+
+  it('should return a dynamic URL for a valid VALID_DYNAMIC_URL_BASES path with numeric segment', () => {
+    const result = returnValidUrl('/respondent/1/acas-cert-num');
+    expect(result).toEqual('/respondent/1/acas-cert-num');
+  });
+
+  it('should return a dynamic URL with preserved query parameters', () => {
+    const result = returnValidUrl('/respondent/1/acas-cert-num?lng=en');
+    expect(result).toContain('/respondent/1/acas-cert-num');
+    expect(result).toContain('lng=en');
+  });
+
+  it('should return the ET1 base URL path when it starts with ET1_BASE_URL', () => {
+    const originalEnv = process.env.ET1_BASE_URL;
+    process.env.ET1_BASE_URL = 'http://et1.test';
+    const result = returnValidUrl('http://et1.test/some-path');
+    expect(result).toEqual('http://et1.test/some-path');
+    process.env.ET1_BASE_URL = originalEnv;
+  });
+});
+
+describe('Router Helpers - getParsedUrl', () => {
+  beforeEach(() => jest.restoreAllMocks());
+
+  it('should parse a relative URL and return a UrlWithStringQuery object', () => {
+    const result = getParsedUrl('/some-page?lng=en');
+    expect(result.pathname).toEqual('/some-page');
+    expect(result.query).toEqual('lng=en');
+  });
+
+  it('should parse an absolute URL and expose the host', () => {
+    const result = getParsedUrl('http://example.com/page');
+    expect(result.host).toEqual('example.com');
   });
 });
 
