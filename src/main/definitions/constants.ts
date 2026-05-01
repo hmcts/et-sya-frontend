@@ -63,6 +63,7 @@ export const TranslationKeys = {
   STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS: 'steps-to-making-your-claim-non-hmcts',
   TYPE_OF_CLAIM: 'type-of-claim',
   REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
+  REASONABLE_ADJUSTMENTS_NON_HMCTS: 'reasonable-adjustments-non-hmcts',
   DOCUMENTS: 'documents',
   COMMUNICATING: 'communicating',
   SUPPORT: 'support',
