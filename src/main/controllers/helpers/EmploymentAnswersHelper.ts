@@ -99,8 +99,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
 
   employmentDetails.push({
     key: {
-      text: translations.employmentDetails.header,
-      classes: 'govuk-summary-list__key govuk-heading-m',
+      html: '<h2 class="govuk-heading-m">' + translations.employmentDetails.header + '</h2>',
     },
     value: {},
   });

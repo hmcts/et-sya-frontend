@@ -78,8 +78,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
   rows.push(
     {
       key: {
-        text: translations.personalDetails.header,
-        classes: 'govuk-summary-list__key govuk-heading-m',
+        html: '<h2 class="govuk-heading-m">' + translations.personalDetails.header + '</h2>',
       },
       value: {},
     },
