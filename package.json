@@ -174,7 +174,6 @@
     "minizlib": "^3.1.0",
     "semver": "^7.5.2",
     "jsdom": "^29.0.0",
-    "js-beautify/glob": "11.1.0",
     "shelljs": "^0.10.0",
     "merge": "^2.1.1",
     "basic-ftp": "^5.2.0",
