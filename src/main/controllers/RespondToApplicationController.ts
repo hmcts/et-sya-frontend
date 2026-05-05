@@ -71,6 +71,11 @@ export default class RespondToApplicationController {
 
     const selectedApplication = req.session.userCase.selectedGenericTseApplication;
 
+    if (!selectedApplication) {
+      logger.warn(`no selectedGenericTseApplication found in session for caseId: ${req.session.userCase?.id}`);
+      return res.redirect('/not-found');
+    }
+
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
     const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);

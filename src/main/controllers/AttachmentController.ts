@@ -29,6 +29,11 @@ export default class AttachmentController {
       return res.redirect('/not-found');
     }
 
+    if (!userCase) {
+      logger.warn('no userCase found in session');
+      return res.redirect('/not-found');
+    }
+
     if (
       docId === getDocId(userCase.contactApplicationFile?.document_url) ||
       docId === getDocId(userCase.supportingMaterialFile?.document_url) ||
