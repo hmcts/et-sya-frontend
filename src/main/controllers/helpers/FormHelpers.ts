@@ -110,6 +110,9 @@ const formatDate = (rawDate: Date): string =>
   }).format(new Date(rawDate));
 
 export const createLabelForHearing = (hearing: HearingModel): string => {
+  if (!hearing?.value) {
+    return;
+  }
   // filter out hearings with dates in the past
   // hearings can have multiple dates set so
   // reduce to find the earliest date set for that particular hearing
