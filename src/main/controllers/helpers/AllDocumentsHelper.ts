@@ -34,8 +34,11 @@ export const isDocFromJudgement = (req: AppRequest, docId: string): boolean => {
 export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean => {
   if (isApplicationSummaryPage(req.session.documentDownloadPage)) {
     const selectedApplication = req.session?.userCase.selectedGenericTseApplication;
+    if (!selectedApplication) {
+      return false;
+    }
     if (
-      docId === getDocId(selectedApplication?.value.documentUpload?.document_url) ||
+      docId === getDocId(selectedApplication.value.documentUpload?.document_url) ||
       docId === getDecisionDocId(req, selectedApplication) ||
       isValidResponseDocId(docId, selectedApplication.value.respondCollection) ||
       isValidResponseDocId(docId, selectedApplication.value.respondStoredCollection)
