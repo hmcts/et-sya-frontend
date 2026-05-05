@@ -86,6 +86,7 @@ import PrepareDocumentsController from '../../controllers/PrepareDocumentsContro
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RepresentativeAddressDetailsController from '../../controllers/RepresentativeAddressDetailsController';
 import RepresentativeCommsPrefController from '../../controllers/RepresentativeCommsPrefController';
+import RepresentativeDetailsCheckController from '../../controllers/RepresentativeDetailsCheckController';
 import RepresentativeDetailsController from '../../controllers/RepresentativeDetailsController';
 import RepresentativePhoneNumberController from '../../controllers/RepresentativePhoneNumberController';
 import RepresentativePostCodeEnterController from '../../controllers/RepresentativePostCodeEnterController';
@@ -492,5 +493,7 @@ export class Routes {
     app.post(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().post);
     app.get(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().get);
     app.post(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().post);
+    app.get(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().get);
+    app.post(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().post);
   }
 }

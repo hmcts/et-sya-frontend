@@ -64,7 +64,11 @@ export default class ReasonableAdjustmentsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.PERSONAL_DETAILS_CHECK);
+    const nextPage =
+      req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+        ? PageUrls.REPRESENTATIVE_DETAILS_CHECK
+        : PageUrls.PERSONAL_DETAILS_CHECK;
+    await handlePostLogic(req, res, this.form, logger, nextPage);
   };
 
   @CaseStateCheck()

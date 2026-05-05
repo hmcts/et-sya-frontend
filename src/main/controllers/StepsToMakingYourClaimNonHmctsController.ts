@@ -22,6 +22,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
     const { userCase } = req.session;
 
     const allSectionsCompleted = !!(
+      userCase?.representativeDetailsCheck === YesOrNo.YES &&
       userCase?.personalDetailsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
       userCase?.claimDetailsCheck === YesOrNo.YES
@@ -34,12 +35,13 @@ export default class StepsToMakingYourClaimNonHmctsController {
           {
             url: setUrlLanguage(req, PageUrls.REPRESENTATIVE_DETAILS.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link1Text,
-            status: (): string => getSectionStatus(undefined, userCase?.representativeName),
+            status: (): string => getSectionStatus(userCase?.representativeDetailsCheck, userCase?.representativeName),
           },
           {
             url: setUrlLanguage(req, PageUrls.REPRESENTATIVE_COMMS_PREFERENCE.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
-            status: (): string => getSectionStatus(undefined, userCase?.claimantContactPreference),
+            status: (): string =>
+              getSectionStatus(userCase?.representativeDetailsCheck, userCase?.claimantContactPreference),
           },
         ],
       },
