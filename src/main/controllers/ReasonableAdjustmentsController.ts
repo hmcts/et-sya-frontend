@@ -69,10 +69,11 @@ export default class ReasonableAdjustmentsController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.reasonableAdjustmentsContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.REASONABLE_ADJUSTMENTS,
-    ]);
+    const isRepresented = req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES;
+    const translationKey = isRepresented
+      ? TranslationKeys.REASONABLE_ADJUSTMENTS_NON_HMCTS
+      : TranslationKeys.REASONABLE_ADJUSTMENTS;
+    const content = getPageContent(req, this.reasonableAdjustmentsContent, [TranslationKeys.COMMON, translationKey]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('reasonable-adjustments', {
       ...content,
