@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
-import { ContactTheTribunalHelper } from './helpers/ContactTheTribunalHelper';
+import { isClaimantRepresentedByOrganisation } from './helpers/ContactTheTribunalHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -153,7 +153,7 @@ export default class ContactTheTribunalSelectedController {
       return;
     }
 
-    if (ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(req.session.userCase)) {
+    if (isClaimantRepresentedByOrganisation(req.session.userCase)) {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
