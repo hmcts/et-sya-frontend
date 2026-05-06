@@ -26,8 +26,10 @@ export default class RepresentativeDetailsController {
         labelSize: 'm',
         values: [
           { label: (l: AnyRecord): string => l.selectAType, value: '' },
-          { label: (l: AnyRecord): string => l.employmentAdvisor, value: 'Employment Advisor' },
-          { label: (l: AnyRecord): string => l.citizensAdviceBureau, value: 'Citizens Advice Bureau' },
+          {
+            label: (l: AnyRecord): string => l.employmentAdvisorOrCab,
+            value: 'Employment Advisor, Citizens Advice Bureau',
+          },
           { label: (l: AnyRecord): string => l.freeRepresentationUnit, value: 'Free Representation Unit' },
           { label: (l: AnyRecord): string => l.lawCentre, value: 'Law Centre' },
           { label: (l: AnyRecord): string => l.tradeUnion, value: 'Trade Union' },
