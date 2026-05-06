@@ -1,0 +1,9 @@
+{
+  "title": "Did the claimant have a written contract?",
+  "heading": "Did the claimant have a written contract?",
+  "errors": {
+    "claimantWrittenContract": {
+      "required": "Tell us if the claimant had a written contract"
+    }
+  }
+}

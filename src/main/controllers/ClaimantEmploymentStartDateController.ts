@@ -37,7 +37,7 @@ export default class ClaimantEmploymentStartDateController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.NOTICE_PERIOD);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT);
   };
 
   @CaseStateCheck()

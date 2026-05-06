@@ -54,6 +54,7 @@ import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyContro
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
+import DidClaimantHaveWrittenContractController from '../../controllers/DidClaimantHaveWrittenContractController';
 import DidClaimantWorkForEmployerController from '../../controllers/DidClaimantWorkForEmployerController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -267,6 +268,8 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS, new ClaimantEmploymentDetailsController().post);
     app.get(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().get);
     app.post(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().post);
+    app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
+    app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);

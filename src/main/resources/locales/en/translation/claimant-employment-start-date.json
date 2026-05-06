@@ -1,8 +1,10 @@
 {
   "title": "Employment start date",
-  "label": "Employment start date",
-  "legend": "When did the claimant start their employment?",
+  "label": "When did their employment start?",
+  "legend": "When did their employment start? (optional)",
   "h1": "Employment start date",
+  "p1": "Tell us when the claimant started working for the respondent.",
+  "p2": "If you don't know the exact date, then enter their best estimate.",
   "hint": "For example, 27 3 2007",
   "errors": {
     "startDate": {

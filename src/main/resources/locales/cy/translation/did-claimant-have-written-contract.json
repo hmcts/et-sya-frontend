@@ -1,0 +1,9 @@
+{
+  "title": "A oedd gan yr hawlydd gontract ysgrifenedig?",
+  "heading": "A oedd gan yr hawlydd gontract ysgrifenedig?",
+  "errors": {
+    "claimantWrittenContract": {
+      "required": "Dywedwch wrthym a oedd gan yr hawlydd gontract ysgrifenedig"
+    }
+  }
+}

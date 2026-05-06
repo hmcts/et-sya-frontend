@@ -1,8 +1,10 @@
 {
   "title": "Dyddiad dechrau cyflogaeth",
-  "label": "Dyddiad dechrau cyflogaeth",
-  "legend": "Pryd dechreuodd yr hawlydd eu cyflogaeth?",
+  "label": "Pryd dechreuodd eu cyflogaeth?",
+  "legend": "Pryd dechreuodd eu cyflogaeth? (dewisol)",
   "h1": "Dyddiad dechrau cyflogaeth",
+  "p1": "Dywedwch wrthym pryd dechreuodd yr hawlydd weithio i'r atebydd.",
+  "p2": "Os nad ydych yn gwybod y dyddiad union, nodwch eu hamcangyfrif gorau.",
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "startDate": {
