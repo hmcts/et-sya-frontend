@@ -155,6 +155,7 @@ export default {
   linkedCases: YesOrNo.YES,
   linkedCasesDetail: 'Linked Cases Detail',
   claimDetailsCheck: YesOrNo.YES,
+  representativeDetailsCheck: undefined,
   claimantWorkAddressQuestion: YesOrNo.YES,
   workAddress1: 'Respondent Address',
   workAddress2: 'That Road',

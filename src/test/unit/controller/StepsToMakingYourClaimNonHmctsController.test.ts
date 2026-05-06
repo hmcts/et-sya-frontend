@@ -155,6 +155,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
       const request = mockRequest({
         t,
         userCase: {
+          representativeDetailsCheck: YesOrNo.YES,
           personalDetailsCheck: YesOrNo.YES,
           employmentAndRespondentCheck: YesOrNo.YES,
           claimDetailsCheck: YesOrNo.YES,

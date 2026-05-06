@@ -167,6 +167,7 @@ export const TranslationKeys = {
   REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
   REPRESENTATIVE_COMMS_PREFERENCE: 'representative-comms-preference',
+  REPRESENTATIVE_DETAILS_CHECK: 'representative-details-check',
 } as const;
 
 export const PageUrls = {
@@ -319,6 +320,7 @@ export const PageUrls = {
   REPRESENTATIVE_ADDRESS_DETAILS: '/representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: '/representative-phone-number',
   REPRESENTATIVE_COMMS_PREFERENCE: '/representative-comms-preference',
+  REPRESENTATIVE_DETAILS_CHECK: '/representative-details-check',
 } as const;
 
 export const InterceptPaths = {

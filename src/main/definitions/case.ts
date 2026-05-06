@@ -125,6 +125,7 @@ export interface Case {
   whistleblowingEntityName?: string;
   linkedCases?: YesOrNo;
   linkedCasesDetail?: string;
+  representativeDetailsCheck?: YesOrNo;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
