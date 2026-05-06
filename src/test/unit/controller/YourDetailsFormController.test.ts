@@ -53,7 +53,7 @@ describe('YourDetailsFormController', () => {
     const body = {
       ethosCaseReference: '1234567/2025',
       id: '1234567890123456',
-      claimantName: 'John Doe',
+      claimantName: 'John Test Doe',
     };
     const controller = new YourDetailsFormController();
 
@@ -89,7 +89,7 @@ describe('YourDetailsFormController', () => {
   });
 
   it('should preserve claimantName when there are errors', async () => {
-    const body = { ethosCaseReference: '', id: '', claimantName: 'John Doe' };
+    const body = { ethosCaseReference: '', id: '', claimantName: 'John Test Doe' };
     const controller = new YourDetailsFormController();
 
     const req = mockRequest({ body });
@@ -100,7 +100,8 @@ describe('YourDetailsFormController', () => {
 
     expect(req.session.caseAssignmentFields.ethosCaseReference).toEqual('');
     expect(req.session.caseAssignmentFields.id).toEqual('');
-    expect(req.session.caseAssignmentFields.claimantName).toEqual('John Doe');
+    expect(req.session.caseAssignmentFields.firstName).toEqual('John Test');
+    expect(req.session.caseAssignmentFields.lastName).toEqual('Doe');
   });
 
   it('should redirect back to self with invalid case details error when case data is not found', async () => {
