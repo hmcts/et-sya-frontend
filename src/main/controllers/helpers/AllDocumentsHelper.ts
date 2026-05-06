@@ -34,7 +34,7 @@ export const isDocFromJudgement = (req: AppRequest, docId: string): boolean => {
 export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean => {
   if (isApplicationSummaryPage(req.session.documentDownloadPage)) {
     const selectedApplication = req.session?.userCase.selectedGenericTseApplication;
-    if (!selectedApplication) {
+    if (!selectedApplication?.value) {
       return false;
     }
     if (
