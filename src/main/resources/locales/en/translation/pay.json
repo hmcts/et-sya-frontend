@@ -4,8 +4,8 @@
   "p1": "For some types of claim, the tribunal will need the average of your last 12 weeks' pay. Provide your best estimate for your average weekly pay. You will be able to correct it later if needed. Providing your pay information will help the tribunal progress your claim.",
   "p2": "You can get information from payslips. Include any overtime payments, commission and bonuses.",
   "p3": "This page is optional but if you choose to tell us your pay then you will have to tell us if you are paid weekly, monthly or annually.",
-  "payBeforeTax": "Enter your pay BEFORE tax and National Insurance amount, in pounds",
-  "payAfterTax": "Enter your pay AFTER tax and National Insurance amount, in pounds",
+  "payBeforeTax": "Enter your pay BEFORE tax and National Insurance amount in pounds",
+  "payAfterTax": "Enter your pay AFTER tax and National Insurance amount in pounds",
   "weeklyMonthlyAnnual": "Is this your weekly, monthly or annual pay?",
   "errors": {
     "payBeforeTax": {
