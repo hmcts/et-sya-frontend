@@ -40,7 +40,8 @@ describe("Representative's details page", () => {
   it('should display all dropdown options', () => {
     const options = htmlRes.getElementsByTagName('option');
     const optionTexts = Array.from(options).map(o => o.innerHTML.trim());
-    expect(optionTexts).to.include('Employment advisor, Citizens Advice Bureau');
+    expect(optionTexts).to.include('Employment advisor');
+    expect(optionTexts).to.include('Citizens Advice Bureau');
     expect(optionTexts).to.include('Free Representation Unit');
     expect(optionTexts).to.include('Law centre');
     expect(optionTexts).to.include('Trade union');
