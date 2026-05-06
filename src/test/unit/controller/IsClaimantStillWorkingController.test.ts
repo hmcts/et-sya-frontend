@@ -21,7 +21,7 @@ describe('IsClaimantStillWorkingController', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.IS_CLAIMANT_STILL_WORKING, expect.anything());
   });
 
-  it('should redirect to JOB_TITLE when claimant is still working', async () => {
+  it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when claimant is still working', async () => {
     const body = { isStillWorking: StillWorking.WORKING };
     const controller = new IsClaimantStillWorkingController();
     const req = mockRequest({ body });
@@ -29,7 +29,7 @@ describe('IsClaimantStillWorkingController', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
   });
 
   it('should redirect to NOTICE_END when claimant is working a notice period', async () => {
@@ -54,7 +54,7 @@ describe('IsClaimantStillWorkingController', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
   });
 
-  it('should redirect to JOB_TITLE when no value is submitted', async () => {
+  it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when no value is submitted', async () => {
     const body = { isStillWorking: '' };
     const controller = new IsClaimantStillWorkingController();
     const req = mockRequest({ body });
@@ -62,7 +62,7 @@ describe('IsClaimantStillWorkingController', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
   });
 
   it('should save isStillWorking to session userCase', async () => {

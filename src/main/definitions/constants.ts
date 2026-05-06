@@ -170,6 +170,8 @@ export const TranslationKeys = {
   REPRESENTATIVE_DETAILS_CHECK: 'representative-details-check',
   DID_CLAIMANT_WORK_FOR_EMPLOYER: 'did-claimant-work-for-employer',
   IS_CLAIMANT_STILL_WORKING: 'is-claimant-still-working',
+  CLAIMANT_EMPLOYMENT_DETAILS: 'claimant-employment-details',
+  CLAIMANT_EMPLOYMENT_START_DATE: 'claimant-employment-start-date',
 } as const;
 
 export const PageUrls = {
@@ -190,6 +192,8 @@ export const PageUrls = {
   STILL_WORKING: '/are-you-still-working',
   DID_CLAIMANT_WORK_FOR_EMPLOYER: '/did-claimant-work-for-employer',
   IS_CLAIMANT_STILL_WORKING: '/is-claimant-still-working',
+  CLAIMANT_EMPLOYMENT_DETAILS: '/claimant-employment-details',
+  CLAIMANT_EMPLOYMENT_START_DATE: '/claimant-employment-start-date',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
   DOB_DETAILS: '/dob-details',

@@ -40,6 +40,8 @@ import ClaimSubmittedController from '../../controllers/ClaimSubmittedController
 import ClaimTypeDiscriminationController from '../../controllers/ClaimTypeDiscriminationController';
 import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
+import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
+import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
@@ -261,6 +263,10 @@ export class Routes {
     app.post(PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER, new DidClaimantWorkForEmployerController().post);
     app.get(PageUrls.IS_CLAIMANT_STILL_WORKING, new IsClaimantStillWorkingController().get);
     app.post(PageUrls.IS_CLAIMANT_STILL_WORKING, new IsClaimantStillWorkingController().post);
+    app.get(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS, new ClaimantEmploymentDetailsController().get);
+    app.post(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS, new ClaimantEmploymentDetailsController().post);
+    app.get(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().get);
+    app.post(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);

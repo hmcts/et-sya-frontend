@@ -1,0 +1,24 @@
+{
+  "title": "Employment start date",
+  "label": "Employment start date",
+  "legend": "When did the claimant start their employment?",
+  "h1": "Employment start date",
+  "hint": "For example, 27 3 2007",
+  "errors": {
+    "startDate": {
+      "required": "Tell us when the claimant started work. For example, 23 04 2014",
+      "dayRequired": "Enter a day for the claimant's start date. For example, 23",
+      "monthRequired": "Enter a month for the claimant's start date. For example, 04",
+      "yearRequired": "Enter a year for the claimant's start date. For example, 2014",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2014",
+      "dayInvalid": "Day must be between 1 and 31",
+      "monthInvalid": "Month must be between 1 and 12",
+      "invalidDate": "You have entered an invalid date. Enter the date using the following format: 22 04 2014",
+      "yearInvalid": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
+      "invalidDateInFuture": "Date entered must be in the past",
+      "invalidDateTooFarInPast": "You have entered a year which is too far in the past"
+    }
+  }
+}

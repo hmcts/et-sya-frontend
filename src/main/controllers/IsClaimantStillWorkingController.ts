@@ -73,7 +73,7 @@ export default class IsClaimantStillWorkingController {
     } else if (req.body.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     } else {
-      redirectUrl = PageUrls.JOB_TITLE;
+      redirectUrl = PageUrls.CLAIMANT_EMPLOYMENT_DETAILS;
     }
 
     await handlePostLogic(req, res, this.form, logger, redirectUrl);

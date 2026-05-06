@@ -1,0 +1,11 @@
+{
+  "title": "Employment details",
+  "h1": "Employment details",
+  "hint": "Tell us what role the claimant had at the time of the dispute",
+  "jobTitle": "Job title (optional)",
+  "errors": {
+    "jobTitle": {
+      "invalid-length": "Job title must be between 2 and 100 characters"
+    }
+  }
+}
