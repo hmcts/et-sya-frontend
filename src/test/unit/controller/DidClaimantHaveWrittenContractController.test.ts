@@ -43,7 +43,7 @@ describe('DidClaimantHaveWrittenContractController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to NOTICE_PERIOD when Yes is selected', async () => {
+    it('should redirect to CLAIMANT_NOTICE_TYPE when Yes is selected (AC2)', async () => {
       const body = { claimantWrittenContract: YesOrNo.YES };
       const controller = new DidClaimantHaveWrittenContractController();
       const req = mockRequest({ body });
@@ -51,10 +51,10 @@ describe('DidClaimantHaveWrittenContractController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_TYPE);
     });
 
-    it('should redirect to NOTICE_PERIOD when No is selected', async () => {
+    it('should redirect to CLAIMANT_AVERAGE_WEEKLY_HOURS when No is selected (AC3)', async () => {
       const body = { claimantWrittenContract: YesOrNo.NO };
       const controller = new DidClaimantHaveWrittenContractController();
       const req = mockRequest({ body });
@@ -62,10 +62,10 @@ describe('DidClaimantHaveWrittenContractController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS);
     });
 
-    it('should redirect to NOTICE_PERIOD when no value is submitted', async () => {
+    it('should redirect to CLAIMANT_AVERAGE_WEEKLY_HOURS when no answer is given (AC3)', async () => {
       const body = { claimantWrittenContract: '' };
       const controller = new DidClaimantHaveWrittenContractController();
       const req = mockRequest({ body });
@@ -73,7 +73,7 @@ describe('DidClaimantHaveWrittenContractController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS);
     });
 
     it('should save Yes to session userCase', async () => {

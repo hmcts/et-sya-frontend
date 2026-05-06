@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantHaveWrittenContractController');
 
@@ -48,7 +49,10 @@ export default class DidClaimantHaveWrittenContractController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.NOTICE_PERIOD);
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+      ? PageUrls.CLAIMANT_NOTICE_TYPE
+      : PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

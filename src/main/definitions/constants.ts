@@ -173,6 +173,8 @@ export const TranslationKeys = {
   CLAIMANT_EMPLOYMENT_DETAILS: 'claimant-employment-details',
   CLAIMANT_EMPLOYMENT_START_DATE: 'claimant-employment-start-date',
   DID_CLAIMANT_HAVE_WRITTEN_CONTRACT: 'did-claimant-have-written-contract',
+  CLAIMANT_NOTICE_TYPE: 'claimant-notice-type',
+  CLAIMANT_AVERAGE_WEEKLY_HOURS: 'claimant-average-weekly-hours',
 } as const;
 
 export const PageUrls = {
@@ -196,6 +198,8 @@ export const PageUrls = {
   CLAIMANT_EMPLOYMENT_DETAILS: '/claimant-employment-details',
   CLAIMANT_EMPLOYMENT_START_DATE: '/claimant-employment-start-date',
   DID_CLAIMANT_HAVE_WRITTEN_CONTRACT: '/did-claimant-have-written-contract',
+  CLAIMANT_NOTICE_TYPE: '/claimant-notice-type',
+  CLAIMANT_AVERAGE_WEEKLY_HOURS: '/claimant-average-weekly-hours',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
   DOB_DETAILS: '/dob-details',

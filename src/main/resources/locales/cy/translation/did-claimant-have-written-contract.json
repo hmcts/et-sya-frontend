@@ -1,9 +1,12 @@
 {
-  "title": "A oedd gan yr hawlydd gontract ysgrifenedig?",
-  "heading": "A oedd gan yr hawlydd gontract ysgrifenedig?",
+  "title": "A oes gan yr hawlydd gontract ysgrifenedig gyda chyfnod rhybudd?",
+  "heading": "A oes gan yr hawlydd gontract ysgrifenedig gyda chyfnod rhybudd? (dewisol)",
+  "h1": "A oes gan yr hawlydd gontract ysgrifenedig gyda chyfnod rhybudd? (dewisol)",
+  "label": "A oes gan yr hawlydd gontract ysgrifenedig gyda chyfnod rhybudd?",
+  "legend": "A oes gan yr hawlydd gontract ysgrifenedig gyda chyfnod rhybudd? (dewisol)",
   "errors": {
     "claimantWrittenContract": {
-      "required": "Dywedwch wrthym a oedd gan yr hawlydd gontract ysgrifenedig"
+      "required": "Dywedwch wrthym a oes gan yr hawlydd gontract ysgrifenedig gyda chyfnod rhybudd"
     }
   }
 }
