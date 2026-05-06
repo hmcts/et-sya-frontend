@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
-import { claimantRepresented } from '../../main/definitions/case';
+import { YesOrNo, claimantRepresented } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -18,7 +18,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
   test("should return the Single or Multiple claims page when (no) 'representing myself' is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
-      .send({ claimantRepresentedQuestion: claimantRepresented.CLAIMING_FOR_MYSELF })
+      .send({ claimantRepresentedQuestion: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_JURISDICTION_SELECTION);

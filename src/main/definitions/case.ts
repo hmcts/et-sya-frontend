@@ -352,8 +352,6 @@ export interface Representative {
 }
 
 export const enum claimantRepresented {
-  CLAIMING_FOR_MYSELF = 'Claiming for myself',
-  CLAIMING_FOR_SOMEONE_ELSE = 'Claiming for someone else',
   LEGAL_REP = 'Legal representative representing a claimant',
 }
 

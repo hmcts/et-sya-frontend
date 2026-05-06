@@ -1,5 +1,5 @@
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
-import { claimantRepresented } from '../../../main/definitions/case';
+import { YesOrNo, claimantRepresented } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -28,7 +28,7 @@ describe('Litigation in Person or Representative Controller', () => {
   });
 
   it("should redirect to Jurisdiction Selection when 'CLAIMING_FOR_MYSELF' is selected", () => {
-    const body = { claimantRepresentedQuestion: claimantRepresented.CLAIMING_FOR_MYSELF };
+    const body = { claimantRepresentedQuestion: YesOrNo.NO };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
@@ -40,7 +40,7 @@ describe('Litigation in Person or Representative Controller', () => {
   });
 
   it("should redirect to Jurisdiction Selection when 'CLAIMING_FOR_SOMEONE_ELSE' is selected", () => {
-    const body = { claimantRepresentedQuestion: claimantRepresented.CLAIMING_FOR_SOMEONE_ELSE };
+    const body = { claimantRepresentedQuestion: YesOrNo.NO };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
