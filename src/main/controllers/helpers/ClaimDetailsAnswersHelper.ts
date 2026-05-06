@@ -48,8 +48,7 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
 
   claimDetails.push({
     key: {
-      text: translations.claimDetails.header,
-      classes: 'govuk-summary-list__key govuk-heading-m',
+      html: '<h2 class="govuk-heading-m">' + translations.claimDetails.header + '</h2>',
     },
     value: {},
   });

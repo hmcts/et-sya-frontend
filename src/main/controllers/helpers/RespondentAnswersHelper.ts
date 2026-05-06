@@ -47,28 +47,22 @@ export const getRespondentSection = (
   if (index === 1 || !addRemoveButton) {
     respondentSections.push({
       key: {
-        text: respondentTitle(index, translations, languageParam),
-        classes: 'govuk-heading-m',
+        html: '<h2 class="govuk-heading-m">' + respondentTitle(index, translations, languageParam) + '</h2>',
       },
-      value: {
-        text: '',
-      },
+      value: {},
     });
   } else {
     respondentSections.push({
       key: {
-        text: respondentTitle(index, translations, languageParam),
-        classes: 'govuk-heading-m',
+        html: '<h2 class="govuk-heading-m">' + respondentTitle(index, translations, languageParam) + '</h2>',
       },
-      value: {
-        text: '',
-      },
+      value: {},
       actions: {
         items: [
           {
             href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam + '&redirect=answers',
-            text: translations.removeRespondent,
-            visuallyHiddenText: translations.removeRespondent,
+            text: translations.removeRespondent + ' ' + index,
+            visuallyHiddenText: translations.removeRespondent + ' ' + index,
           },
         ],
       },

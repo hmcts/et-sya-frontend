@@ -65,21 +65,18 @@ describe('getRespondentSection', () => {
     const result = getRespondentSection(userCase, respondent, 2, translations, '?lang=en', true);
     expect(result).toStrictEqual([
       {
+        key: {
+          html: '<h2 class="govuk-heading-m">Respondent 2 details</h2>',
+        },
+        value: {},
         actions: {
           items: [
             {
               href: '/respondent/2/respondent-remove?lang=en&redirect=answers',
-              text: 'Remove respondent',
-              visuallyHiddenText: 'Remove respondent',
+              text: 'Remove respondent 2',
+              visuallyHiddenText: 'Remove respondent 2',
             },
           ],
-        },
-        key: {
-          classes: 'govuk-heading-m',
-          text: 'Respondent 2 details',
-        },
-        value: {
-          text: '',
         },
       },
       {
@@ -148,12 +145,9 @@ describe('getRespondentSection', () => {
     expect(result).toStrictEqual([
       {
         key: {
-          classes: 'govuk-heading-m',
-          text: 'Respondent 1 details',
+          html: '<h2 class="govuk-heading-m">Respondent 1 details</h2>',
         },
-        value: {
-          text: '',
-        },
+        value: {},
       },
       {
         actions: {

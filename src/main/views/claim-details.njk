@@ -31,7 +31,7 @@
       </dl>
 
       {% if userCase.acknowledgementOfClaimLetterDetail.length or userCase.rejectionOfClaimDocumentDetail.length or userCase.genericTseApplicationCollection.length %}
-        <div class="govuk-summary-list__key govuk-heading-m">{{ claimRelatedInfo }}</div>
+        <h2 class="govuk-heading-m">{{ claimRelatedInfo }}</h2>
       {% endif %}
 
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
@@ -104,8 +104,10 @@
 
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key govuk-heading-m">
-            {{ applicationDetails.header }}
+          <dt class="govuk-summary-list__key">
+            <h2 class="govuk-heading-m">
+              {{ applicationDetails.header }}
+            </h2>
           </dt>
         </div>
         <div class="govuk-summary-list__row">

@@ -11,7 +11,7 @@ const expectedTitle = 'Check your answers';
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
 const summaryListClass = 'govuk-summary-list';
-const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
+const heading2Class = 'govuk-heading-m';
 const summaryListKeyExcludeHeadingClass = '.govuk-summary-list__key:not(.govuk-heading-m)';
 const summaryListLinkClass = 'govuk-link';
 
@@ -70,42 +70,42 @@ describe('Check your answers confirmation page', () => {
   });
 
   it('should display correct headings in the summary lists', () => {
-    const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
-    expect(summaryLists[0].innerHTML).contains('Application details', 'List heading not found');
-    expect(summaryLists[1].innerHTML).contains('Your details', 'List heading not found');
-    expect(summaryLists[2].innerHTML).contains('Employment details', 'List heading not found');
-    expect(summaryLists[3].innerHTML).contains('Respondent 1 details', 'List heading not found');
-    expect(summaryLists[4].innerHTML).contains('Claim details', 'List heading not found');
+    const summaryLists = htmlRes.getElementsByClassName(heading2Class);
+    expect(summaryLists[2].innerHTML).contains('Application details', 'List heading not found');
+    expect(summaryLists[3].innerHTML).contains('Your details', 'List heading not found');
+    expect(summaryLists[4].innerHTML).contains('Employment details', 'List heading not found');
+    expect(summaryLists[5].innerHTML).contains('Respondent 1 details', 'List heading not found');
+    expect(summaryLists[6].innerHTML).contains('Claim details', 'List heading not found');
   });
 
-  it('should display 1 row in Application details summary list', () => {
+  it('should display 1 + 1 row in Application details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const typeOfClaimList = summaryListSections[0].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(typeOfClaimList.length).equals(1, 'Incorrect number of rows found');
+    expect(typeOfClaimList.length).equals(2, 'Incorrect number of rows found');
   });
 
-  it('should display 10 rows in Your Details summary list', () => {
+  it('should display 10 + 1 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(11, 'Incorrect number of rows found');
   });
 
-  it('should display 13 rows in Employment Details summary list', () => {
+  it('should display 13 + 1 rows in Employment Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const employmentDetailsList = summaryListSections[2].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(employmentDetailsList.length).equals(13, 'Incorrect number of rows found');
+    expect(employmentDetailsList.length).equals(14, 'Incorrect number of rows found');
   });
 
-  it('should display 6 rows in Respondent Details summary list', () => {
+  it('should display 6 + 1 rows in Respondent Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const respondentDetailsList = summaryListSections[3].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(respondentDetailsList.length).equals(6, 'Incorrect number of rows found');
+    expect(respondentDetailsList.length).equals(7, 'Incorrect number of rows found');
   });
 
-  it('should display 6 rows in Claim Details summary list', () => {
+  it('should display 7 + 1 rows in Claim Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const claimDetailsList = summaryListSections[4].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(claimDetailsList.length).equals(7, 'Incorrect number of rows found');
+    expect(claimDetailsList.length).equals(8, 'Incorrect number of rows found');
   });
 
   it('should display correct url in the change buttons for Application details row', () => {
@@ -270,10 +270,10 @@ describe('CYA for Scottish cases', () => {
       });
   });
 
-  it('should display 8 rows in Your Details summary list', () => {
+  it('should display 8 + 1 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(9, 'Incorrect number of rows found');
   });
 });
 
