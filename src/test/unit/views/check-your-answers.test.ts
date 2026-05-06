@@ -11,7 +11,7 @@ const expectedTitle = 'Check your answers';
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
 const summaryListClass = 'govuk-summary-list';
-const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
+const heading2Class = 'govuk-heading-l';
 const summaryListKeyExcludeHeadingClass = '.govuk-summary-list__key:not(.govuk-heading-m)';
 const summaryListLinkClass = 'govuk-link';
 
@@ -70,7 +70,7 @@ describe('Check your answers confirmation page', () => {
   });
 
   it('should display correct headings in the summary lists', () => {
-    const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
+    const summaryLists = htmlRes.getElementsByClassName(heading2Class);
     expect(summaryLists[0].innerHTML).contains('Application details', 'List heading not found');
     expect(summaryLists[1].innerHTML).contains('Your details', 'List heading not found');
     expect(summaryLists[2].innerHTML).contains('Employment details', 'List heading not found');
