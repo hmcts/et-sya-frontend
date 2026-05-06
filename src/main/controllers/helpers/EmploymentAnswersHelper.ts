@@ -97,14 +97,6 @@ const getTranslationsEmployeeBenefits = (userCase: CaseWithId, translations: Any
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const employmentDetails = [];
 
-  employmentDetails.push({
-    key: {
-      text: translations.employmentDetails.header,
-      classes: 'govuk-summary-list__key govuk-heading-m',
-    },
-    value: {},
-  });
-
   if (userCase.pastEmployer !== YesOrNo.YES || !userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
     employmentDetails.push(
       addSummaryRow(
