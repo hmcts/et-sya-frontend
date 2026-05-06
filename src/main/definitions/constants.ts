@@ -168,6 +168,8 @@ export const TranslationKeys = {
   REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
   REPRESENTATIVE_COMMS_PREFERENCE: 'representative-comms-preference',
   REPRESENTATIVE_DETAILS_CHECK: 'representative-details-check',
+  DID_CLAIMANT_WORK_FOR_EMPLOYER: 'did-claimant-work-for-employer',
+  IS_CLAIMANT_STILL_WORKING: 'is-claimant-still-working',
 } as const;
 
 export const PageUrls = {
@@ -186,6 +188,8 @@ export const PageUrls = {
   ACAS_MULTIPLE_CLAIM: '/do-you-have-an-acas-no-many-resps',
   VALID_ACAS_REASON: '/do-you-have-a-valid-no-acas-reason',
   STILL_WORKING: '/are-you-still-working',
+  DID_CLAIMANT_WORK_FOR_EMPLOYER: '/did-claimant-work-for-employer',
+  IS_CLAIMANT_STILL_WORKING: '/is-claimant-still-working',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
   DOB_DETAILS: '/dob-details',

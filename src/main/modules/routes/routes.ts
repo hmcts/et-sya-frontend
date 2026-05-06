@@ -52,6 +52,7 @@ import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyContro
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
+import DidClaimantWorkForEmployerController from '../../controllers/DidClaimantWorkForEmployerController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
@@ -62,6 +63,7 @@ import HearingDetailsController from '../../controllers/HearingDetailsController
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
 import HomeController from '../../controllers/HomeController';
+import IsClaimantStillWorkingController from '../../controllers/IsClaimantStillWorkingController';
 import JobTitleController from '../../controllers/JobTitleController';
 import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
 import LinkedCasesController from '../../controllers/LinkedCasesController';
@@ -255,6 +257,10 @@ export class Routes {
     app.post(PageUrls.TYPE_OF_CLAIM, new TypeOfClaimController().post);
     app.get(PageUrls.PAST_EMPLOYER, new PastEmployerController().get);
     app.post(PageUrls.PAST_EMPLOYER, new PastEmployerController().post);
+    app.get(PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER, new DidClaimantWorkForEmployerController().get);
+    app.post(PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER, new DidClaimantWorkForEmployerController().post);
+    app.get(PageUrls.IS_CLAIMANT_STILL_WORKING, new IsClaimantStillWorkingController().get);
+    app.post(PageUrls.IS_CLAIMANT_STILL_WORKING, new IsClaimantStillWorkingController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);

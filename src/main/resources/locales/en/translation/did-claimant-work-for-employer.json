@@ -1,0 +1,9 @@
+{
+  "title": "Did the claimant work for the organisation or person you're making a claim against?",
+  "heading": "Did the claimant work for the organisation or person you're making a claim against?",
+  "errors": {
+    "pastEmployer": {
+      "required": "Tell us if the claimant worked for the organisation or person"
+    }
+  }
+}

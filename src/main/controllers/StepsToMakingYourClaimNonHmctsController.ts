@@ -59,7 +59,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
         title: (l: AnyRecord): string => l.section3.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.PAST_EMPLOYER.toString()),
+            url: setUrlLanguage(req, PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER.toString()),
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
             status: (): string =>
               getSectionStatusForEmployment(
@@ -112,7 +112,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
 
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       req.session.userCase.pastEmployer = YesOrNo.YES;
-      sections[2].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
+      sections[2].links[0].url = setUrlLanguage(req, PageUrls.IS_CLAIMANT_STILL_WORKING.toString());
     }
 
     const paramId = req.params.id;

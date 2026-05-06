@@ -118,7 +118,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
 
       const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       const employmentSection = renderArgs.sections[2];
-      expect(employmentSection.links[0].url).toContain(PageUrls.STILL_WORKING);
+      expect(employmentSection.links[0].url).toContain(PageUrls.IS_CLAIMANT_STILL_WORKING);
     });
 
     it('should set pastEmployer to YES when UNFAIR_DISMISSAL type of claim is selected', () => {
@@ -146,7 +146,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
 
       const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       const employmentSection = renderArgs.sections[2];
-      expect(employmentSection.links[0].url).toContain(PageUrls.PAST_EMPLOYER);
+      expect(employmentSection.links[0].url).toContain(PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER);
     });
 
     it('should set section 5 link to PCQ when all sections are completed', () => {
