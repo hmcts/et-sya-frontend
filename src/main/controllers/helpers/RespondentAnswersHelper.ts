@@ -20,7 +20,7 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
   }
 };
 
-const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
+export const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
   if (languageParam === languages.WELSH_URL_PARAMETER) {
     return (
       translations.respondentDetails.details[0].toUpperCase() +
@@ -38,42 +38,9 @@ export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,
   index: number,
-  translations: AnyRecord,
-  languageParam: string,
-  addRemoveButton: boolean
+  translations: AnyRecord
 ): SummaryListRow[] => {
   const respondentSections: SummaryListRow[] = [];
-
-  if (index === 1 || !addRemoveButton) {
-    respondentSections.push({
-      key: {
-        text: respondentTitle(index, translations, languageParam),
-        classes: 'govuk-heading-m',
-      },
-      value: {
-        text: '',
-      },
-    });
-  } else {
-    respondentSections.push({
-      key: {
-        text: respondentTitle(index, translations, languageParam),
-        classes: 'govuk-heading-m',
-      },
-      value: {
-        text: '',
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam + '&redirect=answers',
-            text: translations.removeRespondent,
-            visuallyHiddenText: translations.removeRespondent,
-          },
-        ],
-      },
-    });
-  }
 
   respondentSections.push({
     key: {

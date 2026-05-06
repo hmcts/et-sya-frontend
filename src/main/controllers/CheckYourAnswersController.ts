@@ -7,7 +7,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
-import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { getRespondentSection, respondentTitle } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
@@ -50,6 +50,7 @@ export default class CheckYourAnswersController {
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
+      respondentTitle,
       claimDetailsSection: getClaimDetails(userCase, translations),
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),

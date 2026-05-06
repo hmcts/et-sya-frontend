@@ -12,7 +12,7 @@ import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
-import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { getRespondentSection, respondentTitle } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
@@ -77,6 +77,7 @@ export default class ClaimDetailsController {
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
+      respondentTitle,
       languageParam: getLanguageParam(req.url),
       claimDetailsSection: getClaimDetails(userCase, translations),
       et1Documents,
