@@ -1,0 +1,13 @@
+{
+  "title": "Oriau wythnosol cyfartalog yr hawlydd",
+  "h1": "Oriau wythnosol cyfartalog yr hawlydd (dewisol)",
+  "enterAverageHours": "Nodwch oriau wythnosol cyfartalog",
+  "errors": {
+    "avgWeeklyHrs": {
+      "invalid": "Nodwch oriau wythnosol cyfartalog mewn fformat dilys, er enghraifft 0, 10, 35 etc",
+      "exceeded": "Rhaid i'r oriau fod yn llai na 168 (uchafswm nifer yr oriau mewn wythnos)",
+      "notANumber": "Rhaid nodi oriau a weithiwyd mewn wythnos fel rhif, er enghraifft 0, 10, 35 etc.",
+      "negativeNumber": "Ni all oriau a weithiwyd fod yn werth negatif. Rhaid ei nodi fel rhif, er enghraifft 0, 10, 35 etc."
+    }
+  }
+}

@@ -40,6 +40,10 @@ import ClaimSubmittedController from '../../controllers/ClaimSubmittedController
 import ClaimTypeDiscriminationController from '../../controllers/ClaimTypeDiscriminationController';
 import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
+import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
+import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
+import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
+import ClaimantNoticeTypeController from '../../controllers/ClaimantNoticeTypeController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
@@ -52,6 +56,8 @@ import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyContro
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
+import DidClaimantHaveWrittenContractController from '../../controllers/DidClaimantHaveWrittenContractController';
+import DidClaimantWorkForEmployerController from '../../controllers/DidClaimantWorkForEmployerController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
@@ -62,6 +68,7 @@ import HearingDetailsController from '../../controllers/HearingDetailsController
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
 import HomeController from '../../controllers/HomeController';
+import IsClaimantStillWorkingController from '../../controllers/IsClaimantStillWorkingController';
 import JobTitleController from '../../controllers/JobTitleController';
 import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
 import LinkedCasesController from '../../controllers/LinkedCasesController';
@@ -255,6 +262,20 @@ export class Routes {
     app.post(PageUrls.TYPE_OF_CLAIM, new TypeOfClaimController().post);
     app.get(PageUrls.PAST_EMPLOYER, new PastEmployerController().get);
     app.post(PageUrls.PAST_EMPLOYER, new PastEmployerController().post);
+    app.get(PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER, new DidClaimantWorkForEmployerController().get);
+    app.post(PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER, new DidClaimantWorkForEmployerController().post);
+    app.get(PageUrls.IS_CLAIMANT_STILL_WORKING, new IsClaimantStillWorkingController().get);
+    app.post(PageUrls.IS_CLAIMANT_STILL_WORKING, new IsClaimantStillWorkingController().post);
+    app.get(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS, new ClaimantEmploymentDetailsController().get);
+    app.post(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS, new ClaimantEmploymentDetailsController().post);
+    app.get(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().get);
+    app.post(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().post);
+    app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
+    app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
+    app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);
+    app.post(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().post);
+    app.get(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS, new ClaimantAverageWeeklyHoursController().get);
+    app.post(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS, new ClaimantAverageWeeklyHoursController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);

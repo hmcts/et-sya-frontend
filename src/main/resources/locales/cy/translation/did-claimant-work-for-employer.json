@@ -1,0 +1,9 @@
+{
+  "title": "A weithiodd yr hawlydd i'r sefydliad neu'r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
+  "heading": "A weithiodd yr hawlydd i'r sefydliad neu'r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
+  "errors": {
+    "pastEmployer": {
+      "required": "Dywedwch wrthym a weithiodd yr hawlydd i'r sefydliad neu'r unigolyn"
+    }
+  }
+}

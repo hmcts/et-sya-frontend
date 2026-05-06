@@ -1,0 +1,11 @@
+{
+  "title": "Manylion cyflogaeth",
+  "h1": "Manylion cyflogaeth",
+  "hint": "Dywedwch wrthym pa rôl oedd gan yr hawlydd ar adeg yr anghydfod",
+  "jobTitle": "Teitl swydd (dewisol)",
+  "errors": {
+    "jobTitle": {
+      "invalid-length": "Rhaid i'r teitl swydd fod rhwng 2 a 100 o nodau"
+    }
+  }
+}
