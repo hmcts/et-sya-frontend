@@ -51,12 +51,10 @@ export default class LipOrRepController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    let redirectUrl;
-    if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
-      redirectUrl = PageUrls.CLAIM_JURISDICTION_SELECTION;
-    } else {
-      redirectUrl = PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
-    }
+    const redirectUrl =
+      req.body.claimantRepresentedQuestion === YesOrNo.NO
+        ? PageUrls.CLAIM_JURISDICTION_SELECTION
+        : PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
