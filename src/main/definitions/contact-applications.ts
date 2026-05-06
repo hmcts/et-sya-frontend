@@ -1,3 +1,5 @@
+export const DOCUMENTS = 'documents';
+
 export default [
   'withdraw',
   'change-details',
@@ -12,7 +14,7 @@ export default [
   'strike',
   'reconsider-judgement',
   'other',
-  'documents',
+  DOCUMENTS,
 ];
 
 export const applicationTypes = {
