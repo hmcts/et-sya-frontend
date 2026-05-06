@@ -63,7 +63,7 @@ export class Oidc {
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
-      idamCallbackHandler(req, res, next, serviceUrl(res));
+      idamCallbackHandler(req, res, next, serviceUrl(res)).catch(next);
     });
 
     app.use(async (req: AppRequest, res: Response, next: NextFunction) => {
@@ -98,9 +98,14 @@ export const idamCallbackHandler = async (
 ): Promise<void> => {
   const redisClient = req.app.locals?.redisClient;
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
-    // eslint-disable-next-line prettier/prettier
-    req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
-    req.session.save();
+    try {
+      // eslint-disable-next-line prettier/prettier
+      req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
+      req.session.save();
+    } catch (err) {
+      logger.error('Failed to retrieve user details from IDAM: ' + err.message);
+      return res.redirect(AuthUrls.LOGIN);
+    }
   } else {
     return res.redirect(AuthUrls.LOGIN);
   }
