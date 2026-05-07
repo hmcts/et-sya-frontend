@@ -1,5 +1,5 @@
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
-import { YesOrNo, claimantRepresented } from '../../../main/definitions/case';
+import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -51,7 +51,7 @@ describe('Litigation in Person or Representative Controller', () => {
   });
 
   it("should redirect to 'Making a claim as a legal representative' when 'LEGAL_REP' is selected", () => {
-    const body = { claimantRepresentedQuestion: claimantRepresented.LEGAL_REP };
+    const body = { claimantRepresentedQuestion: YesOrNo.YES };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });

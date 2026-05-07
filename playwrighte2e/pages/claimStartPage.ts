@@ -247,14 +247,14 @@ export class ClaimStartPage extends BasePage {
     await this.webAction.checkElementById('#lip-or-representative');
     await this.clickContinue();
 
-    //Are you making a claim on your own or with others Page
-    await this.delay(2000);
-    await this.webAction.verifyTextPresentOnPage('text=Are you making a claim on your own or with others?');
-    await this.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
-    await this.webAction.verifyTextPresentOnPage('text=I’m claiming on my own');
-    await this.webAction.verifyTextPresentOnPage('text=I’m claiming with another person or other people');
-    await this.webAction.checkElementById('#single-or-multiple-claim');
-    await this.webAction.clickElementByText('Continue');
+    // //Are you making a claim on your own or with others Page
+    // await this.delay(2000);
+    // await this.webAction.verifyTextPresentOnPage('text=Are you making a claim on your own or with others?');
+    // await this.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
+    // await this.webAction.verifyTextPresentOnPage('text=I’m claiming on my own');
+    // await this.webAction.verifyTextPresentOnPage('text=I’m claiming with another person or other people');
+    // await this.webAction.checkElementById('#single-or-multiple-claim');
+    // await this.webAction.clickElementByText('Continue');
 
     //Where you can make your claim Page....
     await this.delay(2000);

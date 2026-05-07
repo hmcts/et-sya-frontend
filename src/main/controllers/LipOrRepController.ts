@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo, claimantRepresented } from '../definitions/case';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -35,7 +35,7 @@ export default class LipOrRepController {
           },
           {
             label: (l: AnyRecord): string => l.question.radio3,
-            value: claimantRepresented.LEGAL_REP,
+            value: YesOrNo.YES,
           },
         ],
         validator: isFieldFilledIn,

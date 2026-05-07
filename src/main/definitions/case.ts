@@ -351,10 +351,6 @@ export interface Representative {
   representativePreference?: string;
 }
 
-export const enum claimantRepresented {
-  LEGAL_REP = 'Legal representative representing a claimant',
-}
-
 export const enum Et3ResponseStatus {
   ACCEPTED = 'Accepted',
   NOT_RECEIVED = 'Not Received',

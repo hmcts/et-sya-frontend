@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo, claimantRepresented } from '../../main/definitions/case';
+import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -28,7 +28,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
   test("should return the legacy ET1 service when (yes) the 'making a claim for someone else' option is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
-      .send({ claimantRepresentedQuestion: claimantRepresented.LEGAL_REP })
+      .send({ claimantRepresentedQuestion: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE);
