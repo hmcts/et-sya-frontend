@@ -54,7 +54,7 @@ describe('Representative Details Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_DETAILS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
       expect(req.session.errors).toHaveLength(0);
     });
 
@@ -159,7 +159,7 @@ describe('Representative Details Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_DETAILS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_ENTER);
       expect(req.session.errors).toHaveLength(0);
     });
 

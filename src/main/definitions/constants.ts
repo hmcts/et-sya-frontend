@@ -63,6 +63,7 @@ export const TranslationKeys = {
   STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS: 'steps-to-making-your-claim-non-hmcts',
   TYPE_OF_CLAIM: 'type-of-claim',
   REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
+  REASONABLE_ADJUSTMENTS_NON_HMCTS: 'reasonable-adjustments-non-hmcts',
   DOCUMENTS: 'documents',
   COMMUNICATING: 'communicating',
   SUPPORT: 'support',
@@ -171,6 +172,14 @@ export const TranslationKeys = {
   REPRESENTED_CLAIMANT_ADDRESS_DETAILS: 'represented-claimant-address-details',
   REPRESENTED_CLAIMANT_ENTER_EMAIL: 'represented-claimant-enter-email',
   REPRESENTATIVE_COMMS_PREFERENCE: 'representative-comms-preference',
+  REPRESENTATIVE_DETAILS_CHECK: 'representative-details-check',
+  DID_CLAIMANT_WORK_FOR_EMPLOYER: 'did-claimant-work-for-employer',
+  IS_CLAIMANT_STILL_WORKING: 'is-claimant-still-working',
+  CLAIMANT_EMPLOYMENT_DETAILS: 'claimant-employment-details',
+  CLAIMANT_EMPLOYMENT_START_DATE: 'claimant-employment-start-date',
+  DID_CLAIMANT_HAVE_WRITTEN_CONTRACT: 'did-claimant-have-written-contract',
+  CLAIMANT_NOTICE_TYPE: 'claimant-notice-type',
+  CLAIMANT_AVERAGE_WEEKLY_HOURS: 'claimant-average-weekly-hours',
 } as const;
 
 export const PageUrls = {
@@ -189,6 +198,13 @@ export const PageUrls = {
   ACAS_MULTIPLE_CLAIM: '/do-you-have-an-acas-no-many-resps',
   VALID_ACAS_REASON: '/do-you-have-a-valid-no-acas-reason',
   STILL_WORKING: '/are-you-still-working',
+  DID_CLAIMANT_WORK_FOR_EMPLOYER: '/did-claimant-work-for-employer',
+  IS_CLAIMANT_STILL_WORKING: '/is-claimant-still-working',
+  CLAIMANT_EMPLOYMENT_DETAILS: '/claimant-employment-details',
+  CLAIMANT_EMPLOYMENT_START_DATE: '/claimant-employment-start-date',
+  DID_CLAIMANT_HAVE_WRITTEN_CONTRACT: '/did-claimant-have-written-contract',
+  CLAIMANT_NOTICE_TYPE: '/claimant-notice-type',
+  CLAIMANT_AVERAGE_WEEKLY_HOURS: '/claimant-average-weekly-hours',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
   DOB_DETAILS: '/dob-details',
@@ -328,6 +344,7 @@ export const PageUrls = {
   REPRESENTED_CLAIMANT_ADDRESS_DETAILS: '/represented-claimant-address-details',
   REPRESENTED_CLAIMANT_ENTER_EMAIL: '/represented-claimant-enter-email',
   REPRESENTATIVE_COMMS_PREFERENCE: '/representative-comms-preference',
+  REPRESENTATIVE_DETAILS_CHECK: '/representative-details-check',
 } as const;
 
 export const InterceptPaths = {

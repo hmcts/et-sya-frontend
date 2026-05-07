@@ -86,6 +86,7 @@ export interface Case {
   jobTitle?: string;
   typeOfClaim?: string[];
   pastEmployer?: YesOrNo;
+  claimantWrittenContract?: YesOrNo;
   noticeEnds?: CaseDate;
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
@@ -125,6 +126,7 @@ export interface Case {
   whistleblowingEntityName?: string;
   linkedCases?: YesOrNo;
   linkedCasesDetail?: string;
+  representativeDetailsCheck?: YesOrNo;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;

@@ -22,6 +22,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
     const { userCase } = req.session;
 
     const allSectionsCompleted = !!(
+      userCase?.representativeDetailsCheck === YesOrNo.YES &&
       userCase?.personalDetailsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
       userCase?.claimDetailsCheck === YesOrNo.YES
@@ -34,12 +35,13 @@ export default class StepsToMakingYourClaimNonHmctsController {
           {
             url: setUrlLanguage(req, PageUrls.REPRESENTATIVE_DETAILS.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link1Text,
-            status: (): string => getSectionStatus(undefined, userCase?.representativeName),
+            status: (): string => getSectionStatus(userCase?.representativeDetailsCheck, userCase?.representativeName),
           },
           {
             url: setUrlLanguage(req, PageUrls.REPRESENTATIVE_COMMS_PREFERENCE.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
-            status: (): string => getSectionStatus(undefined, userCase?.claimantContactPreference),
+            status: (): string =>
+              getSectionStatus(userCase?.representativeDetailsCheck, userCase?.claimantContactPreference),
           },
         ],
       },
@@ -57,7 +59,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
         title: (l: AnyRecord): string => l.section3.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.PAST_EMPLOYER.toString()),
+            url: setUrlLanguage(req, PageUrls.DID_CLAIMANT_WORK_FOR_EMPLOYER.toString()),
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
             status: (): string =>
               getSectionStatusForEmployment(
@@ -110,7 +112,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
 
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       req.session.userCase.pastEmployer = YesOrNo.YES;
-      sections[2].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
+      sections[2].links[0].url = setUrlLanguage(req, PageUrls.IS_CLAIMANT_STILL_WORKING.toString());
     }
 
     const paramId = req.params.id;
