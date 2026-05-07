@@ -1,6 +1,5 @@
 import { Response } from 'express';
 
-import { getAddressesForPostcode } from '../../address';
 import { isValidUKPostcode } from '../../components/form/address-validator';
 import { Form } from '../../components/form/form';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
@@ -9,8 +8,8 @@ import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
-import { convertJsonArrayToTitleCase, handlePostLogic } from '../helpers/CaseHelpers';
-import { assignAddresses, assignFormData, getPageContent } from '../helpers/FormHelpers';
+import { handlePostLogic } from '../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 import { getEnterTitle, getLink } from '../helpers/RepresentedClaimantPostcodeHelper';
 
 const logger = getLogger('RepresentedClaimantEnterPostcodeController');
@@ -45,11 +44,7 @@ export default class RepresentedClaimantEnterPostcodeController {
 
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    req.session.userCase.representedClaimantAddresses = convertJsonArrayToTitleCase(
-      await getAddressesForPostcode(req.session.userCase.representedClaimantEnterPostcode)
-    );
     const content = getPageContent(req, this.claimantPostcodeSelectContent, [TranslationKeys.COMMON]);
-    assignAddresses(req.session.userCase, this.form.getFormFields());
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ENTER_POSTCODE, {
       ...content,
