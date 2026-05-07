@@ -65,13 +65,15 @@ export default class YourDetailsFormController {
       req.session.caseAssignmentFields = {};
     }
 
+    const nameParts = formData.claimantName.trim().split(' ');
+
     req.session.caseAssignmentFields = {
       ...req.session.caseAssignmentFields,
       ethosCaseReference: formData.ethosCaseReference,
       id: formData.id,
       claimantName: formData.claimantName,
-      firstName: formData.claimantName.split(' ')[0],
-      lastName: formData.claimantName.split(' ')[1],
+      firstName: nameParts.slice(0, -1).join(' '),
+      lastName: nameParts.slice(-1).join(''),
     };
 
     const errors = this.form.getValidatorErrors(formData);

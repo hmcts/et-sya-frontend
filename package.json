@@ -90,7 +90,7 @@
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
     "typescript": "5.1.6",
-    "uuid": "^11.0.0"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.2",
@@ -174,7 +174,6 @@
     "minizlib": "^3.1.0",
     "semver": "^7.5.2",
     "jsdom": "^29.0.0",
-    "js-beautify/glob": "11.1.0",
     "shelljs": "^0.10.0",
     "merge": "^2.1.1",
     "basic-ftp": "^5.2.0",
@@ -195,7 +194,8 @@
     "serialize-javascript": "^7.0.4",
     "underscore": "^1.13.8",
     "yauzl": "3.2.1",
-    "picomatch": "^4.0.4"
+    "picomatch": "^4.0.4",
+    "ip-address": "^10.1.1"
   },
   "packageManager": "yarn@4.12.0"
 }
