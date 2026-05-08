@@ -58,7 +58,7 @@ describe('ClaimantEmploymentStartDateController', () => {
       expect(req.session.userCase.startDate).toStrictEqual({ day: '15', month: '06', year: '2020' });
     });
 
-    it('should redirect to the same page and set required error when all date fields are empty', async () => {
+    it('should redirect to DID_CLAIMANT_HAVE_WRITTEN_CONTRACT when all date fields are empty (optional)', async () => {
       const body = { 'startDate-day': '', 'startDate-month': '', 'startDate-year': '' };
       const controller = new ClaimantEmploymentStartDateController();
       const req = mockRequestEmpty({ body });
@@ -66,8 +66,8 @@ describe('ClaimantEmploymentStartDateController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(req.path);
-      expect(req.session.errors).toEqual([{ propertyName: 'startDate', errorType: 'required', fieldName: 'day' }]);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT);
+      expect(req.session.errors).toHaveLength(0);
     });
 
     it('should redirect to the same page and set dayRequired error when day is missing', async () => {
