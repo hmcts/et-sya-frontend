@@ -343,6 +343,7 @@ export const PageUrls = {
   REPRESENTED_CLAIMANT_SELECT_POSTCODE: '/represented-claimant-select-postcode',
   REPRESENTED_CLAIMANT_ADDRESS_DETAILS: '/represented-claimant-address-details',
   REPRESENTED_CLAIMANT_ENTER_EMAIL: '/represented-claimant-enter-email',
+  REPRESENTED_CLAIMANT_DETAILS_CHECK: '/represented-claimant-details-check',
   REPRESENTATIVE_COMMS_PREFERENCE: '/representative-comms-preference',
   REPRESENTATIVE_DETAILS_CHECK: '/representative-details-check',
 } as const;
