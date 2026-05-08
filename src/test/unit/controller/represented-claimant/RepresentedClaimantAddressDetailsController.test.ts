@@ -1,5 +1,6 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
 import RepresentedClaimantAddressDetailsController from '../../../../main/controllers/represented-claimant/RepresentedClaimantAddressDetailsController';
+import { AddressType } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
@@ -30,7 +31,7 @@ describe('Represented Claimant Address Details Controller', () => {
       const request = mockRequest({
         t,
         userCase: {
-          representedClaimantAddressTypes: 0,
+          representedClaimantAddressTypes: 0 as unknown as AddressType[],
           representedClaimantAddresses: [
             {
               street1: '1 The Street',
