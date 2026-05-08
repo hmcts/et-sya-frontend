@@ -30,10 +30,7 @@ describe('Represented Claimant Address Details Controller', () => {
       const request = mockRequest({
         t,
         userCase: {
-          representedClaimantAddressTypes: [
-            { selected: true, label: '1 address found' },
-            { value: 0, label: '1 The Street, London, LE5 5HD' },
-          ],
+          representedClaimantAddressTypes: 0,
           representedClaimantAddresses: [
             {
               street1: '1 The Street',
@@ -49,6 +46,13 @@ describe('Represented Claimant Address Details Controller', () => {
 
       controller.get(request, response);
 
+      expect(request.session.userCase).toMatchObject({
+        representedClaimantAddress1: '1 The Street',
+        representedClaimantAddress2: '',
+        representedClaimantAddressTown: 'London',
+        representedClaimantAddressCountry: 'England',
+        representedClaimantAddressPostcode: 'SW1A 1AA',
+      });
       expect(response.render).toHaveBeenCalledWith('represented-claimant-address-details', expect.anything());
     });
   });

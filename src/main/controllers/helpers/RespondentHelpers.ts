@@ -101,12 +101,12 @@ export const fillRepresentativeAddressFields = (x: unknown, userCase: CaseWithId
 
 export const fillRepresentedClaimantAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const claimantAddress = userCase.representedClaimantAddresses?.at(x as number);
-  if (!x.toString().includes('object')) {
-    userCase.repAddress1 = claimantAddress?.street1;
-    userCase.repAddress2 = claimantAddress?.street2;
-    userCase.repAddressTown = claimantAddress?.town;
-    userCase.repAddressCountry = claimantAddress?.country;
-    userCase.repAddressPostcode = claimantAddress?.postcode;
+  if (typeof x !== 'object') {
+    userCase.representedClaimantAddress1 = claimantAddress?.street1;
+    userCase.representedClaimantAddress2 = claimantAddress?.street2;
+    userCase.representedClaimantAddressTown = claimantAddress?.town;
+    userCase.representedClaimantAddressCountry = claimantAddress?.country;
+    userCase.representedClaimantAddressPostcode = claimantAddress?.postcode;
   }
 };
 
