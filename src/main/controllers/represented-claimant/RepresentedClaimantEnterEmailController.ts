@@ -16,9 +16,9 @@ export default class RepresentedClaimantEnterEmailController {
   private readonly form: Form;
   private readonly claimantEnterEmailContent: FormContent = {
     fields: {
-      representedClaimantEnterEmail: {
-        id: 'representedClaimantEnterEmail',
-        name: 'representedClaimantEnterEmail',
+      representedClaimantEmail: {
+        id: 'representedClaimantEmail',
+        name: 'representedClaimantEmail',
         type: 'text',
         classes: 'govuk-!-width-two-thirds',
         label: l => l.pageHeader,
