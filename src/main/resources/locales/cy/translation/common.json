@@ -143,6 +143,10 @@
 
   "representedClaimantEnterPostcodeTitle": "place holder for represented claimant postcode enter title",
   "representedClaimantSelectPostcodeTitle": "place holder for represented claimant postcode select title",
+  "representedClaimantEnterEmailTitle": "place holder for represented Claimant's email address title",
+  "representedClaimantEnterEmailHeading": "place holder for represented Claimant's email address title",
+  "representedClaimantEnterEmailDescription": "place holder for represented Claimant's email address Description",
+  "representedClaimantEnterEmailLabel": "place holder for represented Claimant's email address Label",
 
   "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
   "beta": "beta",

@@ -9,6 +9,12 @@ import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
+import {
+  getEnterEmailDescription,
+  getEnterEmailHeading,
+  getEnterEmailLabel,
+  getEnterEmailTitle,
+} from '../helpers/RepresentedClaimantEmailHelper';
 
 const logger = getLogger('RepresentedClaimantEnterEmailController');
 
@@ -51,6 +57,10 @@ export default class RepresentedClaimantEnterEmailController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ENTER_EMAIL, {
       ...content,
+      title: getEnterEmailTitle(req),
+      heading: getEnterEmailHeading(req),
+      description: getEnterEmailDescription(req),
+      label: getEnterEmailLabel(req),
     });
   };
 }

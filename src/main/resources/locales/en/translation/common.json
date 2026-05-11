@@ -143,6 +143,10 @@
 
   "representedClaimantEnterPostcodeTitle": "What is the claimant's address",
   "representedClaimantSelectPostcodeTitle": "Select an address",
+  "representedClaimantEnterEmailTitle": "Claimant's email address",
+  "representedClaimantEnterEmailHeading": "Claimant’s email address",
+  "representedClaimantEnterEmailDescription": "It will help to process your claim quicker if you can provide the claimant’s email address",
+  "representedClaimantEnterEmailLabel": "Enter the claimant’s email address",
 
   "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details.",
   "beta": "beta",

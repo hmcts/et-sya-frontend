@@ -1,4 +1,6 @@
 {
-  "title": "Claimant's email",
-  "pageHeader": "What is the claimant's email address? (optional)"
+  "pageTitle": "Represented Claimant's email",
+  "pageHeader": "Claimant’s email address",
+  "description": "It will help to process your claim quicker if you provide the claimant's email address.",
+  "label": "Enter the claimant’s email address"
 }
