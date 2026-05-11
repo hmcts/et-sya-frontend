@@ -86,7 +86,7 @@ describe('Case Document Controller', () => {
       'content-type': 'application/vnd.ms-excel',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithOriginalFileName = {
@@ -106,7 +106,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithInvalidOriginalFileName = {
@@ -126,7 +126,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithFileName = {
@@ -145,7 +145,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithNoContentTypeNoFileName = {
@@ -163,7 +163,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const caseDocumentController = new CaseDocumentController();
@@ -173,6 +173,7 @@ describe('Case Document Controller', () => {
     getUserAppMock.mockReturnValue(mockApplications);
     getCaseApiMock.mockReturnValue(api);
 
+    axios.get.mockResolvedValue({ headers: {}, data: { pipe: jest.fn() } });
     const request = mockRequest({});
     const response = mockResponse();
     request.params.docId = '1';
