@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantHaveWrittenContractController');
 
@@ -48,6 +48,12 @@ export default class DidClaimantHaveWrittenContractController {
     this.form = new Form(<FormFields>this.formContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.claimantWrittenContract = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.CLAIMANT_NOTICE_TYPE
@@ -57,6 +63,9 @@ export default class DidClaimantHaveWrittenContractController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query?.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.formContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT,
@@ -64,6 +73,7 @@ export default class DidClaimantHaveWrittenContractController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, {
       ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }

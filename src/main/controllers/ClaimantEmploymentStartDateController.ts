@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { isDateInPast, isDateInputInvalid, isDateNotPartial } from '../components/form/date-validator';
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
@@ -22,6 +23,7 @@ const startDate: DateFormFields = {
   id: 'startDate',
   hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
+  validator: value => isDateNotPartial(value) || isDateInputInvalid(value) || isDateInPast(value),
 };
 
 export default class ClaimantEmploymentStartDateController {

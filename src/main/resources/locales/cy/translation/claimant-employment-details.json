@@ -1,6 +1,8 @@
 {
   "title": "Manylion cyflogaeth",
   "h1": "Manylion cyflogaeth",
+  "p1": "Dywedwch wrthym ychydig o fanylion am yr hawlydd yn gweithio i'r sefydliad neu'r unigolyn rydych yn gwneud hawliad yn ei erbyn.",
+  "p2": "Bydd y manylion hyn yn cael eu defnyddio i helpu i symud yr hawliad yn ei flaen.",
   "hint": "Dywedwch wrthym pa rôl oedd gan yr hawlydd ar adeg yr anghydfod",
   "jobTitle": "Teitl swydd (dewisol)",
   "errors": {

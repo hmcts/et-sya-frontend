@@ -65,6 +65,14 @@
         <a href="{{PageUrls.LINKED_CASES}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
         </p>
      {% endif %}
+     {% if "/did-claimant-have-written-contract" in currentUrl %}
+        <p class="govuk-body">
+        <a href="{{PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
+        </p>
+        {{ govukInsetText({
+           text: noticeLengthInsetText
+        }) }}
+     {% endif %}
   {% endblock %}
 
   {% include "./saveButtons.njk" %}

@@ -1,6 +1,8 @@
 {
   "title": "Employment details",
   "h1": "Employment details",
+  "p1": "Tell us some details about the claimant working for the organisation or person you're making a claim against.",
+  "p2": "These details will be used to help progress the claim.",
   "hint": "Tell us what role the claimant had at the time of the dispute",
   "jobTitle": "Job title (optional)",
   "errors": {
