@@ -12,7 +12,6 @@ import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 import {
   getEnterEmailDescription,
   getEnterEmailHeading,
-  getEnterEmailLabel,
   getEnterEmailTitle,
 } from '../helpers/RepresentedClaimantEmailHelper';
 
@@ -27,8 +26,8 @@ export default class RepresentedClaimantEnterEmailController {
         name: 'representedClaimantEmail',
         type: 'text',
         classes: 'govuk-!-width-two-thirds',
-        label: l => l.pageHeader,
-        labelSize: 'xl',
+        label: l => l.representedClaimantEnterEmailLabel,
+        labelSize: 'm',
         isPageHeading: true,
         attributes: {
           autocomplete: 'email',
@@ -60,7 +59,6 @@ export default class RepresentedClaimantEnterEmailController {
       title: getEnterEmailTitle(req),
       heading: getEnterEmailHeading(req),
       description: getEnterEmailDescription(req),
-      label: getEnterEmailLabel(req),
     });
   };
 }
