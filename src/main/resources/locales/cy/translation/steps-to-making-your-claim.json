@@ -3,6 +3,9 @@
   "h1": "Camau i wneud eich hawliad",
   "applicationDetails": "Manylion y cais",
   "claimType": "Math o hawliad",
+  "claimingParagraph": "[W] If you are claiming on your own, or for one person, you do not need to complete Section 2 ('Other people in your claim').",
+  "claimingWithOthersSummary": "[W] Claiming with others",
+  "claimingWithOthersText": "[W] If you are claiming with others, complete the claim sections with your details. The tribunal only needs basic personal details about other people in your claim (Section 2). We do not need their claim details.",
   "section1": {
     "title": "Eich manylion",
     "link1Text": "Manylion personol",
@@ -10,20 +13,26 @@
     "link3Text": "Eich dewisiadau"
   },
   "section2": {
+    "title": "[W] Other people in your claim",
+    "link1Text": "[W] Add another claimant to your group claim",
+    "link2Text": "[W] Group representative",
+    "link3Text": "[W] Claiming on your own or with others"
+  },
+  "section3": {
     "title": "Manylion cyflogaeth a manylion yr Atebydd",
     "link1Text": "Statws Cyflogaeth",
     "link2Text": "Manylion yr Atebydd"
   },
-  "section3": {
+  "section4": {
     "title": "Manylion yr hawliad",
     "link1Text": "Dywedwch wrthym am eich hawliad",
     "link2Text": "Dywedwch wrthym beth yr ydych eisiau ei gael gan eich hawliad"
   },
-  "section4": {
+  "section5": {
     "title": "Gwirio a chyflwyno",
     "link1Text": "Gwirio'ch atebion"
   },
-  "completed": "Wedi’i gwblhau",
+  "completed": "Wedi'i gwblhau",
   "notStarted": "Heb ddechrau eto",
   "inProgress": "Yn mynd rhagddo",
   "cannotStartYet": "Methu dechrau eto"

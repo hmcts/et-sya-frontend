@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -13,7 +14,12 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl"> {{h1}} </h1>
 
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-4">{{applicationDetails}} </h2>
+      <p class="govuk-body">{{claimingParagraph}}</p>
+
+      {{ govukDetails({
+        summaryText: claimingWithOthersSummary,
+        text: claimingWithOthersText
+      }) }}
 
       <ol class="app-task-list">
           {% for section in sections %}
