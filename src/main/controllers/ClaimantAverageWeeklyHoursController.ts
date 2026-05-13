@@ -39,7 +39,7 @@ export default class ClaimantAverageWeeklyHoursController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.PAY);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_PAY);
   };
 
   @CaseStateCheck()

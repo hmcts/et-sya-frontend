@@ -45,6 +45,8 @@ import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmplo
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
 import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLengthController';
 import ClaimantNoticeTypeController from '../../controllers/ClaimantNoticeTypeController';
+import ClaimantPayController from '../../controllers/ClaimantPayController';
+import ClaimantPensionController from '../../controllers/ClaimantPensionController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
@@ -279,6 +281,9 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_NOTICE_LENGTH, new ClaimantNoticeLengthController().post);
     app.get(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS, new ClaimantAverageWeeklyHoursController().get);
     app.post(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS, new ClaimantAverageWeeklyHoursController().post);
+    app.get(PageUrls.CLAIMANT_PAY, new ClaimantPayController().get);
+    app.post(PageUrls.CLAIMANT_PAY, new ClaimantPayController().post);
+    app.get(PageUrls.CLAIMANT_PENSION, new ClaimantPensionController().get);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);
