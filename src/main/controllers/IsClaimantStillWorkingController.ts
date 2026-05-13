@@ -10,9 +10,19 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { renderPage } from './helpers/NonHmctsControllerHelper';
 
 const logger = getLogger('IsClaimantStillWorkingController');
+
+const getRedirectUrl = (isStillWorking: string): string => {
+  if (isStillWorking === StillWorking.NOTICE) {
+    return PageUrls.NOTICE_END;
+  }
+  if (isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    return PageUrls.END_DATE;
+  }
+  return PageUrls.CLAIMANT_EMPLOYMENT_DETAILS;
+};
 
 export default class IsClaimantStillWorkingController {
   private readonly form: Form;
@@ -27,16 +37,8 @@ export default class IsClaimantStillWorkingController {
         labelSize: 'xl',
         isPageHeading: true,
         values: [
-          {
-            name: 'working',
-            label: (l: AnyRecord): string => l.optionText1,
-            value: StillWorking.WORKING,
-          },
-          {
-            name: 'working_notice',
-            label: (l: AnyRecord): string => l.optionText2,
-            value: StillWorking.NOTICE,
-          },
+          { name: 'working', label: (l: AnyRecord): string => l.optionText1, value: StillWorking.WORKING },
+          { name: 'working_notice', label: (l: AnyRecord): string => l.optionText2, value: StillWorking.NOTICE },
           {
             name: 'not_working',
             label: (l: AnyRecord): string => l.optionText3,
@@ -45,14 +47,8 @@ export default class IsClaimantStillWorkingController {
         ],
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: { text: (l: AnyRecord): string => l.submit, classes: 'govuk-!-margin-right-2' },
+    saveForLater: { text: (l: AnyRecord): string => l.saveForLater, classes: 'govuk-button--secondary' },
   };
 
   constructor() {
@@ -60,34 +56,18 @@ export default class IsClaimantStillWorkingController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (req.body.isStillWorking !== StillWorking.NO_LONGER_WORKING) {
+    const { isStillWorking } = req.body;
+    if (isStillWorking !== StillWorking.NO_LONGER_WORKING) {
       req.session.userCase.endDate = undefined;
     }
-    if (req.body.isStillWorking !== StillWorking.NOTICE) {
+    if (isStillWorking !== StillWorking.NOTICE) {
       req.session.userCase.noticeEnds = undefined;
     }
-
-    let redirectUrl: string;
-    if (req.body.isStillWorking === StillWorking.NOTICE) {
-      redirectUrl = PageUrls.NOTICE_END;
-    } else if (req.body.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-      redirectUrl = PageUrls.END_DATE;
-    } else {
-      redirectUrl = PageUrls.CLAIMANT_EMPLOYMENT_DETAILS;
-    }
-
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, getRedirectUrl(isStillWorking));
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.formContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.IS_CLAIMANT_STILL_WORKING,
-    ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.IS_CLAIMANT_STILL_WORKING, {
-      ...content,
-    });
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.IS_CLAIMANT_STILL_WORKING);
   };
 }

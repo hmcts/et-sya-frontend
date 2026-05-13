@@ -12,7 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantBenefitsController');
@@ -46,10 +46,7 @@ export default class ClaimantBenefitsController {
               },
             },
           },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
+          { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
         ],
       },
     },
@@ -62,7 +59,7 @@ export default class ClaimantBenefitsController {
   }
 
   public clearSelection = (req: AppRequest): void => {
-    if (req.session.userCase !== undefined) {
+    if (req.session.userCase) {
       req.session.userCase.employeeBenefits = undefined;
       req.session.userCase.benefitsCharCount = undefined;
     }
@@ -74,13 +71,8 @@ export default class ClaimantBenefitsController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query?.redirect === 'clearSelection') {
-      this.clearSelection(req);
-    }
-    const content = getPageContent(req, this.formContent, [TranslationKeys.COMMON, TranslationKeys.CLAIMANT_BENEFITS]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.CLAIMANT_BENEFITS, {
-      ...content,
+    handleClearSelection(req, this.clearSelection);
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_BENEFITS, {
       languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
