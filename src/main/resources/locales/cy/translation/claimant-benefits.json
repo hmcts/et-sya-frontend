@@ -1,0 +1,13 @@
+{
+  "title": "Buddiannau cyflogai",
+  "h1": "Buddiannau cyflogai",
+  "legend": "A yw - neu a oedd - yr hawlydd yn derbyn unrhyw fuddiant cyflogai? (dewisol)",
+  "label": "A yw - neu a oedd - yr hawlydd yn derbyn unrhyw fuddiant cyflogai?",
+  "p1": "Er enghraifft, gofal plant, car cwmni, tai ac yswiriant iechyd.",
+  "hint": "Dywedwch wrthym am unrhyw fuddiant",
+  "errors": {
+    "benefitsCharCount": {
+      "tooLong": "Rhaid i'r disgrifiad fod yn 2500 nod neu lai"
+    }
+  }
+}

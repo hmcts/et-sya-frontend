@@ -287,6 +287,7 @@ export class Routes {
     app.get(PageUrls.CLAIMANT_PENSION, new ClaimantPensionController().get);
     app.post(PageUrls.CLAIMANT_PENSION, new ClaimantPensionController().post);
     app.get(PageUrls.CLAIMANT_BENEFITS, new ClaimantBenefitsController().get);
+    app.post(PageUrls.CLAIMANT_BENEFITS, new ClaimantBenefitsController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);
