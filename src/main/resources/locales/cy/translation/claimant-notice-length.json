@@ -1,0 +1,11 @@
+{
+  "title": "Faint o wythnosau neu fisoedd sydd yng nghyfnod rhybudd yr hawlydd?",
+  "h1Weeks": "Faint o wythnosau sydd yng nghyfnod rhybudd yr hawlydd? (dewisol)",
+  "h1Months": "Faint o fisoedd sydd yng nghyfnod rhybudd yr hawlydd? (dewisol)",
+  "hint": "Er enghraifft, 4",
+  "errors": {
+    "noticePeriodLength": {
+      "notANumber": "Rhaid i nifer yr wythnosau neu'r misoedd yn y cyfnod rhybudd fod yn rif cyfan, fel 4 etc."
+    }
+  }
+}
