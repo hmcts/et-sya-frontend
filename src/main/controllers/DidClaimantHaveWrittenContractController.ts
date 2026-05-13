@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
 import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantHaveWrittenContractController');
@@ -23,14 +23,8 @@ export default class DidClaimantHaveWrittenContractController {
       claimantWrittenContract: {
         type: 'radios',
         values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
+          { label: (l: AnyRecord): string => l.yes, value: YesOrNo.YES },
+          { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
         ],
         label: (l: AnyRecord): string => l.heading,
         labelHidden: false,
@@ -49,7 +43,7 @@ export default class DidClaimantHaveWrittenContractController {
   }
 
   public clearSelection = (req: AppRequest): void => {
-    if (req.session.userCase !== undefined) {
+    if (req.session.userCase) {
       req.session.userCase.claimantWrittenContract = undefined;
     }
   };
@@ -63,16 +57,8 @@ export default class DidClaimantHaveWrittenContractController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query?.redirect === 'clearSelection') {
-      this.clearSelection(req);
-    }
-    const content = getPageContent(req, this.formContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT,
-    ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, {
-      ...content,
+    handleClearSelection(req, this.clearSelection);
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, {
       languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };

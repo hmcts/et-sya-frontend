@@ -12,7 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantPensionController');
@@ -42,14 +42,8 @@ export default class ClaimantPensionController {
               },
             },
           },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNoOrNotSure.NO,
-          },
-          {
-            label: (l: AnyRecord): string => l.notSure,
-            value: YesOrNoOrNotSure.NOT_SURE,
-          },
+          { label: (l: AnyRecord): string => l.no, value: YesOrNoOrNotSure.NO },
+          { label: (l: AnyRecord): string => l.notSure, value: YesOrNoOrNotSure.NOT_SURE },
         ],
       },
     },
@@ -62,7 +56,7 @@ export default class ClaimantPensionController {
   }
 
   public clearSelection = (req: AppRequest): void => {
-    if (req.session.userCase !== undefined) {
+    if (req.session.userCase) {
       req.session.userCase.claimantPensionContribution = undefined;
       req.session.userCase.claimantPensionWeeklyContribution = undefined;
     }
@@ -74,13 +68,8 @@ export default class ClaimantPensionController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query?.redirect === 'clearSelection') {
-      this.clearSelection(req);
-    }
-    const content = getPageContent(req, this.formContent, [TranslationKeys.COMMON, TranslationKeys.CLAIMANT_PENSION]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.CLAIMANT_PENSION, {
-      ...content,
+    handleClearSelection(req, this.clearSelection);
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_PENSION, {
       languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };

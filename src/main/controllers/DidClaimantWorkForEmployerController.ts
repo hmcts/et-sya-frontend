@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { renderPage } from './helpers/NonHmctsControllerHelper';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantWorkForEmployerController');
@@ -23,14 +23,8 @@ export default class DidClaimantWorkForEmployerController {
       pastEmployer: {
         type: 'radios',
         values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
+          { label: (l: AnyRecord): string => l.yes, value: YesOrNo.YES },
+          { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
         ],
         label: (l: AnyRecord): string => l.heading,
         labelHidden: false,
@@ -57,13 +51,6 @@ export default class DidClaimantWorkForEmployerController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.formContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.DID_CLAIMANT_WORK_FOR_EMPLOYER,
-    ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.DID_CLAIMANT_WORK_FOR_EMPLOYER, {
-      ...content,
-    });
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.DID_CLAIMANT_WORK_FOR_EMPLOYER);
   };
 }

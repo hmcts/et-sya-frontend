@@ -51,7 +51,7 @@ export default class ClaimantNoticeLengthController {
       TranslationKeys.CLAIMANT_NOTICE_LENGTH,
     ]);
     const noticeType = req.session.userCase?.noticePeriodUnit;
-    const h1 = noticeType === WeeksOrMonths.WEEKS ? (content as AnyRecord).h1Weeks : (content as AnyRecord).h1Months;
+    const h1 = noticeType === WeeksOrMonths.WEEKS ? content.h1Weeks : content.h1Months;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_NOTICE_LENGTH, {
       ...content,
