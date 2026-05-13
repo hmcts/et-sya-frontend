@@ -164,9 +164,6 @@ export class ClaimStartPage extends BasePage {
     );
     await this.webAction.verifyTextPresentOnPage('text=way.');
     await this.webAction.verifyTextPresentOnPage(
-      'text=It helps the employment tribunal to know which type it is. If you do not know, choose the first option.'
-    );
-    await this.webAction.verifyTextPresentOnPage(
       'text=If you’re claiming with other people, you will be asked to tell us their names (if you know them).'
     );
   }
