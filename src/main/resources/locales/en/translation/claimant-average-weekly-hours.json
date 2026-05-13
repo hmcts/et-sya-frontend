@@ -1,7 +1,9 @@
 {
   "title": "Claimant's average weekly hours",
   "h1": "Claimant's average weekly hours (optional)",
+  "p1": "If the number of hours worked changed each week (for example, if they had a zero-hours contract), use the final 12 weeks of payslips to work out the weekly average.",
   "enterAverageHours": "Enter average weekly hours",
+  "hint": "Do not include overtime hours.",
   "errors": {
     "avgWeeklyHrs": {
       "invalid": "Enter average weekly hours in a valid format, for example 0, 10, 35 etc",

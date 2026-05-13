@@ -43,6 +43,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
+import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLengthController';
 import ClaimantNoticeTypeController from '../../controllers/ClaimantNoticeTypeController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
@@ -274,6 +275,8 @@ export class Routes {
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);
     app.post(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().post);
+    app.get(PageUrls.CLAIMANT_NOTICE_LENGTH, new ClaimantNoticeLengthController().get);
+    app.post(PageUrls.CLAIMANT_NOTICE_LENGTH, new ClaimantNoticeLengthController().post);
     app.get(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS, new ClaimantAverageWeeklyHoursController().get);
     app.post(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS, new ClaimantAverageWeeklyHoursController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);

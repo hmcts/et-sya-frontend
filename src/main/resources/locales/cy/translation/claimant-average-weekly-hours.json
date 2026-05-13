@@ -1,7 +1,9 @@
 {
   "title": "Oriau wythnosol cyfartalog yr hawlydd",
   "h1": "Oriau wythnosol cyfartalog yr hawlydd (dewisol)",
+  "p1": "Os newidiodd nifer yr oriau a weithiwyd bob wythnos (er enghraifft, os oedd ganddynt gontract dim oriau), defnyddiwch 12 wythnos olaf o slipiau cyflog i weithio allan y cyfartaledd wythnosol.",
   "enterAverageHours": "Nodwch oriau wythnosol cyfartalog",
+  "hint": "Peidiwch â chynnwys oriau goramser.",
   "errors": {
     "avgWeeklyHrs": {
       "invalid": "Nodwch oriau wythnosol cyfartalog mewn fformat dilys, er enghraifft 0, 10, 35 etc",

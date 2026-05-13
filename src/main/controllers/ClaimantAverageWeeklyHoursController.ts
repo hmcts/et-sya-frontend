@@ -25,6 +25,7 @@ export default class ClaimantAverageWeeklyHoursController {
         type: 'text',
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord): string => l.enterAverageHours,
+        hint: (l: AnyRecord): string => l.hint,
         attributes: { maxLength: 5 },
         validator: isValidAvgWeeklyHours,
       },

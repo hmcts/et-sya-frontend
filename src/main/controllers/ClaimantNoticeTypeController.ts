@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantNoticeTypeController');
 
@@ -48,16 +48,25 @@ export default class ClaimantNoticeTypeController {
     this.form = new Form(<FormFields>this.formContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.noticePeriodUnit = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const hasSelection =
       conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.WEEKS) ||
       conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.MONTHS);
-    const redirectUrl = hasSelection ? PageUrls.NOTICE_LENGTH : PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS;
+    const redirectUrl = hasSelection ? PageUrls.CLAIMANT_NOTICE_LENGTH : PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS;
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query?.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.formContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_NOTICE_TYPE,
@@ -65,6 +74,7 @@ export default class ClaimantNoticeTypeController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_NOTICE_TYPE, {
       ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }
