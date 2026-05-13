@@ -178,6 +178,7 @@ export const TranslationKeys = {
   CLAIMANT_AVERAGE_WEEKLY_HOURS: 'claimant-average-weekly-hours',
   CLAIMANT_PAY: 'claimant-pay',
   CLAIMANT_PENSION: 'claimant-pension',
+  CLAIMANT_BENEFITS: 'claimant-benefits',
 } as const;
 
 export const PageUrls = {
@@ -206,6 +207,7 @@ export const PageUrls = {
   CLAIMANT_AVERAGE_WEEKLY_HOURS: '/claimant-average-weekly-hours',
   CLAIMANT_PAY: '/claimant-pay',
   CLAIMANT_PENSION: '/claimant-pension',
+  CLAIMANT_BENEFITS: '/claimant-benefits',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
   DOB_DETAILS: '/dob-details',

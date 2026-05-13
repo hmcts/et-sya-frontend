@@ -1,3 +1,12 @@
 {
-  "title": "A yw'r atebydd yn cyfrannu at bensiwn yr hawlydd?"
+  "title": "A yw'r atebydd yn cyfrannu at bensiwn yr hawlydd? (dewisol)",
+  "legend": "A yw'r atebydd yn cyfrannu at bensiwn yr hawlydd? (dewisol)",
+  "label": "A yw'r atebydd yn cyfrannu at bensiwn yr hawlydd?",
+  "pensionContributions": "Nodwch eu cyfraniadau pensiwn - wedi'u cyfrifo'n wythnosol",
+  "errors": {
+    "claimantPensionWeeklyContribution": {
+      "invalidCurrency": "Nodwch gyfraniadau pensiwn yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i gyfraniadau pensiwn fod yn £9,999,999.99 neu lai"
+    }
+  }
 }

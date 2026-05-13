@@ -41,6 +41,7 @@ import ClaimTypeDiscriminationController from '../../controllers/ClaimTypeDiscri
 import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
+import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
 import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLengthController';
@@ -284,6 +285,8 @@ export class Routes {
     app.get(PageUrls.CLAIMANT_PAY, new ClaimantPayController().get);
     app.post(PageUrls.CLAIMANT_PAY, new ClaimantPayController().post);
     app.get(PageUrls.CLAIMANT_PENSION, new ClaimantPensionController().get);
+    app.post(PageUrls.CLAIMANT_PENSION, new ClaimantPensionController().post);
+    app.get(PageUrls.CLAIMANT_BENEFITS, new ClaimantBenefitsController().get);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);
