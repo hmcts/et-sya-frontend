@@ -9,14 +9,14 @@ import { getPageContent } from '../helpers/FormHelpers';
 import { getEnterEmailHeading, getEnterEmailTitle } from '../helpers/RepresentedClaimantEmailHelper';
 
 export default class RepresentedClaimantDetailsCheckController {
-  private readonly claimantEnterEmailContent: FormContent = {
+  private readonly representedClaimantDetailsCheckContent: FormContent = {
     fields: {
-      representedClaimantEmail: {
-        id: 'representedClaimantEmail',
-        name: 'representedClaimantEmail',
+      representedClaimantDetailsCheckTitle: {
+        id: 'representedClaimantDetailsCheckTitle',
+        name: 'representedClaimantDetailsCheckTitle',
         type: 'text',
         classes: 'govuk-!-width-two-thirds',
-        label: l => l.representedClaimantEnterEmailLabel,
+        label: l => l.representedClaimantDetailsCheckTitle,
         labelSize: 'm',
         isPageHeading: true,
         attributes: {
@@ -30,7 +30,7 @@ export default class RepresentedClaimantDetailsCheckController {
   };
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const content = getPageContent(req, this.claimantEnterEmailContent, [
+    const content = getPageContent(req, this.representedClaimantDetailsCheckContent, [
       TranslationKeys.COMMON,
       TranslationKeys.REPRESENTED_CLAIMANT_DETAILS_CHECK,
     ]);

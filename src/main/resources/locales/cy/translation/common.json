@@ -147,6 +147,8 @@
   "representedClaimantEnterEmailHeading": "place holder for represented Claimant's email address title",
   "representedClaimantEnterEmailDescription": "place holder for represented Claimant's email address Description",
   "representedClaimantEnterEmailLabel": "place holder for represented Claimant's email address Label",
+  "representedClaimantDetailsCheckTitle": "place holder for represented claimant details check title",
+  "representedClaimantDetailsCheckHeading": "place holder for represented claimant details check heading",
 
   "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
   "beta": "beta",
