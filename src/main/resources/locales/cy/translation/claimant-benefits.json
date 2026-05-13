@@ -1,0 +1,13 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "legend": "<place-holder>",
+  "label": "<place-holder>",
+  "p1": "<place-holder>",
+  "hint": "<place-holder>",
+  "errors": {
+    "benefitsCharCount": {
+      "tooLong": "<place-holder>"
+    }
+  }
+}

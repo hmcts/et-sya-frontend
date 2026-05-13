@@ -36,7 +36,7 @@ describe('ClaimantAverageWeeklyHoursController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to PAY on a valid number of hours', async () => {
+    it('should redirect to CLAIMANT_PAY on a valid number of hours (AC3)', async () => {
       const body = { avgWeeklyHrs: '37' };
       const controller = new ClaimantAverageWeeklyHoursController();
       const req = mockRequestEmpty({ body });
@@ -44,10 +44,10 @@ describe('ClaimantAverageWeeklyHoursController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.PAY);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_PAY);
     });
 
-    it('should redirect to PAY when hours field is empty (optional)', async () => {
+    it('should redirect to CLAIMANT_PAY when hours field is empty (optional)', async () => {
       const body = { avgWeeklyHrs: '' };
       const controller = new ClaimantAverageWeeklyHoursController();
       const req = mockRequestEmpty({ body });
@@ -55,7 +55,7 @@ describe('ClaimantAverageWeeklyHoursController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.PAY);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_PAY);
     });
 
     it('should stay on the page and return an error when hours exceed 168', async () => {
