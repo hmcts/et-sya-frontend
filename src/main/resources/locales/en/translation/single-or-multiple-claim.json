@@ -3,7 +3,7 @@
   "h1": "Claiming on your own or with others",
   "legend": "Are you making a claim on your own or with others?",
   "p1": "You can make a claim to an employment tribunal on your own, where you are the only claimant. You can also make a claim alongside another person, or a group of people who have been treated in the same way.",
-  "p3": "If you’re claiming with other people, you will be asked to tell us their names (if you know them).",
+  "p2": "If you’re claiming with other people, you will be asked to tell us their names (if you know them).",
   "radio1": "I’m claiming on my own",
   "radio2": "I’m claiming with another person or other people",
   "errors": {
