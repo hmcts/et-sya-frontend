@@ -108,7 +108,6 @@ async function verifyAreYouMakingAClaimOnYourOwnGuidanceText() {
   I.see('You can make a claim to an employment tribunal on your own, where you are the only claimant. You can');
   I.see('also make a claim alongside another person, or a group of people who have been treated in the same');
   I.see('way.');
-  I.see('It helps the employment tribunal to know which type it is. If you do not know, choose the first option.');
   I.see('If you’re claiming with other people, you will be asked to tell us their names (if you know them).');
 }
 
