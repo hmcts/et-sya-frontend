@@ -44,7 +44,7 @@ export default class RepresentedClaimantEnterEmailController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK);
   };
 
   @CaseStateCheck()

@@ -25,7 +25,7 @@ describe('Represented Claimant Enter Email Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to representative comms preference when email is provided', async () => {
+    it('should redirect to represented claimant details check when email is provided', async () => {
       const body = { representedClaimantEmail: 'claimant@example.com' };
       const controller = new RepresentedClaimantEnterEmailController();
       const req = mockRequestEmpty({ body });
@@ -33,11 +33,11 @@ describe('Represented Claimant Enter Email Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK);
       expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should redirect to representative comms preference when email is blank', async () => {
+    it('should redirect to represented claimant details check when email is blank', async () => {
       const body = { representedClaimantEmail: '' };
       const controller = new RepresentedClaimantEnterEmailController();
       const req = mockRequestEmpty({ body });
@@ -45,7 +45,7 @@ describe('Represented Claimant Enter Email Controller', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK);
       expect(req.session.errors).toHaveLength(0);
     });
 

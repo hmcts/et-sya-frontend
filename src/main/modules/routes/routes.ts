@@ -164,6 +164,7 @@ import CitizenHubController from '../../controllers/citizen-hub/CitizenHubContro
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
 import RepresentedClaimantAddressDetailsController from '../../controllers/represented-claimant/RepresentedClaimantAddressDetailsController';
+import RepresentedClaimantDetailsCheckController from '../../controllers/represented-claimant/RepresentedClaimantDetailsCheckController';
 import RepresentedClaimantEnterEmailController from '../../controllers/represented-claimant/RepresentedClaimantEnterEmailController';
 import RepresentedClaimantEnterPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantEnterPostcodeController';
 import RepresentedClaimantSelectPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantSelectPostcodeController';
@@ -524,6 +525,9 @@ export class Routes {
     app.post(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK, new RepresentedClaimantDetailsCheckController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK, new RepresentedClaimantDetailsCheckController().post);
+
     app.get(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().get);
     app.post(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().post);
     app.get(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().get);
