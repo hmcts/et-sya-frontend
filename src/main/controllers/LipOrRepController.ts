@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { claimantRepresented } from '../definitions/case';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -27,15 +27,15 @@ export default class LipOrRepController {
           {
             label: (l: AnyRecord): string => l.question.radio1,
             hint: (l: AnyRecord): string => l.question.radio1Hint,
-            value: claimantRepresented.CLAIMING_FOR_MYSELF,
+            value: YesOrNo.NO,
           },
           {
             label: (l: AnyRecord): string => l.question.radio2,
-            value: claimantRepresented.CLAIMING_FOR_SOMEONE_ELSE,
+            value: YesOrNo.NO,
           },
           {
             label: (l: AnyRecord): string => l.question.radio3,
-            value: claimantRepresented.LEGAL_REP,
+            value: YesOrNo.YES,
           },
         ],
         validator: isFieldFilledIn,
@@ -51,15 +51,10 @@ export default class LipOrRepController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    let redirectUrl;
-    if (
-      req.body.claimantRepresentedQuestion === claimantRepresented.CLAIMING_FOR_MYSELF ||
-      req.body.claimantRepresentedQuestion === claimantRepresented.CLAIMING_FOR_SOMEONE_ELSE
-    ) {
-      redirectUrl = PageUrls.CLAIM_JURISDICTION_SELECTION;
-    } else {
-      redirectUrl = PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
-    }
+    const redirectUrl =
+      req.body.claimantRepresentedQuestion === YesOrNo.NO
+        ? PageUrls.CLAIM_JURISDICTION_SELECTION
+        : PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE;
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
