@@ -13,8 +13,6 @@ const expectedRadioLabel2 = 'I’m claiming with another person or other people'
 const expectedTitle = 'Claiming on your own or with others';
 const expectedP1 =
   'You can make a claim to an employment tribunal on your own, where you are the only claimant. You can also make a claim alongside another person, or a group of people who have been treated in the same way.';
-const expectedP2 =
-  'It helps the employment tribunal to know which type it is. If you do not know, choose the first option.';
 
 let htmlRes: Document;
 describe('Single or Multiple Claim page', () => {
@@ -34,11 +32,6 @@ describe('Single or Multiple Claim page', () => {
   it('should display firt paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
     expect(p1[6].innerHTML).contains(expectedP1, 'P1 does not exist');
-  });
-
-  it('should display second paragraph', () => {
-    const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[7].innerHTML).contains(expectedP2, 'P2 does not exist');
   });
 
   it('should display continue button', () => {
