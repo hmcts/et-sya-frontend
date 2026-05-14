@@ -51,6 +51,7 @@ import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLeng
 import ClaimantNoticeTypeController from '../../controllers/ClaimantNoticeTypeController';
 import ClaimantPayController from '../../controllers/ClaimantPayController';
 import ClaimantPensionController from '../../controllers/ClaimantPensionController';
+import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWorkController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
 import ClaimantRespondentAddressDetailsController from '../../controllers/ClaimantRespondentAddressDetailsController';
 import ClaimantRespondentDetailsCheckController from '../../controllers/ClaimantRespondentDetailsCheckController';
@@ -58,6 +59,7 @@ import ClaimantRespondentNameController from '../../controllers/ClaimantResponde
 import ClaimantRespondentPostcodeEnterController from '../../controllers/ClaimantRespondentPostcodeEnterController';
 import ClaimantRespondentPostcodeSelectController from '../../controllers/ClaimantRespondentPostcodeSelectController';
 import ClaimantWorkPostcodeEnterController from '../../controllers/ClaimantWorkPostcodeEnterController';
+import ClaimantWorkPostcodeSelectController from '../../controllers/ClaimantWorkPostcodeSelectController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
@@ -316,6 +318,10 @@ export class Routes {
     app.get(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().get);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().get);
     app.post(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().post);
+    app.get(PageUrls.CLAIMANT_WORK_POSTCODE_SELECT, new ClaimantWorkPostcodeSelectController().get);
+    app.post(PageUrls.CLAIMANT_WORK_POSTCODE_SELECT, new ClaimantWorkPostcodeSelectController().post);
+    app.get(PageUrls.CLAIMANT_PLACE_OF_WORK, new ClaimantPlaceOfWorkController().get);
+    app.post(PageUrls.CLAIMANT_PLACE_OF_WORK, new ClaimantPlaceOfWorkController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);

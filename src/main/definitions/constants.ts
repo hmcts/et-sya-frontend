@@ -191,6 +191,7 @@ export const TranslationKeys = {
   CLAIMANT_NO_ACAS_NUMBER: 'claimant-no-acas-reason',
   CLAIMANT_WORK_POSTCODE_ENTER: 'claimant-work-postcode-enter',
   CLAIMANT_WORK_POSTCODE_SELECT: 'claimant-work-postcode-select',
+  CLAIMANT_PLACE_OF_WORK: 'claimant-place-of-work',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: 'claimant-respondent-details-check',
 } as const;
 
@@ -231,6 +232,7 @@ export const PageUrls = {
   CLAIMANT_NO_ACAS_NUMBER: '/claimant-no-acas-reason',
   CLAIMANT_WORK_POSTCODE_ENTER: '/claimant-work-postcode-enter',
   CLAIMANT_WORK_POSTCODE_SELECT: '/claimant-work-postcode-select',
+  CLAIMANT_PLACE_OF_WORK: '/claimant-place-of-work',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: '/claimant-respondent-details-check',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
