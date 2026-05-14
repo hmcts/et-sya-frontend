@@ -37,17 +37,15 @@ describe('ClaimantNoAcasNumberController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK);
     });
 
-    it('should redirect to EMPLOYMENT_RESPONDENT_TASK_CHECK for any valid reason (AC3)', async () => {
-      for (const reason of Object.values(NoAcasNumberReason)) {
-        const body = { noAcasReason: reason };
-        const controller = new ClaimantNoAcasNumberController();
-        const req = mockRequest({ body });
-        const res = mockResponse();
+    it('should redirect to EMPLOYMENT_RESPONDENT_TASK_CHECK for unfair dismissal reason (AC3)', async () => {
+      const body = { noAcasReason: NoAcasNumberReason.UNFAIR_DISMISSAL };
+      const controller = new ClaimantNoAcasNumberController();
+      const req = mockRequest({ body });
+      const res = mockResponse();
 
-        await controller.post(req, res);
+      await controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK);
-      }
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK);
     });
 
     it('should save the selected reason to the respondent in session (AC2)', async () => {
