@@ -70,7 +70,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
               ),
           },
           {
-            url: setUrlLanguage(req, PageUrls.FIRST_RESPONDENT_NAME.toString()),
+            url: setUrlLanguage(req, PageUrls.CLAIMANT_RESPONDENT_NAME.toString()),
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
             status: (): string =>
               getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),

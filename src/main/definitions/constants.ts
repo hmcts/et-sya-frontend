@@ -161,6 +161,8 @@ export const TranslationKeys = {
   YOUR_DETAILS_FORM: 'your-details-form',
   YOUR_DETAILS_CYA: 'your-details-cya',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
+
+  // non-hmcts claimant rep
   REPRESENTATIVE_DETAILS: 'representative-details',
   REPRESENTATIVE_POSTCODE_ENTER: 'representative-postcode-enter',
   REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
@@ -188,6 +190,7 @@ export const TranslationKeys = {
   CLAIMANT_ACAS_CERT_NUM: 'claimant-acas-cert-num',
   CLAIMANT_NO_ACAS_NUMBER: 'claimant-no-acas-reason',
   CLAIMANT_WORK_POSTCODE_ENTER: 'claimant-work-postcode-enter',
+  CLAIMANT_WORK_POSTCODE_SELECT: 'claimant-work-postcode-select',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: 'claimant-respondent-details-check',
 } as const;
 
@@ -227,6 +230,7 @@ export const PageUrls = {
   CLAIMANT_ACAS_CERT_NUM: '/claimant-acas-cert-num',
   CLAIMANT_NO_ACAS_NUMBER: '/claimant-no-acas-reason',
   CLAIMANT_WORK_POSTCODE_ENTER: '/claimant-work-postcode-enter',
+  CLAIMANT_WORK_POSTCODE_SELECT: '/claimant-work-postcode-select',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: '/claimant-respondent-details-check',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',

@@ -33,14 +33,17 @@ export default class ClaimantRespondentAddressDetailsController {
     if (addressTypes !== undefined) {
       fillRespondentAddressFields(addressTypes, req.session.userCase);
     }
+    const respondentName = req.session.userCase?.respondents?.[0]?.respondentName ?? '';
     const content = getPageContent(req, this.formContent, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_ADDRESS,
+      TranslationKeys.CLAIMANT_RESPONDENT_ADDRESS_DETAILS,
       TranslationKeys.ENTER_ADDRESS,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_RESPONDENT_ADDRESS_DETAILS, {
       ...content,
+      respondentName,
     });
   };
 }

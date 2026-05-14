@@ -315,6 +315,7 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().post);
     app.get(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().get);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().get);
+    app.post(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().post);
     app.post(PageUrls.ADDRESS_LOOK_UP, new AddressLookupController().post);
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);

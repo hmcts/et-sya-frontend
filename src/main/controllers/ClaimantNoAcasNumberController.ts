@@ -68,7 +68,7 @@ export default class ClaimantNoAcasNumberController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     req.params.respondentNumber = '1';
-    await handlePostLogicForRespondent(req, res, this.form, logger, PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK);
+    await handlePostLogicForRespondent(req, res, this.form, logger, PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK);
   };
 
   @CaseStateCheck()

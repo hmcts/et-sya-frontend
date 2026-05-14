@@ -1,3 +1,6 @@
 {
-  "title": "Confirm respondent address"
+  "title": "Respondent address details",
+  "h1": "What is the address of ",
+  "pageText": "You should be able to find the address on your payslips, contract or other official documents.",
+  "insetText": "This should be the same respondent address given to Acas."
 }

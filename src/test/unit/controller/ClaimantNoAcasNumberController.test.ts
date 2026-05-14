@@ -34,7 +34,7 @@ describe('ClaimantNoAcasNumberController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK);
     });
 
     it('should redirect to EMPLOYMENT_RESPONDENT_TASK_CHECK for unfair dismissal reason (AC3)', async () => {
@@ -45,7 +45,7 @@ describe('ClaimantNoAcasNumberController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK);
     });
 
     it('should save the selected reason to the respondent in session (AC2)', async () => {
