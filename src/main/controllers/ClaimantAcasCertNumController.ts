@@ -6,7 +6,7 @@ import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -77,6 +77,8 @@ export default class ClaimantAcasCertNumController {
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_ACAS_CERT_NUM,
     ]);
+    const acasCert = Object.entries(this.form.getFormFields())[0][1] as FormInput;
+    acasCert.label = (l: AnyRecord): string => l.legend + respondentName + '?';
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_ACAS_CERT_NUM, {
       ...content,
