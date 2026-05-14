@@ -66,7 +66,7 @@ export default class ClaimantBenefitsController {
   };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_RESPONDENT_NAME);
   };
 
   @CaseStateCheck()

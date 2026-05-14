@@ -1,0 +1,14 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "p1": "<place-holder>",
+  "p2": "<place-holder>",
+  "insetText": "<place-holder>",
+  "label": "<place-holder>",
+  "errors": {
+    "respondentName": {
+      "required": "<place-holder>",
+      "invalidLength": "<place-holder>"
+    }
+  }
+}

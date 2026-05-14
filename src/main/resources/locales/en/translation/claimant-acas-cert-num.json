@@ -1,0 +1,17 @@
+{
+  "title": "ACAS certificate",
+  "h1": "ACAS certificate for the respondent",
+  "legend": "Do you have an ACAS certificate number for the respondent?",
+  "acasCertNum": "Enter an ACAS early conciliation certificate number",
+  "hintText": "Nearly everyone should have this number before they fill in a claim form. You can find it on the ACAS certificate. Read more about the ",
+  "linkText": "ACAS early conciliation service (opens in new tab)",
+  "errors": {
+    "acasCert": {
+      "required": "Tell us if you have an ACAS early conciliation number for the respondent"
+    },
+    "acasCertNum": {
+      "required": "Tell us if you have an ACAS early conciliation number for the respondent",
+      "invalidAcasNumber": "Enter ACAS number in the correct format. For example R123456/12/34"
+    }
+  }
+}
