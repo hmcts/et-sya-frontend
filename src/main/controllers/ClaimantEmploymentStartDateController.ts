@@ -5,7 +5,7 @@ import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDate } from '../definitions/case';
+import { CaseDate, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, DateValues, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
@@ -40,7 +40,11 @@ export default class ClaimantEmploymentStartDateController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT);
+    const redirectUrl =
+      req.session.userCase?.isStillWorking === StillWorking.NOTICE
+        ? PageUrls.NOTICE_END
+        : PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()
