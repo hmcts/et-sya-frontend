@@ -287,3 +287,70 @@ export const getRespondentDetailsSection = (
 
   return respondentSections;
 };
+
+export const getClaimantRespondentDetailsSection = (
+  respondent: Respondent,
+  translations: AnyRecord
+): SummaryListRow[] => {
+  const rows: SummaryListRow[] = [];
+
+  rows.push({
+    key: { text: translations.name },
+    value: { text: respondent.respondentName },
+    actions: {
+      items: [
+        { href: PageUrls.CLAIMANT_RESPONDENT_NAME, text: translations.change, visuallyHiddenText: translations.name },
+      ],
+    },
+  });
+
+  rows.push({
+    key: { text: translations.address },
+    value: {
+      text: answersAddressFormatter(
+        respondent.respondentAddress1,
+        respondent.respondentAddress2,
+        respondent.respondentAddressTown,
+        respondent.respondentAddressCountry,
+        respondent.respondentAddressPostcode
+      ),
+    },
+    actions: {
+      items: [
+        {
+          href: PageUrls.CLAIMANT_RESPONDENT_POSTCODE_ENTER,
+          text: translations.change,
+          visuallyHiddenText: translations.address,
+        },
+      ],
+    },
+  });
+
+  rows.push({
+    key: { text: translations.acasNum },
+    value: { html: respondent.acasCertNum ?? translations.unProvided },
+    actions: {
+      items: [
+        { href: PageUrls.CLAIMANT_ACAS_CERT_NUM, text: translations.change, visuallyHiddenText: translations.acasNum },
+      ],
+    },
+  });
+
+  if (respondent.acasCert === YesOrNo.NO) {
+    rows.push({
+      key: { text: translations.noAcasReason },
+      value: { html: getAcasReason(respondent.noAcasReason, translations) },
+      actions: {
+        items: [
+          {
+            href: PageUrls.CLAIMANT_NO_ACAS_NUMBER,
+            text: translations.change,
+            visuallyHiddenText: translations.noAcasReason,
+          },
+        ],
+      },
+    });
+  }
+
+  return rows;
+};
