@@ -39,17 +39,10 @@ export const getRespondentSection = (
   respondent: Respondent,
   index: number,
   translations: AnyRecord
-): SummaryListRow[] => {
-  const respondentSections: SummaryListRow[] = [];
-
-  respondentSections.push({
-    key: {
-      text: translations.respondentDetails.respondentName,
-      classes: 'govuk-!-font-weight-regular-m',
-    },
-    value: {
-      text: respondent.respondentName,
-    },
+): SummaryListRow[] => [
+  {
+    key: { text: translations.respondentDetails.respondentName, classes: 'govuk-!-font-weight-regular-m' },
+    value: { text: respondent.respondentName },
     actions: {
       items: [
         {
@@ -59,13 +52,9 @@ export const getRespondentSection = (
         },
       ],
     },
-  });
-
-  respondentSections.push({
-    key: {
-      text: translations.respondentDetails.respondentAddress,
-      classes: 'govuk-!-font-weight-regular-m',
-    },
+  },
+  {
+    key: { text: translations.respondentDetails.respondentAddress, classes: 'govuk-!-font-weight-regular-m' },
     value: {
       text: answersAddressFormatter(
         respondent.respondentAddress1,
@@ -84,67 +73,58 @@ export const getRespondentSection = (
         },
       ],
     },
-  });
-
-  if (index === 1 && userCase.pastEmployer !== YesOrNo.NO) {
-    respondentSections.push({
-      key: {
-        text: translations.respondentDetails.workedAtRespondent,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.claimantWorkAddressQuestion === YesOrNo.YES ? translations.doYesOrNo.yes : translations.doYesOrNo.no,
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.WORK_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.respondentDetails.workedAtRespondent,
+  },
+  ...(index === 1 && userCase.pastEmployer !== YesOrNo.NO
+    ? [
+        {
+          key: { text: translations.respondentDetails.workedAtRespondent, classes: 'govuk-!-font-weight-regular-m' },
+          value: {
+            text:
+              userCase.claimantWorkAddressQuestion === YesOrNo.YES
+                ? translations.doYesOrNo.yes
+                : translations.doYesOrNo.no,
           },
-        ],
-      },
-    });
-  }
-
-  if (index === 1 && userCase.claimantWorkAddressQuestion === YesOrNo.NO) {
-    respondentSections.push({
-      key: {
-        text: translations.respondentDetails.addressWorkedAt,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          answersAddressFormatter(
-            userCase.workAddress1,
-            userCase.workAddress2,
-            userCase.workAddressTown,
-            userCase.workAddressCountry,
-            userCase.workAddressPostcode
-          ) || translations.notProvided,
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.PLACE_OF_WORK + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.respondentDetails.addressWorkedAt,
+          actions: {
+            items: [
+              {
+                href: '/respondent/' + index + PageUrls.WORK_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
+                text: translations.change,
+                visuallyHiddenText: translations.respondentDetails.workedAtRespondent,
+              },
+            ],
           },
-        ],
-      },
-    });
-  }
-
-  const acasCertValue = respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.doYesOrNo.no;
-  respondentSections.push({
-    key: {
-      text: translations.respondentDetails.acasNumber,
-      classes: 'govuk-!-font-weight-regular-m',
-    },
-    value: {
-      text: acasCertValue,
-    },
+        },
+      ]
+    : []),
+  ...(index === 1 && userCase.claimantWorkAddressQuestion === YesOrNo.NO
+    ? [
+        {
+          key: { text: translations.respondentDetails.addressWorkedAt, classes: 'govuk-!-font-weight-regular-m' },
+          value: {
+            text:
+              answersAddressFormatter(
+                userCase.workAddress1,
+                userCase.workAddress2,
+                userCase.workAddressTown,
+                userCase.workAddressCountry,
+                userCase.workAddressPostcode
+              ) || translations.notProvided,
+          },
+          actions: {
+            items: [
+              {
+                href: '/respondent/' + index + PageUrls.PLACE_OF_WORK + InterceptPaths.ANSWERS_CHANGE,
+                text: translations.change,
+                visuallyHiddenText: translations.respondentDetails.addressWorkedAt,
+              },
+            ],
+          },
+        },
+      ]
+    : []),
+  {
+    key: { text: translations.respondentDetails.acasNumber, classes: 'govuk-!-font-weight-regular-m' },
+    value: { text: respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.doYesOrNo.no },
     actions: {
       items: [
         {
@@ -154,32 +134,25 @@ export const getRespondentSection = (
         },
       ],
     },
-  });
-
-  if (respondent.acasCert === YesOrNo.NO) {
-    const reasonText = getAcasReason(respondent.noAcasReason, translations);
-    respondentSections.push({
-      key: {
-        text: translations.respondentDetails.noAcasReason,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: reasonText,
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.NO_ACAS_NUMBER + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.respondentDetails.noAcasReason,
+  },
+  ...(respondent.acasCert === YesOrNo.NO
+    ? [
+        {
+          key: { text: translations.respondentDetails.noAcasReason, classes: 'govuk-!-font-weight-regular-m' },
+          value: { text: getAcasReason(respondent.noAcasReason, translations) },
+          actions: {
+            items: [
+              {
+                href: '/respondent/' + index + PageUrls.NO_ACAS_NUMBER + InterceptPaths.ANSWERS_CHANGE,
+                text: translations.change,
+                visuallyHiddenText: translations.respondentDetails.noAcasReason,
+              },
+            ],
           },
-        ],
-      },
-    });
-  }
-
-  return respondentSections;
-};
+        },
+      ]
+    : []),
+];
 
 export const getRespondentDetailsCardActionItem = (
   index: string,
@@ -189,29 +162,23 @@ export const getRespondentDetailsCardActionItem = (
   if (Number(index) === 1) {
     return '';
   }
-  const respondentCardActionItem = [];
-  respondentCardActionItem.push({
-    href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam,
-    text: translations.removeRespondent,
-    visuallyHiddenText: translations.removeRespondent,
-  });
-  return respondentCardActionItem;
+  return [
+    {
+      href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam,
+      text: translations.removeRespondent,
+      visuallyHiddenText: translations.removeRespondent,
+    },
+  ];
 };
 
 export const getRespondentDetailsSection = (
   respondent: Respondent,
   index: string,
   translations: AnyRecord
-): SummaryListRow[] => {
-  const respondentSections: SummaryListRow[] = [];
-
-  respondentSections.push({
-    key: {
-      text: translations.name,
-    },
-    value: {
-      text: respondent.respondentName,
-    },
+): SummaryListRow[] => [
+  {
+    key: { text: translations.name },
+    value: { text: respondent.respondentName },
     actions: {
       items: [
         {
@@ -221,12 +188,9 @@ export const getRespondentDetailsSection = (
         },
       ],
     },
-  });
-
-  respondentSections.push({
-    key: {
-      text: translations.address,
-    },
+  },
+  {
+    key: { text: translations.address },
     value: {
       text: answersAddressFormatter(
         respondent.respondentAddress1,
@@ -245,15 +209,10 @@ export const getRespondentDetailsSection = (
         },
       ],
     },
-  });
-
-  respondentSections.push({
-    key: {
-      text: translations.acasNum,
-    },
-    value: {
-      html: respondent.acasCertNum ?? translations.unProvided,
-    },
+  },
+  {
+    key: { text: translations.acasNum },
+    value: { html: respondent.acasCertNum ?? translations.unProvided },
     actions: {
       items: [
         {
@@ -263,38 +222,31 @@ export const getRespondentDetailsSection = (
         },
       ],
     },
-  });
-
-  if (respondent.acasCert === YesOrNo.NO) {
-    respondentSections.push({
-      key: {
-        text: translations.noAcasReason,
-      },
-      value: {
-        html: getAcasReason(respondent.noAcasReason, translations),
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.acasNum,
+  },
+  ...(respondent.acasCert === YesOrNo.NO
+    ? [
+        {
+          key: { text: translations.noAcasReason },
+          value: { html: getAcasReason(respondent.noAcasReason, translations) },
+          actions: {
+            items: [
+              {
+                href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
+                text: translations.change,
+                visuallyHiddenText: translations.acasNum,
+              },
+            ],
           },
-        ],
-      },
-    });
-  }
-
-  return respondentSections;
-};
+        },
+      ]
+    : []),
+];
 
 export const getClaimantRespondentDetailsSection = (
   respondent: Respondent,
   translations: AnyRecord
-): SummaryListRow[] => {
-  const rows: SummaryListRow[] = [];
-
-  rows.push({
+): SummaryListRow[] => [
+  {
     key: { text: translations.name },
     value: { text: respondent.respondentName },
     actions: {
@@ -302,9 +254,8 @@ export const getClaimantRespondentDetailsSection = (
         { href: PageUrls.CLAIMANT_RESPONDENT_NAME, text: translations.change, visuallyHiddenText: translations.name },
       ],
     },
-  });
-
-  rows.push({
+  },
+  {
     key: { text: translations.address },
     value: {
       text: answersAddressFormatter(
@@ -324,9 +275,8 @@ export const getClaimantRespondentDetailsSection = (
         },
       ],
     },
-  });
-
-  rows.push({
+  },
+  {
     key: { text: translations.acasNum },
     value: { html: respondent.acasCertNum ?? translations.unProvided },
     actions: {
@@ -334,23 +284,22 @@ export const getClaimantRespondentDetailsSection = (
         { href: PageUrls.CLAIMANT_ACAS_CERT_NUM, text: translations.change, visuallyHiddenText: translations.acasNum },
       ],
     },
-  });
-
-  if (respondent.acasCert === YesOrNo.NO) {
-    rows.push({
-      key: { text: translations.noAcasReason },
-      value: { html: getAcasReason(respondent.noAcasReason, translations) },
-      actions: {
-        items: [
-          {
-            href: PageUrls.CLAIMANT_NO_ACAS_NUMBER,
-            text: translations.change,
-            visuallyHiddenText: translations.noAcasReason,
+  },
+  ...(respondent.acasCert === YesOrNo.NO
+    ? [
+        {
+          key: { text: translations.noAcasReason },
+          value: { html: getAcasReason(respondent.noAcasReason, translations) },
+          actions: {
+            items: [
+              {
+                href: PageUrls.CLAIMANT_NO_ACAS_NUMBER,
+                text: translations.change,
+                visuallyHiddenText: translations.noAcasReason,
+              },
+            ],
           },
-        ],
-      },
-    });
-  }
-
-  return rows;
-};
+        },
+      ]
+    : []),
+];
