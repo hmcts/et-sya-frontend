@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
 import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantHaveWrittenContractController');
@@ -42,12 +42,6 @@ export default class DidClaimantHaveWrittenContractController {
     this.form = new Form(<FormFields>this.formContent.fields);
   }
 
-  public clearSelection = (req: AppRequest): void => {
-    if (req.session.userCase) {
-      req.session.userCase.claimantWrittenContract = undefined;
-    }
-  };
-
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.CLAIMANT_NOTICE_TYPE
@@ -57,7 +51,7 @@ export default class DidClaimantHaveWrittenContractController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    handleClearSelection(req, this.clearSelection);
+    handleClearSelection(req, r => clearFields(r, 'claimantWrittenContract'));
     renderPage(req, res, this.form, this.formContent, TranslationKeys.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, {
       languageParam: getLanguageParam(req.url).replace('?', ''),
     });

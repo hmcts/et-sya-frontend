@@ -12,7 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantBenefitsController');
@@ -58,20 +58,13 @@ export default class ClaimantBenefitsController {
     this.form = new Form(<FormFields>this.formContent.fields);
   }
 
-  public clearSelection = (req: AppRequest): void => {
-    if (req.session.userCase) {
-      req.session.userCase.employeeBenefits = undefined;
-      req.session.userCase.benefitsCharCount = undefined;
-    }
-  };
-
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_RESPONDENT_NAME);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    handleClearSelection(req, this.clearSelection);
+    handleClearSelection(req, r => clearFields(r, 'employeeBenefits', 'benefitsCharCount'));
     renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_BENEFITS, {
       languageParam: getLanguageParam(req.url).replace('?', ''),
     });

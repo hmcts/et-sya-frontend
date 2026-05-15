@@ -12,7 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantPensionController');
@@ -55,20 +55,13 @@ export default class ClaimantPensionController {
     this.form = new Form(<FormFields>this.formContent.fields);
   }
 
-  public clearSelection = (req: AppRequest): void => {
-    if (req.session.userCase) {
-      req.session.userCase.claimantPensionContribution = undefined;
-      req.session.userCase.claimantPensionWeeklyContribution = undefined;
-    }
-  };
-
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_BENEFITS);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    handleClearSelection(req, this.clearSelection);
+    handleClearSelection(req, r => clearFields(r, 'claimantPensionContribution', 'claimantPensionWeeklyContribution'));
     renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_PENSION, {
       languageParam: getLanguageParam(req.url).replace('?', ''),
     });
