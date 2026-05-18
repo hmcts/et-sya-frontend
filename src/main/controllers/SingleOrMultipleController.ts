@@ -4,13 +4,15 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseType } from '../definitions/case';
-import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import getLegacyUrl from '../utils/getLegacyUrlFromLng';
+import { getLogger } from '../logger';
 
-import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('SingleOrMultipleController');
 
 export default class SingleOrMultipleController {
   private readonly form: Form;
@@ -45,16 +47,8 @@ export default class SingleOrMultipleController {
     this.form = new Form(<FormFields>this.singleOrMultipleContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    let redirectUrl = '';
-    if (req.body.caseType === CaseType.SINGLE) {
-      redirectUrl = PageUrls.CLAIM_JURISDICTION_SELECTION;
-    } else if (req.body.caseType === CaseType.MULTIPLE) {
-      redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
-    } else {
-      redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    }
-    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

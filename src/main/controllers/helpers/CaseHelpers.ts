@@ -6,7 +6,7 @@ import { LoggerInstance } from 'winston';
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, languages } from '../../definitions/constants';
@@ -41,8 +41,6 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
   req.session.userCase.claimantRepresentedQuestion =
     userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED) === YesOrNo.YES.toString() ? YesOrNo.YES : YesOrNo.NO;
-  req.session.userCase.caseType =
-    userDataMap.get(CaseDataCacheKey.CASE_TYPE) === CaseType.MULTIPLE.toString() ? CaseType.MULTIPLE : CaseType.SINGLE;
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
@@ -51,6 +49,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
     try {
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
       logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      const caseType = req.session.userCase.caseType;
       const workEnterPostcode = req.session.userCase.workEnterPostcode;
       const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
       const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
@@ -61,6 +60,9 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
       req.session.userCase = fromApiFormat(response.data);
+      if (caseType !== undefined) {
+        req.session.userCase.caseType = caseType;
+      }
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       if (req.session.userCase.addressEnterPostcode === undefined) {
         req.session.userCase.addressEnterPostcode = addressEnterPostcode;
