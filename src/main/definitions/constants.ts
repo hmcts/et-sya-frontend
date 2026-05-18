@@ -159,6 +159,11 @@ export const TranslationKeys = {
   YOUR_DETAILS_FORM: 'your-details-form',
   YOUR_DETAILS_CYA: 'your-details-cya',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
+  ADD_ANOTHER_CLAIMANT: 'add-another-claimant',
+  ADD_CLAIMANTS_SPREADSHEET: 'add-claimants-spreadsheet',
+  OTHER_CLAIMANT_PERSONAL_DETAILS: 'other-claimant-personal-details',
+  REVIEW_OTHER_CLAIMANTS: 'review-other-claimants',
+  REMOVE_OTHER_CLAIMANT: 'remove-other-claimant',
 } as const;
 
 export const PageUrls = {
@@ -166,6 +171,12 @@ export const PageUrls = {
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
+  ADD_ANOTHER_CLAIMANT: '/add-another-claimant',
+  ADD_CLAIMANTS_SPREADSHEET: '/add-claimants-spreadsheet',
+  OTHER_CLAIMANT_PERSONAL_DETAILS: '/other-claimant-personal-details',
+  REVIEW_OTHER_CLAIMANTS: '/review-other-claimants',
+  REMOVE_OTHER_CLAIMANT: '/remove-other-claimant',
+  GROUP_REPRESENTATIVE: '/group-representative',
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
   CASE_NUMBER_CHECK: '/case-number-check',
