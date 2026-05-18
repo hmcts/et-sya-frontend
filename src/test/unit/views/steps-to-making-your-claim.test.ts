@@ -31,6 +31,7 @@ const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
 const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
 const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
+const expectedHeader5 = stepsToMakingYourClaimJSON.section5.title;
 
 const taskListTag = 'govuk-tag app-task-list__tag';
 const notStartedTaskTag = 'govuk-tag app-task-list__tag govuk-tag--grey';
@@ -69,26 +70,26 @@ describe('Steps to making your claim page', () => {
 
   it('should display correct number of sections', () => {
     const section = htmlRes.getElementsByClassName(sectionClass);
-    expect(section.length).equal(4, 'number of sections/tables found is not 4');
+    expect(section.length).equal(5, 'number of sections/tables found is not 5');
   });
 
   it('should display the correct number of list items - one for each task', () => {
     const foundListItems = htmlRes.getElementsByClassName(listItemClass);
-    expect(foundListItems.length).equal(8, 'number of list items found is not correct');
+    expect(foundListItems.length).equal(9, 'number of list items found is not correct');
   });
 
   it('should display the correct number of table / section headers', () => {
     const header = htmlRes.getElementsByClassName(headerClass);
-    expect(header.length).equal(4, 'number of table headers found is not 4');
+    expect(header.length).equal(5, 'number of table headers found is not 5');
   });
 
   it('should display the correct task list tags', () => {
     const tags = htmlRes.getElementsByClassName(notStartedTaskTag);
-    expect(tags.length).equal(8, 'number of table headers found is not 8');
+    expect(tags.length).equal(9, 'number of table headers found is not 9');
     for (let index = 0; index < tags.length - 2; index++) {
       expect(tags[index].innerHTML).contains('Not started yet');
     }
-    expect(tags[7].innerHTML).contains('Cannot start yet');
+    expect(tags[8].innerHTML).contains('Cannot start yet');
   });
 
   it('should display the correct table header texts', () => {
@@ -97,6 +98,12 @@ describe('Steps to making your claim page', () => {
     expect(header[1].innerHTML).contains(expectedHeader2, 'could not find table 2 header text');
     expect(header[2].innerHTML).contains(expectedHeader3, 'could not find table 3 header text');
     expect(header[3].innerHTML).contains(expectedHeader4, 'could not find table 4 header text');
+    expect(header[4].innerHTML).contains(expectedHeader5, 'could not find table 5 header text');
+  });
+
+  it('should have the correct link(PageUrls.SINGLE_OR_MULTIPLE_CLAIM) on Claiming on your own or with others', () => {
+    const links = htmlRes.querySelectorAll(linkClass);
+    expect(links[3].outerHTML).contains(PageUrls.SINGLE_OR_MULTIPLE_CLAIM.toString());
   });
 
   it('should have the correct link(PageUrls.TYPE_OF_CLAIM) on Summarise what happened to you', async () => {
@@ -117,7 +124,7 @@ describe('Steps to making your claim page', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
     const links = htmlRes.querySelectorAll(linkClass);
-    expect(links[5].outerHTML).contains(PageUrls.TYPE_OF_CLAIM.toString());
+    expect(links[6].outerHTML).contains(PageUrls.TYPE_OF_CLAIM.toString());
   });
   it(
     'should have the correct link(PageUrls.STILL_WORKING) on Employment status ' +
@@ -140,7 +147,7 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.querySelectorAll(linkClass);
-      expect(links[3].outerHTML).contains(PageUrls.STILL_WORKING.toString());
+      expect(links[4].outerHTML).contains(PageUrls.STILL_WORKING.toString());
     }
   );
   it(
@@ -164,7 +171,7 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.querySelectorAll(linkClass);
-      expect(links[3].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
+      expect(links[4].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
     }
   );
 });
@@ -207,12 +214,12 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
-    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
+    expect(tasklistTags.length).equal(9, 'number of tags found is not 9');
     expect(tasklistTags[0].innerHTML).contains('Completed');
     expect(tasklistTags[1].innerHTML).contains('Completed');
     expect(tasklistTags[2].innerHTML).contains('Completed');
-    expect(notStartedTags[4].innerHTML).contains('Cannot start yet');
+    expect(notStartedTags[5].innerHTML).contains('Cannot start yet');
   });
 
   it('should show employment and respondent section as completed', async () => {
@@ -252,11 +259,11 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
-    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
-    expect(tasklistTags[3].innerHTML).contains('Completed');
+    expect(notStartedTags.length).equal(7, 'number of tags found is not 7');
+    expect(tasklistTags.length).equal(9, 'number of tags found is not 9');
     expect(tasklistTags[4].innerHTML).contains('Completed');
-    expect(notStartedTags[5].innerHTML).contains('Cannot start yet');
+    expect(tasklistTags[5].innerHTML).contains('Completed');
+    expect(notStartedTags[6].innerHTML).contains('Cannot start yet');
   });
 
   it('should show claim details section as completed', async () => {
@@ -295,11 +302,11 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
-    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
-    expect(tasklistTags[5].innerHTML).contains('Completed');
+    expect(notStartedTags.length).equal(7, 'number of tags found is not 7');
+    expect(tasklistTags.length).equal(9, 'number of tags found is not 9');
     expect(tasklistTags[6].innerHTML).contains('Completed');
-    expect(notStartedTags[5].innerHTML).contains('Cannot start yet');
+    expect(tasklistTags[7].innerHTML).contains('Completed');
+    expect(notStartedTags[6].innerHTML).contains('Cannot start yet');
   });
 
   it('should show check your answers section as ready to start', async () => {
@@ -340,11 +347,75 @@ describe('Steps to making your claim page tags', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
-    for (let index = 0; index < tasklistTags.length - 2; index++) {
-      expect(tasklistTags[index].innerHTML).contains('Completed');
-    }
-    expect(tasklistTags[7].innerHTML).contains('Not started yet');
+    expect(tasklistTags.length).equal(9, 'number of tags found is not 9');
+    expect(tasklistTags[0].innerHTML).contains('Completed');
+    expect(tasklistTags[1].innerHTML).contains('Completed');
+    expect(tasklistTags[2].innerHTML).contains('Completed');
+    expect(tasklistTags[4].innerHTML).contains('Completed');
+    expect(tasklistTags[5].innerHTML).contains('Completed');
+    expect(tasklistTags[6].innerHTML).contains('Completed');
+    expect(tasklistTags[7].innerHTML).contains('Completed');
+    expect(tasklistTags[8].innerHTML).contains('Not started yet');
+  });
+
+  it('should show other people in your claim section as completed when caseType is set', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      caseType: CaseType.SINGLE,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
+    expect(tasklistTags[3].innerHTML).contains('Completed');
+  });
+
+  it('should display additional links in section 2 when case type is MULTIPLE', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      caseType: CaseType.MULTIPLE,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.MULTIPLE],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const foundListItems = htmlRes.getElementsByClassName(listItemClass);
+    expect(foundListItems.length).equal(11, 'number of list items found is not correct for MULTIPLE case type');
+    const section = htmlRes.getElementsByClassName(sectionClass);
+    expect(section.length).equal(5, 'number of sections/tables found is not 5');
   });
 
   it('should show section as in progress', async () => {
@@ -385,10 +456,10 @@ describe('Steps to making your claim page tags', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    expect(tasklistTags.length).equal(9, 'number of tags found is not 9');
     for (let index = 0; index < tasklistTags.length - 3; index++) {
       expect(tasklistTags[index].innerHTML).contains('Not started yet');
     }
-    expect(tasklistTags[7].innerHTML).contains('Cannot start yet');
+    expect(tasklistTags[8].innerHTML).contains('Cannot start yet');
   });
 });
