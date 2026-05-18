@@ -11,6 +11,7 @@ import AboutHearingDocumentsController from '../../controllers/AboutHearingDocum
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
+import AddAnotherClaimantController from '../../controllers/AddAnotherClaimantController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
@@ -472,5 +473,8 @@ export class Routes {
     app.post(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().post);
     app.get(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().get);
     app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
+
+    app.get(PageUrls.ADD_ANOTHER_CLAIMANT, new AddAnotherClaimantController().get);
+    app.post(PageUrls.ADD_ANOTHER_CLAIMANT, new AddAnotherClaimantController().post);
   }
 }
