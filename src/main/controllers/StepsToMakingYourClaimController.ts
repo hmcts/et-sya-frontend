@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { CaseType, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -72,8 +72,32 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section2.title,
         links: [
           {
+            url: setUrlLanguage(req, PageUrls.SINGLE_OR_MULTIPLE_CLAIM.toString()),
+            linkTxt: (l: AnyRecord): string => l.section2.link3Text,
+            status: (): string => (userCase?.caseType ? sectionStatus.completed : sectionStatus.notStarted),
+          },
+          ...(userCase?.caseType === CaseType.MULTIPLE
+            ? [
+                {
+                  url: '#',
+                  linkTxt: (l: AnyRecord): string => l.section2.link1Text,
+                  status: (): string => getSectionStatus(userCase?.personalDetailsCheck, undefined),
+                },
+                {
+                  url: '#',
+                  linkTxt: (l: AnyRecord): string => l.section2.link2Text,
+                  status: (): string => getSectionStatus(userCase?.personalDetailsCheck, undefined),
+                },
+              ]
+            : []),
+        ],
+      },
+      {
+        title: (l: AnyRecord): string => l.section3.title,
+        links: [
+          {
             url: setUrlLanguage(req, PageUrls.PAST_EMPLOYER.toString()),
-            linkTxt: (l: AnyRecord): string => l.section2.link1Text,
+            linkTxt: (l: AnyRecord): string => l.section3.link1Text,
             status: (): string =>
               getSectionStatusForEmployment(
                 userCase?.employmentAndRespondentCheck,
@@ -84,18 +108,18 @@ export default class StepsToMakingYourClaimController {
           },
           {
             url: setUrlLanguage(req, PageUrls.FIRST_RESPONDENT_NAME.toString()),
-            linkTxt: (l: AnyRecord): string => l.section2.link2Text,
+            linkTxt: (l: AnyRecord): string => l.section3.link2Text,
             status: (): string =>
               getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),
           },
         ],
       },
       {
-        title: (l: AnyRecord): string => l.section3.title,
+        title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
             url: setUrlLanguage(req, PageUrls.TYPE_OF_CLAIM.toString()),
-            linkTxt: (l: AnyRecord): string => l.section3.link1Text,
+            linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string =>
               getSectionStatus(
                 userCase?.claimDetailsCheck,
@@ -106,17 +130,17 @@ export default class StepsToMakingYourClaimController {
           },
           {
             url: setUrlLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT.toString()),
-            linkTxt: (l: AnyRecord): string => l.section3.link2Text,
+            linkTxt: (l: AnyRecord): string => l.section4.link2Text,
             status: (): string => getSectionStatus(userCase?.claimDetailsCheck, userCase?.tellUsWhatYouWant?.length),
           },
         ],
       },
       {
-        title: (l: AnyRecord): string => l.section4.title,
+        title: (l: AnyRecord): string => l.section5.title,
         links: [
           {
             url: (): string => (allSectionsCompleted ? setUrlLanguage(req, PageUrls.PCQ.toString()) : ''),
-            linkTxt: (l: AnyRecord): string => l.section4.link1Text,
+            linkTxt: (l: AnyRecord): string => l.section5.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
         ],
@@ -124,7 +148,7 @@ export default class StepsToMakingYourClaimController {
     ];
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       req.session.userCase.pastEmployer = YesOrNo.YES;
-      sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
+      sections[2].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
     }
     const paramId = req.params.id;
     const caseReference = paramId && paramId !== 'undefined' ? paramId : req.session.userCase?.id;
