@@ -117,6 +117,13 @@
     },
     "representativeAddressTypes": {
       "notSelected": "Dewiswch gyfeiriad"
+    },
+    "representedClaimantEnterPostcode": {
+      "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA",
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA"
+    },
+    "representedClaimantAddressTypes": {
+      "notSelected": "Dewiswch gyfeiriad"
     }
   },
   "selectAddress": "Dewiswch gyfeiriad",
@@ -133,6 +140,16 @@
   "representativePostcodeEnterTitle": "Cyfeiriad cyswllt y cynrychiolydd",
   "representativePostcodeSelectTitle": "Dewiswch gyfeiriad",
   "representativeManualAddress": "Mae cyfeiriad y cynrychiolydd y tu allan i'r DU",
+
+  "representedClaimantEnterPostcodeTitle": "place holder for represented claimant postcode enter title",
+  "representedClaimantSelectPostcodeTitle": "place holder for represented claimant postcode select title",
+  "representedClaimantEnterEmailTitle": "place holder for represented Claimant's email address title",
+  "representedClaimantEnterEmailHeading": "place holder for represented Claimant's email address title",
+  "representedClaimantEnterEmailDescription": "place holder for represented Claimant's email address Description",
+  "representedClaimantEnterEmailLabel": "place holder for represented Claimant's email address Label",
+  "representedClaimantDetailsCheckTitle": "place holder for represented claimant details check title",
+  "representedClaimantDetailsCheckHeading": "place holder for represented claimant details check heading",
+
   "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
   "beta": "beta",
   "Legal officer": "Swyddog Cyfreithiol",

@@ -224,6 +224,43 @@ describe('handle update draft case', () => {
     await handleUpdateDraftCase(req, mockLogger);
     expect(req.session.userCase.representativeAddressTypes).toEqual(addressTypes);
   });
+
+  it('should preserve representedClaimantEnterPostcode after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantEnterPostcode = 'LE5 5HD';
+    await handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase.representedClaimantEnterPostcode).toEqual('LE5 5HD');
+  });
+
+  it('should preserve representedClaimantAddresses after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const addresses = [
+      {
+        fullAddress: '1 Claimant St',
+        street1: '1 Claimant St',
+        town: 'Leicester',
+        postcode: 'LE5 5HD',
+        country: 'ENGLAND',
+      },
+    ];
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantAddresses = addresses;
+    await handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase.representedClaimantAddresses).toEqual(addresses);
+  });
+
+  it('should preserve representedClaimantAddressTypes after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const addressTypes = [
+      { selected: true, label: '1 address found' },
+      { value: 0, label: '1 Claimant St' },
+    ];
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantAddressTypes = addressTypes;
+    await handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase.representedClaimantAddressTypes).toEqual(addressTypes);
+  });
 });
 
 describe('handle submit application', () => {

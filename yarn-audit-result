@@ -1,0 +1,1 @@
+{"value":"basic-ftp","children":{"ID":1117910,"Issue":"basic-ftp allows a malicious FTP server to cause client-side denial of service via unbounded multiline control response buffering","URL":"https://github.com/advisories/GHSA-rpmf-866q-6p89","Severity":"high","Vulnerable Versions":"<=5.3.0","Tree Versions":["5.3.0"],"Dependents":["get-uri@npm:6.0.4"]}}

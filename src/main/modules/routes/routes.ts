@@ -179,6 +179,11 @@ import YourDetailsFormController from '../../controllers/YourDetailsFormControll
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
+import RepresentedClaimantAddressDetailsController from '../../controllers/represented-claimant/RepresentedClaimantAddressDetailsController';
+import RepresentedClaimantDetailsCheckController from '../../controllers/represented-claimant/RepresentedClaimantDetailsCheckController';
+import RepresentedClaimantEnterEmailController from '../../controllers/represented-claimant/RepresentedClaimantEnterEmailController';
+import RepresentedClaimantEnterPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantEnterPostcodeController';
+import RepresentedClaimantSelectPostcodeController from '../../controllers/represented-claimant/RepresentedClaimantSelectPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import { csrfProtection } from '../csrf';
@@ -558,6 +563,17 @@ export class Routes {
     app.post(PageUrls.REPRESENTATIVE_ADDRESS_DETAILS, new RepresentativeAddressDetailsController().post);
     app.get(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().get);
     app.post(PageUrls.REPRESENTATIVE_PHONE_NUMBER, new RepresentativePhoneNumberController().post);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE, new RepresentedClaimantEnterPostcodeController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_SELECT_POSTCODE, new RepresentedClaimantSelectPostcodeController().get);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_ADDRESS_DETAILS, new RepresentedClaimantAddressDetailsController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_ENTER_EMAIL, new RepresentedClaimantEnterEmailController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK, new RepresentedClaimantDetailsCheckController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK, new RepresentedClaimantDetailsCheckController().post);
+
     app.get(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().get);
     app.post(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().post);
     app.get(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().get);

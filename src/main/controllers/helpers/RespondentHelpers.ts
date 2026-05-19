@@ -99,6 +99,17 @@ export const fillRepresentativeAddressFields = (x: unknown, userCase: CaseWithId
   }
 };
 
+export const fillRepresentedClaimantAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const claimantAddress = userCase.representedClaimantAddresses?.at(x as number);
+  if (typeof x !== 'object') {
+    userCase.representedClaimantAddress1 = claimantAddress?.street1;
+    userCase.representedClaimantAddress2 = claimantAddress?.street2;
+    userCase.representedClaimantAddressTown = claimantAddress?.town;
+    userCase.representedClaimantAddressCountry = claimantAddress?.country;
+    userCase.representedClaimantAddressPostcode = claimantAddress?.postcode;
+  }
+};
+
 export const fillRespondentAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const address = userCase.respondentAddresses?.at(x as number);
   if (typeof x !== 'object') {
