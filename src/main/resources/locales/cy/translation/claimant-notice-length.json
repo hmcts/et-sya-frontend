@@ -1,0 +1,11 @@
+{
+  "title": "<place-holder>",
+  "h1Weeks": "<place-holder>",
+  "h1Months": "<place-holder>",
+  "hint": "<place-holder>",
+  "errors": {
+    "noticePeriodLength": {
+      "notANumber": "<place-holder>"
+    }
+  }
+}

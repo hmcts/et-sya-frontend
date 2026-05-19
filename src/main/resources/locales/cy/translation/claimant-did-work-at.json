@@ -1,0 +1,10 @@
+{
+  "title": "<place-holder>",
+  "legend": "<place-holder>",
+  "hintText": "<place-holder>",
+  "errors": {
+    "claimantWorkAddressQuestion": {
+      "required": "<place-holder>"
+    }
+  }
+}

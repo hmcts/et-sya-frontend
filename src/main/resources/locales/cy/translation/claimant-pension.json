@@ -1,0 +1,12 @@
+{
+  "title": "<place-holder>",
+  "legend": "<place-holder>",
+  "label": "<place-holder>",
+  "pensionContributions": "<place-holder>",
+  "errors": {
+    "claimantPensionWeeklyContribution": {
+      "invalidCurrency": "<place-holder>",
+      "tooHighCurrency": "<place-holder>"
+    }
+  }
+}
