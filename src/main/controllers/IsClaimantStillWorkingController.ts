@@ -15,9 +15,6 @@ import { renderPage } from './helpers/NonHmctsControllerHelper';
 const logger = getLogger('IsClaimantStillWorkingController');
 
 const getRedirectUrl = (isStillWorking: string): string => {
-  if (isStillWorking === StillWorking.NOTICE) {
-    return PageUrls.NOTICE_END;
-  }
   if (isStillWorking === StillWorking.NO_LONGER_WORKING) {
     return PageUrls.END_DATE;
   }

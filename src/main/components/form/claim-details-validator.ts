@@ -16,6 +16,7 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
 
   for (const respondent of respondents) {
     if (
+      !respondent.respondentName ||
       !respondent.respondentAddress1 ||
       !respondent.respondentAddressTown ||
       !respondent.respondentAddressCountry ||
