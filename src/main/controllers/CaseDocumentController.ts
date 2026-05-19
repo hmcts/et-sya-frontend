@@ -49,7 +49,11 @@ export default class CaseDocumentController {
         logger.error('Failed to download document with id: ' + details.id);
         res.setHeader('Content-Type', 'application/pdf');
       }
-      res.status(200).send(Buffer.from(document.data, 'binary'));
+      if (document.headers['content-length']) {
+        res.setHeader('Content-Length', document.headers['content-length']);
+      }
+      res.status(200);
+      (document.data as NodeJS.ReadableStream).pipe(res);
 
       setRespondentResponseHubLinkStatus(details, req, logger);
     } catch (err) {

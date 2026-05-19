@@ -49,7 +49,11 @@ export default class AttachmentController {
       try {
         const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
         res.setHeader('Content-Type', document?.headers['content-type']);
-        res.status(200).send(Buffer.from(document?.data, 'binary'));
+        if (document?.headers['content-length']) {
+          res.setHeader('Content-Length', document.headers['content-length']);
+        }
+        res.status(200);
+        (document?.data as NodeJS.ReadableStream).pipe(res);
       } catch (err) {
         logger.error(err.message);
         return res.redirect('/not-found');
