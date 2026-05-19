@@ -76,13 +76,6 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
   const rows: SummaryListRow[] = [];
 
   rows.push(
-    {
-      key: {
-        text: translations.personalDetails.header,
-        classes: 'govuk-summary-list__key govuk-heading-m',
-      },
-      value: {},
-    },
     addSummaryRow(
       translations.personalDetails.dob,
       userCase.dobDate
@@ -155,7 +148,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         createChangeAction(
           PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
-          translations.personalDetails.howToBeContacted
+          translations.personalDetails.languageLabel
         )
       ),
       addSummaryRow(
@@ -164,7 +157,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         createChangeAction(
           PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
-          translations.personalDetails.howToBeContacted
+          translations.personalDetails.hearingLabel
         )
       )
     );

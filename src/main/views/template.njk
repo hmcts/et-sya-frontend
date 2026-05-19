@@ -1,4 +1,5 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
@@ -78,6 +79,15 @@
   <!-- Hidden session object for user already logged in check -->
   <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="{{isLoggedIn}}">
   <!-- End of hidden session object for user already logged in check-->
+
+  {% include "cookie-banner.njk" %}
+{% endblock %}
+
+{% block govukSkipLink %}
+  {{ govukSkipLink({
+    href: "#main-content",
+    text: "Skip to main content"
+  }) }}
 {% endblock %}
 
   {% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
@@ -129,10 +139,6 @@
   {% if claimantAppsNav %}
     {% set headerNavigation = [claimantAppsNav, logInOrOut] %}
   {% endif %}
-
-  {% block headerStart %}
-    {% include "cookie-banner.njk" %}
-  {% endblock %}
 
   {% block govukHeader %}
     {{ govukHeader({

@@ -42,7 +42,7 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
-import { ContactTheTribunalHelper } from '../helpers/ContactTheTribunalHelper';
+import { isClaimantRepresentedByOrganisation } from '../helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
@@ -68,9 +68,7 @@ export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
     const welshEnabled = await getFlagValue('welsh-language', null);
-    const claimantRepresentedByOrganisation = ContactTheTribunalHelper.isClaimantRepresentedByOrganisation(
-      req.session.userCase
-    );
+    const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(req.session.userCase);
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {

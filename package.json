@@ -15,6 +15,7 @@
     "start": "NODE_ENV=production yarn node src/main/server.js",
     "start:dev": "NODE_ENV=development nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
+    "start:debug": "redis-server 2>&1 & node --require ts-node/register --inspect=9229 ./src/main/server.ts",
     "lint": "sass-lint -v -q && eslint . --ext .js,.jsx,.ts,.tsx --fix && prettier --check ./src/",
     "build": "yarn webpack --config webpack.config.js",
     "build:ts": "tsc -P . --outDir ./src/main",
@@ -92,10 +93,10 @@
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
     "typescript": "5.1.6",
-    "uuid": "^11.0.0"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.11.2",
+    "@axe-core/playwright": "4.11.3",
     "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.21.4",
@@ -176,10 +177,9 @@
     "minizlib": "^3.1.0",
     "semver": "^7.5.2",
     "jsdom": "^29.0.0",
-    "js-beautify/glob": "11.1.0",
     "shelljs": "^0.10.0",
     "merge": "^2.1.1",
-    "basic-ftp": "^5.2.0",
+    "basic-ftp": "^5.3.1",
     "formidable": "^3.5.4",
     "immutable": "^5.1.5",
     "lodash": "^4.17.23",
@@ -197,7 +197,8 @@
     "serialize-javascript": "^7.0.4",
     "underscore": "^1.13.8",
     "yauzl": "3.2.1",
-    "picomatch": "^4.0.4"
+    "picomatch": "^4.0.4",
+    "ip-address": "^10.1.1"
   },
   "packageManager": "yarn@4.12.0"
 }

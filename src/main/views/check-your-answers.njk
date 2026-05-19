@@ -29,12 +29,8 @@
     </div>
   </div>
 
+  <h2 class="govuk-heading-l">{{ applicationDetails.header }}</h2>
   <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <h2 class="govuk-summary-list__key govuk-heading-m">
-        {{ applicationDetails.header }}
-      </h2>
-    </div>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         {{ applicationDetails.typeOfClaim }}
@@ -55,26 +51,39 @@
     </div>
   </dl>
 
+  <h2 class="govuk-heading-l">{{ personalDetails.header }}</h2>
   {{ govukSummaryList({
     rows: yourDetails
   }) }}
 
+  <h2 class="govuk-heading-l">{{ employmentDetails.header }}</h2>
   {{ govukSummaryList({
     rows: employmentSection
   }) }}
 
   {% for respondent in respondents %}
-    {{
-      govukSummaryList({
-        rows: getRespondentSection(userCase, respondent, loop.index, translations, languageParam, true)
-      })
-    }}
+    <h2 class="govuk-heading-l">{{ respondentTitle(loop.index, translations, languageParam) }}</h2>
+    {{ govukSummaryList({
+      rows: getRespondentSection(userCase, respondent, loop.index, translations)
+    }) }}
+    {% if loop.index > 1 %}
+      <p class="govuk-body">
+        <a href="/respondent/{{ loop.index }}{{ PageUrls.RESPONDENT_REMOVE }}{{ languageParam }}" class="govuk-link">
+          {{ removeRespondent }} {{ loop.index }}
+        </a>
+      </p>
+    {% endif %}
   {% endfor %}
 
   {% if isAddRespondent %}
-    <p class="govuk-body"><a class="govuk-link" href="{{PageUrls.RESPONDENT_ADD_REDIRECT}}{{languageParam}}">{{translations.addAnotherRespondent}}</a></p>
+    <p class="govuk-body">
+      <a class="govuk-link" href="{{ PageUrls.RESPONDENT_ADD_REDIRECT }}{{ languageParam }}">
+        {{ translations.addAnotherRespondent }}
+      </a>
+    </p>
   {% endif %}
 
+  <h2 class="govuk-heading-l">{{ claimDetails.header }}</h2>
   {{ govukSummaryList({
     rows: claimDetailsSection
   }) }}
