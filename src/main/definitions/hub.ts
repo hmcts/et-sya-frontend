@@ -9,6 +9,7 @@ export enum HubLinkNames {
   TribunalOrders = 'tribunalOrders',
   TribunalJudgements = 'tribunalJudgements',
   Documents = 'documents',
+  YourSupport = 'yourSupport',
 }
 
 export class HubLinksStatuses {
@@ -22,6 +23,8 @@ export class HubLinksStatuses {
         this[name] = HubLinkStatus.OPTIONAL;
       } else if (name === HubLinkNames.Documents) {
         this[name] = HubLinkStatus.READY_TO_VIEW;
+      } else if (name === HubLinkNames.YourSupport) {
+        this[name] = HubLinkStatus.OPTIONAL;
       } else {
         this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
       }
@@ -86,4 +89,5 @@ export const sectionIndexToLinkNames: HubLinkNames[][] = [
   [HubLinkNames.TribunalOrders],
   [HubLinkNames.TribunalJudgements],
   [HubLinkNames.Documents],
+  [HubLinkNames.YourSupport],
 ];

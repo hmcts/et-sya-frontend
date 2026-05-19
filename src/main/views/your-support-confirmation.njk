@@ -1,0 +1,28 @@
+{% extends "template.njk" %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  {{ govukPanel({
+    titleText: h1
+  }) }}
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-4">{{ h2 }}</h2>
+  <p class="govuk-body ">{{ p }}</p>
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: buttonText,
+      preventDoubleClick: true,
+      href: link,
+      attributes: {
+        id: 'continue-to-next-step'
+      }
+    })  }}
+  </div>
+
+{% endblock %}

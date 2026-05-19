@@ -115,8 +115,19 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: (): string => (allSectionsCompleted ? setUrlLanguage(req, PageUrls.PCQ.toString()) : ''),
+            url: setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
+            status: (): string =>
+              userCase?.claimantFlags?.details?.length ? sectionStatus.completed : sectionStatus.notStarted,
+          },
+        ],
+      },
+      {
+        title: (l: AnyRecord): string => l.section5.title,
+        links: [
+          {
+            url: (): string => (allSectionsCompleted ? setUrlLanguage(req, PageUrls.PCQ.toString()) : ''),
+            linkTxt: (l: AnyRecord): string => l.section5.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
         ],

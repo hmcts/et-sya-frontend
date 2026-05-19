@@ -136,14 +136,21 @@ export const validateLanguageParam = (lng: string): boolean => {
   return validLanguages.includes(lng);
 };
 
-export const getLanguageParam = (url: string): string => {
+export const getLanguageCode = (url: string): string => {
   if (!url?.includes('?')) {
-    return languages.ENGLISH_URL_PARAMETER;
+    return languages.ENGLISH;
   }
   const urlParams = new URLSearchParams(url.split('?')[1]);
   const lng = urlParams.get('lng');
   if (lng && validateLanguageParam(lng)) {
-    return lng === 'cy' ? languages.WELSH_URL_PARAMETER : languages.ENGLISH_URL_PARAMETER;
+    return lng;
+  }
+  return languages.ENGLISH;
+};
+
+export const getLanguageParam = (url: string): string => {
+  if (getLanguageCode(url) === languages.WELSH) {
+    return languages.WELSH_URL_PARAMETER;
   }
   return languages.ENGLISH_URL_PARAMETER;
 };

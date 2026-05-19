@@ -7,6 +7,7 @@ import { DocumentUploadResponse } from '../../../main/definitions/api/documentAp
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   CaseDataCacheKey,
+  CaseFlags,
   CaseType,
   CaseTypeId,
   CaseWithId,
@@ -177,6 +178,39 @@ describe('Should return data in api format', () => {
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
+  });
+
+  it('should include claimant flags in api update format', () => {
+    const claimantFlags: CaseFlags = {
+      partyName: 'John Doe',
+      roleOnCase: 'Claimant',
+      details: [
+        {
+          id: 'flag-id',
+          value: {
+            name: 'Sign language interpreter',
+            flagCode: 'RA0042',
+            status: 'Active',
+            dateTimeCreated: '2026-04-30T10:00:00.000Z',
+            path: [],
+            hearingRelevant: 'Yes',
+            availableExternally: 'Yes',
+          },
+        },
+      ],
+    };
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+      claimantFlags,
+    };
+
+    const apiData = toApiFormat(caseItem);
+
+    expect(apiData.case_data.claimantFlags).toEqual(claimantFlags);
   });
 });
 

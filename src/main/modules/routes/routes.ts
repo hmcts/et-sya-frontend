@@ -145,6 +145,7 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import YourDetailsCYAController from '../../controllers/YourDetailsCYAController';
 import YourDetailsFormController from '../../controllers/YourDetailsFormController';
+import YourSupportController from '../../controllers/YourSupportController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
@@ -374,6 +375,11 @@ export class Routes {
       PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
       new RespondentPostCodeSelectController().post
     );
+
+    app.get(PageUrls.YOUR_SUPPORT, new YourSupportController().get);
+    app.get(PageUrls.YOUR_SUPPORT_REDIRECT, new YourSupportController().redirectToCuiJourney);
+    app.get(PageUrls.YOUR_SUPPORT_CALLBACK, new YourSupportController().callback);
+    app.get(PageUrls.YOUR_SUPPORT_CONFIRMATION, new YourSupportController().confirmation);
 
     // R92 - Non-system user - Store
     app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);

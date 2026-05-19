@@ -1,0 +1,61 @@
+{
+  "title": "Tell us if you need support",
+  "h1": "Tell us if you need support",
+  "legend": "Your Support",
+  "p": "Some people need support to use HMCTS service. You can ask for:",
+  "detailsSummary": {
+    "p": "You can also tell us if you're able to attend a remote hearing.",
+    "bullet1": "a language interpreter",
+    "bullet2": "reasonable adjustments for people with a health condition or disability",
+    "bullet3": "special measures to feel safe at court"
+  },
+  "details": [
+    {
+      "header": "Support before a court or tribunal hearing",
+      "paragraphs": [
+        {
+          "text": "If you need support before your hearing. for example a reasonable adjustment for alternative formats like large print. You can ask for support at any time during your case."
+        }
+      ]
+    },
+    {
+      "header": "Support at a hearing",
+      "paragraphs": [
+        {
+          "text": "You can ask for support to help take part in a hearing."
+        },
+        {
+          "text": "Not everyone has to attend a hearing. If you need to attend a hearing were you know and you can tell us what support you need."
+        }
+      ]
+    },
+    {
+      "header": "Support for someone else",
+      "paragraphs": [
+        {
+          "text": "If someone you're bringing to the hearing needs support, contact us using details on the main page of your account."
+        }
+      ]
+    },
+    {
+      "header": "What happens next",
+      "paragraphs": [
+        {
+          "text": "Once you've submitted your request for support, it'll be reviewed by HMCTS or a judge. We'll keep you updated on status of request in your account. If we need more information we'll contact you."
+        }
+      ]
+    }
+  ],
+  "yes": "Yes",
+  "noSupport": "No - I do not need any extra support at this time",
+  "adjustmentDetailTextLabel": "Tell us what support you need to request",
+  "textAreaHint": "You can describe to us what you need",
+  "errors": {
+    "yourSupportRedirect": {
+      "required": "There was a problem starting your support request. Try again later."
+    },
+    "reasonableAdjustmentsDetail": {
+      "required": "Give details of the support you need"
+    }
+  }
+}

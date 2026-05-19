@@ -290,6 +290,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
     [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS + baseUrls[languageParam]],
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],
+    [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + baseUrls[languageParam]],
   ]);
 };
 

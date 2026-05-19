@@ -29,5 +29,6 @@ nodejs:
     MANAGE_ORG_URL: 'https://manage-org.{{ .Values.global.environment }}.platform.hmcts.net'
     MANAGE_CASE_URL: 'https://manage-case.{{ .Values.global.environment }}.platform.hmcts.net'
     S2S_URL: 'http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    CUI_URL: 'https://manage-your-support-for-hmcts-services.service.gov.uk'
 idam-pr:
   enabled: false

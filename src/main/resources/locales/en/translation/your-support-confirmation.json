@@ -1,0 +1,14 @@
+{
+  "title": "You have sent your request to the tribunal/court",
+  "h1": "You have sent your request to the tribunal/court",
+  "h2": "What happens next",
+  "legend": "",
+  "p": "we have have the details",
+  "buttonText": "Continue to next step",
+  "textAreaHint": "You can describe to us what you need",
+  "errors": {
+    "reasonableAdjustmentsDetail": {
+      "required": "Give details of the support you need"
+    }
+  }
+}
