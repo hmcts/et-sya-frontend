@@ -1,0 +1,17 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "legend": "<place-holder>",
+  "acasCertNum": "<place-holder>",
+  "hintText": "<place-holder>",
+  "linkText": "<place-holder>",
+  "errors": {
+    "acasCert": {
+      "required": "<place-holder>"
+    },
+    "acasCertNum": {
+      "required": "<place-holder>",
+      "invalidAcasNumber": "<place-holder>"
+    }
+  }
+}

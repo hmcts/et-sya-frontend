@@ -86,6 +86,7 @@ export interface Case {
   jobTitle?: string;
   typeOfClaim?: string[];
   pastEmployer?: YesOrNo;
+  claimantWrittenContract?: YesOrNo;
   noticeEnds?: CaseDate;
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
@@ -125,6 +126,7 @@ export interface Case {
   whistleblowingEntityName?: string;
   linkedCases?: YesOrNo;
   linkedCasesDetail?: string;
+  representativeDetailsCheck?: YesOrNo;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
@@ -223,6 +225,19 @@ export interface Case {
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
   claimantName?: string;
+  // non-MyHMCTS Claimant rep
+  representativeType?: string;
+  representativeOrgName?: string;
+  representativeName?: string;
+  representativeEnterPostcode?: string;
+  representativeAddresses?: Record<string, string>[];
+  representativeAddressTypes?: AddressType[];
+  repAddress1?: string;
+  repAddress2?: string;
+  repAddressTown?: string;
+  repAddressCountry?: string;
+  repAddressPostcode?: string;
+  representativePhoneNumber?: string;
 }
 
 export const enum StillWorking {

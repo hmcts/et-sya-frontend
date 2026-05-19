@@ -8,7 +8,7 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { deleteDraftCase } from './helpers/CaseHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getClaimStepsUrl, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('DeleteDraftClaimController');
 export default class DeleteDraftClaimController {
@@ -18,7 +18,7 @@ export default class DeleteDraftClaimController {
     if (req.query?.redirect === 'claimant-applications') {
       redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
     } else if (req.query?.redirect === 'claim-steps') {
-      redirectUrl = PageUrls.CLAIM_STEPS;
+      redirectUrl = getClaimStepsUrl(req);
     }
 
     const content = {

@@ -68,7 +68,7 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
 
 export const fillAddressAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const address = userCase.addressAddresses?.at(x as number);
-  if (!x.toString().includes('object')) {
+  if (typeof x !== 'object') {
     userCase.address1 = address?.street1;
     userCase.address2 = address?.street2;
     userCase.addressTown = address?.town;
@@ -79,7 +79,7 @@ export const fillAddressAddressFields = (x: unknown, userCase: CaseWithId): void
 
 export const fillWorkAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const address = userCase.workAddresses?.at(x as number);
-  if (!x.toString().includes('object')) {
+  if (typeof x !== 'object') {
     userCase.workAddress1 = address?.street1;
     userCase.workAddress2 = address?.street2;
     userCase.workAddressTown = address?.town;
@@ -88,9 +88,20 @@ export const fillWorkAddressFields = (x: unknown, userCase: CaseWithId): void =>
   }
 };
 
+export const fillRepresentativeAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.representativeAddresses?.at(x as number);
+  if (typeof x !== 'object') {
+    userCase.repAddress1 = address?.street1;
+    userCase.repAddress2 = address?.street2;
+    userCase.repAddressTown = address?.town;
+    userCase.repAddressCountry = address?.country;
+    userCase.repAddressPostcode = address?.postcode;
+  }
+};
+
 export const fillRespondentAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const address = userCase.respondentAddresses?.at(x as number);
-  if (!x.toString().includes('object')) {
+  if (typeof x !== 'object') {
     userCase.respondentAddress1 = address?.street1;
     userCase.respondentAddress2 = address?.street2;
     userCase.respondentAddressTown = address?.town;

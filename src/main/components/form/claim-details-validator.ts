@@ -16,6 +16,7 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
 
   for (const respondent of respondents) {
     if (
+      !respondent.respondentName ||
       !respondent.respondentAddress1 ||
       !respondent.respondentAddressTown ||
       !respondent.respondentAddressCountry ||
@@ -34,6 +35,14 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
   }
 
   return true;
+};
+
+export const validateRepresentativeDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const { representativeName, repAddress1 } = userCase;
+  return !(!representativeName || !repAddress1);
 };
 
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {

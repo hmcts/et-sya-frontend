@@ -1,0 +1,18 @@
+{
+  "title": "Check the respondent details",
+  "subTitle": "Respondent ",
+  "name": "Name",
+  "address": "Address",
+  "acasNum": "Acas certificate number",
+  "noAcasReason": "Why do you not have an Acas number?",
+  "acasReason": {
+    "another": "Another person I'm making a claim with has an Acas early conciliation certificate number",
+    "no_power": "Acas doesn't have the power to conciliate on some or all of my claim",
+    "employer": "My employer has already been in touch with Acas",
+    "unfair_dismissal": "The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
+  },
+  "unProvided": "Not provided",
+  "change": "Change",
+  "saveAndContinue": "Save and continue",
+  "saveForLater": "Save as draft"
+}

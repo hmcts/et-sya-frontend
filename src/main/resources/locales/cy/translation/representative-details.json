@@ -1,0 +1,25 @@
+{
+  "title": "<place-holder>",
+  "p1": "<place-holder>",
+  "typeOfRepresentative": "<place-holder>",
+  "selectAType": "<place-holder>",
+  "employmentAdvisor": "<place-holder>",
+  "citizensAdviceBureau": "<place-holder>",
+  "freeRepresentationUnit": "<place-holder>",
+  "lawCentre": "<place-holder>",
+  "tradeUnion": "<place-holder>",
+  "solicitor": "<place-holder>",
+  "privateIndividual": "<place-holder>",
+  "tradeAssociation": "<place-holder>",
+  "other": "<place-holder>",
+  "representativeOrgName": "<place-holder>",
+  "representativeName": "<place-holder>",
+  "errors": {
+    "representativeType": {
+      "required": "<place-holder>"
+    },
+    "representativeName": {
+      "required": "<place-holder>"
+    }
+  }
+}

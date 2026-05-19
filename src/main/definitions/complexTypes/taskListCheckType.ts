@@ -4,4 +4,5 @@ export interface TaskListCheckType {
   personalDetailsCheck?: YesOrNo;
   employmentAndRespondentCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
+  representativeDetailsCheck?: YesOrNo;
 }

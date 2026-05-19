@@ -1,57 +1,125 @@
 import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls } from '../../../main/definitions/constants';
+import * as FormHelpers from '../../../main/controllers/helpers/FormHelpers';
+import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Reasonable Adjustments Controller', () => {
-  const t = {
-    'reasonable-adjustments': {},
-    common: {},
-  };
-  it('should render the Reasonable Adjustments page', () => {
-    const controller = new ReasonableAdjustmentsController();
+  let controller: ReasonableAdjustmentsController;
+  let getPageContentSpy: jest.SpyInstance;
 
-    const response = mockResponse();
-    const request = mockRequest({ t });
-
-    controller.get(request, response);
-
-    expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
+  beforeEach(() => {
+    controller = new ReasonableAdjustmentsController();
+    getPageContentSpy = jest.spyOn(FormHelpers, 'getPageContent');
   });
 
-  describe('post() reasonable adjustments', () => {
-    it('should redirect to the next page when nothing is selected as the form is optional', async () => {
-      const body = {};
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-      const controller = new ReasonableAdjustmentsController();
+  describe('get()', () => {
+    it('should render the reasonable-adjustments template', () => {
+      const request = mockRequest({ t: { 'reasonable-adjustments': {}, common: {} } });
+      const response = mockResponse();
 
-      const req = mockRequest({ body });
+      controller.get(request, response);
+
+      expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
+    });
+
+    it('should use the standard translation key when claimant is not represented', () => {
+      const request = mockRequest({
+        t: { 'reasonable-adjustments': {}, common: {} },
+        userCase: { claimantRepresentedQuestion: YesOrNo.NO },
+      });
+      const response = mockResponse();
+
+      controller.get(request, response);
+
+      expect(getPageContentSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.arrayContaining([TranslationKeys.REASONABLE_ADJUSTMENTS])
+      );
+      expect(getPageContentSpy).not.toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.arrayContaining([TranslationKeys.REASONABLE_ADJUSTMENTS_NON_HMCTS])
+      );
+    });
+
+    it('should use the non-HMCTS translation key when claimant is represented', () => {
+      const request = mockRequest({
+        t: { 'reasonable-adjustments-non-hmcts': {}, common: {} },
+        userCase: { claimantRepresentedQuestion: YesOrNo.YES },
+      });
+      const response = mockResponse();
+
+      controller.get(request, response);
+
+      expect(getPageContentSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.arrayContaining([TranslationKeys.REASONABLE_ADJUSTMENTS_NON_HMCTS])
+      );
+      expect(getPageContentSpy).not.toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.arrayContaining([TranslationKeys.REASONABLE_ADJUSTMENTS])
+      );
+    });
+
+    it('should use the standard translation key when claimantRepresentedQuestion is not set', () => {
+      const request = mockRequest({ t: { 'reasonable-adjustments': {}, common: {} } });
+      const response = mockResponse();
+
+      controller.get(request, response);
+
+      expect(getPageContentSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.arrayContaining([TranslationKeys.REASONABLE_ADJUSTMENTS])
+      );
+    });
+  });
+
+  describe('post()', () => {
+    it('should redirect to personal-details-check when nothing is selected as the form is optional', async () => {
+      const req = mockRequest({ body: {} });
       const res = mockResponse();
+
       await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
     });
-  });
 
-  it('should add the reasonable adjustments form value to the userCase', async () => {
-    const body = {
-      reasonableAdjustments: 'Yes',
-      reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
-    };
+    it('should save reasonableAdjustments and reasonableAdjustmentsDetail to userCase when Yes is selected', async () => {
+      const body = {
+        reasonableAdjustments: 'Yes',
+        reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
+      };
+      const req = mockRequestEmpty({ body });
+      const res = mockResponse();
 
-    const controller = new ReasonableAdjustmentsController();
+      await controller.post(req, res);
 
-    const req = mockRequestEmpty({ body });
-    const res = mockResponse();
+      expect(req.session.userCase).toStrictEqual({
+        reasonableAdjustments: 'Yes',
+        reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
+      });
+    });
 
-    await controller.post(req, res);
+    it('should redirect to personal-details-check when No is selected', async () => {
+      const req = mockRequest({ body: { reasonableAdjustments: 'No' } });
+      const res = mockResponse();
 
-    expect(req.session.userCase).toStrictEqual({
-      reasonableAdjustments: 'Yes',
-      reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
     });
   });
 });

@@ -1,0 +1,17 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "label": "<place-holder>",
+  "email": "<place-holder>",
+  "post": "<place-holder>",
+  "languageLabel": "<place-holder>",
+  "languageHint": "<place-holder>",
+  "welsh": "<place-holder>",
+  "english": "<place-holder>",
+  "hearingLabel": "<place-holder>",
+  "errors": {
+    "claimantContactPreference": {
+      "required": "<place-holder>"
+    }
+  }
+}

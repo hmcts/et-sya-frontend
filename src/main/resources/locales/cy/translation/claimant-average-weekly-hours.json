@@ -1,0 +1,15 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "p1": "<place-holder>",
+  "enterAverageHours": "<place-holder>",
+  "hint": "<place-holder>",
+  "errors": {
+    "avgWeeklyHrs": {
+      "invalid": "<place-holder>",
+      "exceeded": "<place-holder>",
+      "notANumber": "<place-holder>",
+      "negativeNumber": "<place-holder>"
+    }
+  }
+}
