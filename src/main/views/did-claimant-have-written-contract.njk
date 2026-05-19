@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -13,9 +14,15 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% block form %}
-        {% include "form/form.njk"%}
-      {% endblock %}
+      <form class="form" id="main-form" method="post" action="" novalidate="true">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
+        {% include "form/fields.njk" %}
+        <p class="govuk-body">
+          <a href="{{ PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT }}?redirect=clearSelection&{{ languageParam }}" class="govuk-link">{{ clearSelection }}</a>
+        </p>
+        {{ govukInsetText({ text: noticeLengthInsetText }) }}
+        {% include "form/saveButtons.njk" %}
+      </form>
     </div>
   </div>
 {% endblock %}

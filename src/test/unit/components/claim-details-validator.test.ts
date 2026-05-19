@@ -69,6 +69,7 @@ describe('claimDetailsValidator', () => {
       const userCase = {
         respondents: [
           {
+            respondentName: 'Acme Ltd',
             respondentAddress1: '123 Street',
             respondentAddressTown: 'Town',
             respondentAddressCountry: 'Country',
@@ -81,10 +82,27 @@ describe('claimDetailsValidator', () => {
       expect(validateEmploymentAndRespondentDetails(userCase)).toBe(true);
     });
 
+    it('should return false if respondentName is missing', () => {
+      const userCase = {
+        respondents: [
+          {
+            respondentAddress1: '123 Street',
+            respondentAddressTown: 'Town',
+            respondentAddressCountry: 'Country',
+            respondentAddressPostcode: 'AB12 3CD',
+            acasCert: 'No',
+            noAcasReason: 'Valid reason',
+          },
+        ],
+      };
+      expect(validateEmploymentAndRespondentDetails(userCase)).toBe(false);
+    });
+
     it('should return false if acasCert is "Yes" and acasCertNum is not provided', () => {
       const userCase = {
         respondents: [
           {
+            respondentName: 'Acme Ltd',
             respondentAddress1: '123 Street',
             respondentAddressTown: 'Town',
             respondentAddressCountry: 'Country',
@@ -100,6 +118,7 @@ describe('claimDetailsValidator', () => {
       const userCase = {
         respondents: [
           {
+            respondentName: 'Acme Ltd',
             respondentAddress1: '123 Street',
             respondentAddressTown: 'Town',
             respondentAddressCountry: 'Country',

@@ -1,0 +1,47 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
+
+      {% if respondent %}
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: subTitle + "1"
+            }
+          },
+          rows: getClaimantRespondentDetailsSection(respondent, translations)
+        }) }}
+      {% endif %}
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: saveAndContinue,
+        href: PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK + languageParam
+      }) }}
+
+      {{ govukButton({
+        text: saveForLater,
+        classes: "govuk-button--secondary",
+        href: PageUrls.CLAIM_SAVED + languageParam
+      }) }}
+    </div>
+  </div>
+{% endblock %}

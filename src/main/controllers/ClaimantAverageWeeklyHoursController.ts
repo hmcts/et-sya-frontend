@@ -25,6 +25,7 @@ export default class ClaimantAverageWeeklyHoursController {
         type: 'text',
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord): string => l.enterAverageHours,
+        hint: (l: AnyRecord): string => l.hint,
         attributes: { maxLength: 5 },
         validator: isValidAvgWeeklyHours,
       },
@@ -38,7 +39,7 @@ export default class ClaimantAverageWeeklyHoursController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.PAY);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_PAY);
   };
 
   @CaseStateCheck()

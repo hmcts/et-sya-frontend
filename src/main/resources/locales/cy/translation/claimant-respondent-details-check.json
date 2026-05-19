@@ -1,0 +1,18 @@
+{
+  "title": "<place-holder>",
+  "subTitle": "<place-holder>",
+  "name": "<place-holder>",
+  "address": "<place-holder>",
+  "acasNum": "<place-holder>",
+  "noAcasReason": "<place-holder>",
+  "acasReason": {
+    "another": "<place-holder>",
+    "no_power": "<place-holder>",
+    "employer": "<place-holder>",
+    "unfair_dismissal": "<place-holder>"
+  },
+  "unProvided": "<place-holder>",
+  "change": "<place-holder>",
+  "saveAndContinue": "<place-holder>",
+  "saveForLater": "<place-holder>"
+}

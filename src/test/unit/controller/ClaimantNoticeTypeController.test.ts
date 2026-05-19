@@ -37,7 +37,7 @@ describe('ClaimantNoticeTypeController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to NOTICE_LENGTH when Weeks is selected', async () => {
+    it('should redirect to CLAIMANT_NOTICE_LENGTH when Weeks is selected', async () => {
       const body = { noticePeriodUnit: WeeksOrMonths.WEEKS };
       const controller = new ClaimantNoticeTypeController();
       const req = mockRequest({ body });
@@ -45,10 +45,10 @@ describe('ClaimantNoticeTypeController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_LENGTH);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_LENGTH);
     });
 
-    it('should redirect to NOTICE_LENGTH when Months is selected', async () => {
+    it('should redirect to CLAIMANT_NOTICE_LENGTH when Months is selected', async () => {
       const body = { noticePeriodUnit: WeeksOrMonths.MONTHS };
       const controller = new ClaimantNoticeTypeController();
       const req = mockRequest({ body });
@@ -56,7 +56,7 @@ describe('ClaimantNoticeTypeController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_LENGTH);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_LENGTH);
     });
 
     it('should redirect to CLAIMANT_AVERAGE_WEEKLY_HOURS when no value is submitted', async () => {

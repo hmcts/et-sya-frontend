@@ -1,0 +1,26 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "errors": {
+    "workAddress1": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "workAddress2": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "workAddressTown": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "workAddressCountry": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "workAddressPostcode": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
+}

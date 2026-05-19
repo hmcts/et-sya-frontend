@@ -1,0 +1,27 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "label": "<place-holder>",
+  "p1": "<place-holder>",
+  "p2": "<place-holder>",
+  "payBeforeTax": "<place-holder>",
+  "payAfterTax": "<place-holder>",
+  "weeklyMonthlyAnnual": "<place-holder>",
+  "errors": {
+    "payBeforeTax": {
+      "required": "<place-holder>",
+      "invalidCurrency": "<place-holder>",
+      "tooHighCurrency": "<place-holder>"
+    },
+    "payAfterTax": {
+      "required": "<place-holder>",
+      "invalidCurrency": "<place-holder>",
+      "tooHighCurrency": "<place-holder>"
+    },
+    "payInterval": {
+      "payBeforeTax": "<place-holder>",
+      "payAfterTax": "<place-holder>",
+      "required": "<place-holder>"
+    }
+  }
+}
