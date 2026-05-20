@@ -59,6 +59,17 @@ describe('ClaimantEmploymentStartDateController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_END);
     });
 
+    it('should redirect to CLAIMANT_END_DATE on a valid date when claimant is no longer working (AC4)', async () => {
+      const body = { 'startDate-day': '15', 'startDate-month': '06', 'startDate-year': '2020' };
+      const controller = new ClaimantEmploymentStartDateController();
+      const req = mockRequestEmpty({ body, userCase: { isStillWorking: StillWorking.NO_LONGER_WORKING } });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_END_DATE);
+    });
+
     it('should save startDate to session userCase', async () => {
       const body = { 'startDate-day': '15', 'startDate-month': '06', 'startDate-year': '2020' };
       const controller = new ClaimantEmploymentStartDateController();

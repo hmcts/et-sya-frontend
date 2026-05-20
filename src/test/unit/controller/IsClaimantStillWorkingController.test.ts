@@ -59,7 +59,7 @@ describe('IsClaimantStillWorkingController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
     });
 
-    it('should redirect to END_DATE when claimant is no longer working', async () => {
+    it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when claimant is no longer working (AC2)', async () => {
       const body = { isStillWorking: StillWorking.NO_LONGER_WORKING };
       const controller = new IsClaimantStillWorkingController();
       const req = mockRequest({ body });
@@ -67,7 +67,7 @@ describe('IsClaimantStillWorkingController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
     });
 
     it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when no value is submitted', async () => {
@@ -78,6 +78,7 @@ describe('IsClaimantStillWorkingController', () => {
 
       await controller.post(req, res);
 
+      // All statuses (including empty / no selection) now route through employment details
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
     });
 
