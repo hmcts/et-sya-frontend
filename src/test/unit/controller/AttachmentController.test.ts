@@ -1,5 +1,6 @@
 import AttachmentController from '../../../main/controllers/AttachmentController';
 import { PageUrls } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { notificationType } from '../mocks/mockNotificationItem';
@@ -162,5 +163,34 @@ describe('Attachment Controller', () => {
 
     controller.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
+  });
+
+  it('should set Content-Type header and pipe document data to response on successful fetch', async () => {
+    const controller = new AttachmentController();
+    const response = mockResponse();
+    const userCase = {};
+    const request = mockRequest({ userCase });
+    request.params.docId = '12345';
+    request.session.userCase.contactApplicationFile = {
+      document_url: 'http.site/12345',
+      document_binary_url: 'bdf',
+      document_filename: 'dfgdf',
+    };
+
+    const mockPipe = jest.fn();
+    const mockDocument = {
+      headers: { 'content-type': 'application/pdf', 'content-length': '1024' },
+      data: { pipe: mockPipe },
+    };
+    getCaseApiMock.mockReturnValue({
+      getCaseDocument: jest.fn().mockResolvedValue(mockDocument),
+    } as unknown as CaseApi);
+
+    await controller.get(request, response);
+
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'application/pdf');
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Length', '1024');
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(mockPipe).toHaveBeenCalledWith(response);
   });
 });
