@@ -175,6 +175,17 @@ describe('Respond to application Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/respond-to-application/1?lng=en');
   });
 
+  it('should redirect to not-found when no selectedGenericTseApplication in session', async () => {
+    const controller = new RespondToApplicationController();
+    const userCase: Partial<CaseWithId> = {};
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+
+    await controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+  });
+
   it('should redirect error page when genericTseApplicationCollection not found', async () => {
     const body = {
       responseText: 'some Text',
