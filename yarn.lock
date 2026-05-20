@@ -3328,12 +3328,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.214.0":
-  version: 0.214.0
-  resolution: "@opentelemetry/api-logs@npm:0.214.0"
+"@opentelemetry/api-logs@npm:0.218.0":
+  version: 0.218.0
+  resolution: "@opentelemetry/api-logs@npm:0.218.0"
   dependencies:
     "@opentelemetry/api": "npm:^1.3.0"
-  checksum: 10/6213a42f52df25ed06cf178ae79a5926592bf2e5ddaa3abfe8c657d0e9c2df51914818808b7e762bce9380a2f67f0818781745f8985717755ba63375f2acb21b
+  checksum: 10/201bd373978b894962992238359da8a63119ad516f94768902a2821af01a268660e4ed36ac6a853fb99c5a42196f6887e4aff8d8ed5096ae7dfb2f8158a24a85
   languageName: node
   linkType: hard
 
@@ -3355,16 +3355,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation@npm:^0.214.0":
-  version: 0.214.0
-  resolution: "@opentelemetry/instrumentation@npm:0.214.0"
+"@opentelemetry/instrumentation@npm:^0.218.0":
+  version: 0.218.0
+  resolution: "@opentelemetry/instrumentation@npm:0.218.0"
   dependencies:
-    "@opentelemetry/api-logs": "npm:0.214.0"
+    "@opentelemetry/api-logs": "npm:0.218.0"
     import-in-the-middle: "npm:^3.0.0"
     require-in-the-middle: "npm:^8.0.0"
   peerDependencies:
     "@opentelemetry/api": ^1.3.0
-  checksum: 10/fd4451e4e535f21530346a0b161b18928ed56d3bd56fce452b0598fdbfd97da7c1c58a65119a6827db59e4dec384fade579ebee860de5dd6d9aa94abbef49d37
+  checksum: 10/b20c260affc3cedec20ba03b48b8f80ddf2acd6909a2a3741d6dc34bd93cfd748301899bc0b05805d1b2b6da7bb5ec6c336d0fad65ce0465d25d69cf67f3e67d
   languageName: node
   linkType: hard
 
@@ -6356,7 +6356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"body-parser@npm:^1.20.3, body-parser@npm:~1.20.3":
+"body-parser@npm:^1.20.3":
   version: 1.20.4
   resolution: "body-parser@npm:1.20.4"
   dependencies:
@@ -6373,6 +6373,26 @@ __metadata:
     type-is: "npm:~1.6.18"
     unpipe: "npm:~1.0.0"
   checksum: 10/ff67e28d3f426707be8697a75fdf8d564dc50c341b41f054264d8ab6e2924e519c7ce8acc9d0de05328fdc41e1d9f3f200aec9c1cfb1867d6b676a410d97c689
+  languageName: node
+  linkType: hard
+
+"body-parser@npm:~1.20.5":
+  version: 1.20.5
+  resolution: "body-parser@npm:1.20.5"
+  dependencies:
+    bytes: "npm:~3.1.2"
+    content-type: "npm:~1.0.5"
+    debug: "npm:2.6.9"
+    depd: "npm:2.0.0"
+    destroy: "npm:~1.2.0"
+    http-errors: "npm:~2.0.1"
+    iconv-lite: "npm:~0.4.24"
+    on-finished: "npm:~2.4.1"
+    qs: "npm:~6.15.1"
+    raw-body: "npm:~2.5.3"
+    type-is: "npm:~1.6.18"
+    unpipe: "npm:~1.0.0"
+  checksum: 10/3ec787c0d23b16542972226ee352ed917ae404bf862b6783040e8cfc994f165432f6d48e9341ef57f489c667c880f9c5174fad559c482607f83f4db7f412de3a
   languageName: node
   linkType: hard
 
@@ -9681,12 +9701,12 @@ __metadata:
   linkType: hard
 
 "express@npm:^4.20.0, express@npm:^4.21.1":
-  version: 4.22.1
-  resolution: "express@npm:4.22.1"
+  version: 4.22.2
+  resolution: "express@npm:4.22.2"
   dependencies:
     accepts: "npm:~1.3.8"
     array-flatten: "npm:1.1.1"
-    body-parser: "npm:~1.20.3"
+    body-parser: "npm:~1.20.5"
     content-disposition: "npm:~0.5.4"
     content-type: "npm:~1.0.4"
     cookie: "npm:~0.7.1"
@@ -9705,7 +9725,7 @@ __metadata:
     parseurl: "npm:~1.3.3"
     path-to-regexp: "npm:~0.1.12"
     proxy-addr: "npm:~2.0.7"
-    qs: "npm:~6.14.0"
+    qs: "npm:~6.15.1"
     range-parser: "npm:~1.2.1"
     safe-buffer: "npm:5.2.1"
     send: "npm:~0.19.0"
@@ -9715,7 +9735,7 @@ __metadata:
     type-is: "npm:~1.6.18"
     utils-merge: "npm:1.0.1"
     vary: "npm:~1.1.2"
-  checksum: 10/f33c1bd0c7d36e2a1f18de9cdc176469d32f68e20258d2941b8d296ab9a4fd9011872c246391bf87714f009fac5114c832ec5ac65cbee39421f1258801eb8470
+  checksum: 10/defeef5f1cda5bf5ee4a6b35252563552d8d97fab1d29f502e45ef64316f5d02f49739d7c8a79e425613af3a542d0e3cd8cf7e85671ce2ddd592197abcf5acc3
   languageName: node
   linkType: hard
 
@@ -11192,9 +11212,9 @@ __metadata:
   linkType: hard
 
 "i18next-http-middleware@npm:^3.3.0":
-  version: 3.9.3
-  resolution: "i18next-http-middleware@npm:3.9.3"
-  checksum: 10/88f4cd162681fde44fcc5f73bebe5080b99ae8ce75e468f06247217d2549b05826d002d4b174d6bb926991086bf5b20fd0b14bfc8512dec76ab530d0b9ccf620
+  version: 3.9.6
+  resolution: "i18next-http-middleware@npm:3.9.6"
+  checksum: 10/98fac01c9afdf0281fbdb6f33f57a4ac6409435d38fcb3557aa07813a65ae38de2b5adb8db5a3a3152eb86062db8f85a682ae7041d78573e5f59648aee472e07
   languageName: node
   linkType: hard
 
@@ -16819,8 +16839,8 @@ __metadata:
   linkType: hard
 
 "sass-loader@npm:^16.0.0":
-  version: 16.0.7
-  resolution: "sass-loader@npm:16.0.7"
+  version: 16.0.8
+  resolution: "sass-loader@npm:16.0.8"
   dependencies:
     neo-async: "npm:^2.6.2"
   peerDependencies:
@@ -16840,7 +16860,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10/074be7eadbbb2e14f581b06e9f1ec010807d76bd5cc5cd9c6a120fa377f1b94a7f8dc4b0eea5b12cf34511e9b00fe056093b7da02e849d3f2513bfe21e9f660f
+  checksum: 10/2666ab5bf066c4f4a3383e2b310eabac4508228126db89711cd398eb2f8183ec06a33232f2f5994c2e4483d783e14b21b159aa2169782eff3a778382af101f0c
   languageName: node
   linkType: hard
 
@@ -17908,15 +17928,15 @@ __metadata:
   linkType: hard
 
 "tar@npm:^7.5.10":
-  version: 7.5.13
-  resolution: "tar@npm:7.5.13"
+  version: 7.5.15
+  resolution: "tar@npm:7.5.15"
   dependencies:
     "@isaacs/fs-minipass": "npm:^4.0.0"
     chownr: "npm:^3.0.0"
     minipass: "npm:^7.1.2"
     minizlib: "npm:^3.1.0"
     yallist: "npm:^5.0.0"
-  checksum: 10/2bc2b6f0349038a6621dbba1c4522d45752d5071b2994692257113c2050cd23fafc30308f820e5f8ad6fda3f7d7f92adc9a432aa733daa04c42af2061c021c3f
+  checksum: 10/b4cb6acd822159867f81ebda8d765c6941ec8292f1cf2f870d3713f4933c14bf0ed7bf4a92338143c31e8815ca0a1fdd62aa03ddb48a42ae187f7ef696583ffe
   languageName: node
   linkType: hard
 
