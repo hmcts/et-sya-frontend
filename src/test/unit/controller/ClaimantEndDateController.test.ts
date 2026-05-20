@@ -36,7 +36,7 @@ describe('ClaimantEndDateController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to DID_CLAIMANT_HAVE_WRITTEN_CONTRACT on a valid past date (AC4)', async () => {
+    it('should redirect to CLAIMANT_NOTICE_PERIOD on a valid past date (AC1)', async () => {
       const body = {
         'endDate-day': '10',
         'endDate-month': '03',
@@ -48,7 +48,7 @@ describe('ClaimantEndDateController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_PERIOD);
     });
 
     it('should save endDate to session userCase', async () => {

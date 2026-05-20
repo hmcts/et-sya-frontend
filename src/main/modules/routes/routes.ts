@@ -50,7 +50,9 @@ import ClaimantEndDateController from '../../controllers/ClaimantEndDateControll
 import ClaimantNoAcasNumberController from '../../controllers/ClaimantNoAcasNumberController';
 import ClaimantNoticeEndController from '../../controllers/ClaimantNoticeEndController';
 import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLengthController';
+import ClaimantNoticePeriodController from '../../controllers/ClaimantNoticePeriodController';
 import ClaimantNoticeTypeController from '../../controllers/ClaimantNoticeTypeController';
+import ClaimantPastNoticeTypeController from '../../controllers/ClaimantPastNoticeTypeController';
 import ClaimantPayController from '../../controllers/ClaimantPayController';
 import ClaimantPensionController from '../../controllers/ClaimantPensionController';
 import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWorkController';
@@ -292,6 +294,10 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_NOTICE_END, new ClaimantNoticeEndController().post);
     app.get(PageUrls.CLAIMANT_END_DATE, new ClaimantEndDateController().get);
     app.post(PageUrls.CLAIMANT_END_DATE, new ClaimantEndDateController().post);
+    app.get(PageUrls.CLAIMANT_NOTICE_PERIOD, new ClaimantNoticePeriodController().get);
+    app.post(PageUrls.CLAIMANT_NOTICE_PERIOD, new ClaimantNoticePeriodController().post);
+    app.get(PageUrls.CLAIMANT_PAST_NOTICE_TYPE, new ClaimantPastNoticeTypeController().get);
+    app.post(PageUrls.CLAIMANT_PAST_NOTICE_TYPE, new ClaimantPastNoticeTypeController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);

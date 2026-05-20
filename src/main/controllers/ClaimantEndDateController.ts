@@ -38,7 +38,7 @@ export default class ClaimantEndDateController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_NOTICE_PERIOD);
   };
 
   @CaseStateCheck()
