@@ -1,5 +1,6 @@
 import AttachmentController from '../../../main/controllers/AttachmentController';
 import { PageUrls } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
@@ -12,6 +13,11 @@ import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 describe('Attachment Controller', () => {
   const getCaseApiMock = jest.spyOn(CaseService, 'getCaseApi');
   (getCaseApiMock as jest.Mock).mockReturnValue(expect.anything());
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+
+  beforeEach(() => {
+    mockLdClient.mockResolvedValue(false);
+  });
 
   it('should redirect to not-found page if document id not provided', () => {
     const controller = new AttachmentController();
@@ -30,7 +36,7 @@ describe('Attachment Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 
-  it('should call getCaseDocument if document id provided is for contact application file', () => {
+  it('should call getCaseDocument if document id provided is for contact application file', async () => {
     const controller = new AttachmentController();
     const response = mockResponse();
     const userCase = {};
@@ -41,7 +47,7 @@ describe('Attachment Controller', () => {
       document_binary_url: 'bdf',
       document_filename: 'dfgdf',
     };
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(getCaseApiMock).toHaveBeenCalled();
   });
 
@@ -192,5 +198,47 @@ describe('Attachment Controller', () => {
     expect(response.setHeader).toHaveBeenCalledWith('Content-Length', '1024');
     expect(response.status).toHaveBeenCalledWith(200);
     expect(mockPipe).toHaveBeenCalledWith(response);
+  });
+
+  it('should call getCaseDocument with useStreaming=false when document-streaming flag is off', async () => {
+    mockLdClient.mockResolvedValue(false);
+    const userCase = {};
+    const request = mockRequest({ userCase });
+    request.params.docId = '12345';
+    request.session.userCase.contactApplicationFile = {
+      document_url: 'http.site/12345',
+      document_binary_url: 'bdf',
+      document_filename: 'dfgdf',
+    };
+    const mockGetCaseDocument = jest.fn().mockResolvedValue({
+      headers: { 'content-type': 'application/pdf' },
+      data: { pipe: jest.fn() },
+    });
+    getCaseApiMock.mockReturnValue({ getCaseDocument: mockGetCaseDocument } as unknown as CaseApi);
+
+    await new AttachmentController().get(request, mockResponse());
+
+    expect(mockGetCaseDocument).toHaveBeenCalledWith('12345', false);
+  });
+
+  it('should call getCaseDocument with useStreaming=true when document-streaming flag is on', async () => {
+    mockLdClient.mockResolvedValue(true);
+    const userCase = {};
+    const request = mockRequest({ userCase });
+    request.params.docId = '12345';
+    request.session.userCase.contactApplicationFile = {
+      document_url: 'http.site/12345',
+      document_binary_url: 'bdf',
+      document_filename: 'dfgdf',
+    };
+    const mockGetCaseDocument = jest.fn().mockResolvedValue({
+      headers: { 'content-type': 'application/pdf' },
+      data: { pipe: jest.fn() },
+    });
+    getCaseApiMock.mockReturnValue({ getCaseDocument: mockGetCaseDocument } as unknown as CaseApi);
+
+    await new AttachmentController().get(request, mockResponse());
+
+    expect(mockGetCaseDocument).toHaveBeenCalledWith('12345', true);
   });
 });
