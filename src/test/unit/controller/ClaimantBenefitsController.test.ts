@@ -62,7 +62,7 @@ describe('ClaimantBenefitsController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_RESPONDENT_NAME on Yes with benefits text (AC3)', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB on Yes with benefits text (AC1)', async () => {
       const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'company car' };
       const controller = new ClaimantBenefitsController();
       const req = mockRequest({ body });
@@ -70,10 +70,10 @@ describe('ClaimantBenefitsController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
-    it('should redirect to CLAIMANT_RESPONDENT_NAME on No (AC3)', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB on No (AC1)', async () => {
       const body = { employeeBenefits: YesOrNo.NO };
       const controller = new ClaimantBenefitsController();
       const req = mockRequest({ body });
@@ -81,10 +81,10 @@ describe('ClaimantBenefitsController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
-    it('should redirect to CLAIMANT_RESPONDENT_NAME when no answer given (AC3)', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB when no answer given (AC1)', async () => {
       const body = { employeeBenefits: '' };
       const controller = new ClaimantBenefitsController();
       const req = mockRequestEmpty({ body });
@@ -92,7 +92,7 @@ describe('ClaimantBenefitsController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
     it('should stay on page and error when benefits text exceeds 2500 characters (AC2)', async () => {

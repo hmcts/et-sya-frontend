@@ -1,0 +1,11 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "yes": "<place-holder>",
+  "no": "<place-holder>",
+  "errors": {
+    "newJob": {
+      "required": "<place-holder>"
+    }
+  }
+}
