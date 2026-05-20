@@ -1,7 +1,9 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { FEATURE_FLAGS } from '../definitions/constants';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
 import { getCaseApi } from '../services/CaseService';
 
@@ -37,7 +39,8 @@ export default class CaseDocumentController {
         return res.redirect('/not-found');
       }
 
-      const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
+      const streamingEnabled = await getFlagValue(FEATURE_FLAGS.DOCUMENT_STREAMING, null);
+      const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId, streamingEnabled);
 
       let contentType = findContentTypeByDocumentDetail(details);
       if (!contentType) {
