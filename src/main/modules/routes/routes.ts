@@ -48,6 +48,8 @@ import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmplo
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
 import ClaimantEndDateController from '../../controllers/ClaimantEndDateController';
 import ClaimantNewJobController from '../../controllers/ClaimantNewJobController';
+import ClaimantNewJobPayController from '../../controllers/ClaimantNewJobPayController';
+import ClaimantNewJobStartDateController from '../../controllers/ClaimantNewJobStartDateController';
 import ClaimantNoAcasNumberController from '../../controllers/ClaimantNoAcasNumberController';
 import ClaimantNoticeEndController from '../../controllers/ClaimantNoticeEndController';
 import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLengthController';
@@ -301,6 +303,10 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_PAST_NOTICE_TYPE, new ClaimantPastNoticeTypeController().post);
     app.get(PageUrls.CLAIMANT_NEW_JOB, new ClaimantNewJobController().get);
     app.post(PageUrls.CLAIMANT_NEW_JOB, new ClaimantNewJobController().post);
+    app.get(PageUrls.CLAIMANT_NEW_JOB_START_DATE, new ClaimantNewJobStartDateController().get);
+    app.post(PageUrls.CLAIMANT_NEW_JOB_START_DATE, new ClaimantNewJobStartDateController().post);
+    app.get(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().get);
+    app.post(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);

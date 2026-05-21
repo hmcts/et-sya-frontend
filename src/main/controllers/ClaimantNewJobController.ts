@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantNewJobController');
 
@@ -42,7 +43,10 @@ export default class ClaimantNewJobController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_RESPONDENT_NAME);
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+      ? PageUrls.CLAIMANT_NEW_JOB_START_DATE
+      : PageUrls.CLAIMANT_RESPONDENT_NAME;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

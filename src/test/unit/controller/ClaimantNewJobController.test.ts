@@ -48,7 +48,7 @@ describe('ClaimantNewJobController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
     });
 
-    it('should redirect to CLAIMANT_RESPONDENT_NAME when Yes is selected', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB_START_DATE when Yes is selected (AC2)', async () => {
       const body = { newJob: YesOrNo.YES };
       const controller = new ClaimantNewJobController();
       const req = mockRequest({ body });
@@ -56,7 +56,7 @@ describe('ClaimantNewJobController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB_START_DATE);
     });
 
     it('should redirect to CLAIMANT_RESPONDENT_NAME when no value is submitted', async () => {
