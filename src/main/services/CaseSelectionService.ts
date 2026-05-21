@@ -74,6 +74,7 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
 
   const allSectionsCompleted = !!(
     userCase?.personalDetailsCheck === YesOrNo.YES &&
+    userCase?.groupClaimsCheck === YesOrNo.YES &&
     userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
     userCase?.claimDetailsCheck === YesOrNo.YES
   );

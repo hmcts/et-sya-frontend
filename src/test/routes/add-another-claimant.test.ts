@@ -1,6 +1,8 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
+import { AddAdditionalClaimant } from '../../main/definitions/case';
+import { ErrorPages, PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.ADD_ANOTHER_CLAIMANT}`, () => {
@@ -12,23 +14,25 @@ describe(`GET ${PageUrls.ADD_ANOTHER_CLAIMANT}`, () => {
 });
 
 describe(`on POST ${PageUrls.ADD_ANOTHER_CLAIMANT}`, () => {
-  test('should redirect to personal details when manual is selected', async () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
+  test('should redirect back to additional claimant personal details page when manual is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.ADD_ANOTHER_CLAIMANT)
-      .send({ addClaimantMethod: 'manual' })
+      .send({ addClaimantMethod: AddAdditionalClaimant.MANUAL })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.OTHER_CLAIMANT_PERSONAL_DETAILS);
+        expect(res.header['location']).toStrictEqual(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
       });
   });
 
-  test('should redirect to spreadsheet page when spreadsheet is selected', async () => {
+  test('should redirect back to # page when spreadsheet is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.ADD_ANOTHER_CLAIMANT)
-      .send({ addClaimantMethod: 'spreadsheet' })
+      .send({ addClaimantMethod: AddAdditionalClaimant.SPREADSHEET })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.ADD_CLAIMANTS_SPREADSHEET);
+        expect(res.header['location']).toStrictEqual(ErrorPages.NOT_FOUND);
       });
   });
 

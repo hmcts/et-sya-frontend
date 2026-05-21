@@ -10,6 +10,7 @@ import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { TriageQuestions } from '../complexTypes/triageQuestions';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { HubLinksStatuses } from '../hub';
+import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 
 interface CaseDataApiBody {
   caseType: string;
@@ -31,6 +32,9 @@ interface CaseDataApiBody {
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
   claimantTse?: ClaimantTse;
+  leadClaimant?: string;
+  additionalClaimants?: AdditionalClaimantRequestBody[];
+  addClaimantMethod?: string;
 }
 
 export interface CreateCaseBody {
@@ -46,5 +50,10 @@ export interface UpdateCaseBody {
 
 export interface RespondentRequestBody {
   value: RespondentType;
+  id?: string;
+}
+
+export interface AdditionalClaimantRequestBody {
+  value: AdditionalClaimantType;
   id?: string;
 }

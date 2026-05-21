@@ -11,7 +11,10 @@ import AboutHearingDocumentsController from '../../controllers/AboutHearingDocum
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
-import AddAnotherClaimantController from '../../controllers/AddAnotherClaimantController';
+import AddAnotherClaimantController from '../../controllers/multiples/AddAnotherClaimantController';
+import AdditionalClaimantPersonalDetailsController from '../../controllers/multiples/AdditionalClaimantPersonalDetailsController';
+import AdditionalClaimantPostCodeEnterController from '../../controllers/multiples/AdditionalClaimantPostCodeEnterController';
+import AdditionalClaimantPostCodeSelectController from '../../controllers/multiples/AdditionalClaimantPostCodeSelectController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
@@ -59,6 +62,8 @@ import EmploymentAndRespondentCheckController from '../../controllers/Employment
 import EndDateController from '../../controllers/EndDateController';
 import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
 import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
+import GroupClaimsCheckController from '../../controllers/multiples/GroupClaimsCheckController';
+import GroupRepresentativeController from '../../controllers/multiples/GroupRepresentativeController';
 import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
@@ -85,6 +90,7 @@ import PersonalDetailsCheckController from '../../controllers/PersonalDetailsChe
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RemoveAdditionalClaimantController from '../../controllers/multiples/RemoveAdditionalClaimantController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
@@ -107,7 +113,7 @@ import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageCont
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
-import SingleOrMultipleController from '../../controllers/SingleOrMultipleController';
+import SingleOrMultipleController from '../../controllers/multiples/SingleOrMultipleController';
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
@@ -146,6 +152,7 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import YourDetailsCYAController from '../../controllers/YourDetailsCYAController';
 import YourDetailsFormController from '../../controllers/YourDetailsFormController';
+import ReviewOtherClaimantsController from '../../controllers/multiples/ReviewAdditionalClaimantsController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
@@ -185,6 +192,8 @@ export class Routes {
     app.get(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE, new MakingClaimAsLegalRepController().get);
     app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().get);
     app.post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().post);
+    app.get(PageUrls.GROUP_REPRESENTATIVE, new GroupRepresentativeController().get);
+    app.post(PageUrls.GROUP_REPRESENTATIVE, new GroupRepresentativeController().post);
     app.get(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().get);
     app.post(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().post);
     app.get(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().get);
@@ -300,6 +309,8 @@ export class Routes {
     app.post(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().post);
     app.get(PageUrls.LINKED_CASES, new LinkedCasesController().get);
     app.post(PageUrls.LINKED_CASES, new LinkedCasesController().post);
+    app.get(PageUrls.GROUP_CLAIMS_CHECK, new GroupClaimsCheckController().get);
+    app.post(PageUrls.GROUP_CLAIMS_CHECK, new GroupClaimsCheckController().post);
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
@@ -476,5 +487,15 @@ export class Routes {
 
     app.get(PageUrls.ADD_ANOTHER_CLAIMANT, new AddAnotherClaimantController().get);
     app.post(PageUrls.ADD_ANOTHER_CLAIMANT, new AddAnotherClaimantController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS, new AdditionalClaimantPersonalDetailsController().get);
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS, new AdditionalClaimantPersonalDetailsController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER, new AdditionalClaimantPostCodeEnterController().get);
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER, new AdditionalClaimantPostCodeEnterController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT, new AdditionalClaimantPostCodeSelectController().get);
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT, new AdditionalClaimantPostCodeSelectController().post);
+    app.get(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS, new ReviewOtherClaimantsController().get);
+    app.post(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS, new ReviewOtherClaimantsController().post);
+    app.get(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().get);
+    app.post(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().post);
   }
 }

@@ -1,10 +1,10 @@
-import AddAnotherClaimantController from '../../../main/controllers/AddAnotherClaimantController';
-import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { AddAdditionalClaimant } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
-import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
+import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
+import AddAnotherClaimantController from '../../../../main/controllers/multiples/AddAnotherClaimantController';
+import { AddAdditionalClaimant } from '../../../../main/definitions/case';
+import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
+import { mockRequest } from '../../mocks/mockRequest';
+import { mockResponse } from '../../mocks/mockResponse';
+import { userCaseWithRespondent } from '../../mocks/mockUserCaseWithRespondent';
 
 jest.spyOn(CaseHelper, 'handlePostLogic').mockImplementation(() => Promise.resolve());
 
@@ -44,7 +44,7 @@ describe('Add Another Claimant Controller', () => {
       res,
       expect.anything(),
       expect.anything(),
-      PageUrls.OTHER_CLAIMANT_PERSONAL_DETAILS
+      PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS
     );
   });
 

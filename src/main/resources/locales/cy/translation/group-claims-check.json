@@ -1,0 +1,13 @@
+{
+  "title": "A yw'r adran hon wedi'i chwblhau?",
+  "heading": "Ydych chi wedi cwblhau’r adran hon?",
+  "yes": "Do, rwyf wedi cwblhau’r adran hon",
+  "no": "Naddo, rwyf am ddychwelyd i’r adran hon yn hwyrach ymlaen",
+  "p": "Gallwch newid eich atebion yn hwyrach ymlaen.",
+  "errors": {
+    "groupClaimsCheck": {
+      "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",
+      "invalid": "[W] You must complete the Group claims section before you can mark it as completed"
+    }
+  }
+}

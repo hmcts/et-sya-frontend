@@ -15,6 +15,7 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { TypeItem } from './util-types';
+import { AddressUK } from './complexTypes/addressUK';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -39,11 +40,7 @@ export interface AdditionalClaimant {
   lastName?: string;
   email?: string;
   dob?: CaseDate;
-  address1?: string;
-  address2?: string;
-  addressTown?: string;
-  addressCountry?: string;
-  addressPostcode?: string;
+  address?: AddressUK;
 }
 
 export interface Respondent {
@@ -139,6 +136,7 @@ export interface Case {
   linkedCases?: YesOrNo;
   linkedCasesDetail?: string;
   personalDetailsCheck?: YesOrNo;
+  groupClaimsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
@@ -240,7 +238,10 @@ export interface Case {
   additionalClaimantAddressTown?: string;
   additionalClaimantAddressCountry?: string;
   additionalClaimantAddressPostcode?: string;
-  // Multiples
+  additionalClaimantEnterPostcode?: string;
+  additionalClaimantAddressTypes?: AddressType[];
+  additionalClaimantAddresses?: Record<string, string>[];
+  addClaimantMethod?: AddAdditionalClaimant;
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;

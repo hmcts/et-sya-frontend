@@ -1,0 +1,19 @@
+{
+  "title": "[W] Personal details of another claimant",
+  "h1": "[W] Personal details of another claimant",
+  "titleLabel": "[W] Title (optional)",
+  "firstNameLabel": "[W] First name",
+  "lastNameLabel": "[W] Last name",
+  "emailLabel": "[W] Email address (optional)",
+  "emailHint": "[W] The tribunal will use this to send updates about the case",
+  "dobLabel": "[W] Date of birth (optional)",
+  "dobHint": "[W] For example, 23 04 1981",
+  "errors": {
+    "additionalClaimantFirstName": {
+      "required": "[W] Enter the claimant's first name"
+    },
+    "additionalClaimantLastName": {
+      "required": "[W] Enter the claimant's last name"
+    }
+  }
+}

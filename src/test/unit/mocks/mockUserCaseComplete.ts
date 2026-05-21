@@ -134,6 +134,7 @@ export default {
   isStillWorking: StillWorking.WORKING,
   pastEmployer: YesOrNo.YES,
   personalDetailsCheck: YesOrNo.YES,
+  groupClaimsCheck: YesOrNo.YES,
   reasonableAdjustments: YesOrNo.YES,
   reasonableAdjustmentsDetail: 'Adjustments detail test',
   noticeEnds: { year: '2022', month: '08', day: '11' },

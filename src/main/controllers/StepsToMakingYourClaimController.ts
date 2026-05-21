@@ -43,6 +43,7 @@ export default class StepsToMakingYourClaimController {
 
     const allSectionsCompleted = !!(
       userCase?.personalDetailsCheck === YesOrNo.YES &&
+      userCase?.groupClaimsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
       userCase?.claimDetailsCheck === YesOrNo.YES
     );
@@ -74,19 +75,26 @@ export default class StepsToMakingYourClaimController {
           {
             url: setUrlLanguage(req, PageUrls.SINGLE_OR_MULTIPLE_CLAIM.toString()),
             linkTxt: (l: AnyRecord): string => l.section2.link3Text,
-            status: (): string => (userCase?.caseType ? sectionStatus.completed : sectionStatus.notStarted),
+            status: (): string => getSectionStatus(userCase?.groupClaimsCheck, userCase?.caseType),
           },
           ...(userCase?.caseType === CaseType.MULTIPLE
             ? [
                 {
-                  url: '#',
+                  url: setUrlLanguage(
+                    req,
+                    ((userCase?.additionalClaimants?.length || 0) > 0
+                      ? PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
+                      : PageUrls.ADD_ANOTHER_CLAIMANT
+                    ).toString()
+                  ),
                   linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-                  status: (): string => getSectionStatus(userCase?.personalDetailsCheck, undefined),
+                  status: (): string =>
+                    getSectionStatus(userCase?.groupClaimsCheck, userCase?.additionalClaimants?.length),
                 },
                 {
-                  url: '#',
+                  url: setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE.toString()),
                   linkTxt: (l: AnyRecord): string => l.section2.link2Text,
-                  status: (): string => getSectionStatus(userCase?.personalDetailsCheck, undefined),
+                  status: (): string => getSectionStatus(userCase?.groupClaimsCheck, userCase?.leadClaimant),
                 },
               ]
             : []),

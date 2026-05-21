@@ -314,6 +314,7 @@ describe('Steps to making your claim page tags', () => {
       id: '12234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       personalDetailsCheck: YesOrNo.YES,
+      groupClaimsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
       createdDate: 'August 19, 2022',
@@ -362,9 +363,10 @@ describe('Steps to making your claim page tags', () => {
     const userCase: CaseWithId = {
       id: '12234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      caseType: CaseType.SINGLE,
+      caseType: CaseType.MULTIPLE,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
+      groupClaimsCheck: YesOrNo.YES,
     };
     await request(
       mockAppWithRedisClient({
@@ -373,7 +375,7 @@ describe('Steps to making your claim page tags', () => {
           new Map<CaseDataCacheKey, string>([
             [CaseDataCacheKey.CLAIM_JURISDICTION, CaseTypeId.ENGLAND_WALES],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
-            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.MULTIPLE],
             [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
           ])
         ),

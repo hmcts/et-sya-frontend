@@ -2,8 +2,14 @@ import { isDateEmpty } from '../components/form/date-validator';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
-import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import {
+  AdditionalClaimantRequestBody,
+  CreateCaseBody,
+  RespondentRequestBody,
+  UpdateCaseBody,
+} from '../definitions/api/caseApiBody';
+import {
+  AdditionalClaimantApiModel,
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
@@ -14,6 +20,7 @@ import {
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
 import {
+  AdditionalClaimant,
   CaseDataCacheKey,
   CaseDate,
   CaseWithId,
@@ -134,6 +141,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
     reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
+    groupClaimsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.groupClaimsCheck,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
@@ -223,6 +231,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+    additionalClaimants: mapAdditionalClaimants(fromApiCaseData.case_data?.additionalClaimants),
+    addClaimantMethod: fromApiCaseData.case_data?.addClaimantMethod,
   };
 }
 
@@ -314,6 +324,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
+        groupClaimsCheck: caseItem.groupClaimsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
@@ -329,6 +340,9 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
+      leadClaimant: caseItem.leadClaimant,
+      additionalClaimants: setAdditionalClaimantsApiFormat(caseItem.additionalClaimants),
+      addClaimantMethod: caseItem.addClaimantMethod,
     },
   };
 }
@@ -484,6 +498,53 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
         respondent_ACAS_no: respondent.noAcasReason,
       },
       id: respondent.ccdId,
+    };
+  });
+};
+
+export const mapAdditionalClaimants = (additionalClaimant: AdditionalClaimantApiModel[]): AdditionalClaimant[] => {
+  return additionalClaimant?.map(claimant => {
+    return {
+      title: claimant.value?.title,
+      firstName: claimant.value?.firstName,
+      lastName: claimant.value?.lastName,
+      email: claimant.value?.email,
+      dob: parseDateFromString(claimant.value?.dob),
+      address: {
+        AddressLine1: claimant.value.address?.AddressLine1,
+        AddressLine2: claimant.value.address?.AddressLine2,
+        PostTown: claimant.value.address?.PostTown,
+        Country: claimant.value.address?.Country,
+        PostCode: claimant.value.address?.PostCode,
+      },
+    };
+  });
+};
+
+export const setAdditionalClaimantsApiFormat = (
+  additionalClaimant: AdditionalClaimant[]
+): AdditionalClaimantRequestBody[] => {
+  console.log('ADDITIONAL CLAIMANT: ' + JSON.stringify(additionalClaimant));
+  if (additionalClaimant === undefined) {
+    return;
+  }
+  return additionalClaimant.map(claimant => {
+    const address = claimant.address;
+    return {
+      value: {
+        title: claimant.title,
+        firstName: claimant.firstName,
+        lastName: claimant.lastName,
+        email: claimant.email,
+        dob: formatDate(claimant.dob),
+        address: {
+          AddressLine1: address?.AddressLine1,
+          AddressLine2: address?.AddressLine2,
+          PostTown: address?.PostTown,
+          Country: address?.Country,
+          PostCode: address?.PostCode,
+        },
+      },
     };
   });
 };

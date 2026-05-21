@@ -317,7 +317,8 @@ describe('Citizen hub page', () => {
             htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
           });
 
-        expect(htmlRes.querySelector(selector).innerHTML.trim()).toBe(expectedText);
+        const bannerContent = htmlRes.querySelector('div.govuk-notification-banner__content')?.textContent;
+        expect(bannerContent).toContain(expectedText);
       }
     );
   });

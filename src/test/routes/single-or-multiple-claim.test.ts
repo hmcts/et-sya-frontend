@@ -15,23 +15,44 @@ describe(`GET ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
 
 describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
   jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
-  test('should redirect to claim steps when single is selected', async () => {
+  test('should redirect to group claims check when single is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM)
       .send({ caseType: CaseType.SINGLE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.GROUP_CLAIMS_CHECK);
       });
   });
 
-  test('should redirect to claim steps when multiple is selected', async () => {
+  test('should redirect to add another when multiple is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM)
       .send({ caseType: CaseType.MULTIPLE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.ADD_ANOTHER_CLAIMANT);
+      });
+  });
+
+  test('should redirect to review additional claimants when there are additional claimants and multiple is selected', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          additionalClaimants: [
+            {
+              firstName: 'John',
+              lastName: 'Doe',
+            },
+          ],
+        },
+      })
+    )
+      .post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM)
+      .send({ caseType: CaseType.MULTIPLE })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
       });
   });
 });

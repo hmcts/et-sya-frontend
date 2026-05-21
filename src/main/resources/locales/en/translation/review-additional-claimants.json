@@ -1,0 +1,23 @@
+{
+  "title": "Review additional claimants",
+  "h1": "Review additional claimants",
+  "p1": "We do not need any other details about the additional claimants or their claims.",
+  "p2": "You can add up to 5 people. If you need to add more than 5 claimants you can go back and use the spreadsheet upload option.",
+  "additionalClaimant": "Additional claimant",
+  "nameLabel": "Name",
+  "dobLabel": "Date of birth",
+  "addressLabel": "Address",
+  "emailLabel": "Email address",
+  "notProvided": "Not provided",
+  "change": "Change",
+  "removeClaimant": "Remove claimant",
+  "legend": "Do you want to add another claimant?",
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel",
+  "errors": {
+    "addAnotherClaimant": {
+      "required": "Tell us if you want to add another claimant"
+    }
+  }
+}

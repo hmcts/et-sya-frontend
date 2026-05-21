@@ -1,3 +1,5 @@
+import { CaseType, YesOrNo } from '../../definitions/case';
+
 export const validatePersonalDetails = (userCase: Record<string, any>): boolean => {
   if (!userCase) {
     return false;
@@ -5,6 +7,30 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
   const { address1, addressTown, addressPostcode, addressCountry } = userCase;
 
   return !(!address1 || !addressTown || !addressPostcode || !addressCountry);
+};
+
+export const validateGroupClaimsCheckDetails = (userCase?: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+
+  const { caseType, additionalClaimants, leadClaimant } = userCase;
+
+  if (caseType === CaseType.SINGLE) {
+    return true;
+  }
+
+  if (caseType !== CaseType.MULTIPLE) {
+    return false;
+  }
+
+  console.log(leadClaimant, additionalClaimants);
+  console.log(userCase.groupClaimsCheck);
+
+  const hasAdditionalClaimants = Array.isArray(additionalClaimants) && additionalClaimants.length > 0;
+  const hasLeadClaimantSelection = leadClaimant === YesOrNo.YES || leadClaimant === YesOrNo.NO;
+
+  return hasAdditionalClaimants && hasLeadClaimantSelection;
 };
 
 export const validateEmploymentAndRespondentDetails = (userCase: Record<string, any>): boolean => {

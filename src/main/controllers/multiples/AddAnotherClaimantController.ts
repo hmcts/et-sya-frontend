@@ -1,16 +1,16 @@
 import { Response } from 'express';
 
-import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
-import { AppRequest } from '../definitions/appRequest';
-import { AddAdditionalClaimant } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
+import { Form } from '../../components/form/form';
+import { isFieldFilledIn } from '../../components/form/validator';
+import { AppRequest } from '../../definitions/appRequest';
+import { AddAdditionalClaimant } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { FormContent, FormFields } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
+import { getLogger } from '../../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { handlePostLogic } from '../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 
 const logger = getLogger('AddAnotherClaimantController');
 
@@ -52,7 +52,7 @@ export default class AddAnotherClaimantController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl: string;
     if (AddAdditionalClaimant.MANUAL === req.body.addClaimantMethod) {
-      redirectUrl = PageUrls.OTHER_CLAIMANT_PERSONAL_DETAILS;
+      redirectUrl = PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS;
     } else {
       redirectUrl = '#';
     }
@@ -61,7 +61,7 @@ export default class AddAnotherClaimantController {
         req.body.addClaimantMethod || 'none'
       }, redirecting to: ${redirectUrl}`
     );
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
+    return handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

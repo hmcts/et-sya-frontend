@@ -59,6 +59,23 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workAddressTypes = req.session.userCase.workAddressTypes;
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
+      const additionalClaimants = req.session.userCase.additionalClaimants;
+      const currentAdditionalClaimantIndex = req.session.userCase.currentAdditionalClaimantIndex;
+      const additionalClaimantTitle = req.session.userCase.additionalClaimantTitle;
+      const additionalClaimantFirstName = req.session.userCase.additionalClaimantFirstName;
+      const additionalClaimantLastName = req.session.userCase.additionalClaimantLastName;
+      const additionalClaimantEmail = req.session.userCase.additionalClaimantEmail;
+      const additionalClaimantDob = req.session.userCase.additionalClaimantDob;
+      const additionalClaimantAddress1 = req.session.userCase.additionalClaimantAddress1;
+      const additionalClaimantAddress2 = req.session.userCase.additionalClaimantAddress2;
+      const additionalClaimantAddressTown = req.session.userCase.additionalClaimantAddressTown;
+      const additionalClaimantAddressCountry = req.session.userCase.additionalClaimantAddressCountry;
+      const additionalClaimantAddressPostcode = req.session.userCase.additionalClaimantAddressPostcode;
+      const additionalClaimantEnterPostcode = req.session.userCase.additionalClaimantEnterPostcode;
+      const additionalClaimantAddresses = req.session.userCase.additionalClaimantAddresses;
+      const additionalClaimantAddressTypes = req.session.userCase.additionalClaimantAddressTypes;
+      const addClaimantMethod = req.session.userCase.addClaimantMethod;
+      const leadClaimant = req.session.userCase.leadClaimant;
       req.session.userCase = fromApiFormat(response.data);
       if (caseType !== undefined) {
         req.session.userCase.caseType = caseType;
@@ -76,6 +93,23 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.workAddressTypes = workAddressTypes;
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
+      req.session.userCase.additionalClaimants = additionalClaimants;
+      req.session.userCase.currentAdditionalClaimantIndex = currentAdditionalClaimantIndex;
+      req.session.userCase.additionalClaimantTitle = additionalClaimantTitle;
+      req.session.userCase.additionalClaimantFirstName = additionalClaimantFirstName;
+      req.session.userCase.additionalClaimantLastName = additionalClaimantLastName;
+      req.session.userCase.additionalClaimantEmail = additionalClaimantEmail;
+      req.session.userCase.additionalClaimantDob = additionalClaimantDob;
+      req.session.userCase.additionalClaimantAddress1 = additionalClaimantAddress1;
+      req.session.userCase.additionalClaimantAddress2 = additionalClaimantAddress2;
+      req.session.userCase.additionalClaimantAddressTown = additionalClaimantAddressTown;
+      req.session.userCase.additionalClaimantAddressCountry = additionalClaimantAddressCountry;
+      req.session.userCase.additionalClaimantAddressPostcode = additionalClaimantAddressPostcode;
+      req.session.userCase.additionalClaimantEnterPostcode = additionalClaimantEnterPostcode;
+      req.session.userCase.additionalClaimantAddresses = additionalClaimantAddresses;
+      req.session.userCase.additionalClaimantAddressTypes = additionalClaimantAddressTypes;
+      req.session.userCase.addClaimantMethod = addClaimantMethod;
+      req.session.userCase.leadClaimant = leadClaimant;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
@@ -281,7 +315,14 @@ export const postLogic = async (
   const { saveForLater } = req.body;
   if (errors.length === 0) {
     req.session.errors = [];
+    console.log('Before Lead Claimant: ' + req.session.userCase.leadClaimant);
+    console.log('Before Additional Claimants: ' + req.session.userCase.additionalClaimants);
+    console.log('Before Method: ' + req.session.userCase.addClaimantMethod);
+
     await handleUpdateDraftCase(req, logger);
+    console.log('Lead Claimant: ' + req.session.userCase.leadClaimant);
+    console.log('Additional Claimants: ' + req.session.userCase.additionalClaimants);
+    console.log('Method: ' + req.session.userCase.addClaimantMethod);
     if (saveForLater) {
       redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
       return res.redirect(redirectUrl);

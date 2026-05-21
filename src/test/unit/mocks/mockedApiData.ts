@@ -112,6 +112,7 @@ export const mockedApiData: CaseApiDataResponse = {
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
+      groupClaimsCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
     },
     claimantWorkAddress: {

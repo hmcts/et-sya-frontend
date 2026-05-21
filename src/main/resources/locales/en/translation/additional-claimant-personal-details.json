@@ -1,0 +1,19 @@
+{
+  "title": "Personal details of another claimant",
+  "h1": "Personal details of another claimant",
+  "titleLabel": "Title (optional)",
+  "firstNameLabel": "First name",
+  "lastNameLabel": "Last name",
+  "emailLabel": "Email address (optional)",
+  "emailHint": "The tribunal will use this to send updates about the case",
+  "dobLabel": "Date of birth (optional)",
+  "dobHint": "For example, 23 04 1981",
+  "errors": {
+    "additionalClaimantFirstName": {
+      "required": "Enter the claimant's first name"
+    },
+    "additionalClaimantLastName": {
+      "required": "Enter the claimant's last name"
+    }
+  }
+}
