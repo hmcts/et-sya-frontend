@@ -1,10 +1,12 @@
-import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import RepresentedClaimantNameController from '../../../main/controllers/represented-claimant/RepresentedClaimantNameController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+jest.mock('../../../main/controllers/helpers/CaseHelpers', () => ({
+  ...jest.requireActual('../../../main/controllers/helpers/CaseHelpers'),
+  handleUpdateDraftCase: jest.fn(() => Promise.resolve()),
+}));
 
 describe('RepresentedClaimantNameController', () => {
   const t = {
@@ -41,7 +43,7 @@ describe('RepresentedClaimantNameController', () => {
     it('should redirect to represented claimant date of birth when name is given', async () => {
       const controller = new RepresentedClaimantNameController();
       const response = mockResponse();
-      const request = mockRequest({ t }, true);
+      const request = mockRequest({ t });
       request.body = { representedClaimantName: 'Jane Doe' };
 
       await controller.post(request, response);
