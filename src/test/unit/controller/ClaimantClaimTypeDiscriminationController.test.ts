@@ -54,7 +54,7 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
     });
 
     it('should allow multiple discrimination types to be selected (AC2)', async () => {
@@ -71,7 +71,7 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
       expect(req.session.errors).toHaveLength(0);
     });
 
@@ -93,7 +93,7 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
 
         await controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+        expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
       }
     });
 

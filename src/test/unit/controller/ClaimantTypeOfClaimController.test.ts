@@ -67,7 +67,7 @@ describe('ClaimantTypeOfClaimController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
     });
 
     it('should redirect to DESCRIBE_WHAT_HAPPENED when only whistleblowing is selected (AC2)', async () => {
@@ -78,7 +78,7 @@ describe('ClaimantTypeOfClaimController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
     });
 
     it('should redirect to DESCRIBE_WHAT_HAPPENED when only other is selected (AC2)', async () => {
@@ -89,7 +89,7 @@ describe('ClaimantTypeOfClaimController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
     });
 
     it('should allow multiple selections (AC2)', async () => {
@@ -100,7 +100,7 @@ describe('ClaimantTypeOfClaimController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
       expect(req.session.errors).toHaveLength(0);
     });
 

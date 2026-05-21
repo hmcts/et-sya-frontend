@@ -96,7 +96,7 @@ export default class ClaimantClaimTypeDiscriminationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
   };
 
   @CaseStateCheck()

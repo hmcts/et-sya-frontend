@@ -76,7 +76,7 @@ export default class ClaimantTypeOfClaimController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const formData = this.form.getParsedBody(req.body);
     const typeOfClaim = formData.typeOfClaim;
-    let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    let redirectUrl = PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED.toString();
     if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
       redirectUrl = PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION.toString();
     } else if (typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {

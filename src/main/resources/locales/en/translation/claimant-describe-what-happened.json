@@ -1,0 +1,29 @@
+{
+  "title": "Describe the claim",
+  "h1": "Describe the claim",
+  "label": "Describe what happened to the claimant",
+  "p1": "This is an opportunity to explain why the claimant is making a claim to an employment tribunal.",
+  "p2": "It's important that you focus on setting out what happened to the claimant and explain, as far as you can, why the claimant thinks what happened was unlawful.",
+  "p3": "The claim will be sent to the respondents who will have a chance to reply through the tribunal.",
+  "p4": "The tribunal will then decide (usually via a hearing) whether the respondents have acted unlawfully.",
+  "insetText": "We do not need detailed evidence, such as copies of emails, letters or other documents at this stage. Keep hold of these documents in case they are needed. You may need to bring them to a hearing.",
+  "hint": "Use this to describe the events around the dispute, or add to your claim by uploading a document",
+  "fileUpload": {
+    "label": "Upload a document that describes the claim (optional)",
+    "linkText": "Or upload a document",
+    "hint": "Upload a file that describes the claim. Maximum 50MB.",
+    "hintExisting": "Currently uploaded: {{filename}}. Upload a different file to replace it."
+  },
+  "errors": {
+    "claimSummaryText": {
+      "required": "Tell us what happened, or upload a document describing the claim.",
+      "tooLong": "Description must be 2,500 characters or less"
+    },
+    "claimSummaryFileName": {
+      "invalidFileFormat": "The file must be a DOC, DOCX, PDF, TXT or RTF",
+      "invalidFileName": "The file name must not contain special characters",
+      "invalidFileSize": "The file must be smaller than 50MB",
+      "backEndError": "There was an error uploading the file. Try again."
+    }
+  }
+}
