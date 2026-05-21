@@ -1,0 +1,19 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "legend": "<place-holder>",
+  "compensationOnly": {
+    "checkbox": "<place-holder>"
+  },
+  "compensationOnlyHint": "<place-holder>",
+  "tribunalRecommendation": {
+    "checkbox": "<place-holder>"
+  },
+  "tribunalRecommendationHint": "<place-holder>",
+  "oldJob": {
+    "checkbox": "<place-holder>"
+  },
+  "anotherJob": {
+    "checkbox": "<place-holder>"
+  }
+}

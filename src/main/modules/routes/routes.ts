@@ -67,6 +67,7 @@ import ClaimantRespondentDetailsCheckController from '../../controllers/Claimant
 import ClaimantRespondentNameController from '../../controllers/ClaimantRespondentNameController';
 import ClaimantRespondentPostcodeEnterController from '../../controllers/ClaimantRespondentPostcodeEnterController';
 import ClaimantRespondentPostcodeSelectController from '../../controllers/ClaimantRespondentPostcodeSelectController';
+import ClaimantTellUsWhatYouWantController from '../../controllers/ClaimantTellUsWhatYouWantController';
 import ClaimantTypeOfClaimController from '../../controllers/ClaimantTypeOfClaimController';
 import ClaimantWorkPostcodeEnterController from '../../controllers/ClaimantWorkPostcodeEnterController';
 import ClaimantWorkPostcodeSelectController from '../../controllers/ClaimantWorkPostcodeSelectController';
@@ -321,6 +322,8 @@ export class Routes {
       handleUploads.single('claimSummaryFileName'),
       claimantDescribeWhatHappenedController.post
     );
+    app.get(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().get);
+    app.post(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);
