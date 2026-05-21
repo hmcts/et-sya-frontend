@@ -1,6 +1,7 @@
 import CaseDocumentController from '../../../main/controllers/CaseDocumentController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import * as caseSelectionService from '../../../main/services/CaseSelectionService';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
@@ -11,11 +12,16 @@ import { mockResponse } from '../mocks/mockResponse';
 const getUserCasesMock = jest.spyOn(caseSelectionService, 'getUserCasesByLastModified');
 const getUserAppMock = jest.spyOn(caseSelectionService, 'getUserApplications');
 const getCaseApiMock = jest.spyOn(caseService, 'getCaseApi');
+const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
 const axios = require('axios');
 jest.mock('axios');
 const api = new CaseApi(axios);
 
 describe('Case Document Controller', () => {
+  beforeEach(() => {
+    mockLdClient.mockResolvedValue(false);
+  });
+
   const t = {};
   const userCases: CaseWithId[] = [
     {
@@ -86,7 +92,7 @@ describe('Case Document Controller', () => {
       'content-type': 'application/vnd.ms-excel',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithOriginalFileName = {
@@ -106,7 +112,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithInvalidOriginalFileName = {
@@ -126,7 +132,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithFileName = {
@@ -145,7 +151,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const documentWithNoContentTypeNoFileName = {
@@ -163,7 +169,7 @@ describe('Case Document Controller', () => {
       expires: '0',
       'content-length': '244991',
     },
-    data: 'text',
+    data: { pipe: jest.fn() },
   };
 
   const caseDocumentController = new CaseDocumentController();
@@ -173,6 +179,7 @@ describe('Case Document Controller', () => {
     getUserAppMock.mockReturnValue(mockApplications);
     getCaseApiMock.mockReturnValue(api);
 
+    axios.get.mockResolvedValue({ headers: {}, data: { pipe: jest.fn() } });
     const request = mockRequest({});
     const response = mockResponse();
     request.params.docId = '1';
@@ -302,5 +309,35 @@ describe('Case Document Controller', () => {
     request.params.docId = '';
     await caseDocumentController.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
+  });
+
+  it('should call getCaseDocument with useStreaming=false when document-streaming flag is off', async () => {
+    mockLdClient.mockResolvedValue(false);
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue(mockApplications);
+    const mockGetCaseDocument = jest.fn().mockResolvedValue({ headers: {}, data: { pipe: jest.fn() } });
+    getCaseApiMock.mockReturnValue({ ...api, getCaseDocument: mockGetCaseDocument } as unknown as CaseApi);
+
+    const request = mockRequest({});
+    const response = mockResponse();
+    request.params.docId = '1';
+    await caseDocumentController.get(request, response);
+
+    expect(mockGetCaseDocument).toHaveBeenCalledWith('1', false);
+  });
+
+  it('should call getCaseDocument with useStreaming=true when document-streaming flag is on', async () => {
+    mockLdClient.mockResolvedValue(true);
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue(mockApplications);
+    const mockGetCaseDocument = jest.fn().mockResolvedValue({ headers: {}, data: { pipe: jest.fn() } });
+    getCaseApiMock.mockReturnValue({ ...api, getCaseDocument: mockGetCaseDocument } as unknown as CaseApi);
+
+    const request = mockRequest({});
+    const response = mockResponse();
+    request.params.docId = '1';
+    await caseDocumentController.get(request, response);
+
+    expect(mockGetCaseDocument).toHaveBeenCalledWith('1', true);
   });
 });
