@@ -7,6 +7,28 @@
   "p3": "<place-holder>",
   "p4": "<place-holder>",
   "insetText": "<place-holder>",
+  "collapsibleSection1": {
+    "linkText": "<place-holder>",
+    "p1": "<place-holder>",
+    "p2": "<place-holder>"
+  },
+  "collapsibleSection2": {
+    "linkText": "<place-holder>",
+    "p1": "<place-holder>",
+    "p2": "<place-holder>"
+  },
+  "collapsibleSection3": {
+    "linkText": "<place-holder>",
+    "li1": "<place-holder>",
+    "li2": "<place-holder>",
+    "li3": "<place-holder>",
+    "li4": "<place-holder>"
+  },
+  "collapsibleSection4": {
+    "linkText": "<place-holder>",
+    "li1": "<place-holder>",
+    "li2": "<place-holder>"
+  },
   "hint": "<place-holder>",
   "fileUpload": {
     "label": "<place-holder>",
