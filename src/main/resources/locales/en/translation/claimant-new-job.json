@@ -1,0 +1,11 @@
+{
+  "title": "Has the claimant got a new job?",
+  "h1": "Has the claimant got a new job? (optional)",
+  "yes": "Yes",
+  "no": "No",
+  "errors": {
+    "newJob": {
+      "required": "Tell us if the claimant has a new job"
+    }
+  }
+}
