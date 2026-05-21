@@ -2,11 +2,12 @@ import {
   compareUploadDates,
   isBundlesDoc,
   isDocInPseRespondCollection,
+  isDocOnApplicationPage,
 } from '../../../../main/controllers/helpers/AllDocumentsHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant } from '../../../../main/definitions/constants';
+import { Applicant, PageUrls } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';
 import { uploadedDoc, uploadedDoc2, uploadedDoc3 } from '../../mocks/mockUserCaseWithRespondentDocuments';
 
@@ -105,6 +106,24 @@ describe('allDocumentsHelper tests', () => {
     request.session.userCase.bundleDocuments = undefined;
     request.session.documentDownloadPage = '/all-documents';
     const result = isBundlesDoc(request, '123');
+    expect(result).toBe(false);
+  });
+});
+
+describe('isDocOnApplicationPage tests', () => {
+  it('should return false when selectedGenericTseApplication is undefined', () => {
+    const request = mockRequest({});
+    request.session.userCase.selectedGenericTseApplication = undefined;
+    request.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
+    const result = isDocOnApplicationPage(request, 'some-doc-id');
+    expect(result).toBe(false);
+  });
+
+  it('should return false when selectedGenericTseApplication value is undefined', () => {
+    const request = mockRequest({});
+    request.session.userCase.selectedGenericTseApplication = { id: '1', value: undefined };
+    request.session.documentDownloadPage = PageUrls.RESPONDENT_APPLICATION_DETAILS;
+    const result = isDocOnApplicationPage(request, 'some-doc-id');
     expect(result).toBe(false);
   });
 });

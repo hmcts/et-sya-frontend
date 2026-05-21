@@ -430,6 +430,7 @@ export const JavaApiUrls = {
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_STREAM: '/document/stream/',
   DOCUMENT_DETAILS: '/document/details/',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE: '/et3/findCaseByEthosCaseReference',
   FIND_CASE_BY_ID: '/et3/findCaseById',
@@ -669,6 +670,7 @@ export const FEATURE_FLAGS = {
   BUNDLES: 'bundles',
   ECC: 'ecc',
   MUL2: 'MUL2',
+  DOCUMENT_STREAMING: 'document-streaming',
 } as const;
 
 export const DefaultValues = {
