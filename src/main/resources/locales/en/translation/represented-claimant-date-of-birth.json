@@ -1,0 +1,24 @@
+{
+  "title": "Claimant date of birth",
+  "h1": "What is the claimant's date of birth?",
+  "legend": "What is the claimant's date of birth?",
+  "p1": "These details will be used to help progress the claim.",
+  "hint": "For example, 23 04 1981",
+  "errors": {
+    "representedClaimantDateOfBirth": {
+      "dayRequired": "Enter a day for the claimant's date of birth. For example, 23",
+      "monthRequired": "Enter a month for the claimant's date of birth. For example, 04",
+      "yearRequired": "Enter a year for the claimant's date of birth. For example, 1981",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 1981",
+      "dayInvalid": "Date of birth must be a real date.",
+      "monthInvalid": "Date of birth must be a real date.",
+      "yearInvalid": "Date of birth must be a real date.",
+      "invalidDate": "Date of birth must be a real date.",
+      "invalidDateInFuture": "Date entered must be in the past.",
+      "invalidDateTooFarInPast": "Date must be between 10 years and 100 years in the past.",
+      "invalidDateTooRecent": "Date must be between 10 years and 100 years in the past."
+    }
+  }
+}

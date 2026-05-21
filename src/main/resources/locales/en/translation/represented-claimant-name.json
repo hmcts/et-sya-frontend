@@ -1,0 +1,11 @@
+{
+  "title": "Claimant name",
+  "h1": "What is the name of the claimant you are representing?",
+  "p1": "Enter the claimant's full name.",
+  "label": "Enter claimant name",
+  "errors": {
+    "representedClaimantName": {
+      "required": "Enter the claimant's name"
+    }
+  }
+}

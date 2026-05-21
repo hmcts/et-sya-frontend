@@ -179,6 +179,9 @@ import YourDetailsFormController from '../../controllers/YourDetailsFormControll
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
+import RepresentedClaimantDateOfBirthController from '../../controllers/represented-claimant/RepresentedClaimantDateOfBirthController';
+import RepresentedClaimantNameController from '../../controllers/represented-claimant/RepresentedClaimantNameController';
+import RepresentedClaimantSexAndTitleController from '../../controllers/represented-claimant/RepresentedClaimantSexAndTitleController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import { csrfProtection } from '../csrf';
@@ -562,5 +565,11 @@ export class Routes {
     app.post(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().post);
     app.get(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().get);
     app.post(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_NAME, new RepresentedClaimantNameController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_NAME, new RepresentedClaimantNameController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_DATE_OF_BIRTH, new RepresentedClaimantDateOfBirthController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_DATE_OF_BIRTH, new RepresentedClaimantDateOfBirthController().post);
+    app.get(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().get);
+    app.post(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().post);
   }
 }

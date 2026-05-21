@@ -1,0 +1,11 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "p1": "<place-holder>",
+  "label": "<place-holder>",
+  "errors": {
+    "representedClaimantName": {
+      "required": "<place-holder>"
+    }
+  }
+}
