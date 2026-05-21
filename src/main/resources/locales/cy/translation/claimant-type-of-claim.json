@@ -1,0 +1,29 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "description": "<place-holder>",
+  "hint": "<place-holder>",
+  "discrimination": {
+    "checkbox": "<place-holder>",
+    "hint": "<place-holder>"
+  },
+  "payRelated": {
+    "checkbox": "<place-holder>"
+  },
+  "unfairDismissal": {
+    "checkbox": "<place-holder>",
+    "hint": "<place-holder>"
+  },
+  "whistleBlowing": {
+    "checkbox": "<place-holder>",
+    "hint": "<place-holder>"
+  },
+  "otherTypesOfClaims": {
+    "checkbox": "<place-holder>"
+  },
+  "errors": {
+    "typeOfClaim": {
+      "required": "<place-holder>"
+    }
+  }
+}
