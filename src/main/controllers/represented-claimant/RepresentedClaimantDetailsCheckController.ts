@@ -9,7 +9,7 @@ export default class RepresentedClaimantDetailsCheckController extends PersonalD
       TranslationKeys.REPRESENTED_CLAIMANT_DETAILS_CHECK,
       validateRepresentedClaimantDetails,
       () => PageUrls.CLAIM_STEPS_NON_HMCTS,
-      'RepresentativeDetailsCheckController'
+      'RepresentedClaimantDetailsCheckController'
     );
   }
 }
