@@ -37,7 +37,7 @@ describe('ClaimantPastNoticeTypeController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_NOTICE_LENGTH when Weeks is selected (AC4)', async () => {
+    it('should redirect to CLAIMANT_NOTICE_LENGTH when Weeks is selected', async () => {
       const body = { noticePeriodUnit: WeeksOrMonths.WEEKS };
       const controller = new ClaimantPastNoticeTypeController();
       const req = mockRequest({ body });
@@ -48,7 +48,7 @@ describe('ClaimantPastNoticeTypeController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_LENGTH);
     });
 
-    it('should redirect to CLAIMANT_NOTICE_LENGTH when Months is selected (AC4)', async () => {
+    it('should redirect to CLAIMANT_NOTICE_LENGTH when Months is selected', async () => {
       const body = { noticePeriodUnit: WeeksOrMonths.MONTHS };
       const controller = new ClaimantPastNoticeTypeController();
       const req = mockRequest({ body });

@@ -62,7 +62,7 @@ describe('ClaimantBenefitsController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_NEW_JOB on Yes with benefits text (AC1)', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB on Yes with benefits text', async () => {
       const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'company car' };
       const controller = new ClaimantBenefitsController();
       const req = mockRequest({ body });
@@ -73,7 +73,7 @@ describe('ClaimantBenefitsController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
-    it('should redirect to CLAIMANT_NEW_JOB on No (AC1)', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB on No', async () => {
       const body = { employeeBenefits: YesOrNo.NO };
       const controller = new ClaimantBenefitsController();
       const req = mockRequest({ body });
@@ -84,7 +84,7 @@ describe('ClaimantBenefitsController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
-    it('should redirect to CLAIMANT_NEW_JOB when no answer given (AC1)', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB when no answer given', async () => {
       const body = { employeeBenefits: '' };
       const controller = new ClaimantBenefitsController();
       const req = mockRequestEmpty({ body });
@@ -95,7 +95,7 @@ describe('ClaimantBenefitsController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
-    it('should stay on page and error when benefits text exceeds 2500 characters (AC2)', async () => {
+    it('should stay on page and error when benefits text exceeds 2500 characters', async () => {
       const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'a'.repeat(2501) };
       const controller = new ClaimantBenefitsController();
       const req = mockRequestEmpty({ body });

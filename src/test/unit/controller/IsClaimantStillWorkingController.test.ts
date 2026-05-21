@@ -48,7 +48,7 @@ describe('IsClaimantStillWorkingController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
     });
 
-    it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when claimant is working a notice period (AC2)', async () => {
+    it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when claimant is working a notice period', async () => {
       const body = { isStillWorking: StillWorking.NOTICE };
       const controller = new IsClaimantStillWorkingController();
       const req = mockRequest({ body });
@@ -59,7 +59,7 @@ describe('IsClaimantStillWorkingController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS);
     });
 
-    it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when claimant is no longer working (AC2)', async () => {
+    it('should redirect to CLAIMANT_EMPLOYMENT_DETAILS when claimant is no longer working', async () => {
       const body = { isStillWorking: StillWorking.NO_LONGER_WORKING };
       const controller = new IsClaimantStillWorkingController();
       const req = mockRequest({ body });

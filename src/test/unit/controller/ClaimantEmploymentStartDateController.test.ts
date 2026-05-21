@@ -37,7 +37,7 @@ describe('ClaimantEmploymentStartDateController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to DID_CLAIMANT_HAVE_WRITTEN_CONTRACT on a valid date when claimant is still working (AC3)', async () => {
+    it('should redirect to DID_CLAIMANT_HAVE_WRITTEN_CONTRACT on a valid date when claimant is still working', async () => {
       const body = { 'startDate-day': '15', 'startDate-month': '06', 'startDate-year': '2020' };
       const controller = new ClaimantEmploymentStartDateController();
       const req = mockRequestEmpty({ body, userCase: { dobDate: { year: '1990', month: '01', day: '01' } } });
@@ -48,7 +48,7 @@ describe('ClaimantEmploymentStartDateController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT);
     });
 
-    it('should redirect to CLAIMANT_NOTICE_END on a valid date when claimant is working a notice period (AC4)', async () => {
+    it('should redirect to CLAIMANT_NOTICE_END on a valid date when claimant is working a notice period', async () => {
       const body = { 'startDate-day': '15', 'startDate-month': '06', 'startDate-year': '2020' };
       const controller = new ClaimantEmploymentStartDateController();
       const req = mockRequestEmpty({ body, userCase: { isStillWorking: StillWorking.NOTICE } });
@@ -59,7 +59,7 @@ describe('ClaimantEmploymentStartDateController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NOTICE_END);
     });
 
-    it('should redirect to CLAIMANT_END_DATE on a valid date when claimant is no longer working (AC4)', async () => {
+    it('should redirect to CLAIMANT_END_DATE on a valid date when claimant is no longer working', async () => {
       const body = { 'startDate-day': '15', 'startDate-month': '06', 'startDate-year': '2020' };
       const controller = new ClaimantEmploymentStartDateController();
       const req = mockRequestEmpty({ body, userCase: { isStillWorking: StillWorking.NO_LONGER_WORKING } });

@@ -37,7 +37,7 @@ describe('ClaimantNoticePeriodController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_PAST_NOTICE_TYPE when Yes is selected (AC3)', async () => {
+    it('should redirect to CLAIMANT_PAST_NOTICE_TYPE when Yes is selected', async () => {
       const body = { noticePeriod: YesOrNo.YES };
       const controller = new ClaimantNoticePeriodController();
       const req = mockRequest({ body });
@@ -48,7 +48,7 @@ describe('ClaimantNoticePeriodController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_PAST_NOTICE_TYPE);
     });
 
-    it('should redirect to CLAIMANT_AVERAGE_WEEKLY_HOURS when No is selected (AC2)', async () => {
+    it('should redirect to CLAIMANT_AVERAGE_WEEKLY_HOURS when No is selected', async () => {
       const body = { noticePeriod: YesOrNo.NO };
       const controller = new ClaimantNoticePeriodController();
       const req = mockRequest({ body });

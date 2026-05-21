@@ -36,7 +36,7 @@ describe('ClaimantNoticeEndController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_NOTICE_TYPE on a valid future date (AC1)', async () => {
+    it('should redirect to CLAIMANT_NOTICE_TYPE on a valid future date', async () => {
       const body = {
         'noticeEnds-day': '15',
         'noticeEnds-month': '06',

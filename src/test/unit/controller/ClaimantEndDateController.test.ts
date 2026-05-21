@@ -36,7 +36,7 @@ describe('ClaimantEndDateController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_NOTICE_PERIOD on a valid past date (AC1)', async () => {
+    it('should redirect to CLAIMANT_NOTICE_PERIOD on a valid past date', async () => {
       const body = {
         'endDate-day': '10',
         'endDate-month': '03',
