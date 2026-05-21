@@ -78,7 +78,7 @@ export default class ClaimantTypeOfClaimController {
     const typeOfClaim = formData.typeOfClaim;
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
-      redirectUrl = PageUrls.CLAIM_TYPE_DISCRIMINATION.toString();
+      redirectUrl = PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION.toString();
     } else if (typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }

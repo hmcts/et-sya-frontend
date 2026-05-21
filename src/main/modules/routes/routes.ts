@@ -43,6 +43,7 @@ import ClaimantAcasCertNumController from '../../controllers/ClaimantAcasCertNum
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
 import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsController';
+import ClaimantClaimTypeDiscriminationController from '../../controllers/ClaimantClaimTypeDiscriminationController';
 import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
@@ -310,6 +311,8 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().post);
     app.get(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().get);
     app.post(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().post);
+    app.get(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().get);
+    app.post(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);
