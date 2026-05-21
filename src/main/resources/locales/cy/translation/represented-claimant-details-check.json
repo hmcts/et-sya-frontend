@@ -1,4 +1,14 @@
 {
-  "pageTitle": "Check the represented claimant's details",
-  "pageHeader": "Check the details you have entered for the represented claimant"
+  "title": "<place-holder>",
+  "heading": "<place-holder>",
+  "legend": "<place-holder>",
+  "yes": "<place-holder>",
+  "no": "<place-holder>",
+  "hint": "<place-holder>",
+  "errors": {
+    "representedClaimantDetailsCheck": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
 }

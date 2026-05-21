@@ -261,6 +261,14 @@ describe('handle update draft case', () => {
     await handleUpdateDraftCase(req, mockLogger);
     expect(req.session.userCase.representedClaimantAddressTypes).toEqual(addressTypes);
   });
+
+  it('should preserve representedClaimantAddress1 after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantAddress1 = '10 Claimant Street';
+    await handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase.representedClaimantAddress1).toEqual('10 Claimant Street');
+  });
 });
 
 describe('handle submit application', () => {

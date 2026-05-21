@@ -76,6 +76,13 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const repAddressPostcode = req.session.userCase.repAddressPostcode;
       const representativePhoneNumber = req.session.userCase.representativePhoneNumber;
       const representativeDetailsCheck = req.session.userCase.representativeDetailsCheck;
+      const representedClaimantAddress1 = req.session.userCase.representedClaimantAddress1;
+      const representedClaimantAddress2 = req.session.userCase.representedClaimantAddress2;
+      const representedClaimantAddressTown = req.session.userCase.representedClaimantAddressTown;
+      const representedClaimantAddressCountry = req.session.userCase.representedClaimantAddressCountry;
+      const representedClaimantAddressPostcode = req.session.userCase.representedClaimantAddressPostcode;
+      const representedClaimantEmail = req.session.userCase.representedClaimantEmail;
+      const representedClaimantDetailsCheck = req.session.userCase.representedClaimantDetailsCheck;
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       req.session.userCase.addressEnterPostcode ??= addressEnterPostcode;
@@ -102,6 +109,13 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.repAddressPostcode ??= repAddressPostcode;
       req.session.userCase.representativePhoneNumber ??= representativePhoneNumber;
       req.session.userCase.representativeDetailsCheck ??= representativeDetailsCheck;
+      req.session.userCase.representedClaimantAddress1 ??= representedClaimantAddress1;
+      req.session.userCase.representedClaimantAddress2 ??= representedClaimantAddress2;
+      req.session.userCase.representedClaimantAddressTown ??= representedClaimantAddressTown;
+      req.session.userCase.representedClaimantAddressCountry ??= representedClaimantAddressCountry;
+      req.session.userCase.representedClaimantAddressPostcode ??= representedClaimantAddressPostcode;
+      req.session.userCase.representedClaimantEmail ??= representedClaimantEmail;
+      req.session.userCase.representedClaimantDetailsCheck ??= representedClaimantDetailsCheck;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
