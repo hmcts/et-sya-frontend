@@ -248,6 +248,7 @@ export interface Case {
   representedClaimantAddressCountry?: string;
   representedClaimantAddressPostcode?: string;
   representedClaimantEmail?: string;
+  representedClaimantDetailsCheck?: YesOrNo;
 }
 
 export const enum StillWorking {
