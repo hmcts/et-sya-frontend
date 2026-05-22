@@ -2,10 +2,16 @@
   "title": "<place-holder>",
   "h1": "<place-holder>",
   "p1": "<place-holder>",
-  "label": "<place-holder>",
+  "representedClaimantFirstName": "<place-holder>",
+  "representedClaimantLastName": "<place-holder>",
   "errors": {
-    "representedClaimantName": {
-      "required": "<place-holder>"
+    "representedClaimantFirstName": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "representedClaimantLastName": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
     }
   }
 }

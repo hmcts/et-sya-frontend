@@ -17,7 +17,10 @@ describe(`on POST ${PageUrls.REPRESENTED_CLAIMANT_NAME}`, () => {
     jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
     await request(mockApp({}))
       .post(PageUrls.REPRESENTED_CLAIMANT_NAME)
-      .send({ representedClaimantName: 'Jane Doe' })
+      .send({
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+      })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTED_CLAIMANT_DATE_OF_BIRTH);

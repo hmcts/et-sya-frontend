@@ -18,9 +18,17 @@ export default class RepresentedClaimantNameController {
   private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {
-      representedClaimantName: {
-        id: 'representedClaimantName',
-        name: 'representedClaimantName',
+      representedClaimantFirstName: {
+        id: 'representedClaimantFirstName',
+        name: 'representedClaimantFirstName',
+        type: 'text',
+        validator: isFieldFilledIn,
+        label: (l: AnyRecord): string => l.label,
+        attributes: { maxLength: 100 },
+      },
+      representedClaimantLastName: {
+        id: 'representedClaimantLastName',
+        name: 'representedClaimantLastName',
         type: 'text',
         validator: isFieldFilledIn,
         label: (l: AnyRecord): string => l.label,

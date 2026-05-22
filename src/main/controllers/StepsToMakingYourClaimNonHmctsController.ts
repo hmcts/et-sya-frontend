@@ -7,7 +7,11 @@ import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { getSectionStatus, getSectionStatusForEmployment } from './helpers/CaseHelpers';
+import {
+  getRepresentedClaimantNameForStatus,
+  getSectionStatus,
+  getSectionStatusForEmployment,
+} from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -51,7 +55,8 @@ export default class StepsToMakingYourClaimNonHmctsController {
           {
             url: setUrlLanguage(req, PageUrls.REPRESENTED_CLAIMANT_NAME.toString()),
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.representedClaimantName),
+            status: (): string =>
+              getSectionStatus(userCase?.personalDetailsCheck, getRepresentedClaimantNameForStatus(userCase)),
           },
         ],
       },

@@ -230,6 +230,8 @@ export interface Case {
   representativeOrgName?: string;
   representativeName?: string;
   representedClaimantName?: string;
+  representedClaimantFirstName?: string;
+  representedClaimantLastName?: string;
   representativeEnterPostcode?: string;
   representativeAddresses?: Record<string, string>[];
   representativeAddressTypes?: AddressType[];

@@ -8,8 +8,9 @@ import { mockApp } from '../unit/mocks/mockApp';
 describe(`GET ${PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE}`, () => {
   it('should return the represented claimant sex and title page', async () => {
     const res = await request(mockApp({})).get(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE);
-    expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
+    expect(res.headers['content-type']).toContain('text/html');
+    expect(res.text).toBeDefined();
   });
 });
 

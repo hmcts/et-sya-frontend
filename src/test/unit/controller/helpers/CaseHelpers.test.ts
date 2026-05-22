@@ -224,6 +224,18 @@ describe('handle update draft case', () => {
     await handleUpdateDraftCase(req, mockLogger);
     expect(req.session.userCase.representativeAddressTypes).toEqual(addressTypes);
   });
+
+  it('should preserve represented claimant name and date of birth after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantFirstName = 'Jane';
+    req.session.userCase.representedClaimantLastName = 'Doe';
+    req.session.userCase.representedClaimantDateOfBirth = { day: '05', month: '11', year: '2000' };
+    await handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase.representedClaimantFirstName).toEqual('Jane');
+    expect(req.session.userCase.representedClaimantLastName).toEqual('Doe');
+    expect(req.session.userCase.representedClaimantDateOfBirth).toEqual({ day: '05', month: '11', year: '2000' });
+  });
 });
 
 describe('handle submit application', () => {

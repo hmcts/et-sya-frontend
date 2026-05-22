@@ -73,6 +73,9 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const repAddressPostcode = req.session.userCase.repAddressPostcode;
       const representativePhoneNumber = req.session.userCase.representativePhoneNumber;
       const representativeDetailsCheck = req.session.userCase.representativeDetailsCheck;
+      const representedClaimantFirstName = req.session.userCase.representedClaimantFirstName;
+      const representedClaimantLastName = req.session.userCase.representedClaimantLastName;
+      const representedClaimantDateOfBirth = req.session.userCase.representedClaimantDateOfBirth;
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       req.session.userCase.addressEnterPostcode ??= addressEnterPostcode;
@@ -96,6 +99,9 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.repAddressPostcode ??= repAddressPostcode;
       req.session.userCase.representativePhoneNumber ??= representativePhoneNumber;
       req.session.userCase.representativeDetailsCheck ??= representativeDetailsCheck;
+      req.session.userCase.representedClaimantFirstName ??= representedClaimantFirstName;
+      req.session.userCase.representedClaimantLastName ??= representedClaimantLastName;
+      req.session.userCase.representedClaimantDateOfBirth ??= representedClaimantDateOfBirth;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
@@ -201,6 +207,13 @@ export const addResponseSendNotification = async (req: AppRequest, logger: Logge
     logger.error(error.message);
     throw error;
   }
+};
+
+export const getRepresentedClaimantNameForStatus = (userCase?: CaseWithId): string | undefined => {
+  if (userCase?.representedClaimantFirstName && userCase?.representedClaimantLastName) {
+    return `${userCase.representedClaimantFirstName} ${userCase.representedClaimantLastName}`;
+  }
+  return userCase?.representedClaimantName;
 };
 
 export const getSectionStatus = (

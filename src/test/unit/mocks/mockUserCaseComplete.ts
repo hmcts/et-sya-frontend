@@ -107,6 +107,13 @@ export default {
   telNumber: '075',
   firstName: 'Jane',
   lastName: 'Doe',
+  representedClaimantFirstName: 'Jane',
+  representedClaimantLastName: 'Doe',
+  representedClaimantDateOfBirth: {
+    day: '05',
+    month: '10',
+    year: '2022',
+  },
   state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
   caseType: CaseType.SINGLE,
   caseTypeId: CaseTypeId.ENGLAND_WALES,

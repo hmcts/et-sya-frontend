@@ -30,7 +30,7 @@ describe('RepresentedClaimantNameController', () => {
       const response = mockResponse();
       const request = mockRequest({
         t,
-        userCase: { representedClaimantName: 'Jane Doe' },
+        userCase: { representedClaimantFirstName: 'Jane', representedClaimantLastName: 'Doe' },
       });
 
       controller.get(request, response);
@@ -44,7 +44,7 @@ describe('RepresentedClaimantNameController', () => {
       const controller = new RepresentedClaimantNameController();
       const response = mockResponse();
       const request = mockRequest({ t });
-      request.body = { representedClaimantName: 'Jane Doe' };
+      request.body = { representedClaimantFirstName: 'Jane', representedClaimantLastName: 'Doe' };
 
       await controller.post(request, response);
 
@@ -52,7 +52,7 @@ describe('RepresentedClaimantNameController', () => {
     });
 
     it('should stay on page and error when name is empty', async () => {
-      const body = { representedClaimantName: '' };
+      const body = { representedClaimantFirstName: '', representedClaimantLastName: '' };
       const controller = new RepresentedClaimantNameController();
       const request = mockRequestEmpty({ body });
       const response = mockResponse();
@@ -61,7 +61,10 @@ describe('RepresentedClaimantNameController', () => {
 
       expect(response.redirect).toHaveBeenCalledWith(request.path);
       expect(
-        request.session.errors.some((e: { propertyName: string }) => e.propertyName === 'representedClaimantName')
+        request.session.errors.some((e: { propertyName: string }) => e.propertyName === 'representedClaimantFirstName')
+      ).toBe(true);
+      expect(
+        request.session.errors.some((e: { propertyName: string }) => e.propertyName === 'representedClaimantLastName')
       ).toBe(true);
     });
   });
