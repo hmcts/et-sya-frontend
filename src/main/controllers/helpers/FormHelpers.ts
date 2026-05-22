@@ -8,7 +8,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { mapSelectedRespondentValuesToCase } from './RespondentHelpers';
 
-export const getTellUsWhatYouWantFormField = (): FormOptions => ({
+export const getTellUsWhatYouWantFormField = (): FormField => ({
   id: 'tellUsWhatYouWant',
   label: (l: AnyRecord): string => l.legend,
   labelHidden: false,
