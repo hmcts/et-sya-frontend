@@ -21,7 +21,7 @@ const logger = getLogger('ClaimantDescribeWhatHappenedController');
 export default class ClaimantDescribeWhatHappenedController {
   private uploadedFileName = '';
 
-  private getHint = (label: AnyRecord): string => {
+  private readonly getHint = (label: AnyRecord): string => {
     if (this.uploadedFileName !== '') {
       return (label.fileUpload.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
     }

@@ -5,11 +5,12 @@ import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant } from '../definitions/definition';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormOptions } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
+import { getTellUsWhatYouWantFormField } from './helpers/FormHelpers';
 import { renderPage } from './helpers/NonHmctsControllerHelper';
 
 const logger = getLogger('ClaimantTellUsWhatYouWantController');
@@ -18,39 +19,7 @@ export default class ClaimantTellUsWhatYouWantController {
   private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {
-      tellUsWhatYouWant: {
-        id: 'tellUsWhatYouWant',
-        label: l => l.legend,
-        labelHidden: false,
-        labelSize: 'l',
-        type: 'checkboxes',
-        hint: l => l.selectAllHint,
-        validator: null,
-        values: [
-          {
-            id: 'compensationOnly',
-            label: l => l.compensationOnly.checkbox,
-            hint: l => l.compensationOnlyHint,
-            value: TellUsWhatYouWant.COMPENSATION_ONLY,
-          },
-          {
-            id: 'tribunalRecommendation',
-            label: l => l.tribunalRecommendation.checkbox,
-            hint: l => l.tribunalRecommendationHint,
-            value: TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION,
-          },
-          {
-            id: 'oldJob',
-            label: l => l.oldJob.checkbox,
-            value: TellUsWhatYouWant.OLD_JOB,
-          },
-          {
-            id: 'anotherJob',
-            label: l => l.anotherJob.checkbox,
-            value: TellUsWhatYouWant.ANOTHER_JOB,
-          },
-        ],
-      },
+      tellUsWhatYouWant: getTellUsWhatYouWantFormField() as FormOptions,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

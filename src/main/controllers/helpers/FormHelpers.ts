@@ -2,10 +2,45 @@ import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
+import { TellUsWhatYouWant } from '../../definitions/definition';
 import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { mapSelectedRespondentValuesToCase } from './RespondentHelpers';
+
+export const getTellUsWhatYouWantFormField = (): FormOptions => ({
+  id: 'tellUsWhatYouWant',
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
+  type: 'checkboxes',
+  hint: (l: AnyRecord): string => l.selectAllHint,
+  validator: null,
+  values: [
+    {
+      id: 'compensationOnly',
+      label: (l: AnyRecord): string => l.compensationOnly.checkbox,
+      hint: (l: AnyRecord): string => l.compensationOnlyHint,
+      value: TellUsWhatYouWant.COMPENSATION_ONLY,
+    },
+    {
+      id: 'tribunalRecommendation',
+      label: (l: AnyRecord): string => l.tribunalRecommendation.checkbox,
+      hint: (l: AnyRecord): string => l.tribunalRecommendationHint,
+      value: TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION,
+    },
+    {
+      id: 'oldJob',
+      label: (l: AnyRecord): string => l.oldJob.checkbox,
+      value: TellUsWhatYouWant.OLD_JOB,
+    },
+    {
+      id: 'anotherJob',
+      label: (l: AnyRecord): string => l.anotherJob.checkbox,
+      value: TellUsWhatYouWant.ANOTHER_JOB,
+    },
+  ],
+});
 
 export const getPageContent = (
   req: AppRequest,
