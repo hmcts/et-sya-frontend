@@ -215,7 +215,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
 
       const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       const section4 = renderArgs.sections[3];
-      expect(section4.links[0].url).toContain(PageUrls.TYPE_OF_CLAIM);
+      expect(section4.links[0].url).toContain(PageUrls.CLAIMANT_TYPE_OF_CLAIM);
       expect(section4.links[1].url).toContain(PageUrls.TELL_US_WHAT_YOU_WANT);
     });
 

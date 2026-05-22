@@ -43,6 +43,8 @@ import ClaimantAcasCertNumController from '../../controllers/ClaimantAcasCertNum
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
 import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsController';
+import ClaimantClaimTypeDiscriminationController from '../../controllers/ClaimantClaimTypeDiscriminationController';
+import ClaimantDescribeWhatHappenedController from '../../controllers/ClaimantDescribeWhatHappenedController';
 import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
@@ -65,6 +67,8 @@ import ClaimantRespondentDetailsCheckController from '../../controllers/Claimant
 import ClaimantRespondentNameController from '../../controllers/ClaimantRespondentNameController';
 import ClaimantRespondentPostcodeEnterController from '../../controllers/ClaimantRespondentPostcodeEnterController';
 import ClaimantRespondentPostcodeSelectController from '../../controllers/ClaimantRespondentPostcodeSelectController';
+import ClaimantTellUsWhatYouWantController from '../../controllers/ClaimantTellUsWhatYouWantController';
+import ClaimantTypeOfClaimController from '../../controllers/ClaimantTypeOfClaimController';
 import ClaimantWorkPostcodeEnterController from '../../controllers/ClaimantWorkPostcodeEnterController';
 import ClaimantWorkPostcodeSelectController from '../../controllers/ClaimantWorkPostcodeSelectController';
 import CompensationController from '../../controllers/CompensationController';
@@ -307,6 +311,19 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_NEW_JOB_START_DATE, new ClaimantNewJobStartDateController().post);
     app.get(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().get);
     app.post(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().post);
+    app.get(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().get);
+    app.post(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().post);
+    app.get(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().get);
+    app.post(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().post);
+    const claimantDescribeWhatHappenedController = new ClaimantDescribeWhatHappenedController();
+    app.get(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED, claimantDescribeWhatHappenedController.get);
+    app.post(
+      PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED,
+      handleUploads.single('claimSummaryFileName'),
+      claimantDescribeWhatHappenedController.post
+    );
+    app.get(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().get);
+    app.post(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);

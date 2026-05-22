@@ -1,0 +1,20 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "legend": "<place-holder>",
+  "hint": "<place-holder>",
+  "age": { "checkbox": "<place-holder>" },
+  "disability": { "checkbox": "<place-holder>" },
+  "genderReassignment": { "checkbox": "<place-holder>" },
+  "marriageOrCivilPartnership": { "checkbox": "<place-holder>" },
+  "pregnancyOrMaternity": { "checkbox": "<place-holder>" },
+  "race": { "checkbox": "<place-holder>", "hint": "<place-holder>" },
+  "religionOrBelief": { "checkbox": "<place-holder>" },
+  "sex": { "checkbox": "<place-holder>", "hint": "<place-holder>" },
+  "sexualOrientation": { "checkbox": "<place-holder>" },
+  "errors": {
+    "claimTypeDiscrimination": {
+      "required": "<place-holder>"
+    }
+  }
+}
