@@ -23,7 +23,7 @@ export default class RepresentedClaimantNameController {
         name: 'representedClaimantFirstName',
         type: 'text',
         validator: isFieldFilledIn,
-        label: (l: AnyRecord): string => l.label,
+        label: (l: AnyRecord): string => l.representedClaimantFirstName,
         attributes: { maxLength: 100 },
       },
       representedClaimantLastName: {
@@ -31,7 +31,7 @@ export default class RepresentedClaimantNameController {
         name: 'representedClaimantLastName',
         type: 'text',
         validator: isFieldFilledIn,
-        label: (l: AnyRecord): string => l.label,
+        label: (l: AnyRecord): string => l.representedClaimantLastName,
         attributes: { maxLength: 100 },
       },
     },
