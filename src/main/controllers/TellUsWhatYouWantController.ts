@@ -5,7 +5,7 @@ import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
-import { FormContent, FormFields, FormOptions } from '../definitions/form';
+import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
@@ -18,7 +18,7 @@ export default class TellUsWhatYouWantController {
   private readonly form: Form;
   private readonly tellUsWhatYouWantFormContent: FormContent = {
     fields: {
-      tellUsWhatYouWant: getTellUsWhatYouWantFormField() as FormOptions,
+      tellUsWhatYouWant: getTellUsWhatYouWantFormField(),
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

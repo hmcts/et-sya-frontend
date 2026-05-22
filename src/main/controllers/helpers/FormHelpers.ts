@@ -1,14 +1,101 @@
+import { areBenefitsValid } from '../../components/form/validator';
 import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
-import { TellUsWhatYouWant } from '../../definitions/definition';
+import { DefaultCurrencyFormFields } from '../../definitions/currency-fields';
+import { TellUsWhatYouWant, TypesOfClaim } from '../../definitions/definition';
 import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { mapSelectedRespondentValuesToCase } from './RespondentHelpers';
 
-export const getTellUsWhatYouWantFormField = (): FormOptions => ({
+export const getTypeOfClaimFormValues = (): FormInput[] => [
+  {
+    id: 'discrimination',
+    name: 'typeOfClaim',
+    label: (l: AnyRecord): string => l.discrimination.checkbox,
+    value: TypesOfClaim.DISCRIMINATION,
+    hint: (l: AnyRecord): string => l.discrimination.hint,
+  },
+  {
+    id: 'payRelatedClaim',
+    name: 'typeOfClaim',
+    label: (l: AnyRecord): string => l.payRelated.checkbox,
+    value: TypesOfClaim.PAY_RELATED_CLAIM,
+  },
+  {
+    id: 'unfairDismissal',
+    name: 'typeOfClaim',
+    label: (l: AnyRecord): string => l.unfairDismissal.checkbox,
+    value: TypesOfClaim.UNFAIR_DISMISSAL,
+    hint: (l: AnyRecord): string => l.unfairDismissal.hint,
+  },
+  {
+    id: 'whistleBlowing',
+    name: 'typeOfClaim',
+    label: (l: AnyRecord): string => l.whistleBlowing.checkbox,
+    value: TypesOfClaim.WHISTLE_BLOWING,
+    hint: (l: AnyRecord): string => l.whistleBlowing.hint,
+  },
+];
+
+export const getEmployeeBenefitsFormField = (): FormField => ({
+  id: 'employee-benefits',
+  type: 'radios',
+  classes: 'govuk-radios',
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
+  values: [
+    {
+      label: (l: AnyRecord): string => l.yes,
+      value: YesOrNo.YES,
+      subFields: {
+        benefitsCharCount: {
+          id: 'benefits-char-count',
+          name: 'benefits-char-count',
+          type: 'charactercount',
+          label: (l: AnyRecord): string => l.hint,
+          labelHidden: false,
+          labelAsHint: true,
+          maxlength: 2500,
+          attributes: { maxLength: 2500 },
+          validator: areBenefitsValid,
+        },
+      },
+    },
+    { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
+  ],
+});
+
+export const getPensionFormField = (id: string): FormField => ({
+  id,
+  type: 'radios',
+  classes: 'govuk-radios',
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'xl',
+  isPageHeading: true,
+  values: [
+    {
+      label: (l: AnyRecord): string => l.yes,
+      value: YesOrNoOrNotSure.YES,
+      subFields: {
+        claimantPensionWeeklyContribution: {
+          ...DefaultCurrencyFormFields,
+          id: 'pension-contributions',
+          label: (l: AnyRecord): string => l.pensionContributions,
+          labelAsHint: true,
+        },
+      },
+    },
+    { label: (l: AnyRecord): string => l.no, value: YesOrNoOrNotSure.NO },
+    { label: (l: AnyRecord): string => l.notSure, value: YesOrNoOrNotSure.NOT_SURE },
+  ],
+});
+
+export const getTellUsWhatYouWantFormField = (): FormField => ({
   id: 'tellUsWhatYouWant',
   label: (l: AnyRecord): string => l.legend,
   labelHidden: false,
