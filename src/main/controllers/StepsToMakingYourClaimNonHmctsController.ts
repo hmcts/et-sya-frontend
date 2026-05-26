@@ -23,7 +23,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
 
     const allSectionsCompleted = !!(
       userCase?.representativeDetailsCheck === YesOrNo.YES &&
-      userCase?.personalDetailsCheck === YesOrNo.YES &&
+      userCase?.representedClaimantDetailsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
       userCase?.claimDetailsCheck === YesOrNo.YES
     );
@@ -49,9 +49,10 @@ export default class StepsToMakingYourClaimNonHmctsController {
         title: (l: AnyRecord): string => l.section2.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.DOB_DETAILS.toString()),
+            url: setUrlLanguage(req, PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE.toString()),
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
+            status: (): string =>
+              getSectionStatus(userCase?.representedClaimantDetailsCheck, userCase?.representedClaimantAddress1),
           },
         ],
       },

@@ -156,7 +156,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
         t,
         userCase: {
           representativeDetailsCheck: YesOrNo.YES,
-          personalDetailsCheck: YesOrNo.YES,
+          representedClaimantDetailsCheck: YesOrNo.YES,
           employmentAndRespondentCheck: YesOrNo.YES,
           claimDetailsCheck: YesOrNo.YES,
         },
@@ -194,7 +194,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
       expect(section1.links[1].url).toContain(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
     });
 
-    it('should include section 2 with DOB details link', () => {
+    it('should include section 2 with represented claimant enter postcode link', () => {
       const controller = new StepsToMakingYourClaimNonHmctsController();
       const response = mockResponse();
       const request = mockRequest({ t });
@@ -203,7 +203,7 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
 
       const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       const section2 = renderArgs.sections[1];
-      expect(section2.links[0].url).toContain(PageUrls.DOB_DETAILS);
+      expect(section2.links[0].url).toContain(PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE);
     });
 
     it('should include section 4 with type of claim and tell us what you want links', () => {

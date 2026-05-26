@@ -2,6 +2,7 @@ import {
   validateClaimCheckDetails,
   validateEmploymentAndRespondentDetails,
   validatePersonalDetails,
+  validateRepresentedClaimantDetails,
 } from '../../../main/components/form/claim-details-validator';
 
 describe('claimDetailsValidator', () => {
@@ -129,6 +130,29 @@ describe('claimDetailsValidator', () => {
         ],
       };
       expect(validateEmploymentAndRespondentDetails(userCase)).toBe(true);
+    });
+  });
+
+  describe('validateRepresentedClaimantDetails', () => {
+    it('should return false if userCase is undefined', () => {
+      expect(validateRepresentedClaimantDetails(undefined)).toBe(false);
+    });
+
+    it('should return false if any mandatory address field is missing', () => {
+      const userCase = {
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(false);
+    });
+
+    it('should return true if all mandatory address fields are present', () => {
+      const userCase = {
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+        representedClaimantAddressCountry: 'England',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(true);
     });
   });
 
