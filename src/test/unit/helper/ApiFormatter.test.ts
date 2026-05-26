@@ -271,6 +271,9 @@ describe('Format Case Data to Frontend Model', () => {
       addressTown: undefined,
       telNumber: undefined,
       firstName: undefined,
+      representedClaimantFirstName: undefined,
+      representedClaimantLastName: undefined,
+      representedClaimantDateOfBirth: undefined,
       genericTseApplicationCollection: undefined,
       tseApplicationStoredCollection: undefined,
       lastName: undefined,
@@ -427,6 +430,9 @@ describe('Format Case Data to Frontend Model', () => {
       addressTown: undefined,
       telNumber: undefined,
       firstName: undefined,
+      representedClaimantFirstName: undefined,
+      representedClaimantLastName: undefined,
+      representedClaimantDateOfBirth: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,
@@ -525,6 +531,22 @@ describe('Format Case Data to Frontend Model', () => {
       ],
       id: '1234',
     });
+  });
+
+  it('should map represented claimant name and date of birth to claimantIndType', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      representedClaimantFirstName: 'Jane',
+      representedClaimantLastName: 'Doe',
+      representedClaimantDateOfBirth: { day: '05', month: '11', year: '2000' },
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.claimantIndType.claimant_first_names).toEqual('Jane');
+    expect(apiData.case_data.claimantIndType.claimant_last_name).toEqual('Doe');
+    expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual('2000-11-05');
   });
 
   it('date formatter should return null when date is empty', () => {
