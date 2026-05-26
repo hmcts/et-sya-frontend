@@ -229,6 +229,9 @@ export interface Case {
   representativeType?: string;
   representativeOrgName?: string;
   representativeName?: string;
+  representedClaimantName?: string;
+  representedClaimantFirstName?: string;
+  representedClaimantLastName?: string;
   representativeEnterPostcode?: string;
   representativeAddresses?: Record<string, string>[];
   representativeAddressTypes?: AddressType[];
@@ -239,6 +242,7 @@ export interface Case {
   repAddressPostcode?: string;
   representativePhoneNumber?: string;
   // Represented Claimant
+  representedClaimantDateOfBirth?: CaseDate;
   representedClaimantEnterPostcode?: string;
   representedClaimantAddresses?: Record<string, string>[];
   representedClaimantAddressTypes?: AddressType[];

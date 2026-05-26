@@ -95,6 +95,18 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     caseType: fromApiCaseData.case_data?.caseType,
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
+    representedClaimantFirstName:
+      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
+        ? fromApiCaseData.case_data?.claimantIndType?.claimant_first_names
+        : undefined,
+    representedClaimantLastName:
+      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
+        ? fromApiCaseData.case_data?.claimantIndType?.claimant_last_name
+        : undefined,
+    representedClaimantDateOfBirth:
+      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
+        ? parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth)
+        : undefined,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
     address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
@@ -247,9 +259,9 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
-        claimant_first_names: caseItem.firstName,
-        claimant_last_name: caseItem.lastName,
-        claimant_date_of_birth: formatDate(caseItem.dobDate),
+        claimant_first_names: caseItem.representedClaimantFirstName ?? caseItem.firstName,
+        claimant_last_name: caseItem.representedClaimantLastName ?? caseItem.lastName,
+        claimant_date_of_birth: formatDate(caseItem.representedClaimantDateOfBirth ?? caseItem.dobDate),
         claimant_sex: caseItem.claimantSex,
         claimant_preferred_title: isValidPreferredTitle(caseItem.preferredTitle),
         claimant_title_other: isOtherTitle(caseItem.preferredTitle),
