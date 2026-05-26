@@ -168,6 +168,13 @@ export const TranslationKeys = {
   REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
   REPRESENTATIVE_ADDRESS_DETAILS: 'representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: 'representative-phone-number',
+  // Represented Claimant
+  REPRESENTED_CLAIMANT_ENTER_POSTCODE: 'represented-claimant-enter-postcode',
+  REPRESENTED_CLAIMANT_SELECT_POSTCODE: 'represented-claimant-select-postcode',
+  REPRESENTED_CLAIMANT_ADDRESS_DETAILS: 'represented-claimant-address-details',
+  REPRESENTED_CLAIMANT_ENTER_EMAIL: 'represented-claimant-enter-email',
+  REPRESENTED_CLAIMANT_DETAILS_CHECK: 'represented-claimant-details-check',
+
   REPRESENTATIVE_COMMS_PREFERENCE: 'representative-comms-preference',
   REPRESENTATIVE_DETAILS_CHECK: 'representative-details-check',
   REPRESENTED_CLAIMANT_NAME: 'represented-claimant-name',
@@ -349,6 +356,12 @@ export const PageUrls = {
   REPRESENTATIVE_POSTCODE_SELECT: '/representative-postcode-select',
   REPRESENTATIVE_ADDRESS_DETAILS: '/representative-address-details',
   REPRESENTATIVE_PHONE_NUMBER: '/representative-phone-number',
+
+  REPRESENTED_CLAIMANT_ENTER_POSTCODE: '/represented-claimant-enter-postcode',
+  REPRESENTED_CLAIMANT_SELECT_POSTCODE: '/represented-claimant-select-postcode',
+  REPRESENTED_CLAIMANT_ADDRESS_DETAILS: '/represented-claimant-address-details',
+  REPRESENTED_CLAIMANT_ENTER_EMAIL: '/represented-claimant-enter-email',
+  REPRESENTED_CLAIMANT_DETAILS_CHECK: '/represented-claimant-details-check',
   REPRESENTATIVE_COMMS_PREFERENCE: '/representative-comms-preference',
   REPRESENTATIVE_DETAILS_CHECK: '/representative-details-check',
   REPRESENTED_CLAIMANT_NAME: '/represented-claimant-name',

@@ -243,6 +243,16 @@ export interface Case {
   representativePhoneNumber?: string;
   // Represented Claimant
   representedClaimantDateOfBirth?: CaseDate;
+  representedClaimantEnterPostcode?: string;
+  representedClaimantAddresses?: Record<string, string>[];
+  representedClaimantAddressTypes?: AddressType[];
+  representedClaimantAddress1?: string;
+  representedClaimantAddress2?: string;
+  representedClaimantAddressTown?: string;
+  representedClaimantAddressCountry?: string;
+  representedClaimantAddressPostcode?: string;
+  representedClaimantEmail?: string;
+  representedClaimantDetailsCheck?: YesOrNo;
 }
 
 export const enum StillWorking {

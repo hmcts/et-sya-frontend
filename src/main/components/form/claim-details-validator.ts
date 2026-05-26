@@ -64,3 +64,11 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
 
   return !(!hasClaimSummaryFile && !hasClaimSummaryText);
 };
+
+export const validateRepresentedClaimantDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const { representedClaimantAddress1 } = userCase;
+  return !!representedClaimantAddress1;
+};
