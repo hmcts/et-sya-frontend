@@ -48,7 +48,7 @@ describe('ClaimantTypeOfClaimController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION);
     });
 
-    it('should redirect to CLAIM_TYPE_PAY when pay-related is selected without discrimination (AC2)', async () => {
+    it('should redirect to CLAIMANT_CLAIM_TYPE_PAY when pay-related is selected without discrimination (AC2)', async () => {
       const body = { typeOfClaim: [TypesOfClaim.PAY_RELATED_CLAIM] };
       const controller = new ClaimantTypeOfClaimController();
       const req = mockRequest({ body });
@@ -56,7 +56,7 @@ describe('ClaimantTypeOfClaimController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_TYPE_PAY);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_PAY);
     });
 
     it('should redirect to DESCRIBE_WHAT_HAPPENED when only unfair dismissal is selected (AC2)', async () => {

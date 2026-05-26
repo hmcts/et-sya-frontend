@@ -1,0 +1,16 @@
+{
+  "title": "Hawliad tâl",
+  "h1": "Hawliad tâl",
+  "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
+  "arrears": "Ôl-ddyledion",
+  "arrearsHint": "tâl sy'n ddyledus i chi",
+  "holidayPay": "Tâl gwyliau",
+  "noticePay": "Tâl rhybudd",
+  "redundancyPay": "Tâl diswyddo",
+  "otherPayments": "Taliadau eraill",
+  "errors": {
+    "claimTypePay": {
+      "required": "Dywedwch wrthym pa fath o hawliad tâl mae'r hawlydd yn ei wneud"
+    }
+  }
+}

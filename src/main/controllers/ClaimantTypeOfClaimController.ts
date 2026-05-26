@@ -55,7 +55,7 @@ export default class ClaimantTypeOfClaimController {
     if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
       redirectUrl = PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION.toString();
     } else if (typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
-      redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
+      redirectUrl = PageUrls.CLAIMANT_CLAIM_TYPE_PAY.toString();
     }
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };

@@ -44,6 +44,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
 import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsController';
 import ClaimantClaimTypeDiscriminationController from '../../controllers/ClaimantClaimTypeDiscriminationController';
+import ClaimantClaimTypePayController from '../../controllers/ClaimantClaimTypePayController';
 import ClaimantDescribeWhatHappenedController from '../../controllers/ClaimantDescribeWhatHappenedController';
 import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
@@ -316,6 +317,8 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().post);
     app.get(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().get);
     app.post(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().post);
+    app.get(PageUrls.CLAIMANT_CLAIM_TYPE_PAY, new ClaimantClaimTypePayController().get);
+    app.post(PageUrls.CLAIMANT_CLAIM_TYPE_PAY, new ClaimantClaimTypePayController().post);
     const claimantDescribeWhatHappenedController = new ClaimantDescribeWhatHappenedController();
     app.get(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED, claimantDescribeWhatHappenedController.get);
     app.post(

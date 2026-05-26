@@ -205,6 +205,7 @@ export const TranslationKeys = {
   CLAIMANT_PLACE_OF_WORK: 'claimant-place-of-work',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: 'claimant-respondent-details-check',
   CLAIMANT_LINKED_CASES: 'claimant-linked-cases',
+  CLAIMANT_CLAIM_TYPE_PAY: 'claimant-claim-type-pay',
 } as const;
 
 export const PageUrls = {
@@ -394,6 +395,7 @@ export const PageUrls = {
   CLAIMANT_PLACE_OF_WORK: '/claimant-place-of-work',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: '/claimant-respondent-details-check',
   CLAIMANT_LINKED_CASES: '/claimant-linked-cases',
+  CLAIMANT_CLAIM_TYPE_PAY: '/claimant-claim-type-pay',
 } as const;
 
 export const InterceptPaths = {
