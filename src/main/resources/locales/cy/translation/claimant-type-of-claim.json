@@ -19,11 +19,15 @@
     "hint": "<place-holder>"
   },
   "otherTypesOfClaims": {
-    "checkbox": "<place-holder>"
+    "checkbox": "<place-holder>",
+    "explain": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud. Gallwch ddisgrifio manylion yr hawliad yn ddiweddarach."
   },
   "errors": {
     "typeOfClaim": {
       "required": "<place-holder>"
+    },
+    "otherClaim": {
+      "required": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud"
     }
   }
 }

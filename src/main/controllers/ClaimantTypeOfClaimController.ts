@@ -1,13 +1,14 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { atLeastOneFieldIsChecked, isFieldFilledIn } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
@@ -36,6 +37,19 @@ export default class ClaimantTypeOfClaimController {
             name: 'typeOfClaim',
             label: l => l.otherTypesOfClaims.checkbox,
             value: 'other',
+            subFields: {
+              otherClaim: {
+                id: 'otherClaim',
+                name: 'otherClaim',
+                type: 'textarea',
+                label: (l: AnyRecord): string => l.otherTypesOfClaims.explain,
+                labelSize: 'normal',
+                labelHidden: false,
+                classes: 'govuk-textarea',
+                attributes: { maxLength: 2500 },
+                validator: isFieldFilledIn,
+              },
+            },
           },
         ],
       },

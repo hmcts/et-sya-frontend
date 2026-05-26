@@ -19,11 +19,15 @@
     "hint": "including dismissal or any other unfair treatment after whistleblowing"
   },
   "otherTypesOfClaims": {
-    "checkbox": "Other type of claim"
+    "checkbox": "Other type of claim",
+    "explain": "Tell us briefly what type of claim the claimant is making. You can describe the details of the claim later."
   },
   "errors": {
     "typeOfClaim": {
       "required": "Please select at least one of the options below to choose the type of claim."
+    },
+    "otherClaim": {
+      "required": "Tell us briefly what type of claim the claimant is making"
     }
   }
 }
