@@ -49,10 +49,13 @@ export default class StepsToMakingYourClaimNonHmctsController {
         title: (l: AnyRecord): string => l.section2.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE.toString()),
+            url: setUrlLanguage(req, PageUrls.REPRESENTED_CLAIMANT_NAME.toString()),
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
             status: (): string =>
-              getSectionStatus(userCase?.representedClaimantDetailsCheck, userCase?.representedClaimantAddress1),
+              getSectionStatus(
+                userCase?.representedClaimantDetailsCheck,
+                userCase?.representedClaimantFirstName || userCase?.representedClaimantAddress1
+              ),
           },
         ],
       },
