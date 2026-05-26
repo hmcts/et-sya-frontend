@@ -106,15 +106,15 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
         return { errorType, propertyName: 'otherClaim' };
       }
     } else if (isRegularOtherSelected) {
-      const x = isContent100CharsOrLess(otherClaimTextarea);
-      if (x) {
-        return { errorType: x, propertyName: 'otherClaim' };
+      const errorType = isContent100CharsOrLess(otherClaimTextarea);
+      if (errorType) {
+        return { errorType, propertyName: 'otherClaim' };
       }
     }
   } else {
-    const x = isContent100CharsOrLess(otherClaimTextarea);
-    if (x) {
-      return { errorType: x, propertyName: 'otherClaim' };
+    const errorType = isContent100CharsOrLess(otherClaimTextarea);
+    if (errorType) {
+      return { errorType, propertyName: 'otherClaim' };
     }
   }
 };

@@ -43,7 +43,7 @@ export default class ClaimantTypeOfClaimController {
                 name: 'otherClaim',
                 type: 'textarea',
                 label: (l: AnyRecord): string => l.otherTypesOfClaims.explain,
-                labelSize: 'normal',
+                labelSize: 'm',
                 labelHidden: false,
                 classes: 'govuk-textarea',
                 attributes: { maxLength: 2500 },
