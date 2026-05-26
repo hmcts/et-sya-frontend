@@ -96,18 +96,25 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   const claimTypesCheckbox = formData.typeOfClaim;
   const otherClaimTextarea = formData.otherClaim;
 
-  if (
-    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
-    (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
-  ) {
-    const errorType = isFieldFilledIn(otherClaimTextarea);
-    if (errorType) {
-      return { errorType, propertyName: 'otherClaim' };
+  const isRegularOtherSelected = (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims');
+  const isClaimantOtherSelected = (claimTypesCheckbox as string[])?.includes('other');
+
+  if (isRegularOtherSelected || isClaimantOtherSelected) {
+    if (!otherClaimTextarea || otherClaimTextarea.trim().length === 0) {
+      const errorType = isFieldFilledIn(otherClaimTextarea);
+      if (errorType) {
+        return { errorType, propertyName: 'otherClaim' };
+      }
+    } else if (isRegularOtherSelected) {
+      const errorType = isContent100CharsOrLess(otherClaimTextarea);
+      if (errorType) {
+        return { errorType, propertyName: 'otherClaim' };
+      }
     }
   } else {
-    const x = isContent100CharsOrLess(otherClaimTextarea);
-    if (x) {
-      return { errorType: x, propertyName: 'otherClaim' };
+    const errorType = isContent100CharsOrLess(otherClaimTextarea);
+    if (errorType) {
+      return { errorType, propertyName: 'otherClaim' };
     }
   }
 };

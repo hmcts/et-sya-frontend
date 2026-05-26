@@ -48,7 +48,7 @@ describe('ClaimantTypeOfClaimController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION);
     });
 
-    it('should redirect to CLAIM_TYPE_PAY when pay-related is selected without discrimination (AC2)', async () => {
+    it('should redirect to CLAIMANT_CLAIM_TYPE_PAY when pay-related is selected without discrimination (AC2)', async () => {
       const body = { typeOfClaim: [TypesOfClaim.PAY_RELATED_CLAIM] };
       const controller = new ClaimantTypeOfClaimController();
       const req = mockRequest({ body });
@@ -56,7 +56,7 @@ describe('ClaimantTypeOfClaimController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_TYPE_PAY);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_PAY);
     });
 
     it('should redirect to DESCRIBE_WHAT_HAPPENED when only unfair dismissal is selected (AC2)', async () => {
@@ -81,8 +81,8 @@ describe('ClaimantTypeOfClaimController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
     });
 
-    it('should redirect to DESCRIBE_WHAT_HAPPENED when only other is selected (AC2)', async () => {
-      const body = { typeOfClaim: ['other'] };
+    it('should redirect to CLAIMANT_DESCRIBE_WHAT_HAPPENED when other is selected with text entered (AC3)', async () => {
+      const body = { typeOfClaim: 'other', otherClaim: 'Breach of contract' };
       const controller = new ClaimantTypeOfClaimController();
       const req = mockRequestEmpty({ body });
       const res = mockResponse();
@@ -92,8 +92,20 @@ describe('ClaimantTypeOfClaimController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
     });
 
+    it('should error when other is selected but no text is entered (AC2)', async () => {
+      const body = { typeOfClaim: 'other', otherClaim: '' };
+      const controller = new ClaimantTypeOfClaimController();
+      const req = mockRequestEmpty({ body });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual([{ propertyName: 'otherClaim', errorType: 'required' }]);
+    });
+
     it('should allow multiple selections (AC2)', async () => {
-      const body = { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL, TypesOfClaim.WHISTLE_BLOWING, 'other'] };
+      const body = { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL, TypesOfClaim.WHISTLE_BLOWING] };
       const controller = new ClaimantTypeOfClaimController();
       const req = mockRequestEmpty({ body });
       const res = mockResponse();
