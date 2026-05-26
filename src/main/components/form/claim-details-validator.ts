@@ -50,9 +50,17 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
     return false;
   }
 
-  const { typeOfClaim, claimSummaryFile, claimSummaryText } = userCase;
+  const { typeOfClaim, claimSummaryFile, claimSummaryText, claimTypeDiscrimination, claimTypePay } = userCase;
 
   if (!typeOfClaim || !Array.isArray(typeOfClaim) || typeOfClaim.length === 0) {
+    return false;
+  }
+
+  if (typeOfClaim.includes('discrimination') && (!claimTypeDiscrimination || claimTypeDiscrimination.length === 0)) {
+    return false;
+  }
+
+  if (typeOfClaim.includes('payRelated') && (!claimTypePay || claimTypePay.length === 0)) {
     return false;
   }
 
