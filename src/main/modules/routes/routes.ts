@@ -49,6 +49,7 @@ import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtCont
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
 import ClaimantEndDateController from '../../controllers/ClaimantEndDateController';
+import ClaimantLinkedCasesController from '../../controllers/ClaimantLinkedCasesController';
 import ClaimantNewJobController from '../../controllers/ClaimantNewJobController';
 import ClaimantNewJobPayController from '../../controllers/ClaimantNewJobPayController';
 import ClaimantNewJobStartDateController from '../../controllers/ClaimantNewJobStartDateController';
@@ -324,6 +325,8 @@ export class Routes {
     );
     app.get(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().get);
     app.post(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().post);
+    app.get(PageUrls.CLAIMANT_LINKED_CASES, new ClaimantLinkedCasesController().get);
+    app.post(PageUrls.CLAIMANT_LINKED_CASES, new ClaimantLinkedCasesController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);

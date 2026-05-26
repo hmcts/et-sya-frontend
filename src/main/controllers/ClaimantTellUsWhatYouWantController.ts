@@ -4,7 +4,6 @@ import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { TellUsWhatYouWant } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
@@ -30,15 +29,7 @@ export default class ClaimantTellUsWhatYouWantController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl: string;
-    if (req.body.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
-      redirectUrl = PageUrls.COMPENSATION;
-    } else if (req.body.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
-    } else {
-      redirectUrl = PageUrls.LINKED_CASES;
-    }
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_LINKED_CASES);
   };
 
   @CaseStateCheck()
