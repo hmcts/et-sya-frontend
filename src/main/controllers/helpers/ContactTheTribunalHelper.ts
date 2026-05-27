@@ -37,6 +37,16 @@ export const isClaimantRepresentedByOrganisation = (userCase: CaseWithId): boole
 };
 
 /**
+ * Determines whether claimant is represented by a non-HMCTS representative.
+ *
+ * Non-HMCTS representation is when claimant has selected represented flow
+ * but is not represented via an HMCTS organisation account.
+ */
+export const isClaimantRepresentedByNonHmctsRepresentative = (userCase: CaseWithId): boolean => {
+  return userCase?.claimantRepresentedQuestion === YesOrNo.YES && !isClaimantRepresentedByOrganisation(userCase);
+};
+
+/**
  * Get applications accordion items to display on contact the tribunal page.
  * @param req
  * @param bundlesEnabled

@@ -1,5 +1,6 @@
 import {
   getApplicationsAccordionItems,
+  isClaimantRepresentedByNonHmctsRepresentative,
   isClaimantRepresentedByOrganisation,
 } from '../../../../main/controllers/helpers/ContactTheTribunalHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
@@ -161,6 +162,43 @@ describe('ContactTheTribunalHelper tests', () => {
         },
       };
       expect(isClaimantRepresentedByOrganisation(userCase)).toBe(true);
+    });
+  });
+
+  describe('isClaimantRepresentedByNonHmctsRepresentative tests', () => {
+    const DATE = 'August 19, 2022';
+
+    it('should return false when user case is undefined', () => {
+      expect(isClaimantRepresentedByNonHmctsRepresentative(undefined)).toBe(false);
+    });
+
+    it('should return true when claimant is represented and not represented by HMCTS organisation', () => {
+      const userCase: CaseWithId = {
+        id: '1',
+        state: CaseState.SUBMITTED,
+        createdDate: DATE,
+        lastModified: DATE,
+        respondents: undefined,
+        claimantRepresentedQuestion: YesOrNo.YES,
+      };
+      expect(isClaimantRepresentedByNonHmctsRepresentative(userCase)).toBe(true);
+    });
+
+    it('should return false when claimant is represented via HMCTS organisation', () => {
+      const userCase: CaseWithId = {
+        id: '1',
+        state: CaseState.SUBMITTED,
+        createdDate: DATE,
+        lastModified: DATE,
+        respondents: undefined,
+        claimantRepresentedQuestion: YesOrNo.YES,
+        claimantRepresentativeOrganisationPolicy: {
+          Organisation: {
+            OrganisationID: 'dummyId',
+          },
+        },
+      };
+      expect(isClaimantRepresentedByNonHmctsRepresentative(userCase)).toBe(false);
     });
   });
 
