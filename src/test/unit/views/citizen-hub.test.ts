@@ -300,27 +300,24 @@ describe('Citizen hub page', () => {
         selector: bannerHeaderSelector,
         expectedText: 'The tribunal has received a response from the respondent',
       },
-    ])(
-      'should render text in banner for expected text: $expectedText',
-      async ({ userCaseDetails, selector, expectedText }) => {
-        mockedCase = { ...mockedCase, ...userCaseDetails };
-        mockFromApiFormat.mockReturnValue(mockedCase);
-        const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
-        mockLdClient.mockResolvedValue(true);
-        await request(
-          mockApp({
-            userCase: {} as Partial<CaseWithId>,
-          })
-        )
-          .get(PageUrls.CITIZEN_HUB)
-          .then(res => {
-            htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-          });
+    ])('should render text in banner for expected text: $expectedText', async ({ userCaseDetails, expectedText }) => {
+      mockedCase = { ...mockedCase, ...userCaseDetails };
+      mockFromApiFormat.mockReturnValue(mockedCase);
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
+      await request(
+        mockApp({
+          userCase: {} as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
 
-        const bannerContent = htmlRes.querySelector('div.govuk-notification-banner__content')?.textContent;
-        expect(bannerContent).toContain(expectedText);
-      }
-    );
+      const bannerContent = htmlRes.querySelector('div.govuk-notification-banner__content')?.textContent;
+      expect(bannerContent).toContain(expectedText);
+    });
   });
 
   describe('Alert containing a link to view the response acknowledgement documents on the citizen hub page', () => {
