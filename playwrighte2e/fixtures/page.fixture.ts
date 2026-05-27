@@ -16,7 +16,7 @@ export type PageFixtures = {
   saveCardPage: SaveCardPage;
   makeClaimPage: MakeClaimPage;
   personalDetailsPage: PersonDetailsPage;
-  groupClaimDetailsPage: GroupClaimsDetailsPage;
+  groupClaimsDetailsPage: GroupClaimsDetailsPage;
   employmentDetailsPage: EmploymentDetailsPage;
   claimDetailsPage: ClaimDetailsPage;
   submitPage: SubmitPage;

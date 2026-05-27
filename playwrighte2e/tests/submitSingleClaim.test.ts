@@ -17,7 +17,7 @@ test.describe('Submit a single claim for myself without the Complete PCQ/Equalit
       saveCardPage,
       makeClaimPage,
       personalDetailsPage,
-      groupClaimDetailsPage,
+      groupClaimsDetailsPage,
       employmentDetailsPage,
       claimDetailsPage,
       submitPage,
@@ -27,7 +27,7 @@ test.describe('Submit a single claim for myself without the Complete PCQ/Equalit
       await saveCardPage.doNotHaveToCompleteCard();
       await makeClaimPage.stepsToMakingYourClaim(false);
       await personalDetailsPage.enterPersonalDetails();
-      await groupClaimDetailsPage.enterGroupClaimsDetails();
+      await groupClaimsDetailsPage.enterGroupClaimsDetails();
       await employmentDetailsPage.didYouWorkForOrg('Yes');
       await employmentDetailsPage.areYouStillWorkingForOrg('Still working for respondent');
       await employmentDetailsPage.stillWorkingForRespondentJourney('Yes written contract with notice period', 'Months');
