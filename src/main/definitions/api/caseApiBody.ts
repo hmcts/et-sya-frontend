@@ -1,4 +1,5 @@
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
+import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -10,7 +11,6 @@ import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { TriageQuestions } from '../complexTypes/triageQuestions';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { HubLinksStatuses } from '../hub';
-import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 
 interface CaseDataApiBody {
   caseType: string;

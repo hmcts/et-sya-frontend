@@ -1,5 +1,5 @@
-import GroupRepresentativeController from '../../../../main/controllers/multiples/GroupRepresentativeController';
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
+import GroupRepresentativeController from '../../../../main/controllers/multiples/GroupRepresentativeController';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';

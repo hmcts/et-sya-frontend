@@ -8,7 +8,6 @@ import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
-
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 

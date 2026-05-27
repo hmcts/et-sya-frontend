@@ -11,10 +11,6 @@ import AboutHearingDocumentsController from '../../controllers/AboutHearingDocum
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
-import AddAnotherClaimantController from '../../controllers/multiples/AddAnotherClaimantController';
-import AdditionalClaimantPersonalDetailsController from '../../controllers/multiples/AdditionalClaimantPersonalDetailsController';
-import AdditionalClaimantPostCodeEnterController from '../../controllers/multiples/AdditionalClaimantPostCodeEnterController';
-import AdditionalClaimantPostCodeSelectController from '../../controllers/multiples/AdditionalClaimantPostCodeSelectController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
@@ -62,8 +58,6 @@ import EmploymentAndRespondentCheckController from '../../controllers/Employment
 import EndDateController from '../../controllers/EndDateController';
 import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
 import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
-import GroupClaimsCheckController from '../../controllers/multiples/GroupClaimsCheckController';
-import GroupRepresentativeController from '../../controllers/multiples/GroupRepresentativeController';
 import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
@@ -90,7 +84,6 @@ import PersonalDetailsCheckController from '../../controllers/PersonalDetailsChe
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
-import RemoveAdditionalClaimantController from '../../controllers/multiples/RemoveAdditionalClaimantController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
@@ -113,7 +106,6 @@ import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageCont
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
-import SingleOrMultipleController from '../../controllers/multiples/SingleOrMultipleController';
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
@@ -152,10 +144,18 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import YourDetailsCYAController from '../../controllers/YourDetailsCYAController';
 import YourDetailsFormController from '../../controllers/YourDetailsFormController';
-import ReviewOtherClaimantsController from '../../controllers/multiples/ReviewAdditionalClaimantsController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
+import AddAnotherClaimantController from '../../controllers/multiples/AddAnotherClaimantController';
+import AdditionalClaimantPersonalDetailsController from '../../controllers/multiples/AdditionalClaimantPersonalDetailsController';
+import AdditionalClaimantPostCodeEnterController from '../../controllers/multiples/AdditionalClaimantPostCodeEnterController';
+import AdditionalClaimantPostCodeSelectController from '../../controllers/multiples/AdditionalClaimantPostCodeSelectController';
+import GroupClaimsCheckController from '../../controllers/multiples/GroupClaimsCheckController';
+import GroupRepresentativeController from '../../controllers/multiples/GroupRepresentativeController';
+import RemoveAdditionalClaimantController from '../../controllers/multiples/RemoveAdditionalClaimantController';
+import ReviewOtherClaimantsController from '../../controllers/multiples/ReviewAdditionalClaimantsController';
+import SingleOrMultipleController from '../../controllers/multiples/SingleOrMultipleController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import { csrfProtection } from '../csrf';
