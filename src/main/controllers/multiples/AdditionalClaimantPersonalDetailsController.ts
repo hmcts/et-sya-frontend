@@ -158,7 +158,6 @@ export default class AdditionalClaimantPersonalDetailsController {
     if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
     }
-    console.log('INDEX: ' + req.session.userCase?.currentAdditionalClaimantIndex);
     this.populateFormFieldsForExistingClaimant(req);
     // Ensure date subfields (day/month/year) receive values from session state.
     assignFormData(req.session.userCase, this.form.getFormFields());

@@ -62,7 +62,6 @@ export default class SingleOrMultipleController {
   };
 
   private clearGroupClaimsFields(userCase: CaseWithId) {
-    console.log('Clearing group claims');
     userCase.additionalClaimants = undefined;
     userCase.leadClaimant = undefined;
   }
