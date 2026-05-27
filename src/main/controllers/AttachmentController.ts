@@ -1,8 +1,10 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { FEATURE_FLAGS } from '../definitions/constants';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import {
@@ -47,9 +49,14 @@ export default class AttachmentController {
       isDocInPseRespondCollection(req, docId)
     ) {
       try {
-        const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
+        const streamingEnabled = await getFlagValue(FEATURE_FLAGS.DOCUMENT_STREAMING, null);
+        const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId, streamingEnabled);
         res.setHeader('Content-Type', document?.headers['content-type']);
-        res.status(200).send(Buffer.from(document?.data, 'binary'));
+        if (document?.headers['content-length']) {
+          res.setHeader('Content-Length', document.headers['content-length']);
+        }
+        res.status(200);
+        (document?.data as NodeJS.ReadableStream).pipe(res);
       } catch (err) {
         logger.error(err.message);
         return res.redirect('/not-found');
