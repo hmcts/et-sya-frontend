@@ -1,71 +1,30 @@
 import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
+import { validateAdditionalClaimants } from '../../components/form/group-claims-validator';
 import { isFieldFilledIn } from '../../components/form/validator';
+import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant, CaseDate, YesOrNo } from '../../definitions/case';
+import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { getPageContent } from '../helpers/FormHelpers';
 import { setUrlLanguage } from '../helpers/LanguageHelper';
+import { getLanguageParam } from '../helpers/RouterHelpers';
+import {
+  ClaimantSummaryCard,
+  clearAdditionalClaimantTransientFields,
+  formatAddress,
+  formatDob,
+  formatName,
+} from '../helpers/multiples/ReviewAdditionalClaimantsHelper';
 
 const logger = getLogger('ReviewAdditionalClaimantsController');
 const MAX_ADDITIONAL_CLAIMANTS = 5;
-
-interface ClaimantSummaryCard {
-  name: string;
-  dob: string;
-  address: string;
-  email: string;
-  removeUrl: string;
-  changeNameUrl: string;
-  changeDobUrl: string;
-  changeAddressUrl: string;
-  changeEmailUrl: string;
-}
-
-const formatDob = (dob?: CaseDate): string => {
-  if (!dob || (!dob.day && !dob.month && !dob.year)) {
-    return '';
-  }
-  return `${dob.day}/${dob.month}/${dob.year}`;
-};
-
-const formatAddress = (c: AdditionalClaimant): string => {
-  const parts = [
-    c.address.AddressLine1,
-    c.address.AddressLine2,
-    c.address.PostTown,
-    c.address.Country,
-    c.address.PostCode,
-  ].filter(Boolean);
-  return parts.join('<br>');
-};
-
-const formatName = (c: AdditionalClaimant): string => {
-  const parts = [c.title, c.firstName, c.lastName].filter(Boolean);
-  return parts.join(' ');
-};
-
-const clearAdditionalClaimantTransientFields = (req: AppRequest): void => {
-  req.session.userCase.currentAdditionalClaimantIndex = undefined;
-  req.session.userCase.additionalClaimantTitle = undefined;
-  req.session.userCase.additionalClaimantFirstName = undefined;
-  req.session.userCase.additionalClaimantLastName = undefined;
-  req.session.userCase.additionalClaimantEmail = undefined;
-  req.session.userCase.additionalClaimantDob = undefined;
-  req.session.userCase.additionalClaimantAddress1 = undefined;
-  req.session.userCase.additionalClaimantAddress2 = undefined;
-  req.session.userCase.additionalClaimantAddressTown = undefined;
-  req.session.userCase.additionalClaimantAddressCountry = undefined;
-  req.session.userCase.additionalClaimantAddressPostcode = undefined;
-  req.session.userCase.additionalClaimantEnterPostcode = undefined;
-  req.session.userCase.additionalClaimantAddressTypes = undefined;
-  req.session.userCase.additionalClaimantAddresses = undefined;
-};
 
 export default class ReviewAdditionalClaimantsController {
   private readonly form: Form;
@@ -91,9 +50,8 @@ export default class ReviewAdditionalClaimantsController {
         validator: isFieldFilledIn,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
@@ -101,25 +59,56 @@ export default class ReviewAdditionalClaimantsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const additionalClaimantCount = req.session.userCase?.additionalClaimants?.length || 0;
     logger.info(
       `Handling review other claimants submission. Add another claimant answer: ${
         req.body.addAdditionalClaimant || 'none'
       }`
     );
+
+    // 1. Run all claimant data validation
+    const claimantErrors = validateAdditionalClaimants(req);
+    const additionalClaimantCount = req.session?.userCase?.additionalClaimants?.length || 0;
+    req.session.errors = req.session.errors || [];
+
+    // 2. Error redirects with validation failures
+    if (claimantErrors.length > 0) {
+      logger.info('Redirecting to review page due to additional claimant validation failures.');
+      req.session.errors.push(...claimantErrors);
+      req.session.userCase.addAdditionalClaimant = undefined; // Clear the user's selection on error to prevent confusion on return
+      return res.redirect(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS + getLanguageParam(req.url));
+    }
+
+    if (req.body.addAdditionalClaimant === YesOrNo.NO && additionalClaimantCount === 0) {
+      logger.info(
+        'Redirecting to review other claimants page with error - no additional claimants added but user selected no'
+      );
+      req.session.errors.push({
+        propertyName: 'hiddenErrorField',
+        errorType: 'additionalClaimantRequired',
+      });
+      req.session.userCase.addAdditionalClaimant = YesOrNo.YES; // Pre-select yes as there should be an additional claimant
+      return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
+    }
+
+    // 3. Standard routing rules on successful validation
+    let redirectUrl;
+    if (req.body.addAdditionalClaimant === YesOrNo.NO || additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
+      logger.info(
+        'Maximum additional claimant limit reached or user selected No. Redirecting to group representative page'
+      );
+      redirectUrl = setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
+    } else {
+      logger.info('User selected Yes to add more. Redirecting to personal details page.');
+      redirectUrl = setUrlLanguage(req, PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
+    }
+
+    // 3. Clear transient fields and pass off to baseline framework handler
     clearAdditionalClaimantTransientFields(req);
-    if (additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
-      logger.info('Maximum additional claimant limit reached. Redirecting to claim details check page');
-      return res.redirect(setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE));
-    }
-    if (req.body.addAdditionalClaimant === YesOrNo.YES) {
-      logger.info('Redirecting from review other claimants to other claimant personal details page');
-      return handlePostLogic(req, res, this.form, logger, PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
-    }
-    logger.info('Redirecting from review other claimants to claim details check page');
-    return handlePostLogic(req, res, this.form, logger, PageUrls.GROUP_REPRESENTATIVE);
+
+    return handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     logger.info(
       `Rendering review other claimants page. Current claimant count: ${
@@ -140,19 +129,19 @@ export default class ReviewAdditionalClaimantsController {
       dob: formatDob(c.dob),
       address: formatAddress(c),
       email: c.email || '',
-      removeUrl: `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?index=${index}${
+      removeUrl: `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?additionalClaimant=${index}${
         languageParam ? '&' + languageParam.substring(1) : ''
       }`,
-      changeNameUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?index=${index}${
+      changeNameUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
         languageParam ? '&' + languageParam.substring(1) : ''
       }`,
-      changeDobUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?index=${index}${
+      changeDobUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
         languageParam ? '&' + languageParam.substring(1) : ''
       }`,
-      changeAddressUrl: `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?index=${index}${
+      changeAddressUrl: `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=${index}${
         languageParam ? '&' + languageParam.substring(1) : ''
       }`,
-      changeEmailUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?index=${index}${
+      changeEmailUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
         languageParam ? '&' + languageParam.substring(1) : ''
       }`,
     }));

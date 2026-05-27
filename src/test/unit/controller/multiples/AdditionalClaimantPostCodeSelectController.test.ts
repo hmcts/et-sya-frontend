@@ -29,7 +29,6 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
         expect.objectContaining({ propertyName: 'additionalClaimantAddress1', errorType: 'required' }),
         expect.objectContaining({ propertyName: 'additionalClaimantAddressTown', errorType: 'required' }),
         expect.objectContaining({ propertyName: 'additionalClaimantAddressCountry', errorType: 'required' }),
-        expect.objectContaining({ propertyName: 'additionalClaimantAddressPostcode', errorType: 'required' }),
       ])
     );
     expect(CaseHelper.handleUpdateDraftCase).not.toHaveBeenCalled();
@@ -124,7 +123,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   it('should set current edit index from query and render postcode select page with resolved addresses', async () => {
     const req = mockRequest({});
     const res = mockResponse();
-    req.query = { index: '1' };
+    req.query = { additionalClaimant: '1' };
     req.session.userCase.additionalClaimantEnterPostcode = 'SW1H 9AJ';
     (getAddressesForPostcode as jest.Mock).mockResolvedValue([
       {

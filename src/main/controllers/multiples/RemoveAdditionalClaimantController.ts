@@ -2,10 +2,13 @@ import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
 import { isFieldFilledIn } from '../../components/form/validator';
+import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
+import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
+import { submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
@@ -38,9 +41,7 @@ export default class RemoveAdditionalClaimantController {
         validator: isFieldFilledIn,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-    },
+    submit: submitButton,
   };
 
   constructor() {
@@ -48,26 +49,31 @@ export default class RemoveAdditionalClaimantController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const indexStr = req.query?.index as string;
+    const indexStr = req.query?.additionalClaimant as string;
     const index = Number.parseInt(indexStr, 10);
     logger.info(
-      `Handling remove other claimant submission. Index: ${Number.isNaN(index) ? 'invalid' : index}, answer: ${
-        req.body.removeAdditionalClaimant || 'none'
-      }`
+      `Handling remove other claimant submission. Additional claimant index: ${
+        Number.isNaN(index) ? 'invalid' : index
+      }, answer: ${req.body.removeAdditionalClaimant || 'none'}`
     );
 
     if (req.body.removeAdditionalClaimant === YesOrNo.YES && !Number.isNaN(index)) {
       const claimants = req.session.userCase?.additionalClaimants || [];
       if (index >= 0 && index < claimants.length) {
-        req.session.userCase.additionalClaimants = undefined;
+        claimants.splice(index, 1);
+        req.session.userCase.additionalClaimants = claimants;
         logger.info(`Removed claimant at index ${index}. Remaining claimant count: ${claimants.length}`);
       }
     }
     return handlePostLogic(req, res, this.form, logger, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   };
 
+  @AdditionalClaimantCheck()
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    logger.info(`Rendering remove other claimant page. Query index: ${(req.query?.index as string) || 'none'}`);
+    logger.info(
+      `Rendering remove other claimant page. Query index: ${(req.query?.additionalClaimant as string) || 'none'}`
+    );
     const content = getPageContent(req, this.removeContent, [
       TranslationKeys.COMMON,
       TranslationKeys.REMOVE_ADDITIONAL_CLAIMANT,

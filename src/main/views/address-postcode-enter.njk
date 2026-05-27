@@ -17,11 +17,9 @@
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}
-      {% if not form.fields.additionalClaimantEnterPostcode %}
-        <p class="govuk-body">
-            <a href="{{ link }}" id="manualAddress" class="govuk-link" target="_self">{{ manualAddress }}</a>
-         </p>
-      {% endif %}
+      <p class="govuk-body">
+          <a href="{{ link }}" id="manualAddress" class="govuk-link" target="_self">{{ manualAddress }}</a>
+       </p>
     </div>
   </div>
 {% endblock %}

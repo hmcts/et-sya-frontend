@@ -1,5 +1,5 @@
-import RemoveAdditionalClaimantController from '../../../../main/controllers/multiples/RemoveAdditionalClaimantController';
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
+import RemoveAdditionalClaimantController from '../../../../main/controllers/multiples/RemoveAdditionalClaimantController';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';
@@ -31,7 +31,7 @@ describe('RemoveAdditionalClaimantController', () => {
     const request = mockRequest({
       body: { removeAdditionalClaimant: YesOrNo.YES },
     });
-    request.query = { index: '1' };
+    request.query = { additionalClaimant: '1' };
     request.session.userCase.additionalClaimants = [
       { firstName: 'First', lastName: 'Person' },
       { firstName: 'Second', lastName: 'Person' },

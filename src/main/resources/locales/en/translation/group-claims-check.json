@@ -8,6 +8,11 @@
     "groupClaimsCheck": {
       "required": "Tell us if you have completed this section",
       "invalid": "You must complete the Group claims section before you can mark it as completed"
+    },
+    "hiddenErrorField": {
+      "nameRequired": "First name and last name are required for an additional claimant",
+      "additionalClaimantRequired": "A minimum of one additional claimant is required for a group claim",
+      "addressRequired": "The address is required for an additional claimant"
     }
   }
 }

@@ -75,6 +75,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const additionalClaimantAddresses = req.session.userCase.additionalClaimantAddresses;
       const additionalClaimantAddressTypes = req.session.userCase.additionalClaimantAddressTypes;
       const addClaimantMethod = req.session.userCase.addClaimantMethod;
+      const addAdditionalClaimant = req.session.userCase.addAdditionalClaimant;
       const leadClaimant = req.session.userCase.leadClaimant;
       req.session.userCase = fromApiFormat(response.data);
       if (caseType !== undefined) {
@@ -109,6 +110,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.additionalClaimantAddresses = additionalClaimantAddresses;
       req.session.userCase.additionalClaimantAddressTypes = additionalClaimantAddressTypes;
       req.session.userCase.addClaimantMethod = addClaimantMethod;
+      req.session.userCase.addAdditionalClaimant = addAdditionalClaimant;
       req.session.userCase.leadClaimant = leadClaimant;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
@@ -315,14 +317,7 @@ export const postLogic = async (
   const { saveForLater } = req.body;
   if (errors.length === 0) {
     req.session.errors = [];
-    console.log('Before Lead Claimant: ' + req.session.userCase.leadClaimant);
-    console.log('Before Additional Claimants: ' + req.session.userCase.additionalClaimants);
-    console.log('Before Method: ' + req.session.userCase.addClaimantMethod);
-
     await handleUpdateDraftCase(req, logger);
-    console.log('Lead Claimant: ' + req.session.userCase.leadClaimant);
-    console.log('Additional Claimants: ' + req.session.userCase.additionalClaimants);
-    console.log('Method: ' + req.session.userCase.addClaimantMethod);
     if (saveForLater) {
       redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
       return res.redirect(redirectUrl);

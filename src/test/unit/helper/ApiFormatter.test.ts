@@ -251,7 +251,29 @@ describe('Format document model', () => {
 describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
     const result = fromApiFormat(mockedApiData);
-    expect(result).toStrictEqual(mockUserCaseComplete);
+    expect(result).toStrictEqual({
+      ...mockUserCaseComplete,
+      additionalClaimants: [
+        {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs',
+          email: 'test@test.com',
+          dob: {
+            day: '00',
+            month: '/2',
+            year: '05/0',
+          },
+          address: {
+            AddressLine1: 'Muffin Mans House',
+            AddressLine2: 'Drewry Lane',
+            PostTown: 'London',
+            Country: 'United Kingdom',
+            PostCode: undefined,
+          },
+        },
+      ],
+    });
   });
 
   it('should format Case Api Response with no applications`', () => {
@@ -262,7 +284,29 @@ describe('Format Case Data to Frontend Model', () => {
 
     const result = fromApiFormat(mock);
 
-    expect(result).toStrictEqual(complete);
+    expect(result).toStrictEqual({
+      ...complete,
+      additionalClaimants: [
+        {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs',
+          email: 'test@test.com',
+          dob: {
+            day: '00',
+            month: '/2',
+            year: '05/0',
+          },
+          address: {
+            AddressLine1: 'Muffin Mans House',
+            AddressLine2: 'Drewry Lane',
+            PostTown: 'London',
+            Country: 'United Kingdom',
+            PostCode: undefined,
+          },
+        },
+      ],
+    });
   });
 
   it('should return undefined for empty field`', () => {
@@ -381,6 +425,8 @@ describe('Format Case Data to Frontend Model', () => {
       leadClaimant: undefined,
       caseStayed: undefined,
       claimantRepresentativeOrganisationPolicy: undefined,
+      addClaimantMethod: undefined,
+      additionalClaimants: undefined,
     });
   });
 

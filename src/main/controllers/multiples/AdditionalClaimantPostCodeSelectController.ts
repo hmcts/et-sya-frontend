@@ -5,12 +5,12 @@ import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
-  isValidUKPostcode,
 } from '../../components/form/address-validator';
 import { Form } from '../../components/form/form';
+import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant } from '../../definitions/case';
+import { AdditionalClaimant, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
@@ -99,7 +99,6 @@ export default class AdditionalClaimantPostCodeSelectController {
         classes: 'govuk-label govuk-input--width-10',
         label: l => l.postcode,
         labelSize: null,
-        validator: isValidUKPostcode,
         attributes: {
           maxLength: 14,
           autocomplete: 'postal-code',
@@ -151,6 +150,7 @@ export default class AdditionalClaimantPostCodeSelectController {
     claimant.address.PostCode = req.session.userCase.additionalClaimantAddressPostcode;
     req.session.userCase.additionalClaimants[editIndex] = claimant;
 
+    req.session.userCase.groupClaimsCheck = YesOrNo.NO;
     await handleUpdateDraftCase(req, logger);
     if (req.body?.saveForLater) {
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIM_SAVED));
@@ -159,10 +159,11 @@ export default class AdditionalClaimantPostCodeSelectController {
     return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
   };
 
+  @AdditionalClaimantCheck()
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const selectedAddressType = req.session.userCase.additionalClaimantAddressTypes;
-    const indexParam = req.query?.index as string;
+    const indexParam = req.query?.additionalClaimant as string;
     if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
     }

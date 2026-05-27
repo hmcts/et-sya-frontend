@@ -42,7 +42,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
   it('should set index from query and prepopulate when editing an existing claimant', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-    request.query = { index: '0' };
+    request.query = { additionalClaimant: '0' };
     request.session.userCase.additionalClaimants = [
       {
         title: 'Mrs',
@@ -127,7 +127,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
       response,
       expect.anything(),
       expect.anything(),
-      PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER,
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=0`,
       true
     );
   });

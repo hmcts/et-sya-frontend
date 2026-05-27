@@ -8,6 +8,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
@@ -41,9 +42,8 @@ export default class GroupRepresentativeController {
         validator: isFieldFilledIn,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
@@ -51,6 +51,7 @@ export default class GroupRepresentativeController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.userCase.groupClaimsCheck = YesOrNo.NO;
     return handlePostLogic(req, res, this.form, logger, PageUrls.GROUP_CLAIMS_CHECK, true);
   };
 

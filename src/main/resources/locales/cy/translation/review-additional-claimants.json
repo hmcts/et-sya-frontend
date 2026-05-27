@@ -16,8 +16,13 @@
   "no": "[W] No",
   "cancel": "[W] Cancel",
   "errors": {
-    "addAnotherClaimant": {
-      "required": "[W] Tell us if you want to add another claimant"
+    "addAdditionalClaimant": {
+      "required": "[W] You have not selected a value. You need to select an answer before continuing."
+    },
+    "hiddenErrorField": {
+      "nameRequired": "[W] First name and last name are required for an additional claimant",
+      "additionalClaimantRequired": "[W] A minimum of one additional claimant is required for a group claim",
+      "addressRequired": "[W] The address is required for an additional claimant"
     }
   }
 }

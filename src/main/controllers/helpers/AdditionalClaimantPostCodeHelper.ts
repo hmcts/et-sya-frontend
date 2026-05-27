@@ -4,7 +4,10 @@ import { PageUrls, languages } from '../../definitions/constants';
 import localesCy from '../../resources/locales/cy/translation/common.json';
 import locales from '../../resources/locales/en/translation/common.json';
 
-export const getAdditionalClaimantAddressTypes = (response: Record<string, string>[], req: AppRequest): AddressType[] => {
+export const getAdditionalClaimantAddressTypes = (
+  response: Record<string, string>[],
+  req: AppRequest
+): AddressType[] => {
   const additionalClaimantAddressTypes: AddressType[] = [];
   if (response?.length === 1) {
     additionalClaimantAddressTypes.push({

@@ -1,4 +1,5 @@
 import {
+  AddAdditionalClaimant,
   CaseType,
   CaseTypeId,
   EmailOrPost,
@@ -310,4 +311,25 @@ export default {
   leadClaimant: YesOrNo.YES,
   caseStayed: YesOrNo.YES,
   claimantRepresentativeOrganisationPolicy: undefined,
+  addClaimantMethod: AddAdditionalClaimant.MANUAL,
+  additionalClaimants: [
+    {
+      title: 'Mr',
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+      email: 'test@test.com',
+      dob: {
+        day: '13',
+        month: '02',
+        year: '1996',
+      },
+      address: {
+        AddressLine1: 'Muffin Mans House',
+        AddressLine2: 'Drewry Lane',
+        County: 'West Minister',
+        Country: 'United Kingdom',
+        PostTown: 'London',
+      },
+    },
+  ],
 };

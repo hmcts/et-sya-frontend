@@ -524,7 +524,6 @@ export const mapAdditionalClaimants = (additionalClaimant: AdditionalClaimantApi
 export const setAdditionalClaimantsApiFormat = (
   additionalClaimant: AdditionalClaimant[]
 ): AdditionalClaimantRequestBody[] => {
-  console.log('ADDITIONAL CLAIMANT: ' + JSON.stringify(additionalClaimant));
   if (additionalClaimant === undefined) {
     return;
   }

@@ -3,14 +3,16 @@ import { Response } from 'express';
 import { Form } from '../../components/form/form';
 import { convertToDateObject } from '../../components/form/parser';
 import { isFieldFilledIn } from '../../components/form/validator';
+import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
+import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant, CaseDate } from '../../definitions/case';
+import { AdditionalClaimant, CaseDate, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { DateValues } from '../../definitions/dates';
 import { FormContent, FormFields } from '../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
-
 import { handlePostLogic, setUserCase } from '../helpers/CaseHelpers';
 import { returnSessionErrors } from '../helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
@@ -70,9 +72,8 @@ export default class AdditionalClaimantPersonalDetailsController {
         validator: (): string | void => undefined,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
@@ -127,19 +128,24 @@ export default class AdditionalClaimantPersonalDetailsController {
     }
     const redirectUrl = isEditingExistingClaimant
       ? PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
-      : PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER;
+      : this.getPostcodeEnterUrlWithClaimantIndex(req.session.userCase.currentAdditionalClaimantIndex);
     logger.info(
       `Saved additional claimant personal details. Claimant count is now: ${
         req.session.userCase.additionalClaimants?.length || 0
       }. Redirecting to: ${redirectUrl}`
     );
+    req.session.userCase.groupClaimsCheck = YesOrNo.NO;
     return handlePostLogic(req, res, this.form, logger, redirectUrl, true);
   };
 
+  @AdditionalClaimantCheck()
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     logger.info(
       `Rendering additional claimant personal details page for ${
-        req.query?.index ? `additional claimant index: ${req.query.index as string}` : 'a new claimant'
+        req.query?.additionalClaimant
+          ? `additional claimant index: ${req.query.additionalClaimant as string}`
+          : 'a new claimant'
       }`
     );
     const content = getPageContent(req, this.personalDetailsContent, [
@@ -148,7 +154,7 @@ export default class AdditionalClaimantPersonalDetailsController {
     ]);
 
     // Set editing index from query param (e.g. from Change link on review page)
-    const indexParam = req.query?.index as string;
+    const indexParam = req.query?.additionalClaimant as string;
     if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
     }
@@ -241,5 +247,12 @@ export default class AdditionalClaimantPersonalDetailsController {
     req.session.userCase.additionalClaimantEnterPostcode = undefined;
     req.session.userCase.additionalClaimantAddressTypes = undefined;
     req.session.userCase.additionalClaimantAddresses = undefined;
+  }
+
+  private getPostcodeEnterUrlWithClaimantIndex(additionalClaimantIndex: number | undefined): string {
+    if (additionalClaimantIndex === undefined) {
+      return PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER;
+    }
+    return `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=${additionalClaimantIndex}`;
   }
 }

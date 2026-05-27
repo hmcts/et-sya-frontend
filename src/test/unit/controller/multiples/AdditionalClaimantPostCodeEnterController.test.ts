@@ -26,7 +26,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
   it('should set edit index from query and clear previous selected addresses', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-    request.query = { index: '0' };
+    request.query = { additionalClaimant: '0' };
     request.session.userCase.additionalClaimantAddressTypes = [{ label: 'old' }];
     request.session.userCase.additionalClaimantAddresses = [{ fullAddress: 'old' }];
 
@@ -84,7 +84,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
   it('should render heading with claimant full name on postcode enter page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-    request.query = { index: '0' };
+    request.query = { additionalClaimant: '0' };
     request.session.userCase.additionalClaimants = [
       {
         firstName: 'Jane',
@@ -125,7 +125,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
     const body = { additionalClaimantEnterPostcode: 'M1 1AA' };
     const req = mockRequest({ body });
     const res = mockResponse();
-    req.query = { index: '1' };
+    req.query = { additionalClaimant: '1' };
     req.session.userCase.additionalClaimants = [
       { firstName: 'John', lastName: 'Smith' },
       {
@@ -162,7 +162,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
       res,
       expect.anything(),
       expect.anything(),
-      PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT,
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT}?additionalClaimant=1`,
       true
     );
   });

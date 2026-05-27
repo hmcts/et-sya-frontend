@@ -48,11 +48,11 @@ describe('ReviewOtherClaimantsController', () => {
       dob: '01/02/2000',
       address: '1 High Street<br>Flat 2<br>London<br>SW1A 1AA',
       email: 'john@example.com',
-      removeUrl: `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?index=0`,
-      changeNameUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?index=0`,
-      changeDobUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?index=0`,
-      changeAddressUrl: `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?index=0`,
-      changeEmailUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?index=0`,
+      removeUrl: `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?additionalClaimant=0`,
+      changeNameUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=0`,
+      changeDobUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=0`,
+      changeAddressUrl: `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=0`,
+      changeEmailUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=0`,
     });
     expect(request.session.userCase.currentAdditionalClaimantIndex).toBeUndefined();
   });
@@ -83,9 +83,11 @@ describe('ReviewOtherClaimantsController', () => {
     new ReviewOtherClaimantsController().get(request, response);
 
     const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
-    expect(renderArgs.additionalClaimants[0].removeUrl).toBe(`${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?index=0&lng=cy`);
+    expect(renderArgs.additionalClaimants[0].removeUrl).toBe(
+      `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?additionalClaimant=0&lng=cy`
+    );
     expect(renderArgs.additionalClaimants[0].changeAddressUrl).toBe(
-      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?index=0&lng=cy`
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=0&lng=cy`
     );
   });
 
@@ -125,13 +127,52 @@ describe('ReviewOtherClaimantsController', () => {
     );
   });
 
-  it('should redirect to group claims check when no is selected', async () => {
+  it('should redirect back to review page when no is selected and there are no claimants', async () => {
     const response = mockResponse();
     const request = mockRequest({
       body: { addAdditionalClaimant: YesOrNo.NO },
     });
 
     await new ReviewOtherClaimantsController().post(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
+    expect(CaseHelper.handlePostLogic).not.toHaveBeenCalled();
+  });
+
+  it('should redirect to group claims check and block add-another when claimant count is already five', async () => {
+    const response = mockResponse();
+    const request = mockRequest({
+      body: { addAdditionalClaimant: YesOrNo.YES },
+    });
+    request.session.userCase.additionalClaimants = [
+      {
+        firstName: 'One',
+        lastName: 'Person',
+        address: { AddressLine1: '1 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Two',
+        lastName: 'Person',
+        address: { AddressLine1: '2 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Three',
+        lastName: 'Person',
+        address: { AddressLine1: '3 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Four',
+        lastName: 'Person',
+        address: { AddressLine1: '4 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Five',
+        lastName: 'Person',
+        address: { AddressLine1: '5 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+    ];
+
+    await new ReviewOtherClaimantsController().post(request, response);
+
     expect(response.redirect).not.toHaveBeenCalled();
     expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
       request,
@@ -142,22 +183,22 @@ describe('ReviewOtherClaimantsController', () => {
     );
   });
 
-  it('should redirect to group claims check and block add-another when claimant count is already five', async () => {
+  it('should stop execution when validation helper redirects to review page', async () => {
     const response = mockResponse();
     const request = mockRequest({
       body: { addAdditionalClaimant: YesOrNo.YES },
     });
     request.session.userCase.additionalClaimants = [
-      { firstName: 'One', lastName: 'Person' },
-      { firstName: 'Two', lastName: 'Person' },
-      { firstName: 'Three', lastName: 'Person' },
-      { firstName: 'Four', lastName: 'Person' },
-      { firstName: 'Five', lastName: 'Person' },
+      {
+        firstName: 'Only',
+        lastName: 'Person',
+        // Missing address should trigger helper validation redirect
+      },
     ];
 
     await new ReviewOtherClaimantsController().post(request, response);
 
+    expect(response.redirect).toHaveBeenCalledWith(`${PageUrls.REVIEW_ADDITIONAL_CLAIMANTS}?lng=en`);
     expect(CaseHelper.handlePostLogic).not.toHaveBeenCalled();
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.GROUP_REPRESENTATIVE);
   });
 });

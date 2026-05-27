@@ -2,14 +2,14 @@ import { Response } from 'express';
 
 import { isValidUKPostcode } from '../../components/form/address-validator';
 import { Form } from '../../components/form/form';
+import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant } from '../../definitions/case';
+import { AdditionalClaimant, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
-
 import {
   getAdditionalClaimantAddressLink,
   getAddressPageHeader,
@@ -47,7 +47,7 @@ export default class AdditionalClaimantPostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const indexParam = req.query?.index as string;
+    const indexParam = req.query?.additionalClaimant as string;
     if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
     }
@@ -62,12 +62,21 @@ export default class AdditionalClaimantPostCodeEnterController {
     ) {
       this.clearAdditionalClaimantAddressSelection(req);
     }
-    return handlePostLogic(req, res, this.form, logger, PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT, true);
+    req.session.userCase.groupClaimsCheck = YesOrNo.NO;
+    return handlePostLogic(
+      req,
+      res,
+      this.form,
+      logger,
+      this.getPostcodeSelectUrlWithClaimantIndex(req.session.userCase.currentAdditionalClaimantIndex),
+      true
+    );
   };
 
+  @AdditionalClaimantCheck()
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const indexParam = req.query?.index as string;
+    const indexParam = req.query?.additionalClaimant as string;
     if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
       req.session.userCase.additionalClaimantAddressTypes = undefined;
@@ -156,5 +165,12 @@ export default class AdditionalClaimantPostCodeEnterController {
     const firstName = currentClaimant?.firstName || req.session.userCase.additionalClaimantFirstName;
     const lastName = currentClaimant?.lastName || req.session.userCase.additionalClaimantLastName;
     return `${firstName || ''} ${lastName || ''}`.trim();
+  };
+
+  private readonly getPostcodeSelectUrlWithClaimantIndex = (additionalClaimantIndex: number | undefined): string => {
+    if (additionalClaimantIndex === undefined) {
+      return PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT;
+    }
+    return `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT}?additionalClaimant=${additionalClaimantIndex}`;
   };
 }

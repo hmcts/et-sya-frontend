@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
-import { validateGroupClaimsCheckDetails } from '../../components/form/claim-details-validator';
 import { Form } from '../../components/form/form';
+import { validateGroupClaimsCheckDetails } from '../../components/form/group-claims-validator';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
@@ -42,9 +42,8 @@ export default class GroupClaimsCheckController {
 
     if (req.body?.groupClaimsCheck === 'Yes') {
       const userCase = req.session?.userCase;
-      const isValid = validateGroupClaimsCheckDetails(userCase);
-
       req.session.errors = [];
+      const isValid = validateGroupClaimsCheckDetails(req, userCase);
       if (!isValid) {
         req.session.errors.push({ propertyName: 'groupClaimsCheck', errorType: 'invalid' });
         const content = getPageContent(req, this.groupClaimsCheckFormContent, [

@@ -1,6 +1,7 @@
 import { OrganisationPolicy } from './OrganisationPolicy';
 import { HearingModel } from './api/caseApiResponse';
 import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
+import { AddressUK } from './complexTypes/addressUK';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { Et1Address } from './complexTypes/et1Address';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
@@ -15,7 +16,6 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { TypeItem } from './util-types';
-import { AddressUK } from './complexTypes/addressUK';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -242,6 +242,7 @@ export interface Case {
   additionalClaimantAddressTypes?: AddressType[];
   additionalClaimantAddresses?: Record<string, string>[];
   addClaimantMethod?: AddAdditionalClaimant;
+  addAdditionalClaimant?: YesOrNo;
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;
