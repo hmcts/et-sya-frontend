@@ -14,7 +14,8 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
       <p class="govuk-body">{{ p1 }}</p>
-      <p class="govuk-body">{{ p2 }}</p>
+      {% set addAnotherClaimantLink = PageUrls.ADD_ANOTHER_CLAIMANT ~ (languageParam if languageParam else '?lng=en') %}
+      <p class="govuk-body">{{ p2 }} <a class="govuk-link" href="{{ addAnotherClaimantLink }}">{{ spreadsheetOptionLink }}</a></p>
 
       {% for claimant in additionalClaimants %}
         <div class="govuk-summary-card">
@@ -55,18 +56,9 @@
         </div>
       {% endfor %}
 
-      {% if canAddAnotherClaimant %}
-        {% block form %}
-          {% include "form/form.njk" %}
-        {% endblock %}
-      {% else %}
-        <form class="form" id="main-form" method="post" action="" novalidate="true">
-          <input type="hidden" name="_csrf" value={{ csrfToken }}>
-          {{ govukButton({
-            text: continue
-          }) }}
-        </form>
-      {% endif %}
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
     </div>
   </div>
 {% endblock %}

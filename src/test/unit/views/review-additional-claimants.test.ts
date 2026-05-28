@@ -35,4 +35,9 @@ describe('Review other claimants page', () => {
     const radioButtons = htmlRes.getElementsByClassName('govuk-radios--inline');
     expect(radioButtons.length).equal(1, 'Radio buttons not found');
   });
+
+  it('should display spreadsheet option link after p2', () => {
+    const link = htmlRes.querySelector('a[href^="/add-another-claimant"]');
+    expect(link).to.not.equal(null, 'Spreadsheet option link not found');
+  });
 });

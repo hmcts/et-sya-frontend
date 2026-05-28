@@ -49,6 +49,12 @@ export default class ReviewAdditionalClaimantsController {
         ],
         validator: isFieldFilledIn,
       },
+      addAdditionalClaimantMaxTxt: {
+        id: 'add-another-claimant-txt',
+        classes: 'govuk-body',
+        type: 'readonly',
+        hint: (l: AnyRecord): string => l.p3 + l.spreadsheetOptionLink,
+      },
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
@@ -69,6 +75,12 @@ export default class ReviewAdditionalClaimantsController {
     const claimantErrors = validateAdditionalClaimants(req);
     const additionalClaimantCount = req.session?.userCase?.additionalClaimants?.length || 0;
     req.session.errors = req.session.errors || [];
+
+    // When max claimants are reached, the radios are hidden and we implicitly continue.
+    if (additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS && !req.body.addAdditionalClaimant) {
+      req.body.addAdditionalClaimant = YesOrNo.NO;
+      req.session.userCase.addAdditionalClaimant = YesOrNo.NO;
+    }
 
     // 2. Error redirects with validation failures
     if (claimantErrors.length > 0) {
@@ -115,13 +127,12 @@ export default class ReviewAdditionalClaimantsController {
         req.session.userCase?.additionalClaimants?.length || 0
       }`
     );
-    const content = getPageContent(req, this.reviewContent, [
+    const claimants = req.session.userCase?.additionalClaimants || [];
+    const canAddAnotherClaimant = claimants.length < MAX_ADDITIONAL_CLAIMANTS;
+    const content = getPageContent(req, this.getReviewContent(req, canAddAnotherClaimant), [
       TranslationKeys.COMMON,
       TranslationKeys.REVIEW_ADDITIONAL_CLAIMANTS,
     ]);
-
-    const claimants = req.session.userCase?.additionalClaimants || [];
-    const canAddAnotherClaimant = claimants.length < MAX_ADDITIONAL_CLAIMANTS;
     const languageParam = req.url?.includes('lng=cy') ? '?lng=cy' : '';
 
     const additionalClaimants: ClaimantSummaryCard[] = claimants.map((c, index) => ({
@@ -154,5 +165,25 @@ export default class ReviewAdditionalClaimantsController {
       additionalClaimants,
       canAddAnotherClaimant,
     });
+  };
+
+  private readonly getReviewContent = (req: AppRequest, canAddAnotherClaimant: boolean): FormContent => {
+    if (typeof this.reviewContent.fields === 'function') {
+      return this.reviewContent;
+    }
+
+    const fields: FormFields = { ...this.reviewContent.fields };
+    if (canAddAnotherClaimant) {
+      delete (fields as AnyRecord).addAdditionalClaimantMaxTxt;
+    } else {
+      const addAnotherClaimantUrl = `${PageUrls.ADD_ANOTHER_CLAIMANT}${getLanguageParam(req.url)}`;
+      (fields as AnyRecord).addAdditionalClaimantMaxTxt = {
+        ...(fields as AnyRecord).addAdditionalClaimantMaxTxt,
+        hint: (l: AnyRecord): string =>
+          `${l.p3} <a class="govuk-link" href="${addAnotherClaimantUrl}">${l.spreadsheetOptionLink}</a>`,
+      };
+      delete (fields as AnyRecord).addAdditionalClaimant;
+    }
+    return { ...this.reviewContent, fields };
   };
 }

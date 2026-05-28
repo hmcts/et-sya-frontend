@@ -42,6 +42,8 @@ describe('ReviewOtherClaimantsController', () => {
     const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.REVIEW_ADDITIONAL_CLAIMANTS, expect.anything());
     expect(renderArgs.canAddAnotherClaimant).toBe(true);
+    expect(renderArgs.form.fields.addAdditionalClaimant).toBeDefined();
+    expect(renderArgs.form.fields.addAdditionalClaimantMaxTxt).toBeUndefined();
     expect(renderArgs.additionalClaimants).toHaveLength(1);
     expect(renderArgs.additionalClaimants[0]).toMatchObject({
       name: 'Mr John Doe',
@@ -72,6 +74,13 @@ describe('ReviewOtherClaimantsController', () => {
 
     const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
     expect(renderArgs.canAddAnotherClaimant).toBe(false);
+    expect(renderArgs.form.fields.addAdditionalClaimant).toBeUndefined();
+    expect(renderArgs.form.fields.addAdditionalClaimantMaxTxt).toBeDefined();
+    const maxTextHint = renderArgs.form.fields.addAdditionalClaimantMaxTxt.hint({
+      p3: 'If you need to add more than 5 claimants, you will need to use the',
+      spreadsheetOptionLink: 'spreadsheet upload option.',
+    });
+    expect(maxTextHint).toContain(`<a class="govuk-link" href="${PageUrls.ADD_ANOTHER_CLAIMANT}?lng=en">`);
   });
 
   it('should append welsh language parameter to action links when on welsh page', () => {
@@ -174,6 +183,50 @@ describe('ReviewOtherClaimantsController', () => {
     await new ReviewOtherClaimantsController().post(request, response);
 
     expect(response.redirect).not.toHaveBeenCalled();
+    expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
+      request,
+      response,
+      expect.anything(),
+      expect.anything(),
+      PageUrls.GROUP_REPRESENTATIVE
+    );
+  });
+
+  it('should continue to group representative when max claimants reached and add-another radios are hidden', async () => {
+    const response = mockResponse();
+    const request = mockRequest({
+      body: {},
+    });
+    request.session.userCase.additionalClaimants = [
+      {
+        firstName: 'One',
+        lastName: 'Person',
+        address: { AddressLine1: '1 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Two',
+        lastName: 'Person',
+        address: { AddressLine1: '2 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Three',
+        lastName: 'Person',
+        address: { AddressLine1: '3 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Four',
+        lastName: 'Person',
+        address: { AddressLine1: '4 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+      {
+        firstName: 'Five',
+        lastName: 'Person',
+        address: { AddressLine1: '5 Street', PostTown: 'Town', Country: 'United Kingdom' },
+      },
+    ];
+
+    await new ReviewOtherClaimantsController().post(request, response);
+
     expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
       request,
       response,
