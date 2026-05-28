@@ -4,6 +4,7 @@ import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TellUsWhatYouWant } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
@@ -29,7 +30,12 @@ export default class ClaimantTellUsWhatYouWantController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_LINKED_CASES);
+    const selected = req.body?.tellUsWhatYouWant;
+    const hasCompensation = Array.isArray(selected)
+      ? selected.includes(TellUsWhatYouWant.COMPENSATION_ONLY)
+      : selected === TellUsWhatYouWant.COMPENSATION_ONLY;
+    const redirectUrl = hasCompensation ? PageUrls.CLAIMANT_COMPENSATION : PageUrls.CLAIMANT_LINKED_CASES;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

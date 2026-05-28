@@ -26,7 +26,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_LINKED_CASES when compensation only is selected', async () => {
+    it('should redirect to CLAIMANT_COMPENSATION when compensation only is selected (AC1)', async () => {
       const body = { tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY] };
       const controller = new ClaimantTellUsWhatYouWantController();
       const req = mockRequestEmpty({ body });
@@ -34,7 +34,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_LINKED_CASES);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_COMPENSATION);
     });
 
     it('should redirect to CLAIMANT_LINKED_CASES when tribunal recommendation is selected', async () => {
@@ -59,7 +59,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_LINKED_CASES);
     });
 
-    it('should redirect to CLAIMANT_LINKED_CASES when multiple options are selected', async () => {
+    it('should redirect to CLAIMANT_COMPENSATION when compensation is among multiple selections', async () => {
       const body = {
         tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
       };
@@ -69,7 +69,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_LINKED_CASES);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_COMPENSATION);
     });
   });
 });
