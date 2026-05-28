@@ -1,0 +1,14 @@
+{
+  "title": "Compensation",
+  "h1": "Compensation (optional)",
+  "label": "What compensation is the claimant seeking?",
+  "hint": "Try to set out all compensation the claimant is seeking and provide a total if possible.",
+  "amountLabel": "Enter the total compensation amount you are requesting",
+  "description": ["Try to set out all compensation the claimant is seeking and provide a total if possible."],
+  "errors": {
+    "totalCompensationAmount": {
+      "invalidCurrency": "Enter compensation in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Compensation must be £9,999,999.99 or less"
+    }
+  }
+}
