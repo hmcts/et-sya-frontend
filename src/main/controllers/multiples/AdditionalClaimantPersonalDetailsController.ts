@@ -8,18 +8,26 @@ import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
 import { AdditionalClaimant, CaseDate, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import { DateValues } from '../../definitions/dates';
+import { AdditionalClaimantDobFormFields, DateFormFields } from '../../definitions/dates';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
-import { handlePostLogic, setUserCase } from '../helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from '../helpers/CaseHelpers';
 import { returnSessionErrors } from '../helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 import { setUrlLanguage } from '../helpers/LanguageHelper';
 
 const logger = getLogger('AdditionalClaimantPersonalDetailsController');
-const MAX_ADDITIONAL_CLAIMANTS = 5;
+
+const dob_date: DateFormFields = {
+  ...AdditionalClaimantDobFormFields,
+  id: 'additionalClaimantDob',
+  parser: (body: UnknownRecord): CaseDate => {
+    const date = convertToDateObject('additionalClaimantDob', body);
+    return { day: date.day ?? '', month: date.month ?? '', year: date.year ?? '' };
+  },
+};
 
 export default class AdditionalClaimantPersonalDetailsController {
   private readonly form: Form;
@@ -60,17 +68,7 @@ export default class AdditionalClaimantPersonalDetailsController {
         classes: 'govuk-!-width-one-half',
         attributes: { maxLength: 100 },
       },
-      additionalClaimantDob: {
-        id: 'additionalClaimantDob',
-        classes: 'govuk-date-input',
-        type: 'date',
-        label: (l: AnyRecord): string => l.dobLabel,
-        labelHidden: false,
-        hint: (l: AnyRecord): string => l.dobHint,
-        values: DateValues,
-        parser: (body: UnknownRecord): CaseDate => convertToDateObject('additionalClaimantDob', body),
-        validator: (): string | void => undefined,
-      },
+      additionalClaimantDob: dob_date,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
@@ -82,7 +80,6 @@ export default class AdditionalClaimantPersonalDetailsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    const formData = this.form.getParsedBody(req.body);
     const errors = returnSessionErrors(req, this.form);
     logger.info(
       `Handling additional claimant personal details submission. Existing claimant count: ${
@@ -98,29 +95,28 @@ export default class AdditionalClaimantPersonalDetailsController {
 
     req.session.errors = [];
 
-    const claimant: AdditionalClaimant = {
-      title: formData.additionalClaimantTitle,
-      firstName: formData.additionalClaimantFirstName,
-      lastName: formData.additionalClaimantLastName,
-      email: formData.additionalClaimantEmail,
-      dob: formData.additionalClaimantDob,
-    };
-
     if (!req.session.userCase.additionalClaimants) {
       req.session.userCase.additionalClaimants = [];
     }
 
     const editIndex = req.session.userCase.currentAdditionalClaimantIndex;
-    if (
-      (editIndex === undefined || editIndex >= req.session.userCase.additionalClaimants.length) &&
-      req.session.userCase.additionalClaimants.length >= MAX_ADDITIONAL_CLAIMANTS
-    ) {
-      logger.info('Maximum additional claimant limit reached. Redirecting to review other claimants page');
-      req.session.userCase.currentAdditionalClaimantIndex = undefined;
-      return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
-    }
     const isEditingExistingClaimant =
       editIndex !== undefined && editIndex < req.session.userCase.additionalClaimants.length;
+
+    // Mirror the GET-handler guard: prevent adding a 6th claimant via direct POST
+    if (!isEditingExistingClaimant && req.session.userCase.additionalClaimants.length >= 5) {
+      return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
+    }
+
+    // Use session data already populated by setUserCase — avoids re-parsing a consumed req.body
+    const claimant: AdditionalClaimant = {
+      title: req.session.userCase.additionalClaimantTitle,
+      firstName: req.session.userCase.additionalClaimantFirstName,
+      lastName: req.session.userCase.additionalClaimantLastName,
+      email: req.session.userCase.additionalClaimantEmail,
+      dob: req.session.userCase.additionalClaimantDob,
+    };
+
     if (isEditingExistingClaimant) {
       this.setFieldsToEditAnExistingClaimant(req, editIndex, claimant);
     } else {
@@ -135,7 +131,12 @@ export default class AdditionalClaimantPersonalDetailsController {
       }. Redirecting to: ${redirectUrl}`
     );
     req.session.userCase.groupClaimsCheck = YesOrNo.NO;
-    return handlePostLogic(req, res, this.form, logger, redirectUrl, true);
+    await handleUpdateDraftCase(req, logger);
+    const { saveForLater } = req.body;
+    if (saveForLater) {
+      return res.redirect(setUrlLanguage(req, PageUrls.CLAIM_SAVED));
+    }
+    return res.redirect(setUrlLanguage(req, redirectUrl));
   };
 
   @AdditionalClaimantCheck()

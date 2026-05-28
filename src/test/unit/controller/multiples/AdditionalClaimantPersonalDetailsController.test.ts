@@ -4,7 +4,7 @@ import { PageUrls, TranslationKeys } from '../../../../main/definitions/constant
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
-jest.spyOn(CaseHelper, 'handlePostLogic').mockImplementation(() => Promise.resolve());
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('AdditionalClaimantPersonalDetailsController', () => {
   const t = {
@@ -92,7 +92,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(request.session.errors).toBeDefined();
     expect(request.session.errors.length).toBeGreaterThan(0);
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
-    expect(CaseHelper.handlePostLogic).not.toHaveBeenCalled();
+    expect(CaseHelper.handleUpdateDraftCase).not.toHaveBeenCalled();
     expect(request.session.userCase.additionalClaimantTitle).toBe('Mr');
     expect(request.session.userCase.additionalClaimantFirstName).toBe('John');
   });
@@ -122,13 +122,9 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(request.session.userCase.additionalClaimantAddressPostcode).toBeUndefined();
     expect(request.session.userCase.additionalClaimantAddressTypes).toBeUndefined();
     expect(request.session.userCase.additionalClaimantAddresses).toBeUndefined();
-    expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
-      request,
-      response,
-      expect.anything(),
-      expect.anything(),
-      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=0`,
-      true
+    expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalledWith(request, expect.anything());
+    expect(response.redirect).toHaveBeenCalledWith(
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=0`
     );
   });
 
@@ -166,14 +162,8 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(request.session.userCase.additionalClaimants[0].address.PostCode).toBe('LS1 1AA');
     expect(request.session.userCase.additionalClaimantAddress1).toBe('1 Existing Road');
     expect(request.session.userCase.additionalClaimantEnterPostcode).toBe('LS1 1AA');
-    expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
-      request,
-      response,
-      expect.anything(),
-      expect.anything(),
-      PageUrls.REVIEW_ADDITIONAL_CLAIMANTS,
-      true
-    );
+    expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalledWith(request, expect.anything());
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   });
 
   it('should not add a claimant when there are already five and should redirect to review page', async () => {
@@ -199,7 +189,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
 
     expect(request.session.userCase.additionalClaimants).toHaveLength(5);
     expect(request.session.userCase.currentAdditionalClaimantIndex).toBeUndefined();
-    expect(CaseHelper.handlePostLogic).not.toHaveBeenCalled();
+    expect(CaseHelper.handleUpdateDraftCase).not.toHaveBeenCalled();
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   });
 });

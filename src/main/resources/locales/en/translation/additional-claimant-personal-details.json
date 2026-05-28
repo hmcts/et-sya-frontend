@@ -14,6 +14,21 @@
     },
     "additionalClaimantLastName": {
       "required": "Enter the claimant's last name"
+    },
+    "additionalClaimantDob": {
+      "dayRequired": "Enter a day for your date of birth. For example, 23",
+      "monthRequired": "Enter a month for your date of birth. For example, 04",
+      "yearRequired": "Enter a year for your date of birth. For example, 1981",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 1981",
+      "dayInvalid": "Date of birth must be a real date.",
+      "monthInvalid": "Date of birth must be a real date.",
+      "yearInvalid": "Date of birth must be a real date.",
+      "invalidDate": "Date of birth must be a real date.",
+      "invalidDateInFuture": "Date entered must be in the past.",
+      "invalidDateTooFarInPast": "Date must be between 16 years and 100 years in the past.",
+      "invalidDateLessThanSixteenYearsInPast": "Date of birth invalid. Claimant must be a minimum of 16 years old"
     }
   }
 }

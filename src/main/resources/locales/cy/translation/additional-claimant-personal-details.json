@@ -14,6 +14,21 @@
     },
     "additionalClaimantLastName": {
       "required": "[W] Enter the claimant's last name"
+    },
+    "additionalClaimantDob": {
+      "dayRequired": "Rhowch ddiwrnod ar gyfer eich dyddiad geni. Er enghraifft, 23",
+      "monthRequired": "Rhowch fis ar gyfer eich dyddiad geni. Er enghraifft, 04",
+      "yearRequired": "Rhowch flwyddyn ar gyfer eich dyddiad geni. Er enghraifft, 1981",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 1981",
+      "dayInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "monthInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "yearInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "invalidDate": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "invalidDateInFuture": "Rhaid i’r dyddiad fod yn y gorffennol.",
+      "invalidDateTooFarInPast": "Rhaid i’r dyddiad fod rhwng 16 mlynedd a 100 mlynedd yn y gorffennol.",
+      "invalidDateLessThanSixteenYearsInPast": "[W] Date of birth invalid. Claimant must be a minimum of 16 years old"
     }
   }
 }

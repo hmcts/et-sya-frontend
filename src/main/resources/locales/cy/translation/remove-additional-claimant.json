@@ -1,12 +1,12 @@
 {
   "title": "[W] Are you sure you want to remove this claimant?",
   "h1": "[W] Are you sure you want to remove this claimant?",
-  "legend": "[W] Are you sure you want to remove this claimant?",
+  "legend": "[W] Are you sure you want to remove",
   "yes": "[W] Yes",
   "no": "[W] No - I do not want to remove this claimant",
   "errors": {
-    "removeOtherClaimant": {
-      "required": "[W] Tell us if you want to remove this claimant"
+    "removeAdditionalClaimant": {
+      "required": "[W] Provide an answer, tell us if you want to remove this claimant"
     }
   }
 }

@@ -24,7 +24,7 @@ export default class RemoveAdditionalClaimantController {
         classes: 'govuk-radios',
         id: 'remove-other-claimant',
         type: 'radios',
-        label: (l: AnyRecord): string => l.legend,
+        label: (l: AnyRecord): string => `${l.legend} ${l.claimantName}?`,
         labelSize: 'xl',
         labelHidden: false,
         isPageHeading: true,
@@ -71,13 +71,16 @@ export default class RemoveAdditionalClaimantController {
   @AdditionalClaimantCheck()
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    logger.info(
-      `Rendering remove other claimant page. Query index: ${(req.query?.additionalClaimant as string) || 'none'}`
-    );
+    const indexStr = req.query?.additionalClaimant as string;
+    const index = Number.parseInt(indexStr, 10);
+    logger.info(`Rendering remove other claimant page. Query index: ${indexStr || 'none'}`);
     const content = getPageContent(req, this.removeContent, [
       TranslationKeys.COMMON,
       TranslationKeys.REMOVE_ADDITIONAL_CLAIMANT,
     ]);
+    const claimant = !Number.isNaN(index) ? req.session.userCase?.additionalClaimants?.[index] : undefined;
+    const name = claimant ? [claimant.firstName, claimant.lastName].filter(Boolean).join(' ') : 'this claimant';
+    content.claimantName = name;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.REMOVE_ADDITIONAL_CLAIMANT, {
       ...content,
