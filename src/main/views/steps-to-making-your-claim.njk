@@ -33,9 +33,7 @@
           } %}
         {% elseif getContent(link.status) == "COMPLETED" %}
           {% set status = {
-            tag: {
-              text: completed
-            }
+            text: completed
           } %}
         {% elseif getContent(link.status) == "IN PROGRESS" %}
           {% set status = {
