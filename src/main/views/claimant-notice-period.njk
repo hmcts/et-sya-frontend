@@ -1,0 +1,23 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form class="form" id="main-form" method="post" action="" novalidate="true">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
+        {% include "form/fields.njk" %}
+        {% include "form/saveButtons.njk" %}
+      </form>
+    </div>
+  </div>
+{% endblock %}
