@@ -207,6 +207,7 @@ export const TranslationKeys = {
   CLAIMANT_LINKED_CASES: 'claimant-linked-cases',
   CLAIMANT_CLAIM_TYPE_PAY: 'claimant-claim-type-pay',
   CLAIMANT_COMPENSATION: 'claimant-compensation',
+  CLAIMANT_TRIBUNAL_RECOMMENDATION: 'claimant-tribunal-recommendation',
 } as const;
 
 export const PageUrls = {
@@ -398,6 +399,7 @@ export const PageUrls = {
   CLAIMANT_LINKED_CASES: '/claimant-linked-cases',
   CLAIMANT_CLAIM_TYPE_PAY: '/claimant-claim-type-pay',
   CLAIMANT_COMPENSATION: '/claimant-compensation',
+  CLAIMANT_TRIBUNAL_RECOMMENDATION: '/claimant-tribunal-recommendation',
 } as const;
 
 export const InterceptPaths = {

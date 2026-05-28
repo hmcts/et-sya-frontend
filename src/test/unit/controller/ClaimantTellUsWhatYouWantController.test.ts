@@ -37,7 +37,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_COMPENSATION);
     });
 
-    it('should redirect to CLAIMANT_LINKED_CASES when tribunal recommendation is selected', async () => {
+    it('should redirect to CLAIMANT_TRIBUNAL_RECOMMENDATION when tribunal recommendation is selected (AC1)', async () => {
       const body = { tellUsWhatYouWant: [TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION] };
       const controller = new ClaimantTellUsWhatYouWantController();
       const req = mockRequestEmpty({ body });
@@ -45,7 +45,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_LINKED_CASES);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION);
     });
 
     it('should redirect to CLAIMANT_LINKED_CASES when no option is selected', async () => {
