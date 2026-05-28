@@ -578,6 +578,7 @@ describe('Format Case Data to Frontend Model', () => {
   it('should map represented claimant email and address to claimantType', () => {
     const caseItem: CaseWithId = {
       id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       claimantRepresentedQuestion: YesOrNo.YES,
       representedClaimantEmail: 'represented@example.com',
       representedClaimantAddress1: '1 High Street',
