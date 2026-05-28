@@ -17,7 +17,9 @@ export const getRedirectUrl = (
     ? process.env.IDAM_WEB_URL_HMCTS_ACCESS ?? config.get('services.idam.hmctsAccessURL')
     : process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
-  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}`;
+  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}&scope=${encodeURIComponent(
+    'openid profile roles'
+  )}`;
 };
 
 export const getUserDetails = async (
