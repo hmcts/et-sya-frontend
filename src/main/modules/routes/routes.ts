@@ -366,6 +366,7 @@ export class Routes {
     app.get(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().get);
     app.post(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().post);
     app.get(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().get);
+    app.post(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().get);
     app.post(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_SELECT, new ClaimantWorkPostcodeSelectController().get);

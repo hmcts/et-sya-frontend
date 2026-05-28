@@ -1,6 +1,10 @@
 {
   "title": "Check the respondent details",
   "subTitle": "Respondent ",
+  "legend": "Have you completed this section?",
+  "hint": "You can change your answers later.",
+  "yes": "Yes, I've completed this section",
+  "no": "No, I'll come back to it later",
   "name": "Name",
   "address": "Address",
   "acasNum": "Acas certificate number",
@@ -14,5 +18,11 @@
   "unProvided": "Not provided",
   "change": "Change",
   "saveAndContinue": "Save and continue",
-  "saveForLater": "Save as draft"
+  "saveForLater": "Save as draft",
+  "errors": {
+    "employmentAndRespondentCheck": {
+      "required": "Tell us if you have completed this section",
+      "invalid": "You must complete the Employment and respondent details section before you can mark it as completed"
+    }
+  }
 }
