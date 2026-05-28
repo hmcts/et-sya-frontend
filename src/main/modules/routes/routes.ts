@@ -45,6 +45,7 @@ import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAver
 import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsController';
 import ClaimantClaimTypeDiscriminationController from '../../controllers/ClaimantClaimTypeDiscriminationController';
 import ClaimantClaimTypePayController from '../../controllers/ClaimantClaimTypePayController';
+import ClaimantCompensationController from '../../controllers/ClaimantCompensationController';
 import ClaimantDescribeWhatHappenedController from '../../controllers/ClaimantDescribeWhatHappenedController';
 import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
@@ -70,6 +71,7 @@ import ClaimantRespondentNameController from '../../controllers/ClaimantResponde
 import ClaimantRespondentPostcodeEnterController from '../../controllers/ClaimantRespondentPostcodeEnterController';
 import ClaimantRespondentPostcodeSelectController from '../../controllers/ClaimantRespondentPostcodeSelectController';
 import ClaimantTellUsWhatYouWantController from '../../controllers/ClaimantTellUsWhatYouWantController';
+import ClaimantTribunalRecommendationController from '../../controllers/ClaimantTribunalRecommendationController';
 import ClaimantTypeOfClaimController from '../../controllers/ClaimantTypeOfClaimController';
 import ClaimantWorkPostcodeEnterController from '../../controllers/ClaimantWorkPostcodeEnterController';
 import ClaimantWorkPostcodeSelectController from '../../controllers/ClaimantWorkPostcodeSelectController';
@@ -328,6 +330,10 @@ export class Routes {
     );
     app.get(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().get);
     app.post(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().post);
+    app.get(PageUrls.CLAIMANT_COMPENSATION, new ClaimantCompensationController().get);
+    app.post(PageUrls.CLAIMANT_COMPENSATION, new ClaimantCompensationController().post);
+    app.get(PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION, new ClaimantTribunalRecommendationController().get);
+    app.post(PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION, new ClaimantTribunalRecommendationController().post);
     app.get(PageUrls.CLAIMANT_LINKED_CASES, new ClaimantLinkedCasesController().get);
     app.post(PageUrls.CLAIMANT_LINKED_CASES, new ClaimantLinkedCasesController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
