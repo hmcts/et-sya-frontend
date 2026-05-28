@@ -81,6 +81,7 @@ export function toApiFormatCreate(
 }
 
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
+  const isRepresentedClaimant = fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES;
   return {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
@@ -95,18 +96,33 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     caseType: fromApiCaseData.case_data?.caseType,
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
-    representedClaimantFirstName:
-      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
-        ? fromApiCaseData.case_data?.claimantIndType?.claimant_first_names
-        : undefined,
-    representedClaimantLastName:
-      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
-        ? fromApiCaseData.case_data?.claimantIndType?.claimant_last_name
-        : undefined,
-    representedClaimantDateOfBirth:
-      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
-        ? parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth)
-        : undefined,
+    representedClaimantFirstName: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantIndType?.claimant_first_names
+      : undefined,
+    representedClaimantLastName: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantIndType?.claimant_last_name
+      : undefined,
+    representedClaimantDateOfBirth: isRepresentedClaimant
+      ? parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth)
+      : undefined,
+    representedClaimantEmail: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_email_address
+      : undefined,
+    representedClaimantAddress1: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1
+      : undefined,
+    representedClaimantAddress2: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2
+      : undefined,
+    representedClaimantAddressTown: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown
+      : undefined,
+    representedClaimantAddressCountry: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country
+      : undefined,
+    representedClaimantAddressPostcode: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode
+      : undefined,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
     address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
@@ -248,6 +264,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   return updateCaseBody;
 }
 export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
+  const isRepresentedClaimant = caseItem.claimantRepresentedQuestion === YesOrNo.YES;
   return {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
@@ -267,15 +284,27 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimant_title_other: isOtherTitle(caseItem.preferredTitle),
       },
       claimantType: {
-        claimant_email_address: caseItem.email,
+        claimant_email_address: isRepresentedClaimant
+          ? caseItem.representedClaimantEmail ?? caseItem.email
+          : caseItem.email,
         claimant_phone_number: caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
         claimant_addressUK: {
-          AddressLine1: caseItem.address1,
-          AddressLine2: caseItem.address2,
-          PostTown: caseItem.addressTown,
-          PostCode: caseItem.addressPostcode,
-          Country: caseItem.addressCountry,
+          AddressLine1: isRepresentedClaimant
+            ? caseItem.representedClaimantAddress1 ?? caseItem.address1
+            : caseItem.address1,
+          AddressLine2: isRepresentedClaimant
+            ? caseItem.representedClaimantAddress2 ?? caseItem.address2
+            : caseItem.address2,
+          PostTown: isRepresentedClaimant
+            ? caseItem.representedClaimantAddressTown ?? caseItem.addressTown
+            : caseItem.addressTown,
+          PostCode: isRepresentedClaimant
+            ? caseItem.representedClaimantAddressPostcode ?? caseItem.addressPostcode
+            : caseItem.addressPostcode,
+          Country: isRepresentedClaimant
+            ? caseItem.representedClaimantAddressCountry ?? caseItem.addressCountry
+            : caseItem.addressCountry,
         },
       },
       claimantOtherType: {

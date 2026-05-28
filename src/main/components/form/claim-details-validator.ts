@@ -69,6 +69,20 @@ export const validateRepresentedClaimantDetails = (userCase: Record<string, any>
   if (!userCase) {
     return false;
   }
-  const { representedClaimantAddress1, representedClaimantAddressTown, representedClaimantAddressCountry } = userCase;
-  return !!(representedClaimantAddress1 && representedClaimantAddressTown && representedClaimantAddressCountry);
+  const {
+    representedClaimantFirstName,
+    representedClaimantLastName,
+    representedClaimantAddress1,
+    representedClaimantAddressTown,
+    representedClaimantAddressCountry,
+    representedClaimantEmail,
+  } = userCase;
+  return !!(
+    representedClaimantFirstName &&
+    representedClaimantLastName &&
+    representedClaimantAddress1 &&
+    representedClaimantAddressTown &&
+    representedClaimantAddressCountry &&
+    representedClaimantEmail
+  );
 };
