@@ -88,7 +88,7 @@ export default class ClaimantPlaceOfWorkController {
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const workAddressTypes = req.session.userCase.workAddressTypes;
-    if (workAddressTypes !== undefined) {
+    if (workAddressTypes !== undefined && req.session.userCase.workAddresses) {
       fillWorkAddressFields(workAddressTypes, req.session.userCase);
     }
     const content = getPageContent(req, this.formContent, [
