@@ -73,6 +73,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const repAddressPostcode = req.session.userCase.repAddressPostcode;
       const representativePhoneNumber = req.session.userCase.representativePhoneNumber;
       const representativeDetailsCheck = req.session.userCase.representativeDetailsCheck;
+      const claimantWrittenContract = req.session.userCase.claimantWrittenContract;
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       req.session.userCase.addressEnterPostcode ??= addressEnterPostcode;
@@ -96,6 +97,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.repAddressPostcode ??= repAddressPostcode;
       req.session.userCase.representativePhoneNumber ??= representativePhoneNumber;
       req.session.userCase.representativeDetailsCheck ??= representativeDetailsCheck;
+      req.session.userCase.claimantWrittenContract ??= claimantWrittenContract;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
