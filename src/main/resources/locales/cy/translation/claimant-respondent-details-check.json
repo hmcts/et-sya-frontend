@@ -1,6 +1,10 @@
 {
   "title": "<place-holder>",
   "subTitle": "<place-holder>",
+  "legend": "<place-holder>",
+  "hint": "<place-holder>",
+  "yes": "<place-holder>",
+  "no": "<place-holder>",
   "name": "<place-holder>",
   "address": "<place-holder>",
   "acasNum": "<place-holder>",
@@ -14,5 +18,11 @@
   "unProvided": "<place-holder>",
   "change": "<place-holder>",
   "saveAndContinue": "<place-holder>",
-  "saveForLater": "<place-holder>"
+  "saveForLater": "<place-holder>",
+  "errors": {
+    "employmentAndRespondentCheck": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
 }
