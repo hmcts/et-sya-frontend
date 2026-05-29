@@ -429,6 +429,8 @@ export const ErrorPages = {
   NOT_FOUND: '/not-found',
 };
 
+export const UNASSIGNED_OFFICE_EMAIL = 'employmentJurisdictionalSupportTeamInbox@justice.gov.uk';
+
 export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',

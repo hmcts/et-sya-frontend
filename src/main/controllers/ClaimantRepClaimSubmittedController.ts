@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys, UNASSIGNED_OFFICE_EMAIL } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -60,7 +60,7 @@ function returnManagingOffice(managingOffice: string, pageTranslations: AnyRecor
 
 function returnEmailText(tribunalCorrespondenceEmail: string, managingOffice: string): string {
   if (managingOffice === 'Unassigned') {
-    return 'employmentJurisdictionalSupportTeamInbox@justice.gov.uk';
+    return UNASSIGNED_OFFICE_EMAIL;
   }
   return tribunalCorrespondenceEmail;
 }
