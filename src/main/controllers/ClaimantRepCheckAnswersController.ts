@@ -23,9 +23,9 @@ export default class ClaimantRepCheckAnswersController {
     const userCase = req.session.userCase;
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CLAIMANT_REP_CHECK_ANSWERS, { returnObjects: true }),
-      ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.CLAIMANT_REP_CHECK_ANSWERS, { returnObjects: true }),
     };
 
     const respondents = userCase.respondents ?? [];
