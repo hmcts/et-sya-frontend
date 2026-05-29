@@ -166,7 +166,10 @@ export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery 
 };
 
 export const isReturnUrlIsCheckAnswers = (req: AppRequest): boolean => {
-  return req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS);
+  return (
+    req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS) ||
+    req.session.returnUrl?.includes(PageUrls.CLAIMANT_REP_CHECK_ANSWERS)
+  );
 };
 
 export const getClaimStepsUrl = (req: AppRequest): string => {

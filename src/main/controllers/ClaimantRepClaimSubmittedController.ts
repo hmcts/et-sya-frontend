@@ -6,41 +6,44 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-export default class ClaimSubmittedController {
+export default class ClaimantRepClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
     if (req.session?.userCase) {
       req.session.submittedCase = req.session.userCase;
       req.session.userCase = null;
     }
+
     const { submittedCase } = req.session;
     const lang =
       req.cookies.i18next === TranslationKeys.WELSH || req.url?.includes('?lng=cy') ? TranslationKeys.WELSH : 'en-GB';
+
+    res.cookie('i18next', lang, {
+      secure: true,
+    });
+
     const pageTranslations: AnyRecord = {
-      ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
+      ...req.t(TranslationKeys.CLAIMANT_REP_CLAIM_SUBMITTED, { returnObjects: true }),
     };
 
-    // Set the i18next cookie with HttpOnly flag
-    res.cookie('i18next', lang, {
-      secure: true, // Ensures the cookie is only sent over HTTPS
-    });
-    res.render(TranslationKeys.CLAIM_SUBMITTED, {
+    res.render(TranslationKeys.CLAIMANT_REP_CLAIM_SUBMITTED, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
+      ...pageTranslations,
       hideContactUs: true,
-      submissionReferenceText: submittedCase.id,
+      submissionReferenceText: submittedCase?.id,
       claimSubmittedText: formatClaimSubmittedDate(new Date(), lang),
-      attachmentsText: formatAttachmentsText(submittedCase.claimSummaryFile?.document_filename, pageTranslations),
-      downloadLink: '/getCaseDocument/' + submittedCase.et1SubmittedForm?.id,
-      tribunalOfficeText: returnManagingOffice(submittedCase.managingOffice, pageTranslations),
-      emailText: returnEmailText(submittedCase.tribunalCorrespondenceEmail, submittedCase.managingOffice),
-      telephoneText: submittedCase.tribunalCorrespondenceTelephone,
+      attachmentsText: formatAttachmentsText(submittedCase?.claimSummaryFile?.document_filename, pageTranslations),
+      downloadLink: '/getCaseDocument/' + submittedCase?.et1SubmittedForm?.id,
+      tribunalOfficeText: returnManagingOffice(submittedCase?.managingOffice, pageTranslations),
+      emailText: returnEmailText(submittedCase?.tribunalCorrespondenceEmail, submittedCase?.managingOffice),
+      telephoneText: submittedCase?.tribunalCorrespondenceTelephone,
       PageUrls,
-      redirectUrl: `/citizen-hub/${submittedCase.id}${getLanguageParam(req.url)}`,
+      languageParam: getLanguageParam(req.url),
+      redirectUrl: PageUrls.CLAIMANT_APPLICATIONS,
     });
   }
 }
 
-function formatClaimSubmittedDate(date: Date, lang: string) {
+function formatClaimSubmittedDate(date: Date, lang: string): string {
   return new Date(date).toLocaleDateString(lang, {
     year: 'numeric',
     month: 'long',
@@ -62,7 +65,7 @@ function returnEmailText(tribunalCorrespondenceEmail: string, managingOffice: st
   return tribunalCorrespondenceEmail;
 }
 
-const formatAttachmentsText = (fileName: string, translations: AnyRecord) => {
+const formatAttachmentsText = (fileName: string, translations: AnyRecord): string => {
   if (fileName === undefined || fileName.length < 1) {
     return translations.none;
   }

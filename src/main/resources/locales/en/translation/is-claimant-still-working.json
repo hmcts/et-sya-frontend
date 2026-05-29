@@ -1,6 +1,6 @@
 {
-  "title": "Is the claimant still working for the organisation or person you're making a claim against?",
-  "legend": "Is the claimant still working for the organisation or person you're making a claim against?",
+  "title": "Is the claimant still working for the organisation or person they're making a claim against?",
+  "legend": "Is the claimant still working for the organisation or person they're making a claim against? (optional)",
   "optionText1": "Yes, they're still working for the respondent",
   "optionText2": "Yes, they're working a notice period for the respondent",
   "optionText3": "No, they're no longer working for the respondent",
