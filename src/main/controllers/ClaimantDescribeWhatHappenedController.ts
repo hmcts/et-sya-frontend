@@ -74,7 +74,8 @@ export default class ClaimantDescribeWhatHappenedController {
 
     if (claimSummaryError) {
       req.session.errors.push(claimSummaryError);
-      return res.redirect(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
+      req.session.save(() => res.redirect(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED));
+      return;
     }
 
     if (req.file) {

@@ -70,6 +70,17 @@ describe('ClaimantNoticeTypeController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_AVERAGE_WEEKLY_HOURS);
     });
 
+    it('should handle clearSelection query param by clearing noticePeriodUnit', () => {
+      const controller = new ClaimantNoticeTypeController();
+      const response = mockResponse();
+      const request = mockRequest({ t, userCase: { noticePeriodUnit: 'Weeks' as any } });
+      request.query = { redirect: 'clearSelection' };
+
+      controller.get(request, response);
+
+      expect(request.session.userCase.noticePeriodUnit).toBeUndefined();
+    });
+
     it('should save noticePeriodUnit to session userCase', async () => {
       const body = { noticePeriodUnit: WeeksOrMonths.WEEKS };
       const controller = new ClaimantNoticeTypeController();

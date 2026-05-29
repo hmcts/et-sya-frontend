@@ -38,7 +38,7 @@ export default class ClaimantRepClaimSubmittedController {
       telephoneText: submittedCase?.tribunalCorrespondenceTelephone,
       PageUrls,
       languageParam: getLanguageParam(req.url),
-      redirectUrl: PageUrls.CLAIMANT_APPLICATIONS,
+      redirectUrl: `/claimant-rep-hub/${submittedCase?.id}${getLanguageParam(req.url)}`,
     });
   }
 }

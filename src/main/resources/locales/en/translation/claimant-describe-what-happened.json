@@ -1,10 +1,10 @@
 {
-  "title": "Describe your claim",
-  "h1": "Describe your claim",
-  "label": "Describe your claim",
-  "p1": "This is your opportunity to explain why you are making a claim to an employment tribunal.",
-  "p2": "It's important you focus on setting out what happened to you and explain, as far as you can, why you think what happened was unlawful.",
-  "p3": "Your claim will be sent to the respondents who will have a chance to reply through the tribunal.",
+  "title": "Describe the claim",
+  "h1": "Describe the claim",
+  "label": "Describe the claim",
+  "p1": "This is an opportunity to explain why the claimant is making a claim to an employment tribunal.",
+  "p2": "It's important that you focus on setting out what happened to the claimant and explain, as far as you can, why the claimant thinks what happened was unlawful.",
+  "p3": "The claim will be sent to the respondents who will have a chance to reply through the tribunal.",
   "p4": "The tribunal will then decide (usually via a hearing) whether the respondents have acted unlawfully.",
   "insetText": "We do not need detailed evidence, such as copies of emails, letters or other documents at this stage. Keep hold of these documents in case they are needed. You may need to bring them to a hearing.",
   "collapsibleSection1": {

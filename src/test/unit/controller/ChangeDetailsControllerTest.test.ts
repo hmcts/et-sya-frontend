@@ -49,6 +49,21 @@ describe('Change Details Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.DOB_DETAILS + languages.ENGLISH_URL_PARAMETER);
   });
 
+  it('should redirect to the correct page and set returnUrl to CLAIMANT_REP_CHECK_ANSWERS for rep-answers', () => {
+    const controller = new ChangeDetailsController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.url = PageUrls.DOB_DETAILS + InterceptPaths.REP_ANSWERS_CHANGE;
+    request.query = {
+      redirect: 'rep-answers',
+    };
+    controller.get(request, response);
+    expect(request.session.returnUrl).toStrictEqual(
+      PageUrls.CLAIMANT_REP_CHECK_ANSWERS + languages.ENGLISH_URL_PARAMETER
+    );
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.DOB_DETAILS + languages.ENGLISH_URL_PARAMETER);
+  });
+
   it('should redirect to Error page if invalid query param passed', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
