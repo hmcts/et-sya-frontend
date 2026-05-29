@@ -1,0 +1,93 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+      <p class="govuk-body govuk-!-margin-bottom-8">{{ description }}</p>
+    </div>
+  </div>
+
+  <h2 class="govuk-heading-l">{{ applicationDetails.header }}</h2>
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        {{ applicationDetails.typeOfClaim }}
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <ul class="govuk-list">
+          {% for item in userCase.typeOfClaim %}
+            <li>{{ getContent(claimTypes[item]) }}</li>
+          {% endfor %}
+        </ul>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="{{ PageUrls.CLAIMANT_TYPE_OF_CLAIM }}{{ InterceptPaths.REP_ANSWERS_CHANGE }}{{ languageParam }}">
+          {{ change }}
+          <span class="govuk-visually-hidden">{{ applicationDetails.typeOfClaim }}</span>
+        </a>
+      </dd>
+    </div>
+  </dl>
+
+  <h2 class="govuk-heading-l">{{ repDetails.header }}</h2>
+  {{ govukSummaryList({
+    rows: representativeDetails
+  }) }}
+
+  <h2 class="govuk-heading-l">{{ claimantDetails.header }}</h2>
+  {{ govukSummaryList({
+    rows: claimantPersonalDetails
+  }) }}
+
+  {% for respondent in respondents %}
+    <h2 class="govuk-heading-l">{{ respondentDetails.header }} {{ loop.index }}</h2>
+    {{ govukSummaryList({
+      rows: getClaimantRespondentSection(respondent, translations)
+    }) }}
+  {% endfor %}
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="{{ PageUrls.CLAIMANT_RESPONDENT_NAME + languageParam }}">
+      {{ addAnotherRespondent }}
+    </a>
+  </p>
+
+  <h2 class="govuk-heading-l">{{ claimDetails.header }}</h2>
+  {{ govukSummaryList({
+    rows: claimDetailsRows
+  }) }}
+
+  <div class="govuk-form-group">
+    {{ govukButton({
+      text: submitBtn,
+      classes: 'govuk-!-margin-right-2',
+      type: "submit",
+      href: InterceptPaths.SUBMIT_REP_CASE + languageParam,
+      preventDoubleClick: true,
+      attributes: {
+        id: 'main-form-submit'
+      }
+    }) }}
+
+    {{ govukButton({
+      text: saveForLater,
+      classes: 'govuk-button--secondary',
+      preventDoubleClick: true,
+      name: 'saveForLater',
+      href: PageUrls.CLAIM_SAVED + languageParam,
+      value: true,
+      attributes: {
+        id: 'main-form-save-for-later'
+      }
+    }) }}
+  </div>
+{% endblock %}
