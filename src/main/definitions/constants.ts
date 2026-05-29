@@ -163,6 +163,9 @@ export const TranslationKeys = {
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
 
   // non-hmcts claimant rep
+  CLAIMANT_REP_HUB: 'claimant-rep-hub',
+  CLAIMANT_REP_CHECK_ANSWERS: 'claimant-rep-check-your-answers',
+  CLAIMANT_REP_CLAIM_SUBMITTED: 'claimant-rep-claim-submitted',
   REPRESENTATIVE_DETAILS: 'representative-details',
   REPRESENTATIVE_POSTCODE_ENTER: 'representative-postcode-enter',
   REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
@@ -400,13 +403,18 @@ export const PageUrls = {
   CLAIMANT_CLAIM_TYPE_PAY: '/claimant-claim-type-pay',
   CLAIMANT_COMPENSATION: '/claimant-compensation',
   CLAIMANT_TRIBUNAL_RECOMMENDATION: '/claimant-tribunal-recommendation',
+  CLAIMANT_REP_HUB: '/claimant-rep-hub/:caseId',
+  CLAIMANT_REP_CHECK_ANSWERS: '/claimant-rep-check-your-answers',
+  CLAIMANT_REP_CLAIM_SUBMITTED: '/claimant-rep-claim-submitted',
 } as const;
 
 export const InterceptPaths = {
   CHANGE_DETAILS: '*/change',
   ANSWERS_CHANGE: '/change?redirect=answers',
+  REP_ANSWERS_CHANGE: '/change?redirect=rep-answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  SUBMIT_REP_CASE: '/submitRepCase',
   REMOVE_FILE: '/remove-uploaded-file',
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',

@@ -64,6 +64,9 @@ import ClaimantPastNoticeTypeController from '../../controllers/ClaimantPastNoti
 import ClaimantPayController from '../../controllers/ClaimantPayController';
 import ClaimantPensionController from '../../controllers/ClaimantPensionController';
 import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWorkController';
+import ClaimantRepCheckAnswersController from '../../controllers/ClaimantRepCheckAnswersController';
+import ClaimantRepClaimSubmittedController from '../../controllers/ClaimantRepClaimSubmittedController';
+import ClaimantRepHubController from '../../controllers/ClaimantRepHubController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
 import ClaimantRespondentAddressDetailsController from '../../controllers/ClaimantRespondentAddressDetailsController';
 import ClaimantRespondentDetailsCheckController from '../../controllers/ClaimantRespondentDetailsCheckController';
@@ -167,6 +170,7 @@ import StoredToSubmitResponseController from '../../controllers/StoredToSubmitRe
 import StoredToSubmitTribunalController from '../../controllers/StoredToSubmitTribunalController';
 import SubmitBundlesHearingDocsCYAController from '../../controllers/SubmitBundlesHearingDocsCYAController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitRepCaseController from '../../controllers/SubmitRepCaseController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
 import TelNumberController from '../../controllers/TelNumberController';
@@ -613,5 +617,9 @@ export class Routes {
     app.post(PageUrls.REPRESENTATIVE_COMMS_PREFERENCE, new RepresentativeCommsPrefController().post);
     app.get(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().get);
     app.post(PageUrls.REPRESENTATIVE_DETAILS_CHECK, new RepresentativeDetailsCheckController().post);
+    app.get(PageUrls.CLAIMANT_REP_HUB, new ClaimantRepHubController().get);
+    app.get(PageUrls.CLAIMANT_REP_CHECK_ANSWERS, new ClaimantRepCheckAnswersController().get);
+    app.get(PageUrls.CLAIMANT_REP_CLAIM_SUBMITTED, new ClaimantRepClaimSubmittedController().get);
+    app.get(InterceptPaths.SUBMIT_REP_CASE, new SubmitRepCaseController().get);
   }
 }
