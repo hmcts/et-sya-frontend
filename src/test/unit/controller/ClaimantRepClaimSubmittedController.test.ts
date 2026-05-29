@@ -86,7 +86,7 @@ describe('ClaimantRepClaimSubmittedController', () => {
     const request = mockRequest({ t });
     request.session.userCase = null;
     request.session.submittedCase = { id: 'x', claimSummaryFile: undefined } as any;
-    (request.t as jest.Mock).mockReturnValue({ none: 'None' });
+    (request.t as unknown as jest.Mock).mockReturnValue({ none: 'None' });
 
     controller.get(request, response);
 

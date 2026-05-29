@@ -13,7 +13,7 @@ import {
   Sex,
   YesOrNo,
 } from '../../../../main/definitions/case';
-import { CaseState } from '../../../../main/definitions/definition';
+import { CaseState, ClaimTypeDiscrimination, ClaimTypePay } from '../../../../main/definitions/definition';
 import et1DetailsJson from '../../../../main/resources/locales/en/translation/et1-details.json';
 
 const translations = {
@@ -223,13 +223,17 @@ describe('ClaimantRepAnswersHelper', () => {
 
   describe('getClaimantClaimDetails', () => {
     it('should include discrimination row when typeOfClaim includes discrimination', () => {
-      const userCase = { ...baseCase, typeOfClaim: ['discrimination'], claimTypeDiscrimination: ['Age'] };
+      const userCase = {
+        ...baseCase,
+        typeOfClaim: ['discrimination'],
+        claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+      };
       const rows = getClaimantClaimDetails(userCase, translations);
       expect(rows.some(r => r.key.text === 'What type of discrimination claim are you making?')).toBe(true);
     });
 
     it('should include pay row when typeOfClaim includes payRelated', () => {
-      const userCase = { ...baseCase, typeOfClaim: ['payRelated'], claimTypePay: ['Arrears'] };
+      const userCase = { ...baseCase, typeOfClaim: ['payRelated'], claimTypePay: [ClaimTypePay.ARREARS] };
       const rows = getClaimantClaimDetails(userCase, translations);
       expect(rows.some(r => r.key.text === 'What type of pay claim are you making?')).toBe(true);
     });
