@@ -65,6 +65,16 @@ const getReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord)
   }
 };
 
+const getLinkedCasesAnswer = (linkedCases: YesOrNo, translations: AnyRecord): string => {
+  if (linkedCases === YesOrNo.YES) {
+    return translations.doYesOrNo.yes;
+  }
+  if (linkedCases === YesOrNo.NO) {
+    return translations.doYesOrNo.no;
+  }
+  return translations.notProvided;
+};
+
 const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.claimantSex) {
     case Sex.MALE:
@@ -349,11 +359,7 @@ export const getClaimantClaimDetails = (userCase: CaseWithId, translations: AnyR
     ),
     addSummaryRow(
       translations.claimDetails.linkedCases,
-      userCase.linkedCases === YesOrNo.YES
-        ? translations.doYesOrNo.yes
-        : userCase.linkedCases === YesOrNo.NO
-        ? translations.doYesOrNo.no
-        : translations.notProvided,
+      getLinkedCasesAnswer(userCase.linkedCases, translations),
       createChangeAction(
         PageUrls.CLAIMANT_LINKED_CASES + InterceptPaths.REP_ANSWERS_CHANGE,
         translations.change,

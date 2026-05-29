@@ -96,8 +96,8 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   const claimTypesCheckbox = formData.typeOfClaim;
   const otherClaimTextarea = formData.otherClaim;
 
-  const isRegularOtherSelected = (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims');
-  const isClaimantOtherSelected = (claimTypesCheckbox as string[])?.includes('other');
+  const isRegularOtherSelected = claimTypesCheckbox?.includes('otherTypesOfClaims');
+  const isClaimantOtherSelected = claimTypesCheckbox?.includes('other');
 
   if (isRegularOtherSelected || isClaimantOtherSelected) {
     if (!otherClaimTextarea || otherClaimTextarea.trim().length === 0) {

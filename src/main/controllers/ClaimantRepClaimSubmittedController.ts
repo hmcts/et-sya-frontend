@@ -8,7 +8,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ClaimantRepClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
-    if (req.session && req.session.userCase) {
+    if (req.session?.userCase) {
       req.session.submittedCase = req.session.userCase;
       req.session.userCase = null;
     }

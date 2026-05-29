@@ -14,7 +14,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ClaimantRepCheckAnswersController {
   public get = (req: AppRequest, res: Response): void => {
-    if (!req.session || !req.session.userCase) {
+    if (!req.session?.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
