@@ -1,8 +1,21 @@
 {
   "title": "<place-holder>",
   "h1": "<place-holder>",
+  "header": "<place-holder>",
   "caseNumber": "<place-holder>",
-  "claimant": "<place-holder>",
-  "respondent": "<place-holder>",
+  "iWantTo": "<place-holder>",
+  "contactTribunalMyCase": "<place-holder>",
+  "findLegalAdvice": "<place-holder>",
+  "appointLegalRepresentative": "<place-holder>",
+  "sectionAboutYou": "<place-holder>",
+  "personalDetails": "<place-holder>",
+  "section1": "<place-holder>",
+  "section2": "<place-holder>",
+  "section3": "<place-holder>",
+  "section4": "<place-holder>",
+  "section5": "<place-holder>",
+  "section6": "<place-holder>",
+  "section7": "<place-holder>",
+  "viewClaimantContactDetails": "<place-holder>",
   "returnToApplications": "<place-holder>"
 }
