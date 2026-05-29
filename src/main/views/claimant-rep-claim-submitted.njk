@@ -31,12 +31,12 @@
     {{ govukSummaryList({
       rows: [
         { key: { text: submissionReference }, value: { text: submissionReferenceText } },
-        { key: { text: claimSubmitted }, value: { text: claimSubmittedText | safe } },
+        { key: { text: claimSubmitted }, value: { text: claimSubmittedText } },
         {
-          key: { text: downloadClaim | safe },
-          value: { html: '<a href="' + downloadLink + '" class="govuk-link">' + downloadBtnText + '</a>' | safe }
+          key: { text: downloadClaim },
+          value: { html: '<a href="' + downloadLink + '" class="govuk-link">' + downloadBtnText + '</a>' }
         },
-        { key: { text: attachments }, value: { text: attachmentsText | safe } }
+        { key: { text: attachments }, value: { text: attachmentsText } }
       ]
     }) }}
 
@@ -71,7 +71,8 @@
     </ul>
 
     <p class="govuk-body">
-      {{ contactAppend | safe }}
+      {{ contactAppend }}
+      <a href="https://www.gov.uk/call-charges" class="govuk-link">{{ callChargesLinkText }}</a>
     </p>
 
     <div class="govuk-button-group">
