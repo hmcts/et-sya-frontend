@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
@@ -13,7 +14,7 @@ import {
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ClaimantRepCheckAnswersController {
- @CaseStateCheck()
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     if (!req.session?.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
@@ -42,6 +43,7 @@ export default class ClaimantRepCheckAnswersController {
       respondents,
       getClaimantRespondentSection,
       claimDetailsRows: getClaimantClaimDetails(userCase, translations),
+      errors: req.session.errors,
     });
   };
 }

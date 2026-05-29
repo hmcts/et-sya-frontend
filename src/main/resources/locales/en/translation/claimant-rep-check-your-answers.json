@@ -44,5 +44,6 @@
     "linkedCases": "Linked cases"
   },
   "submitBtn": "Submit",
-  "addAnotherRespondent": "Add another respondent"
+  "addAnotherRespondent": "Add another respondent",
+  "submitError": "Sorry, we're having technical problems processing your application. Please try again in a few minutes."
 }

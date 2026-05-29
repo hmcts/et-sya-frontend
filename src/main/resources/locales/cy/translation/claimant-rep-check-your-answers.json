@@ -44,5 +44,6 @@
     "linkedCases": "<place-holder>"
   },
   "submitBtn": "<place-holder>",
-  "addAnotherRespondent": "<place-holder>"
+  "addAnotherRespondent": "<place-holder>",
+  "submitError": "<place-holder>"
 }
