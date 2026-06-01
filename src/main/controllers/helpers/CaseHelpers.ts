@@ -55,14 +55,17 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
       const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
       const representativeEnterPostcode = req.session.userCase.representativeEnterPostcode;
+      const representedClaimantEnterPostcode = req.session.userCase.representedClaimantEnterPostcode;
       const addressAddresses = req.session.userCase.addressAddresses;
       const workAddresses = req.session.userCase.workAddresses;
       const respondentAddresses = req.session.userCase.respondentAddresses;
       const representativeAddresses = req.session.userCase.representativeAddresses;
+      const representedClaimantAddresses = req.session.userCase.representedClaimantAddresses;
       const workAddressTypes = req.session.userCase.workAddressTypes;
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
       const representativeAddressTypes = req.session.userCase.representativeAddressTypes;
+      const representedClaimantAddressTypes = req.session.userCase.representedClaimantAddressTypes;
       const representativeType = req.session.userCase.representativeType;
       const representativeOrgName = req.session.userCase.representativeOrgName;
       const representativeName = req.session.userCase.representativeName;
@@ -73,20 +76,33 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const repAddressPostcode = req.session.userCase.repAddressPostcode;
       const representativePhoneNumber = req.session.userCase.representativePhoneNumber;
       const representativeDetailsCheck = req.session.userCase.representativeDetailsCheck;
+      const representedClaimantFirstName = req.session.userCase.representedClaimantFirstName;
+      const representedClaimantLastName = req.session.userCase.representedClaimantLastName;
+      const representedClaimantDateOfBirth = req.session.userCase.representedClaimantDateOfBirth;
+      const representedClaimantAddress1 = req.session.userCase.representedClaimantAddress1;
+      const representedClaimantAddress2 = req.session.userCase.representedClaimantAddress2;
+      const representedClaimantAddressTown = req.session.userCase.representedClaimantAddressTown;
+      const representedClaimantAddressCountry = req.session.userCase.representedClaimantAddressCountry;
+      const representedClaimantAddressPostcode = req.session.userCase.representedClaimantAddressPostcode;
+      const representedClaimantEmail = req.session.userCase.representedClaimantEmail;
+      const representedClaimantDetailsCheck = req.session.userCase.representedClaimantDetailsCheck;
       const claimantWrittenContract = req.session.userCase.claimantWrittenContract;
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       req.session.userCase.addressEnterPostcode ??= addressEnterPostcode;
       req.session.userCase.respondentEnterPostcode ??= respondentEnterPostcode;
       req.session.userCase.representativeEnterPostcode ??= representativeEnterPostcode;
+      req.session.userCase.representedClaimantEnterPostcode ??= representedClaimantEnterPostcode;
       req.session.userCase.addressAddresses = addressAddresses;
       req.session.userCase.workAddresses = workAddresses;
       req.session.userCase.respondentAddresses = respondentAddresses;
       req.session.userCase.representativeAddresses = representativeAddresses;
+      req.session.userCase.representedClaimantAddresses = representedClaimantAddresses;
       req.session.userCase.workAddressTypes = workAddressTypes;
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
       req.session.userCase.representativeAddressTypes = representativeAddressTypes;
+      req.session.userCase.representedClaimantAddressTypes = representedClaimantAddressTypes;
       req.session.userCase.representativeType ??= representativeType;
       req.session.userCase.representativeOrgName ??= representativeOrgName;
       req.session.userCase.representativeName ??= representativeName;
@@ -97,6 +113,19 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.repAddressPostcode ??= repAddressPostcode;
       req.session.userCase.representativePhoneNumber ??= representativePhoneNumber;
       req.session.userCase.representativeDetailsCheck ??= representativeDetailsCheck;
+
+      req.session.userCase.representedClaimantFirstName ??= representedClaimantFirstName;
+      req.session.userCase.representedClaimantLastName ??= representedClaimantLastName;
+      req.session.userCase.representedClaimantDateOfBirth ??= representedClaimantDateOfBirth;
+
+      req.session.userCase.representedClaimantAddress1 ??= representedClaimantAddress1;
+      req.session.userCase.representedClaimantAddress2 ??= representedClaimantAddress2;
+      req.session.userCase.representedClaimantAddressTown ??= representedClaimantAddressTown;
+      req.session.userCase.representedClaimantAddressCountry ??= representedClaimantAddressCountry;
+      req.session.userCase.representedClaimantAddressPostcode ??= representedClaimantAddressPostcode;
+      req.session.userCase.representedClaimantEmail ??= representedClaimantEmail;
+      req.session.userCase.representedClaimantDetailsCheck ??= representedClaimantDetailsCheck;
+
       req.session.userCase.claimantWrittenContract ??= claimantWrittenContract;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
@@ -203,6 +232,13 @@ export const addResponseSendNotification = async (req: AppRequest, logger: Logge
     logger.error(error.message);
     throw error;
   }
+};
+
+export const getRepresentedClaimantNameForStatus = (userCase?: CaseWithId): string | undefined => {
+  if (userCase?.representedClaimantFirstName && userCase?.representedClaimantLastName) {
+    return `${userCase.representedClaimantFirstName} ${userCase.representedClaimantLastName}`;
+  }
+  return userCase?.representedClaimantName;
 };
 
 export const getSectionStatus = (

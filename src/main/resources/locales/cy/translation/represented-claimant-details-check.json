@@ -1,0 +1,14 @@
+{
+  "title": "<place-holder>",
+  "heading": "<place-holder>",
+  "legend": "<place-holder>",
+  "yes": "<place-holder>",
+  "no": "<place-holder>",
+  "hint": "<place-holder>",
+  "errors": {
+    "representedClaimantDetailsCheck": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
+}

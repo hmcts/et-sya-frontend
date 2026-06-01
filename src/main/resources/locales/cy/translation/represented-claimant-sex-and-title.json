@@ -1,0 +1,16 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "male": "<place-holder>",
+  "female": "<place-holder>",
+  "sex": "<place-holder>",
+  "preferNotToSay": "<place-holder>",
+  "preferredTitle": "<place-holder>",
+  "errors": {
+    "preferredTitle": {
+      "required": "<place-holder>",
+      "lengthError": "<place-holder>",
+      "numberError": "<place-holder>"
+    }
+  }
+}

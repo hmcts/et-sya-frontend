@@ -1,0 +1,17 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "p1": "<place-holder>",
+  "representedClaimantFirstName": "<place-holder>",
+  "representedClaimantLastName": "<place-holder>",
+  "errors": {
+    "representedClaimantFirstName": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    },
+    "representedClaimantLastName": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
+}
