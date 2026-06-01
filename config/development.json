@@ -4,6 +4,7 @@
     "idam": {
       "clientID": "et-sya",
       "authorizationURL": "http://localhost:5062/login",
+      "hmctsAccessURL": "http://localhost:5062/o/authorize",
       "clientSecret": "test1234",
       "tokenURL": "http://localhost:5062/o/token"
     },
