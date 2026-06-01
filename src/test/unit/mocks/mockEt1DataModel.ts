@@ -126,6 +126,7 @@ export const mockEt1DataModelUpdate = {
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
+      groupClaimsCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
     },
     claimantWorkAddress: {

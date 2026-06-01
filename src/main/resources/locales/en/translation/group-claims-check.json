@@ -1,0 +1,18 @@
+{
+  "title": "Is this section completed?",
+  "heading": "Have you completed this section?",
+  "yes": "Yes, I've completed this section",
+  "no": "No, I'll come back to it later",
+  "p": "You can change your answers later.",
+  "errors": {
+    "groupClaimsCheck": {
+      "required": "Tell us if you have completed this section",
+      "invalid": "You must complete the Group claims section before you can mark it as completed"
+    },
+    "hiddenErrorField": {
+      "nameRequired": "First name and last name are required for an additional claimant",
+      "additionalClaimantRequired": "A minimum of one additional claimant is required for a group claim",
+      "addressRequired": "The address is required for an additional claimant"
+    }
+  }
+}

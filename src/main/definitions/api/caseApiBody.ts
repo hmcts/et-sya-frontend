@@ -1,4 +1,5 @@
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
+import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -31,6 +32,9 @@ interface CaseDataApiBody {
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
   claimantTse?: ClaimantTse;
+  leadClaimant?: string;
+  additionalClaimants?: AdditionalClaimantRequestBody[];
+  addClaimantMethod?: string;
 }
 
 export interface CreateCaseBody {
@@ -46,5 +50,10 @@ export interface UpdateCaseBody {
 
 export interface RespondentRequestBody {
   value: RespondentType;
+  id?: string;
+}
+
+export interface AdditionalClaimantRequestBody {
+  value: AdditionalClaimantType;
   id?: string;
 }

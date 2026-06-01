@@ -1,0 +1,30 @@
+{
+  "title": "Review additional claimants",
+  "h1": "Review additional claimants",
+  "p1": "We do not need any other details about the additional claimants or their claims.",
+  "p2": "You can add up to 5 people. If you need to add more than 5 claimants you can go back and use the ",
+  "p3": "If you need to add more than 5 claimants, you will need to use the ",
+  "spreadsheetOptionLink": "spreadsheet upload option.",
+  "additionalClaimant": "Additional claimant",
+  "nameLabel": "Name",
+  "dobLabel": "Date of birth",
+  "addressLabel": "Address",
+  "emailLabel": "Email address",
+  "notProvided": "Not provided",
+  "change": "Change",
+  "removeClaimant": "Remove claimant",
+  "legend": "Do you want to add another claimant?",
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel",
+  "errors": {
+    "addAdditionalClaimant": {
+      "required": "You have not selected a value. You need to select an answer before continuing."
+    },
+    "hiddenErrorField": {
+      "nameRequired": "First name and last name are required for an additional claimant",
+      "additionalClaimantRequired": "A minimum of one additional claimant is required for a group claim",
+      "addressRequired": "The address is required for an additional claimant"
+    }
+  }
+}

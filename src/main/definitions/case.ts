@@ -1,6 +1,7 @@
 import { OrganisationPolicy } from './OrganisationPolicy';
 import { HearingModel } from './api/caseApiResponse';
 import { ClaimantRepresentative } from './complexTypes/ClaimantRepresentative';
+import { AddressUK } from './complexTypes/addressUK';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { Et1Address } from './complexTypes/et1Address';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
@@ -31,6 +32,15 @@ export interface AddressType {
   selected?: boolean;
   value?: number;
   label?: string;
+}
+
+export interface AdditionalClaimant {
+  title?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  dob?: CaseDate;
+  address?: AddressUK;
 }
 
 export interface Respondent {
@@ -126,6 +136,7 @@ export interface Case {
   linkedCases?: YesOrNo;
   linkedCasesDetail?: string;
   personalDetailsCheck?: YesOrNo;
+  groupClaimsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
@@ -214,7 +225,24 @@ export interface Case {
   // indiciates if responding to a tribunal order/request or not when responding to an application
   isRespondingToRequestOrOrder?: boolean;
   updateDraftCaseError?: string;
-  // Multiples
+  // Additional claimants (group claim)
+  additionalClaimants?: AdditionalClaimant[];
+  currentAdditionalClaimantIndex?: number;
+  additionalClaimantTitle?: string;
+  additionalClaimantFirstName?: string;
+  additionalClaimantLastName?: string;
+  additionalClaimantEmail?: string;
+  additionalClaimantDob?: CaseDate;
+  additionalClaimantAddress1?: string;
+  additionalClaimantAddress2?: string;
+  additionalClaimantAddressTown?: string;
+  additionalClaimantAddressCountry?: string;
+  additionalClaimantAddressPostcode?: string;
+  additionalClaimantEnterPostcode?: string;
+  additionalClaimantAddressTypes?: AddressType[];
+  additionalClaimantAddresses?: Record<string, string>[];
+  addClaimantMethod?: AddAdditionalClaimant;
+  addAdditionalClaimant?: YesOrNo;
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;
@@ -364,4 +392,9 @@ export const enum ReturnToExistingOption {
   CLAIM_BUT_NO_ACCOUNT = 'Claim but no account',
   DRAFT_CLAIM = 'Draft claim',
   SUBMITTED_CLAIM = 'Submitted claim',
+}
+
+export const enum AddAdditionalClaimant {
+  MANUAL = 'Manual',
+  SPREADSHEET = 'Spreadsheet',
 }

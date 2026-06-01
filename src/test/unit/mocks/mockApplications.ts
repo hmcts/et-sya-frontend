@@ -30,7 +30,7 @@ export const mockApplications: ApplicationTableRecord[] = [
       typeOfClaimString: 'discrimination',
     },
     respondents: 'Globo Corp<br />Mega Globo Corp',
-    completionStatus: '4 of 4 tasks completed',
+    completionStatus: '3 of 4 tasks completed',
     url: '/claimant-application/12345?lng=en',
     deleteDraftUrl: '/claimant-application/12345/delete?lng=en&redirect=claimant-applications',
     claimSubmittedDate: '2022-09-01',

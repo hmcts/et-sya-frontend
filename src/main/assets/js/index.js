@@ -11,6 +11,7 @@ import './set-focus';
 import { initialize, ready } from './session/utils';
 import './data-layer';
 import './navigation-click-guard';
+import './additional-claimant-address-preview';
 // Initialize GOV.UK Frontend components
 initAll();
 

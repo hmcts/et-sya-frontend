@@ -106,7 +106,6 @@ import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageCont
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
-import SingleOrMultipleController from '../../controllers/SingleOrMultipleController';
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
@@ -148,6 +147,15 @@ import YourDetailsFormController from '../../controllers/YourDetailsFormControll
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
+import AddAnotherClaimantController from '../../controllers/multiples/AddAnotherClaimantController';
+import AdditionalClaimantPersonalDetailsController from '../../controllers/multiples/AdditionalClaimantPersonalDetailsController';
+import AdditionalClaimantPostCodeEnterController from '../../controllers/multiples/AdditionalClaimantPostCodeEnterController';
+import AdditionalClaimantPostCodeSelectController from '../../controllers/multiples/AdditionalClaimantPostCodeSelectController';
+import GroupClaimsCheckController from '../../controllers/multiples/GroupClaimsCheckController';
+import GroupRepresentativeController from '../../controllers/multiples/GroupRepresentativeController';
+import RemoveAdditionalClaimantController from '../../controllers/multiples/RemoveAdditionalClaimantController';
+import ReviewOtherClaimantsController from '../../controllers/multiples/ReviewAdditionalClaimantsController';
+import SingleOrMultipleController from '../../controllers/multiples/SingleOrMultipleController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import { csrfProtection } from '../csrf';
@@ -184,6 +192,8 @@ export class Routes {
     app.get(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE, new MakingClaimAsLegalRepController().get);
     app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().get);
     app.post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, new SingleOrMultipleController().post);
+    app.get(PageUrls.GROUP_REPRESENTATIVE, new GroupRepresentativeController().get);
+    app.post(PageUrls.GROUP_REPRESENTATIVE, new GroupRepresentativeController().post);
     app.get(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().get);
     app.post(PageUrls.ACAS_MULTIPLE_CLAIM, new AcasMultipleController().post);
     app.get(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().get);
@@ -299,6 +309,8 @@ export class Routes {
     app.post(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().post);
     app.get(PageUrls.LINKED_CASES, new LinkedCasesController().get);
     app.post(PageUrls.LINKED_CASES, new LinkedCasesController().post);
+    app.get(PageUrls.GROUP_CLAIMS_CHECK, new GroupClaimsCheckController().get);
+    app.post(PageUrls.GROUP_CLAIMS_CHECK, new GroupClaimsCheckController().post);
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
@@ -472,5 +484,18 @@ export class Routes {
     app.post(PageUrls.YOUR_DETAILS_CYA, new YourDetailsCYAController().post);
     app.get(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().get);
     app.post(PageUrls.DELETE_DRAFT_CLAIM, new DeleteDraftClaimController().post);
+
+    app.get(PageUrls.ADD_ANOTHER_CLAIMANT, new AddAnotherClaimantController().get);
+    app.post(PageUrls.ADD_ANOTHER_CLAIMANT, new AddAnotherClaimantController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS, new AdditionalClaimantPersonalDetailsController().get);
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS, new AdditionalClaimantPersonalDetailsController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER, new AdditionalClaimantPostCodeEnterController().get);
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER, new AdditionalClaimantPostCodeEnterController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT, new AdditionalClaimantPostCodeSelectController().get);
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT, new AdditionalClaimantPostCodeSelectController().post);
+    app.get(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS, new ReviewOtherClaimantsController().get);
+    app.post(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS, new ReviewOtherClaimantsController().post);
+    app.get(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().get);
+    app.post(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().post);
   }
 }

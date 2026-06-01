@@ -1,9 +1,9 @@
-import SingleOrMultipleController from '../../../main/controllers/SingleOrMultipleController';
-import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { CaseType } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
+import SingleOrMultipleController from '../../../../main/controllers/multiples/SingleOrMultipleController';
+import { CaseType } from '../../../../main/definitions/case';
+import { PageUrls } from '../../../../main/definitions/constants';
+import { mockRequest } from '../../mocks/mockRequest';
+import { mockResponse } from '../../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
@@ -32,7 +32,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.GROUP_CLAIMS_CHECK);
   });
 
   it("should redirect to claim steps when 'multiple' is selected", async () => {
@@ -43,7 +43,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADD_ANOTHER_CLAIMANT);
   });
 
   it('should render same page if nothing selected', async () => {

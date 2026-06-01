@@ -1,16 +1,16 @@
 import { Response } from 'express';
 
-import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
-import { AppRequest } from '../definitions/appRequest';
-import { CaseType } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
-
-import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { Form } from '../../components/form/form';
+import { isFieldFilledIn } from '../../components/form/validator';
+import { CaseStateCheck } from '../../decorators/CaseStateCheck';
+import { AppRequest } from '../../definitions/appRequest';
+import { CaseType, CaseWithId } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { FormContent, FormFields } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
+import { getLogger } from '../../logger';
+import { handlePostLogic } from '../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 
 const logger = getLogger('SingleOrMultipleController');
 
@@ -48,9 +48,25 @@ export default class SingleOrMultipleController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
+    const userCase = req.session.userCase;
+    let redirectUrl;
+    if (CaseType.SINGLE === req.body.caseType) {
+      this.clearGroupClaimsFields(userCase);
+      redirectUrl = PageUrls.GROUP_CLAIMS_CHECK;
+    } else if (CaseType.MULTIPLE === req.body.caseType && userCase?.additionalClaimants?.length > 0) {
+      redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
+    } else {
+      redirectUrl = PageUrls.ADD_ANOTHER_CLAIMANT;
+    }
+    return handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
+  private clearGroupClaimsFields(userCase: CaseWithId) {
+    userCase.additionalClaimants = undefined;
+    userCase.leadClaimant = undefined;
+  }
+
+  @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.singleOrMultipleContent, [
       TranslationKeys.COMMON,
