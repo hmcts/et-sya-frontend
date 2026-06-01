@@ -29,7 +29,8 @@
       "hmctsAccessURL": "https://idam-web-public.aat.platform.hmcts.net/o/authorize",
       "hmctsAccess": false,
       "clientSecret": "TO BE PICKED UP FROM ENV",
-      "tokenURL": "https://idam-api.aat.platform.hmcts.net/o/token"
+      "tokenURL": "https://idam-api.aat.platform.hmcts.net/o/token",
+      "endSessionURL": "https://idam-web-public.aat.platform.hmcts.net/o/endSession"
     },
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",
