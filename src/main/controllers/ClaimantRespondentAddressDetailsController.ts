@@ -29,17 +29,22 @@ export default class ClaimantRespondentAddressDetailsController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
+    const respondentName = req.session.userCase?.respondents?.[0]?.respondentName ?? '';
+    const content = getPageContent(
+      req,
+      this.formContent,
+      [
+        TranslationKeys.COMMON,
+        TranslationKeys.RESPONDENT_ADDRESS,
+        TranslationKeys.CLAIMANT_RESPONDENT_ADDRESS_DETAILS,
+        TranslationKeys.ENTER_ADDRESS,
+      ],
+      0
+    );
     const addressTypes = req.session.userCase.respondentAddressTypes;
-    if (addressTypes !== undefined) {
+    if (addressTypes !== undefined && req.session.userCase.respondentAddresses) {
       fillRespondentAddressFields(addressTypes, req.session.userCase);
     }
-    const respondentName = req.session.userCase?.respondents?.[0]?.respondentName ?? '';
-    const content = getPageContent(req, this.formContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_ADDRESS,
-      TranslationKeys.CLAIMANT_RESPONDENT_ADDRESS_DETAILS,
-      TranslationKeys.ENTER_ADDRESS,
-    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_RESPONDENT_ADDRESS_DETAILS, {
       ...content,

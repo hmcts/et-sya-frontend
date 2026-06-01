@@ -7,11 +7,10 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { getYesNoInlineRadioField, renderPage } from './helpers/NonHmctsControllerHelper';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantWorkForEmployerController');
@@ -20,19 +19,7 @@ export default class DidClaimantWorkForEmployerController {
   private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {
-      pastEmployer: {
-        type: 'radios',
-        values: [
-          { label: (l: AnyRecord): string => l.yes, value: YesOrNo.YES },
-          { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
-        ],
-        label: (l: AnyRecord): string => l.heading,
-        labelHidden: false,
-        labelSize: 'xl',
-        isPageHeading: true,
-        id: 'did-claimant-work-for-employer',
-        classes: 'govuk-radios--inline',
-      },
+      pastEmployer: getYesNoInlineRadioField('did-claimant-work-for-employer', l => l.heading),
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

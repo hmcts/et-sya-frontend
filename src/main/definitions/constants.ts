@@ -163,6 +163,9 @@ export const TranslationKeys = {
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
 
   // non-hmcts claimant rep
+  CLAIMANT_REP_HUB: 'claimant-rep-hub',
+  CLAIMANT_REP_CHECK_ANSWERS: 'claimant-rep-check-your-answers',
+  CLAIMANT_REP_CLAIM_SUBMITTED: 'claimant-rep-claim-submitted',
   REPRESENTATIVE_DETAILS: 'representative-details',
   REPRESENTATIVE_POSTCODE_ENTER: 'representative-postcode-enter',
   REPRESENTATIVE_POSTCODE_SELECT: 'representative-postcode-select',
@@ -184,6 +187,17 @@ export const TranslationKeys = {
   IS_CLAIMANT_STILL_WORKING: 'is-claimant-still-working',
   CLAIMANT_EMPLOYMENT_DETAILS: 'claimant-employment-details',
   CLAIMANT_EMPLOYMENT_START_DATE: 'claimant-employment-start-date',
+  CLAIMANT_NOTICE_END: 'claimant-notice-end',
+  CLAIMANT_END_DATE: 'claimant-end-date',
+  CLAIMANT_NOTICE_PERIOD: 'claimant-notice-period',
+  CLAIMANT_PAST_NOTICE_TYPE: 'claimant-past-notice-type',
+  CLAIMANT_NEW_JOB: 'claimant-new-job',
+  CLAIMANT_NEW_JOB_START_DATE: 'claimant-new-job-start-date',
+  CLAIMANT_NEW_JOB_PAY: 'claimant-new-job-pay',
+  CLAIMANT_TYPE_OF_CLAIM: 'claimant-type-of-claim',
+  CLAIMANT_CLAIM_TYPE_DISCRIMINATION: 'claimant-claim-type-discrimination',
+  CLAIMANT_DESCRIBE_WHAT_HAPPENED: 'claimant-describe-what-happened',
+  CLAIMANT_TELL_US_WHAT_YOU_WANT: 'claimant-tell-us-what-you-want',
   DID_CLAIMANT_HAVE_WRITTEN_CONTRACT: 'did-claimant-have-written-contract',
   CLAIMANT_NOTICE_TYPE: 'claimant-notice-type',
   CLAIMANT_NOTICE_LENGTH: 'claimant-notice-length',
@@ -203,6 +217,10 @@ export const TranslationKeys = {
   CLAIMANT_WORK_POSTCODE_SELECT: 'claimant-work-postcode-select',
   CLAIMANT_PLACE_OF_WORK: 'claimant-place-of-work',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: 'claimant-respondent-details-check',
+  CLAIMANT_LINKED_CASES: 'claimant-linked-cases',
+  CLAIMANT_CLAIM_TYPE_PAY: 'claimant-claim-type-pay',
+  CLAIMANT_COMPENSATION: 'claimant-compensation',
+  CLAIMANT_TRIBUNAL_RECOMMENDATION: 'claimant-tribunal-recommendation',
 } as const;
 
 export const PageUrls = {
@@ -370,6 +388,17 @@ export const PageUrls = {
   IS_CLAIMANT_STILL_WORKING: '/is-claimant-still-working',
   CLAIMANT_EMPLOYMENT_DETAILS: '/claimant-employment-details',
   CLAIMANT_EMPLOYMENT_START_DATE: '/claimant-employment-start-date',
+  CLAIMANT_NOTICE_END: '/claimant-notice-end',
+  CLAIMANT_END_DATE: '/claimant-end-date',
+  CLAIMANT_NOTICE_PERIOD: '/claimant-notice-period',
+  CLAIMANT_PAST_NOTICE_TYPE: '/claimant-past-notice-type',
+  CLAIMANT_NEW_JOB: '/claimant-new-job',
+  CLAIMANT_NEW_JOB_START_DATE: '/claimant-new-job-start-date',
+  CLAIMANT_NEW_JOB_PAY: '/claimant-new-job-pay',
+  CLAIMANT_TYPE_OF_CLAIM: '/claimant-type-of-claim',
+  CLAIMANT_CLAIM_TYPE_DISCRIMINATION: '/claimant-claim-type-discrimination',
+  CLAIMANT_DESCRIBE_WHAT_HAPPENED: '/claimant-describe-what-happened',
+  CLAIMANT_TELL_US_WHAT_YOU_WANT: '/claimant-tell-us-what-you-want',
   DID_CLAIMANT_HAVE_WRITTEN_CONTRACT: '/did-claimant-have-written-contract',
   CLAIMANT_NOTICE_TYPE: '/claimant-notice-type',
   CLAIMANT_NOTICE_LENGTH: '/claimant-notice-length',
@@ -389,13 +418,22 @@ export const PageUrls = {
   CLAIMANT_WORK_POSTCODE_SELECT: '/claimant-work-postcode-select',
   CLAIMANT_PLACE_OF_WORK: '/claimant-place-of-work',
   CLAIMANT_RESPONDENT_DETAILS_CHECK: '/claimant-respondent-details-check',
+  CLAIMANT_LINKED_CASES: '/claimant-linked-cases',
+  CLAIMANT_CLAIM_TYPE_PAY: '/claimant-claim-type-pay',
+  CLAIMANT_COMPENSATION: '/claimant-compensation',
+  CLAIMANT_TRIBUNAL_RECOMMENDATION: '/claimant-tribunal-recommendation',
+  CLAIMANT_REP_HUB: '/claimant-rep-hub/:caseId',
+  CLAIMANT_REP_CHECK_ANSWERS: '/claimant-rep-check-your-answers',
+  CLAIMANT_REP_CLAIM_SUBMITTED: '/claimant-rep-claim-submitted',
 } as const;
 
 export const InterceptPaths = {
   CHANGE_DETAILS: '*/change',
   ANSWERS_CHANGE: '/change?redirect=answers',
+  REP_ANSWERS_CHANGE: '/change?redirect=rep-answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  SUBMIT_REP_CASE: '/submitRepCase',
   REMOVE_FILE: '/remove-uploaded-file',
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
@@ -409,6 +447,8 @@ export const InterceptPaths = {
 export const ErrorPages = {
   NOT_FOUND: '/not-found',
 };
+
+export const UNASSIGNED_OFFICE_EMAIL = 'employmentJurisdictionalSupportTeamInbox@justice.gov.uk';
 
 export const ValidationErrors = {
   REQUIRED: 'required',
@@ -427,6 +467,7 @@ export const JavaApiUrls = {
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_STREAM: '/document/stream/',
   DOCUMENT_DETAILS: '/document/details/',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE: '/et3/findCaseByEthosCaseReference',
   FIND_CASE_BY_ID: '/et3/findCaseById',
@@ -666,6 +707,7 @@ export const FEATURE_FLAGS = {
   BUNDLES: 'bundles',
   ECC: 'ecc',
   MUL2: 'MUL2',
+  DOCUMENT_STREAMING: 'document-streaming',
 } as const;
 
 export const DefaultValues = {

@@ -7,11 +7,15 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import {
+  clearFields,
+  getYesNoInlineRadioField,
+  handleClearSelection,
+  renderPage,
+} from './helpers/NonHmctsControllerHelper';
 import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('DidClaimantHaveWrittenContractController');
@@ -20,19 +24,7 @@ export default class DidClaimantHaveWrittenContractController {
   private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {
-      claimantWrittenContract: {
-        type: 'radios',
-        values: [
-          { label: (l: AnyRecord): string => l.yes, value: YesOrNo.YES },
-          { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
-        ],
-        label: (l: AnyRecord): string => l.heading,
-        labelHidden: false,
-        labelSize: 'xl',
-        isPageHeading: true,
-        id: 'did-claimant-have-written-contract',
-        classes: 'govuk-radios--inline',
-      },
+      claimantWrittenContract: getYesNoInlineRadioField('did-claimant-have-written-contract', l => l.heading),
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

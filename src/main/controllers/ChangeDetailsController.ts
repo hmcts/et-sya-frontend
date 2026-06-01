@@ -21,6 +21,9 @@ export default class ChangeDetailsController {
     if (req.query.redirect === 'answers') {
       redirectUrl = req.url.replace(InterceptPaths.ANSWERS_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CHECK_ANSWERS);
+    } else if (req.query.redirect === 'rep-answers') {
+      redirectUrl = req.url.replace(InterceptPaths.REP_ANSWERS_CHANGE, languageParam);
+      req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CLAIMANT_REP_CHECK_ANSWERS);
     } else if (req.query.redirect === 'respondent') {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK);

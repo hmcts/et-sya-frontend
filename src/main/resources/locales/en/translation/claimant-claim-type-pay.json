@@ -1,0 +1,16 @@
+{
+  "title": "Pay claim",
+  "h1": "Pay claim",
+  "selectAllHint": "Select all that apply.",
+  "arrears": "Arrears",
+  "arrearsHint": "pay you are owed",
+  "holidayPay": "Holiday pay",
+  "noticePay": "Notice pay",
+  "redundancyPay": "Redundancy pay",
+  "otherPayments": "Other payments",
+  "errors": {
+    "claimTypePay": {
+      "required": "Tell us what type of pay claim the claimant is making"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "label": "<place-holder>",
+  "hint": "<place-holder>",
+  "amountLabel": "<place-holder>",
+  "description": ["<place-holder>"],
+  "errors": {
+    "totalCompensationAmount": {
+      "invalidCurrency": "<place-holder>",
+      "tooHighCurrency": "<place-holder>"
+    }
+  }
+}

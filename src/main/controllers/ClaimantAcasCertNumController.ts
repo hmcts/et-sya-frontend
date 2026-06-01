@@ -73,10 +73,12 @@ export default class ClaimantAcasCertNumController {
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const respondentName = req.session.userCase?.respondents?.[0]?.respondentName ?? '';
-    const content = getPageContent(req, this.formContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.CLAIMANT_ACAS_CERT_NUM,
-    ]);
+    const content = getPageContent(
+      req,
+      this.formContent,
+      [TranslationKeys.COMMON, TranslationKeys.CLAIMANT_ACAS_CERT_NUM],
+      0
+    );
     const acasCert = Object.entries(this.form.getFormFields())[0][1] as FormInput;
     acasCert.label = (l: AnyRecord): string => l.legend + respondentName + '?';
     assignFormData(req.session.userCase, this.form.getFormFields());

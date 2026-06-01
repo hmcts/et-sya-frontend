@@ -1,0 +1,40 @@
+{
+  "title": "Discrimination claim",
+  "h1": "Discrimination claim",
+  "legend": "What type of discrimination is the claimant claiming?",
+  "hint": "Select all that apply.",
+  "age": {
+    "checkbox": "Age"
+  },
+  "disability": {
+    "checkbox": "Disability"
+  },
+  "genderReassignment": {
+    "checkbox": "Gender reassignment"
+  },
+  "marriageOrCivilPartnership": {
+    "checkbox": "Marriage or civil partnership"
+  },
+  "pregnancyOrMaternity": {
+    "checkbox": "Pregnancy or maternity"
+  },
+  "race": {
+    "checkbox": "Race",
+    "hint": "including colour, nationality, and ethnic or national origins"
+  },
+  "religionOrBelief": {
+    "checkbox": "Religion or belief"
+  },
+  "sex": {
+    "checkbox": "Sex",
+    "hint": "including equal pay"
+  },
+  "sexualOrientation": {
+    "checkbox": "Sexual orientation"
+  },
+  "errors": {
+    "claimTypeDiscrimination": {
+      "required": "Please select at least one type of discrimination."
+    }
+  }
+}

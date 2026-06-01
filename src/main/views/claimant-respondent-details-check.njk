@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
@@ -27,21 +28,9 @@
         }) }}
       {% endif %}
 
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-button-group">
-      {{ govukButton({
-        text: saveAndContinue,
-        href: PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK + languageParam
-      }) }}
-
-      {{ govukButton({
-        text: saveForLater,
-        classes: "govuk-button--secondary",
-        href: PageUrls.CLAIM_SAVED + languageParam
-      }) }}
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
     </div>
   </div>
 {% endblock %}

@@ -14,10 +14,7 @@ import { renderPage } from './helpers/NonHmctsControllerHelper';
 
 const logger = getLogger('IsClaimantStillWorkingController');
 
-const getRedirectUrl = (isStillWorking: string): string => {
-  if (isStillWorking === StillWorking.NO_LONGER_WORKING) {
-    return PageUrls.END_DATE;
-  }
+const getRedirectUrl = (): string => {
   return PageUrls.CLAIMANT_EMPLOYMENT_DETAILS;
 };
 
@@ -60,7 +57,7 @@ export default class IsClaimantStillWorkingController {
     if (isStillWorking !== StillWorking.NOTICE) {
       req.session.userCase.noticeEnds = undefined;
     }
-    await handlePostLogic(req, res, this.form, logger, getRedirectUrl(isStillWorking));
+    await handlePostLogic(req, res, this.form, logger, getRedirectUrl());
   };
 
   @CaseStateCheck()

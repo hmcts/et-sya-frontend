@@ -121,5 +121,17 @@ describe('Reasonable Adjustments Controller', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
     });
+
+    it('should redirect to REPRESENTATIVE_DETAILS_CHECK when claimantRepresentedQuestion is YES', async () => {
+      const req = mockRequest({
+        body: { reasonableAdjustments: 'No' },
+        userCase: { claimantRepresentedQuestion: YesOrNo.YES },
+      });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_DETAILS_CHECK);
+    });
   });
 });
