@@ -1,0 +1,36 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">{{ h1 }}</h1>
+
+      {% if userCase.ethosCaseReference %}
+        <p class="govuk-body">{{ caseNumber }} <strong>{{ userCase.ethosCaseReference }}</strong></p>
+      {% endif %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: claimant },
+            value: { text: userCase.firstName + ' ' + userCase.lastName }
+          },
+          {
+            key: { text: respondent },
+            value: { text: userCase.respondents[0].respondentName if userCase.respondents and userCase.respondents.length > 0 }
+          }
+        ]
+      }) }}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: returnToApplications,
+          href: PageUrls.CLAIMANT_APPLICATIONS,
+          classes: 'govuk-button--secondary'
+        }) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

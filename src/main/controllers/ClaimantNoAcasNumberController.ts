@@ -28,10 +28,12 @@ export default class ClaimantNoAcasNumberController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.formContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.CLAIMANT_NO_ACAS_NUMBER,
-    ]);
+    const content = getPageContent(
+      req,
+      this.formContent,
+      [TranslationKeys.COMMON, TranslationKeys.CLAIMANT_NO_ACAS_NUMBER],
+      0
+    );
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_NO_ACAS_NUMBER, { ...content });
   };

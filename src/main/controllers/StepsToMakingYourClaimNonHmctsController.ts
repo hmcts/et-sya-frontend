@@ -85,7 +85,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.TYPE_OF_CLAIM.toString()),
+            url: setUrlLanguage(req, PageUrls.CLAIMANT_TYPE_OF_CLAIM.toString()),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string =>
               getSectionStatus(

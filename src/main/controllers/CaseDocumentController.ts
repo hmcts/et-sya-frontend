@@ -1,7 +1,9 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { FEATURE_FLAGS } from '../definitions/constants';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
 import { getCaseApi } from '../services/CaseService';
 
@@ -37,7 +39,8 @@ export default class CaseDocumentController {
         return res.redirect('/not-found');
       }
 
-      const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
+      const streamingEnabled = await getFlagValue(FEATURE_FLAGS.DOCUMENT_STREAMING, null);
+      const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId, streamingEnabled);
 
       let contentType = findContentTypeByDocumentDetail(details);
       if (!contentType) {
@@ -49,7 +52,11 @@ export default class CaseDocumentController {
         logger.error('Failed to download document with id: ' + details.id);
         res.setHeader('Content-Type', 'application/pdf');
       }
-      res.status(200).send(Buffer.from(document.data, 'binary'));
+      if (document.headers['content-length']) {
+        res.setHeader('Content-Length', document.headers['content-length']);
+      }
+      res.status(200);
+      (document.data as NodeJS.ReadableStream).pipe(res);
 
       setRespondentResponseHubLinkStatus(details, req, logger);
     } catch (err) {

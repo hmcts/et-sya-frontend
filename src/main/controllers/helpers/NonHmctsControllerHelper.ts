@@ -4,9 +4,9 @@ import { isValidUKPostcode } from '../../components/form/address-validator';
 import { Form } from '../../components/form/form';
 import { isFieldFilledIn } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
-import { NoAcasNumberReason } from '../../definitions/case';
+import { NoAcasNumberReason, YesOrNo } from '../../definitions/case';
 import { TranslationKeys } from '../../definitions/constants';
-import { FormContent } from '../../definitions/form';
+import { FormContent, FormField, Label } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -38,6 +38,20 @@ export const handleClearSelection = (req: AppRequest, clearFn: (req: AppRequest)
     clearFn(req);
   }
 };
+
+export const getYesNoInlineRadioField = (id: string, label: Label): FormField => ({
+  id,
+  type: 'radios',
+  classes: 'govuk-radios--inline',
+  label,
+  labelHidden: false,
+  labelSize: 'xl',
+  isPageHeading: true,
+  values: [
+    { label: (l: AnyRecord): string => l.yes, value: YesOrNo.YES },
+    { label: (l: AnyRecord): string => l.no, value: YesOrNo.NO },
+  ],
+});
 
 export const getPostcodeEnterFormContent = (fieldId: string): FormContent => ({
   fields: {

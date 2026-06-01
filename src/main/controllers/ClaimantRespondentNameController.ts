@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
-import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimantRespondentNameController');
 
@@ -43,6 +43,13 @@ export default class ClaimantRespondentNameController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_RESPONDENT_NAME);
+    const content = getPageContent(
+      req,
+      this.formContent,
+      [TranslationKeys.COMMON, TranslationKeys.CLAIMANT_RESPONDENT_NAME],
+      0
+    );
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    res.render(TranslationKeys.CLAIMANT_RESPONDENT_NAME, { ...content });
   };
 }

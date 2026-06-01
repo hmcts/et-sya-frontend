@@ -1,0 +1,265 @@
+import {
+  getClaimantClaimDetails,
+  getClaimantPersonalDetails,
+  getClaimantRespondentSection,
+  getRepresentativeDetails,
+} from '../../../../main/controllers/helpers/ClaimantRepAnswersHelper';
+import {
+  CaseWithId,
+  EmailOrPost,
+  EnglishOrWelsh,
+  HearingPreference,
+  Respondent,
+  Sex,
+  YesOrNo,
+} from '../../../../main/definitions/case';
+import { CaseState, ClaimTypeDiscrimination, ClaimTypePay } from '../../../../main/definitions/definition';
+import et1DetailsJson from '../../../../main/resources/locales/en/translation/et1-details.json';
+
+const translations = {
+  ...et1DetailsJson,
+  personalDetails: {
+    email: 'Email',
+    post: 'Post',
+    welsh: 'Welsh',
+    english: 'English',
+    video: 'Video',
+    phone: 'Phone',
+    neither: 'Neither',
+    male: 'Male',
+    female: 'Female',
+    preferNotToSay: 'Prefer not to say',
+  },
+  oesYesOrNo: { yes: 'Yes', no: 'No' },
+  doYesOrNo: { yes: 'Yes', no: 'No' },
+  notProvided: 'Not provided',
+  change: 'Change',
+  repDetails: {
+    typeOfRepresentative: 'Type of representative',
+    organisationName: "Name of the representative's organisation",
+    representativeName: "Representative's name",
+    representativeAddress: "Representative's address",
+    representativeTelephone: "Representative's telephone number",
+    howToBeContacted: 'How would you like us to contact you?',
+    contactLanguage: 'What language do you want us to use when we contact you?',
+    hearingLanguage: 'If a hearing is required, what language do you want to speak at a hearing?',
+    hearingPreferences: 'Can you and the claimant attend hearings by video and phone?',
+    disability: 'Does anyone in the claimant party have a disability?',
+  },
+  claimantDetails: {
+    firstName: "Claimant's first name",
+    lastName: "Claimant's last name",
+    dob: 'Date of birth',
+    sex: 'Sex',
+    preferredTitle: 'Preferred title',
+    address: 'Address',
+    email: 'Email address',
+  },
+  respondentDetails: {
+    respondentName: 'Name of respondent',
+    respondentAddress: 'Respondent address',
+    acasNumber: 'Do you have an Acas certificate number?',
+  },
+  claimDetails: {
+    claimTypeDiscrimination: 'What type of discrimination claim are you making?',
+    claimTypePay: 'What type of pay claim are you making?',
+    describeWhatHappened: 'Describe what happened to you',
+    ifClaimSuccessful: 'What do you want if your claim is successful',
+    linkedCases: 'Linked cases',
+  },
+  discriminationClaims: { Age: 'Age' },
+  payClaims: { Arrears: 'Arrears' },
+  tellUsWhatYouWant: { compensation: 'Compensation only' },
+};
+
+const baseCase = {
+  id: '1234',
+  state: CaseState.DRAFT,
+} as CaseWithId;
+
+describe('ClaimantRepAnswersHelper', () => {
+  describe('getRepresentativeDetails', () => {
+    it('should return rows with provided values', () => {
+      const userCase = {
+        ...baseCase,
+        representativeType: 'Trade Union',
+        representativeOrgName: 'Union Org',
+        representativeName: 'Wolfie Smith',
+        repAddress1: '56 High Street',
+        representativePhoneNumber: '01234567890',
+        claimantContactPreference: EmailOrPost.EMAIL,
+        claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
+        claimantHearingLanguagePreference: EnglishOrWelsh.WELSH,
+        hearingPreferences: [HearingPreference.VIDEO, HearingPreference.PHONE],
+        reasonableAdjustments: YesOrNo.NO,
+      };
+      const rows = getRepresentativeDetails(userCase, translations);
+      expect(rows).toHaveLength(10);
+      expect(rows[0].value.text).toBe('Trade Union');
+      expect(rows[1].value.text).toBe('Union Org');
+      expect(rows[2].value.text).toBe('Wolfie Smith');
+      expect(rows[5].value.text).toBe('Email');
+      expect(rows[6].value.text).toBe('English');
+      expect(rows[7].value.text).toBe('Welsh');
+      expect(rows[8].value.text).toBe('Video, Phone');
+      expect(rows[9].value.text).toBe('No');
+    });
+
+    it('should show notProvided for missing fields', () => {
+      const rows = getRepresentativeDetails(baseCase, translations);
+      expect(rows[0].value.text).toBe('Not provided');
+      expect(rows[4].value.text).toBe('Not provided');
+    });
+
+    it('should return Post for post contact preference', () => {
+      const rows = getRepresentativeDetails({ ...baseCase, claimantContactPreference: EmailOrPost.POST }, translations);
+      expect(rows[5].value.text).toBe('Post');
+    });
+
+    it('should return notProvided for unknown contact preference', () => {
+      const rows = getRepresentativeDetails({ ...baseCase, claimantContactPreference: undefined }, translations);
+      expect(rows[5].value.text).toBe('Not provided');
+    });
+
+    it('should return neither for hearing preference NEITHER', () => {
+      const rows = getRepresentativeDetails(
+        { ...baseCase, hearingPreferences: [HearingPreference.NEITHER] },
+        translations
+      );
+      expect(rows[8].value.text).toBe('Neither');
+    });
+
+    it('should return notProvided when hearingPreferences is empty', () => {
+      const rows = getRepresentativeDetails({ ...baseCase, hearingPreferences: [] }, translations);
+      expect(rows[8].value.text).toBe('Not provided');
+    });
+
+    it('should show Yes with detail for reasonableAdjustments YES', () => {
+      const rows = getRepresentativeDetails(
+        { ...baseCase, reasonableAdjustments: YesOrNo.YES, reasonableAdjustmentsDetail: 'ramp needed' },
+        translations
+      );
+      expect(rows[9].value.text).toBe('Yes, ramp needed');
+    });
+
+    it('should return notProvided for unknown reasonableAdjustments', () => {
+      const rows = getRepresentativeDetails({ ...baseCase, reasonableAdjustments: undefined }, translations);
+      expect(rows[9].value.text).toBe('Not provided');
+    });
+  });
+
+  describe('getClaimantPersonalDetails', () => {
+    it('should return rows with provided claimant values', () => {
+      const userCase = {
+        ...baseCase,
+        firstName: 'Zebedee',
+        lastName: 'Spring',
+        dobDate: { year: '1990', month: '07', day: '01' },
+        claimantSex: Sex.MALE,
+        preferredTitle: 'Mr',
+        address1: '27 Poultry',
+        addressTown: 'London',
+        addressPostcode: 'EC2R 8AJ',
+        email: 'zebedee@test.com',
+      };
+      const rows = getClaimantPersonalDetails(userCase, translations);
+      expect(rows).toHaveLength(7);
+      expect(rows[0].value.text).toBe('Zebedee');
+      expect(rows[1].value.text).toBe('Spring');
+      expect(rows[2].value.text).toBe('01-07-1990');
+      expect(rows[3].value.text).toBe('Male');
+      expect(rows[4].value.text).toBe('Mr');
+      expect(rows[6].value.text).toBe('zebedee@test.com');
+    });
+
+    it('should return notProvided for missing personal details', () => {
+      const rows = getClaimantPersonalDetails(baseCase, translations);
+      expect(rows[0].value.text).toBe('Not provided');
+      expect(rows[6].value.text).toBe('Not provided');
+    });
+
+    it('should return Female for female sex', () => {
+      const rows = getClaimantPersonalDetails({ ...baseCase, claimantSex: Sex.FEMALE }, translations);
+      expect(rows[3].value.text).toBe('Female');
+    });
+
+    it('should return Prefer not to say for prefer not to say sex', () => {
+      const rows = getClaimantPersonalDetails({ ...baseCase, claimantSex: Sex.PREFER_NOT_TO_SAY }, translations);
+      expect(rows[3].value.text).toBe('Prefer not to say');
+    });
+
+    it('should return notProvided for unknown sex', () => {
+      const rows = getClaimantPersonalDetails({ ...baseCase, claimantSex: undefined }, translations);
+      expect(rows[3].value.text).toBe('Not provided');
+    });
+
+    it('should return notProvided when dobDate is absent', () => {
+      const rows = getClaimantPersonalDetails({ ...baseCase, dobDate: undefined }, translations);
+      expect(rows[2].value.text).toBe('Not provided');
+    });
+  });
+
+  describe('getClaimantRespondentSection', () => {
+    it('should return respondent rows', () => {
+      const respondent: Respondent = {
+        respondentName: 'Magic Roundabout',
+        respondentAddress1: 'The Courtyard',
+        respondentAddressTown: 'London',
+        respondentAddressPostcode: 'EC3V 3LR',
+        acasCertNum: 'R123456/11/11',
+      } as Respondent;
+      const rows = getClaimantRespondentSection(respondent, translations);
+      expect(rows).toHaveLength(3);
+      expect(rows[0].value.text).toBe('Magic Roundabout');
+      expect(rows[2].value.text).toBe('R123456/11/11');
+    });
+
+    it('should show notProvided when respondent fields are missing', () => {
+      const rows = getClaimantRespondentSection({} as Respondent, translations);
+      expect(rows[0].value.text).toBe('Not provided');
+      expect(rows[2].value.text).toBe('Not provided');
+    });
+  });
+
+  describe('getClaimantClaimDetails', () => {
+    it('should include discrimination row when typeOfClaim includes discrimination', () => {
+      const userCase = {
+        ...baseCase,
+        typeOfClaim: ['discrimination'],
+        claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+      };
+      const rows = getClaimantClaimDetails(userCase, translations);
+      expect(rows.some(r => r.key.text === 'What type of discrimination claim are you making?')).toBe(true);
+    });
+
+    it('should include pay row when typeOfClaim includes payRelated', () => {
+      const userCase = { ...baseCase, typeOfClaim: ['payRelated'], claimTypePay: [ClaimTypePay.ARREARS] };
+      const rows = getClaimantClaimDetails(userCase, translations);
+      expect(rows.some(r => r.key.text === 'What type of pay claim are you making?')).toBe(true);
+    });
+
+    it('should always include describe what happened and linked cases rows', () => {
+      const rows = getClaimantClaimDetails(baseCase, translations);
+      expect(rows.some(r => r.key.text === 'Describe what happened to you')).toBe(true);
+      expect(rows.some(r => r.key.text === 'Linked cases')).toBe(true);
+    });
+
+    it('should return Yes for linkedCases YES', () => {
+      const rows = getClaimantClaimDetails({ ...baseCase, linkedCases: YesOrNo.YES }, translations);
+      const linkedRow = rows.find(r => r.key.text === 'Linked cases');
+      expect(linkedRow.value.text).toBe('Yes');
+    });
+
+    it('should return No for linkedCases NO', () => {
+      const rows = getClaimantClaimDetails({ ...baseCase, linkedCases: YesOrNo.NO }, translations);
+      const linkedRow = rows.find(r => r.key.text === 'Linked cases');
+      expect(linkedRow.value.text).toBe('No');
+    });
+
+    it('should return notProvided for undefined linkedCases', () => {
+      const rows = getClaimantClaimDetails({ ...baseCase, linkedCases: undefined }, translations);
+      const linkedRow = rows.find(r => r.key.text === 'Linked cases');
+      expect(linkedRow.value.text).toBe('Not provided');
+    });
+  });
+});

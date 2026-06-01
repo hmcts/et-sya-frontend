@@ -1,0 +1,20 @@
+{
+  "title": "Start of new job",
+  "h1": "Start of new job",
+  "legend": "When did the claimant start their new job? (optional)",
+  "p1": "Tell us about the claimant's new job. If you do not know the exact date then enter your best estimate.",
+  "hint": "For example, 27 3 2007",
+  "errors": {
+    "newJobStartDate": {
+      "dayRequired": "Enter a day for when the claimant's new job starts. For example, 23",
+      "monthRequired": "Enter a month for when the claimant's new job starts. For example, 08",
+      "yearRequired": "Enter a year for when the claimant's new job starts. For example, 2022",
+      "invalidDateInPast": "Date entered must not be in the past",
+      "invalidDateMoreThanTenYearsInFuture": "Enter a date between now and 10 years in the future",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2022",
+      "invalidDate": "New job start date must be a real date."
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "title": "What does the claimant want from the claim?",
+  "h1": "What does the claimant want from the claim? (optional)",
+  "legend": "What does the claimant want if their claim is successful?",
+  "compensationOnly": {
+    "checkbox": "Compensation only"
+  },
+  "compensationOnlyHint": "You'll be asked to provide an estimate of total compensation",
+  "tribunalRecommendation": {
+    "checkbox": "If claiming discrimination, a tribunal recommendation"
+  },
+  "tribunalRecommendationHint": "You'll be asked to describe the claimant's request to the tribunal",
+  "oldJob": {
+    "checkbox": "If claiming unfair dismissal, to get their old job back and be compensated"
+  },
+  "anotherJob": {
+    "checkbox": "If claiming unfair dismissal, to get another job with the same employer or associated employer and compensation (re-engagement)"
+  }
+}

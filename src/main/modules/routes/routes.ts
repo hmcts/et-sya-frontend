@@ -43,21 +43,39 @@ import ClaimantAcasCertNumController from '../../controllers/ClaimantAcasCertNum
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import ClaimantAverageWeeklyHoursController from '../../controllers/ClaimantAverageWeeklyHoursController';
 import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsController';
+import ClaimantClaimTypeDiscriminationController from '../../controllers/ClaimantClaimTypeDiscriminationController';
+import ClaimantClaimTypePayController from '../../controllers/ClaimantClaimTypePayController';
+import ClaimantCompensationController from '../../controllers/ClaimantCompensationController';
+import ClaimantDescribeWhatHappenedController from '../../controllers/ClaimantDescribeWhatHappenedController';
 import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
 import ClaimantEmploymentStartDateController from '../../controllers/ClaimantEmploymentStartDateController';
+import ClaimantEndDateController from '../../controllers/ClaimantEndDateController';
+import ClaimantLinkedCasesController from '../../controllers/ClaimantLinkedCasesController';
+import ClaimantNewJobController from '../../controllers/ClaimantNewJobController';
+import ClaimantNewJobPayController from '../../controllers/ClaimantNewJobPayController';
+import ClaimantNewJobStartDateController from '../../controllers/ClaimantNewJobStartDateController';
 import ClaimantNoAcasNumberController from '../../controllers/ClaimantNoAcasNumberController';
+import ClaimantNoticeEndController from '../../controllers/ClaimantNoticeEndController';
 import ClaimantNoticeLengthController from '../../controllers/ClaimantNoticeLengthController';
+import ClaimantNoticePeriodController from '../../controllers/ClaimantNoticePeriodController';
 import ClaimantNoticeTypeController from '../../controllers/ClaimantNoticeTypeController';
+import ClaimantPastNoticeTypeController from '../../controllers/ClaimantPastNoticeTypeController';
 import ClaimantPayController from '../../controllers/ClaimantPayController';
 import ClaimantPensionController from '../../controllers/ClaimantPensionController';
 import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWorkController';
+import ClaimantRepCheckAnswersController from '../../controllers/ClaimantRepCheckAnswersController';
+import ClaimantRepClaimSubmittedController from '../../controllers/ClaimantRepClaimSubmittedController';
+import ClaimantRepHubController from '../../controllers/ClaimantRepHubController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
 import ClaimantRespondentAddressDetailsController from '../../controllers/ClaimantRespondentAddressDetailsController';
 import ClaimantRespondentDetailsCheckController from '../../controllers/ClaimantRespondentDetailsCheckController';
 import ClaimantRespondentNameController from '../../controllers/ClaimantRespondentNameController';
 import ClaimantRespondentPostcodeEnterController from '../../controllers/ClaimantRespondentPostcodeEnterController';
 import ClaimantRespondentPostcodeSelectController from '../../controllers/ClaimantRespondentPostcodeSelectController';
+import ClaimantTellUsWhatYouWantController from '../../controllers/ClaimantTellUsWhatYouWantController';
+import ClaimantTribunalRecommendationController from '../../controllers/ClaimantTribunalRecommendationController';
+import ClaimantTypeOfClaimController from '../../controllers/ClaimantTypeOfClaimController';
 import ClaimantWorkPostcodeEnterController from '../../controllers/ClaimantWorkPostcodeEnterController';
 import ClaimantWorkPostcodeSelectController from '../../controllers/ClaimantWorkPostcodeSelectController';
 import CompensationController from '../../controllers/CompensationController';
@@ -152,6 +170,7 @@ import StoredToSubmitResponseController from '../../controllers/StoredToSubmitRe
 import StoredToSubmitTribunalController from '../../controllers/StoredToSubmitTribunalController';
 import SubmitBundlesHearingDocsCYAController from '../../controllers/SubmitBundlesHearingDocsCYAController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitRepCaseController from '../../controllers/SubmitRepCaseController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
 import TelNumberController from '../../controllers/TelNumberController';
@@ -294,6 +313,41 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_EMPLOYMENT_DETAILS, new ClaimantEmploymentDetailsController().post);
     app.get(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().get);
     app.post(PageUrls.CLAIMANT_EMPLOYMENT_START_DATE, new ClaimantEmploymentStartDateController().post);
+    app.get(PageUrls.CLAIMANT_NOTICE_END, new ClaimantNoticeEndController().get);
+    app.post(PageUrls.CLAIMANT_NOTICE_END, new ClaimantNoticeEndController().post);
+    app.get(PageUrls.CLAIMANT_END_DATE, new ClaimantEndDateController().get);
+    app.post(PageUrls.CLAIMANT_END_DATE, new ClaimantEndDateController().post);
+    app.get(PageUrls.CLAIMANT_NOTICE_PERIOD, new ClaimantNoticePeriodController().get);
+    app.post(PageUrls.CLAIMANT_NOTICE_PERIOD, new ClaimantNoticePeriodController().post);
+    app.get(PageUrls.CLAIMANT_PAST_NOTICE_TYPE, new ClaimantPastNoticeTypeController().get);
+    app.post(PageUrls.CLAIMANT_PAST_NOTICE_TYPE, new ClaimantPastNoticeTypeController().post);
+    app.get(PageUrls.CLAIMANT_NEW_JOB, new ClaimantNewJobController().get);
+    app.post(PageUrls.CLAIMANT_NEW_JOB, new ClaimantNewJobController().post);
+    app.get(PageUrls.CLAIMANT_NEW_JOB_START_DATE, new ClaimantNewJobStartDateController().get);
+    app.post(PageUrls.CLAIMANT_NEW_JOB_START_DATE, new ClaimantNewJobStartDateController().post);
+    app.get(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().get);
+    app.post(PageUrls.CLAIMANT_NEW_JOB_PAY, new ClaimantNewJobPayController().post);
+    app.get(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().get);
+    app.post(PageUrls.CLAIMANT_TYPE_OF_CLAIM, new ClaimantTypeOfClaimController().post);
+    app.get(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().get);
+    app.post(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION, new ClaimantClaimTypeDiscriminationController().post);
+    app.get(PageUrls.CLAIMANT_CLAIM_TYPE_PAY, new ClaimantClaimTypePayController().get);
+    app.post(PageUrls.CLAIMANT_CLAIM_TYPE_PAY, new ClaimantClaimTypePayController().post);
+    const claimantDescribeWhatHappenedController = new ClaimantDescribeWhatHappenedController();
+    app.get(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED, claimantDescribeWhatHappenedController.get);
+    app.post(
+      PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED,
+      handleUploads.single('claimSummaryFileName'),
+      claimantDescribeWhatHappenedController.post
+    );
+    app.get(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().get);
+    app.post(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().post);
+    app.get(PageUrls.CLAIMANT_COMPENSATION, new ClaimantCompensationController().get);
+    app.post(PageUrls.CLAIMANT_COMPENSATION, new ClaimantCompensationController().post);
+    app.get(PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION, new ClaimantTribunalRecommendationController().get);
+    app.post(PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION, new ClaimantTribunalRecommendationController().post);
+    app.get(PageUrls.CLAIMANT_LINKED_CASES, new ClaimantLinkedCasesController().get);
+    app.post(PageUrls.CLAIMANT_LINKED_CASES, new ClaimantLinkedCasesController().post);
     app.get(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().get);
     app.post(PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT, new DidClaimantHaveWrittenContractController().post);
     app.get(PageUrls.CLAIMANT_NOTICE_TYPE, new ClaimantNoticeTypeController().get);
@@ -324,6 +378,7 @@ export class Routes {
     app.get(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().get);
     app.post(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().post);
     app.get(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().get);
+    app.post(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().get);
     app.post(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_SELECT, new ClaimantWorkPostcodeSelectController().get);
@@ -587,5 +642,9 @@ export class Routes {
     app.post(PageUrls.REPRESENTED_CLAIMANT_DATE_OF_BIRTH, new RepresentedClaimantDateOfBirthController().post);
     app.get(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().post);
+    app.get(PageUrls.CLAIMANT_REP_HUB, new ClaimantRepHubController().get);
+    app.get(PageUrls.CLAIMANT_REP_CHECK_ANSWERS, new ClaimantRepCheckAnswersController().get);
+    app.get(PageUrls.CLAIMANT_REP_CLAIM_SUBMITTED, new ClaimantRepClaimSubmittedController().get);
+    app.get(InterceptPaths.SUBMIT_REP_CASE, new SubmitRepCaseController().get);
   }
 }

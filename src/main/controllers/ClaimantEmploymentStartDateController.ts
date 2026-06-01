@@ -40,10 +40,15 @@ export default class ClaimantEmploymentStartDateController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl =
-      req.session.userCase?.isStillWorking === StillWorking.NOTICE
-        ? PageUrls.NOTICE_END
-        : PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT;
+    const { isStillWorking } = req.session.userCase ?? {};
+    let redirectUrl: string;
+    if (isStillWorking === StillWorking.NOTICE) {
+      redirectUrl = PageUrls.CLAIMANT_NOTICE_END;
+    } else if (isStillWorking === StillWorking.NO_LONGER_WORKING) {
+      redirectUrl = PageUrls.CLAIMANT_END_DATE;
+    } else {
+      redirectUrl = PageUrls.DID_CLAIMANT_HAVE_WRITTEN_CONTRACT;
+    }
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 

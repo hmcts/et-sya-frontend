@@ -1,0 +1,49 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "description": "<place-holder>",
+  "applicationDetails": {
+    "header": "<place-holder>",
+    "typeOfClaim": "<place-holder>"
+  },
+  "repDetails": {
+    "header": "<place-holder>",
+    "typeOfRepresentative": "<place-holder>",
+    "organisationName": "<place-holder>",
+    "representativeName": "<place-holder>",
+    "representativeAddress": "<place-holder>",
+    "representativeTelephone": "<place-holder>",
+    "howToBeContacted": "<place-holder>",
+    "contactLanguage": "<place-holder>",
+    "hearingLanguage": "<place-holder>",
+    "hearingPreferences": "<place-holder>",
+    "disability": "<place-holder>"
+  },
+  "claimantDetails": {
+    "header": "<place-holder>",
+    "firstName": "<place-holder>",
+    "lastName": "<place-holder>",
+    "dob": "<place-holder>",
+    "sex": "<place-holder>",
+    "preferredTitle": "<place-holder>",
+    "address": "<place-holder>",
+    "email": "<place-holder>"
+  },
+  "respondentDetails": {
+    "header": "<place-holder>",
+    "respondentName": "<place-holder>",
+    "respondentAddress": "<place-holder>",
+    "acasNumber": "<place-holder>"
+  },
+  "claimDetails": {
+    "header": "<place-holder>",
+    "claimTypeDiscrimination": "<place-holder>",
+    "claimTypePay": "<place-holder>",
+    "describeWhatHappened": "<place-holder>",
+    "ifClaimSuccessful": "<place-holder>",
+    "linkedCases": "<place-holder>"
+  },
+  "submitBtn": "<place-holder>",
+  "addAnotherRespondent": "<place-holder>",
+  "submitError": "<place-holder>"
+}
