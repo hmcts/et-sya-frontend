@@ -96,18 +96,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     caseType: fromApiCaseData.case_data?.caseType,
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
-    representedClaimantFirstName:
-      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
-        ? fromApiCaseData.case_data?.claimantIndType?.claimant_first_names
-        : undefined,
-    representedClaimantLastName:
-      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
-        ? fromApiCaseData.case_data?.claimantIndType?.claimant_last_name
-        : undefined,
-    representedClaimantDateOfBirth:
-      fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES
-        ? parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth)
-        : undefined,
     representedClaimantFirstName: isRepresentedClaimant
       ? fromApiCaseData.case_data?.claimantIndType?.claimant_first_names
       : undefined,
