@@ -3,6 +3,11 @@
   "h1": "<place-holder>",
   "legend": "<place-holder>",
   "hint": "<place-holder>",
+  "detailsSummary": "<place-holder>",
+  "detailsText": {
+    "p1": "<place-holder>",
+    "p2": "<place-holder>"
+  },
   "age": { "checkbox": "<place-holder>" },
   "disability": { "checkbox": "<place-holder>" },
   "genderReassignment": { "checkbox": "<place-holder>" },
