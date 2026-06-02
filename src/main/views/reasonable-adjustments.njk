@@ -12,12 +12,12 @@
   {% block errorSummary %}
    {% include "error-summary.njk" %}
   {% endblock %}
-      
+
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
 {{ govukInsetText({
   text: p
 }) }}
-<details class="govuk-details" data-module="govuk-details">
+<details class="govuk-details">
   <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
       {{detailsSummary.heading}}
@@ -27,7 +27,7 @@
       <p class="govuk-body ">{{ detailsSummary.p }}</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>{{ detailsSummary.bullet1 }} </li>
-        <li>{{ detailsSummary.bullet2 }} </li>        
+        <li>{{ detailsSummary.bullet2 }} </li>
         <li>{{ detailsSummary.bullet3 }} </li>
       </ul>
   </div>
