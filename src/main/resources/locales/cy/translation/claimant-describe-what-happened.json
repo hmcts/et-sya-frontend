@@ -36,6 +36,10 @@
     "hint": "<place-holder>",
     "hintExisting": "<place-holder>"
   },
+  "acceptedFormats": {
+    "label": "<place-holder>",
+    "p1": "<place-holder>"
+  },
   "errors": {
     "claimSummaryText": {
       "required": "<place-holder>",
