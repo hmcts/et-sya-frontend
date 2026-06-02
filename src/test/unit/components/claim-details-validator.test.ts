@@ -2,6 +2,7 @@ import {
   validateClaimCheckDetails,
   validateEmploymentAndRespondentDetails,
   validatePersonalDetails,
+  validateRepresentedClaimantDetails,
 } from '../../../main/components/form/claim-details-validator';
 
 describe('claimDetailsValidator', () => {
@@ -129,6 +130,34 @@ describe('claimDetailsValidator', () => {
         ],
       };
       expect(validateEmploymentAndRespondentDetails(userCase)).toBe(true);
+    });
+  });
+
+  describe('validateRepresentedClaimantDetails', () => {
+    it('should return false if userCase is undefined', () => {
+      expect(validateRepresentedClaimantDetails(undefined)).toBe(false);
+    });
+
+    it('should return false if any mandatory represented claimant field is missing', () => {
+      const userCase = {
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(false);
+    });
+
+    it('should return true if all mandatory represented claimant fields are present', () => {
+      const userCase = {
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+        representedClaimantAddressCountry: 'England',
+        representedClaimantEmail: 'jane.doe@example.com',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(true);
     });
   });
 

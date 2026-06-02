@@ -4,8 +4,10 @@
     "idam": {
       "clientID": "et-sya",
       "authorizationURL": "http://localhost:5062/login",
+      "hmctsAccessURL": "http://localhost:5062/o/authorize",
       "clientSecret": "test1234",
-      "tokenURL": "http://localhost:5062/o/token"
+      "tokenURL": "http://localhost:5062/o/token",
+      "endSessionURL": "http://localhost:5062/o/endSession"
     },
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",

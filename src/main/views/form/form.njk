@@ -19,7 +19,11 @@
         </p>
      {% endif %}
 
-      {% if "/sex-and-title" in currentUrl %}
+      {% if "/represented-claimant-sex-and-title" in currentUrl %}
+             <p class="govuk-body">
+             <a href="{{PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
+             </p>
+      {% elif "/sex-and-title" in currentUrl %}
              <p class="govuk-body">
              <a href="{{PageUrls.SEX_AND_TITLE}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
              </p>

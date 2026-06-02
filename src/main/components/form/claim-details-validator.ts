@@ -72,3 +72,25 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
 
   return !(!hasClaimSummaryFile && !hasClaimSummaryText);
 };
+
+export const validateRepresentedClaimantDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const {
+    representedClaimantFirstName,
+    representedClaimantLastName,
+    representedClaimantAddress1,
+    representedClaimantAddressTown,
+    representedClaimantAddressCountry,
+    representedClaimantEmail,
+  } = userCase;
+  return !!(
+    representedClaimantFirstName &&
+    representedClaimantLastName &&
+    representedClaimantAddress1 &&
+    representedClaimantAddressTown &&
+    representedClaimantAddressCountry &&
+    representedClaimantEmail
+  );
+};

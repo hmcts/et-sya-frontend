@@ -1,0 +1,88 @@
+import { Response } from 'express';
+
+import { Form } from '../../components/form/form';
+import { validateTitlePreference } from '../../components/form/validator';
+import { CaseStateCheck } from '../../decorators/CaseStateCheck';
+import { AppRequest } from '../../definitions/appRequest';
+import { Sex } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { FormContent, FormFields } from '../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../definitions/radios';
+import { AnyRecord } from '../../definitions/util-types';
+import { getLogger } from '../../logger';
+import { handlePostLogic } from '../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../helpers/FormHelpers';
+import { getLanguageParam } from '../helpers/RouterHelpers';
+
+const logger = getLogger('RepresentedClaimantSexAndTitleController');
+
+export default class RepresentedClaimantSexAndTitleController {
+  private readonly form: Form;
+  private readonly formContent: FormContent = {
+    fields: {
+      claimantSex: {
+        classes: 'govuk-radios govuk-!-margin-bottom-6',
+        id: 'sex',
+        type: 'radios',
+        labelSize: 'm',
+        label: (l: AnyRecord): string => l.sex,
+        values: [
+          {
+            label: (l: AnyRecord): string => l.male,
+            value: Sex.MALE,
+          },
+          {
+            label: (l: AnyRecord): string => l.female,
+            value: Sex.FEMALE,
+          },
+          {
+            label: (l: AnyRecord): string => l.preferNotToSay,
+            value: Sex.PREFER_NOT_TO_SAY,
+          },
+        ],
+      },
+      preferredTitle: {
+        id: 'preferredTitle',
+        type: 'text',
+        classes: 'govuk-input--width-10',
+        label: (l: AnyRecord) => l.preferredTitle,
+        labelSize: 'm',
+        attributes: { maxLength: 20 },
+        validator: validateTitlePreference,
+      },
+    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
+  };
+
+  constructor() {
+    this.form = new Form(<FormFields>this.formContent.fields);
+  }
+
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_ENTER_POSTCODE);
+  };
+
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.claimantSex = undefined;
+      req.session.userCase.preferredTitle = undefined;
+    }
+  };
+
+  @CaseStateCheck()
+  public get = (req: AppRequest, res: Response): void => {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
+    const content = getPageContent(req, this.formContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.REPRESENTED_CLAIMANT_SEX_AND_TITLE,
+    ]);
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    res.render(TranslationKeys.REPRESENTED_CLAIMANT_SEX_AND_TITLE, {
+      ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
+    });
+  };
+}
