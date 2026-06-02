@@ -16,7 +16,8 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantNewJobPayController');
 
@@ -53,6 +54,9 @@ export default class ClaimantNewJobPayController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_NEW_JOB_PAY);
+    handleClearSelection(req, r => clearFields(r, 'newJobPay', 'newJobPayInterval'));
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_NEW_JOB_PAY, {
+      languageParam: getLanguageParam(req.url).replace('?', ''),
+    });
   };
 }

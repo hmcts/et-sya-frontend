@@ -13,7 +13,8 @@ import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantNewJobStartDateController');
 
@@ -43,6 +44,9 @@ export default class ClaimantNewJobStartDateController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_NEW_JOB_START_DATE);
+    handleClearSelection(req, r => clearFields(r, 'newJobStartDate'));
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_NEW_JOB_START_DATE, {
+      languageParam: getLanguageParam(req.url).replace('?', ''),
+    });
   };
 }

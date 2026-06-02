@@ -10,8 +10,13 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { getYesNoInlineRadioField, renderPage } from './helpers/NonHmctsControllerHelper';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import {
+  clearFields,
+  getYesNoInlineRadioField,
+  handleClearSelection,
+  renderPage,
+} from './helpers/NonHmctsControllerHelper';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantNewJobController');
 
@@ -38,6 +43,9 @@ export default class ClaimantNewJobController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_NEW_JOB);
+    handleClearSelection(req, r => clearFields(r, 'newJob'));
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_NEW_JOB, {
+      languageParam: getLanguageParam(req.url).replace('?', ''),
+    });
   };
 }
