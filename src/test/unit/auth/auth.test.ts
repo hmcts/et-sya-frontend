@@ -23,14 +23,14 @@ describe('getRedirectUrl', () => {
 
   test('should create a valid URL to redirect to the login screen', () => {
     expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK, guid, languageParam)).toBe(
-      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback&state=${guid}&ui_locales=${languageParam}`
+      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback&state=${guid}&ui_locales=${languageParam}&scope=openid%20profile%20roles`
     );
   });
 
   test('should use HMCTS Access authorize URL when HMCTS_ACCESS is true', () => {
     process.env.HMCTS_ACCESS = 'true';
     expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK, guid, languageParam)).toBe(
-      `${hmctsAccessLoginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback&state=${guid}&ui_locales=${languageParam}`
+      `${hmctsAccessLoginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback&state=${guid}&ui_locales=${languageParam}&scope=openid%20profile%20roles`
     );
   });
 });
