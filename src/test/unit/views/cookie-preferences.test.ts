@@ -105,9 +105,9 @@ describe('Cookie preferences page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display 20 paragraphs', () => {
+  it('should display 22 paragraphs', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(20, `${p.length} paragraphs found - expected 20`);
+    expect(p.length).equal(22, `${p.length} paragraphs found - expected 20`);
     expect(p[6].innerHTML).contains(expectedParagraph1, paragraphDoesNotExist);
     expect(p[7].innerHTML).contains(expectedHowAreCookiesUsedParagraph1, paragraphDoesNotExist);
     expect(p[8].innerHTML).contains(expectedHowAreCookiesUsedParagraph2, paragraphDoesNotExist);
