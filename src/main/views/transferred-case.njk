@@ -1,0 +1,44 @@
+{% extends "template.njk" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ h1 }}</h1>
+
+      <p class="govuk-body-l">{{ caseNumberLabel }} {{ caseNumber }}</p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <h2 class="govuk-heading-l">{{ noAccessHeader }}</h2>
+      <p class="govuk-body">{{ noAccessBody }}</p>
+      <p class="govuk-body">{{ newCaseNumberBody }} <strong>{{ replacementCaseNumber }}</strong>.</p>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-8">{{ whatThisMeansHeader }}</h2>
+      <p class="govuk-body">{{ whatThisMeansPointOne }}</p>
+      <p class="govuk-body">{{ whatThisMeansPointTwo }}</p>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-8">{{ whatHappensNextHeader }}</h2>
+      <p class="govuk-body">{{ whatHappensNextPointOne }}</p>
+      <p class="govuk-body">{{ whatHappensNextPointTwo }} <strong>{{ replacementCaseNumber }}</strong>.</p>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      <h2 class="govuk-heading-m">{{ contactHeader }}</h2>
+      <p class="govuk-body">{{ callEmployer }}</p>
+
+      <h3 class="govuk-heading-s">{{ englandWales }}</h3>
+      <p class="govuk-body">{{ ewNumbers }}</p>
+
+      <h3 class="govuk-heading-s">{{ welsh }}</h3>
+      <p class="govuk-body">{{ welshNumber }}</p>
+
+      <h3 class="govuk-heading-s">{{ scotland }}</h3>
+      <p class="govuk-body">{{ scotlandNumbers }}</p>
+      <p class="govuk-body">{{ hours | safe }}</p>
+      <p class="govuk-body">
+        <a href="https://www.gov.uk/call-charges" class="govuk-link" target="_blank" rel="noreferrer noopener">
+          {{ callCharges }}
+        </a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

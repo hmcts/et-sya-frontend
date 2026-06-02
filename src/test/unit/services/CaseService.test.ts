@@ -30,7 +30,7 @@ import {
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
 import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
-import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
+import { CaseApi, UploadedFile, getCaseApi, isTransferredToEcmCaseError } from '../../../main/services/CaseService';
 import { mockSimpleRespAppTypeItem } from '../mocks/mockApplications';
 import { mockClaimantTseRequest } from '../mocks/mockClaimantTseRequest';
 import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
@@ -119,6 +119,20 @@ describe('Axios get to retrieve draft cases', () => {
 describe('getCaseApi', () => {
   test('should create a CaseApi', () => {
     expect(getCaseApi(token)).toBeInstanceOf(CaseApi);
+  });
+});
+
+describe('isTransferredToEcmCaseError', () => {
+  it('should return true for ECM transfer marker', () => {
+    expect(isTransferredToEcmCaseError(new Error('CASE_TRANSFERRED_TO_ECM'))).toBe(true);
+  });
+
+  it('should return true for 410 responses', () => {
+    expect(isTransferredToEcmCaseError(new Error('Request failed with status code 410'))).toBe(true);
+  });
+
+  it('should return false for generic fetch errors', () => {
+    expect(isTransferredToEcmCaseError(new Error('Error getting user case: status code 404'))).toBe(false);
   });
 });
 

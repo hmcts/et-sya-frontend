@@ -1,0 +1,17 @@
+{
+  "title": "Case overview",
+  "h1": "Case overview - Peter Rabbit vs McGregor's Farm",
+  "caseNumberLabel": "Case number",
+  "caseNumber": "6010106/2024",
+  "noAccessHeader": "You cannot access this case online",
+  "noAccessBody": "This case is now being managed offline and is not available through this service.",
+  "newCaseNumberBody": "Your new case number is",
+  "replacementCaseNumber": "1234567/YYYY",
+  "whatThisMeansHeader": "What this means",
+  "whatThisMeansPointOne": "You cannot view case details or upload documents here.",
+  "whatThisMeansPointTwo": "Updates and decisions will not appear in this service.",
+  "whatHappensNextHeader": "What happens next",
+  "whatHappensNextPointOne": "The tribunal will contact you by post or email with updates.",
+  "whatHappensNextPointTwo": "If you have any questions or need to contact the tribunal, you can do so, quoting your new case number",
+  "contactHeader": "Call the Employment Tribunal customer contact centre"
+}

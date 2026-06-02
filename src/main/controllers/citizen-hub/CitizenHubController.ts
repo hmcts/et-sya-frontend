@@ -15,7 +15,7 @@ import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
-import { getCaseApi } from '../../services/CaseService';
+import { getCaseApi, isTransferredToEcmCaseError } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
 import {
   clearPrepareDocumentsForHearingFields,
@@ -78,6 +78,9 @@ export default class CitizenHubController {
         );
       } catch (error) {
         logger.error(error.message);
+        if (isTransferredToEcmCaseError(error)) {
+          return res.redirect(PageUrls.TRANSFERRED_CASE + getLanguageParam(req.url));
+        }
         return res.redirect('/not-found');
       }
     }

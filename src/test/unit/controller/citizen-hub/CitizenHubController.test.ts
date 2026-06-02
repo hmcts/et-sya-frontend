@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import CitizenHubController from '../../../../main/controllers/citizen-hub/CitizenHubController';
 import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
-import { Applicant } from '../../../../main/definitions/constants';
+import { Applicant, PageUrls } from '../../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../../main/services/CaseService';
 import * as CaseService from '../../../../main/services/CaseService';
@@ -47,6 +47,21 @@ describe('Citizen Hub Controller', () => {
     controller.get(req, res);
     await new Promise(nextTick);
     expect(res.redirect).toHaveBeenCalledWith('/not-found');
+  });
+
+  it('should redirect to transferred page when case is transferred to ECM', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValueOnce(
+        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+      );
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TRANSFERRED_CASE + '?lng=en');
   });
 
   it('should assign mock user when in test', async () => {
