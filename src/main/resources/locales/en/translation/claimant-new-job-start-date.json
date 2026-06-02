@@ -2,7 +2,7 @@
   "title": "Start of new job",
   "h1": "Start of new job",
   "legend": "When did the claimant start their new job? (optional)",
-  "p1": "Tell us about the claimant's new job. If you do not know the exact date then enter claimant's best estimate.",
+  "p1": "Tell us about the claimant's new job. If you do not know the exact date then enter the claimant's best estimate.",
   "hint": "For example, 27 3 2007",
   "errors": {
     "newJobStartDate": {
