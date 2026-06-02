@@ -65,12 +65,6 @@ export default class ReviewAdditionalClaimantsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    logger.info(
-      `Handling review other claimants submission. Add another claimant answer: ${
-        req.body.addAdditionalClaimant || 'none'
-      }`
-    );
-
     // 1. Run all claimant data validation
     const claimantErrors = validateAdditionalClaimants(req);
     const additionalClaimantCount = req.session?.userCase?.additionalClaimants?.length || 0;
@@ -84,16 +78,12 @@ export default class ReviewAdditionalClaimantsController {
 
     // 2. Error redirects with validation failures
     if (claimantErrors.length > 0) {
-      logger.info('Redirecting to review page due to additional claimant validation failures.');
       req.session.errors.push(...claimantErrors);
       req.session.userCase.addAdditionalClaimant = undefined; // Clear the user's selection on error to prevent confusion on return
       return res.redirect(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS + getLanguageParam(req.url));
     }
 
     if (req.body.addAdditionalClaimant === YesOrNo.NO && additionalClaimantCount === 0) {
-      logger.info(
-        'Redirecting to review other claimants page with error - no additional claimants added but user selected no'
-      );
       req.session.errors.push({
         propertyName: 'hiddenErrorField',
         errorType: 'additionalClaimantRequired',
@@ -105,28 +95,27 @@ export default class ReviewAdditionalClaimantsController {
     // 3. Standard routing rules on successful validation
     let redirectUrl;
     if (req.body.addAdditionalClaimant === YesOrNo.NO || additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
-      logger.info(
-        'Maximum additional claimant limit reached or user selected No. Redirecting to group representative page'
-      );
       redirectUrl = setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
     } else {
-      logger.info('User selected Yes to add more. Redirecting to personal details page.');
-      redirectUrl = setUrlLanguage(req, PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
+      redirectUrl = setUrlLanguage(
+        req,
+        `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=new-claimant`
+      );
     }
 
     // 3. Clear transient fields and pass off to baseline framework handler
     clearAdditionalClaimantTransientFields(req);
+
+    // Re-enable creation flow for the next claimant (flag was reset by the clear above)
+    if (req.body.addAdditionalClaimant === YesOrNo.YES && additionalClaimantCount < MAX_ADDITIONAL_CLAIMANTS) {
+      req.session.additionalClaimantNewFlow = true;
+    }
 
     return handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    logger.info(
-      `Rendering review other claimants page. Current claimant count: ${
-        req.session.userCase?.additionalClaimants?.length || 0
-      }`
-    );
     const claimants = req.session.userCase?.additionalClaimants || [];
     const canAddAnotherClaimant = claimants.length < MAX_ADDITIONAL_CLAIMANTS;
     const content = getPageContent(req, this.getReviewContent(req, canAddAnotherClaimant), [

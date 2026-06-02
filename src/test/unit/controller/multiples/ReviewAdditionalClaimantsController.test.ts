@@ -126,13 +126,14 @@ describe('ReviewOtherClaimantsController', () => {
     expect(request.session.userCase.additionalClaimantAddressPostcode).toBeUndefined();
     expect(request.session.userCase.additionalClaimantAddressTypes).toBeUndefined();
     expect(request.session.userCase.additionalClaimantAddresses).toBeUndefined();
+    expect((request.session as any).additionalClaimantNewFlow).toBe(true);
     expect(response.redirect).not.toHaveBeenCalled();
     expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
       request,
       response,
       expect.anything(),
       expect.anything(),
-      PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS
+      `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=new-claimant`
     );
   });
 

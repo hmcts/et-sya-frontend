@@ -37,6 +37,7 @@ export const formatName = (c: AdditionalClaimant): string => {
 };
 
 export const clearAdditionalClaimantTransientFields = (req: AppRequest): void => {
+  req.session.additionalClaimantNewFlow = false;
   req.session.userCase.currentAdditionalClaimantIndex = undefined;
   req.session.userCase.additionalClaimantTitle = undefined;
   req.session.userCase.additionalClaimantFirstName = undefined;

@@ -10,7 +10,7 @@ import { Form } from '../../components/form/form';
 import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant, YesOrNo } from '../../definitions/case';
+import { AdditionalClaimant, AddressType, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
@@ -163,35 +163,7 @@ export default class AdditionalClaimantPostCodeSelectController {
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const selectedAddressType = req.session.userCase.additionalClaimantAddressTypes;
-    const indexParam = req.query?.additionalClaimant as string;
-    if (indexParam !== undefined) {
-      req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
-    }
-    const editIndex = req.session.userCase.currentAdditionalClaimantIndex;
-    const currentClaimant = editIndex === undefined ? undefined : req.session.userCase.additionalClaimants?.[editIndex];
-    if (
-      currentClaimant?.address &&
-      !this.hasAnyAddressFieldValue(req.session.userCase as unknown as AnyRecord) &&
-      !this.hasEnteredDifferentPostcodeToCurrentClaimant(currentClaimant, req.session.userCase as unknown as AnyRecord)
-    ) {
-      req.session.userCase.additionalClaimantAddress1 = currentClaimant.address.AddressLine1;
-      req.session.userCase.additionalClaimantAddress2 = currentClaimant.address.AddressLine2;
-      req.session.userCase.additionalClaimantAddressTown = currentClaimant.address.PostTown;
-      req.session.userCase.additionalClaimantAddressCountry = currentClaimant.address.Country;
-      req.session.userCase.additionalClaimantAddressPostcode = currentClaimant.address.PostCode;
-      if (!req.session.userCase.additionalClaimantEnterPostcode) {
-        req.session.userCase.additionalClaimantEnterPostcode = currentClaimant.address.PostCode;
-      }
-    }
-
-    const response = convertJsonArrayToTitleCase(
-      await getAddressesForPostcode(req.session.userCase.additionalClaimantEnterPostcode)
-    );
-    req.session.userCase.additionalClaimantAddresses = response;
-    req.session.userCase.additionalClaimantAddressTypes = getAdditionalClaimantAddressTypes(response, req);
-    if (!this.hasAnyAddressFieldValue(req.session.userCase as unknown as AnyRecord)) {
-      this.fillAdditionalClaimantAddressFields(selectedAddressType, req);
-    }
+    await this.editAdditionalClaimantData(req, selectedAddressType);
 
     if (selectedAddressType !== undefined && !Array.isArray(selectedAddressType)) {
       const selectedAddressIndex = parseInt(`${selectedAddressType}`, 10);
@@ -222,6 +194,42 @@ export default class AdditionalClaimantPostCodeSelectController {
       title: getSelectTitle(req),
     });
   };
+
+  private async editAdditionalClaimantData(req: AppRequest<Partial<AnyRecord>>, selectedAddressType: AddressType[]) {
+    const indexParam = req.query?.additionalClaimant as string;
+    if (indexParam === 'new-claimant') {
+      req.session.userCase.currentAdditionalClaimantIndex ??= req.session.userCase.additionalClaimants
+        ? req.session.userCase.additionalClaimants.length
+        : 0;
+    } else if (indexParam !== undefined) {
+      req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
+    }
+    const editIndex = req.session.userCase.currentAdditionalClaimantIndex;
+    const currentClaimant = editIndex === undefined ? undefined : req.session.userCase.additionalClaimants?.[editIndex];
+    if (
+      currentClaimant?.address &&
+      !this.hasAnyAddressFieldValue(req.session.userCase as unknown as AnyRecord) &&
+      !this.hasEnteredDifferentPostcodeToCurrentClaimant(currentClaimant, req.session.userCase as unknown as AnyRecord)
+    ) {
+      req.session.userCase.additionalClaimantAddress1 = currentClaimant.address.AddressLine1;
+      req.session.userCase.additionalClaimantAddress2 = currentClaimant.address.AddressLine2;
+      req.session.userCase.additionalClaimantAddressTown = currentClaimant.address.PostTown;
+      req.session.userCase.additionalClaimantAddressCountry = currentClaimant.address.Country;
+      req.session.userCase.additionalClaimantAddressPostcode = currentClaimant.address.PostCode;
+      if (!req.session.userCase.additionalClaimantEnterPostcode) {
+        req.session.userCase.additionalClaimantEnterPostcode = currentClaimant.address.PostCode;
+      }
+    }
+
+    const response = convertJsonArrayToTitleCase(
+      await getAddressesForPostcode(req.session.userCase.additionalClaimantEnterPostcode)
+    );
+    req.session.userCase.additionalClaimantAddresses = response;
+    req.session.userCase.additionalClaimantAddressTypes = getAdditionalClaimantAddressTypes(response, req);
+    if (!this.hasAnyAddressFieldValue(req.session.userCase as unknown as AnyRecord)) {
+      this.fillAdditionalClaimantAddressFields(selectedAddressType, req);
+    }
+  }
 
   normalisePostcode = (postcode: string | undefined): string => {
     return (postcode || '').replace(/\s+/g, '').toUpperCase();
@@ -268,6 +276,7 @@ export default class AdditionalClaimantPostCodeSelectController {
   };
 
   clearAdditionalClaimantTransientFields = (req: AppRequest): void => {
+    req.session.additionalClaimantNewFlow = false;
     req.session.userCase.currentAdditionalClaimantIndex = undefined;
     req.session.userCase.additionalClaimantTitle = undefined;
     req.session.userCase.additionalClaimantFirstName = undefined;

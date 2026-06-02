@@ -116,7 +116,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
       res,
       expect.anything(),
       expect.anything(),
-      PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT,
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT}?additionalClaimant=new-claimant`,
       true
     );
   });
@@ -126,6 +126,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     req.query = { additionalClaimant: '1' };
+    (req.session as any).additionalClaimantNewFlow = false;
     req.session.userCase.additionalClaimants = [
       { firstName: 'John', lastName: 'Smith' },
       {
