@@ -18,6 +18,7 @@ nodejs:
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_WEB_URL_HMCTS_ACCESS: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/o/authorize'
+    IDAM_END_SESSION_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/o/endSession'
     HMCTS_ACCESS: 'false'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
     REDIS_HOST: 'et-session-storage-{{ .Values.global.environment }}.redis.cache.windows.net'
