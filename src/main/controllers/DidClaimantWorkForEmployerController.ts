@@ -32,7 +32,7 @@ export default class DidClaimantWorkForEmployerController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.IS_CLAIMANT_STILL_WORKING
-      : PageUrls.FIRST_RESPONDENT_NAME;
+      : PageUrls.CLAIMANT_RESPONDENT_NAME;
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 

@@ -1,7 +1,5 @@
-import * as url from 'url';
-
 import config from 'config';
-import { Application, NextFunction, Request, Response } from 'express';
+import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
@@ -28,6 +26,7 @@ export class Oidc {
   public enableFor(app: Application): void {
     const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
+    const idamSignOutUrl: string = process.env.IDAM_END_SESSION_URL ?? config.get('services.idam.endSessionURL');
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
@@ -49,16 +48,19 @@ export class Oidc {
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
-    app.get(AuthUrls.LOGOUT, (req, res) => {
+    app.get(AuthUrls.LOGOUT, (req: AppRequest, res: Response) => {
+      // serviceUrl(res) resolves to the homepage of the service and is used as the post_logout_redirect_uri for IDAM,
+      // so that after logout, user is redirected to the homepage
+      const params = new URLSearchParams({
+        id_token_hint: req.session.user?.accessToken,
+        post_logout_redirect_uri: serviceUrl(res),
+      });
+
       req.session.destroy(err => {
         if (err) {
           logger.error('Error destroying session');
         }
-        if (req.query.redirectUrl) {
-          return handleRedirectUrl(req, res);
-        } else {
-          return res.redirect(PageUrls.HOME);
-        }
+        res.redirect(idamSignOutUrl + '?' + params.toString());
       });
     });
 
@@ -79,15 +81,6 @@ export class Oidc {
       }
     });
   }
-}
-
-function handleRedirectUrl(req: Request, res: Response) {
-  const parsedUrl = url.parse(req.query.redirectUrl as string);
-  if (parsedUrl.host !== req.headers.host && (req.query.redirectUrl as string) !== '/?lng=en') {
-    logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
-    return res.redirect(PageUrls.HOME);
-  }
-  return res.redirect(req.query.redirectUrl as string);
 }
 
 export const idamCallbackHandler = async (
