@@ -49,7 +49,7 @@ describe('DidClaimantWorkForEmployerController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.IS_CLAIMANT_STILL_WORKING);
     });
 
-    it('should redirect to FIRST_RESPONDENT_NAME when No is selected', async () => {
+    it('should redirect to CLAIMANT_RESPONDENT_NAME when No is selected', async () => {
       const body = { pastEmployer: YesOrNo.NO };
       const controller = new DidClaimantWorkForEmployerController();
       const req = mockRequest({ body });
@@ -57,10 +57,10 @@ describe('DidClaimantWorkForEmployerController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
     });
 
-    it('should redirect to FIRST_RESPONDENT_NAME when no value is submitted', async () => {
+    it('should redirect to CLAIMANT_RESPONDENT_NAME when no value is submitted', async () => {
       const body = { pastEmployer: '' };
       const controller = new DidClaimantWorkForEmployerController();
       const req = mockRequest({ body });
@@ -68,7 +68,7 @@ describe('DidClaimantWorkForEmployerController', () => {
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
     });
 
     it('should save Yes to session userCase', async () => {
