@@ -14,5 +14,10 @@
     "textBeforeLink": "If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
     "contactLink": "contact the tribunal",
     "textAfterLink": "."
+  },
+  "errors": {
+    "hiddenErrorField": {
+      "invalid": "You must complete your name and address before you can submit"
+    }
   }
 }

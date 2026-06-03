@@ -646,6 +646,7 @@ export class Routes {
     app.post(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().post);
     app.get(PageUrls.CLAIMANT_REP_HUB, new ClaimantRepHubController().get);
     app.get(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().get);
+    app.post(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().post);
     app.get(PageUrls.CLAIMANT_REP_CHECK_ANSWERS, new ClaimantRepCheckAnswersController().get);
     app.get(PageUrls.CLAIMANT_REP_CLAIM_SUBMITTED, new ClaimantRepClaimSubmittedController().get);
     app.get(InterceptPaths.SUBMIT_REP_CASE, new SubmitRepCaseController().get);

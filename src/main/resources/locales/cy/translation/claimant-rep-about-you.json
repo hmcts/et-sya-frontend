@@ -14,5 +14,10 @@
     "textBeforeLink": "<place-holder>",
     "contactLink": "<place-holder>",
     "textAfterLink": "<place-holder>"
+  },
+  "errors": {
+    "hiddenErrorField": {
+      "invalid": "<place-holder>"
+    }
   }
 }

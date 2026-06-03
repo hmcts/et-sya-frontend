@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { isClaimantRepAboutYouFlow } from '../controllers/helpers/ClaimantRepAnswersHelper';
 import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
@@ -21,6 +22,10 @@ export function CaseStateCheck() {
 }
 
 export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boolean => {
+  if (isClaimantRepAboutYouFlow(req)) {
+    return false;
+  }
+
   const userCase = req.session?.userCase;
   let redirectUrl: string | null = null;
 

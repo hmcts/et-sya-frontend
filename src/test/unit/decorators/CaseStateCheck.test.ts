@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { CaseStateCheck, checkCaseStateAndRedirect } from '../../../main/decorators/CaseStateCheck';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { PageUrls } from '../../../main/definitions/constants';
+import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -48,6 +48,20 @@ describe('CaseStateCheck Decorator', () => {
 
       expect(result).toBe(true);
       expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=cy');
+    });
+
+    it('should not redirect when editing from claimant rep about you flow', () => {
+      const req = mockRequest({
+        userCase: { id: '12345', state: CaseState.SUBMITTED },
+      });
+      req.session.returnUrl = '/claimant-rep-about-you/12345?lng=en';
+      req.url = '/representative-details' + InterceptPaths.REP_ABOUT_YOU_CHANGE;
+      const res = mockResponse();
+
+      const result = checkCaseStateAndRedirect(req, res);
+
+      expect(result).toBe(false);
+      expect(res.redirect).not.toHaveBeenCalled();
     });
 
     it('should not redirect when case state is AWAITING_SUBMISSION_TO_HMCTS', () => {

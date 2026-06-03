@@ -1,12 +1,15 @@
+import { AppRequest } from '../../definitions/appRequest';
 import {
   CaseWithId,
   EmailOrPost,
   EnglishOrWelsh,
   HearingPreference,
+  Representative,
   Respondent,
   Sex,
   YesOrNo,
 } from '../../definitions/case';
+import { Et1Address } from '../../definitions/complexTypes/et1Address';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { TypesOfClaim } from '../../definitions/definition';
 import {
@@ -90,6 +93,64 @@ const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
 
 export const getClaimantRepAboutYouUrl = (caseId: string, languageParam: string): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + languageParam;
+
+export const isClaimantRepAboutYouFlow = (req: AppRequest): boolean =>
+  !!req.session?.returnUrl?.includes('claimant-rep-about-you') || req.url?.includes('redirect=rep-about-you');
+
+const setRepAddressFromApi = (userCase: CaseWithId, address?: Et1Address): void => {
+  if (!address) {
+    return;
+  }
+  if (!userCase.repAddress1 && address.AddressLine1) {
+    userCase.repAddress1 = address.AddressLine1;
+  }
+  if (!userCase.repAddress2 && address.AddressLine2) {
+    userCase.repAddress2 = address.AddressLine2;
+  }
+  if (!userCase.repAddressTown && address.PostTown) {
+    userCase.repAddressTown = address.PostTown;
+  }
+  if (!userCase.repAddressCountry && address.Country) {
+    userCase.repAddressCountry = address.Country;
+  }
+  if (!userCase.repAddressPostcode && address.PostCode) {
+    userCase.repAddressPostcode = address.PostCode;
+  }
+};
+
+const setRepDetailsFromRepresentativeEntry = (userCase: CaseWithId, representative?: Representative): void => {
+  if (!representative) {
+    return;
+  }
+  if (!userCase.representativeName && representative.nameOfRepresentative) {
+    userCase.representativeName = representative.nameOfRepresentative;
+  }
+  if (!userCase.representativeOrgName && representative.nameOfOrganisation) {
+    userCase.representativeOrgName = representative.nameOfOrganisation;
+  }
+  setRepAddressFromApi(userCase, representative.representativeAddress);
+};
+
+export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void => {
+  if (!userCase) {
+    return;
+  }
+
+  const claimantRep = userCase.claimantRepresentative;
+  if (!userCase.representativeName && claimantRep?.name_of_representative) {
+    userCase.representativeName = claimantRep.name_of_representative;
+  }
+  if (!userCase.representativeOrgName && claimantRep?.name_of_organisation) {
+    userCase.representativeOrgName = claimantRep.name_of_organisation;
+  }
+
+  if (!userCase.representativePhoneNumber && userCase.telNumber) {
+    userCase.representativePhoneNumber = userCase.telNumber;
+  }
+
+  const claimantRepEntry = userCase.representatives?.find(rep => !rep.respondentId) ?? userCase.representatives?.[0];
+  setRepDetailsFromRepresentativeEntry(userCase, claimantRepEntry);
+};
 
 export const getClaimantRepAboutYouDetails = (
   userCase: CaseWithId,

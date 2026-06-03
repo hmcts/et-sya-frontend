@@ -5,6 +5,7 @@ import {
   getClaimantRepAboutYouUrl,
   getClaimantRespondentSection,
   getRepresentativeDetails,
+  populateClaimantRepDetailsFromCase,
 } from '../../../../main/controllers/helpers/ClaimantRepAnswersHelper';
 import {
   CaseWithId,
@@ -92,6 +93,55 @@ describe('ClaimantRepAnswersHelper', () => {
   describe('getClaimantRepAboutYouUrl', () => {
     it('should build the about you page url for a case', () => {
       expect(getClaimantRepAboutYouUrl('case-123', '')).toBe('/claimant-rep-about-you/case-123');
+    });
+  });
+
+  describe('populateClaimantRepDetailsFromCase', () => {
+    it('should populate representative fields from case data when not already set', () => {
+      const userCase = {
+        ...baseCase,
+        claimantRepresentative: {
+          name_of_representative: 'Wolfie Smith',
+          name_of_organisation: 'Tooting Popular Front',
+        },
+        telNumber: '0208 123 1234',
+        representatives: [
+          {
+            nameOfRepresentative: 'Rep From Collection',
+            nameOfOrganisation: 'Collection Org',
+            representativeAddress: {
+              AddressLine1: '1 Tooting Broadway',
+              PostTown: 'London',
+              PostCode: 'SW17 1NE',
+              Country: 'England',
+            },
+          },
+        ],
+      };
+
+      populateClaimantRepDetailsFromCase(userCase);
+
+      expect(userCase.representativeName).toBe('Wolfie Smith');
+      expect(userCase.representativeOrgName).toBe('Tooting Popular Front');
+      expect(userCase.representativePhoneNumber).toBe('0208 123 1234');
+      expect(userCase.repAddress1).toBe('1 Tooting Broadway');
+      expect(userCase.repAddressTown).toBe('London');
+      expect(userCase.repAddressPostcode).toBe('SW17 1NE');
+      expect(userCase.repAddressCountry).toBe('England');
+    });
+
+    it('should not overwrite existing representative fields', () => {
+      const userCase = {
+        ...baseCase,
+        representativeName: 'Existing Name',
+        claimantRepresentative: {
+          name_of_representative: 'Wolfie Smith',
+        },
+      };
+
+      populateClaimantRepDetailsFromCase(userCase);
+
+      expect(userCase.representativeName).toBe('Existing Name');
     });
   });
 
