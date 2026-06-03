@@ -26,7 +26,8 @@
       "required": "Please select at least one of the options below to choose the type of claim."
     },
     "otherClaim": {
-      "required": "Tell us briefly what type of claim the claimant is making"
+      "required": "Tell us briefly what type of claim the claimant is making",
+      "tooLong": "Description must be 100 characters or less"
     }
   }
 }
