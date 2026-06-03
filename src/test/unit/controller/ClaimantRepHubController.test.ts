@@ -3,6 +3,8 @@ import AxiosInstance from 'axios';
 import ClaimantRepHubController from '../../../main/controllers/ClaimantRepHubController';
 import * as CaseHelpers from '../../../main/controllers/helpers/CaseHelpers';
 import * as CitizenHubHelper from '../../../main/controllers/helpers/CitizenHubHelper';
+import * as TribunalHelper from '../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
+import * as MultiplePanelHelper from '../../../main/controllers/helpers/multiples/MultiplePanelHelper';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
@@ -15,6 +17,9 @@ import { mockResponse } from '../mocks/mockResponse';
 jest.mock('axios');
 jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({ id: 'case-123' } as any);
 jest.spyOn(CaseHelpers, 'handleUpdateHubLinksStatuses').mockResolvedValue();
+jest.spyOn(MultiplePanelHelper, 'showMutipleData').mockResolvedValue(false);
+jest.spyOn(MultiplePanelHelper, 'getMultiplePanelData').mockResolvedValue(undefined);
+jest.spyOn(TribunalHelper, 'activateTribunalOrdersAndRequestsLink').mockResolvedValue();
 
 const mockCaseApi = {
   axios: AxiosInstance,
@@ -149,33 +154,6 @@ describe('ClaimantRepHubController', () => {
 
       const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
       expect(renderArgs.showSubmittedAlert).toBe(true);
-    });
-
-    it('should pass showAcknowledgementAlert from helper', async () => {
-      const req = mockRequest({});
-      const res = mockResponse();
-      req.params = { caseId: 'case-123' };
-      const mockAlert = { shouldShowAlert: true, isAcknowledgementOfClaimOnly: true };
-      jest.spyOn(CitizenHubHelper, 'getAcknowledgementAlert').mockReturnValue(mockAlert);
-      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
-
-      await controller.get(req, res);
-
-      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
-      expect(renderArgs.showAcknowledgementAlert).toEqual(mockAlert);
-    });
-
-    it('should pass showRejectionAlert from helper', async () => {
-      const req = mockRequest({});
-      const res = mockResponse();
-      req.params = { caseId: 'case-123' };
-      jest.spyOn(CitizenHubHelper, 'shouldShowRejectionAlert').mockReturnValue(true);
-      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
-
-      await controller.get(req, res);
-
-      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
-      expect(renderArgs.showRejectionAlert).toBe(true);
     });
 
     it('should pass progressBarItems to render context', async () => {

@@ -1,7 +1,8 @@
 {% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block content %}
   <div class="govuk-grid-row">
@@ -19,26 +20,9 @@
               classes: ''
             }) }}
 
-            {% if showSubmittedAlert %}
-              {{ govukNotificationBanner({
-                type: 'important',
-                html: '<h3 class="govuk-notification-banner__heading">' + submittedAlert + '</h3><p class="govuk-body">' + submittedBannerText + '</p>'
-              }) }}
-            {% endif %}
+            {% include "./citizen-hub-notification-banner.njk" %}
 
-            {% if showAcknowledgementAlert %}
-              {{ govukNotificationBanner({
-                type: 'important',
-                html: '<h3 class="govuk-notification-banner__heading">' + notificationBanner.acknowledgement.header + '</h3>'
-              }) }}
-            {% endif %}
-
-            {% if showRejectionAlert %}
-              {{ govukNotificationBanner({
-                type: 'important',
-                html: '<h3 class="govuk-notification-banner__heading">' + notificationBanner.rejection.header + '</h3>'
-              }) }}
-            {% endif %}
+            {% include "./multiples/multiplePanel.njk" %}
 
             <ol class="app-task-list">
               {% for section in sections %}
@@ -89,6 +73,15 @@
                 {{ appointLegalRepresentative }}
               </a>
             </p>
+
+            {% set sideBarContent %}
+              {% include "./citizen-hub-sidebar.njk" %}
+            {% endset %}
+
+            {{ govukDetails({
+              summaryHtml: "<span id='contact-us-sidebar'>" + contact + "</span>",
+              html: sideBarContent
+            }) }}
           </div>
         </div>
       </div>
