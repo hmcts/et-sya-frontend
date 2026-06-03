@@ -45,7 +45,6 @@ export default class ClaimantTypeOfClaimController {
                 label: (l: AnyRecord): string => l.otherTypesOfClaims.explain,
                 labelSize: 'm',
                 labelHidden: false,
-                classes: 'govuk-label',
                 maxlength: 100,
                 attributes: { maxLength: 100 },
                 validator: isContent100CharsOrLess,
