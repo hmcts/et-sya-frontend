@@ -231,3 +231,16 @@ export const isValidCaseReferenceId: Validator = value => {
     return ValidationErrors.INVALID_VALUE;
   }
 };
+
+export const isValidEmailAddress: Validator = value => {
+  // If there is no value (empty string, null, or undefined), consider it valid and exit early
+  if (!value || (value as string).trim() === '') {
+    return;
+  }
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!(value as string).match(emailRegex)) {
+    return ValidationErrors.INVALID_VALUE;
+  }
+};

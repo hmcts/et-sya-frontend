@@ -124,7 +124,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(request.session.userCase.additionalClaimantAddresses).toBeUndefined();
     expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalledWith(request, expect.anything());
     expect(response.redirect).toHaveBeenCalledWith(
-      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=0`
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=new-claimant`
     );
   });
 
@@ -153,6 +153,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
       },
     ];
     request.session.userCase.currentAdditionalClaimantIndex = 0;
+    (request.session as any).additionalClaimantNewFlow = false;
 
     await new AdditionalClaimantPersonalDetailsController().post(request, response);
 

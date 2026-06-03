@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
 import { convertToDateObject } from '../../components/form/parser';
-import { isFieldFilledIn } from '../../components/form/validator';
+import { isFieldFilledIn, isValidEmailAddress } from '../../components/form/validator';
 import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
@@ -67,6 +67,7 @@ export default class AdditionalClaimantPersonalDetailsController {
         hint: (l: AnyRecord): string => l.emailHint,
         classes: 'govuk-!-width-one-half',
         attributes: { maxLength: 100 },
+        validator: isValidEmailAddress,
       },
       additionalClaimantDob: dob_date,
     },
@@ -81,14 +82,8 @@ export default class AdditionalClaimantPersonalDetailsController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
-    logger.info(
-      `Handling additional claimant personal details submission. Existing claimant count: ${
-        req.session.userCase.additionalClaimants?.length || 0
-      }, current edit index: ${req.session.userCase.currentAdditionalClaimantIndex ?? 'new'}`
-    );
 
     if (errors.length > 0) {
-      logger.info(`Additional claimant personal details validation failed with ${errors.length} error(s)`);
       req.session.errors = errors;
       return res.redirect(setUrlLanguage(req, PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS));
     }
@@ -122,14 +117,14 @@ export default class AdditionalClaimantPersonalDetailsController {
     } else {
       this.setFieldsForANewClaimant(req, claimant);
     }
-    const redirectUrl = isEditingExistingClaimant
-      ? PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
-      : this.getPostcodeEnterUrlWithClaimantIndex(req.session.userCase.currentAdditionalClaimantIndex);
-    logger.info(
-      `Saved additional claimant personal details. Claimant count is now: ${
-        req.session.userCase.additionalClaimants?.length || 0
-      }. Redirecting to: ${redirectUrl}`
-    );
+
+    // Only redirect to review when editing from a Change link (flag explicitly false).
+    // During creation (flag true or undefined), always continue forward.
+    const isNewClaimantFlow = req.session.additionalClaimantNewFlow !== false;
+    const redirectUrl =
+      isEditingExistingClaimant && !isNewClaimantFlow
+        ? PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
+        : `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=new-claimant`;
     req.session.userCase.groupClaimsCheck = YesOrNo.NO;
     await handleUpdateDraftCase(req, logger);
     const { saveForLater } = req.body;
@@ -142,21 +137,22 @@ export default class AdditionalClaimantPersonalDetailsController {
   @AdditionalClaimantCheck()
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    logger.info(
-      `Rendering additional claimant personal details page for ${
-        req.query?.additionalClaimant
-          ? `additional claimant index: ${req.query.additionalClaimant as string}`
-          : 'a new claimant'
-      }`
-    );
     const content = getPageContent(req, this.personalDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS,
     ]);
 
-    // Set editing index from query param (e.g. from Change link on review page)
+    // Set editing index and flow mode from query param
     const indexParam = req.query?.additionalClaimant as string;
-    if (indexParam !== undefined) {
+    if (indexParam === 'new-claimant') {
+      // Creation flow — flag persists in session across back-navigation
+      req.session.additionalClaimantNewFlow = true;
+      req.session.userCase.currentAdditionalClaimantIndex ??= req.session.userCase.additionalClaimants
+        ? req.session.userCase.additionalClaimants.length
+        : 0;
+    } else if (indexParam !== undefined) {
+      // Edit flow — came from a Change link on the review page
+      req.session.additionalClaimantNewFlow = false;
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
     }
     this.populateFormFieldsForExistingClaimant(req);
@@ -193,7 +189,8 @@ export default class AdditionalClaimantPersonalDetailsController {
       req.session.userCase.additionalClaimantAddressCountry = address?.Country;
       req.session.userCase.additionalClaimantAddressPostcode = address?.PostCode;
       req.session.userCase.additionalClaimantEnterPostcode = address?.PostCode;
-    } else if (editIndex !== undefined && claimants && editIndex >= claimants.length) {
+    } else if (editIndex !== undefined && claimants && editIndex > claimants.length) {
+      // Index beyond the next available position is invalid — reset it
       req.session.userCase.currentAdditionalClaimantIndex = undefined;
     }
   }
@@ -247,12 +244,5 @@ export default class AdditionalClaimantPersonalDetailsController {
     req.session.userCase.additionalClaimantEnterPostcode = undefined;
     req.session.userCase.additionalClaimantAddressTypes = undefined;
     req.session.userCase.additionalClaimantAddresses = undefined;
-  }
-
-  private getPostcodeEnterUrlWithClaimantIndex(additionalClaimantIndex: number | undefined): string {
-    if (additionalClaimantIndex === undefined) {
-      return PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER;
-    }
-    return `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=${additionalClaimantIndex}`;
   }
 }

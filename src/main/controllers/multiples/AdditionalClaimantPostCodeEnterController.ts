@@ -48,7 +48,13 @@ export default class AdditionalClaimantPostCodeEnterController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const indexParam = req.query?.additionalClaimant as string;
-    if (indexParam !== undefined) {
+    if (indexParam === 'new-claimant') {
+      if (req.session.userCase.currentAdditionalClaimantIndex === undefined) {
+        req.session.userCase.currentAdditionalClaimantIndex = req.session.userCase.additionalClaimants
+          ? req.session.userCase.additionalClaimants.length
+          : 0;
+      }
+    } else if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
     }
 
@@ -63,21 +69,26 @@ export default class AdditionalClaimantPostCodeEnterController {
       this.clearAdditionalClaimantAddressSelection(req);
     }
     req.session.userCase.groupClaimsCheck = YesOrNo.NO;
-    return handlePostLogic(
-      req,
-      res,
-      this.form,
-      logger,
-      this.getPostcodeSelectUrlWithClaimantIndex(req.session.userCase.currentAdditionalClaimantIndex),
-      true
-    );
+    const isNewClaimantFlow = req.session.additionalClaimantNewFlow !== false;
+    const postcodeSelectUrl = isNewClaimantFlow
+      ? `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT}?additionalClaimant=new-claimant`
+      : this.getPostcodeSelectUrlWithClaimantIndex(req.session.userCase.currentAdditionalClaimantIndex);
+    return handlePostLogic(req, res, this.form, logger, postcodeSelectUrl, true);
   };
 
   @AdditionalClaimantCheck()
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
     const indexParam = req.query?.additionalClaimant as string;
-    if (indexParam !== undefined) {
+    if (indexParam === 'new-claimant') {
+      if (req.session.userCase.currentAdditionalClaimantIndex === undefined) {
+        req.session.userCase.currentAdditionalClaimantIndex = req.session.userCase.additionalClaimants
+          ? req.session.userCase.additionalClaimants.length
+          : 0;
+      }
+      req.session.userCase.additionalClaimantAddressTypes = undefined;
+      req.session.userCase.additionalClaimantAddresses = undefined;
+    } else if (indexParam !== undefined) {
       req.session.userCase.currentAdditionalClaimantIndex = parseInt(indexParam, 10);
       req.session.userCase.additionalClaimantAddressTypes = undefined;
       req.session.userCase.additionalClaimantAddresses = undefined;

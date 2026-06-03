@@ -20,28 +20,21 @@ export const checkAdditionalClaimantAndRedirect = (req: AppRequest, res: Respons
   const claimantQuery = req.query?.additionalClaimant;
   let redirectUrl: string | null = null;
 
-  // If it's missing entirely, it's a creation flow -> skip validation completely
-  if (claimantQuery === undefined || claimantQuery === null || claimantQuery === '') {
-    if (claimants?.length === 5) {
-      // prevent navigation to create screens if claimants is equal to 5
-      redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
-    } else {
+  if (
+    claimantQuery === 'new-claimant' ||
+    claimantQuery === undefined ||
+    claimantQuery === null ||
+    claimantQuery === ''
+  ) {
+    // Creation flow — only allow through if the session flag is active and not at max capacity.
+    // A stale ?additionalClaimant=new-claimant in browser history is blocked once the flag is cleared.
+    if (req.session?.additionalClaimantNewFlow === true && claimants?.length < 5) {
       return false;
     }
-  }
-
-  // If it's present, try to parse it as a number and validate against the session array
-  // (Handles strings like "0", native numbers like 0, or even arrays like ["0"])
-  const normalizedQuery = Array.isArray(claimantQuery) ? claimantQuery[0] : claimantQuery;
-  const claimantIndex = Number.parseInt(String(normalizedQuery), 10);
-
-  if (
-    Number.isNaN(claimantIndex) ||
-    claimantIndex < 0 ||
-    !Array.isArray(claimants) ||
-    claimants[claimantIndex] === undefined
-  ) {
     redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
+  } else {
+    // Numeric index or other value — edit flow, allow through
+    return false;
   }
 
   // Early exit redirect if a validation rule tripped
@@ -50,5 +43,5 @@ export const checkAdditionalClaimantAndRedirect = (req: AppRequest, res: Respons
     return true;
   }
 
-  return false; // Safely proceed to your controller GET handler
+  return false;
 };

@@ -39,6 +39,7 @@ export interface AppSession extends Session {
   respondentName?: string;
   csrfInitialized?: boolean;
   deletedCaseIds?: string[];
+  additionalClaimantNewFlow?: boolean;
 }
 
 export interface UserDetails {
