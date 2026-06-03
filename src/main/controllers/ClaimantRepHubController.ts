@@ -59,6 +59,9 @@ export default class ClaimantRepHubController {
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
     updateHubLinkStatuses(userCase, hubLinksStatuses);
+    hubLinksStatuses[HubLinkNames.AboutYou] = HubLinkStatus.OPTIONAL;
+
+    const aboutYouStatus = hubLinksStatuses[HubLinkNames.AboutYou];
 
     const sections = repSectionIndexToLinkNames.map((linkNames, index) => ({
       title: (l: AnyRecord): string => l[`section${index + 1}`],
@@ -74,16 +77,15 @@ export default class ClaimantRepHubController {
       }),
     }));
 
-    // Prepend the "About you" section (static, not yet available)
     const aboutYouSection = {
       title: (l: AnyRecord): string => l.sectionAboutYou,
       links: [
         {
           linkTxt: (l: AnyRecord): string => l.personalDetails,
-          status: (l: AnyRecord): string => l[HubLinkStatus.NOT_YET_AVAILABLE],
-          shouldShow: false,
-          url: () => '',
-          statusColor: () => statusColorMap.get(HubLinkStatus.NOT_YET_AVAILABLE),
+          status: (l: AnyRecord): string => l[aboutYouStatus],
+          shouldShow: shouldHubLinkBeClickable(aboutYouStatus, HubLinkNames.AboutYou),
+          url: () => getHubLinksUrlMap(false, languageParam).get(HubLinkNames.AboutYou),
+          statusColor: () => statusColorMap.get(aboutYouStatus),
         },
       ],
     };
