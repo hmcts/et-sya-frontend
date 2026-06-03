@@ -338,6 +338,7 @@ export class Routes {
     app.post(
       PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED,
       handleUploads.single('claimSummaryFileName'),
+      csrfProtection,
       claimantDescribeWhatHappenedController.post
     );
     app.get(PageUrls.CLAIMANT_TELL_US_WHAT_YOU_WANT, new ClaimantTellUsWhatYouWantController().get);
