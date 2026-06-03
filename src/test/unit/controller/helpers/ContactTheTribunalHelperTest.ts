@@ -17,7 +17,7 @@ describe('ContactTheTribunalHelper tests', () => {
       expect(isClaimantRepresentedByOrganisation(undefined)).toBe(false);
     });
 
-    it('should return false when user case claimant represented question is undefined', () => {
+    it('should return false when organisation policy and representative are absent', () => {
       const userCase: CaseWithId = {
         id: '1',
         state: CaseState.SUBMITTED,
@@ -25,32 +25,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-      };
-      expect(isClaimantRepresentedByOrganisation(userCase)).toBe(false);
-    });
-
-    it('should return false when user case claimant represented question is not equal to Yes', () => {
-      const userCase: CaseWithId = {
-        id: '1',
-        state: CaseState.SUBMITTED,
-        createdDate: DATE,
-        lastModified: DATE,
-        respondents: undefined,
-        et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.NO,
-      };
-      expect(isClaimantRepresentedByOrganisation(userCase)).toBe(false);
-    });
-
-    it('should return false when user case claimant representative organisation policy is undefined', () => {
-      const userCase: CaseWithId = {
-        id: '1',
-        state: CaseState.SUBMITTED,
-        createdDate: DATE,
-        lastModified: DATE,
-        respondents: undefined,
-        et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
       };
       expect(isClaimantRepresentedByOrganisation(userCase)).toBe(false);
     });
@@ -63,7 +37,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
         claimantRepresentativeOrganisationPolicy: {
           Organisation: undefined,
         },
@@ -79,7 +52,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
         claimantRepresentativeOrganisationPolicy: {
           Organisation: {
             OrganisationID: undefined,
@@ -98,7 +70,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
         claimantRepresentativeOrganisationPolicy: {
           Organisation: {
             OrganisationID: 'dummyId',
@@ -117,7 +88,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
         claimantRepresentativeOrganisationPolicy: {
           Organisation: {
             OrganisationID: 'dummyId',
@@ -136,7 +106,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
         claimantRepresentativeOrganisationPolicy: undefined,
         claimantRepresentative: {
           myHmctsOrganisation: undefined,
@@ -145,7 +114,7 @@ describe('ContactTheTribunalHelper tests', () => {
       expect(isClaimantRepresentedByOrganisation(userCase)).toBe(false);
     });
 
-    it('should return false when user case claimant representative organisation policy undefined and claimant representative have MyHmcts organisation', () => {
+    it('should return true when claimant representative has MyHmcts organisation', () => {
       const userCase: CaseWithId = {
         id: '1',
         state: CaseState.SUBMITTED,
@@ -153,7 +122,6 @@ describe('ContactTheTribunalHelper tests', () => {
         lastModified: DATE,
         respondents: undefined,
         et3ResponseReceived: true,
-        claimantRepresentedQuestion: YesOrNo.YES,
         claimantRepresentativeOrganisationPolicy: undefined,
         claimantRepresentative: {
           myHmctsOrganisation: {
