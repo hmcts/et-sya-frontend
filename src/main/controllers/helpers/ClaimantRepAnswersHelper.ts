@@ -88,6 +88,85 @@ const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
   }
 };
 
+export const getClaimantRepAboutYouUrl = (caseId: string, languageParam: string): string =>
+  PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + languageParam;
+
+export const getClaimantRepAboutYouDetails = (
+  userCase: CaseWithId,
+  userEmail: string | undefined,
+  translations: AnyRecord,
+  languageParam: string
+): SummaryListRow[] => {
+  const changePath = InterceptPaths.REP_ABOUT_YOU_CHANGE + languageParam;
+
+  const emailValue = userEmail
+    ? `<a class="govuk-link" href="mailto:${userEmail}">${userEmail}</a>`
+    : translations.notProvided;
+
+  return [
+    addSummaryRow(
+      translations.aboutYouDetails.name,
+      userCase.representativeName ?? translations.notProvided,
+      createChangeAction(
+        PageUrls.REPRESENTATIVE_DETAILS + changePath,
+        translations.change,
+        translations.aboutYouDetails.name
+      )
+    ),
+    addSummaryRow(
+      translations.aboutYouDetails.organisation,
+      userCase.representativeOrgName ?? translations.notProvided,
+      createChangeAction(
+        PageUrls.REPRESENTATIVE_DETAILS + changePath,
+        translations.change,
+        translations.aboutYouDetails.organisation
+      )
+    ),
+    addSummaryRow(
+      translations.aboutYouDetails.typeOfOrganisation,
+      userCase.representativeType ?? translations.notProvided,
+      createChangeAction(
+        PageUrls.REPRESENTATIVE_DETAILS + changePath,
+        translations.change,
+        translations.aboutYouDetails.typeOfOrganisation
+      )
+    ),
+    addSummaryRow(
+      translations.aboutYouDetails.address,
+      answersAddressFormatter(
+        userCase.repAddress1,
+        userCase.repAddress2,
+        userCase.repAddressTown,
+        userCase.repAddressCountry,
+        userCase.repAddressPostcode
+      ),
+      createChangeAction(
+        PageUrls.REPRESENTATIVE_POSTCODE_ENTER + changePath,
+        translations.change,
+        translations.aboutYouDetails.address
+      )
+    ),
+    addSummaryHtmlRow(
+      translations.aboutYouDetails.email,
+      emailValue,
+      createChangeAction(
+        PageUrls.REPRESENTATIVE_COMMS_PREFERENCE + changePath,
+        translations.change,
+        translations.aboutYouDetails.email
+      )
+    ),
+    addSummaryRow(
+      translations.aboutYouDetails.phone,
+      userCase.representativePhoneNumber ?? translations.notProvided,
+      createChangeAction(
+        PageUrls.REPRESENTATIVE_PHONE_NUMBER + changePath,
+        translations.change,
+        translations.aboutYouDetails.phone
+      )
+    ),
+  ];
+};
+
 export const getRepresentativeDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
 

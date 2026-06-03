@@ -1,6 +1,8 @@
 import {
   getClaimantClaimDetails,
   getClaimantPersonalDetails,
+  getClaimantRepAboutYouDetails,
+  getClaimantRepAboutYouUrl,
   getClaimantRespondentSection,
   getRepresentativeDetails,
 } from '../../../../main/controllers/helpers/ClaimantRepAnswersHelper';
@@ -13,6 +15,7 @@ import {
   Sex,
   YesOrNo,
 } from '../../../../main/definitions/case';
+import { InterceptPaths, PageUrls } from '../../../../main/definitions/constants';
 import { CaseState, ClaimTypeDiscrimination, ClaimTypePay } from '../../../../main/definitions/definition';
 import et1DetailsJson from '../../../../main/resources/locales/en/translation/et1-details.json';
 
@@ -70,6 +73,14 @@ const translations = {
   discriminationClaims: { Age: 'Age' },
   payClaims: { Arrears: 'Arrears' },
   tellUsWhatYouWant: { compensation: 'Compensation only' },
+  aboutYouDetails: {
+    name: 'Name',
+    organisation: 'Organisation',
+    typeOfOrganisation: 'Type of organisation',
+    address: 'Address',
+    email: 'Email',
+    phone: 'Phone',
+  },
 };
 
 const baseCase = {
@@ -78,6 +89,38 @@ const baseCase = {
 } as CaseWithId;
 
 describe('ClaimantRepAnswersHelper', () => {
+  describe('getClaimantRepAboutYouUrl', () => {
+    it('should build the about you page url for a case', () => {
+      expect(getClaimantRepAboutYouUrl('case-123', '')).toBe('/claimant-rep-about-you/case-123');
+    });
+  });
+
+  describe('getClaimantRepAboutYouDetails', () => {
+    it('should return summary rows with change links to rep edit pages', () => {
+      const userCase = {
+        ...baseCase,
+        representativeType: 'Trade Union',
+        representativeOrgName: 'Tooting Popular Front',
+        representativeName: 'Wolfie Smith',
+        repAddress1: '1 Tooting Broadway',
+        repAddressTown: 'London',
+        repAddressPostcode: 'SW17 1NE',
+        representativePhoneNumber: '0208 123 1234',
+      };
+      const rows = getClaimantRepAboutYouDetails(userCase, 'WSmith@TPF.com', translations, '');
+      expect(rows).toHaveLength(6);
+      expect(rows[0].value.text).toBe('Wolfie Smith');
+      expect(rows[0].actions.items[0].href).toBe(PageUrls.REPRESENTATIVE_DETAILS + InterceptPaths.REP_ABOUT_YOU_CHANGE);
+      expect(rows[4].value.html).toContain('WSmith@TPF.com');
+      expect(rows[4].actions.items[0].href).toBe(
+        PageUrls.REPRESENTATIVE_COMMS_PREFERENCE + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+      expect(rows[5].actions.items[0].href).toBe(
+        PageUrls.REPRESENTATIVE_PHONE_NUMBER + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+    });
+  });
+
   describe('getRepresentativeDetails', () => {
     it('should return rows with provided values', () => {
       const userCase = {

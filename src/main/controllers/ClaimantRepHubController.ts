@@ -24,6 +24,7 @@ import {
   updateHubLinkStatuses,
 } from './helpers/CitizenHubHelper';
 import { getProgressBarItems } from './helpers/CitizenHubProgressBarHelper';
+import { getClaimantRepAboutYouUrl } from './helpers/ClaimantRepAnswersHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantRepHubController');
@@ -84,7 +85,7 @@ export default class ClaimantRepHubController {
           linkTxt: (l: AnyRecord): string => l.personalDetails,
           status: (l: AnyRecord): string => l[aboutYouStatus],
           shouldShow: shouldHubLinkBeClickable(aboutYouStatus, HubLinkNames.AboutYou),
-          url: () => getHubLinksUrlMap(false, languageParam).get(HubLinkNames.AboutYou),
+          url: () => getClaimantRepAboutYouUrl(userCase.id, languageParam),
           statusColor: () => statusColorMap.get(aboutYouStatus),
         },
       ],

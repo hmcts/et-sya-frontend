@@ -1,0 +1,18 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "aboutYouDetails": {
+    "name": "<place-holder>",
+    "organisation": "<place-holder>",
+    "typeOfOrganisation": "<place-holder>",
+    "address": "<place-holder>",
+    "email": "<place-holder>",
+    "phone": "<place-holder>"
+  },
+  "tellTheTribunal": {
+    "heading": "<place-holder>",
+    "textBeforeLink": "<place-holder>",
+    "contactLink": "<place-holder>",
+    "textAfterLink": "<place-holder>"
+  }
+}

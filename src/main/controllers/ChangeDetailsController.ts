@@ -24,6 +24,13 @@ export default class ChangeDetailsController {
     } else if (req.query.redirect === 'rep-answers') {
       redirectUrl = req.url.replace(InterceptPaths.REP_ANSWERS_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CLAIMANT_REP_CHECK_ANSWERS);
+    } else if (req.query.redirect === 'rep-about-you') {
+      redirectUrl = req.url.replace(InterceptPaths.REP_ABOUT_YOU_CHANGE, languageParam);
+      const caseId = req.session.userCase?.id;
+      if (!caseId) {
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
+      req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId));
     } else if (req.query.redirect === 'respondent') {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK);

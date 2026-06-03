@@ -3,7 +3,7 @@ import AxiosInstance from 'axios';
 import ClaimantRepHubController from '../../../main/controllers/ClaimantRepHubController';
 import * as CaseHelpers from '../../../main/controllers/helpers/CaseHelpers';
 import * as CitizenHubHelper from '../../../main/controllers/helpers/CitizenHubHelper';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
@@ -122,7 +122,9 @@ describe('ClaimantRepHubController', () => {
       expect(personalDetailsLink.linkTxt(l)).toBe('View and edit your personal details');
       expect(personalDetailsLink.status(l)).toBe('Optional');
       expect(personalDetailsLink.shouldShow).toBe(true);
-      expect(personalDetailsLink.url()).toBe(PageUrls.REPRESENTATIVE_DETAILS_CHECK);
+      expect(personalDetailsLink.url()).toBe(
+        PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', 'case-123') + languages.ENGLISH_URL_PARAMETER
+      );
       expect(personalDetailsLink.statusColor()).toBe('--blue');
     });
 
@@ -144,7 +146,9 @@ describe('ClaimantRepHubController', () => {
       const personalDetailsLink = renderArgs.sections[0].links[0];
 
       expect(personalDetailsLink.shouldShow).toBe(true);
-      expect(personalDetailsLink.url()).toBe(PageUrls.REPRESENTATIVE_DETAILS_CHECK);
+      expect(personalDetailsLink.url()).toBe(
+        PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', 'case-123') + languages.ENGLISH_URL_PARAMETER
+      );
     });
 
     it('should include "View claimant contact details" in The Claim section', async () => {
