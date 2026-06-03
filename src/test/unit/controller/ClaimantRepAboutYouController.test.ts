@@ -14,7 +14,7 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 jest.mock('axios');
-jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({ id: 'case-123' } as CaseWithId);
+jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({ id: 'case-123' } as unknown as CaseWithId);
 
 const mockCaseApi = {
   axios: AxiosInstance,
@@ -42,7 +42,7 @@ describe('ClaimantRepAboutYouController', () => {
       repAddressPostcode: 'SW17 1NE',
       representativePhoneNumber: '0208 123 1234',
       hubLinksStatuses: { [HubLinkNames.AboutYou]: HubLinkStatus.OPTIONAL },
-    } as CaseWithId);
+    } as unknown as CaseWithId);
   });
 
   it('should render the about you page on successful case load', async () => {
@@ -100,7 +100,7 @@ describe('ClaimantRepAboutYouController', () => {
     jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({
       id: 'case-123',
       hubLinksStatuses: { [HubLinkNames.AboutYou]: HubLinkStatus.OPTIONAL },
-    } as CaseWithId);
+    } as unknown as CaseWithId);
 
     const req = mockRequest({});
     const res = mockResponse();

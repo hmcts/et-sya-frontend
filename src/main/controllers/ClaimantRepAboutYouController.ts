@@ -1,10 +1,9 @@
 import { Response } from 'express';
 
 import { validateRepresentativeDetails } from '../components/form/claim-details-validator';
-import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent } from '../definitions/form';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -21,15 +20,10 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 const logger = getLogger('ClaimantRepAboutYouController');
 
 export default class ClaimantRepAboutYouController {
-  private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {},
     submit: submitButton,
   };
-
-  constructor() {
-    this.form = new Form(<FormFields>this.formContent.fields);
-  }
 
   private loadCase = async (req: AppRequest, caseId: string): Promise<boolean> => {
     try {
