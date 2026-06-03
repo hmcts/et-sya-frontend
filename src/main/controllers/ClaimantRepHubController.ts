@@ -28,8 +28,8 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantRepHubController');
 
-// Rep hub has an additional "About you" section at the front
-const repSectionIndexToLinkNames: HubLinkNames[][] = [...sectionIndexToLinkNames];
+// Rep hub uses a custom "About you" section; exclude the shared citizen-hub AboutYou section
+const repSectionIndexToLinkNames: HubLinkNames[][] = sectionIndexToLinkNames.slice(1);
 
 export default class ClaimantRepHubController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
