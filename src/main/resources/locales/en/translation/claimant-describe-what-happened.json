@@ -32,9 +32,13 @@
   "hint": "Use this to describe the events around the dispute, or add to your claim by uploading a document",
   "fileUpload": {
     "label": "Upload a document that describes the claim (optional)",
-    "linkText": "Or upload a document",
+    "linkText": "Or upload your summary as a separate document (optional)",
     "hint": "Upload a file that describes the claim. Maximum 50MB.",
     "hintExisting": "Currently uploaded: {{filename}}. Upload a different file to replace it."
+  },
+  "acceptedFormats": {
+    "label": "Accepted formats",
+    "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {

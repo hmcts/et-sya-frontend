@@ -72,7 +72,7 @@ export default class RepresentedClaimantSexAndTitleController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+    if (req.query?.redirect === 'clearSelection') {
       this.clearSelection(req);
     }
     const content = getPageContent(req, this.formContent, [
