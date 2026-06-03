@@ -1,35 +1,96 @@
 {% extends "template.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl">{{ h1 }}</h1>
+      <h2 class="govuk-heading-l">
+        {{ header + userCase.firstName + ' ' + userCase.lastName }} vs {{ userCase.respondents[0].respondentName }}
+      </h2>
+      <p id="caseNumber" class="govuk-body">{{ caseNumber + userCase.ethosCaseReference }}</p>
 
-      {% if userCase.ethosCaseReference %}
-        <p class="govuk-body">{{ caseNumber }} <strong>{{ userCase.ethosCaseReference }}</strong></p>
-      {% endif %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+          <div class="top-border-blue">
+            {{ hmctsProgressBar({
+              items: progressBarItems,
+              classes: ''
+            }) }}
 
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: { text: claimant },
-            value: { text: userCase.firstName + ' ' + userCase.lastName }
-          },
-          {
-            key: { text: respondent },
-            value: { text: userCase.respondents[0].respondentName if userCase.respondents and userCase.respondents.length > 0 }
-          }
-        ]
-      }) }}
+            {% if showSubmittedAlert %}
+              {{ govukNotificationBanner({
+                type: 'important',
+                html: '<h3 class="govuk-notification-banner__heading">' + submittedAlert + '</h3><p class="govuk-body">' + submittedBannerText + '</p>'
+              }) }}
+            {% endif %}
 
-      <div class="govuk-button-group">
-        {{ govukButton({
-          text: returnToApplications,
-          href: PageUrls.CLAIMANT_APPLICATIONS,
-          classes: 'govuk-button--secondary'
-        }) }}
+            {% if showAcknowledgementAlert %}
+              {{ govukNotificationBanner({
+                type: 'important',
+                html: '<h3 class="govuk-notification-banner__heading">' + notificationBanner.acknowledgement.header + '</h3>'
+              }) }}
+            {% endif %}
+
+            {% if showRejectionAlert %}
+              {{ govukNotificationBanner({
+                type: 'important',
+                html: '<h3 class="govuk-notification-banner__heading">' + notificationBanner.rejection.header + '</h3>'
+              }) }}
+            {% endif %}
+
+            <ol class="app-task-list">
+              {% for section in sections %}
+                <li>
+                  <h2 class="app-task-list__section">
+                    {{ getContent(section.title) }}
+                  </h2>
+                  <ul class="app-task-list__items">
+                    {% for link in section.links %}
+                      <li class="app-task-list__item">
+                        <span class="app-task-list__task-name">
+                          {% if link.shouldShow %}
+                            <a href="{{ getContent(link.url) }}" class="govuk-link">
+                              {{ getContent(link.linkTxt) }}
+                            </a>
+                          {% else %}
+                            {{ getContent(link.linkTxt) }}
+                          {% endif %}
+                        </span>
+                        {{ govukTag({
+                          text: getContent(link.status),
+                          classes: 'no-text-transform app-task-list__tag govuk-tag' + getContent(link.statusColor)
+                        }) }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+
+        <div class="govuk-grid-column-one-third-from-desktop">
+          <div class="top-border-blue">
+            <h2 class="govuk-heading-s">{{ iWantTo }}</h2>
+            <p class="govuk-body">
+              <a href="{{ PageUrls.CONTACT_THE_TRIBUNAL + languageParam }}" class="govuk-link">
+                {{ contactTribunalMyCase }}
+              </a>
+            </p>
+            <p class="govuk-body">
+              <a href="https://www.gov.uk/find-legal-advice" target="_blank" class="govuk-link">
+                {{ findLegalAdvice }}
+              </a>
+            </p>
+            <p class="govuk-body">
+              <a href="{{ PageUrls.APPOINT_LEGAL_REPRESENTATIVE + languageParam }}" class="govuk-link">
+                {{ appointLegalRepresentative }}
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
