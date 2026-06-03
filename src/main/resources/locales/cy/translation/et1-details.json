@@ -25,6 +25,22 @@
     "phone": "Ffôn",
     "neither": "Dim un"
   },
+  "groupClaimsHeader": "[W] Other people in your claim",
+  "groupClaimDetails": {
+    "claimType": "[W] Claiming on your own or with others",
+    "single": "[W] I’m claiming on my own",
+    "multiple": "[W] I’m claiming with another person or other people",
+    "addAdditionalClaimantsMethod": "[W] How do you want to add the other claimants?",
+    "manually": "[W] Manually",
+    "spreadsheetUpload": "[W] Spreadsheet upload",
+    "additionalClaimants": "[W] Additional claimants",
+    "additionalClaimant": "[W] Additional claimant",
+    "nameLabel": "[W] Name",
+    "dobLabel": "[W] Date of birth",
+    "addressLabel": "[W] Address",
+    "emailLabel": "[W] Email address",
+    "groupRepresentative": "[W] Do you agree to be the group claim representative?"
+  },
   "contactDetails": {
     "header": "Manylion cyswllt",
     "telephone": "Rhif ffôn"

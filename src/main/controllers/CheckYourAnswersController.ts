@@ -7,6 +7,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
+import { getGroupClaimDetails } from './helpers/GroupClaimDetailsAnswersHelper';
 import { getRespondentSection, respondentTitle } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -15,14 +16,12 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 export default class CheckYourAnswersController {
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    if (!req.session || !req.session.userCase) {
+    if (!req.session?.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
     if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim?.length === 0) {
-      if (req.session.errors === undefined) {
-        req.session.errors = [];
-      }
+      req.session.errors ??= [];
       req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
     }
 
@@ -35,19 +34,20 @@ export default class CheckYourAnswersController {
     };
 
     const newRespondentNum =
-      req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : undefined;
+      req.session.userCase.respondents === undefined ? undefined : req.session.userCase.respondents.length + 1;
 
     setNumbersToRespondents(userCase.respondents);
 
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
       PageUrls,
+      translations,
       userCase,
       respondents: req.session.userCase?.respondents,
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
-      translations,
       yourDetails: getYourDetails(userCase, translations),
+      groupClaimDetails: getGroupClaimDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

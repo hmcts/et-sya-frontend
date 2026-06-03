@@ -62,6 +62,7 @@ export default class SingleOrMultipleController {
   };
 
   private clearGroupClaimsFields(userCase: CaseWithId) {
+    userCase.addClaimantMethod = undefined;
     userCase.additionalClaimants = undefined;
     userCase.leadClaimant = undefined;
   }
