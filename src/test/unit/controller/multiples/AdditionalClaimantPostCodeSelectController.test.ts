@@ -245,4 +245,234 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     expect(req.session.userCase.additionalClaimantAddressCountry).toBeUndefined();
     expect(req.session.userCase.additionalClaimantAddressPostcode).toBeUndefined();
   });
+
+  it('should set currentAdditionalClaimantIndex for new-claimant query when additionalClaimants exist', async () => {
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.query = { additionalClaimant: 'new-claimant' };
+    req.session.additionalClaimantNewFlow = true;
+    req.session.userCase.additionalClaimants = [{ firstName: 'Existing', lastName: 'Claimant' }];
+    req.session.userCase.additionalClaimantEnterPostcode = 'SW1A 1AA';
+    (getAddressesForPostcode as jest.Mock).mockResolvedValue([]);
+
+    await new AdditionalClaimantPostCodeSelectController().get(req, res);
+
+    expect(req.session.userCase.currentAdditionalClaimantIndex).toBe(1);
+  });
+
+  it('should fill address fields from selected address when no address fields are populated', async () => {
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.session.userCase.additionalClaimantAddressTypes = 0 as never;
+    req.session.userCase.additionalClaimantEnterPostcode = 'SW1A 2AA';
+    (getAddressesForPostcode as jest.Mock).mockResolvedValue([
+      {
+        fullAddress: '10 DOWNING STREET, LONDON, SW1A 2AA',
+        street1: '10 Downing Street',
+        street2: '',
+        town: 'London',
+        postcode: 'SW1A 2AA',
+        country: 'England',
+      },
+    ]);
+
+    await new AdditionalClaimantPostCodeSelectController().get(req, res);
+
+    expect(req.session.userCase.additionalClaimantAddress1).toBe('10 Downing Street');
+    expect(req.session.userCase.additionalClaimantAddressTown).toBe('London');
+    expect(req.session.userCase.additionalClaimantAddressCountry).toBe('England');
+    expect(req.session.userCase.additionalClaimantAddressPostcode).toBe('SW1A 2AA');
+  });
+
+  it('should highlight selected address type in the dropdown', async () => {
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.session.userCase.additionalClaimantAddressTypes = 0 as never;
+    req.session.userCase.additionalClaimantEnterPostcode = 'SW1A 2AA';
+    (getAddressesForPostcode as jest.Mock).mockResolvedValue([
+      {
+        fullAddress: '10 DOWNING STREET',
+        street1: '10 Downing Street',
+        street2: '',
+        town: 'London',
+        postcode: 'SW1A 2AA',
+        country: 'England',
+      },
+    ]);
+
+    await new AdditionalClaimantPostCodeSelectController().get(req, res);
+
+    const addressTypes = req.session.userCase.additionalClaimantAddressTypes;
+    expect(addressTypes[1].selected).toBe(true);
+  });
+
+  it('should create a new claimant when additionalClaimants is undefined on post', async () => {
+    const req = mockRequest({
+      body: {
+        additionalClaimantAddress1: '5 High St',
+        additionalClaimantAddressTown: 'Bristol',
+        additionalClaimantAddressCountry: 'England',
+        additionalClaimantAddressPostcode: 'BS1 1AA',
+      },
+    });
+    const res = mockResponse();
+    req.session.userCase.additionalClaimants = undefined;
+    req.session.userCase.additionalClaimantTitle = 'Ms';
+    req.session.userCase.additionalClaimantFirstName = 'Alice';
+    req.session.userCase.additionalClaimantLastName = 'Brown';
+
+    await new AdditionalClaimantPostCodeSelectController().post(req, res);
+
+    expect(req.session.userCase.additionalClaimants).toHaveLength(1);
+    expect(req.session.userCase.additionalClaimants[0].firstName).toBe('Alice');
+    expect(req.session.userCase.additionalClaimants[0].address.AddressLine1).toBe('5 High St');
+  });
+
+  describe('utility methods', () => {
+    const controller = new AdditionalClaimantPostCodeSelectController();
+
+    describe('normalisePostcode', () => {
+      it('should strip whitespace and uppercase', () => {
+        expect(controller.normalisePostcode('sw1a 2aa')).toBe('SW1A2AA');
+      });
+
+      it('should handle undefined', () => {
+        expect(controller.normalisePostcode(undefined)).toBe('');
+      });
+
+      it('should handle empty string', () => {
+        expect(controller.normalisePostcode('')).toBe('');
+      });
+    });
+
+    describe('hasAnyAddressFieldValue', () => {
+      it('should return false when all fields are empty or undefined', () => {
+        expect(
+          controller.hasAnyAddressFieldValue({
+            additionalClaimantAddress1: undefined,
+            additionalClaimantAddress2: undefined,
+            additionalClaimantAddressTown: undefined,
+            additionalClaimantAddressCountry: undefined,
+            additionalClaimantAddressPostcode: undefined,
+          })
+        ).toBe(false);
+      });
+
+      it('should return true when at least one field has a value', () => {
+        expect(
+          controller.hasAnyAddressFieldValue({
+            additionalClaimantAddress1: '1 Main St',
+            additionalClaimantAddress2: undefined,
+            additionalClaimantAddressTown: undefined,
+            additionalClaimantAddressCountry: undefined,
+            additionalClaimantAddressPostcode: undefined,
+          })
+        ).toBe(true);
+      });
+
+      it('should return false when fields are whitespace only', () => {
+        expect(
+          controller.hasAnyAddressFieldValue({
+            additionalClaimantAddress1: '   ',
+            additionalClaimantAddress2: undefined,
+            additionalClaimantAddressTown: undefined,
+            additionalClaimantAddressCountry: undefined,
+            additionalClaimantAddressPostcode: undefined,
+          })
+        ).toBe(false);
+      });
+    });
+
+    describe('hasEnteredDifferentPostcodeToCurrentClaimant', () => {
+      it('should return false when currentClaimant is undefined', () => {
+        expect(controller.hasEnteredDifferentPostcodeToCurrentClaimant(undefined, {})).toBe(false);
+      });
+
+      it('should return false when both postcodes are empty', () => {
+        const claimant = { address: { PostCode: '' } } as never;
+        expect(
+          controller.hasEnteredDifferentPostcodeToCurrentClaimant(claimant, {
+            additionalClaimantEnterPostcode: '',
+          })
+        ).toBe(false);
+      });
+
+      it('should return false when postcodes match (ignoring spaces and case)', () => {
+        const claimant = { address: { PostCode: 'SW1A 2AA' } } as never;
+        expect(
+          controller.hasEnteredDifferentPostcodeToCurrentClaimant(claimant, {
+            additionalClaimantEnterPostcode: 'sw1a2aa',
+          })
+        ).toBe(false);
+      });
+
+      it('should return true when postcodes differ', () => {
+        const claimant = { address: { PostCode: 'SW1A 2AA' } } as never;
+        expect(
+          controller.hasEnteredDifferentPostcodeToCurrentClaimant(claimant, {
+            additionalClaimantEnterPostcode: 'M1 1AA',
+          })
+        ).toBe(true);
+      });
+    });
+
+    describe('fillAdditionalClaimantAddressFields', () => {
+      it('should do nothing when selectedAddressType is NaN', () => {
+        const req = mockRequest({});
+        controller.fillAdditionalClaimantAddressFields('invalid', req);
+
+        expect(req.session.userCase.additionalClaimantAddress1).toBeUndefined();
+      });
+
+      it('should do nothing when selected address does not exist', () => {
+        const req = mockRequest({});
+        req.session.userCase.additionalClaimantAddresses = [];
+        controller.fillAdditionalClaimantAddressFields('5', req);
+
+        expect(req.session.userCase.additionalClaimantAddress1).toBeUndefined();
+      });
+
+      it('should populate address fields from matching address', () => {
+        const req = mockRequest({});
+        req.session.userCase.additionalClaimantAddresses = [
+          {
+            street1: '10 Downing St',
+            street2: '',
+            town: 'London',
+            country: 'England',
+            postcode: 'SW1A 2AA',
+          },
+        ];
+        controller.fillAdditionalClaimantAddressFields('0', req);
+
+        expect(req.session.userCase.additionalClaimantAddress1).toBe('10 Downing St');
+        expect(req.session.userCase.additionalClaimantAddressTown).toBe('London');
+        expect(req.session.userCase.additionalClaimantAddressCountry).toBe('England');
+        expect(req.session.userCase.additionalClaimantAddressPostcode).toBe('SW1A 2AA');
+      });
+    });
+
+    describe('clearAdditionalClaimantTransientFields', () => {
+      it('should clear all transient fields', () => {
+        const req = mockRequest({});
+        req.session.additionalClaimantNewFlow = true;
+        req.session.userCase.currentAdditionalClaimantIndex = 0;
+        req.session.userCase.additionalClaimantTitle = 'Mr';
+        req.session.userCase.additionalClaimantFirstName = 'John';
+        req.session.userCase.additionalClaimantLastName = 'Doe';
+        req.session.userCase.additionalClaimantEmail = 'john@test.com';
+        req.session.userCase.additionalClaimantAddress1 = '1 Main St';
+
+        controller.clearAdditionalClaimantTransientFields(req);
+
+        expect(req.session.additionalClaimantNewFlow).toBe(false);
+        expect(req.session.userCase.currentAdditionalClaimantIndex).toBeUndefined();
+        expect(req.session.userCase.additionalClaimantTitle).toBeUndefined();
+        expect(req.session.userCase.additionalClaimantFirstName).toBeUndefined();
+        expect(req.session.userCase.additionalClaimantLastName).toBeUndefined();
+        expect(req.session.userCase.additionalClaimantEmail).toBeUndefined();
+        expect(req.session.userCase.additionalClaimantAddress1).toBeUndefined();
+      });
+    });
+  });
 });

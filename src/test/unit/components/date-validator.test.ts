@@ -3,6 +3,7 @@ import {
   areDates10YearsApartOrMore,
   convertCaseDateToDate,
   convertDateToCaseDate,
+  isAtLeast16YearsOld,
   isDateEmpty,
   isDateInLastTenYears,
   isDateInNextTenYears,
@@ -330,6 +331,51 @@ describe('convertDateToCaseDate()', () => {
     { date: new Date(2000, 11, 5), caseDate: { year: '2000', month: '12', day: '5' } },
   ])('should convert date to CaseDate correctly: %o', ({ date, caseDate }) => {
     expect(convertDateToCaseDate(date)).toMatchObject(caseDate);
+  });
+});
+
+describe('isAtLeast16YearsOld()', () => {
+  const now = new Date();
+
+  it.each([
+    {
+      dateObj: { day: '', month: '', year: '' },
+      expected: undefined,
+    },
+    {
+      dateObj: {
+        day: `${now.getDate()}`,
+        month: `${now.getMonth() + 1}`,
+        year: `${now.getFullYear() - 20}`,
+      },
+      expected: undefined,
+    },
+    {
+      dateObj: {
+        day: `${now.getDate()}`,
+        month: `${now.getMonth() + 1}`,
+        year: `${now.getFullYear() - 16}`,
+      },
+      expected: undefined,
+    },
+    {
+      dateObj: {
+        day: `${now.getDate()}`,
+        month: `${now.getMonth() + 1}`,
+        year: `${now.getFullYear() - 10}`,
+      },
+      expected: { error: 'invalidDateLessThanSixteenYearsInPast', fieldName: 'day' },
+    },
+    {
+      dateObj: {
+        day: `${now.getDate()}`,
+        month: `${now.getMonth() + 1}`,
+        year: `${now.getFullYear()}`,
+      },
+      expected: { error: 'invalidDateLessThanSixteenYearsInPast', fieldName: 'day' },
+    },
+  ])('Should check if person is at least 16 years old when %o', ({ dateObj, expected }) => {
+    expect(isAtLeast16YearsOld(dateObj)).toStrictEqual(expected);
   });
 });
 
