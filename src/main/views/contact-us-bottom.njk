@@ -5,17 +5,15 @@
 <div class="govuk-width-container">
 
   {% set html %}
-    <p>{{ contactUsForeword }}</p>
-    <ul class="govuk-list">
-      <li>{{ contactDuration }}</li>
-      <li>{{ mainTelephone }}</li>
-      <li>{{ welshTelephone }}</li>
-      <li>{{ scotlandTelephone }}</li>
-      <li>
-        <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table>
-      </li>
-    </ul>
-    <p>
+    <p class="govuk-body">{{ contactUsForeword }}</p>
+    {{ contactDuration }}<br/>
+    {{ mainTelephone }}<br/>
+    {{ welshTelephone }}<br/>
+    {{ scotlandTelephone }}<br/>
+    {% if i18n.language == "en" %}
+    <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table>
+    {% endif %}
+    <p class="govuk-body">
       <a href="https://www.gov.uk/call-charges" class="govuk-link" target="_blank">{{ contactCharges }}</a>
     </p>
   {% endset %}
