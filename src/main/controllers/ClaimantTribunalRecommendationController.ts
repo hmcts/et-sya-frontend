@@ -23,6 +23,7 @@ export default class ClaimantTribunalRecommendationController {
         type: 'textarea',
         label: (l: AnyRecord): string => l.label,
         labelSize: 'l',
+        hint: (l: AnyRecord): string => l.hint,
         attributes: { title: 'Tribunal recommendation text area' },
       },
     },
