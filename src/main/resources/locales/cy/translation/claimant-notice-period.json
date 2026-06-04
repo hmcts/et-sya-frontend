@@ -1,6 +1,6 @@
 {
-  "title": "<place-holder>",
-  "legend": "<place-holder>",
-  "yes": "<place-holder>",
-  "no": "<place-holder>"
+  "title": "[W]Did the claimant have or work a notice period?",
+  "legend": "[W]Did the claimant have or work a notice period (optional)?",
+  "yes": "[W]Yes",
+  "no": "[W]No"
 }

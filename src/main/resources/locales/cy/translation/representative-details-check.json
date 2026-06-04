@@ -1,13 +1,13 @@
 {
-  "title": "<place-holder>",
-  "legend": "<place-holder>",
-  "yes": "<place-holder>",
-  "no": "<place-holder>",
-  "hint": "<place-holder>",
+  "title": "[W]Is this section completed?",
+  "legend": "[W]Have you completed this section?",
+  "yes": "[W]Yes, I've completed this section",
+  "no": "[W]No, I'll come back to it later",
+  "hint": "[W]You can change your answers later.",
   "errors": {
     "representativeDetailsCheck": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "[W]Tell us if you have completed this section",
+      "invalid": "[W]You must complete the Contact details section before you can mark it as completed"
     }
   }
 }

@@ -1,14 +1,14 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "p1": "<place-holder>",
-  "p2": "<place-holder>",
-  "insetText": "<place-holder>",
-  "label": "<place-holder>",
+  "title": "[W]Respondent name",
+  "h1": "[W]What is the name of the respondent you're making the claim against?",
+  "p1": "[W]Enter the name of the organisation. If there's no organisation – for example, because the claimant was employed by an individual acting as a sole trader – enter the individual's name.",
+  "p2": "[W]This should be the same as the name of the respondent(s) on the Acas certificate. If they are not the same this claim might be rejected.",
+  "insetText": "[W]You'll be able to add more respondents later if you need to.",
+  "label": "[W]Enter name of respondent",
   "errors": {
     "respondentName": {
-      "required": "<place-holder>",
-      "invalidLength": "<place-holder>"
+      "required": "[W]Enter a respondent name between 1-100 characters",
+      "invalidLength": "[W]Enter a respondent name between 1-100 characters"
     }
   }
 }

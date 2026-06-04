@@ -23,9 +23,9 @@
             <li>{{ detailsTextComp.li1 }}</li>
             <li>{{ detailsTextComp.li2 }}</li>
           </ul>
-          {{ detailsTextComp.p2 | safe }}
-          {{ detailsTextComp.p3 | safe }}
-          {{ detailsTextComp.p4 | safe }}
+          <p class="govuk-body">{{ detailsTextComp.p2 }}</p>
+          <p class="govuk-body">{{ detailsTextComp.p3 }} <a href="{{ detailsTextComp.acasLinkUrl }}" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsTextComp.acasLinkText }}</a></p>
+          <p class="govuk-body">{{ detailsTextComp.p4 }} <a href="{{ detailsTextComp.acasLinkUrl }}" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsTextComp.acasLinkText }}</a></p>
           {{ detailsTextComp.p5 }}
         </div>
       </details>

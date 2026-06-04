@@ -22,8 +22,8 @@
           <span class="govuk-details__summary-text">{{ detailsSummary }}</span>
         </summary>
         <div class="govuk-details__text">
-          {{ detailsText.p1 | safe }}
-          {{ detailsText.p2 | safe }}
+          <p class="govuk-body">{{ detailsText.p1 }}</p>
+          <p class="govuk-body">{{ detailsText.p2 }} <a href="{{ detailsText.govukLinkUrl }}" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ detailsText.govukLinkText }}</a> {{ detailsText.p2Suffix }}</p>
         </div>
       </details>
 
