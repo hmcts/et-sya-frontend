@@ -93,38 +93,56 @@ const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
 export const getClaimantRepAboutYouUrl = (caseId: string, languageParam: string): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + languageParam;
 
+const hasValue = (value?: string): boolean => !!value?.trim();
+
 const setRepAddressFromApi = (userCase: CaseWithId, address?: Et1Address): void => {
   if (!address) {
     return;
   }
-  if (!userCase.repAddress1 && address.AddressLine1) {
+  if (!hasValue(userCase.repAddress1) && address.AddressLine1) {
     userCase.repAddress1 = address.AddressLine1;
   }
-  if (!userCase.repAddress2 && address.AddressLine2) {
+  if (!hasValue(userCase.repAddress2) && address.AddressLine2) {
     userCase.repAddress2 = address.AddressLine2;
   }
-  if (!userCase.repAddressTown && address.PostTown) {
+  if (!hasValue(userCase.repAddressTown) && address.PostTown) {
     userCase.repAddressTown = address.PostTown;
   }
-  if (!userCase.repAddressCountry && address.Country) {
+  if (!hasValue(userCase.repAddressCountry) && address.Country) {
     userCase.repAddressCountry = address.Country;
   }
-  if (!userCase.repAddressPostcode && address.PostCode) {
+  if (!hasValue(userCase.repAddressPostcode) && address.PostCode) {
     userCase.repAddressPostcode = address.PostCode;
   }
 };
+
+const getClaimantRepresentativeEntry = (userCase: CaseWithId): Representative | undefined =>
+  userCase.representatives?.find(rep => !rep.respondentId && hasValue(rep.nameOfRepresentative)) ??
+  userCase.representatives?.find(rep => !rep.respondentId) ??
+  userCase.representatives?.[0];
 
 const setRepDetailsFromRepresentativeEntry = (userCase: CaseWithId, representative?: Representative): void => {
   if (!representative) {
     return;
   }
-  if (!userCase.representativeName && representative.nameOfRepresentative) {
+  if (!hasValue(userCase.representativeName) && representative.nameOfRepresentative) {
     userCase.representativeName = representative.nameOfRepresentative;
   }
-  if (!userCase.representativeOrgName && representative.nameOfOrganisation) {
+  if (!hasValue(userCase.representativeOrgName) && representative.nameOfOrganisation) {
     userCase.representativeOrgName = representative.nameOfOrganisation;
   }
   setRepAddressFromApi(userCase, representative.representativeAddress);
+};
+
+const formatRepAddress = (userCase: CaseWithId, translations: AnyRecord): string => {
+  const formatted = answersAddressFormatter(
+    userCase.repAddress1,
+    userCase.repAddress2,
+    userCase.repAddressTown,
+    userCase.repAddressCountry,
+    userCase.repAddressPostcode
+  );
+  return hasValue(formatted) ? formatted : translations.notProvided;
 };
 
 export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void => {
@@ -133,67 +151,63 @@ export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void =
   }
 
   const claimantRep = userCase.claimantRepresentative;
-  if (!userCase.representativeName && claimantRep?.name_of_representative) {
+  if (!hasValue(userCase.representativeName) && claimantRep?.name_of_representative) {
     userCase.representativeName = claimantRep.name_of_representative;
   }
-  if (!userCase.representativeOrgName && claimantRep?.name_of_organisation) {
+  if (!hasValue(userCase.representativeOrgName) && claimantRep?.name_of_organisation) {
     userCase.representativeOrgName = claimantRep.name_of_organisation;
   }
 
-  if (!userCase.representativePhoneNumber && userCase.telNumber) {
+  if (!hasValue(userCase.representativePhoneNumber) && userCase.telNumber) {
     userCase.representativePhoneNumber = userCase.telNumber;
   }
 
-  const claimantRepEntry = userCase.representatives?.find(rep => !rep.respondentId) ?? userCase.representatives?.[0];
+  const claimantRepEntry = getClaimantRepresentativeEntry(userCase);
   setRepDetailsFromRepresentativeEntry(userCase, claimantRepEntry);
 
-  if (!userCase.claimantRepEmail && claimantRep?.representative_email_address) {
+  if (!hasValue(userCase.claimantRepEmail) && claimantRep?.representative_email_address) {
     userCase.claimantRepEmail = claimantRep.representative_email_address;
   }
-  if (!userCase.claimantRepEmail && claimantRepEntry?.representativeEmailAddress) {
+  if (!hasValue(userCase.claimantRepEmail) && claimantRepEntry?.representativeEmailAddress) {
     userCase.claimantRepEmail = claimantRepEntry.representativeEmailAddress;
   }
 };
 
-export const getClaimantRepAboutYouDetails = (
-  userCase: CaseWithId,
-  translations: AnyRecord,
-  languageParam: string
-): SummaryListRow[] => {
-  const changePath = InterceptPaths.REP_ABOUT_YOU_CHANGE + languageParam;
+export const getClaimantRepAboutYouDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+  populateClaimantRepDetailsFromCase(userCase);
+
+  const changePath = InterceptPaths.REP_ABOUT_YOU_CHANGE;
   const caseId = userCase.id;
 
-  const emailValue = userCase.claimantRepEmail
-    ? `<a class="govuk-link" href="mailto:${userCase.claimantRepEmail}">${userCase.claimantRepEmail}</a>`
+  const representativeName =
+    userCase.representativeName ?? userCase.claimantRepresentative?.name_of_representative ?? translations.notProvided;
+  const representativeOrgName =
+    userCase.representativeOrgName ?? userCase.claimantRepresentative?.name_of_organisation ?? translations.notProvided;
+  const representativeEmail =
+    userCase.claimantRepEmail ?? userCase.claimantRepresentative?.representative_email_address;
+  const emailValue = representativeEmail
+    ? `<a class="govuk-link" href="mailto:${representativeEmail}">${representativeEmail}</a>`
     : translations.notProvided;
+  const phoneValue = userCase.representativePhoneNumber ?? translations.notProvided;
 
   return [
     addSummaryRow(
       translations.aboutYouDetails.name,
-      userCase.representativeName ?? translations.notProvided,
+      representativeName,
       createChangeAction(
         PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', caseId) + changePath,
         translations.change,
         translations.aboutYouDetails.name
       )
     ),
-    addSummaryRow(
-      translations.aboutYouDetails.organisation,
-      userCase.representativeOrgName ?? translations.notProvided
-    ),
+    addSummaryRow(translations.aboutYouDetails.organisation, representativeOrgName),
     addSummaryRow(
       translations.aboutYouDetails.typeOfOrganisation,
       userCase.representativeType ?? translations.notProvided
     ),
     addSummaryRow(
       translations.aboutYouDetails.address,
-      answersAddressFormatter(
-        userCase.repAddress1,
-        userCase.repAddress2,
-        userCase.repAddressTown,
-        userCase.repAddressCountry,
-        userCase.repAddressPostcode
-      ),
+      formatRepAddress(userCase, translations),
       createChangeAction(
         PageUrls.REPRESENTATIVE_POSTCODE_ENTER + changePath,
         translations.change,
@@ -211,7 +225,7 @@ export const getClaimantRepAboutYouDetails = (
     ),
     addSummaryRow(
       translations.aboutYouDetails.phone,
-      userCase.representativePhoneNumber ?? translations.notProvided,
+      phoneValue,
       createChangeAction(
         PageUrls.REPRESENTATIVE_PHONE_NUMBER + changePath,
         translations.change,

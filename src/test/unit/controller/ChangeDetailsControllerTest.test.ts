@@ -65,6 +65,23 @@ describe('Change Details Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.DOB_DETAILS + languages.ENGLISH_URL_PARAMETER);
   });
 
+  it('should redirect and set repAboutYouCaseId from url when session case is missing', () => {
+    const controller = new ChangeDetailsController();
+    const response = mockResponse();
+    const caseId = 'a4396b10-6928-4711-a3ba-89fcf6adb779';
+    const request = mockRequest({});
+    request.session.userCase = undefined;
+    request.url = PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', caseId) + InterceptPaths.REP_ABOUT_YOU_CHANGE;
+    request.query = {
+      redirect: 'rep-about-you',
+    };
+    controller.get(request, response);
+    expect(request.session.repAboutYouCaseId).toBe(caseId);
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', caseId) + languages.ENGLISH_URL_PARAMETER
+    );
+  });
+
   it('should redirect and set repAboutYouCaseId for rep-about-you', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();

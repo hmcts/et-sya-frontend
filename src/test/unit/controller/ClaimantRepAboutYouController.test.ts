@@ -60,8 +60,7 @@ describe('ClaimantRepAboutYouController', () => {
     expect(ClaimantRepAnswersHelper.populateClaimantRepDetailsFromCase).toHaveBeenCalled();
     expect(ClaimantRepAnswersHelper.getClaimantRepAboutYouDetails).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'case-123' }),
-      expect.any(Object),
-      expect.any(String)
+      expect.any(Object)
     );
     const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
     expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_REP_ABOUT_YOU, renderArgs);

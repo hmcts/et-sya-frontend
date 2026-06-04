@@ -7,6 +7,15 @@ import { setChangeAnswersUrlLanguage, setCheckAnswersLanguage } from './helpers/
 import { ValidRespondentUrls } from './helpers/RespondentHelpers';
 import { returnValidUrl } from './helpers/RouterHelpers';
 
+const getRepAboutYouCaseId = (req: AppRequest): string | undefined => {
+  if (req.session.userCase?.id) {
+    return req.session.userCase.id;
+  }
+
+  const match = req.url.match(/\/claimant-rep-(?:edit-name|edit-email|about-you)\/([0-9a-f-]{36})/i);
+  return match?.[1];
+};
+
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
     let redirectUrl;
@@ -26,7 +35,7 @@ export default class ChangeDetailsController {
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CLAIMANT_REP_CHECK_ANSWERS);
     } else if (req.query.redirect === 'rep-about-you') {
       redirectUrl = req.url.replace(InterceptPaths.REP_ABOUT_YOU_CHANGE, languageParam);
-      const caseId = req.session.userCase?.id;
+      const caseId = getRepAboutYouCaseId(req);
       if (!caseId) {
         return res.redirect(ErrorPages.NOT_FOUND);
       }

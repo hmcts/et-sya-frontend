@@ -80,7 +80,7 @@ export default class ClaimantRepAboutYouController {
       languageParam,
       userCase,
       backLinkUrl: PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId) + languageParam,
-      aboutYouRows: getClaimantRepAboutYouDetails(userCase, translations, languageParam),
+      aboutYouRows: getClaimantRepAboutYouDetails(userCase, translations),
       contactTribunalUrl: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
     });
   };

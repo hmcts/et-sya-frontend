@@ -159,7 +159,7 @@ describe('ClaimantRepAnswersHelper', () => {
         representativePhoneNumber: '0208 123 1234',
         claimantRepEmail: 'WSmith@TPF.com',
       };
-      const rows = getClaimantRepAboutYouDetails(userCase, translations, '');
+      const rows = getClaimantRepAboutYouDetails(userCase, translations);
       expect(rows).toHaveLength(6);
       expect(rows[0].value.text).toBe('Wolfie Smith');
       expect(rows[0].actions.items[0].href).toBe(
@@ -174,6 +174,53 @@ describe('ClaimantRepAnswersHelper', () => {
       expect(rows[5].actions.items[0].href).toBe(
         PageUrls.REPRESENTATIVE_PHONE_NUMBER + InterceptPaths.REP_ABOUT_YOU_CHANGE
       );
+    });
+
+    it('should not append language param to change links', () => {
+      const userCase = {
+        ...baseCase,
+        id: 'case-123',
+        representativeName: 'Wolfie Smith',
+        repAddress1: '1 Tooting Broadway',
+        repAddressTown: 'London',
+        repAddressCountry: 'England',
+        claimantRepEmail: 'WSmith@TPF.com',
+      };
+      const rows = getClaimantRepAboutYouDetails(userCase, translations);
+      expect(rows[0].actions.items[0].href).toBe(
+        PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', 'case-123') + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+    });
+
+    it('should display representative details from claimantRepresentative when session fields are unset', () => {
+      const userCase = {
+        ...baseCase,
+        id: 'case-123',
+        claimantRepresentative: {
+          name_of_representative: 'Wolfie Smith',
+          name_of_organisation: 'Tooting Popular Front',
+          representative_email_address: 'WSmith@TPF.com',
+        },
+        representatives: [
+          {
+            nameOfRepresentative: 'Wolfie Smith',
+            nameOfOrganisation: 'Tooting Popular Front',
+            representativeAddress: {
+              AddressLine1: '1 Tooting Broadway',
+              PostTown: 'London',
+              PostCode: 'SW17 1NE',
+              Country: 'England',
+            },
+          },
+        ],
+        telNumber: '0208 123 1234',
+      };
+      const rows = getClaimantRepAboutYouDetails(userCase, translations);
+      expect(rows[0].value.text).toBe('Wolfie Smith');
+      expect(rows[1].value.text).toBe('Tooting Popular Front');
+      expect(rows[3].value.text).toContain('1 Tooting Broadway');
+      expect(rows[4].value.html).toContain('WSmith@TPF.com');
+      expect(rows[5].value.text).toBe('0208 123 1234');
     });
   });
 

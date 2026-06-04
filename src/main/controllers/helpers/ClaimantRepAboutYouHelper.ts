@@ -52,6 +52,7 @@ export const loadClaimantRepCase = async (req: AppRequest, caseId: string): Prom
     const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     req.session.userCase = fromApiFormat(caseData.data);
     populateClaimantRepDetailsFromCase(req.session.userCase);
+    req.session.repAboutYouCaseId = caseId;
     return true;
   } catch (error) {
     logger.error(`Error loading case ${caseId}: ${error.message}`);
