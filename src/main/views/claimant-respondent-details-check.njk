@@ -1,7 +1,5 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block beforeContent %}
@@ -17,16 +15,22 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
 
-      {% if respondent %}
+      {% for respondent in respondents %}
         {{ govukSummaryList({
           card: {
             title: {
-              text: subTitle + "1"
+              text: subTitle + loop.index
             }
           },
           rows: getClaimantRespondentDetailsSection(respondent, translations)
         }) }}
-      {% endif %}
+      {% endfor %}
+
+      <p class="govuk-body">
+        <a href="{{ PageUrls.CLAIMANT_RESPONDENT_NAME + languageParam }}" class="govuk-link">
+          {{ addAnotherRespondent }}
+        </a>
+      </p>
 
       {% block form %}
         {% include "form/form.njk"%}

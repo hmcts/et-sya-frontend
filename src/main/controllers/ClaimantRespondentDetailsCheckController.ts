@@ -40,39 +40,8 @@ export default class ClaimantRespondentDetailsCheckController {
     this.form = new Form(<FormFields>this.formContent.fields);
   }
 
-  public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (req.body?.employmentAndRespondentCheck === 'Yes') {
-      const userCase = req.session?.userCase;
-      const isValid = validateEmploymentAndRespondentDetails(userCase);
-
-      req.session.errors = [];
-      if (!isValid) {
-        req.session.errors.push({ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' });
-        const respondent = req.session.userCase?.respondents?.[0];
-        const translations: AnyRecord = {
-          ...req.t(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, { returnObjects: true }),
-        };
-        const content = getPageContent(req, this.formContent, [
-          TranslationKeys.COMMON,
-          TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK,
-        ]);
-        return res.render(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, {
-          ...content,
-          respondent,
-          translations,
-          getClaimantRespondentDetailsSection,
-          PageUrls,
-          languageParam: getLanguageParam(req.url),
-        });
-      }
-    }
-
-    await handlePostLogic(req, res, this.form, logger, getClaimStepsUrl(req));
-  };
-
-  @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
-    const respondent = req.session.userCase?.respondents?.[0];
+  private renderPage(req: AppRequest, res: Response): void {
+    const respondents = req.session.userCase?.respondents ?? [];
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, { returnObjects: true }),
     };
@@ -83,11 +52,28 @@ export default class ClaimantRespondentDetailsCheckController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, {
       ...content,
-      respondent,
+      respondents,
       translations,
       getClaimantRespondentDetailsSection,
       PageUrls,
       languageParam: getLanguageParam(req.url),
     });
+  }
+
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body?.employmentAndRespondentCheck === 'Yes') {
+      const isValid = validateEmploymentAndRespondentDetails(req.session?.userCase);
+      req.session.errors = [];
+      if (!isValid) {
+        req.session.errors.push({ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' });
+        return this.renderPage(req, res);
+      }
+    }
+    await handlePostLogic(req, res, this.form, logger, getClaimStepsUrl(req));
+  };
+
+  @CaseStateCheck()
+  public get = (req: AppRequest, res: Response): void => {
+    this.renderPage(req, res);
   };
 }
