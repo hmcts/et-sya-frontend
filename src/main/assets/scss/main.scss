@@ -1,4 +1,16 @@
 @import 'govuk-frontend';
+@import '@govuk-prototype-kit/step-by-step/sass/step-by-step-navigation';
+
+// Restore header padding for non-collapsible (always-open) steps.
+// The plugin resets all .app-step-nav__header padding to 0 when JS is enabled;
+// the --open modifier opts a step back out of that reset.
+.js-enabled .app-step-nav__header--open {
+  padding: govuk-spacing(2) 0 govuk-spacing(4);
+
+  .app-step-nav--large & {
+    padding-top: govuk-spacing(2);
+  }
+}
 @import './utilities/borders';
 @import 'patterns/task-list';
 @import 'patterns/timeout-modal';

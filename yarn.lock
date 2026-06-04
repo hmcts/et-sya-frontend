@@ -2540,6 +2540,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@govuk-prototype-kit/step-by-step@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@govuk-prototype-kit/step-by-step@npm:3.0.0"
+  peerDependencies:
+    govuk-frontend: ">=6.0.0"
+  checksum: 10/3c4e49a4214555317c6e1527e59397fc684efe274a903c0a6cfa7d5740629d879ba37451badc35cd05b10a006e73458305ee94733aa1f9e661938a8a1887edf1
+  languageName: node
+  linkType: hard
+
 "@hapi/address@npm:^5.1.1":
   version: 5.1.1
   resolution: "@hapi/address@npm:5.1.1"
@@ -9526,6 +9535,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.21.4"
     "@codeceptjs/allure-legacy": "npm:^1.0.2"
     "@faker-js/faker": "npm:^9.0.0"
+    "@govuk-prototype-kit/step-by-step": "npm:3.0.0"
     "@hmcts/cookie-manager": "npm:^1.0.0"
     "@hmcts/info-provider": "npm:^1.0.0"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.0"

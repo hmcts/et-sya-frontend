@@ -8,6 +8,20 @@
   "warningTxt2": "Fel arfer  mae’n rhaid gwneud hawliad o fewn 3 mis i gyflogaeth ddod i ben neu i adeg y problemau a gododd.  Os yw hawliad yn hwyr, rhaid i chi egluro pam. Bydd barnwr wedyn yn penderfynu beth fydd yn digwydd nesaf.",
   "startANewClaim": "Dechrau hawliad newydd",
   "returnToDraftOrSubmittedClaim": "Dychwelyd at ddrafft neu hawliad sy’n bodoli",
-  "contactUsHelpTitle": "Help i ddefnyddio’r gwasanaeth",
-  "contactUsHelpTxt": "Ffoniwch un o Ganolfannau Cyswllt Cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi."
+  "contactUsHelpTitle": "Help i ddefnyddio'r gwasanaeth",
+  "contactUsHelpTxt": "Ffoniwch un o Ganolfannau Cyswllt Cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi.",
+  "stepByStep": {
+    "step1Title": "Gwiriwch y gallwch wneud hawliad",
+    "step1Body": "Cyn gwneud hawliad, rhaid i chi gysylltu ag Acas a chael tystysgrif cymodi cynnar, neu gael rheswm dilys pam nad oes gennych un.",
+    "step1Link": "Cysylltwch ag Acas am gymodi cynnar (yn agor mewn tab newydd)",
+    "step2Title": "Paratowch eich manylion personol",
+    "step2Body": "Bydd angen eich enw, cyfeiriad, dyddiad geni, a manylion cyswllt arnoch.",
+    "step3Title": "Darparwch eich gwybodaeth gyflogaeth",
+    "step3Body": "Bydd angen enw a chyfeiriad eich cyflogwr, eich teitl swydd, dyddiad dechrau cyflogaeth, a manylion cyflog arnoch.",
+    "step4Title": "Disgrifiwch eich hawliad",
+    "step4Body": "Bydd angen i chi ddweud wrthym fath yr hawliad rydych chi'n ei wneud, beth ddigwyddodd, a pha ganlyniad rydych chi'n ei geisio.",
+    "step5Title": "Adolygwch a chyflwynwch eich hawliad",
+    "step5Body": "Gwiriwch eich holl atebion cyn cyflwyno. Gallwch gadw eich hawliad a dychwelyd ato ar unrhyw adeg cyn i chi gyflwyno.",
+    "step5Link": "Dechreuwch eich hawliad"
+  }
 }

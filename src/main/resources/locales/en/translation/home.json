@@ -9,5 +9,19 @@
   "startANewClaim": "Start a new claim",
   "returnToDraftOrSubmittedClaim": "Return to a draft or submitted claim",
   "contactUsHelpTitle": "Help using the service",
-  "contactUsHelpTxt": "Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice."
+  "contactUsHelpTxt": "Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.",
+  "stepByStep": {
+    "step1Title": "Check you can make a claim",
+    "step1Body": "Before making a claim you must contact Acas and get an Early Conciliation certificate, or have a valid reason why you do not have one.",
+    "step1Link": "Contact Acas for Early Conciliation (opens in new tab)",
+    "step2Title": "Prepare your personal details",
+    "step2Body": "You will need your name, address, date of birth, and contact details.",
+    "step3Title": "Provide your employment information",
+    "step3Body": "You will need your employer's name and address, your job title, employment start date, and pay details.",
+    "step4Title": "Describe your claim",
+    "step4Body": "You will need to tell us the type of claim you are making, what happened, and what outcome you are seeking.",
+    "step5Title": "Review and submit your claim",
+    "step5Body": "Check all your answers before submitting. You can save your claim and return to it at any time before you submit.",
+    "step5Link": "Start your claim"
+  }
 }

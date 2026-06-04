@@ -2,6 +2,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "components/step-by-step-navigation/macro.njk" import stepByStepNavigation %}
 
 {% block content %}
   <div class="govuk-grid-row">
@@ -33,6 +34,43 @@
           href: returnToExistingUrl
         }) }}
       </div>
+
+      {{ stepByStepNavigation({
+        steps: [
+          {
+            id: "check-you-can-make-a-claim",
+            title: stepByStep.step1Title,
+            body: stepByStep.step1Body,
+            collapsible: false,
+            links: [{ href: "https://www.acas.org.uk/early-conciliation", text: stepByStep.step1Link, external: true }]
+          },
+          {
+            id: "prepare-your-personal-details",
+            title: stepByStep.step2Title,
+            collapsible: false,
+            body: stepByStep.step2Body
+          },
+          {
+            id: "provide-your-employment-information",
+            title: stepByStep.step3Title,
+            collapsible: false,
+            body: stepByStep.step3Body
+          },
+          {
+            id: "describe-your-claim",
+            title: stepByStep.step4Title,
+            collapsible: false,
+            body: stepByStep.step4Body
+          },
+          {
+            id: "review-and-submit",
+            title: stepByStep.step5Title,
+            body: stepByStep.step5Body,
+            collapsible: false,
+            links: [{ href: redirectUrl, text: stepByStep.step5Link }]
+          }
+        ]
+      }) }}
 
       <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
       <div class="govuk-body">
