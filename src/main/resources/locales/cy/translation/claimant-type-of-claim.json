@@ -19,14 +19,14 @@
   },
   "otherTypesOfClaims": {
     "checkbox": "[W]Other type of claim",
-    "explain": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud. Gallwch ddisgrifio manylion yr hawliad yn ddiweddarach."
+    "explain": "[W]Tell us briefly what type of claim the claimant is making. You can describe the details of the claim later."
   },
   "errors": {
     "typeOfClaim": {
       "required": "[W]Please select at least one of the options below to choose the type of claim."
     },
     "otherClaim": {
-      "required": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud",
+      "required": "[W]Tell us briefly what type of claim the claimant is making",
       "tooLong": "[W]Description must be 100 characters or less"
     }
   }
