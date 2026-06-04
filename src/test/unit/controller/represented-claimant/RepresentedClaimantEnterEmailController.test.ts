@@ -49,6 +49,20 @@ describe('Represented Claimant Enter Email Controller', () => {
       expect(req.session.errors).toHaveLength(0);
     });
 
+    it('should return an invalid error when email format is not valid', async () => {
+      const body = { representedClaimantEmail: 'not-an-email' };
+      const controller = new RepresentedClaimantEnterEmailController();
+      const req = mockRequestEmpty({ body });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual(
+        expect.arrayContaining([{ propertyName: 'representedClaimantEmail', errorType: 'invalid' }])
+      );
+    });
+
     it('should save represented claimant email to userCase', async () => {
       const body = { representedClaimantEmail: 'claimant@example.com' };
       const controller = new RepresentedClaimantEnterEmailController();

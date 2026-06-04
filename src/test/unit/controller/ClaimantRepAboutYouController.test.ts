@@ -41,6 +41,7 @@ describe('ClaimantRepAboutYouController', () => {
       repAddressTown: 'London',
       repAddressPostcode: 'SW17 1NE',
       representativePhoneNumber: '0208 123 1234',
+      claimantRepEmail: 'WSmith@TPF.com',
       hubLinksStatuses: { [HubLinkNames.AboutYou]: HubLinkStatus.OPTIONAL },
     } as unknown as CaseWithId);
   });
@@ -59,7 +60,6 @@ describe('ClaimantRepAboutYouController', () => {
     expect(ClaimantRepAnswersHelper.populateClaimantRepDetailsFromCase).toHaveBeenCalled();
     expect(ClaimantRepAnswersHelper.getClaimantRepAboutYouDetails).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'case-123' }),
-      'WSmith@TPF.com',
       expect.any(Object),
       expect.any(String)
     );

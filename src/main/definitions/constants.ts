@@ -166,6 +166,8 @@ export const TranslationKeys = {
   // non-hmcts claimant rep
   CLAIMANT_REP_HUB: 'claimant-rep-hub',
   CLAIMANT_REP_ABOUT_YOU: 'claimant-rep-about-you',
+  CLAIMANT_REP_EDIT_NAME: 'claimant-rep-edit-name',
+  CLAIMANT_REP_EDIT_EMAIL: 'claimant-rep-edit-email',
   CLAIMANT_REP_CHECK_ANSWERS: 'claimant-rep-check-your-answers',
   CLAIMANT_REP_CLAIM_SUBMITTED: 'claimant-rep-claim-submitted',
   REPRESENTATIVE_DETAILS: 'representative-details',
@@ -426,6 +428,8 @@ export const PageUrls = {
   CLAIMANT_TRIBUNAL_RECOMMENDATION: '/claimant-tribunal-recommendation',
   CLAIMANT_REP_HUB: '/claimant-rep-hub/:caseId',
   CLAIMANT_REP_ABOUT_YOU: '/claimant-rep-about-you/:caseId',
+  CLAIMANT_REP_EDIT_NAME: '/claimant-rep-edit-name/:caseId',
+  CLAIMANT_REP_EDIT_EMAIL: '/claimant-rep-edit-email/:caseId',
   CLAIMANT_REP_CHECK_ANSWERS: '/claimant-rep-check-your-answers',
   CLAIMANT_REP_CLAIM_SUBMITTED: '/claimant-rep-claim-submitted',
 } as const;
@@ -754,6 +758,8 @@ export const VALID_DYNAMIC_URL_BASES = [
   'citizen-hub',
   'claimant-rep-hub',
   'claimant-rep-about-you',
+  'claimant-rep-edit-name',
+  'claimant-rep-edit-email',
   'no-acas-reason',
   'work-postcode-enter',
   'acas-cert-num',

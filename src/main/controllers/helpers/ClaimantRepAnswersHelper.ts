@@ -1,4 +1,3 @@
-import { AppRequest } from '../../definitions/appRequest';
 import {
   CaseWithId,
   EmailOrPost,
@@ -94,9 +93,6 @@ const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
 export const getClaimantRepAboutYouUrl = (caseId: string, languageParam: string): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + languageParam;
 
-export const isClaimantRepAboutYouFlow = (req: AppRequest): boolean =>
-  !!req.session?.returnUrl?.includes('claimant-rep-about-you') || req.url?.includes('redirect=rep-about-you');
-
 const setRepAddressFromApi = (userCase: CaseWithId, address?: Et1Address): void => {
   if (!address) {
     return;
@@ -150,18 +146,25 @@ export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void =
 
   const claimantRepEntry = userCase.representatives?.find(rep => !rep.respondentId) ?? userCase.representatives?.[0];
   setRepDetailsFromRepresentativeEntry(userCase, claimantRepEntry);
+
+  if (!userCase.claimantRepEmail && claimantRep?.representative_email_address) {
+    userCase.claimantRepEmail = claimantRep.representative_email_address;
+  }
+  if (!userCase.claimantRepEmail && claimantRepEntry?.representativeEmailAddress) {
+    userCase.claimantRepEmail = claimantRepEntry.representativeEmailAddress;
+  }
 };
 
 export const getClaimantRepAboutYouDetails = (
   userCase: CaseWithId,
-  userEmail: string | undefined,
   translations: AnyRecord,
   languageParam: string
 ): SummaryListRow[] => {
   const changePath = InterceptPaths.REP_ABOUT_YOU_CHANGE + languageParam;
+  const caseId = userCase.id;
 
-  const emailValue = userEmail
-    ? `<a class="govuk-link" href="mailto:${userEmail}">${userEmail}</a>`
+  const emailValue = userCase.claimantRepEmail
+    ? `<a class="govuk-link" href="mailto:${userCase.claimantRepEmail}">${userCase.claimantRepEmail}</a>`
     : translations.notProvided;
 
   return [
@@ -169,28 +172,18 @@ export const getClaimantRepAboutYouDetails = (
       translations.aboutYouDetails.name,
       userCase.representativeName ?? translations.notProvided,
       createChangeAction(
-        PageUrls.REPRESENTATIVE_DETAILS + changePath,
+        PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', caseId) + changePath,
         translations.change,
         translations.aboutYouDetails.name
       )
     ),
     addSummaryRow(
       translations.aboutYouDetails.organisation,
-      userCase.representativeOrgName ?? translations.notProvided,
-      createChangeAction(
-        PageUrls.REPRESENTATIVE_DETAILS + changePath,
-        translations.change,
-        translations.aboutYouDetails.organisation
-      )
+      userCase.representativeOrgName ?? translations.notProvided
     ),
     addSummaryRow(
       translations.aboutYouDetails.typeOfOrganisation,
-      userCase.representativeType ?? translations.notProvided,
-      createChangeAction(
-        PageUrls.REPRESENTATIVE_DETAILS + changePath,
-        translations.change,
-        translations.aboutYouDetails.typeOfOrganisation
-      )
+      userCase.representativeType ?? translations.notProvided
     ),
     addSummaryRow(
       translations.aboutYouDetails.address,
@@ -211,7 +204,7 @@ export const getClaimantRepAboutYouDetails = (
       translations.aboutYouDetails.email,
       emailValue,
       createChangeAction(
-        PageUrls.REPRESENTATIVE_COMMS_PREFERENCE + changePath,
+        PageUrls.CLAIMANT_REP_EDIT_EMAIL.replace(':caseId', caseId) + changePath,
         translations.change,
         translations.aboutYouDetails.email
       )

@@ -10,7 +10,8 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRepAboutYouPageContent, isClaimantRepAboutYouFlow } from './helpers/ClaimantRepAboutYouHelper';
+import { assignFormData } from './helpers/FormHelpers';
 
 const logger = getLogger('RepresentativePhoneNumberController');
 
@@ -45,12 +46,25 @@ export default class RepresentativePhoneNumberController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (isClaimantRepAboutYouFlow(req)) {
+      const caseId = req.session.repAboutYouCaseId ?? req.session.userCase?.id;
+      await handlePostLogic(
+        req,
+        res,
+        this.form,
+        logger,
+        PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId),
+        true
+      );
+      req.session.repAboutYouCaseId = undefined;
+      return;
+    }
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_COMMS_PREFERENCE);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.phoneNumberContent, [
+    const content = getRepAboutYouPageContent(req, this.phoneNumberContent, [
       TranslationKeys.COMMON,
       TranslationKeys.REPRESENTATIVE_PHONE_NUMBER,
     ]);

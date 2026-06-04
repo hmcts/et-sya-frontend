@@ -1,18 +1,16 @@
 import { Response } from 'express';
 
-import { validateRepresentativeDetails } from '../components/form/claim-details-validator';
+import { validateClaimantRepAboutYou } from '../components/form/claim-details-validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
-import { submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
-import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
-import { getCaseApi } from '../services/CaseService';
 
 import { handleUpdateDraftCase, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { getClaimantRepAboutYouDetails, populateClaimantRepDetailsFromCase } from './helpers/ClaimantRepAnswersHelper';
+import { loadClaimantRepCase } from './helpers/ClaimantRepAboutYouHelper';
+import { getClaimantRepAboutYouDetails } from './helpers/ClaimantRepAnswersHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -22,30 +20,21 @@ const logger = getLogger('ClaimantRepAboutYouController');
 export default class ClaimantRepAboutYouController {
   private readonly formContent: FormContent = {
     fields: {},
-    submit: submitButton,
-  };
-
-  private loadCase = async (req: AppRequest, caseId: string): Promise<boolean> => {
-    try {
-      const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
-      req.session.userCase = fromApiFormat(caseData.data);
-      populateClaimantRepDetailsFromCase(req.session.userCase);
-      return true;
-    } catch (error) {
-      logger.error(`Error loading case ${caseId}: ${error.message}`);
-      return false;
-    }
+    submit: {
+      text: (l: AnyRecord): string => l.submitBtn,
+      classes: 'govuk-!-margin-right-2',
+    },
   };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const caseId = req.params.caseId;
 
-    if (!(await this.loadCase(req, caseId))) {
+    if (!(await loadClaimantRepCase(req, caseId))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
     req.session.errors = [];
-    if (!validateRepresentativeDetails(req.session.userCase)) {
+    if (!validateClaimantRepAboutYou(req.session.userCase)) {
       req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'invalid' });
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
     }
@@ -67,7 +56,7 @@ export default class ClaimantRepAboutYouController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const caseId = req.params.caseId;
 
-    if (!(await this.loadCase(req, caseId))) {
+    if (!(await loadClaimantRepCase(req, caseId))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
@@ -91,7 +80,7 @@ export default class ClaimantRepAboutYouController {
       languageParam,
       userCase,
       backLinkUrl: PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId) + languageParam,
-      aboutYouRows: getClaimantRepAboutYouDetails(userCase, req.session.user?.email, translations, languageParam),
+      aboutYouRows: getClaimantRepAboutYouDetails(userCase, translations, languageParam),
       contactTribunalUrl: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
     });
   };

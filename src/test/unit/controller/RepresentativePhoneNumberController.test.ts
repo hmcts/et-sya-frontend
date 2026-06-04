@@ -22,6 +22,18 @@ describe('Representative Phone Number Controller', () => {
 
       expect(response.render).toHaveBeenCalledWith('representative-phone-number', expect.anything());
     });
+
+    it('should use Submit button label in rep-about-you flow', () => {
+      const controller = new RepresentativePhoneNumberController();
+      const response = mockResponse();
+      const request = mockRequest({ t });
+      request.session.repAboutYouCaseId = 'case-123';
+
+      controller.get(request, response);
+
+      const renderArgs = response.render.mock.calls[0][1];
+      expect(renderArgs.form.submit.text({ submitBtn: 'Submit', submit: 'Save and continue' })).toBe('Submit');
+    });
   });
 
   describe('post()', () => {

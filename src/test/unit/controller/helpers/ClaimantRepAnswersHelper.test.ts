@@ -146,9 +146,10 @@ describe('ClaimantRepAnswersHelper', () => {
   });
 
   describe('getClaimantRepAboutYouDetails', () => {
-    it('should return summary rows with change links to rep edit pages', () => {
+    it('should return summary rows with change links only on editable fields', () => {
       const userCase = {
         ...baseCase,
+        id: 'case-123',
         representativeType: 'Trade Union',
         representativeOrgName: 'Tooting Popular Front',
         representativeName: 'Wolfie Smith',
@@ -156,14 +157,19 @@ describe('ClaimantRepAnswersHelper', () => {
         repAddressTown: 'London',
         repAddressPostcode: 'SW17 1NE',
         representativePhoneNumber: '0208 123 1234',
+        claimantRepEmail: 'WSmith@TPF.com',
       };
-      const rows = getClaimantRepAboutYouDetails(userCase, 'WSmith@TPF.com', translations, '');
+      const rows = getClaimantRepAboutYouDetails(userCase, translations, '');
       expect(rows).toHaveLength(6);
       expect(rows[0].value.text).toBe('Wolfie Smith');
-      expect(rows[0].actions.items[0].href).toBe(PageUrls.REPRESENTATIVE_DETAILS + InterceptPaths.REP_ABOUT_YOU_CHANGE);
+      expect(rows[0].actions.items[0].href).toBe(
+        PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', 'case-123') + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+      expect(rows[1].actions).toBeUndefined();
+      expect(rows[2].actions).toBeUndefined();
       expect(rows[4].value.html).toContain('WSmith@TPF.com');
       expect(rows[4].actions.items[0].href).toBe(
-        PageUrls.REPRESENTATIVE_COMMS_PREFERENCE + InterceptPaths.REP_ABOUT_YOU_CHANGE
+        PageUrls.CLAIMANT_REP_EDIT_EMAIL.replace(':caseId', 'case-123') + InterceptPaths.REP_ABOUT_YOU_CHANGE
       );
       expect(rows[5].actions.items[0].href).toBe(
         PageUrls.REPRESENTATIVE_PHONE_NUMBER + InterceptPaths.REP_ABOUT_YOU_CHANGE

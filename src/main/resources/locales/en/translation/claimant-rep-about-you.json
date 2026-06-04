@@ -1,6 +1,7 @@
 {
   "title": "About you",
   "h1": "About you",
+  "submitBtn": "Submit",
   "aboutYouDetails": {
     "name": "Name",
     "organisation": "Organisation",
@@ -17,7 +18,7 @@
   },
   "errors": {
     "hiddenErrorField": {
-      "invalid": "You must complete your name and address before you can submit"
+      "invalid": "You must complete your name, address and email before you can submit"
     }
   }
 }

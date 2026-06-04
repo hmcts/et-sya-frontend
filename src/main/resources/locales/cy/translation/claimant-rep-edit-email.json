@@ -1,0 +1,13 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "emailLabel": "<place-holder>",
+  "hint": "<place-holder>",
+  "submitBtn": "<place-holder>",
+  "errors": {
+    "claimantRepEmail": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
+}

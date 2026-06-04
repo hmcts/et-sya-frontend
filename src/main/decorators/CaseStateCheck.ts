@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { isClaimantRepAboutYouFlow } from '../controllers/helpers/ClaimantRepAnswersHelper';
+import { isClaimantRepAboutYouFlow } from '../controllers/helpers/ClaimantRepAboutYouHelper';
 import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';

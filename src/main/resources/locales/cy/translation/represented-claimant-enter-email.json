@@ -2,5 +2,10 @@
   "pageTitle": "<place-holder>",
   "pageHeader": "<place-holder>",
   "description": "<place-holder>",
-  "label": "<place-holder>"
+  "label": "<place-holder>",
+  "errors": {
+    "representedClaimantEmail": {
+      "invalid": "<place-holder>"
+    }
+  }
 }

@@ -127,6 +127,7 @@ export default {
   avgWeeklyHrs: 5,
   claimantPensionContribution: YesOrNoOrNotSure.YES,
   claimantPensionWeeklyContribution: 15,
+  claimantRepEmail: undefined,
   claimantRepresentative: undefined,
   claimantRepresentativeRemoved: undefined,
   employeeBenefits: YesOrNo.YES,

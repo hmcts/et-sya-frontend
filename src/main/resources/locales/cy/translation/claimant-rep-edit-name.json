@@ -1,0 +1,11 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "representativeName": "<place-holder>",
+  "submitBtn": "<place-holder>",
+  "errors": {
+    "representativeName": {
+      "required": "<place-holder>"
+    }
+  }
+}

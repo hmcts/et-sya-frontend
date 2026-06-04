@@ -67,6 +67,13 @@ function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: stri
   return undefined;
 }
 
+function isDynamicUrlIdSegment(urlPart: string): boolean {
+  if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+    return true;
+  }
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(urlPart);
+}
+
 function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | undefined {
   const urlParts = baseUrl.split('/');
   let returnUrl = '';
@@ -74,7 +81,7 @@ function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | unde
     const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
     if (matchedUrlPart) {
       returnUrl += `/${matchedUrlPart}`;
-    } else if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+    } else if (isDynamicUrlIdSegment(urlPart)) {
       returnUrl += `/${urlPart}`;
     }
   }

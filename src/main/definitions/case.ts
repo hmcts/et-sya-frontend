@@ -241,6 +241,7 @@ export interface Case {
   repAddressCountry?: string;
   repAddressPostcode?: string;
   representativePhoneNumber?: string;
+  claimantRepEmail?: string;
   // Represented Claimant
   representedClaimantDateOfBirth?: CaseDate;
   representedClaimantEnterPostcode?: string;

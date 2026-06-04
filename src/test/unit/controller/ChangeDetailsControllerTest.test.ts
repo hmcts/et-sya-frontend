@@ -1,4 +1,5 @@
 import ChangeDetailsController from '../../../main/controllers/ChangeDetailsController';
+import { CaseWithId } from '../../../main/definitions/case';
 import { ErrorPages, InterceptPaths, PageUrls, languages } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -64,20 +65,22 @@ describe('Change Details Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.DOB_DETAILS + languages.ENGLISH_URL_PARAMETER);
   });
 
-  it('should redirect and set returnUrl to CLAIMANT_REP_ABOUT_YOU for rep-about-you', () => {
+  it('should redirect and set repAboutYouCaseId for rep-about-you', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
+    const caseId = 'a4396b10-6928-4711-a3ba-89fcf6adb779';
     const request = mockRequest({});
-    request.session.userCase = { id: 'case-123' } as any;
-    request.url = PageUrls.REPRESENTATIVE_DETAILS + InterceptPaths.REP_ABOUT_YOU_CHANGE;
+    request.session.userCase = { id: caseId } as unknown as CaseWithId;
+    request.url = PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', caseId) + InterceptPaths.REP_ABOUT_YOU_CHANGE;
     request.query = {
       redirect: 'rep-about-you',
     };
     controller.get(request, response);
-    expect(request.session.returnUrl).toStrictEqual(
-      PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', 'case-123') + languages.ENGLISH_URL_PARAMETER
+    expect(request.session.repAboutYouCaseId).toBe(caseId);
+    expect(request.session.returnUrl).toBeUndefined();
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', caseId) + languages.ENGLISH_URL_PARAMETER
     );
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_DETAILS + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should redirect to Error page if invalid query param passed', () => {

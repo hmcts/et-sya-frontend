@@ -75,6 +75,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const repAddressCountry = req.session.userCase.repAddressCountry;
       const repAddressPostcode = req.session.userCase.repAddressPostcode;
       const representativePhoneNumber = req.session.userCase.representativePhoneNumber;
+      const claimantRepEmail = req.session.userCase.claimantRepEmail;
       const representativeDetailsCheck = req.session.userCase.representativeDetailsCheck;
       const representedClaimantFirstName = req.session.userCase.representedClaimantFirstName;
       const representedClaimantLastName = req.session.userCase.representedClaimantLastName;
@@ -112,6 +113,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.repAddressCountry ??= repAddressCountry;
       req.session.userCase.repAddressPostcode ??= repAddressPostcode;
       req.session.userCase.representativePhoneNumber ??= representativePhoneNumber;
+      req.session.userCase.claimantRepEmail ??= claimantRepEmail;
       req.session.userCase.representativeDetailsCheck ??= representativeDetailsCheck;
 
       req.session.userCase.representedClaimantFirstName ??= representedClaimantFirstName;

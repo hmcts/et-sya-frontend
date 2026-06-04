@@ -30,7 +30,7 @@ export default class ChangeDetailsController {
       if (!caseId) {
         return res.redirect(ErrorPages.NOT_FOUND);
       }
-      req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId));
+      req.session.repAboutYouCaseId = caseId;
     } else if (req.query.redirect === 'respondent') {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK);

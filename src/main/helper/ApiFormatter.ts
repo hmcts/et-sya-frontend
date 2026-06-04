@@ -251,6 +251,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     leadClaimant: fromApiCaseData?.case_data?.leadClaimant,
     caseStayed: fromApiCaseData?.case_data?.batchCaseStayed,
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
+    claimantRepEmail: fromApiCaseData.case_data?.representativeClaimantType?.representative_email_address,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
   };
@@ -374,6 +375,11 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
+      representativeClaimantType: {
+        name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
+        name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
+        representative_email_address: caseItem.claimantRepEmail,
+      },
     },
   };
 }
