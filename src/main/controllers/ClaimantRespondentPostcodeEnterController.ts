@@ -22,7 +22,7 @@ export default class ClaimantRespondentPostcodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    req.params.respondentNumber = '1';
+    req.params.respondentNumber = req.session.claimantRespondentNumber ?? '1';
     await handlePostLogicForRespondent(req, res, this.form, logger, PageUrls.CLAIMANT_RESPONDENT_POSTCODE_SELECT, true);
   };
 

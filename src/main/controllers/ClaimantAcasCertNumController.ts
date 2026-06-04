@@ -63,7 +63,7 @@ export default class ClaimantAcasCertNumController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    req.params.respondentNumber = '1';
+    req.params.respondentNumber = req.session.claimantRespondentNumber ?? '1';
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK
       : PageUrls.CLAIMANT_NO_ACAS_NUMBER;

@@ -67,6 +67,7 @@ import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWork
 import ClaimantRepCheckAnswersController from '../../controllers/ClaimantRepCheckAnswersController';
 import ClaimantRepClaimSubmittedController from '../../controllers/ClaimantRepClaimSubmittedController';
 import ClaimantRepHubController from '../../controllers/ClaimantRepHubController';
+import ClaimantRespondentAddRedirectController from '../../controllers/ClaimantRespondentAddRedirectController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
 import ClaimantRespondentAddressDetailsController from '../../controllers/ClaimantRespondentAddressDetailsController';
 import ClaimantRespondentDetailsCheckController from '../../controllers/ClaimantRespondentDetailsCheckController';
@@ -378,6 +379,7 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_ACAS_CERT_NUM, new ClaimantAcasCertNumController().post);
     app.get(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().get);
     app.post(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().post);
+    app.get(PageUrls.CLAIMANT_RESPONDENT_ADD_REDIRECT, new ClaimantRespondentAddRedirectController().get);
     app.get(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().get);
     app.post(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().get);
