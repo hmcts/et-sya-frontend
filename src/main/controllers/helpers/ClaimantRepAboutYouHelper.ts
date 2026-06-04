@@ -10,7 +10,7 @@ import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getCaseApi } from '../../services/CaseService';
 
-import { handleUpdateDraftCase, setUserCase } from './CaseHelpers';
+import { handleUpdateClaimantRepAboutYou, setUserCase } from './CaseHelpers';
 import {
   applyPreservedClaimantRepSessionFields,
   populateClaimantRepDetailsFromCase,
@@ -50,6 +50,7 @@ export const getClaimantRepAboutYouPageUrl = (caseId: string, req: AppRequest): 
 
 export const clearRepAboutYouFlow = (req: AppRequest): void => {
   req.session.repAboutYouCaseId = undefined;
+  req.session.claimantRepAboutYouPendingDisplay = undefined;
 };
 
 export const loadClaimantRepCase = async (req: AppRequest, caseId: string): Promise<boolean> => {
@@ -103,12 +104,12 @@ export const handleRepAboutYouPostLogic = async (
   req.session.errors = [];
 
   if (persistToApi) {
-    await handleUpdateDraftCase(req, fieldLogger);
+    await handleUpdateClaimantRepAboutYou(req, fieldLogger);
     const caseId = req.session.repAboutYouCaseId ?? req.params.caseId ?? req.session.userCase?.id;
+    req.session.repAboutYouCaseId = caseId;
     if (req.session.userCase?.updateDraftCaseError) {
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
     }
-    clearRepAboutYouFlow(req);
     redirectUrl = PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId);
   }
 

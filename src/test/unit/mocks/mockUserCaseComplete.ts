@@ -105,6 +105,7 @@ export default {
   addressCountry: 'United',
   addressTown: 'Test',
   telNumber: '075',
+  representativePhoneNumber: '075',
   firstName: 'Jane',
   lastName: 'Doe',
   representedClaimantFirstName: 'Jane',

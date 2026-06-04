@@ -12,7 +12,7 @@ import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotifi
 import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
-import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
+import { getClaimantRepAboutYouUpdateCaseBody, toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
 
@@ -86,6 +86,17 @@ export class CaseApi {
     } catch (error) {
       throw new Error(
         'Error updating draft case: ' + axiosErrorDetails(error, { action: 'updateDraftCase', caseId: caseItem.id })
+      );
+    }
+  };
+
+  updateClaimantRepAboutYou = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, getClaimantRepAboutYouUpdateCaseBody(caseItem));
+    } catch (error) {
+      throw new Error(
+        'Error updating claimant rep about you: ' +
+          axiosErrorDetails(error, { action: 'updateClaimantRepAboutYou', caseId: caseItem.id })
       );
     }
   };

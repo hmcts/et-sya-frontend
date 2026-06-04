@@ -18,7 +18,12 @@ import localesCy from '../../resources/locales/cy/translation/common.json';
 import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
-import { syncClaimantRepresentativeFromSessionFields } from './ClaimantRepAnswersHelper';
+import {
+  applyPreservedClaimantRepSessionFields,
+  populateClaimantRepDetailsFromCase,
+  preserveClaimantRepSessionFields,
+  syncClaimantRepresentativeFromSessionFields,
+} from './ClaimantRepAnswersHelper';
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
@@ -131,6 +136,31 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
 
       req.session.userCase.claimantWrittenContract ??= claimantWrittenContract;
       syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+      req.session.userCase.updateDraftCaseError = undefined;
+      req.session.save();
+    } catch (error) {
+      req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)
+        ? localesCy.updateDraftErrorMessage
+        : locales.updateDraftErrorMessage;
+      req.session.returnUrl = req.url;
+      req.session.save();
+      logger.error(error.message);
+    }
+  }
+};
+
+export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: Logger): Promise<void> => {
+  if (!req.session.errors?.length) {
+    try {
+      const preserved = preserveClaimantRepSessionFields(req.session.userCase);
+      syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+      const response = await getCaseApi(req.session.user?.accessToken).updateClaimantRepAboutYou(req.session.userCase);
+      logger.info(`Updated claimant rep about you for case id: ${req.session.userCase.id}`);
+      req.session.userCase = fromApiFormat(response.data);
+      applyPreservedClaimantRepSessionFields(req.session.userCase, preserved);
+      populateClaimantRepDetailsFromCase(req.session.userCase);
+      syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+      req.session.claimantRepAboutYouPendingDisplay = preserveClaimantRepSessionFields(req.session.userCase);
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {

@@ -1,5 +1,6 @@
 import { isDateEmpty } from '../components/form/date-validator';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { populateClaimantRepDetailsFromCase } from '../controllers/helpers/ClaimantRepAnswersHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import {
@@ -87,7 +88,7 @@ export function toApiFormatCreate(
 
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
   const isRepresentedClaimant = fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES;
-  return {
+  const userCase: CaseWithId = {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
@@ -261,6 +262,40 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     claimantRepEmail: fromApiCaseData.case_data?.representativeClaimantType?.representative_email_address,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+  };
+  populateClaimantRepDetailsFromCase(userCase);
+  return userCase;
+}
+
+export function getClaimantRepAboutYouUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
+  const caseData: UpdateCaseBody['case_data'] = {
+    caseType: caseItem.caseType,
+    typesOfClaim: caseItem.typeOfClaim,
+    claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
+    caseSource: CcdDataModel.CASE_SOURCE,
+    claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+    representativeClaimantType: {
+      name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
+      name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
+      representative_email_address: caseItem.claimantRepEmail,
+    },
+  };
+
+  const repCollection = setRepCollectionApiFormat(caseItem);
+  if (repCollection) {
+    caseData.repCollection = repCollection;
+  }
+
+  if (caseItem.representativePhoneNumber) {
+    caseData.claimantType = {
+      claimant_phone_number: caseItem.representativePhoneNumber,
+    };
+  }
+
+  return {
+    case_id: caseItem.id,
+    case_type_id: caseItem.caseTypeId,
+    case_data: caseData,
   };
 }
 

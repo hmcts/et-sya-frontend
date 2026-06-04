@@ -148,6 +148,13 @@ export const syncClaimantRepresentativeFromSessionFields = (userCase: CaseWithId
   }
 };
 
+export const applyClaimantRepAboutYouPendingDisplay = (
+  userCase: CaseWithId,
+  pending?: ClaimantRepSessionFields
+): void => {
+  applyPreservedClaimantRepSessionFields(userCase, pending);
+};
+
 export const applyPreservedClaimantRepSessionFields = (
   userCase: CaseWithId,
   preserved?: ClaimantRepSessionFields

@@ -8,9 +8,13 @@ import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { loadClaimantRepCase } from './helpers/ClaimantRepAboutYouHelper';
-import { getClaimantRepAboutYouDetails } from './helpers/ClaimantRepAnswersHelper';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { clearRepAboutYouFlow, loadClaimantRepCase } from './helpers/ClaimantRepAboutYouHelper';
+import {
+  applyClaimantRepAboutYouPendingDisplay,
+  getClaimantRepAboutYouDetails,
+  populateClaimantRepDetailsFromCase,
+} from './helpers/ClaimantRepAnswersHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -39,16 +43,12 @@ export default class ClaimantRepAboutYouController {
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
     }
 
-    await handleUpdateDraftCase(req, logger);
-    if (req.session.userCase.updateDraftCaseError) {
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
-    }
-
     if (!req.session.userCase.hubLinksStatuses) {
       req.session.userCase.hubLinksStatuses = {};
     }
     req.session.userCase.hubLinksStatuses[HubLinkNames.AboutYou] = HubLinkStatus.VIEWED;
     await handleUpdateHubLinksStatuses(req, logger);
+    clearRepAboutYouFlow(req);
 
     return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId)));
   };
@@ -61,6 +61,8 @@ export default class ClaimantRepAboutYouController {
     }
 
     const userCase = req.session.userCase;
+    applyClaimantRepAboutYouPendingDisplay(userCase, req.session.claimantRepAboutYouPendingDisplay);
+    populateClaimantRepDetailsFromCase(userCase);
     const languageParam = getLanguageParam(req.url);
 
     const translations: AnyRecord = {
