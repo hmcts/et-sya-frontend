@@ -1,27 +1,27 @@
 {
-  "title": "<place-holder>",
-  "pageHeader": "<place-holder>",
-  "addressLine1": "<place-holder>",
-  "addressLine2": "<place-holder>",
-  "town": "<place-holder>",
-  "country": "<place-holder>",
-  "postcode": "<place-holder>",
+  "title": "[W]Representative's address",
+  "pageHeader": "[W]What is the representative's contact address?",
+  "addressLine1": "[W]Address line 1",
+  "addressLine2": "[W]Address line 2 (optional)",
+  "town": "[W]Town or city",
+  "country": "[W]Country",
+  "postcode": "[W]Postcode (optional)",
   "errors": {
     "repAddress1": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "[W]Enter the first line of the representative's address",
+      "invalid": "[W]Enter the first line of the representative's address - up to 150 characters"
     },
     "repAddress2": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "[W]Enter the second line of the representative's address - up to 50 characters",
+      "invalid": "[W]Enter the second line of the representative's address - up to 50 characters"
     },
     "repAddressTown": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "[W]Enter a town or city for the representative's address - up to 50 characters",
+      "invalid": "[W]Enter a town or city for the representative's address - up to 50 characters"
     },
     "repAddressCountry": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "[W]Enter a country for the representative's address - up to 50 characters",
+      "invalid": "[W]Enter a country for the representative's address - up to 50 characters"
     }
   }
 }

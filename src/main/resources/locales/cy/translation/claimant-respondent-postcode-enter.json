@@ -1,7 +1,7 @@
 {
-  "title": "<place-holder>",
-  "pageHeader": "<place-holder>",
-  "pageText": "<place-holder>",
-  "insetText": "<place-holder>",
-  "enterPostcode": "<place-holder>"
+  "title": "[W]Respondent address",
+  "pageHeader": "[W]What is the address of ",
+  "pageText": "[W]You should be able to find the address on the claimant's playslips, contract or other official documents.",
+  "insetText": "[W]This should be the same respondent address given to Acas.",
+  "enterPostcode": "[W]Enter postcode"
 }

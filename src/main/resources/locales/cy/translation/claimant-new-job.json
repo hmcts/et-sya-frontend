@@ -1,11 +1,11 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "yes": "<place-holder>",
-  "no": "<place-holder>",
+  "title": "[W]Has the claimant got a new job?",
+  "h1": "[W]Has the claimant got a new job? (optional)",
+  "yes": "[W]Yes",
+  "no": "[W]No",
   "errors": {
     "newJob": {
-      "required": "<place-holder>"
+      "required": "[W]Tell us if the claimant has a new job"
     }
   }
 }
