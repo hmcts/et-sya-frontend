@@ -8,9 +8,6 @@
 {% endblock %}
 
 {% block content %}
-  {% block errorSummary %}
-    {% include "error-summary.njk" %}
-  {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
@@ -32,9 +29,13 @@
         </a>
       </p>
 
-      {% block form %}
-        {% include "form/form.njk"%}
-      {% endblock %}
+      <form method="post" action="" novalidate="true">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
+        {{ govukButton({
+          text: saveAndContinue,
+          preventDoubleClick: true
+        }) }}
+      </form>
     </div>
   </div>
 {% endblock %}

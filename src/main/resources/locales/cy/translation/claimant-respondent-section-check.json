@@ -1,0 +1,13 @@
+{
+  "title": "<place-holder>",
+  "legend": "<place-holder>",
+  "yes": "<place-holder>",
+  "no": "<place-holder>",
+  "hint": "<place-holder>",
+  "errors": {
+    "employmentAndRespondentCheck": {
+      "required": "<place-holder>",
+      "invalid": "<place-holder>"
+    }
+  }
+}
