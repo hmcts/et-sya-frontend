@@ -2,6 +2,20 @@
   "title": "<place-holder>",
   "h1": "<place-holder>",
   "legend": "<place-holder>",
+  "detailsSummaryComp": "<place-holder>",
+  "detailsTextComp": {
+    "p1": "<place-holder>",
+    "li1": "<place-holder>",
+    "li2": "<place-holder>",
+    "p2": "<place-holder>",
+    "p3": "<place-holder>",
+    "p4": "<place-holder>",
+    "acasLinkText": "<place-holder>",
+    "acasLinkUrl": "https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures",
+    "p5": "<place-holder>"
+  },
+  "detailsSummaryRecom": "<place-holder>",
+  "detailsTextRecom": "<place-holder>",
   "compensationOnly": {
     "checkbox": "<place-holder>"
   },

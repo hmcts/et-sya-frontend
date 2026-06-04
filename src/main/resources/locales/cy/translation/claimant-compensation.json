@@ -5,6 +5,16 @@
   "hint": "<place-holder>",
   "amountLabel": "<place-holder>",
   "description": ["<place-holder>"],
+  "detailsSummaryComp": "<place-holder>",
+  "detailsTextComp": {
+    "p1": "<place-holder>",
+    "li1": "<place-holder>",
+    "li2": "<place-holder>",
+    "p2": "<place-holder>",
+    "p3": "<place-holder>",
+    "p4": "<place-holder>",
+    "p5": "<place-holder>"
+  },
   "errors": {
     "totalCompensationAmount": {
       "invalidCurrency": "<place-holder>",

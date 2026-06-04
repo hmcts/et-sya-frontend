@@ -24,7 +24,14 @@
       <p class="govuk-body">{{ p3 }}</p>
 
       {% block form %}
-        {% include "form/form.njk"%}
+        <form class="form" id="main-form" method="post" action="" novalidate="true">
+          <input type="hidden" name="_csrf" value={{ csrfToken }}>
+          {% include "form/fields.njk" %}
+          <p class="govuk-body">
+            <a href="{{ PageUrls.CLAIMANT_LINKED_CASES }}?redirect=clearSelection&{{ languageParam }}" class="govuk-link">{{ clearSelection }}</a>
+          </p>
+          {% include "form/saveButtons.njk" %}
+        </form>
       {% endblock %}
     </div>
   </div>

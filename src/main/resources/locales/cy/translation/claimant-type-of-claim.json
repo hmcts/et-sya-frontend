@@ -26,7 +26,8 @@
       "required": "<place-holder>"
     },
     "otherClaim": {
-      "required": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud"
+      "required": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud",
+      "tooLong": "<place-holder>"
     }
   }
 }

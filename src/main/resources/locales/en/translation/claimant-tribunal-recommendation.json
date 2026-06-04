@@ -4,5 +4,7 @@
   "label": "What tribunal recommendation would the claimant like to make?",
   "description": [
     "Tell us what action the claimant would like the tribunal to recommend your respondent(s) take to reduce the impact of any discrimination which has occurred."
-  ]
+  ],
+  "detailsSummaryRecom": "What is a tribunal recommendation?",
+  "detailsTextRecom": "If the claimant's employer is found to have discriminated against them, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on the claimant"
 }

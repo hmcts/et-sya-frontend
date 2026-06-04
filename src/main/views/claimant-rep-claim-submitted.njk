@@ -33,7 +33,7 @@
         { key: { text: submissionReference }, value: { text: submissionReferenceText } },
         { key: { text: claimSubmitted }, value: { text: claimSubmittedText } },
         {
-          key: { text: downloadClaim },
+          key: { html: downloadClaim + '<br><p class="govuk-body">' + downloadClaimHint + '</p>' },
           value: { html: '<a href="' + downloadLink + '" class="govuk-link">' + downloadBtnText + '</a>' }
         },
         { key: { text: attachments }, value: { text: attachmentsText } }
