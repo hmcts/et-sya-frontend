@@ -1,13 +1,13 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "legend": "<place-holder>",
-  "label": "<place-holder>",
-  "p1": "<place-holder>",
-  "hint": "<place-holder>",
+  "title": "[W]Employee benefits",
+  "h1": "[W]Employee benefits",
+  "legend": "[W]Does - or did - the claimant receive any employee benefits? (optional)",
+  "label": "[W]Does - or did - the claimant receive any employee benefits?",
+  "p1": "[W]For example, child care, company car, housing and health insurance.",
+  "hint": "[W]Tell us about any benefits",
   "errors": {
     "benefitsCharCount": {
-      "tooLong": "<place-holder>"
+      "tooLong": "[W]Description must be 2500 characters or less"
     }
   }
 }

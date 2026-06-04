@@ -1,17 +1,17 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "legend": "<place-holder>",
-  "acasCertNum": "<place-holder>",
-  "hintText": "<place-holder>",
-  "linkText": "<place-holder>",
+  "title": "[W]Acas certificate for the respondent",
+  "h1": "[W]Acas certificate for the respondent",
+  "legend": "[W]Do you have an Acas certificate number for ",
+  "acasCertNum": "[W]Enter an Acas early conciliation certificate number",
+  "hintText": "[W]Nearly everyone should have this number before they fill in a claim form. You can find it on your Acas certificate. Read more about the ",
+  "linkText": "[W]Acas early conciliation service (opens in new tab)",
   "errors": {
     "acasCert": {
-      "required": "<place-holder>"
+      "required": "[W]Tell us if you have an Acas early conciliation number for the respondent"
     },
     "acasCertNum": {
-      "required": "<place-holder>",
-      "invalidAcasNumber": "<place-holder>"
+      "required": "[W]Tell us if you have an Acas early conciliation number for the respondent",
+      "invalidAcasNumber": "[W]Enter Acas number in the correct format. For example R123456/12/34"
     }
   }
 }

@@ -1,33 +1,33 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "hint": "<place-holder>",
+  "title": "[W]Type of claim",
+  "h1": "[W]What type of claim is the claimant making?",
+  "hint": "[W]You can choose all that apply to the claimant. Further information will be asked for later in the claim. <br><br><span class=\"govuk-!-font-weight-bold\">Select all that apply</span>",
   "discrimination": {
-    "checkbox": "<place-holder>",
-    "hint": "<place-holder>"
+    "checkbox": "[W]Discrimination of any type",
+    "hint": "[W]for example, because of the claimant's sex, ethnicity, disability or other characteristic"
   },
   "payRelated": {
-    "checkbox": "<place-holder>"
+    "checkbox": "[W]Pay-related claim"
   },
   "unfairDismissal": {
-    "checkbox": "<place-holder>",
-    "hint": "<place-holder>"
+    "checkbox": "[W]Unfair dismissal",
+    "hint": "[W]including constructive dismissal"
   },
   "whistleBlowing": {
-    "checkbox": "<place-holder>",
-    "hint": "<place-holder>"
+    "checkbox": "[W]Whistleblowing",
+    "hint": "[W]including dismissal or any other unfair treatment after whistleblowing"
   },
   "otherTypesOfClaims": {
-    "checkbox": "<place-holder>",
+    "checkbox": "[W]Other type of claim",
     "explain": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud. Gallwch ddisgrifio manylion yr hawliad yn ddiweddarach."
   },
   "errors": {
     "typeOfClaim": {
-      "required": "<place-holder>"
+      "required": "[W]Please select at least one of the options below to choose the type of claim."
     },
     "otherClaim": {
       "required": "Dywedwch wrthym yn fyr pa fath o hawliad mae'r hawlydd yn ei wneud",
-      "tooLong": "<place-holder>"
+      "tooLong": "[W]Description must be 100 characters or less"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "p1": "<place-holder>",
-  "p2": "<place-holder>",
-  "enterPostcode": "<place-holder>"
+  "title": "[W]Postcode where the claimant worked",
+  "h1": "[W]What's the postcode where the claimant worked?",
+  "p1": "[W]This will usually decide which Employment Tribunal office deals with your claim. If you worked at home, enter the home postcode at which you work or worked.",
+  "p2": "[W]If the claimant is claiming against someone they did not work for, enter the postcode of where they are based.",
+  "enterPostcode": "[W]Enter a UK postcode"
 }

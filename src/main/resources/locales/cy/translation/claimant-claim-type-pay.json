@@ -1,10 +1,10 @@
 {
   "title": "Hawliad tâl",
   "h1": "Hawliad tâl",
-  "legend": "<place-holder>",
+  "legend": "[W]What type of pay claim is the claimant making?",
   "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
-  "detailsSummary": "<place-holder>",
-  "detailsText": "<place-holder>",
+  "detailsSummary": "[W]What are pay claims?",
+  "detailsText": "[W]It is against the law for an employer to withhold pay after an employee has carried out work for them. This can also include unlawful deduction of pay.",
   "arrears": "Ôl-ddyledion",
   "arrearsHint": "tâl sy'n ddyledus i chi",
   "holidayPay": "Tâl gwyliau",
