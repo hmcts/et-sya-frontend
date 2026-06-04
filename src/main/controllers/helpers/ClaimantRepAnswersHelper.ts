@@ -93,7 +93,99 @@ const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
 export const getClaimantRepAboutYouUrl = (caseId: string, languageParam: string): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + languageParam;
 
+export type ClaimantRepSessionFields = Pick<
+  CaseWithId,
+  | 'representativeName'
+  | 'representativeOrgName'
+  | 'claimantRepEmail'
+  | 'repAddress1'
+  | 'repAddress2'
+  | 'repAddressTown'
+  | 'repAddressCountry'
+  | 'repAddressPostcode'
+  | 'representativePhoneNumber'
+>;
+
 const hasValue = (value?: string): boolean => !!value?.trim();
+
+export const preserveClaimantRepSessionFields = (userCase?: CaseWithId): ClaimantRepSessionFields | undefined => {
+  if (!userCase?.id) {
+    return undefined;
+  }
+
+  return {
+    representativeName: userCase.representativeName,
+    representativeOrgName: userCase.representativeOrgName,
+    claimantRepEmail: userCase.claimantRepEmail,
+    repAddress1: userCase.repAddress1,
+    repAddress2: userCase.repAddress2,
+    repAddressTown: userCase.repAddressTown,
+    repAddressCountry: userCase.repAddressCountry,
+    repAddressPostcode: userCase.repAddressPostcode,
+    representativePhoneNumber: userCase.representativePhoneNumber,
+  };
+};
+
+export const syncClaimantRepresentativeFromSessionFields = (userCase: CaseWithId): void => {
+  if (!userCase) {
+    return;
+  }
+
+  const claimantRepresentative = { ...userCase.claimantRepresentative };
+
+  if (hasValue(userCase.representativeName)) {
+    claimantRepresentative.name_of_representative = userCase.representativeName;
+  }
+  if (hasValue(userCase.representativeOrgName)) {
+    claimantRepresentative.name_of_organisation = userCase.representativeOrgName;
+  }
+  if (hasValue(userCase.claimantRepEmail)) {
+    claimantRepresentative.representative_email_address = userCase.claimantRepEmail;
+  }
+
+  if (Object.keys(claimantRepresentative).length) {
+    userCase.claimantRepresentative = claimantRepresentative;
+  }
+};
+
+export const applyPreservedClaimantRepSessionFields = (
+  userCase: CaseWithId,
+  preserved?: ClaimantRepSessionFields
+): void => {
+  if (!preserved) {
+    return;
+  }
+
+  if (hasValue(preserved.representativeName)) {
+    userCase.representativeName = preserved.representativeName;
+  }
+  if (hasValue(preserved.representativeOrgName)) {
+    userCase.representativeOrgName = preserved.representativeOrgName;
+  }
+  if (hasValue(preserved.claimantRepEmail)) {
+    userCase.claimantRepEmail = preserved.claimantRepEmail;
+  }
+  if (hasValue(preserved.repAddress1)) {
+    userCase.repAddress1 = preserved.repAddress1;
+  }
+  if (hasValue(preserved.repAddress2)) {
+    userCase.repAddress2 = preserved.repAddress2;
+  }
+  if (hasValue(preserved.repAddressTown)) {
+    userCase.repAddressTown = preserved.repAddressTown;
+  }
+  if (hasValue(preserved.repAddressCountry)) {
+    userCase.repAddressCountry = preserved.repAddressCountry;
+  }
+  if (hasValue(preserved.repAddressPostcode)) {
+    userCase.repAddressPostcode = preserved.repAddressPostcode;
+  }
+  if (hasValue(preserved.representativePhoneNumber)) {
+    userCase.representativePhoneNumber = preserved.representativePhoneNumber;
+  }
+
+  syncClaimantRepresentativeFromSessionFields(userCase);
+};
 
 const setRepAddressFromApi = (userCase: CaseWithId, address?: Et1Address): void => {
   if (!address) {
@@ -171,6 +263,8 @@ export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void =
   if (!hasValue(userCase.claimantRepEmail) && claimantRepEntry?.representativeEmailAddress) {
     userCase.claimantRepEmail = claimantRepEntry.representativeEmailAddress;
   }
+
+  syncClaimantRepresentativeFromSessionFields(userCase);
 };
 
 export const getClaimantRepAboutYouDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {

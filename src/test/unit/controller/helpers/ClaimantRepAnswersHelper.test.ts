@@ -1,4 +1,5 @@
 import {
+  applyPreservedClaimantRepSessionFields,
   getClaimantClaimDetails,
   getClaimantPersonalDetails,
   getClaimantRepAboutYouDetails,
@@ -93,6 +94,23 @@ describe('ClaimantRepAnswersHelper', () => {
   describe('getClaimantRepAboutYouUrl', () => {
     it('should build the about you page url for a case', () => {
       expect(getClaimantRepAboutYouUrl('case-123', '')).toBe('/claimant-rep-about-you/case-123');
+    });
+  });
+
+  describe('applyPreservedClaimantRepSessionFields', () => {
+    it('should keep an updated representative name after reloading case data from the api', () => {
+      const userCase = {
+        ...baseCase,
+        claimantRepresentative: {
+          name_of_representative: 'Old Name',
+        },
+      };
+      applyPreservedClaimantRepSessionFields(userCase, {
+        representativeName: 'Updated Name',
+      });
+
+      expect(userCase.representativeName).toBe('Updated Name');
+      expect(userCase.claimantRepresentative?.name_of_representative).toBe('Updated Name');
     });
   });
 

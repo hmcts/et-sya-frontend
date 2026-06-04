@@ -373,6 +373,7 @@ export interface Document {
 }
 
 export interface Representative {
+  ccdId?: string;
   respondentId?: string;
   hasMyHMCTSAccount?: YesOrNo;
   nameOfRepresentative?: string;

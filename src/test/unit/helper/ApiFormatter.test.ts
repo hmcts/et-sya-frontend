@@ -289,6 +289,8 @@ describe('Format Case Data to Frontend Model', () => {
       claimantRepEmail: undefined,
       claimantRepresentative: undefined,
       claimantRepresentativeRemoved: undefined,
+      representativeName: undefined,
+      representativeOrgName: undefined,
       employeeBenefits: undefined,
       endDate: undefined,
       newJob: undefined,

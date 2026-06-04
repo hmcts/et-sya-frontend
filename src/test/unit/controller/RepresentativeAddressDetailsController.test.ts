@@ -52,13 +52,13 @@ describe('Representative Address Details Controller', () => {
       expect(response.render).toHaveBeenCalledWith('representative-address-details', expect.anything());
     });
 
-    it('should use Submit button label in rep-about-you flow', () => {
+    it('should use Submit button label in rep-about-you flow', async () => {
       const controller = new RepresentativeAddressDetailsController();
       const response = mockResponse();
       const request = mockRequest({ t });
-      request.session.repAboutYouCaseId = 'case-123';
+      request.session.repAboutYouCaseId = '1234';
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       expect(renderArgs.form.submit.text({ submitBtn: 'Submit', submit: 'Save and continue' })).toBe('Submit');
@@ -154,6 +154,24 @@ describe('Representative Address Details Controller', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_PHONE_NUMBER);
       expect(req.session.errors).toHaveLength(0);
+    });
+
+    it('should redirect to claimant rep about you when in rep-about-you flow', async () => {
+      const body = {
+        repAddress1: '1 The Street',
+        repAddress2: 'Flat 2',
+        repAddressTown: 'London',
+        repAddressCountry: 'England',
+        repAddressPostcode: 'SW1A 1AA',
+      };
+      const controller = new RepresentativeAddressDetailsController();
+      const req = mockRequestEmpty({ body, userCase: { id: '1234' } });
+      req.session.repAboutYouCaseId = '1234';
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/1234');
     });
 
     it('should save the address fields to userCase', async () => {

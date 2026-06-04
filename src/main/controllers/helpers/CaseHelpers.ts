@@ -18,6 +18,7 @@ import localesCy from '../../resources/locales/cy/translation/common.json';
 import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
+import { syncClaimantRepresentativeFromSessionFields } from './ClaimantRepAnswersHelper';
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
@@ -129,6 +130,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.representedClaimantDetailsCheck ??= representedClaimantDetailsCheck;
 
       req.session.userCase.claimantWrittenContract ??= claimantWrittenContract;
+      syncClaimantRepresentativeFromSessionFields(req.session.userCase);
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {

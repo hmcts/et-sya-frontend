@@ -130,6 +130,8 @@ export default {
   claimantRepEmail: undefined,
   claimantRepresentative: undefined,
   claimantRepresentativeRemoved: undefined,
+  representativeName: undefined,
+  representativeOrgName: undefined,
   employeeBenefits: YesOrNo.YES,
   jobTitle: 'Developer',
   noticePeriod: YesOrNo.YES,
@@ -312,6 +314,7 @@ export default {
   bundleDocuments: [],
   representatives: [
     {
+      ccdId: '123',
       hasMyHMCTSAccount: YesOrNo.YES,
       nameOfOrganisation: undefined,
       nameOfRepresentative: undefined,
