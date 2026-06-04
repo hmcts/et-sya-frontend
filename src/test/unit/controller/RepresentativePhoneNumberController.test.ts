@@ -31,7 +31,7 @@ describe('Representative Phone Number Controller', () => {
 
       controller.get(request, response);
 
-      const renderArgs = response.render.mock.calls[0][1];
+      const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       expect(renderArgs.form.submit.text({ submitBtn: 'Submit', submit: 'Save and continue' })).toBe('Submit');
     });
   });
