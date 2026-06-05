@@ -1,11 +1,11 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "representativeName": "<place-holder>",
-  "submitBtn": "<place-holder>",
+  "title": "[W]Your name",
+  "h1": "[W]Your name",
+  "representativeName": "[W]Your name",
+  "submitBtn": "[W]Submit",
   "errors": {
     "representativeName": {
-      "required": "<place-holder>"
+      "required": "[W]Enter your name"
     }
   }
 }

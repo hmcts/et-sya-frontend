@@ -1,24 +1,24 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "submitBtn": "<place-holder>",
+  "title": "[W]About you",
+  "h1": "[W]About you",
+  "submitBtn": "[W]Submit",
   "aboutYouDetails": {
-    "name": "<place-holder>",
-    "organisation": "<place-holder>",
-    "typeOfOrganisation": "<place-holder>",
-    "address": "<place-holder>",
-    "email": "<place-holder>",
-    "phone": "<place-holder>"
+    "name": "[W]Name",
+    "organisation": "[W]Organisation",
+    "typeOfOrganisation": "[W]Type of organisation",
+    "address": "[W]Address",
+    "email": "[W]Email",
+    "phone": "[W]Phone"
   },
   "tellTheTribunal": {
-    "heading": "<place-holder>",
-    "textBeforeLink": "<place-holder>",
-    "contactLink": "<place-holder>",
-    "textAfterLink": "<place-holder>"
+    "heading": "[W]Tell the tribunal",
+    "textBeforeLink": "[W]If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
+    "contactLink": "[W]contact the tribunal",
+    "textAfterLink": "[W]."
   },
   "errors": {
     "hiddenErrorField": {
-      "invalid": "<place-holder>"
+      "invalid": "[W]You must complete your name, address and email before you can submit"
     }
   }
 }
