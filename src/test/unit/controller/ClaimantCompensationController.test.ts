@@ -2,7 +2,7 @@ import ClaimantCompensationController from '../../../main/controllers/ClaimantCo
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { TellUsWhatYouWant } from '../../../main/definitions/definition';
+import { TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -50,5 +50,18 @@ describe('ClaimantCompensationController', () => {
     const res = mockResponse();
     await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION);
+  });
+
+  it('should redirect to WHISTLEBLOWING_CLAIMS when whistleblowing is in typeOfClaim and tribunal not selected', async () => {
+    const body = { compensationDetails: 'Lost wages' };
+    const userCase: Partial<CaseWithId> = {
+      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING],
+    };
+    const controller = new ClaimantCompensationController();
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    await controller.post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.WHISTLEBLOWING_CLAIMS);
   });
 });
