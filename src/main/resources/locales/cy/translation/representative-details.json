@@ -1,25 +1,25 @@
 {
-  "title": "<place-holder>",
-  "p1": "<place-holder>",
-  "typeOfRepresentative": "<place-holder>",
-  "selectAType": "<place-holder>",
-  "employmentAdvisor": "<place-holder>",
-  "citizensAdviceBureau": "<place-holder>",
-  "freeRepresentationUnit": "<place-holder>",
-  "lawCentre": "<place-holder>",
-  "tradeUnion": "<place-holder>",
-  "solicitor": "<place-holder>",
-  "privateIndividual": "<place-holder>",
-  "tradeAssociation": "<place-holder>",
-  "other": "<place-holder>",
-  "representativeOrgName": "<place-holder>",
-  "representativeName": "<place-holder>",
+  "title": "[W]Representative's details",
+  "p1": "[W]All correspondence about the case will be sent to the representative and not the claimant.",
+  "typeOfRepresentative": "[W]Type of representative",
+  "selectAType": "[W]Select a type",
+  "employmentAdvisor": "[W]Employment advisor",
+  "citizensAdviceBureau": "[W]Citizens Advice Bureau",
+  "freeRepresentationUnit": "[W]Free Representation Unit",
+  "lawCentre": "[W]Law centre",
+  "tradeUnion": "[W]Trade union",
+  "solicitor": "[W]Solicitor",
+  "privateIndividual": "[W]Private individual",
+  "tradeAssociation": "[W]Trade association",
+  "other": "[W]Other",
+  "representativeOrgName": "[W]Name of the representative's organisation (optional)",
+  "representativeName": "[W]Representative's name",
   "errors": {
     "representativeType": {
-      "required": "<place-holder>"
+      "required": "[W]Select a type of representative"
     },
     "representativeName": {
-      "required": "<place-holder>"
+      "required": "[W]Enter the representative's name"
     }
   }
 }

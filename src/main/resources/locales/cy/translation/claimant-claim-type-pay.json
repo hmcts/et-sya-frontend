@@ -1,16 +1,19 @@
 {
-  "title": "Hawliad tâl",
-  "h1": "Hawliad tâl",
-  "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
-  "arrears": "Ôl-ddyledion",
-  "arrearsHint": "tâl sy'n ddyledus i chi",
-  "holidayPay": "Tâl gwyliau",
-  "noticePay": "Tâl rhybudd",
-  "redundancyPay": "Tâl diswyddo",
-  "otherPayments": "Taliadau eraill",
+  "title": "[W]Pay claim",
+  "h1": "[W]Pay claim",
+  "legend": "[W]What type of pay claim is the claimant making?",
+  "selectAllHint": "[W]Select all that apply.",
+  "detailsSummary": "[W]What are pay claims?",
+  "detailsText": "[W]It is against the law for an employer to withhold pay after an employee has carried out work for them. This can also include unlawful deduction of pay.",
+  "arrears": "[W]Arrears",
+  "arrearsHint": "[W]pay you are owed",
+  "holidayPay": "[W]Holiday pay",
+  "noticePay": "[W]Notice pay",
+  "redundancyPay": "[W]Redundancy pay",
+  "otherPayments": "[W]Other payments",
   "errors": {
     "claimTypePay": {
-      "required": "Dywedwch wrthym pa fath o hawliad tâl mae'r hawlydd yn ei wneud"
+      "required": "[W]Tell us what type of pay claim the claimant is making"
     }
   }
 }

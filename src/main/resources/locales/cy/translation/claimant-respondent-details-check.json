@@ -1,28 +1,29 @@
 {
-  "title": "<place-holder>",
-  "subTitle": "<place-holder>",
-  "legend": "<place-holder>",
-  "hint": "<place-holder>",
-  "yes": "<place-holder>",
-  "no": "<place-holder>",
-  "name": "<place-holder>",
-  "address": "<place-holder>",
-  "acasNum": "<place-holder>",
-  "noAcasReason": "<place-holder>",
+  "title": "[W]Check the respondent details",
+  "subTitle": "[W]Respondent ",
+  "legend": "[W]Have you completed this section?",
+  "hint": "[W]You can change your answers later.",
+  "yes": "[W]Yes, I've completed this section",
+  "no": "[W]No, I'll come back to it later",
+  "name": "[W]Name",
+  "address": "[W]Address",
+  "acasNum": "[W]Acas certificate number",
+  "noAcasReason": "[W]Why do you not have an Acas number?",
   "acasReason": {
-    "another": "<place-holder>",
-    "no_power": "<place-holder>",
-    "employer": "<place-holder>",
-    "unfair_dismissal": "<place-holder>"
+    "another": "[W]Another person I'm making a claim with has an Acas early conciliation certificate number",
+    "no_power": "[W]Acas doesn't have the power to conciliate on some or all of my claim",
+    "employer": "[W]My employer has already been in touch with Acas",
+    "unfair_dismissal": "[W]The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
   },
-  "unProvided": "<place-holder>",
-  "change": "<place-holder>",
-  "saveAndContinue": "<place-holder>",
-  "saveForLater": "<place-holder>",
+  "unProvided": "[W]Not provided",
+  "change": "[W]Change",
+  "addAnotherRespondent": "[W]Add another respondent",
+  "saveAndContinue": "[W]Save and continue",
+  "saveForLater": "[W]Save as draft",
   "errors": {
     "employmentAndRespondentCheck": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "[W]Tell us if you have completed this section",
+      "invalid": "[W]You must complete the Employment and respondent details section before you can mark it as completed"
     }
   }
 }

@@ -1,18 +1,18 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "p1": "<place-holder>",
-  "p2": "<place-holder>",
-  "payBeforeTax": "<place-holder>",
-  "weeklyMonthlyAnnual": "<place-holder>",
+  "title": "[W]New job pay",
+  "h1": "[W]What does the new job pay? (optional)",
+  "p1": "[W]This page is optional but if you choose to tell us the pay then you will have to tell us if the claimant is paid weekly, monthly or annually.",
+  "p2": "[W]Tell us the gross pay - before tax and other deductions. You'll find this on the claimant's new payslips or ask their employer for details.",
+  "payBeforeTax": "[W]Enter the pay BEFORE tax and National Insurance amount in pounds",
+  "weeklyMonthlyAnnual": "[W]Is this the weekly, monthly or annual pay?",
   "errors": {
     "newJobPay": {
-      "required": "<place-holder>",
-      "invalidCurrency": "<place-holder>",
-      "tooHighCurrency": "<place-holder>"
+      "required": "[W]Tell us the pay before tax and NI",
+      "invalidCurrency": "[W]Enter pay before tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "[W]Pay before tax and NI must be £9,999,999.99 or less"
     },
     "newJobPayInterval": {
-      "required": "<place-holder>"
+      "required": "[W]Tell us the pay frequency"
     }
   }
 }

@@ -82,7 +82,7 @@ describe('ClaimantTypeOfClaimController', () => {
     });
 
     it('should redirect to CLAIMANT_DESCRIBE_WHAT_HAPPENED when other is selected with text entered (AC3)', async () => {
-      const body = { typeOfClaim: 'other', otherClaim: 'Breach of contract' };
+      const body = { typeOfClaim: 'otherTypesOfClaims', otherClaim: 'Breach of contract' };
       const controller = new ClaimantTypeOfClaimController();
       const req = mockRequestEmpty({ body });
       const res = mockResponse();
@@ -93,7 +93,7 @@ describe('ClaimantTypeOfClaimController', () => {
     });
 
     it('should error when other is selected but no text is entered (AC2)', async () => {
-      const body = { typeOfClaim: 'other', otherClaim: '' };
+      const body = { typeOfClaim: 'otherTypesOfClaims', otherClaim: '' };
       const controller = new ClaimantTypeOfClaimController();
       const req = mockRequestEmpty({ body });
       const res = mockResponse();

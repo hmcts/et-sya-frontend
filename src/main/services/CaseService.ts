@@ -333,7 +333,6 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         send_notification_id: selectedJudgment.id,
-        notification_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
       throw new Error(

@@ -11,7 +11,8 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { clearFields, handleClearSelection, renderPage } from './helpers/NonHmctsControllerHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantLinkedCasesController');
 
@@ -64,6 +65,9 @@ export default class ClaimantLinkedCasesController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_LINKED_CASES);
+    handleClearSelection(req, r => clearFields(r, 'linkedCases', 'linkedCasesDetail'));
+    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_LINKED_CASES, {
+      languageParam: getLanguageParam(req.url).replace('?', ''),
+    });
   };
 }

@@ -1,7 +1,5 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block beforeContent %}
@@ -10,27 +8,34 @@
 {% endblock %}
 
 {% block content %}
-  {% block errorSummary %}
-    {% include "error-summary.njk" %}
-  {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
 
-      {% if respondent %}
+      {% for respondent in respondents %}
         {{ govukSummaryList({
           card: {
             title: {
-              text: subTitle + "1"
+              text: subTitle + loop.index
             }
           },
           rows: getClaimantRespondentDetailsSection(respondent, translations)
         }) }}
-      {% endif %}
+      {% endfor %}
 
-      {% block form %}
-        {% include "form/form.njk"%}
-      {% endblock %}
+      <p class="govuk-body">
+        <a href="{{ PageUrls.CLAIMANT_RESPONDENT_ADD_REDIRECT + languageParam }}" class="govuk-link">
+          {{ addAnotherRespondent }}
+        </a>
+      </p>
+
+      <form method="post" action="" novalidate="true">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
+        {{ govukButton({
+          text: saveAndContinue,
+          preventDoubleClick: true
+        }) }}
+      </form>
     </div>
   </div>
 {% endblock %}

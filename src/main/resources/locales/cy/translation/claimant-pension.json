@@ -1,12 +1,12 @@
 {
-  "title": "<place-holder>",
-  "legend": "<place-holder>",
-  "label": "<place-holder>",
-  "pensionContributions": "<place-holder>",
+  "title": "[W]Does the respondent make contributions to the claimant's pension? (optional)",
+  "legend": "[W]Does the respondent make contributions to the claimant's pension? (optional)",
+  "label": "[W]Does the respondent make contributions to the claimant's pension?",
+  "pensionContributions": "[W]Enter their pension contributions - worked out weekly",
   "errors": {
     "claimantPensionWeeklyContribution": {
-      "invalidCurrency": "<place-holder>",
-      "tooHighCurrency": "<place-holder>"
+      "invalidCurrency": "[W]Enter pension contributions in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "[W]Pension contributions must be £9,999,999.99 or less"
     }
   }
 }

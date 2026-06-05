@@ -1,5 +1,4 @@
 {% extends "template.njk" %}
-{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -11,15 +10,7 @@
     {% include "error-summary.njk" %}
   {% endblock %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
-
-      {{ govukDetails({
-        summaryText: detailsSummaryRecom,
-        text: detailsTextRecom,
-        classes: "govuk-!-margin-bottom-2"
-      }) }}
-
+    <div class="govuk-grid-column-two-thirds">
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}

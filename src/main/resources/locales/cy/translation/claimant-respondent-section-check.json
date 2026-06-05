@@ -5,9 +5,9 @@
   "no": "[W]No, I'll come back to it later",
   "hint": "[W]You can change your answers later.",
   "errors": {
-    "representativeDetailsCheck": {
+    "employmentAndRespondentCheck": {
       "required": "[W]Tell us if you have completed this section",
-      "invalid": "[W]You must complete the Contact details section before you can mark it as completed"
+      "invalid": "[W]You must complete the Employment and respondent details section before you can mark it as completed"
     }
   }
 }
