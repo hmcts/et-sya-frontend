@@ -108,5 +108,16 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
       expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual([{ propertyName: 'claimTypeDiscrimination', errorType: 'required' }]);
     });
+
+    it('should redirect to CLAIMANT_CLAIM_TYPE_PAY when pay related is also selected', async () => {
+      const body = { claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE] };
+      const controller = new ClaimantClaimTypeDiscriminationController();
+      const req = mockRequestEmpty({ body, userCase: { typeOfClaim: ['discrimination', 'payRelated'] } });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_PAY);
+    });
   });
 });

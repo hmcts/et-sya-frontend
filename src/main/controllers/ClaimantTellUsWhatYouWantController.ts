@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { TellUsWhatYouWant } from '../definitions/definition';
+import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
@@ -37,6 +37,8 @@ export default class ClaimantTellUsWhatYouWantController {
       redirectUrl = PageUrls.CLAIMANT_COMPENSATION;
     } else if (includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
       redirectUrl = PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION;
+    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
       redirectUrl = PageUrls.CLAIMANT_LINKED_CASES;
     }
