@@ -53,7 +53,20 @@ export const clearRepAboutYouFlow = (req: AppRequest): void => {
   req.session.claimantRepAboutYouPendingDisplay = undefined;
 };
 
-export const loadClaimantRepCase = async (req: AppRequest, caseId: string): Promise<boolean> => {
+export const refreshClaimantRepSession = (req: AppRequest, caseId: string): void => {
+  const loginEmail = req.session.user?.email;
+  populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
+  applyPreservedClaimantRepSessionFields(req.session.userCase, req.session.claimantRepAboutYouPendingDisplay);
+  syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+  req.session.repAboutYouCaseId = caseId;
+};
+
+export const loadClaimantRepCase = async (req: AppRequest, caseId: string, forceReload = false): Promise<boolean> => {
+  if (!forceReload && req.session.userCase?.id === caseId) {
+    refreshClaimantRepSession(req, caseId);
+    return true;
+  }
+
   try {
     const preservedFields =
       req.session.userCase?.id === caseId ? preserveClaimantRepSessionFields(req.session.userCase) : undefined;
@@ -79,7 +92,7 @@ export const ensureClaimantRepCaseLoaded = async (req: AppRequest): Promise<bool
     return false;
   }
   if (req.session.userCase?.id === caseId) {
-    req.session.repAboutYouCaseId = caseId;
+    refreshClaimantRepSession(req, caseId);
     return true;
   }
   return loadClaimantRepCase(req, caseId);

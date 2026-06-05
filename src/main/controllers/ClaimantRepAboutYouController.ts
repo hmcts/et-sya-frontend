@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { handleUpdateClaimantRepAboutYou, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { clearRepAboutYouFlow, loadClaimantRepCase } from './helpers/ClaimantRepAboutYouHelper';
-import { getClaimantRepAboutYouDetails } from './helpers/ClaimantRepAnswersHelper';
+import { getClaimantRepAboutYouDetails, populateClaimantRepDetailsFromCase } from './helpers/ClaimantRepAnswersHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -32,6 +32,9 @@ export default class ClaimantRepAboutYouController {
     if (!(await loadClaimantRepCase(req, caseId))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
+
+    const loginEmail = req.session.user?.email;
+    populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
 
     req.session.errors = [];
     if (!validateClaimantRepAboutYou(req.session.userCase)) {
@@ -62,6 +65,7 @@ export default class ClaimantRepAboutYouController {
     }
 
     const userCase = req.session.userCase;
+    const loginEmail = req.session.user?.email;
     const languageParam = getLanguageParam(req.url);
 
     const translations: AnyRecord = {
@@ -81,7 +85,7 @@ export default class ClaimantRepAboutYouController {
       languageParam,
       userCase,
       backLinkUrl: PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId) + languageParam,
-      aboutYouRows: getClaimantRepAboutYouDetails(userCase, translations),
+      aboutYouRows: getClaimantRepAboutYouDetails(userCase, translations, { loginEmail }),
       contactTribunalUrl: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
     });
   };

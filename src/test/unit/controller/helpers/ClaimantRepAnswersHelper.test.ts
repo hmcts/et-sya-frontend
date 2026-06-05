@@ -148,6 +148,17 @@ describe('ClaimantRepAnswersHelper', () => {
       expect(userCase.repAddressCountry).toBe('England');
     });
 
+    it('should sync representative phone number from telNumber', () => {
+      const userCase = {
+        ...baseCase,
+        telNumber: '0208 123 1234',
+      };
+
+      populateClaimantRepDetailsFromCase(userCase);
+
+      expect(userCase.representativePhoneNumber).toBe('0208 123 1234');
+    });
+
     it('should default email to the login email when not set on the case', () => {
       const userCase = {
         ...baseCase,

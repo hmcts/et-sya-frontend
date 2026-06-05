@@ -112,6 +112,14 @@ export type ClaimantRepSessionFields = Pick<
 
 const hasValue = (value?: string): boolean => !!value?.trim();
 
+export const syncRepPhoneFields = (userCase: CaseWithId): void => {
+  if (hasValue(userCase.representativePhoneNumber)) {
+    userCase.telNumber = userCase.representativePhoneNumber;
+  } else if (hasValue(userCase.telNumber)) {
+    userCase.representativePhoneNumber = userCase.telNumber;
+  }
+};
+
 export const preserveClaimantRepSessionFields = (userCase?: CaseWithId): ClaimantRepSessionFields | undefined => {
   if (!userCase?.id) {
     return undefined;
@@ -264,9 +272,7 @@ export const populateClaimantRepDetailsFromCase = (
     userCase.representativeOrgName = claimantRep.name_of_organisation;
   }
 
-  if (!hasValue(userCase.representativePhoneNumber) && userCase.telNumber) {
-    userCase.representativePhoneNumber = userCase.telNumber;
-  }
+  syncRepPhoneFields(userCase);
 
   const claimantRepEntry = getClaimantRepresentativeEntry(userCase);
   setRepDetailsFromRepresentativeEntry(userCase, claimantRepEntry);
@@ -284,8 +290,12 @@ export const populateClaimantRepDetailsFromCase = (
   syncClaimantRepresentativeFromSessionFields(userCase);
 };
 
-export const getClaimantRepAboutYouDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
-  populateClaimantRepDetailsFromCase(userCase);
+export const getClaimantRepAboutYouDetails = (
+  userCase: CaseWithId,
+  translations: AnyRecord,
+  options?: PopulateClaimantRepOptions
+): SummaryListRow[] => {
+  populateClaimantRepDetailsFromCase(userCase, options);
 
   const changePath = InterceptPaths.REP_ABOUT_YOU_CHANGE;
   const caseId = userCase.id;

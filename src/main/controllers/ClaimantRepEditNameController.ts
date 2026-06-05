@@ -9,6 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import {
+  ensureClaimantRepCaseLoaded,
   getClaimantRepAboutYouPageUrl,
   handleRepAboutYouFieldPost,
   loadClaimantRepCase,
@@ -43,8 +44,7 @@ export default class ClaimantRepEditNameController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const caseId = req.params.caseId;
-    if (!(await loadClaimantRepCase(req, caseId))) {
+    if (!(await ensureClaimantRepCaseLoaded(req))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     return handleRepAboutYouFieldPost(req, res, this.form, logger);

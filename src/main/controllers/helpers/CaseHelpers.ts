@@ -23,6 +23,7 @@ import {
   populateClaimantRepDetailsFromCase,
   preserveClaimantRepSessionFields,
   syncClaimantRepresentativeFromSessionFields,
+  syncRepPhoneFields,
 } from './ClaimantRepAnswersHelper';
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
@@ -154,11 +155,14 @@ export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: L
     try {
       const loginEmail = req.session.user?.email;
       const preserved = preserveClaimantRepSessionFields(req.session.userCase);
+      const hubLinksStatuses = req.session.userCase.hubLinksStatuses;
       populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
+      syncRepPhoneFields(req.session.userCase);
       syncClaimantRepresentativeFromSessionFields(req.session.userCase);
       const response = await getCaseApi(req.session.user?.accessToken).updateClaimantRepAboutYou(req.session.userCase);
       logger.info(`Updated claimant rep about you for case id: ${req.session.userCase.id}`);
       req.session.userCase = fromApiFormat(response.data);
+      req.session.userCase.hubLinksStatuses ??= hubLinksStatuses;
       applyPreservedClaimantRepSessionFields(req.session.userCase, preserved);
       populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
       syncClaimantRepresentativeFromSessionFields(req.session.userCase);

@@ -131,6 +131,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
       : undefined,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
+    representativePhoneNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
     address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
     address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
     addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
@@ -330,7 +331,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimant_email_address: isRepresentedClaimant
           ? caseItem.representedClaimantEmail ?? caseItem.email
           : caseItem.email,
-        claimant_phone_number: caseItem.telNumber,
+        claimant_phone_number: caseItem.representativePhoneNumber ?? caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
         claimant_addressUK: {
           AddressLine1: isRepresentedClaimant

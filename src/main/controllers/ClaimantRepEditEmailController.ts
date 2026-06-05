@@ -9,10 +9,12 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import {
+  ensureClaimantRepCaseLoaded,
   getClaimantRepAboutYouPageUrl,
   handleRepAboutYouFieldPost,
   loadClaimantRepCase,
 } from './helpers/ClaimantRepAboutYouHelper';
+import { populateClaimantRepDetailsFromCase } from './helpers/ClaimantRepAnswersHelper';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimantRepEditEmailController');
@@ -48,8 +50,7 @@ export default class ClaimantRepEditEmailController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const caseId = req.params.caseId;
-    if (!(await loadClaimantRepCase(req, caseId))) {
+    if (!(await ensureClaimantRepCaseLoaded(req))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     return handleRepAboutYouFieldPost(req, res, this.form, logger);
@@ -65,6 +66,7 @@ export default class ClaimantRepEditEmailController {
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_REP_EDIT_EMAIL,
     ]);
+    populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail: req.session.user?.email });
     assignFormData(req.session.userCase, this.form.getFormFields());
 
     res.render(TranslationKeys.CLAIMANT_REP_EDIT_EMAIL, {
