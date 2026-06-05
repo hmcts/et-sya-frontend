@@ -18,6 +18,7 @@ import localesCy from '../../resources/locales/cy/translation/common.json';
 import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
+import { isClaimantRepCaseEligibleForDraftUpdate } from './ClaimantRepAboutYouHelper';
 import {
   applyPreservedClaimantRepSessionFields,
   populateClaimantRepDetailsFromCase,
@@ -150,24 +151,36 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
+const saveClaimantRepAboutYouToSession = (req: AppRequest): void => {
+  const loginEmail = req.session.user?.email;
+  populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
+  syncRepPhoneFields(req.session.userCase);
+  syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+  req.session.claimantRepAboutYouPendingDisplay = preserveClaimantRepSessionFields(req.session.userCase);
+  req.session.userCase.updateDraftCaseError = undefined;
+};
+
 export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
     try {
-      const loginEmail = req.session.user?.email;
+      if (!isClaimantRepCaseEligibleForDraftUpdate(req.session.userCase)) {
+        saveClaimantRepAboutYouToSession(req);
+        logger.info(
+          `Saved claimant rep about you details to session for submitted case id: ${req.session.userCase.id}`
+        );
+        req.session.save();
+        return;
+      }
+
       const preserved = preserveClaimantRepSessionFields(req.session.userCase);
       const hubLinksStatuses = req.session.userCase.hubLinksStatuses;
-      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
-      syncRepPhoneFields(req.session.userCase);
-      syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+      saveClaimantRepAboutYouToSession(req);
       const response = await getCaseApi(req.session.user?.accessToken).updateClaimantRepAboutYou(req.session.userCase);
       logger.info(`Updated claimant rep about you for case id: ${req.session.userCase.id}`);
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.hubLinksStatuses ??= hubLinksStatuses;
       applyPreservedClaimantRepSessionFields(req.session.userCase, preserved);
-      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
-      syncClaimantRepresentativeFromSessionFields(req.session.userCase);
-      req.session.claimantRepAboutYouPendingDisplay = preserveClaimantRepSessionFields(req.session.userCase);
-      req.session.userCase.updateDraftCaseError = undefined;
+      saveClaimantRepAboutYouToSession(req);
       req.session.save();
     } catch (error) {
       req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)

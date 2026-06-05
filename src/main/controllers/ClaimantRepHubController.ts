@@ -24,7 +24,11 @@ import {
   updateHubLinkStatuses,
 } from './helpers/CitizenHubHelper';
 import { getProgressBarItems } from './helpers/CitizenHubProgressBarHelper';
-import { getClaimantRepAboutYouUrl, populateClaimantRepDetailsFromCase } from './helpers/ClaimantRepAnswersHelper';
+import {
+  applyPreservedClaimantRepSessionFields,
+  getClaimantRepAboutYouUrl,
+  populateClaimantRepDetailsFromCase,
+} from './helpers/ClaimantRepAnswersHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantRepHubController');
@@ -40,6 +44,7 @@ export default class ClaimantRepHubController {
       const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
       req.session.userCase = fromApiFormat(caseData.data);
       populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail: req.session.user?.email });
+      applyPreservedClaimantRepSessionFields(req.session.userCase, req.session.claimantRepAboutYouPendingDisplay);
     } catch (error) {
       logger.error(`Error loading case ${caseId}: ${error.message}`);
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);

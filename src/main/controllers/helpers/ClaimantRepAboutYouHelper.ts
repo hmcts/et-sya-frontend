@@ -3,7 +3,9 @@ import { LoggerInstance } from 'winston';
 
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { CaseState } from '../../definitions/definition';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -48,9 +50,11 @@ export const getRepAboutYouPageContent = (
 export const getClaimantRepAboutYouPageUrl = (caseId: string, req: AppRequest): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + getLanguageParam(req.url);
 
+export const isClaimantRepCaseEligibleForDraftUpdate = (userCase?: CaseWithId): boolean =>
+  userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS;
+
 export const clearRepAboutYouFlow = (req: AppRequest): void => {
   req.session.repAboutYouCaseId = undefined;
-  req.session.claimantRepAboutYouPendingDisplay = undefined;
 };
 
 export const refreshClaimantRepSession = (req: AppRequest, caseId: string): void => {
