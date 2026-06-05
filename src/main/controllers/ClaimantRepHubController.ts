@@ -39,7 +39,7 @@ export default class ClaimantRepHubController {
     try {
       const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
       req.session.userCase = fromApiFormat(caseData.data);
-      populateClaimantRepDetailsFromCase(req.session.userCase);
+      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail: req.session.user?.email });
     } catch (error) {
       logger.error(`Error loading case ${caseId}: ${error.message}`);
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);

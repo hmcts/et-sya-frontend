@@ -152,13 +152,15 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
 export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
     try {
+      const loginEmail = req.session.user?.email;
       const preserved = preserveClaimantRepSessionFields(req.session.userCase);
+      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
       syncClaimantRepresentativeFromSessionFields(req.session.userCase);
       const response = await getCaseApi(req.session.user?.accessToken).updateClaimantRepAboutYou(req.session.userCase);
       logger.info(`Updated claimant rep about you for case id: ${req.session.userCase.id}`);
       req.session.userCase = fromApiFormat(response.data);
       applyPreservedClaimantRepSessionFields(req.session.userCase, preserved);
-      populateClaimantRepDetailsFromCase(req.session.userCase);
+      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
       syncClaimantRepresentativeFromSessionFields(req.session.userCase);
       req.session.claimantRepAboutYouPendingDisplay = preserveClaimantRepSessionFields(req.session.userCase);
       req.session.userCase.updateDraftCaseError = undefined;

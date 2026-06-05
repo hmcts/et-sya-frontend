@@ -30,6 +30,7 @@ describe('ClaimantRepAboutYouController', () => {
     controller = new ClaimantRepAboutYouController();
     jest.clearAllMocks();
     jest.spyOn(ClaimantRepAnswersHelper, 'populateClaimantRepDetailsFromCase').mockImplementation(() => undefined);
+    jest.spyOn(CaseHelpers, 'handleUpdateClaimantRepAboutYou').mockResolvedValue(undefined);
     jest.spyOn(CaseHelpers, 'handleUpdateHubLinksStatuses').mockResolvedValue(undefined);
     jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({
       id: 'case-123',
@@ -88,6 +89,7 @@ describe('ClaimantRepAboutYouController', () => {
 
     await controller.post(req, res);
 
+    expect(CaseHelpers.handleUpdateClaimantRepAboutYou).toHaveBeenCalled();
     expect(CaseHelpers.handleUpdateHubLinksStatuses).toHaveBeenCalled();
     expect(req.session.userCase.hubLinksStatuses[HubLinkNames.AboutYou]).toBe(HubLinkStatus.VIEWED);
     expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-hub/case-123');

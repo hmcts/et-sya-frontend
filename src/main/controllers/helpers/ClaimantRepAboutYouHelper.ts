@@ -57,10 +57,13 @@ export const loadClaimantRepCase = async (req: AppRequest, caseId: string): Prom
   try {
     const preservedFields =
       req.session.userCase?.id === caseId ? preserveClaimantRepSessionFields(req.session.userCase) : undefined;
+    const pendingDisplay = req.session.claimantRepAboutYouPendingDisplay;
+    const loginEmail = req.session.user?.email;
     const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     req.session.userCase = fromApiFormat(caseData.data);
-    populateClaimantRepDetailsFromCase(req.session.userCase);
+    populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
     applyPreservedClaimantRepSessionFields(req.session.userCase, preservedFields);
+    applyPreservedClaimantRepSessionFields(req.session.userCase, pendingDisplay);
     syncClaimantRepresentativeFromSessionFields(req.session.userCase);
     req.session.repAboutYouCaseId = caseId;
     return true;

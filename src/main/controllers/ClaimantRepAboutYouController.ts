@@ -8,13 +8,9 @@ import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { handleUpdateClaimantRepAboutYou, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { clearRepAboutYouFlow, loadClaimantRepCase } from './helpers/ClaimantRepAboutYouHelper';
-import {
-  applyClaimantRepAboutYouPendingDisplay,
-  getClaimantRepAboutYouDetails,
-  populateClaimantRepDetailsFromCase,
-} from './helpers/ClaimantRepAnswersHelper';
+import { getClaimantRepAboutYouDetails } from './helpers/ClaimantRepAnswersHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -43,6 +39,11 @@ export default class ClaimantRepAboutYouController {
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
     }
 
+    await handleUpdateClaimantRepAboutYou(req, logger);
+    if (req.session.userCase.updateDraftCaseError) {
+      return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
+    }
+
     if (!req.session.userCase.hubLinksStatuses) {
       req.session.userCase.hubLinksStatuses = {};
     }
@@ -61,8 +62,6 @@ export default class ClaimantRepAboutYouController {
     }
 
     const userCase = req.session.userCase;
-    applyClaimantRepAboutYouPendingDisplay(userCase, req.session.claimantRepAboutYouPendingDisplay);
-    populateClaimantRepDetailsFromCase(userCase);
     const languageParam = getLanguageParam(req.url);
 
     const translations: AnyRecord = {

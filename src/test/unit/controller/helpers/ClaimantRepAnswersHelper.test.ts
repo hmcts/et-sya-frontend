@@ -148,6 +148,18 @@ describe('ClaimantRepAnswersHelper', () => {
       expect(userCase.repAddressCountry).toBe('England');
     });
 
+    it('should default email to the login email when not set on the case', () => {
+      const userCase = {
+        ...baseCase,
+        representativeName: 'Wolfie Smith',
+      };
+
+      populateClaimantRepDetailsFromCase(userCase, { loginEmail: 'rep@example.com' });
+
+      expect(userCase.claimantRepEmail).toBe('rep@example.com');
+      expect(userCase.claimantRepresentative?.representative_email_address).toBe('rep@example.com');
+    });
+
     it('should not overwrite existing representative fields', () => {
       const userCase = {
         ...baseCase,

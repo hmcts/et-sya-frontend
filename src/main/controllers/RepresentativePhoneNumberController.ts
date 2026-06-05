@@ -16,6 +16,7 @@ import {
   handleRepAboutYouFieldPost,
   isClaimantRepAboutYouFlow,
 } from './helpers/ClaimantRepAboutYouHelper';
+import { populateClaimantRepDetailsFromCase } from './helpers/ClaimantRepAnswersHelper';
 import { assignFormData } from './helpers/FormHelpers';
 
 const logger = getLogger('RepresentativePhoneNumberController');
@@ -61,6 +62,9 @@ export default class RepresentativePhoneNumberController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     if (isClaimantRepAboutYouFlow(req) && !(await ensureClaimantRepCaseLoaded(req))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
+    if (isClaimantRepAboutYouFlow(req)) {
+      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail: req.session.user?.email });
     }
     const content = getRepAboutYouPageContent(req, this.phoneNumberContent, [
       TranslationKeys.COMMON,

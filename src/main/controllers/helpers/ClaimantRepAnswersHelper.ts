@@ -93,6 +93,10 @@ const getSex = (userCase: CaseWithId, translations: AnyRecord): string => {
 export const getClaimantRepAboutYouUrl = (caseId: string, languageParam: string): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + languageParam;
 
+export type PopulateClaimantRepOptions = {
+  loginEmail?: string;
+};
+
 export type ClaimantRepSessionFields = Pick<
   CaseWithId,
   | 'representativeName'
@@ -244,7 +248,10 @@ const formatRepAddress = (userCase: CaseWithId, translations: AnyRecord): string
   return hasValue(formatted) ? formatted : translations.notProvided;
 };
 
-export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void => {
+export const populateClaimantRepDetailsFromCase = (
+  userCase: CaseWithId,
+  options?: PopulateClaimantRepOptions
+): void => {
   if (!userCase) {
     return;
   }
@@ -269,6 +276,9 @@ export const populateClaimantRepDetailsFromCase = (userCase: CaseWithId): void =
   }
   if (!hasValue(userCase.claimantRepEmail) && claimantRepEntry?.representativeEmailAddress) {
     userCase.claimantRepEmail = claimantRepEntry.representativeEmailAddress;
+  }
+  if (!hasValue(userCase.claimantRepEmail) && hasValue(options?.loginEmail)) {
+    userCase.claimantRepEmail = options.loginEmail;
   }
 
   syncClaimantRepresentativeFromSessionFields(userCase);
