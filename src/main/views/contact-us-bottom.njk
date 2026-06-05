@@ -11,12 +11,16 @@
     <li>{{ mainTelephone }}</li>
     <li>{{ welshTelephone }}</li>
     <li>{{ scotlandTelephone }}</li>
+    {% if i18n.language == "en" %}
     <li>
       <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table>
     </li>
+    {% endif %}
   </ul>
   <p class="govuk-body">
-    <a href="https://www.gov.uk/call-charges" class="govuk-link" target="_blank">{{ contactCharges }}</a>
+    <a href="https://www.gov.uk/call-charges" class="govuk-link" target="_blank">
+      {{ contactCharges }}
+    </a>
   </p>
 {% endset %}
 
