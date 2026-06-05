@@ -1,11 +1,8 @@
 import ClaimantRespondentDetailsCheckController from '../../../main/controllers/ClaimantRespondentDetailsCheckController';
-import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { CaseWithId, Respondent, YesOrNo } from '../../../main/definitions/case';
+import { Respondent, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-
-jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 const completeRespondent: Respondent = {
   respondentName: 'Acme Ltd',
@@ -30,71 +27,23 @@ describe('ClaimantRespondentDetailsCheckController', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, expect.anything());
   });
 
-  it('should redirect to claim steps non-HMCTS when Yes and all mandatory fields are answered (AC1)', async () => {
-    const body = { employmentAndRespondentCheck: YesOrNo.YES };
-    const userCase: Partial<CaseWithId> = {
-      claimantRepresentedQuestion: YesOrNo.YES,
-      respondents: [completeRespondent],
-    };
+  it('should render all respondents in GET context', () => {
     const controller = new ClaimantRespondentDetailsCheckController();
-    const req = mockRequest({ body, userCase });
-    const res = mockResponse();
-    await controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS);
+    const response = mockResponse();
+    const request = mockRequest({
+      t,
+      userCase: { respondents: [completeRespondent, { ...completeRespondent, respondentName: 'Beta Ltd' }] },
+    });
+    controller.get(request, response);
+    const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderArgs.respondents).toHaveLength(2);
   });
 
-  it('should redirect to claim steps non-HMCTS when No is selected (AC3)', async () => {
-    const body = { employmentAndRespondentCheck: YesOrNo.NO };
-    const userCase: Partial<CaseWithId> = {
-      claimantRepresentedQuestion: YesOrNo.YES,
-      respondents: [completeRespondent],
-    };
+  it('should redirect to CLAIMANT_RESPONDENT_SECTION_CHECK on POST', async () => {
     const controller = new ClaimantRespondentDetailsCheckController();
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body: {}, userCase: { respondents: [completeRespondent] } });
     const res = mockResponse();
     await controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS);
-  });
-
-  it('should show invalid error when Yes selected but respondent name missing (AC4)', async () => {
-    const body = { employmentAndRespondentCheck: YesOrNo.YES };
-    const userCase: Partial<CaseWithId> = {
-      claimantRepresentedQuestion: YesOrNo.YES,
-      respondents: [{ ...completeRespondent, respondentName: undefined }],
-    };
-    const controller = new ClaimantRespondentDetailsCheckController();
-    const req = mockRequest({ body, userCase });
-    const res = mockResponse();
-    await controller.post(req, res);
-    expect(req.session.errors).toEqual([{ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' }]);
-    expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, expect.anything());
-  });
-
-  it('should show invalid error when Yes selected but respondent address missing (AC4)', async () => {
-    const body = { employmentAndRespondentCheck: YesOrNo.YES };
-    const userCase: Partial<CaseWithId> = {
-      claimantRepresentedQuestion: YesOrNo.YES,
-      respondents: [{ ...completeRespondent, respondentAddress1: undefined }],
-    };
-    const controller = new ClaimantRespondentDetailsCheckController();
-    const req = mockRequest({ body, userCase });
-    const res = mockResponse();
-    await controller.post(req, res);
-    expect(req.session.errors).toEqual([{ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' }]);
-    expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, expect.anything());
-  });
-
-  it('should show invalid error when Yes selected but ACAS cert info missing (AC4)', async () => {
-    const body = { employmentAndRespondentCheck: YesOrNo.YES };
-    const userCase: Partial<CaseWithId> = {
-      claimantRepresentedQuestion: YesOrNo.YES,
-      respondents: [{ ...completeRespondent, acasCert: undefined }],
-    };
-    const controller = new ClaimantRespondentDetailsCheckController();
-    const req = mockRequest({ body, userCase });
-    const res = mockResponse();
-    await controller.post(req, res);
-    expect(req.session.errors).toEqual([{ propertyName: 'employmentAndRespondentCheck', errorType: 'invalid' }]);
-    expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_RESPONDENT_DETAILS_CHECK, expect.anything());
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_SECTION_CHECK);
   });
 });

@@ -67,12 +67,14 @@ import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWork
 import ClaimantRepCheckAnswersController from '../../controllers/ClaimantRepCheckAnswersController';
 import ClaimantRepClaimSubmittedController from '../../controllers/ClaimantRepClaimSubmittedController';
 import ClaimantRepHubController from '../../controllers/ClaimantRepHubController';
+import ClaimantRespondentAddRedirectController from '../../controllers/ClaimantRespondentAddRedirectController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
 import ClaimantRespondentAddressDetailsController from '../../controllers/ClaimantRespondentAddressDetailsController';
 import ClaimantRespondentDetailsCheckController from '../../controllers/ClaimantRespondentDetailsCheckController';
 import ClaimantRespondentNameController from '../../controllers/ClaimantRespondentNameController';
 import ClaimantRespondentPostcodeEnterController from '../../controllers/ClaimantRespondentPostcodeEnterController';
 import ClaimantRespondentPostcodeSelectController from '../../controllers/ClaimantRespondentPostcodeSelectController';
+import ClaimantRespondentSectionCheckController from '../../controllers/ClaimantRespondentSectionCheckController';
 import ClaimantTellUsWhatYouWantController from '../../controllers/ClaimantTellUsWhatYouWantController';
 import ClaimantTribunalRecommendationController from '../../controllers/ClaimantTribunalRecommendationController';
 import ClaimantTypeOfClaimController from '../../controllers/ClaimantTypeOfClaimController';
@@ -378,8 +380,11 @@ export class Routes {
     app.post(PageUrls.CLAIMANT_ACAS_CERT_NUM, new ClaimantAcasCertNumController().post);
     app.get(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().get);
     app.post(PageUrls.CLAIMANT_NO_ACAS_NUMBER, new ClaimantNoAcasNumberController().post);
+    app.get(PageUrls.CLAIMANT_RESPONDENT_ADD_REDIRECT, new ClaimantRespondentAddRedirectController().get);
     app.get(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().get);
     app.post(PageUrls.CLAIMANT_RESPONDENT_DETAILS_CHECK, new ClaimantRespondentDetailsCheckController().post);
+    app.get(PageUrls.CLAIMANT_RESPONDENT_SECTION_CHECK, new ClaimantRespondentSectionCheckController().get);
+    app.post(PageUrls.CLAIMANT_RESPONDENT_SECTION_CHECK, new ClaimantRespondentSectionCheckController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().get);
     app.post(PageUrls.CLAIMANT_WORK_POSTCODE_ENTER, new ClaimantWorkPostcodeEnterController().post);
     app.get(PageUrls.CLAIMANT_WORK_POSTCODE_SELECT, new ClaimantWorkPostcodeSelectController().get);
