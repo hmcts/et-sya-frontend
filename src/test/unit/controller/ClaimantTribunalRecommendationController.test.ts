@@ -51,7 +51,7 @@ describe('ClaimantTribunalRecommendationController', () => {
   it('should pre-populate existing recommendation text on GET', () => {
     const controller = new ClaimantTribunalRecommendationController();
     const response = mockResponse();
-    const request = mockRequest({ t, userCase: { tribunalRecommendation: 'Existing recommendation' } });
+    const request = mockRequest({ t, userCase: { tribunalRecommendationRequest: 'Existing recommendation' } });
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_TRIBUNAL_RECOMMENDATION, expect.anything());
   });

@@ -73,7 +73,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
     });
 
     it('should redirect to WHISTLEBLOWING_CLAIMS when whistleblowing in typeOfClaim and nothing selected', async () => {
-      const body = { tellUsWhatYouWant: [] };
+      const body = { tellUsWhatYouWant: [] as string[] };
       const controller = new ClaimantTellUsWhatYouWantController();
       const req = mockRequestEmpty({ body, userCase: { typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING] } });
       const res = mockResponse();
@@ -84,7 +84,7 @@ describe('ClaimantTellUsWhatYouWantController', () => {
     });
 
     it('should redirect to CLAIMANT_LINKED_CASES when whistleblowing not in typeOfClaim', async () => {
-      const body = { tellUsWhatYouWant: [] };
+      const body = { tellUsWhatYouWant: [] as string[] };
       const controller = new ClaimantTellUsWhatYouWantController();
       const req = mockRequestEmpty({ body, userCase: { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL] } });
       const res = mockResponse();
