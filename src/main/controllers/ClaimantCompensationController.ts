@@ -45,16 +45,18 @@ export default class ClaimantCompensationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl: string;
-    if (req.session.userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      redirectUrl = PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION;
-    } else if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
-    } else {
-      redirectUrl = PageUrls.CLAIMANT_LINKED_CASES;
-    }
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, this.getRedirectUrl(req));
   };
+
+  private getRedirectUrl(req: AppRequest): string {
+    if (req.session.userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+      return PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION;
+    }
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+      return PageUrls.WHISTLEBLOWING_CLAIMS;
+    }
+    return PageUrls.CLAIMANT_LINKED_CASES;
+  }
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
