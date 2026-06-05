@@ -1,7 +1,7 @@
 import ClaimantClaimTypeDiscriminationController from '../../../main/controllers/ClaimantClaimTypeDiscriminationController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { ClaimTypeDiscrimination } from '../../../main/definitions/definition';
+import { ClaimTypeDiscrimination, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -112,7 +112,10 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
     it('should redirect to CLAIMANT_CLAIM_TYPE_PAY when pay related is also selected', async () => {
       const body = { claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE] };
       const controller = new ClaimantClaimTypeDiscriminationController();
-      const req = mockRequestEmpty({ body, userCase: { typeOfClaim: ['discrimination', 'payRelated'] } });
+      const req = mockRequestEmpty({
+        body,
+        userCase: { typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.PAY_RELATED_CLAIM] },
+      });
       const res = mockResponse();
 
       await controller.post(req, res);
