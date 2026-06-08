@@ -103,7 +103,15 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
         const deletedIds = new Set(req.session.deletedCaseIds.map(id => String(id).trim()));
         casesByLastModified = casesByLastModified.filter(app => !deletedIds.has(String(app.id).trim()));
       }
-      return casesByLastModified.map(app => fromApiFormat(app, req));
+      logger.info(`${casesByLastModified.length} cases for user ${req.session.user?.id} after filtering deleted cases`);
+      return casesByLastModified.flatMap(app => {
+        try {
+          return [fromApiFormat(app, req)];
+        } catch (err) {
+          logger.error(`Failed to format case ${app.id}: ${err instanceof Error ? err.message : String(err)}`);
+          return [];
+        }
+      });
     }
   } catch (err) {
     logger.error(err.message);

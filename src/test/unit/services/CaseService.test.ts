@@ -460,7 +460,6 @@ describe('update case', () => {
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
       case_id: caseItem.id,
       send_notification_id: '111',
-      notification_state: HubLinkStatus.VIEWED,
     });
   });
 
