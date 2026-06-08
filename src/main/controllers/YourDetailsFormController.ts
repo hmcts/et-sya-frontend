@@ -89,7 +89,7 @@ export default class YourDetailsFormController {
         req.session.yourDetailsVerified = true;
         return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_CYA)));
       } else {
-        logger.error(`Invalid case details. Submission reference: ${formData.id}`);
+        logger.warn(`Invalid case details. Submission reference: ${formData.id}`);
         req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'invalidCaseDetails' });
         return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM)));
       }
