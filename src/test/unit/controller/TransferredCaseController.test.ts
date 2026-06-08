@@ -33,7 +33,7 @@ describe('Transferred Case Controller tests', () => {
       newEthosCaseReference: '18850001/2020',
       transferComplete: true,
     };
-    request.t = jest.fn().mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
         return {
           h1: 'Your case has been transferred',
@@ -63,7 +63,7 @@ describe('Transferred Case Controller tests', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: '1234' };
-    request.t = jest.fn().mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
         return {
           h1: 'Your case has been transferred',
