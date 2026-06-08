@@ -22,6 +22,7 @@ import {
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
+import { handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -78,6 +79,9 @@ export default class CitizenHubController {
         );
       } catch (error) {
         logger.error(error.message);
+        if (await handleTransferredCaseRedirect(req, res, req.params.caseId)) {
+          return;
+        }
         if (isTransferredToEcmCaseError(error)) {
           return res.redirect(PageUrls.TRANSFERRED_CASE + getLanguageParam(req.url));
         }

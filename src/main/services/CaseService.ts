@@ -3,6 +3,7 @@ import config from 'config';
 import FormData from 'form-data';
 
 import { CaseApiDataResponse, CaseAssignmentResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
+import { CaseTransferInfoResponse } from '../definitions/api/caseTransferInfoResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
@@ -434,6 +435,16 @@ export class CaseApi {
       return await this.axios.post(JavaApiUrls.GET_CASE, { case_id: id });
     } catch (error) {
       throw new Error('Error getting user case: ' + axiosErrorDetails(error, { action: 'getUserCase', caseId: id }));
+    }
+  };
+
+  getCaseTransferInfo = async (caseId: string): Promise<AxiosResponse<CaseTransferInfoResponse>> => {
+    try {
+      return await this.axios.get<CaseTransferInfoResponse>(`cases/${caseId}/transfer-info`);
+    } catch (error) {
+      throw new Error(
+        'Error getting case transfer info: ' + axiosErrorDetails(error, { action: 'getCaseTransferInfo', caseId })
+      );
     }
   };
 

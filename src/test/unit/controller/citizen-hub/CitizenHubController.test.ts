@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import CitizenHubController from '../../../../main/controllers/citizen-hub/CitizenHubController';
 import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
+import { CaseTransferInfoResponse } from '../../../../main/definitions/api/caseTransferInfoResponse';
 import { Applicant, PageUrls } from '../../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -25,6 +26,7 @@ caseApi.getUserCase = jest.fn().mockResolvedValue(
     },
   } as AxiosResponse<CaseApiDataResponse>)
 );
+caseApi.getCaseTransferInfo = jest.fn();
 
 const OLD_ENV = process.env;
 
@@ -32,6 +34,7 @@ describe('Citizen Hub Controller', () => {
   beforeEach(() => {
     jest.resetModules();
     process.env = { ...OLD_ENV };
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
   });
   afterAll(() => {
     process.env = OLD_ENV;
@@ -44,9 +47,33 @@ describe('Citizen Hub Controller', () => {
     caseApi.getUserCase = jest.fn().mockRejectedValueOnce('error');
     const res = mockResponse();
     const req = mockRequest({});
+    req.params.caseId = '1234';
     controller.get(req, res);
     await new Promise(nextTick);
     expect(res.redirect).toHaveBeenCalledWith('/not-found');
+  });
+
+  it('should redirect to transferred page with case id when transfer info is available', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest.fn().mockRejectedValueOnce(new Error('Error getting user case: status code 500'));
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValueOnce({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1234',
+        originalEthosCaseReference: '60000001/2022',
+        newEthosCaseReference: '18850001/2020',
+        transferComplete: true,
+      } as CaseTransferInfoResponse,
+    });
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.params.caseId = '1234';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    expect(req.session.caseTransferInfo?.originalEthosCaseReference).toBe('60000001/2022');
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
   });
 
   it('should redirect to transferred page when case is transferred to ECM', async () => {
@@ -98,6 +125,7 @@ describe('filterClaimantApplications', () => {
 
     userCase.genericTseApplicationCollection = genericTseApplicationCollection;
     const result = getAllClaimantApplications(userCase);
+
     expect(result).toHaveLength(2);
     expect(result[0].value.applicant).toBe(Applicant.CLAIMANT);
     expect(result[1].value.applicant).toBe(Applicant.CLAIMANT);
@@ -111,6 +139,7 @@ describe('filterClaimantApplications', () => {
 
     userCase.genericTseApplicationCollection = genericTseApplicationCollection;
     const result = getAllClaimantApplications(userCase);
+
     expect(result).toHaveLength(0);
   });
 });

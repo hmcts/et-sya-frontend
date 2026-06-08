@@ -5,12 +5,19 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ h1 }}</h1>
 
-      <p class="govuk-body-l">{{ caseNumberLabel }} {{ caseNumber }}</p>
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      {% if caseNumber %}
+        <p class="govuk-body-l">{{ caseNumberLabel }} {{ caseNumber }}</p>
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      {% endif %}
 
       <h2 class="govuk-heading-l">{{ noAccessHeader }}</h2>
       <p class="govuk-body">{{ noAccessBody }}</p>
-      <p class="govuk-body">{{ newCaseNumberBody }} <strong>{{ replacementCaseNumber }}</strong>.</p>
+
+      {% if showNewCaseNumber %}
+        <p class="govuk-body">{{ newCaseNumberBody }} <strong>{{ replacementCaseNumber }}</strong>.</p>
+      {% elif not transferComplete %}
+        <p class="govuk-body">{{ transferPendingBody }}</p>
+      {% endif %}
 
       <h2 class="govuk-heading-m govuk-!-margin-top-8">{{ whatThisMeansHeader }}</h2>
       <p class="govuk-body">{{ whatThisMeansPointOne }}</p>
@@ -18,7 +25,11 @@
 
       <h2 class="govuk-heading-m govuk-!-margin-top-8">{{ whatHappensNextHeader }}</h2>
       <p class="govuk-body">{{ whatHappensNextPointOne }}</p>
-      <p class="govuk-body">{{ whatHappensNextPointTwo }} <strong>{{ replacementCaseNumber }}</strong>.</p>
+      {% if showNewCaseNumber %}
+        <p class="govuk-body">{{ whatHappensNextPointTwo }} <strong>{{ replacementCaseNumber }}</strong>.</p>
+      {% else %}
+        <p class="govuk-body">{{ whatHappensNextPointTwo }}.</p>
+      {% endif %}
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 

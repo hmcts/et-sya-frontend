@@ -106,6 +106,12 @@ describe('Retrieve individual case', () => {
       })
     );
   });
+
+  it('should send get request to retrieve case transfer info', async () => {
+    const caseId = '1646225213651590';
+    await api.getCaseTransferInfo(caseId);
+    expect(mockedAxios.get).toHaveBeenCalledWith(`cases/${caseId}/transfer-info`);
+  });
 });
 
 describe('Axios get to retrieve draft cases', () => {
@@ -579,7 +585,6 @@ describe('update case from claimant actions', () => {
     await api.changeApplicationStatus(caseItem, HubLinkStatus.VIEWED);
 
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.CHANGE_APPLICATION_STATUS);
-    console.table(mockedAxios.put.mock.calls[0][1]);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ application_id: '1', new_status: HubLinkStatus.VIEWED });
   });
 
