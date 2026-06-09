@@ -8,7 +8,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('ClaimantRespondentNameController', () => {
   const t = {
-    'claimant-respondent-name': {},
+    'non-hmcts/claimant-respondent-name': {},
     common: {},
   };
 

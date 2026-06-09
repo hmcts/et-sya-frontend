@@ -11,7 +11,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('RepresentativeCommsPrefController', () => {
   const t = {
-    'representative-comms-preference': {},
+    'non-hmcts/representative-comms-preference': {},
     common: {},
   };
 

@@ -10,7 +10,7 @@ jest.mock('../../../../main/controllers/helpers/CaseHelpers', () => ({
 
 describe('RepresentedClaimantNameController', () => {
   const t = {
-    'represented-claimant-name': {},
+    'non-hmcts/represented-claimant-name': {},
     common: {},
   };
 

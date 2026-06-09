@@ -8,7 +8,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('Representative Details Controller', () => {
   const t = {
-    'representative-details': {},
+    'non-hmcts/representative-details': {},
     common: {},
   };
 
@@ -20,7 +20,7 @@ describe('Representative Details Controller', () => {
 
       controller.get(request, response);
 
-      expect(response.render).toHaveBeenCalledWith('representative-details', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/representative-details', expect.anything());
     });
 
     it('should render with existing session data pre-populated', () => {
@@ -37,7 +37,7 @@ describe('Representative Details Controller', () => {
 
       controller.get(request, response);
 
-      expect(response.render).toHaveBeenCalledWith('representative-details', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/representative-details', expect.anything());
     });
   });
 

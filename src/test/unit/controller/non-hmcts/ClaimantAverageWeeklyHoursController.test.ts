@@ -8,7 +8,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('ClaimantAverageWeeklyHoursController', () => {
   const t = {
-    'claimant-average-weekly-hours': {},
+    'non-hmcts/claimant-average-weekly-hours': {},
     common: {},
   };
 

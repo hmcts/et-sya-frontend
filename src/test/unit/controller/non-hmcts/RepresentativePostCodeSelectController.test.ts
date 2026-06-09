@@ -53,7 +53,7 @@ describe('RepresentativePostCodeSelectController', () => {
 
       await controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith('representative-postcode-select', expect.anything());
+      expect(res.render).toHaveBeenCalledWith('non-hmcts/representative-postcode-select', expect.anything());
     });
   });
 });

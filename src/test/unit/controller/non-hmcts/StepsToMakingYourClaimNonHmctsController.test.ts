@@ -11,7 +11,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('StepsToMakingYourClaimNonHmctsController', () => {
   const t = {
-    'steps-to-making-your-claim-non-hmcts': {},
+    'non-hmcts/steps-to-making-your-claim-non-hmcts': {},
     common: {},
   };
 

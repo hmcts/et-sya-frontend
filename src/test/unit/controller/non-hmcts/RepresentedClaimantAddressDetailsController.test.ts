@@ -9,7 +9,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('Represented Claimant Address Details Controller', () => {
   const t = {
-    'represented-claimant-address-details': {},
+    'non-hmcts/represented-claimant-address-details': {},
     'enter-address': {},
     common: {},
   };
@@ -22,7 +22,7 @@ describe('Represented Claimant Address Details Controller', () => {
 
       controller.get(request, response);
 
-      expect(response.render).toHaveBeenCalledWith('represented-claimant-address-details', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/represented-claimant-address-details', expect.anything());
     });
 
     it('should pre-populate address fields when an address type has been selected', () => {
@@ -54,7 +54,7 @@ describe('Represented Claimant Address Details Controller', () => {
         representedClaimantAddressCountry: 'England',
         representedClaimantAddressPostcode: 'SW1A 1AA',
       });
-      expect(response.render).toHaveBeenCalledWith('represented-claimant-address-details', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/represented-claimant-address-details', expect.anything());
     });
   });
 

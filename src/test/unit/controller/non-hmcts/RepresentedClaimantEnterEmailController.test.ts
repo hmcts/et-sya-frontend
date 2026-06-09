@@ -9,7 +9,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 describe('Represented Claimant Enter Email Controller', () => {
   const t = {
     common: {},
-    'represented-claimant-enter-email': {},
+    'non-hmcts/represented-claimant-enter-email': {},
   };
 
   describe('get()', () => {

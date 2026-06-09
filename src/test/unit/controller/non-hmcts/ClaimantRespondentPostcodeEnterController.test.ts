@@ -8,7 +8,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('ClaimantRespondentPostcodeEnterController', () => {
   const t = {
-    'claimant-respondent-postcode-enter': {},
+    'non-hmcts/claimant-respondent-postcode-enter': {},
     common: {},
   };
 

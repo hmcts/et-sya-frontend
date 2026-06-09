@@ -15,7 +15,7 @@ const completeRespondent: Respondent = {
 
 describe('ClaimantRespondentDetailsCheckController', () => {
   const t = {
-    'claimant-respondent-details-check': {},
+    'non-hmcts/claimant-respondent-details-check': {},
     common: {},
   };
 

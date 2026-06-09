@@ -53,7 +53,7 @@ describe('RepresentedClaimantSelectPostcodeController', () => {
 
       await selectPostController.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith('represented-claimant-select-postcode', expect.anything());
+      expect(res.render).toHaveBeenCalledWith('non-hmcts/represented-claimant-select-postcode', expect.anything());
     });
   });
 });

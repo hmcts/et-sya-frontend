@@ -8,7 +8,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('Representative Address Details Controller', () => {
   const t = {
-    'representative-address-details': {},
+    'non-hmcts/representative-address-details': {},
     'enter-address': {},
     common: {},
   };
@@ -21,7 +21,7 @@ describe('Representative Address Details Controller', () => {
 
       controller.get(request, response);
 
-      expect(response.render).toHaveBeenCalledWith('representative-address-details', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/representative-address-details', expect.anything());
     });
 
     it('should pre-populate address fields when an address type has been selected', () => {
@@ -49,7 +49,7 @@ describe('Representative Address Details Controller', () => {
 
       controller.get(request, response);
 
-      expect(response.render).toHaveBeenCalledWith('representative-address-details', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/representative-address-details', expect.anything());
     });
   });
 

@@ -8,7 +8,7 @@ jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise
 
 describe('Representative Phone Number Controller', () => {
   const t = {
-    'representative-phone-number': {},
+    'non-hmcts/representative-phone-number': {},
     common: {},
   };
 
@@ -20,7 +20,7 @@ describe('Representative Phone Number Controller', () => {
 
       controller.get(request, response);
 
-      expect(response.render).toHaveBeenCalledWith('representative-phone-number', expect.anything());
+      expect(response.render).toHaveBeenCalledWith('non-hmcts/representative-phone-number', expect.anything());
     });
   });
 

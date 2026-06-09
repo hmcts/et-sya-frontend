@@ -5,7 +5,7 @@ import { mockResponse } from '../../mocks/mockResponse';
 
 describe('ClaimantRepClaimSubmittedController', () => {
   const t = {
-    'claimant-rep-claim-submitted': {},
+    'non-hmcts/claimant-rep-claim-submitted': {},
     common: {},
   };
 

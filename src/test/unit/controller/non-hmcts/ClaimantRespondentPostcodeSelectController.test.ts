@@ -11,7 +11,7 @@ jest.mock('../../../../main/address', () => ({
 
 describe('ClaimantRespondentPostcodeSelectController', () => {
   const t = {
-    'claimant-respondent-postcode-select': {},
+    'non-hmcts/claimant-respondent-postcode-select': {},
     common: {},
   };
 

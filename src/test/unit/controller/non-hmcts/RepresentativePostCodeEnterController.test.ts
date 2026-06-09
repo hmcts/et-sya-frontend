@@ -15,7 +15,7 @@ describe('Representative PostCode Enter Controller', () => {
 
     controller.get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith('representative-postcode-enter', expect.anything());
+    expect(response.render).toHaveBeenCalledWith('non-hmcts/representative-postcode-enter', expect.anything());
   });
 
   describe('post()', () => {
