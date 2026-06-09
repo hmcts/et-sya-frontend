@@ -20,13 +20,15 @@ export default class TransferredCaseController {
     const caseId = (req.query.caseId as string) || req.session.caseTransferInfo?.originalCaseId;
     let transferInfo: CaseTransferInfoResponse | undefined = req.session.caseTransferInfo;
 
-    if (caseId && (!transferInfo || transferInfo.originalCaseId !== caseId)) {
+    if (caseId && transferInfo?.originalCaseId !== caseId) {
       try {
         transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
+        logger.info(`Fetched transfer info for case ID ${caseId}: ${JSON.stringify(transferInfo)}`, '');
         req.session.caseTransferInfo = transferInfo;
       } catch (error) {
         logger.error(error instanceof Error ? error.message : String(error));
         if (caseId) {
+          logger.info(`Falling back to default transfer info for case ID ${caseId}`, '');
           transferInfo = fallbackTransferInfo(caseId);
         } else {
           return res.redirect('/not-found');
