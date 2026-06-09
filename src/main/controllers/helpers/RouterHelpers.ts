@@ -47,7 +47,7 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
 };
 
 function isFullEt1LegacyUrl(baseUrl: string, et1BaseUrl: string): boolean {
-  return baseUrl.startsWith(et1BaseUrl);
+  return StringUtils.isNotBlank(et1BaseUrl) && baseUrl.startsWith(et1BaseUrl);
 }
 
 function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: string[]): string | undefined {

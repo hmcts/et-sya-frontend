@@ -1,7 +1,8 @@
 import { Response } from 'express';
 
-import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
+import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
+import NumberUtils from '../utils/NumberUtils';
 
 import { createCheckDecorator } from './BaseDecorator';
 
@@ -40,17 +41,17 @@ export const checkFormSubmissionAndRedirect = (req: AppRequest, res: Response): 
   const referer = req.get('Referer') || req.get('Referrer');
 
   // Users must visit /contact-the-tribunal first, which sets visitedContactTribunalSelection flag
-  if (userCase?.id && !req.session?.visitedContactTribunalSelection) {
+  if (userCase?.id && NumberUtils.isNumericValue(userCase.id) && !req.session?.visitedContactTribunalSelection) {
     const redirectUrl = `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`;
-    res.redirect(redirectUrl);
+    res.redirect(returnValidUrl(redirectUrl));
     return true;
   }
 
   // After submission, users should not return to form pages from the completion page
   // users should not be able to use the back button to return to the form pages
-  if (userCase?.id && referer?.includes('/application-complete')) {
+  if (userCase?.id && NumberUtils.isNumericValue(userCase.id) && referer?.includes('/application-complete')) {
     const redirectUrl = `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`;
-    res.redirect(redirectUrl);
+    res.redirect(returnValidUrl(redirectUrl));
     return true;
   }
 

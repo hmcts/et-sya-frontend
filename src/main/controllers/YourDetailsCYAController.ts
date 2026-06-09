@@ -11,6 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
+import NumberUtils from '../utils/NumberUtils';
 import StringUtils from '../utils/StringUtils';
 
 import { getPageContent } from './helpers/FormHelpers';
@@ -116,7 +117,10 @@ export default class YourDetailsCYAController {
       );
       const caseId = req.session?.caseAssignmentFields?.id;
       this.resetCaseAssignmentFieldsAndFlags(req);
-      return res.redirect(`/citizen-hub/${caseId}${getLanguageParam(req.url)}`);
+      if (NumberUtils.isNumericValue(caseId)) {
+        return res.redirect(returnValidUrl(`/citizen-hub/${caseId}${getLanguageParam(req.url)}`));
+      }
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
     this.resetCaseAssignmentFieldsAndFlags(req);

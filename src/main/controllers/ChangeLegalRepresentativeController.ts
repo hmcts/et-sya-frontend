@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { removeClaimantRepresentative } from './helpers/CaseRoleHelper';
 import { getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondentApplicationDetailsController');
 
@@ -51,7 +51,7 @@ export default class ChangeLegalRepresentativeController {
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = this.form.getValidatorErrors(formData);
     if (req.session.errors.length > 0) {
-      return res.redirect(req.url);
+      return res.redirect(returnValidUrl(req.url));
     }
     try {
       const redirectUrl = conditionalRedirect(
@@ -61,11 +61,11 @@ export default class ChangeLegalRepresentativeController {
       )
         ? PageUrls.APPOINT_LEGAL_REPRESENTATIVE
         : await removeClaimantRepresentative(req);
-      res.redirect(redirectUrl);
+      res.redirect(returnValidUrl(redirectUrl));
     } catch (error) {
       logger.info(error);
       req.session.errors.push({ propertyName: 'legalRep', errorType: 'backEndError' });
-      res.redirect(req.url);
+      res.redirect(returnValidUrl(req.url));
     }
   };
 
