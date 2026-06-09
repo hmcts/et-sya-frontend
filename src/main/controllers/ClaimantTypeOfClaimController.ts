@@ -4,16 +4,14 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { getTypeOfClaimFormValues } from './helpers/FormHelpers';
-import { renderPage } from './helpers/NonHmctsControllerHelper';
+import { assignFormData, getPageContent, getTypeOfClaimFormValues } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimantTypeOfClaimController');
 
@@ -42,11 +40,10 @@ export default class ClaimantTypeOfClaimController {
                 id: 'otherTypesOfClaims',
                 type: 'charactercount',
                 classes: 'govuk-label',
-                label: (l: AnyRecord): string => l.otherTypesOfClaims.explain,
+                label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
                 labelHidden: false,
                 maxlength: 100,
-                attributes: { maxLength: 100 },
               },
             },
           },
@@ -75,6 +72,14 @@ export default class ClaimantTypeOfClaimController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.CLAIMANT_TYPE_OF_CLAIM);
+    const content = getPageContent(req, this.formContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.CLAIMANT_TYPE_OF_CLAIM,
+    ]);
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    res.render(TranslationKeys.CLAIMANT_TYPE_OF_CLAIM, {
+      ...content,
+      redisError: req.app?.get(RedisErrors.REDIS_ERROR),
+    });
   };
 }

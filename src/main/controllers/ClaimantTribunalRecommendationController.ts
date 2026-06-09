@@ -4,6 +4,7 @@ import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -36,7 +37,10 @@ export default class ClaimantTribunalRecommendationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_LINKED_CASES);
+    const redirectUrl = req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())
+      ? PageUrls.WHISTLEBLOWING_CLAIMS
+      : PageUrls.CLAIMANT_LINKED_CASES;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

@@ -5,7 +5,7 @@ import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
-import { TellUsWhatYouWant } from '../definitions/definition';
+import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -45,10 +45,18 @@ export default class ClaimantCompensationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const hasTribunal = req.session.userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION);
-    const redirectUrl = hasTribunal ? PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION : PageUrls.CLAIMANT_LINKED_CASES;
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, this.getRedirectUrl(req));
   };
+
+  private getRedirectUrl(req: AppRequest): string {
+    if (req.session.userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+      return PageUrls.CLAIMANT_TRIBUNAL_RECOMMENDATION;
+    }
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+      return PageUrls.WHISTLEBLOWING_CLAIMS;
+    }
+    return PageUrls.CLAIMANT_LINKED_CASES;
+  }
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
