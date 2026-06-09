@@ -22,7 +22,7 @@ import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
-import { returnNextPage } from './RouterHelpers';
+import { returnNextPage, returnValidUrl } from './RouterHelpers';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -80,7 +80,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)
         ? localesCy.updateDraftErrorMessage
         : locales.updateDraftErrorMessage;
-      req.session.returnUrl = req.url;
+      req.session.returnUrl = req.url ? returnValidUrl(req.url) : undefined;
       req.session.save();
       logger.error(error.message);
     }
