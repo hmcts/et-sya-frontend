@@ -589,6 +589,11 @@ export const isTransferredToEcmCaseError = (error: unknown): boolean => {
   );
 };
 
+export const isCaseNotFoundError = (error: unknown): boolean => {
+  const message = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase();
+  return message.includes('status code 404') || message.includes('casenotfoundexception');
+};
+
 export type UploadedFile =
   | {
       [fieldname: string]: Express.Multer.File;

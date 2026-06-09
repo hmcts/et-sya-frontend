@@ -85,10 +85,29 @@ describe('Citizen Hub Controller', () => {
       );
     const res = mockResponse();
     const req = mockRequest({});
+    req.params.caseId = '1234';
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TRANSFERRED_CASE + '?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+  });
+
+  it('should redirect to transferred page when case is not found in CCD', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValueOnce(
+        new Error(
+          'Error getting user case: Request failed with status code 404, [404 Not Found] CaseNotFoundException: No case found'
+        )
+      );
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.params.caseId = '1234';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
   });
 
   it('should assign mock user when in test', async () => {

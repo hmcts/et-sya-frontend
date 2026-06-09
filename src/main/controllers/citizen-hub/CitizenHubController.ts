@@ -15,14 +15,14 @@ import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
-import { getCaseApi, isTransferredToEcmCaseError } from '../../services/CaseService';
+import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
 import {
   clearPrepareDocumentsForHearingFields,
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
-import { handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
+import { buildTransferredCaseRedirectUrl, handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -82,8 +82,8 @@ export default class CitizenHubController {
         if (await handleTransferredCaseRedirect(req, res, req.params.caseId)) {
           return;
         }
-        if (isTransferredToEcmCaseError(error)) {
-          return res.redirect(PageUrls.TRANSFERRED_CASE + getLanguageParam(req.url));
+        if (isTransferredToEcmCaseError(error) || isCaseNotFoundError(error)) {
+          return res.redirect(buildTransferredCaseRedirectUrl(req, req.params.caseId));
         }
         return res.redirect('/not-found');
       }

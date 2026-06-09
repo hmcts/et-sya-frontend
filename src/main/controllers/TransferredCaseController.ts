@@ -8,6 +8,13 @@ import { getCaseApi } from '../services/CaseService';
 
 const logger = getLogger('TransferredCaseController');
 
+const fallbackTransferInfo = (caseId: string): CaseTransferInfoResponse => ({
+  transferred: true,
+  transferType: 'ECM',
+  originalCaseId: caseId,
+  transferComplete: false,
+});
+
 export default class TransferredCaseController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const caseId = (req.query.caseId as string) || req.session.caseTransferInfo?.originalCaseId;
@@ -19,14 +26,26 @@ export default class TransferredCaseController {
         req.session.caseTransferInfo = transferInfo;
       } catch (error) {
         logger.error(error instanceof Error ? error.message : String(error));
-        return res.redirect('/not-found');
+        if (caseId) {
+          transferInfo = fallbackTransferInfo(caseId);
+        } else {
+          return res.redirect('/not-found');
+        }
       }
     }
 
     if (!transferInfo?.transferred) {
-      return res.redirect('/not-found');
+      if (caseId) {
+        transferInfo = fallbackTransferInfo(caseId);
+      } else {
+        return res.redirect('/not-found');
+      }
     }
 
+    this.renderTransferredCasePage(req, res, transferInfo);
+  }
+
+  private renderTransferredCasePage(req: AppRequest, res: Response, transferInfo: CaseTransferInfoResponse): void {
     const translations = req.t(TranslationKeys.TRANSFERRED_CASE, { returnObjects: true }) as Record<string, string>;
     const showNewCaseNumber = transferInfo.transferComplete && !!transferInfo.newEthosCaseReference;
     const noAccessBody =

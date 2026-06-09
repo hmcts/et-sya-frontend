@@ -97,11 +97,40 @@ describe('Transferred Case Controller tests', () => {
     );
   });
 
-  it('should redirect to not found when transfer info cannot be loaded', async () => {
+  it('should render fallback page when transfer info cannot be loaded but case id is provided', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: '1234' };
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+      if (options?.returnObjects) {
+        return {
+          h1: 'Your case has been transferred',
+          noAccessBodyEcm: 'ECM body',
+          noAccessBodyCrossCountry: 'Cross country body',
+        };
+      }
+      return key;
+    });
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not found'));
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        showNewCaseNumber: false,
+        transferComplete: false,
+        noAccessBody: 'ECM body',
+      })
+    );
+  });
+
+  it('should redirect to not found when transfer info cannot be loaded and no case id is provided', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not found'));
 
     controller.get(request, response);

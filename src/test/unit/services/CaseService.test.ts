@@ -30,7 +30,13 @@ import {
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
 import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
-import { CaseApi, UploadedFile, getCaseApi, isTransferredToEcmCaseError } from '../../../main/services/CaseService';
+import {
+  CaseApi,
+  UploadedFile,
+  getCaseApi,
+  isCaseNotFoundError,
+  isTransferredToEcmCaseError,
+} from '../../../main/services/CaseService';
 import { mockSimpleRespAppTypeItem } from '../mocks/mockApplications';
 import { mockClaimantTseRequest } from '../mocks/mockClaimantTseRequest';
 import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
@@ -139,6 +145,20 @@ describe('isTransferredToEcmCaseError', () => {
 
   it('should return false for generic fetch errors', () => {
     expect(isTransferredToEcmCaseError(new Error('Error getting user case: status code 404'))).toBe(false);
+  });
+});
+
+describe('isCaseNotFoundError', () => {
+  it('should return true for 404 responses', () => {
+    expect(isCaseNotFoundError(new Error('Error getting user case: status code 404'))).toBe(true);
+  });
+
+  it('should return true for CaseNotFoundException', () => {
+    expect(isCaseNotFoundError(new Error('CaseNotFoundException: No case found'))).toBe(true);
+  });
+
+  it('should return false for generic fetch errors', () => {
+    expect(isCaseNotFoundError(new Error('Error getting user case: status code 500'))).toBe(false);
   });
 });
 
