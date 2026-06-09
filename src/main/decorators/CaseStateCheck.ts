@@ -1,8 +1,8 @@
 import { Response } from 'express';
 
-import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
+import { returnValidUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { PageUrls, languages } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
 import NumberUtils from '../utils/NumberUtils';
 
@@ -26,7 +26,11 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
 
   if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
     if (NumberUtils.isNumericValue(userCase?.id)) {
-      redirectUrl = `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`;
+      // Inline ternary: all branches are constants so Fortify cannot trace taint from req.url to res.redirect
+      const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
+        ? languages.WELSH_URL_PARAMETER
+        : languages.ENGLISH_URL_PARAMETER;
+      redirectUrl = `/citizen-hub/${userCase.id}${langParam}`;
     } else {
       redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
     }
