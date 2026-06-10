@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 import { removeClaimantRepresentative } from './helpers/CaseRoleHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { conditionalRedirect, getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondentApplicationDetailsController');
 
@@ -62,7 +62,7 @@ export default class ChangeLegalRepresentativeController {
       )
         ? PageUrls.APPOINT_LEGAL_REPRESENTATIVE
         : await removeClaimantRepresentative(req);
-      res.redirect(returnValidUrl(redirectUrl));
+      res.redirect(redirectUrl);
     } catch (error) {
       logger.info(error);
       req.session.errors.push({ propertyName: 'legalRep', errorType: 'backEndError' });

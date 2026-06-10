@@ -5,18 +5,17 @@ import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AssignClaimCheck } from '../decorators/AssignClaimCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../definitions/case';
-import { CaseAssignmentResponse, PageUrls, ServiceErrors, TranslationKeys } from '../definitions/constants';
+import { CaseAssignmentResponse, PageUrls, ServiceErrors, TranslationKeys, languages } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
-import NumberUtils from '../utils/NumberUtils';
 import StringUtils from '../utils/StringUtils';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam, returnValidUrl } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeCitizenHubUrl, returnValidUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('YourDetailsCYAController');
 
@@ -117,14 +116,15 @@ export default class YourDetailsCYAController {
       );
       const caseId = req.session?.caseAssignmentFields?.id;
       this.resetCaseAssignmentFieldsAndFlags(req);
-      if (NumberUtils.isNumericValue(caseId)) {
-        return res.redirect(returnValidUrl(`/citizen-hub/${caseId}${getLanguageParam(req.url)}`));
-      }
-      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+      return res.redirect(returnSafeCitizenHubUrl(caseId, req));
     }
 
     this.resetCaseAssignmentFieldsAndFlags(req);
-    return res.redirect(`${PageUrls.CLAIMANT_APPLICATIONS}${getLanguageParam(req.url)}`);
+    // Inline ternary: constant branches break the req.url taint chain
+    const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
+      ? languages.WELSH_URL_PARAMETER
+      : languages.ENGLISH_URL_PARAMETER;
+    return res.redirect(PageUrls.CLAIMANT_APPLICATIONS + langParam);
   };
 
   private resetCaseAssignmentFieldsAndFlags(req: AppRequest<Partial<AnyRecord>>) {

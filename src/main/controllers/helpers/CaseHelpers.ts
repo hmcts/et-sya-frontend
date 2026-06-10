@@ -79,7 +79,8 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)
         ? localesCy.updateDraftErrorMessage
         : locales.updateDraftErrorMessage;
-      req.session.returnUrl = req.url ? returnValidUrl(req.url) : undefined;
+      // Strip query params so getStaticValidUrl returns a pure PageUrls constant (no tainted params appended)
+      req.session.returnUrl = req.url ? returnValidUrl(req.url.split('?')[0]) : undefined;
       req.session.save();
       logger.error(error.message);
     }
