@@ -1,6 +1,6 @@
 import ClaimantBenefitsController from '../../../main/controllers/ClaimantBenefitsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
+import { StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -62,10 +62,10 @@ describe('ClaimantBenefitsController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_NEW_JOB on Yes with benefits text', async () => {
+    it('should redirect to CLAIMANT_NEW_JOB when no longer working for respondent', async () => {
       const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'company car' };
       const controller = new ClaimantBenefitsController();
-      const req = mockRequest({ body });
+      const req = mockRequest({ body, userCase: { isStillWorking: StillWorking.NO_LONGER_WORKING } });
       const res = mockResponse();
 
       await controller.post(req, res);
@@ -73,26 +73,26 @@ describe('ClaimantBenefitsController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
     });
 
-    it('should redirect to CLAIMANT_NEW_JOB on No', async () => {
+    it('should redirect to CLAIMANT_RESPONDENT_NAME when still working for respondent', async () => {
+      const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'company car' };
+      const controller = new ClaimantBenefitsController();
+      const req = mockRequest({ body, userCase: { isStillWorking: StillWorking.WORKING } });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
+    });
+
+    it('should redirect to CLAIMANT_RESPONDENT_NAME when working a notice period', async () => {
       const body = { employeeBenefits: YesOrNo.NO };
       const controller = new ClaimantBenefitsController();
-      const req = mockRequest({ body });
+      const req = mockRequest({ body, userCase: { isStillWorking: StillWorking.NOTICE } });
       const res = mockResponse();
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
-    });
-
-    it('should redirect to CLAIMANT_NEW_JOB when no answer given', async () => {
-      const body = { employeeBenefits: '' };
-      const controller = new ClaimantBenefitsController();
-      const req = mockRequestEmpty({ body });
-      const res = mockResponse();
-
-      await controller.post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_NEW_JOB);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_RESPONDENT_NAME);
     });
 
     it('should stay on page and error when benefits text exceeds 2500 characters', async () => {

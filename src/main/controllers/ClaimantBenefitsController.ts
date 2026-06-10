@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
+import { StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -30,7 +31,11 @@ export default class ClaimantBenefitsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_NEW_JOB);
+    const redirectUrl =
+      req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING
+        ? PageUrls.CLAIMANT_NEW_JOB
+        : PageUrls.CLAIMANT_RESPONDENT_NAME;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()
