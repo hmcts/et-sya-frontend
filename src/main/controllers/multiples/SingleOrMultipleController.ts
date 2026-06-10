@@ -53,8 +53,6 @@ export default class SingleOrMultipleController {
     if (CaseType.SINGLE === req.body.caseType) {
       this.clearGroupClaimsFields(userCase);
       redirectUrl = PageUrls.GROUP_CLAIMS_CHECK;
-    } else if (CaseType.MULTIPLE === req.body.caseType && userCase?.additionalClaimants?.length > 0) {
-      redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
     } else {
       redirectUrl = PageUrls.ADD_ANOTHER_CLAIMANT;
     }

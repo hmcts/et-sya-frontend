@@ -13,7 +13,7 @@ const translations = {
     multiple: 'Multiple',
     addAdditionalClaimantsMethod: 'How claimants were added',
     manually: 'Manually',
-    spreadsheet: 'Spreadsheet',
+    spreadsheet: 'Spreadsheet upload',
     additionalClaimants: 'Additional claimants',
     additionalClaimant: 'Additional claimant',
     groupRepresentative: 'Group representative',
@@ -21,21 +21,24 @@ const translations = {
     emailLabel: 'Email',
     dobLabel: 'Date of birth',
     addressLabel: 'Address',
+    removeClaimant: 'Remove claimant',
   },
 };
 
 describe('GroupClaimDetailsAnswersHelper', () => {
   describe('getGroupClaimDetails', () => {
-    it('should return a single row for SINGLE case type', () => {
+    it('should return a single meta row for SINGLE case type with no cards and no post rows', () => {
       const userCase = { caseType: CaseType.SINGLE } as CaseWithId;
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { metaRows, cardsHtml, postRows } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows).toHaveLength(1);
-      expect(rows[0].value.text).toBe('Single');
-      expect(rows[0].actions.items[0].href).toContain(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
+      expect(metaRows).toHaveLength(1);
+      expect(metaRows[0].value.text).toBe('Single');
+      expect(metaRows[0].actions.items[0].href).toContain(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
+      expect(cardsHtml).toBe('');
+      expect(postRows).toHaveLength(0);
     });
 
-    it('should return rows for MULTIPLE case type including additional claimants and lead claimant', () => {
+    it('should return metaRows, cardsHtml, and postRows for MULTIPLE case type', () => {
       const userCase = {
         caseType: CaseType.MULTIPLE,
         addClaimantMethod: AddAdditionalClaimant.MANUAL,
@@ -56,29 +59,33 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         ],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { metaRows, cardsHtml, postRows } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows).toHaveLength(4);
-      // Claim type
-      expect(rows[0].value.text).toBe('Multiple');
-      // Add claimant method
-      expect(rows[1].value.text).toBe('Manually');
-      expect(rows[1].actions.items[0].href).toContain(PageUrls.ADD_ANOTHER_CLAIMANT);
-      // Additional claimants HTML
-      expect(rows[2].value.html).toContain('John');
-      expect(rows[2].value.html).toContain('john@example.com');
-      expect(rows[2].actions.items[0].href).toContain(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
-      // Group representative
-      expect(rows[3].value.text).toBe('Yes');
-      expect(rows[3].actions.items[0].href).toContain(PageUrls.GROUP_REPRESENTATIVE);
+      // Meta rows: claim type + add claimant method
+      expect(metaRows).toHaveLength(2);
+      expect(metaRows[0].value.text).toBe('Multiple');
+      expect(metaRows[1].value.text).toBe('Manually');
+      expect(metaRows[1].actions.items[0].href).toContain(PageUrls.ADD_ANOTHER_CLAIMANT);
+      // Cards HTML contains claimant data and links
+      expect(cardsHtml).toContain('John');
+      expect(cardsHtml).toContain('john@example.com');
+      expect(cardsHtml).toContain(PageUrls.REMOVE_ADDITIONAL_CLAIMANT);
+      expect(cardsHtml).toContain(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
+      expect(cardsHtml).toContain(InterceptPaths.ANSWERS_CHANGE);
+      // Post rows: group representative
+      expect(postRows).toHaveLength(1);
+      expect(postRows[0].value.text).toBe('Yes');
+      expect(postRows[0].actions.items[0].href).toContain(PageUrls.GROUP_REPRESENTATIVE);
     });
 
     it('should show "Not provided" for default/unknown case type', () => {
       const userCase = {} as CaseWithId;
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { metaRows, cardsHtml, postRows } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows).toHaveLength(1);
-      expect(rows[0].value.text).toBe('Not provided');
+      expect(metaRows).toHaveLength(1);
+      expect(metaRows[0].value.text).toBe('Not provided');
+      expect(cardsHtml).toBe('');
+      expect(postRows).toHaveLength(0);
     });
 
     it('should show "Not provided" when addClaimantMethod is undefined for MULTIPLE', () => {
@@ -88,9 +95,9 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         additionalClaimants: [],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { metaRows } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows[1].value.text).toBe('Not provided');
+      expect(metaRows[1].value.text).toBe('Not provided');
     });
 
     it('should show Spreadsheet for addClaimantMethod SPREADSHEET', () => {
@@ -101,9 +108,20 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         additionalClaimants: [],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { metaRows } = getGroupClaimDetails(userCase, translations);
+      expect(metaRows[1].value.text).toBe('Spreadsheet upload');
+    });
 
-      expect(rows[1].value.text).toBe('Spreadsheet');
+    it('should show Yes for leadClaimant when addClaimantMethod is SPREADSHEET', () => {
+      const userCase = {
+        caseType: CaseType.MULTIPLE,
+        addClaimantMethod: AddAdditionalClaimant.SPREADSHEET,
+        leadClaimant: YesOrNo.YES,
+        additionalClaimants: [],
+      } as unknown as CaseWithId;
+
+      const { metaRows } = getGroupClaimDetails(userCase, translations);
+      expect(metaRows[2].value.text).toBe('Yes');
     });
 
     it('should show "No" for leadClaimant NO', () => {
@@ -114,9 +132,9 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         additionalClaimants: [],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { postRows } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows[3].value.text).toBe('No');
+      expect(postRows[0].value.text).toBe('No');
     });
 
     it('should show "Not provided" when leadClaimant is undefined', () => {
@@ -126,9 +144,9 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         additionalClaimants: [],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { postRows } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows[3].value.text).toBe('Not provided');
+      expect(postRows[0].value.text).toBe('Not provided');
     });
 
     it('should show "Not provided" when there are no additional claimants', () => {
@@ -138,10 +156,9 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         leadClaimant: YesOrNo.YES,
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { cardsHtml } = getGroupClaimDetails(userCase, translations);
 
-      // When additionalClaimants is undefined/empty, buildAdditionalClaimantCards returns notProvided
-      expect(rows[2].value.html).toBe('Not provided');
+      expect(cardsHtml).toBe('Not provided');
     });
 
     it('should build cards for multiple additional claimants', () => {
@@ -155,15 +172,18 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         ],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { cardsHtml } = getGroupClaimDetails(userCase, translations);
 
-      expect(rows[2].value.html).toContain('Additional claimant  1');
-      expect(rows[2].value.html).toContain('Additional claimant  2');
-      expect(rows[2].value.html).toContain('Alice');
-      expect(rows[2].value.html).toContain('bob@test.com');
+      expect(cardsHtml).toContain('Additional claimant 1');
+      expect(cardsHtml).toContain('Additional claimant 2');
+      expect(cardsHtml).toContain('Alice');
+      expect(cardsHtml).toContain('bob@test.com');
+      expect(cardsHtml).toContain(PageUrls.REMOVE_ADDITIONAL_CLAIMANT);
+      expect(cardsHtml).toContain(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
+      expect(cardsHtml).toContain(InterceptPaths.ANSWERS_CHANGE);
     });
 
-    it('should include ANSWERS_CHANGE intercept path in all change links', () => {
+    it('should include ANSWERS_CHANGE intercept path in all summary list rows', () => {
       const userCase = {
         caseType: CaseType.MULTIPLE,
         addClaimantMethod: AddAdditionalClaimant.MANUAL,
@@ -171,9 +191,11 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         additionalClaimants: [],
       } as unknown as CaseWithId;
 
-      const rows = getGroupClaimDetails(userCase, translations);
+      const { metaRows, postRows } = getGroupClaimDetails(userCase, translations);
 
-      for (const row of rows) {
+      const allRows = [...metaRows, ...postRows];
+      expect(allRows.length).toBeGreaterThan(0);
+      for (const row of allRows) {
         expect(row.actions.items[0].href).toContain(InterceptPaths.ANSWERS_CHANGE);
       }
     });

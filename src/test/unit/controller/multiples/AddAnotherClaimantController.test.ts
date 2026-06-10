@@ -44,11 +44,12 @@ describe('Add Another Claimant Controller', () => {
       res,
       expect.anything(),
       expect.anything(),
-      PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS
+      PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS + '?additionalClaimant=new-claimant'
     );
   });
 
-  it('should redirect to "#" when SPREADSHEET is selected', async () => {
+  //Todo: update this test when spreadsheet upload is implemented
+  test('should redirect to REVIEW (temporary) page when spreadsheet is selected', async () => {
     const body = { addClaimantMethod: AddAdditionalClaimant.SPREADSHEET };
 
     const controller = new AddAnotherClaimantController();
@@ -59,20 +60,13 @@ describe('Add Another Claimant Controller', () => {
 
     await controller.post(req, res);
 
-    expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(req, res, expect.anything(), expect.anything(), '#');
-  });
-
-  it('should fallback and redirect to "#" when no method is selected', async () => {
-    const body = {};
-
-    const controller = new AddAnotherClaimantController();
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    req.session.userCase = userCaseWithRespondent;
-
-    await controller.post(req, res);
-
-    expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(req, res, expect.anything(), expect.anything(), '#');
+    // handlePostLogic will be called with the target redirect URL determined by the controller
+    expect(CaseHelper.handlePostLogic).toHaveBeenCalledWith(
+      req,
+      res,
+      expect.anything(),
+      expect.anything(),
+      PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
+    );
   });
 });

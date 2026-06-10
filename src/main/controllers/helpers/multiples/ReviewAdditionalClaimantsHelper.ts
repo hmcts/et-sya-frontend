@@ -43,7 +43,7 @@ export const clearAdditionalClaimantTransientFields = (req: AppRequest): void =>
   req.session.userCase.additionalClaimantFirstName = undefined;
   req.session.userCase.additionalClaimantLastName = undefined;
   req.session.userCase.additionalClaimantEmail = undefined;
-  req.session.userCase.additionalClaimantDob = undefined;
+  req.session.userCase.additionalClaimantDob = { day: '', month: '', year: '' };
   req.session.userCase.additionalClaimantAddress1 = undefined;
   req.session.userCase.additionalClaimantAddress2 = undefined;
   req.session.userCase.additionalClaimantAddressTown = undefined;

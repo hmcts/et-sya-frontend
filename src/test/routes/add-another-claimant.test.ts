@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { AddAdditionalClaimant } from '../../main/definitions/case';
-import { ErrorPages, PageUrls } from '../../main/definitions/constants';
+import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.ADD_ANOTHER_CLAIMANT}`, () => {
@@ -22,17 +22,20 @@ describe(`on POST ${PageUrls.ADD_ANOTHER_CLAIMANT}`, () => {
       .send({ addClaimantMethod: AddAdditionalClaimant.MANUAL })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS);
+        expect(res.header['location']).toStrictEqual(
+          PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS + '?additionalClaimant=new-claimant'
+        );
       });
   });
 
-  test('should redirect back to # page when spreadsheet is selected', async () => {
+  //Todo: update this test when spreadsheet upload is implemented
+  test('should redirect to REVIEW (temporary) page when spreadsheet is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.ADD_ANOTHER_CLAIMANT)
       .send({ addClaimantMethod: AddAdditionalClaimant.SPREADSHEET })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(ErrorPages.NOT_FOUND);
+        expect(res.header['location']).toStrictEqual(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
       });
   });
 
