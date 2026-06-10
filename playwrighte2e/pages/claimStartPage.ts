@@ -84,12 +84,9 @@ export class ClaimStartPage extends BasePage {
   }
 
   async verifyContactUs(): Promise<void> {
-    await this.webAction.verifyTextPresentOnPage('text=Telephone:');
-    await this.webAction.verifyTextPresentOnPage('text=0300 323 0196');
-    await this.webAction.verifyTextPresentOnPage('text=Telephone:');
-    await this.webAction.verifyTextPresentOnPage('text=0300 303 5176 (Welsh language)');
-    await this.webAction.verifyTextPresentOnPage('text=Telephone:');
-    await this.webAction.verifyTextPresentOnPage('text=0300 790 6234 (Scotland)');
+    await this.webAction.verifyTextPresentOnPage('text=Telephone: 0300 323 0196');
+    await this.webAction.verifyTextPresentOnPage('text=Telephone: 0300 303 5176 (Welsh language)');
+    await this.webAction.verifyTextPresentOnPage('text=Telephone: 0300 790 6234 (Scotland)');
     await this.webAction.verifyTextPresentOnPage('text=Monday to Friday, 9am to 5pm');
     await this.webAction.verifyTextPresentOnPage('text=Find out about call charges (opens in new tab)');
   }
