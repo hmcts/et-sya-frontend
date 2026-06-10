@@ -17,6 +17,7 @@ import { handleUpdateDraftCase, setUserCase } from '../helpers/CaseHelpers';
 import { returnSessionErrors } from '../helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 import { setUrlLanguage } from '../helpers/LanguageHelper';
+import { returnNextPage } from '../helpers/RouterHelpers';
 
 const logger = getLogger('AdditionalClaimantPersonalDetailsController');
 
@@ -131,7 +132,7 @@ export default class AdditionalClaimantPersonalDetailsController {
     if (saveForLater) {
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIM_SAVED));
     }
-    return res.redirect(setUrlLanguage(req, redirectUrl));
+    return returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
   };
 
   @AdditionalClaimantCheck()
@@ -145,8 +146,6 @@ export default class AdditionalClaimantPersonalDetailsController {
     // Set editing index and flow mode from query param
     const indexParam = req.query?.additionalClaimant as string;
     if (indexParam === 'new-claimant') {
-      // Creation flow — flag persists in session across back-navigation
-      req.session.additionalClaimantNewFlow = true;
       req.session.userCase.currentAdditionalClaimantIndex ??= req.session.userCase.additionalClaimants
         ? req.session.userCase.additionalClaimants.length
         : 0;
@@ -182,7 +181,7 @@ export default class AdditionalClaimantPersonalDetailsController {
       req.session.userCase.additionalClaimantFirstName = c.firstName;
       req.session.userCase.additionalClaimantLastName = c.lastName;
       req.session.userCase.additionalClaimantEmail = c.email;
-      req.session.userCase.additionalClaimantDob = c.dob;
+      req.session.userCase.additionalClaimantDob = c.dob ?? { day: '', month: '', year: '' };
       req.session.userCase.additionalClaimantAddress1 = address?.AddressLine1;
       req.session.userCase.additionalClaimantAddress2 = address?.AddressLine2;
       req.session.userCase.additionalClaimantAddressTown = address?.PostTown;

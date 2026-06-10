@@ -29,6 +29,9 @@
       "invalidDateInFuture": "Date entered must be in the past.",
       "invalidDateTooFarInPast": "Date must be between 16 years and 100 years in the past.",
       "invalidDateLessThanSixteenYearsInPast": "Date of birth invalid. Claimant must be a minimum of 16 years old"
+    },
+    "additionalClaimantEmail": {
+      "invalid": "Enter an email address in the correct format"
     }
   }
 }

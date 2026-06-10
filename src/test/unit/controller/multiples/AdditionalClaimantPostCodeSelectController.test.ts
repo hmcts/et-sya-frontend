@@ -120,6 +120,26 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
+  it('should redirect to returnUrl (CYA) instead of review page when returnUrl is set', async () => {
+    const req = mockRequest({
+      body: {
+        additionalClaimantAddress1: '1 Test Street',
+        additionalClaimantAddressTown: 'London',
+        additionalClaimantAddressCountry: 'England',
+        additionalClaimantAddressPostcode: 'SW1A 1AA',
+      },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+    });
+    const res = mockResponse();
+    req.session.userCase.currentAdditionalClaimantIndex = 0;
+    req.session.userCase.additionalClaimants = [{ firstName: 'Jane', lastName: 'Doe' }];
+
+    await new AdditionalClaimantPostCodeSelectController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(req.session.returnUrl).toBeUndefined();
+  });
+
   it('should set current edit index from query and render postcode select page with resolved addresses', async () => {
     const req = mockRequest({});
     const res = mockResponse();

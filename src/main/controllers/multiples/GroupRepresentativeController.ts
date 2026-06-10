@@ -52,7 +52,7 @@ export default class GroupRepresentativeController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     req.session.userCase.groupClaimsCheck = YesOrNo.NO;
-    return handlePostLogic(req, res, this.form, logger, PageUrls.GROUP_CLAIMS_CHECK, true);
+    return handlePostLogic(req, res, this.form, logger, PageUrls.GROUP_CLAIMS_CHECK);
   };
 
   @CaseStateCheck()

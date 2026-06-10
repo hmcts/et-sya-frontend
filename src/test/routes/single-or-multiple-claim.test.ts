@@ -52,7 +52,7 @@ describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
       .send({ caseType: CaseType.MULTIPLE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.ADD_ANOTHER_CLAIMANT);
       });
   });
 });

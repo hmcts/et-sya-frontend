@@ -29,6 +29,9 @@
       "invalidDateInFuture": "Rhaid i’r dyddiad fod yn y gorffennol.",
       "invalidDateTooFarInPast": "Rhaid i’r dyddiad fod rhwng 16 mlynedd a 100 mlynedd yn y gorffennol.",
       "invalidDateLessThanSixteenYearsInPast": "[W] Date of birth invalid. Claimant must be a minimum of 16 years old"
+    },
+    "additionalClaimantEmail": {
+      "invalid": "[W] Enter an email address in the correct format"
     }
   }
 }

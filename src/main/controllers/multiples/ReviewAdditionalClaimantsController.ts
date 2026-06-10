@@ -163,15 +163,15 @@ export default class ReviewAdditionalClaimantsController {
 
     const fields: FormFields = { ...this.reviewContent.fields };
     if (canAddAnotherClaimant) {
-      delete (fields as AnyRecord).addAdditionalClaimantMaxTxt;
+      delete fields.addAdditionalClaimantMaxTxt;
     } else {
       const addAnotherClaimantUrl = `${PageUrls.ADD_ANOTHER_CLAIMANT}${getLanguageParam(req.url)}`;
-      (fields as AnyRecord).addAdditionalClaimantMaxTxt = {
-        ...(fields as AnyRecord).addAdditionalClaimantMaxTxt,
+      fields.addAdditionalClaimantMaxTxt = {
+        ...fields.addAdditionalClaimantMaxTxt,
         hint: (l: AnyRecord): string =>
           `${l.p3} <a class="govuk-link" href="${addAnotherClaimantUrl}">${l.spreadsheetOptionLink}</a>`,
       };
-      delete (fields as AnyRecord).addAdditionalClaimant;
+      delete fields.addAdditionalClaimant;
     }
     return { ...this.reviewContent, fields };
   };

@@ -38,6 +38,12 @@ export default class CheckYourAnswersController {
 
     setNumbersToRespondents(userCase.respondents);
 
+    const {
+      metaRows: groupClaimMetaRows,
+      cardsHtml: groupClaimCardsHtml,
+      postRows: groupClaimPostRows,
+    } = getGroupClaimDetails(userCase, translations);
+
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
       PageUrls,
@@ -47,7 +53,9 @@ export default class CheckYourAnswersController {
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
       yourDetails: getYourDetails(userCase, translations),
-      groupClaimDetails: getGroupClaimDetails(userCase, translations),
+      groupClaimMetaRows,
+      groupClaimCardsHtml,
+      groupClaimPostRows,
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,
