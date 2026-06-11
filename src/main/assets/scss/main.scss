@@ -288,7 +288,7 @@ $spreadsheet-loading-overlay-bg: rgba(255, 255, 255, 0.93);
 
   &__spinner {
     animation: spreadsheet-spin 0.7s linear infinite;
-    border: 4px solid govuk-colour('mid-grey');
+    border: 4px solid govuk-colour('black', $variant: 'tint-80');
     border-radius: 50%;
     border-top-color: govuk-colour('blue');
     height: 48px;
