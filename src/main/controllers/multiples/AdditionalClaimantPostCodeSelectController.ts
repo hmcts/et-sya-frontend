@@ -25,6 +25,7 @@ import { convertJsonArrayToTitleCase, handleUpdateDraftCase, setUserCase } from 
 import { handleErrors, returnSessionErrors } from '../helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 import { setUrlLanguage } from '../helpers/LanguageHelper';
+import { returnNextPage } from '../helpers/RouterHelpers';
 
 const logger = getLogger('AdditionalClaimantPostCodeSelectController');
 
@@ -156,7 +157,7 @@ export default class AdditionalClaimantPostCodeSelectController {
       return res.redirect(setUrlLanguage(req, PageUrls.CLAIM_SAVED));
     }
     this.clearAdditionalClaimantTransientFields(req);
-    return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
+    return returnNextPage(req, res, setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
   };
 
   @AdditionalClaimantCheck()
@@ -282,7 +283,7 @@ export default class AdditionalClaimantPostCodeSelectController {
     req.session.userCase.additionalClaimantFirstName = undefined;
     req.session.userCase.additionalClaimantLastName = undefined;
     req.session.userCase.additionalClaimantEmail = undefined;
-    req.session.userCase.additionalClaimantDob = undefined;
+    req.session.userCase.additionalClaimantDob = { day: '', month: '', year: '' };
     req.session.userCase.additionalClaimantAddress1 = undefined;
     req.session.userCase.additionalClaimantAddress2 = undefined;
     req.session.userCase.additionalClaimantAddressTown = undefined;

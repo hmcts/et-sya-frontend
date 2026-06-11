@@ -17,6 +17,7 @@ export function AdditionalClaimantCheck() {
 
 export const checkAdditionalClaimantAndRedirect = (req: AppRequest, res: Response): boolean => {
   const claimants = req.session?.userCase?.additionalClaimants;
+  const claimantsLength = claimants?.length ?? 0;
   const claimantQuery = req.query?.additionalClaimant;
   let redirectUrl: string | null = null;
 
@@ -28,7 +29,7 @@ export const checkAdditionalClaimantAndRedirect = (req: AppRequest, res: Respons
   ) {
     // Creation flow — only allow through if the session flag is active and not at max capacity.
     // A stale ?additionalClaimant=new-claimant in browser history is blocked once the flag is cleared.
-    if (req.session?.additionalClaimantNewFlow === true && claimants?.length < 5) {
+    if (req.session?.additionalClaimantNewFlow === true && claimantsLength < 5) {
       return false;
     }
     redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;

@@ -167,6 +167,27 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   });
 
+  it('should redirect to returnUrl (CYA) instead of review page when returnUrl is set', async () => {
+    const response = mockResponse();
+    const request = mockRequest({
+      body: {
+        additionalClaimantTitle: 'Mr',
+        additionalClaimantFirstName: 'Updated',
+        additionalClaimantLastName: 'Person',
+        additionalClaimantEmail: 'updated@example.com',
+      },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+    });
+    request.session.userCase.additionalClaimants = [{ title: 'Mr', firstName: 'Old', lastName: 'Name' }];
+    request.session.userCase.currentAdditionalClaimantIndex = 0;
+    (request.session as any).additionalClaimantNewFlow = false;
+
+    await new AdditionalClaimantPersonalDetailsController().post(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(request.session.returnUrl).toBeUndefined();
+  });
+
   it('should not add a claimant when there are already five and should redirect to review page', async () => {
     const response = mockResponse();
     const request = mockRequest({

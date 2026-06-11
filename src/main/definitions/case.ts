@@ -396,6 +396,6 @@ export const enum ReturnToExistingOption {
 }
 
 export const enum AddAdditionalClaimant {
-  MANUAL = 'Manual',
-  SPREADSHEET = 'Spreadsheet',
+  MANUAL = 'manually',
+  SPREADSHEET = 'spreadsheet',
 }

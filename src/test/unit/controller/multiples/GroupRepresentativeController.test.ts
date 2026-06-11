@@ -57,6 +57,21 @@ describe('GroupRepresentativeController', () => {
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.GROUP_CLAIMS_CHECK);
   });
 
+  it('should redirect to returnUrl (CYA) instead of group claims check when returnUrl is set', async () => {
+    const controller = new GroupRepresentativeController();
+    const response = mockResponse();
+    const request = mockRequest({
+      body: { leadClaimant: YesOrNo.YES },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+    });
+    request.url = PageUrls.GROUP_REPRESENTATIVE;
+
+    await controller.post(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(request.session.returnUrl).toBeUndefined();
+  });
+
   it('should redirect back to group representative when no option is selected', async () => {
     const controller = new GroupRepresentativeController();
     const response = mockResponse();

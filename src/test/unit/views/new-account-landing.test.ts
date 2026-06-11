@@ -34,9 +34,9 @@ describe('New Account Landing page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Panel title does not exist');
   });
 
-  it('should display 2 paragraph classes', () => {
+  it('should display 10 paragraph classes', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(8, '8 paragraph class should exist (with cookies)');
+    expect(p.length).equal(10, '10 paragraph class should exist (with cookies)');
     expect(p[6].innerHTML).contains(expectedP1, 'Could not find P1 text');
     expect(p[7].innerHTML).contains(expectedP2, 'Could not find P2 text');
   });

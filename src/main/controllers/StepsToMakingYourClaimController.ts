@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseType, YesOrNo } from '../definitions/case';
+import { AddAdditionalClaimant, CaseType, CaseWithId, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -17,6 +17,18 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StepsToMakingYourClaimController');
+
+function getAddClaimantNextPage(userCase: CaseWithId) {
+  if (userCase?.addClaimantMethod === AddAdditionalClaimant.SPREADSHEET) {
+    return '#';
+  }
+
+  if ((userCase?.additionalClaimants?.length || 0) > 0) {
+    return PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
+  }
+
+  return PageUrls.ADD_ANOTHER_CLAIMANT;
+}
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -80,13 +92,7 @@ export default class StepsToMakingYourClaimController {
           ...(userCase?.caseType === CaseType.MULTIPLE
             ? [
                 {
-                  url: setUrlLanguage(
-                    req,
-                    ((userCase?.additionalClaimants?.length || 0) > 0
-                      ? PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
-                      : PageUrls.ADD_ANOTHER_CLAIMANT
-                    ).toString()
-                  ),
+                  url: setUrlLanguage(req, getAddClaimantNextPage(userCase)),
                   linkTxt: (l: AnyRecord): string => l.section2.link1Text,
                   status: (): string =>
                     getSectionStatus(userCase?.groupClaimsCheck, userCase?.additionalClaimants?.length),

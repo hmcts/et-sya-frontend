@@ -1,0 +1,34 @@
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% if "/" !== currentUrl and "/?lng=en" != currentUrl and "/?lng=cy" != currentUrl and hideContactUs === undefined %}
+
+<div class="govuk-width-container">
+
+{% set html %}
+  <p class="govuk-body">{{ contactUsForeword }}</p>
+  <ul class="govuk-list">
+    <li>{{ contactDuration }}</li>
+    <li>{{ mainTelephone }}</li>
+    <li>{{ welshTelephone }}</li>
+    <li>{{ scotlandTelephone }}</li>
+    {% if i18n.language == "en" %}
+    <li>
+      <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table>
+    </li>
+    {% endif %}
+  </ul>
+  <p class="govuk-body">
+    <a href="https://www.gov.uk/call-charges" class="govuk-link" target="_blank">
+      {{ contactCharges }}
+    </a>
+  </p>
+{% endset %}
+
+{{ govukDetails({
+  summaryText: contactUsTitle,
+  html: html
+}) }}
+
+</div>
+
+{% endif %}

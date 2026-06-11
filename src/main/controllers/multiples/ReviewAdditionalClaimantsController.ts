@@ -169,7 +169,6 @@ export default class ReviewAdditionalClaimantsController {
 
     const hasSpreadsheet = !!req.session.userCase?.additionalClaimantSpreadsheet;
     const fields: FormFields = { ...this.reviewContent.fields };
-
     if (hasSpreadsheet) {
       delete fields.addAdditionalClaimant;
       delete fields.addAdditionalClaimantMaxTxt;
