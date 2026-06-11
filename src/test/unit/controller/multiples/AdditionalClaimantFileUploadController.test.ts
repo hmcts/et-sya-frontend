@@ -136,7 +136,7 @@ describe('AdditionalClaimantFileUploadController', () => {
       await controller.post(req, res);
 
       expect(helper.handleUpdateDraftCase).toHaveBeenCalled();
-      expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
+      expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining(PageUrls.GROUP_REPRESENTATIVE));
     });
 
     it('should redirect to claim saved when saveForLater is submitted', async () => {

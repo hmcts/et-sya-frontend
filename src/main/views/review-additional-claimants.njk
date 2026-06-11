@@ -4,6 +4,7 @@
 
 {% block beforeContent %}
   {{ super() }}
+  {% include "back-link.njk"%}
 {% endblock %}
 
 {% block content %}
@@ -13,29 +14,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
-      <p class="govuk-body">{{ p1 }}</p>
-      {% set addAnotherClaimantLink = PageUrls.ADD_ANOTHER_CLAIMANT ~ (languageParam if languageParam else '?lng=en') %}
-      <p class="govuk-body">{{ p2 }} <a class="govuk-link" href="{{ addAnotherClaimantLink }}">{{ spreadsheetOptionLink }}</a></p>
+        <p class="govuk-body">{{ p1 }}</p>
+        {% set addAnotherClaimantLink = PageUrls.ADD_ANOTHER_CLAIMANT ~ (languageParam if languageParam else '?lng=en') %}
+        <p class="govuk-body">{{ p2 }} <a class="govuk-link" href="{{ addAnotherClaimantLink }}">{{ spreadsheetOptionLink }}</a></p>
 
-      {% if additionalClaimantsSpreadsheet %}
-        <div class="govuk-summary-card">
-          <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">{{ additionalClaimantDocument }}</h2>
-          </div>
-          <div class="govuk-summary-card__content">
-            {{ govukSummaryList({
-              rows: [
-                {
-                  key: { text: documentLabel },
-                  value: { html: '<a class="govuk-link" href="' + userCase.additionalClaimantSpreadsheet.document_binary_url + '">' + userCase.additionalClaimantSpreadsheet.document_filename + '</a>' },
-                  actions: { items: [{ href: changeSpreadsheetUrl, text: change, visuallyHiddenText: documentLabel }] }
-                }
-              ]
-            }) }}
-          </div>
-        </div>
-
-      {% else %}
         {% for claimant in additionalClaimants %}
           <div class="govuk-summary-card">
             <div class="govuk-summary-card__title-wrapper">
@@ -74,8 +56,6 @@
             </div>
           </div>
         {% endfor %}
-      {% endif %}
-
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}

@@ -1,6 +1,11 @@
 import { AddAdditionalClaimant, CaseType, CaseWithId, YesOrNo } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
-import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
+import {
+  SummaryListRow,
+  addSummaryHtmlRow,
+  addSummaryRow,
+  createChangeAction,
+} from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { formatAddress, formatDob, formatName } from './multiples/ReviewAdditionalClaimantsHelper';
@@ -139,6 +144,19 @@ export const getGroupClaimDetails = (userCase: CaseWithId, translations: AnyReco
 
   if (userCase?.caseType === CaseType.MULTIPLE && userCase.addClaimantMethod === AddAdditionalClaimant.SPREADSHEET) {
     metaRows.push(
+      addSummaryHtmlRow(
+        translations.groupClaimDetails.additionalClaimantDocument,
+        '<a class="govuk-link" href="' +
+          userCase.additionalClaimantSpreadsheet.document_binary_url +
+          '">' +
+          userCase.additionalClaimantSpreadsheet.document_filename +
+          '</a>',
+        createChangeAction(
+          PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.groupClaimDetails.groupRepresentative
+        )
+      ),
       addSummaryRow(
         translations.groupClaimDetails.groupRepresentative,
         getTranslationsGroupRepresentative(userCase, translations),

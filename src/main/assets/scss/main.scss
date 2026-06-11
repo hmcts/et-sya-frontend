@@ -4,11 +4,13 @@
 // Restore header padding for non-collapsible (always-open) steps.
 // The plugin resets all .app-step-nav__header padding to 0 when JS is enabled;
 // the --open modifier opts a step back out of that reset.
-.js-enabled .app-step-nav__header--open {
-  padding: govuk-spacing(2) 0 govuk-spacing(4);
+.js-enabled {
+  .app-step-nav__header--open {
+    padding: govuk-spacing(2) 0 govuk-spacing(4);
 
-  .app-step-nav--large & {
-    padding-top: govuk-spacing(2);
+    .app-step-nav--large & {
+      padding-top: govuk-spacing(2);
+    }
   }
 }
 @import './utilities/borders';
@@ -259,9 +261,11 @@ $lightgrey-panel: #d3d3d3;
 // #SPREADSHEET UPLOAD LOADING OVERLAY
 // ==========================================================================
 
+$spreadsheet-loading-overlay-bg: rgba(255, 255, 255, 0.93);
+
 .spreadsheet-loading-overlay {
   align-items: center;
-  background: rgba(255, 255, 255, 0.93);
+  background: $spreadsheet-loading-overlay-bg;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -310,18 +314,18 @@ $lightgrey-panel: #d3d3d3;
 // Global layout element for a distinct numbered row
 .app-step-nav__item {
   display: flex;
-  position: relative;
   padding-bottom: govuk-spacing(7);
+  position: relative;
 
   // Vertical connector line targeting steps 1 and 2
   &::before {
-    content: '';
-    position: absolute;
-    left: 17px; // Exact line tracking through middle of a 36px circle
-    top: 36px;
-    bottom: 0;
-    width: 2px;
     background-color: $govuk-border-colour;
+    bottom: 0;
+    content: '';
+    left: 17px; // Exact line tracking through middle of a 36px circle
+    position: absolute;
+    top: 36px;
+    width: 2px;
   }
 
   // Prevents line breaking past final step form controls
@@ -336,22 +340,22 @@ $lightgrey-panel: #d3d3d3;
 
 // Side column tracking the circle graphic away from headers
 .app-step-nav__icon-wrapper {
-  margin-right: govuk-spacing(4);
   flex-shrink: 0;
+  margin-right: govuk-spacing(4);
 }
 
 // Circular indicator framework
 .app-step-nav__circle {
   @include govuk-font($size: 19, $weight: bold);
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
+  background-color: govuk-colour('white');
   border: 2px solid $govuk-text-colour;
   border-radius: 50%;
-  background-color: #ffffff;
   box-sizing: border-box;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
 }
 
 // Core text block width alignment alongside grid elements

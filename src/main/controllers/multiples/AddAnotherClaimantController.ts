@@ -50,12 +50,18 @@ export default class AddAnotherClaimantController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl: string;
-    const claimantsLength = req.session?.userCase?.additionalClaimants?.length ?? 0;
-    if (AddAdditionalClaimant.MANUAL === req.body.addClaimantMethod && claimantsLength === 0) {
+    if (AddAdditionalClaimant.MANUAL === req.body.addClaimantMethod) {
+      if (req.session?.userCase?.additionalClaimantSpreadsheet) {
+        req.session.userCase.additionalClaimantSpreadsheet = undefined;
+        req.session.userCase.additionalClaimants = undefined;
+      }
       req.session.additionalClaimantNewFlow = true;
       redirectUrl = `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=new-claimant`;
     } else {
-      redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
+      if (!req.session?.userCase?.additionalClaimantSpreadsheet) {
+        req.session.userCase.additionalClaimants = undefined;
+      }
+      redirectUrl = PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD;
     }
     logger.info(
       `Handling add another claimant submission. Selected method: ${

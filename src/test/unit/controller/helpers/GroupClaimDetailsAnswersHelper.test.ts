@@ -22,6 +22,7 @@ const translations = {
     dobLabel: 'Date of birth',
     addressLabel: 'Address',
     removeClaimant: 'Remove claimant',
+    additionalClaimantDocument: 'Additional claimant document',
   },
 };
 
@@ -112,6 +113,18 @@ describe('GroupClaimDetailsAnswersHelper', () => {
       expect(metaRows[1].value.text).toBe('Spreadsheet upload');
     });
 
+    it('should show document row when type is SPREADSHEET', () => {
+      const userCase = {
+        caseType: CaseType.MULTIPLE,
+        addClaimantMethod: AddAdditionalClaimant.SPREADSHEET,
+        leadClaimant: YesOrNo.YES,
+        additionalClaimants: [],
+      } as unknown as CaseWithId;
+
+      const { metaRows } = getGroupClaimDetails(userCase, translations);
+      expect(metaRows[2].value.text).toBe('Additional claimant document');
+    });
+
     it('should show Yes for leadClaimant when addClaimantMethod is SPREADSHEET', () => {
       const userCase = {
         caseType: CaseType.MULTIPLE,
@@ -121,7 +134,7 @@ describe('GroupClaimDetailsAnswersHelper', () => {
       } as unknown as CaseWithId;
 
       const { metaRows } = getGroupClaimDetails(userCase, translations);
-      expect(metaRows[2].value.text).toBe('Yes');
+      expect(metaRows[3].value.text).toBe('Yes');
     });
 
     it('should show "No" for leadClaimant NO', () => {

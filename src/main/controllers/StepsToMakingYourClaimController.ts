@@ -20,7 +20,7 @@ const logger = getLogger('StepsToMakingYourClaimController');
 
 function getAddClaimantNextPage(userCase: CaseWithId) {
   if (userCase?.addClaimantMethod === AddAdditionalClaimant.SPREADSHEET) {
-    return '#';
+    return PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD;
   }
 
   if ((userCase?.additionalClaimants?.length || 0) > 0) {

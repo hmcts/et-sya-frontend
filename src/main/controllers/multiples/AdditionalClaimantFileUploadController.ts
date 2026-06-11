@@ -57,7 +57,7 @@ export default class AdditionalClaimantFileUploadController {
       return res.redirect(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD);
     }
 
-    const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
+    const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 

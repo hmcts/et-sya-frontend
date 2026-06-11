@@ -157,8 +157,7 @@ export default class ReviewAdditionalClaimantsController {
       ...content,
       additionalClaimants,
       canAddAnotherClaimant,
-      additionalClaimantsSpreadsheet: userCase?.additionalClaimantSpreadsheet,
-      changeSpreadsheetUrl: PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD,
+      addAnotherClaimantLink: PageUrls.ADD_ANOTHER_CLAIMANT,
     });
   };
 
@@ -167,12 +166,8 @@ export default class ReviewAdditionalClaimantsController {
       return this.reviewContent;
     }
 
-    const hasSpreadsheet = !!req.session.userCase?.additionalClaimantSpreadsheet;
     const fields: FormFields = { ...this.reviewContent.fields };
-    if (hasSpreadsheet) {
-      delete fields.addAdditionalClaimant;
-      delete fields.addAdditionalClaimantMaxTxt;
-    } else if (canAddAnotherClaimant) {
+    if (canAddAnotherClaimant) {
       delete fields.addAdditionalClaimantMaxTxt;
     } else {
       const addAnotherClaimantUrl = `${PageUrls.ADD_ANOTHER_CLAIMANT}${getLanguageParam(req.url)}`;

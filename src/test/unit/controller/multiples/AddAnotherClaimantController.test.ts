@@ -49,7 +49,7 @@ describe('Add Another Claimant Controller', () => {
   });
 
   //Todo: update this test when spreadsheet upload is implemented
-  test('should redirect to REVIEW (temporary) page when spreadsheet is selected', async () => {
+  test('should redirect to Upload screen page when spreadsheet is selected', async () => {
     const body = { addClaimantMethod: AddAdditionalClaimant.SPREADSHEET };
 
     const controller = new AddAnotherClaimantController();
@@ -66,7 +66,7 @@ describe('Add Another Claimant Controller', () => {
       res,
       expect.anything(),
       expect.anything(),
-      PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
+      PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD
     );
   });
 });
