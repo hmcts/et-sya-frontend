@@ -351,6 +351,7 @@ export const JavaApiUrls = {
   FIND_CASE_BY_ID: '/et3/findCaseById',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
+  GET_CASE_TRANSFER_INFO: 'cases/',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',

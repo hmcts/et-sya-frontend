@@ -116,7 +116,7 @@ describe('Retrieve individual case', () => {
   it('should send get request to retrieve case transfer info', async () => {
     const caseId = '1646225213651590';
     await api.getCaseTransferInfo(caseId);
-    expect(mockedAxios.get).toHaveBeenCalledWith(`cases/${caseId}/transfer-info`);
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${JavaApiUrls.GET_CASE_TRANSFER_INFO}${caseId}/transfer-info`);
   });
 });
 

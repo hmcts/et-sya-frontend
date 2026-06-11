@@ -21,11 +21,16 @@ export const handleTransferredCaseRedirect = async (
   try {
     const transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
     if (transferInfo?.transferred) {
+      logger.error(
+        `Case ID ${caseId} has been transferred.` +
+          ` Redirecting to transferred case page. Transfer info: ${JSON.stringify(transferInfo)}`
+      );
       req.session.caseTransferInfo = transferInfo;
       res.redirect(buildTransferredCaseRedirectUrl(req, caseId));
       return true;
     }
   } catch (transferError) {
+    logger.error(`Case ID ${caseId} transferred case check error occurred: ${JSON.stringify(transferError)}`);
     logger.error(transferError instanceof Error ? transferError.message : String(transferError));
   }
   return false;
