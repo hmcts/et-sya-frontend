@@ -243,6 +243,7 @@ export interface Case {
   additionalClaimantAddresses?: Record<string, string>[];
   addClaimantMethod?: AddAdditionalClaimant;
   addAdditionalClaimant?: YesOrNo;
+  additionalClaimantSpreadsheet?: Document;
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
   caseStayed?: YesOrNo;

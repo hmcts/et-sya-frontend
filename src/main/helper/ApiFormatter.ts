@@ -233,6 +233,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
     additionalClaimants: mapAdditionalClaimants(fromApiCaseData.case_data?.additionalClaimants),
     addClaimantMethod: fromApiCaseData.case_data?.addClaimantMethod,
+    additionalClaimantSpreadsheet: fromApiCaseData.case_data?.additionalClaimantSpreadsheet,
   };
 }
 
@@ -343,6 +344,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       leadClaimant: caseItem.leadClaimant,
       additionalClaimants: setAdditionalClaimantsApiFormat(caseItem.additionalClaimants),
       addClaimantMethod: caseItem.addClaimantMethod,
+      additionalClaimantSpreadsheet: caseItem.additionalClaimantSpreadsheet,
     },
   };
 }

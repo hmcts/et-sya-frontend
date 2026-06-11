@@ -1,0 +1,48 @@
+{
+  "title": "[W] How to add claimants using a spreadsheet",
+  "h1": "[W] How to add claimants using a spreadsheet",
+  "section1": {
+    "heading": "[W] Download and complete the spreadsheet template",
+    "p1": "[W] Download the spreadsheet template or use you own if it follows the same format.",
+    "link": "[W] Spreadsheet template (CSV, 12KB)",
+    "linkUrl": "/resources/csv/group-claims-template-cy.csv"
+  },
+  "section2": {
+    "heading": "[W] Save in CSV format",
+    "p1": "[W] Follow these steps:",
+    "steps": [
+      "[W] select 'File'",
+      "[W] select 'Save as' or 'Export to'",
+      "[W] save as the format 'Comma Separated Values (.csv)'"
+    ]
+  },
+  "section3": {
+    "heading": "[W] Upload spreadsheet",
+    "p1": "[W] Select 'Choose file', browse to your saved spreadsheet and select it.",
+    "buttonLabel": "[W] Choose file"
+  },
+  "fileUpload": {
+    "chooseFiles": "[W] Choose file",
+    "dropInstruction": "[W] or drop file",
+    "noFileChosen": "[W] No file chosen"
+  },
+  "errors": {
+    "additionalClaimantSpreadsheetName": {
+      "required": "[W] Please upload a spreadsheet",
+      "invalidFileSize": "[W] The file size must be less than 5MB",
+      "invalidFileFormat": "[W] The selected file must be an Excel spreadsheet (.xlsx or .xls)",
+      "invalidRowData": "[W] The following rows contain invalid data: {{additionalErrorInfo}}.",
+      "backEndError": "[W] Backend error occurred while processing the file. Please try again later.",
+      "fileEmpty": "[W] The uploaded file is empty. Upload a file with data.",
+      "noDataRows": "[W] The uploaded file does not contain any data rows. Please upload a file with data.",
+      "dataRowsExceedsMax": "The uploaded file has exceeded the maximum of {{additionalErrorInfo}} rows.",
+      "mappingError": "[W] The additional claimant mapping from the uploaded file has failed. The file needs to follow the template, try again."
+    }
+  },
+  "successTitle": "[W] Success",
+  "successHeading": "[W] Document upload successful",
+  "successBody": "[W] has been uploaded.",
+  "uploadedDocument": "[W] Uploaded document",
+  "uploadedTag": "[W] Uploaded",
+  "removeLink": "[W] Remove"
+}

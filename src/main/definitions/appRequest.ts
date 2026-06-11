@@ -40,6 +40,8 @@ export interface AppSession extends Session {
   csrfInitialized?: boolean;
   deletedCaseIds?: string[];
   additionalClaimantNewFlow?: boolean;
+  additionalClaimantInvalidRows?: string;
+  additionalClaimantUploadedFileName?: string;
 }
 
 export interface UserDetails {

@@ -77,6 +77,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const addClaimantMethod = req.session.userCase.addClaimantMethod;
       const addAdditionalClaimant = req.session.userCase.addAdditionalClaimant;
       const leadClaimant = req.session.userCase.leadClaimant;
+      const additionalClaimantSpreadsheet = req.session.userCase.additionalClaimantSpreadsheet;
       req.session.userCase = fromApiFormat(response.data);
       if (caseType !== undefined) {
         req.session.userCase.caseType = caseType;
@@ -112,6 +113,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.addClaimantMethod = addClaimantMethod;
       req.session.userCase.addAdditionalClaimant = addAdditionalClaimant;
       req.session.userCase.leadClaimant = leadClaimant;
+      req.session.userCase.additionalClaimantSpreadsheet = additionalClaimantSpreadsheet;
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {

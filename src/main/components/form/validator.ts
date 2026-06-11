@@ -1,4 +1,8 @@
-import { ALLOWED_FILE_FORMATS, ValidationErrors } from '../../definitions/constants';
+import {
+  ALLOWED_FILE_FORMATS,
+  ALLOWED_FILE_FORMATS_ADDITIONAL_CLAIMANTS,
+  ValidationErrors,
+} from '../../definitions/constants';
 import { Logger } from '../../logger';
 import StringUtils from '../../utils/StringUtils';
 
@@ -186,6 +190,22 @@ export const hasInvalidFileFormat = (value: Express.Multer.File, logger: Logger)
   }
 
   for (const format of ALLOWED_FILE_FORMATS) {
+    if (value.originalname.endsWith('.' + format)) {
+      return;
+    }
+  }
+  if (logger) {
+    logger.info('Invalid file name:' + value.originalname);
+  }
+  return 'invalidFileFormat';
+};
+
+export const hasInvalidFileFormatAdditionalClaimants = (value: Express.Multer.File, logger: Logger): string => {
+  if (!value || !value.originalname) {
+    return;
+  }
+
+  for (const format of ALLOWED_FILE_FORMATS_ADDITIONAL_CLAIMANTS) {
     if (value.originalname.endsWith('.' + format)) {
       return;
     }

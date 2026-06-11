@@ -84,6 +84,7 @@ export interface CaseData {
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
   additionalClaimants?: AdditionalClaimantApiModel[];
   addClaimantMethod?: AddAdditionalClaimant;
+  additionalClaimantSpreadsheet?: Document;
 }
 
 export type HearingBundleType = {

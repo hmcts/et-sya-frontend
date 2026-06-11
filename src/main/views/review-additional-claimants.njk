@@ -17,44 +17,64 @@
       {% set addAnotherClaimantLink = PageUrls.ADD_ANOTHER_CLAIMANT ~ (languageParam if languageParam else '?lng=en') %}
       <p class="govuk-body">{{ p2 }} <a class="govuk-link" href="{{ addAnotherClaimantLink }}">{{ spreadsheetOptionLink }}</a></p>
 
-      {% for claimant in additionalClaimants %}
+      {% if additionalClaimantsSpreadsheet %}
         <div class="govuk-summary-card">
           <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">{{ additionalClaimant }} {{ loop.index }}</h2>
-            <ul class="govuk-summary-card__actions">
-              <li class="govuk-summary-card__action">
-                <a class="govuk-link" href="{{ claimant.removeUrl }}">{{ removeClaimant }}</a>
-              </li>
-            </ul>
+            <h2 class="govuk-summary-card__title">{{ additionalClaimantDocument }}</h2>
           </div>
           <div class="govuk-summary-card__content">
             {{ govukSummaryList({
               rows: [
                 {
-                  key: { text: nameLabel },
-                  value: { text: claimant.name or notProvided },
-                  actions: { items: [{ href: claimant.changeNameUrl, text: change, visuallyHiddenText: nameLabel }] }
-                },
-                {
-                  key: { text: emailLabel },
-                  value: { text: claimant.email or notProvided },
-                  actions: { items: [{ href: claimant.changeEmailUrl, text: change, visuallyHiddenText: emailLabel }] }
-                },
-                {
-                  key: { text: dobLabel },
-                  value: { text: claimant.dob or notProvided },
-                  actions: { items: [{ href: claimant.changeDobUrl, text: change, visuallyHiddenText: dobLabel }] }
-                },
-                {
-                  key: { text: addressLabel },
-                  value: { html: claimant.address or notProvided },
-                  actions: { items: [{ href: claimant.changeAddressUrl, text: change, visuallyHiddenText: addressLabel }] }
+                  key: { text: documentLabel },
+                  value: { html: '<a class="govuk-link" href="' + userCase.additionalClaimantSpreadsheet.document_binary_url + '">' + userCase.additionalClaimantSpreadsheet.document_filename + '</a>' },
+                  actions: { items: [{ href: changeSpreadsheetUrl, text: change, visuallyHiddenText: documentLabel }] }
                 }
               ]
             }) }}
           </div>
         </div>
-      {% endfor %}
+
+      {% else %}
+        {% for claimant in additionalClaimants %}
+          <div class="govuk-summary-card">
+            <div class="govuk-summary-card__title-wrapper">
+              <h2 class="govuk-summary-card__title">{{ additionalClaimant}} {{ loop.index }}</h2>
+              <ul class="govuk-summary-card__actions">
+                <li class="govuk-summary-card__action">
+                  <a class="govuk-link" href="{{ claimant.removeUrl }}">{{ removeClaimant }}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="govuk-summary-card__content">
+              {{ govukSummaryList({
+                rows: [
+                  {
+                    key: { text: nameLabel },
+                    value: { text: claimant.name or notProvided },
+                    actions: { items: [{ href: claimant.changeNameUrl, text: change, visuallyHiddenText: nameLabel }] }
+                  },
+                  {
+                    key: { text: emailLabel },
+                    value: { text: claimant.email or notProvided },
+                    actions: { items: [{ href: claimant.changeEmailUrl, text: change, visuallyHiddenText: emailLabel }] }
+                  },
+                  {
+                    key: { text: dobLabel },
+                    value: { text: claimant.dob or notProvided },
+                    actions: { items: [{ href: claimant.changeDobUrl, text: change, visuallyHiddenText: dobLabel }] }
+                  },
+                  {
+                    key: { text: addressLabel },
+                    value: { html: claimant.address or notProvided },
+                    actions: { items: [{ href: claimant.changeAddressUrl, text: change, visuallyHiddenText: addressLabel }] }
+                  }
+                ]
+              }) }}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
 
       {% block form %}
         {% include "form/form.njk" %}

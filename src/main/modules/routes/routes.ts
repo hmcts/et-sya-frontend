@@ -148,6 +148,7 @@ import CitizenHubController from '../../controllers/citizen-hub/CitizenHubContro
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
 import AddAnotherClaimantController from '../../controllers/multiples/AddAnotherClaimantController';
+import AdditionalClaimantFileUploadController from '../../controllers/multiples/AdditionalClaimantFileUploadController';
 import AdditionalClaimantPersonalDetailsController from '../../controllers/multiples/AdditionalClaimantPersonalDetailsController';
 import AdditionalClaimantPostCodeEnterController from '../../controllers/multiples/AdditionalClaimantPostCodeEnterController';
 import AdditionalClaimantPostCodeSelectController from '../../controllers/multiples/AdditionalClaimantPostCodeSelectController';
@@ -497,5 +498,14 @@ export class Routes {
     app.post(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS, new ReviewOtherClaimantsController().post);
     app.get(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().get);
     app.post(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD, new AdditionalClaimantFileUploadController().get);
+    app.post(
+      PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD_POSTVALIDATE,
+      handleUploads.single('additionalClaimantSpreadsheetName'),
+      csrfProtection,
+      new AdditionalClaimantFileUploadController().postValidate
+    );
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD, new AdditionalClaimantFileUploadController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD_REMOVE, new AdditionalClaimantFileUploadController().remove);
   }
 }

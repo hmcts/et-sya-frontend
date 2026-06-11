@@ -1,0 +1,44 @@
+{
+  "title": "How to add claimants using a spreadsheet",
+  "h1": "How to add claimants using a spreadsheet",
+  "section1": {
+    "heading": "Download and complete the spreadsheet template",
+    "p1": "Download the spreadsheet template or use you own if it follows the same format.",
+    "link": "Spreadsheet template (CSV, 12KB)",
+    "linkUrl": "/resources/csv/group-claims-template.csv"
+  },
+  "section2": {
+    "heading": "Save in CSV format",
+    "p1": "Follow these steps:",
+    "steps": ["select 'File'", "select 'Save as' or 'Export to'", "save as the format 'Comma Separated Values (.csv)'"]
+  },
+  "section3": {
+    "heading": "Upload spreadsheet",
+    "p1": "Select 'Choose file', browse to your saved spreadsheet and select it.",
+    "buttonLabel": "Choose file"
+  },
+  "fileUpload": {
+    "chooseFiles": "Choose file",
+    "dropInstruction": "or drop file",
+    "noFileChosen": "No file chosen"
+  },
+  "errors": {
+    "additionalClaimantSpreadsheetName": {
+      "required": "Please upload a spreadsheet",
+      "invalidFileSize": "The file size must be less than 5MB",
+      "invalidFileFormat": "The selected file must be an Excel spreadsheet (.xlsx or .xls)",
+      "invalidRowData": "The following rows contain invalid data: {{additionalErrorInfo}}.",
+      "backEndError": "Backend error occurred while processing the file. Please try again later.",
+      "fileEmpty": "The uploaded file is empty. Upload a file with data.",
+      "noDataRows": "The uploaded file does not contain any data rows. Please upload a file with data.",
+      "dataRowsExceedsMax": "The uploaded file has exceeded the maximum of {{additionalErrorInfo}} rows.",
+      "mappingError": "The additional claimant mapping from the uploaded file has failed. The file needs to follow the template, try again."
+    }
+  },
+  "successTitle": "Success",
+  "successHeading": "Document upload successful",
+  "successBody": "has been uploaded.",
+  "uploadedDocument": "Uploaded document",
+  "uploadedTag": "Uploaded",
+  "removeLink": "Remove"
+}

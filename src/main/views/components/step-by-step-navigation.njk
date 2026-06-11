@@ -1,0 +1,64 @@
+{% macro stepByStepNavigation(params) %}
+  <div data-module="appstepnav"
+       id="{{ params.id or 'step-by-step-navigation' }}"
+       class="app-step-nav app-step-nav--large js-hidden{{ ' ' + params.classes if params.classes }}"
+       data-show-text="{{ params.showText or 'Show' }}"
+       data-hide-text="{{ params.hideText or 'Hide' }}"
+       data-show-all-text="{{ params.showAllText or 'Show all steps' }}"
+       data-hide-all-text="{{ params.hideAllText or 'Hide all steps' }}">
+    <ol class="app-step-nav__steps">
+      {% for step in params.steps %}
+        {% set position = loop.index %}
+        {#- collapsible defaults to true; set collapsible: false to pin the step open with no toggle -#}
+        {% set collapsible = step.collapsible != false %}
+        <li class="app-step-nav__step{{ ' js-step' if collapsible }}{{ ' app-step-nav__step--active' if step.active }}"
+            id="{{ step.id }}"
+          {{ 'aria-current="step"' | safe if step.active }}>
+          <div class="app-step-nav__header{{ ' js-toggle-panel' if collapsible }}{{ ' app-step-nav__header--open' if not collapsible }}" data-position="{{ position }}">
+            <h2 class="app-step-nav__title">
+            <span class="app-step-nav__circle app-step-nav__circle--{{ 'logic' if step.type == 'logic' else 'number' }}">
+              <span class="app-step-nav__circle-inner">
+                <span class="app-step-nav__circle-background">
+                  {% if step.type == 'logic' %}
+                    {{ step.logicText or 'and' }}
+                  {% else %}
+                    <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span> {{ position }}<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                  {% endif %}
+                </span>
+              </span>
+            </span>
+              <span class="{{ 'js-step-title' if collapsible }}">{{ step.title }}</span>
+            </h2>
+          </div>
+          <div class="app-step-nav__panel{{ ' js-panel' if collapsible }}" id="step-panel-{{ step.id }}-{{ position }}">
+            {% if step.body %}
+              {# Changed from <p> to <div> to safely handle complex layout/form tags passed as body content #}
+              <div class="app-step-nav__body-container">
+                {{ step.body }}
+              </div>
+            {% endif %}
+            {% if step.links %}
+              <ol class="app-step-nav__list" data-length="{{ step.links | length }}">
+                {% for link in step.links %}
+                  <li class="app-step-nav__list-item{{ ' js-list-item' if collapsible }}{{ ' app-step-nav__list-item--active' if link.active }}">
+                    <a data-position="{{ link.position or (position ~ '.' ~ loop.index) }}"
+                       class="app-step-nav__link{{ ' js-link' if collapsible }}"
+                       href="{{ link.href }}"
+                      {{ 'download' | safe if link.download }}
+                      {{ 'rel="noreferrer noopener" target="_blank"' | safe if link.external }}>
+                      {% if link.active %}
+                        <span class="app-step-nav__link-active-context govuk-visually-hidden">You are currently viewing: </span>
+                      {% endif %}
+                      {{ link.text }}
+                      {% if link.context %}<span class="app-step-nav__context">{{ link.context }}</span>{% endif %}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ol>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+{% endmacro %}

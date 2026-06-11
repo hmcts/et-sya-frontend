@@ -1,3 +1,4 @@
+import { Document } from '../case';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
@@ -35,6 +36,7 @@ interface CaseDataApiBody {
   leadClaimant?: string;
   additionalClaimants?: AdditionalClaimantRequestBody[];
   addClaimantMethod?: string;
+  additionalClaimantSpreadsheet?: Document;
 }
 
 export interface CreateCaseBody {

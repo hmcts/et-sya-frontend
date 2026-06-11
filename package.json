@@ -44,7 +44,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.0.0",
+    "@faker-js/faker": "^5.5.3 || ^8.0.0 || ^9.0.0",
+    "@govuk-prototype-kit/step-by-step": "3.0.0",
     "@hmcts/cookie-manager": "^1.0.0",
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.8.0",
@@ -91,7 +92,8 @@
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
     "typescript": "5.1.6",
-    "uuid": "^11.1.1"
+    "uuid": "^11.1.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.3",

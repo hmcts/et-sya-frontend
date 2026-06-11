@@ -427,6 +427,7 @@ describe('Format Case Data to Frontend Model', () => {
       claimantRepresentativeOrganisationPolicy: undefined,
       addClaimantMethod: undefined,
       additionalClaimants: undefined,
+      additionalClaimantSpreadsheet: undefined,
     });
   });
 
