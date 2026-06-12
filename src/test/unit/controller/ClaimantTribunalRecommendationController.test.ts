@@ -1,6 +1,7 @@
 import ClaimantTribunalRecommendationController from '../../../main/controllers/ClaimantTribunalRecommendationController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { TypesOfClaim } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -36,5 +37,22 @@ describe('ClaimantTribunalRecommendationController', () => {
     const res = mockResponse();
     await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_LINKED_CASES);
+  });
+
+  it('should redirect to WHISTLEBLOWING_CLAIMS when whistleblowing is in typeOfClaim', async () => {
+    const body = { tribunalRecommendation: 'Implement equality training' };
+    const controller = new ClaimantTribunalRecommendationController();
+    const req = mockRequest({ body, userCase: { typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING] } });
+    const res = mockResponse();
+    await controller.post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.WHISTLEBLOWING_CLAIMS);
+  });
+
+  it('should pre-populate existing recommendation text on GET', () => {
+    const controller = new ClaimantTribunalRecommendationController();
+    const response = mockResponse();
+    const request = mockRequest({ t, userCase: { tribunalRecommendationRequest: 'Existing recommendation' } });
+    controller.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_TRIBUNAL_RECOMMENDATION, expect.anything());
   });
 });

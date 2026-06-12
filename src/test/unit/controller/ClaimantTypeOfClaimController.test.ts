@@ -138,5 +138,38 @@ describe('ClaimantTypeOfClaimController', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION);
     });
+
+    it('should redirect to CLAIMANT_DESCRIBE_WHAT_HAPPENED when only unfair dismissal is selected', async () => {
+      const body = { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL] };
+      const controller = new ClaimantTypeOfClaimController();
+      const req = mockRequestEmpty({ body });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
+    });
+
+    it('should redirect to CLAIMANT_CLAIM_TYPE_PAY when only pay related is selected', async () => {
+      const body = { typeOfClaim: [TypesOfClaim.PAY_RELATED_CLAIM] };
+      const controller = new ClaimantTypeOfClaimController();
+      const req = mockRequestEmpty({ body });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_PAY);
+    });
+
+    it('should redirect to CLAIMANT_CLAIM_TYPE_DISCRIMINATION when discrimination + pay both selected', async () => {
+      const body = { typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.PAY_RELATED_CLAIM] };
+      const controller = new ClaimantTypeOfClaimController();
+      const req = mockRequestEmpty({ body });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_CLAIM_TYPE_DISCRIMINATION);
+    });
   });
 });

@@ -5,7 +5,7 @@ import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { ClaimTypeDiscrimination } from '../definitions/definition';
+import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
@@ -96,7 +96,11 @@ export default class ClaimantClaimTypeDiscriminationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
+    const typeOfClaim = req.session.userCase?.typeOfClaim;
+    const redirectUrl = typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())
+      ? PageUrls.CLAIMANT_CLAIM_TYPE_PAY
+      : PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED;
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

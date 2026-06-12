@@ -25,7 +25,7 @@ export default class ClaimantRespondentSectionCheckController {
         label: (l: AnyRecord): string => l.legend,
         labelHidden: false,
         labelSize: 'xl',
-        isPageHeading: false,
+        isPageHeading: true,
         hint: (l: AnyRecord): string => l.hint,
         id: 'employment-respondent-check',
         classes: 'govuk-radios',
