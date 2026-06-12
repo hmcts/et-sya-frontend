@@ -19,13 +19,22 @@ export const handleTransferredCaseRedirect = async (
   caseId: string
 ): Promise<boolean> => {
   try {
-    const transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
-    if (transferInfo?.transferred) {
+    logger.info('handleTransferredCaseRedirect', req.session.user?.accessToken);
+    const caseApi = await getCaseApi(req.session.user?.accessToken);
+    logger.info('getCaseApi:', getCaseApi(req.session.user?.accessToken));
+
+    const transferInfo = await caseApi.getCaseTransferInfo(caseId);
+    logger.info('getCaseTransferInfo:', transferInfo);
+
+    const transferInfoData = transferInfo.data;
+    logger.info('transferInfoData:', transferInfoData);
+
+    if (transferInfoData?.transferred) {
       logger.error(
         `Case ID ${caseId} has been transferred.` +
-          ` Redirecting to transferred case page. Transfer info: ${JSON.stringify(transferInfo)}`
+          ` Redirecting to transferred case page. Transfer info: ${JSON.stringify(transferInfoData)}`
       );
-      req.session.caseTransferInfo = transferInfo;
+      req.session.caseTransferInfo = transferInfoData;
       res.redirect(buildTransferredCaseRedirectUrl(req, caseId));
       return true;
     }
