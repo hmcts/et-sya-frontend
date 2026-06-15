@@ -21,11 +21,8 @@ import {
   getAdditionalClaimantAddressTypes,
   getSelectTitle,
 } from '../helpers/AdditionalClaimantPostCodeHelper';
-import { convertJsonArrayToTitleCase, handleUpdateDraftCase, setUserCase } from '../helpers/CaseHelpers';
-import { handleErrors, returnSessionErrors } from '../helpers/ErrorHelpers';
+import { convertJsonArrayToTitleCase, handlePostLogic, setUserCase } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
-import { setUrlLanguage } from '../helpers/LanguageHelper';
-import { returnNextPage } from '../helpers/RouterHelpers';
 
 const logger = getLogger('AdditionalClaimantPostCodeSelectController');
 
@@ -116,16 +113,6 @@ export default class AdditionalClaimantPostCodeSelectController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    const errors = returnSessionErrors(req, this.form);
-    if (errors.length > 0) {
-      handleErrors(req, res, errors);
-      return;
-    }
-    req.session.errors = [];
-
-    if (!req.session.userCase.additionalClaimants) {
-      req.session.userCase.additionalClaimants = [];
-    }
 
     let editIndex = req.session.userCase.currentAdditionalClaimantIndex;
     if (editIndex === undefined || editIndex >= req.session.userCase.additionalClaimants.length) {
@@ -152,12 +139,7 @@ export default class AdditionalClaimantPostCodeSelectController {
     req.session.userCase.additionalClaimants[editIndex] = claimant;
 
     req.session.userCase.groupClaimsCheck = YesOrNo.NO;
-    await handleUpdateDraftCase(req, logger);
-    if (req.body?.saveForLater) {
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIM_SAVED));
-    }
-    this.clearAdditionalClaimantTransientFields(req);
-    return returnNextPage(req, res, setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
+    return handlePostLogic(req, res, this.form, logger, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   };
 
   @AdditionalClaimantCheck()

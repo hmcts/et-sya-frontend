@@ -188,7 +188,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(request.session.returnUrl).toBeUndefined();
   });
 
-  it('should not add a claimant when there are already five and should redirect to review page', async () => {
+  it('should add a new claimant via post when five already exist and continue to postcode entry', async () => {
     const response = mockResponse();
     const request = mockRequest({
       body: {
@@ -209,9 +209,12 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
 
     await new AdditionalClaimantPersonalDetailsController().post(request, response);
 
-    expect(request.session.userCase.additionalClaimants).toHaveLength(5);
-    expect(request.session.userCase.currentAdditionalClaimantIndex).toBeUndefined();
-    expect(CaseHelper.handleUpdateDraftCase).not.toHaveBeenCalled();
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
+    expect(request.session.userCase.additionalClaimants).toHaveLength(6);
+    expect(request.session.userCase.additionalClaimants[5].firstName).toBe('Sixth');
+    expect(request.session.userCase.currentAdditionalClaimantIndex).toBe(5);
+    expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalledWith(request, expect.anything());
+    expect(response.redirect).toHaveBeenCalledWith(
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=new-claimant`
+    );
   });
 });

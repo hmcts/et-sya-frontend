@@ -29,10 +29,11 @@ export const checkAdditionalClaimantAndRedirect = (req: AppRequest, res: Respons
   ) {
     // Creation flow — only allow through if the session flag is active and not at max capacity.
     // A stale ?additionalClaimant=new-claimant in browser history is blocked once the flag is cleared.
-    if (req.session?.additionalClaimantNewFlow === true && claimantsLength < 5) {
+    if (req.session?.additionalClaimantNewFlow === true && claimantsLength <= 5) {
       return false;
+    } else if (req.session?.additionalClaimantNewFlow === false) {
+      redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
     }
-    redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
   } else {
     // Numeric index or other value — edit flow, allow through
     return false;
