@@ -105,13 +105,6 @@ export default class AdditionalClaimantFileUploadController {
       req.session.userCase.additionalClaimantSpreadsheet = await spreadsheetService.uploadDocument(req);
       req.session.additionalClaimantUploadedFileName = req.file?.originalname;
 
-      const mappingError = spreadsheetService.mapClaimants(req);
-      if (mappingError) {
-        req.session.errors.push(mappingError);
-        await saveAndRedirect();
-        return;
-      }
-
       req.session.save();
 
       res.json({

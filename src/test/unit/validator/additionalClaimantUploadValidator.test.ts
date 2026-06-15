@@ -1,4 +1,4 @@
-import * as xlsx from 'xlsx';
+import ExcelJS from 'exceljs';
 
 import {
   buildHeaderMap,
@@ -7,11 +7,11 @@ import {
   validateSpreadsheetData,
 } from '../../../main/validators/multiples/additionalClaimantUploadValidator';
 
-const buildBuffer = (rows: unknown[][]): Buffer => {
-  const ws = xlsx.utils.aoa_to_sheet(rows);
-  const wb = xlsx.utils.book_new();
-  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-  return xlsx.write(wb, { type: 'buffer', bookType: 'xlsx' });
+const buildBuffer = async (rows: unknown[][]): Promise<Buffer> => {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Sheet1');
+  rows.forEach(row => worksheet.addRow(row));
+  return workbook.xlsx.writeBuffer() as Promise<Buffer>;
 };
 
 const HEADER_ROW = [
@@ -618,73 +618,73 @@ describe('rowIsInvalid()', () => {
 });
 
 describe('validateSpreadsheetData()', () => {
-  it('returns fileEmpty when spreadsheet has no rows', () => {
-    const buffer = buildBuffer([]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'fileEmpty' });
+  it('returns fileEmpty when spreadsheet has no rows', async () => {
+    const buffer = await buildBuffer([]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'fileEmpty' });
   });
 
-  it('returns fileEmpty when all rows are blank', () => {
-    const buffer = buildBuffer([
+  it('returns fileEmpty when all rows are blank', async () => {
+    const buffer = await buildBuffer([
       ['', '', ''],
       ['', '', ''],
     ]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'fileEmpty' });
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'fileEmpty' });
   });
 
-  it('returns noDataRows when only header row is present', () => {
-    const buffer = buildBuffer([HEADER_ROW]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'noDataRows' });
+  it('returns noDataRows when only header row is present', async () => {
+    const buffer = await buildBuffer([HEADER_ROW]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'noDataRows' });
   });
 
-  it('returns dataRowsExceedsMax when rows exceed maxDataRowsForUpload', () => {
+  it('returns dataRowsExceedsMax when rows exceed maxDataRowsForUpload', async () => {
     const rows = [HEADER_ROW, ...Array(51).fill(VALID_ROW)];
-    const buffer = buildBuffer(rows);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'dataRowsExceedsMax' });
+    const buffer = await buildBuffer(rows);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'dataRowsExceedsMax' });
   });
 
-  it('respects a custom maxDataRowsForUpload', () => {
+  it('respects a custom maxDataRowsForUpload', async () => {
     const rows = [HEADER_ROW, ...Array(6).fill(VALID_ROW)];
-    const buffer = buildBuffer(rows);
-    expect(validateSpreadsheetData(buffer, 5)).toEqual({ status: 'dataRowsExceedsMax' });
+    const buffer = await buildBuffer(rows);
+    expect(await validateSpreadsheetData(buffer, 5)).toEqual({ status: 'dataRowsExceedsMax' });
   });
 
-  it('does not exceed max when rows equal maxDataRowsForUpload', () => {
+  it('does not exceed max when rows equal maxDataRowsForUpload', async () => {
     const rows = [HEADER_ROW, ...Array(50).fill(VALID_ROW)];
-    const buffer = buildBuffer(rows);
-    const result = validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS);
+    const buffer = await buildBuffer(rows);
+    const result = await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS);
     expect(result.status).toBe('ok');
   });
 
-  it('returns ok with no invalid rows for a valid spreadsheet', () => {
-    const buffer = buildBuffer([HEADER_ROW, VALID_ROW]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [] });
+  it('returns ok with no invalid rows for a valid spreadsheet', async () => {
+    const buffer = await buildBuffer([HEADER_ROW, VALID_ROW]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [] });
   });
 
-  it('returns ok with no invalid rows for mandatory-only row', () => {
-    const buffer = buildBuffer([HEADER_ROW, MANDATORY_ONLY_ROW]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [] });
+  it('returns ok with no invalid rows for mandatory-only row', async () => {
+    const buffer = await buildBuffer([HEADER_ROW, MANDATORY_ONLY_ROW]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [] });
   });
 
-  it('returns ok with invalid row numbers for failing rows', () => {
+  it('returns ok with invalid row numbers for failing rows', async () => {
     const invalidRow = [...VALID_ROW];
     invalidRow[1] = '';
-    const buffer = buildBuffer([HEADER_ROW, VALID_ROW, invalidRow]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3] });
+    const buffer = await buildBuffer([HEADER_ROW, VALID_ROW, invalidRow]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3] });
   });
 
-  it('returns multiple invalid row numbers when multiple rows fail', () => {
+  it('returns multiple invalid row numbers when multiple rows fail', async () => {
     const invalidRow1 = [...VALID_ROW];
     invalidRow1[1] = '';
     const invalidRow2 = [...VALID_ROW];
     invalidRow2[2] = '';
-    const buffer = buildBuffer([HEADER_ROW, VALID_ROW, invalidRow1, invalidRow2]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3, 4] });
+    const buffer = await buildBuffer([HEADER_ROW, VALID_ROW, invalidRow1, invalidRow2]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3, 4] });
   });
 
-  it('returns ok with XSS row flagged as invalid', () => {
+  it('returns ok with XSS row flagged as invalid', async () => {
     const xssRow = [...VALID_ROW];
     xssRow[1] = '<script>alert(1)</script>';
-    const buffer = buildBuffer([HEADER_ROW, xssRow]);
-    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [2] });
+    const buffer = await buildBuffer([HEADER_ROW, xssRow]);
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [2] });
   });
 });

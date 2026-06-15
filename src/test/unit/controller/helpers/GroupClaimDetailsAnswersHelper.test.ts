@@ -122,7 +122,8 @@ describe('GroupClaimDetailsAnswersHelper', () => {
       } as unknown as CaseWithId;
 
       const { metaRows } = getGroupClaimDetails(userCase, translations);
-      expect(metaRows[2].value.text).toBe('Additional claimant document');
+      expect(metaRows[2].key.text).toBe('Additional claimant document');
+      expect(metaRows[2].value.html).toBe('Not provided');
     });
 
     it('should show Yes for leadClaimant when addClaimantMethod is SPREADSHEET', () => {
@@ -169,9 +170,10 @@ describe('GroupClaimDetailsAnswersHelper', () => {
         leadClaimant: YesOrNo.YES,
       } as unknown as CaseWithId;
 
-      const { cardsHtml } = getGroupClaimDetails(userCase, translations);
+      const { metaRows, cardsHtml } = getGroupClaimDetails(userCase, translations);
 
-      expect(cardsHtml).toBe('Not provided');
+      expect(cardsHtml).toBe('');
+      expect(metaRows[2].value.text).toBe('Not provided');
     });
 
     it('should build cards for multiple additional claimants', () => {

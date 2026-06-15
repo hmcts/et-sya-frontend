@@ -1,4 +1,4 @@
-import * as xlsx from 'xlsx';
+import ExcelJS from 'exceljs';
 
 type FieldKey =
   | 'title'
@@ -252,21 +252,25 @@ type SpreadsheetValidationResult =
 /**
  * Validates spreadsheet buffer and returns row numbers that fail validation.
  */
-export const validateSpreadsheetData = (buffer: Buffer, maxDataRowsForUpload: number): SpreadsheetValidationResult => {
-  const workbook = xlsx.read(buffer, { type: 'buffer', cellDates: true });
-  const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+export const validateSpreadsheetData = async (
+  buffer: Buffer,
+  maxDataRowsForUpload: number
+): Promise<SpreadsheetValidationResult> => {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(buffer);
 
-  const allRows = xlsx.utils.sheet_to_json(worksheet, {
-    header: 1,
-    defval: '',
-    raw: true,
-  }) as unknown[][];
+  const worksheet = workbook.worksheets[0];
 
-  const rows = allRows.filter(row => {
-    return row.some(cell => {
-      return cellToString(cell) !== '';
-    });
+  if (!worksheet) {
+    return { status: 'fileEmpty' };
+  }
+
+  const allRows: unknown[][] = [];
+  worksheet.eachRow(row => {
+    allRows.push((row.values as unknown[]).slice(1)); // ExcelJS row.values is 1-indexed, slice off the empty first element
   });
+
+  const rows = allRows.filter(row => row.some(cell => cellToString(cell) !== ''));
 
   if (rows.length === 0) {
     return { status: 'fileEmpty' };
@@ -283,15 +287,10 @@ export const validateSpreadsheetData = (buffer: Buffer, maxDataRowsForUpload: nu
   const headerMap = buildHeaderMap(rows[0]);
 
   dataRows.forEach((row, idx) => {
-    const spreadsheetRow = idx + 2;
-
     if (rowIsInvalid(row, headerMap)) {
-      invalidNums.push(spreadsheetRow);
+      invalidNums.push(idx + 2);
     }
   });
 
-  return {
-    status: 'ok',
-    invalidRows: invalidNums,
-  };
+  return { status: 'ok', invalidRows: invalidNums };
 };

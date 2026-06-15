@@ -1,5 +1,3 @@
-import * as xlsx from 'xlsx';
-
 import { handleUploadDocument } from '../../../../../main/controllers/helpers/CaseHelpers';
 import { getAdditionalClaimantSpreadsheetError } from '../../../../../main/controllers/helpers/ErrorHelpers';
 import { AdditionalClaimantSpreadsheetService } from '../../../../../main/controllers/helpers/multiples/AdditionalClaimantFileUploadService';
@@ -9,13 +7,6 @@ import * as validator from '../../../../../main/validators/multiples/additionalC
 import { mockFile } from '../../../mocks/mockFile';
 import { mockRequest } from '../../../mocks/mockRequest';
 
-// Fix: Explicitly structure the xlsx mock so nested objects like `utils` are not undefined
-jest.mock('xlsx', () => ({
-  read: jest.fn(),
-  utils: {
-    sheet_to_json: jest.fn(),
-  },
-}));
 jest.mock('../../../../../main/controllers/helpers/CaseHelpers');
 jest.mock('../../../../../main/controllers/helpers/ErrorHelpers');
 jest.mock('../../../../../main/helper/ApiFormatter');
@@ -98,7 +89,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     });
 
     it('should return fileEmpty error', async () => {
-      jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'fileEmpty',
       } as never);
 
@@ -109,7 +100,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     });
 
     it('should return noDataRows error', async () => {
-      jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'noDataRows',
       } as never);
 
@@ -120,7 +111,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     });
 
     it('should return dataRowsExceedsMax error', async () => {
-      jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'dataRowsExceedsMax',
       } as never);
 
@@ -131,7 +122,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     });
 
     it('should return invalidRowData and set invalid rows', async () => {
-      jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
         invalidRows: [2, 5, 8],
       });
@@ -148,7 +139,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     it('should clear invalid rows and return null when spreadsheet is valid', async () => {
       req.session.additionalClaimantInvalidRows = '2, 3';
 
-      jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
         invalidRows: [],
       });
@@ -161,7 +152,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     it('should use LaunchDarkly value when present', async () => {
       jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValueOnce(100);
 
-      const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
         invalidRows: [],
       });
@@ -174,7 +165,7 @@ describe('AdditionalClaimantSpreadsheetService', () => {
     it('should default max rows to 50 when LaunchDarkly returns null', async () => {
       jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValueOnce(null);
 
-      const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockReturnValue({
+      const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
         invalidRows: [],
       });
@@ -182,87 +173,6 @@ describe('AdditionalClaimantSpreadsheetService', () => {
       await service.validateSpreadsheet(req);
 
       expect(validateSpy).toHaveBeenCalledWith(req.file.buffer, 50);
-    });
-  });
-
-  describe('mapClaimants', () => {
-    // Fix: Mock the validator helpers so they accurately parse your dummy array
-    beforeEach(() => {
-      jest.spyOn(validator, 'cellToString').mockImplementation((val: never) => (val ? String(val) : ''));
-      jest.spyOn(validator, 'buildHeaderMap').mockReturnValue({
-        firstName: 0,
-        lastName: 1,
-        dob: 2,
-        address1: 3,
-        town: 4,
-        country: 5,
-      } as never);
-    });
-
-    it('should map spreadsheet rows to additional claimants', () => {
-      (xlsx.read as jest.Mock).mockReturnValue({
-        SheetNames: ['Sheet1'],
-        Sheets: {
-          Sheet1: {},
-        },
-      });
-
-      (xlsx.utils.sheet_to_json as jest.Mock).mockReturnValue([
-        ['First Name', 'Last Name', 'Date Of Birth', 'Address Line 1', 'Town', 'Country'],
-        ['John', 'Smith', '01/02/1990', '1 High Street', 'London', 'England'],
-      ]);
-
-      const result = service.mapClaimants(req);
-
-      expect(result).toBeNull();
-
-      expect(req.session.userCase.additionalClaimants).toEqual([
-        {
-          title: undefined,
-          firstName: 'John',
-          lastName: 'Smith',
-          email: undefined,
-          dob: {
-            day: '01',
-            month: '02',
-            year: '1990',
-          },
-          address: {
-            AddressLine1: '1 High Street',
-            AddressLine2: undefined,
-            PostTown: 'London',
-            Country: 'England',
-            PostCode: undefined,
-          },
-        },
-      ]);
-    });
-
-    it('should return mappingError when no claimants exist', () => {
-      (xlsx.read as jest.Mock).mockReturnValue({
-        SheetNames: ['Sheet1'],
-        Sheets: {
-          Sheet1: {},
-        },
-      });
-
-      (xlsx.utils.sheet_to_json as jest.Mock).mockReturnValue([['First Name', 'Last Name']]);
-
-      expect(service.mapClaimants(req)).toEqual({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'mappingError',
-      });
-    });
-
-    it('should return mappingError when spreadsheet parsing throws', () => {
-      (xlsx.read as jest.Mock).mockImplementation(() => {
-        throw new Error('Spreadsheet error');
-      });
-
-      expect(service.mapClaimants(req)).toEqual({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'mappingError',
-      });
     });
   });
 

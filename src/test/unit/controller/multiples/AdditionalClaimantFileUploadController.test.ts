@@ -27,14 +27,6 @@ const mockDocument = {
   document_binary_url: uploadResponse._links.binary.href,
 };
 
-const mockClaimants = [
-  {
-    firstName: 'Jane',
-    lastName: 'Smith',
-    address: { AddressLine1: '1 High Street', PostTown: 'London', Country: 'England' },
-  },
-];
-
 describe('AdditionalClaimantFileUploadController', () => {
   const t = {
     'additional-claimant-file-upload': {},
@@ -254,49 +246,6 @@ describe('AdditionalClaimantFileUploadController', () => {
       expect(req.session.errors).toEqual([
         { propertyName: 'additionalClaimantSpreadsheetName', errorType: 'backEndError' },
       ]);
-    });
-
-    it('should push mappingError when mapClaimants fails', async () => {
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validatePreconditions').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateFileFormat').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'uploadDocument').mockResolvedValueOnce(mockDocument);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'mapClaimants').mockReturnValueOnce({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'mappingError',
-      });
-
-      const req = mockRequest({ body: {}, file: mockFile });
-      const res = mockResponse();
-
-      await controller.postValidate(req, res);
-
-      expect(req.session.errors).toEqual([
-        { propertyName: 'additionalClaimantSpreadsheetName', errorType: 'mappingError' },
-      ]);
-    });
-
-    it('should save document, map claimants and return success on happy path', async () => {
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validatePreconditions').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateFileFormat').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'uploadDocument').mockResolvedValueOnce(mockDocument);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'mapClaimants').mockImplementationOnce(req => {
-        req.session.userCase.additionalClaimants = mockClaimants;
-        return null;
-      });
-
-      const req = mockRequest({ body: {}, file: mockFile });
-      const res = mockResponse();
-
-      await controller.postValidate(req, res);
-
-      expect(req.session.userCase.additionalClaimantSpreadsheet).toEqual(mockDocument);
-      expect(req.session.userCase.additionalClaimants).toEqual(mockClaimants);
-      expect(res.json).toHaveBeenCalledWith({
-        redirect: PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD,
-        success: true,
-      });
     });
 
     it('should push backEndError and redirect when an unexpected error is thrown', async () => {

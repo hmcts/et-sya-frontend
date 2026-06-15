@@ -552,7 +552,7 @@ export const DOCUMENT_CONTENT_TYPES = {
   DOC: ['doc', 'application/vnd.ms-word'],
   XLS: ['xls', 'application/vnd.ms-excel'],
   PPT: ['ppt', 'application/vnd.ms-powerpoint'],
-  CSV: ['xlsx', 'text/xlsx'],
+  CSV: ['csv', 'text/csv'],
   GZ: ['gz', 'application/gzip'],
   GIF: ['gif', 'image/gif'],
   JPEG: ['jpeg', 'image/jpeg'],
