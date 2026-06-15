@@ -13,11 +13,8 @@ import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
-import { handleUpdateDraftCase, setUserCase } from '../helpers/CaseHelpers';
-import { returnSessionErrors } from '../helpers/ErrorHelpers';
+import { handlePostLogic, setUserCase } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
-import { setUrlLanguage } from '../helpers/LanguageHelper';
-import { returnNextPage } from '../helpers/RouterHelpers';
 
 const logger = getLogger('AdditionalClaimantPersonalDetailsController');
 
@@ -82,14 +79,6 @@ export default class AdditionalClaimantPersonalDetailsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    const errors = returnSessionErrors(req, this.form);
-
-    if (errors.length > 0) {
-      req.session.errors = errors;
-      return res.redirect(setUrlLanguage(req, PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS));
-    }
-
-    req.session.errors = [];
 
     if (!req.session.userCase.additionalClaimants) {
       req.session.userCase.additionalClaimants = [];
@@ -98,11 +87,6 @@ export default class AdditionalClaimantPersonalDetailsController {
     const editIndex = req.session.userCase.currentAdditionalClaimantIndex;
     const isEditingExistingClaimant =
       editIndex !== undefined && editIndex < req.session.userCase.additionalClaimants.length;
-
-    // Mirror the GET-handler guard: prevent adding a 6th claimant via direct POST
-    if (!isEditingExistingClaimant && req.session.userCase.additionalClaimants.length >= 5) {
-      return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
-    }
 
     // Use session data already populated by setUserCase — avoids re-parsing a consumed req.body
     const claimant: AdditionalClaimant = {
@@ -127,12 +111,7 @@ export default class AdditionalClaimantPersonalDetailsController {
         ? PageUrls.REVIEW_ADDITIONAL_CLAIMANTS
         : `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=new-claimant`;
     req.session.userCase.groupClaimsCheck = YesOrNo.NO;
-    await handleUpdateDraftCase(req, logger);
-    const { saveForLater } = req.body;
-    if (saveForLater) {
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIM_SAVED));
-    }
-    return returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
+    return handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @AdditionalClaimantCheck()
@@ -143,7 +122,7 @@ export default class AdditionalClaimantPersonalDetailsController {
       TranslationKeys.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS,
     ]);
 
-    // Set editing index and flow mode from query param
+    // Set editing index and flow mode from query param\
     const indexParam = req.query?.additionalClaimant as string;
     if (indexParam === 'new-claimant') {
       req.session.userCase.currentAdditionalClaimantIndex ??= req.session.userCase.additionalClaimants

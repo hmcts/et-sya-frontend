@@ -123,6 +123,7 @@ export default class ReviewAdditionalClaimantsController {
       TranslationKeys.REVIEW_ADDITIONAL_CLAIMANTS,
     ]);
     const languageParam = req.url?.includes('lng=cy') ? '?lng=cy' : '';
+    req.session.additionalClaimantNewFlow = false;
 
     const additionalClaimants: ClaimantSummaryCard[] = claimants.map((c, index) => ({
       name: formatName(c),

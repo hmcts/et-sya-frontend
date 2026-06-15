@@ -20,6 +20,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     const req = mockRequest({ body: {} });
     const res = mockResponse();
     req.url = PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT;
+    req.session.userCase.additionalClaimants = [];
 
     await new AdditionalClaimantPostCodeSelectController().post(req, res);
 
@@ -73,14 +74,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     expect(req.session.userCase.additionalClaimants[0].address.PostTown).toBe('Abertawe');
     expect(req.session.userCase.additionalClaimants[0].address.Country).toBe('Wales');
     expect(req.session.userCase.additionalClaimants[0].address.PostCode).toBe('SA7 9RN');
-    expect(req.session.userCase.currentAdditionalClaimantIndex).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddress1).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddress2).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddressTown).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddressCountry).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddressPostcode).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddressTypes).toBeUndefined();
-    expect(req.session.userCase.additionalClaimantAddresses).toBeUndefined();
+    expect(req.session.userCase.currentAdditionalClaimantIndex).toBe(0);
     expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalled();
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   });
@@ -120,7 +114,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it('should redirect to returnUrl (CYA) instead of review page when returnUrl is set', async () => {
+  it('should redirect to the review page regardless of a returnUrl being set', async () => {
     const req = mockRequest({
       body: {
         additionalClaimantAddress1: '1 Test Street',
@@ -137,7 +131,6 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     await new AdditionalClaimantPostCodeSelectController().post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
-    expect(req.session.returnUrl).toBeUndefined();
   });
 
   it('should set current edit index from query and render postcode select page with resolved addresses', async () => {
@@ -326,7 +319,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     expect(addressTypes[1].selected).toBe(true);
   });
 
-  it('should create a new claimant when additionalClaimants is undefined on post', async () => {
+  it('should create a new claimant when additionalClaimants is empty on post', async () => {
     const req = mockRequest({
       body: {
         additionalClaimantAddress1: '5 High St',
@@ -336,7 +329,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
       },
     });
     const res = mockResponse();
-    req.session.userCase.additionalClaimants = undefined;
+    req.session.userCase.additionalClaimants = [];
     req.session.userCase.additionalClaimantTitle = 'Ms';
     req.session.userCase.additionalClaimantFirstName = 'Alice';
     req.session.userCase.additionalClaimantLastName = 'Brown';

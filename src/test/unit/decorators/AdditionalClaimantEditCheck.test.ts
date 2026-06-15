@@ -38,30 +38,35 @@ describe('AdditionalClaimantEditCheck', () => {
       expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
     });
 
-    it('should redirect when query is new-claimant and at max capacity (5 claimants)', () => {
-      const req = mockRequest({});
-      const res = mockResponse();
-      req.query = { additionalClaimant: 'new-claimant' };
-      req.session.additionalClaimantNewFlow = true;
-      req.session.userCase.additionalClaimants = [
-        { firstName: 'A' },
-        { firstName: 'B' },
-        { firstName: 'C' },
-        { firstName: 'D' },
-        { firstName: 'E' },
-      ];
-      req.url = '/some-page';
+    it(
+      'should allow through when query is new-claimant, flag is active and at capacity (5 claimants) ' +
+        '- IMPOSSIBLE scenario - additionalClaimantNewFlow can only being set to true on ReviewAdditionalClaimants and ' +
+        'selecting Yes, but the fields are hidden when capacity of 5 is hit',
+      () => {
+        const req = mockRequest({});
+        const res = mockResponse();
+        req.query = { additionalClaimant: 'new-claimant' };
+        req.session.additionalClaimantNewFlow = true;
+        req.session.userCase.additionalClaimants = [
+          { firstName: 'A' },
+          { firstName: 'B' },
+          { firstName: 'C' },
+          { firstName: 'D' },
+          { firstName: 'E' },
+        ];
 
-      const result = checkAdditionalClaimantAndRedirect(req, res);
+        const result = checkAdditionalClaimantAndRedirect(req, res);
 
-      expect(result).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
-    });
+        expect(result).toBe(false);
+        expect(res.redirect).not.toHaveBeenCalled();
+      }
+    );
 
-    it('should redirect when query is undefined', () => {
+    it('should redirect when query is undefined and flag is inactive', () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.query = {};
+      req.session.additionalClaimantNewFlow = false;
       req.url = '/some-page';
 
       const result = checkAdditionalClaimantAndRedirect(req, res);
@@ -70,10 +75,11 @@ describe('AdditionalClaimantEditCheck', () => {
       expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
     });
 
-    it('should redirect when query is null', () => {
+    it('should redirect when query is null and flag is inactive', () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.query = { additionalClaimant: null as any };
+      req.session.additionalClaimantNewFlow = false;
       req.url = '/some-page';
 
       const result = checkAdditionalClaimantAndRedirect(req, res);
@@ -82,10 +88,11 @@ describe('AdditionalClaimantEditCheck', () => {
       expect(res.redirect).toHaveBeenCalledWith(expect.stringContaining(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
     });
 
-    it('should redirect when query is empty string', () => {
+    it('should redirect when query is empty string and flag is inactive', () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.query = { additionalClaimant: '' };
+      req.session.additionalClaimantNewFlow = false;
       req.url = '/some-page';
 
       const result = checkAdditionalClaimantAndRedirect(req, res);
@@ -153,6 +160,7 @@ describe('AdditionalClaimantEditCheck', () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.query = {};
+      req.session.additionalClaimantNewFlow = false;
       req.url = '/some-page';
 
       const result = controller.testMethod(req, res);
@@ -176,6 +184,7 @@ describe('AdditionalClaimantEditCheck', () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.query = {};
+      req.session.additionalClaimantNewFlow = false;
       req.url = '/some-page';
 
       const result = await controller.testAsyncMethod(req, res);
