@@ -39,11 +39,10 @@ const VALID_ROW = [
   'England',
   'SW1A 1AA',
 ];
+
 const MANDATORY_ONLY_ROW = ['', 'Jane', 'Doe', '', '', '2 Low Road', '', 'Manchester', 'England', ''];
 
 const DEFAULT_MAX_ROWS = 50;
-
-// ─── cellToString ────────────────────────────────────────────────────────────
 
 describe('cellToString()', () => {
   it('returns empty string for null', () => {
@@ -70,8 +69,6 @@ describe('cellToString()', () => {
     expect(cellToString(new Date(2000, 0, 1))).toBe('01/01/2000');
   });
 });
-
-// ─── buildHeaderMap ──────────────────────────────────────────────────────────
 
 describe('buildHeaderMap()', () => {
   it('maps English headers correctly', () => {
@@ -140,8 +137,6 @@ describe('buildHeaderMap()', () => {
   });
 });
 
-// ─── rowIsInvalid ─────────────────────────────────────────────────────────────
-
 describe('rowIsInvalid()', () => {
   const map = buildHeaderMap(HEADER_ROW);
 
@@ -153,82 +148,282 @@ describe('rowIsInvalid()', () => {
     expect(rowIsInvalid(MANDATORY_ONLY_ROW, map)).toBe(false);
   });
 
-  it('returns true when firstName is missing', () => {
-    const row = [...VALID_ROW];
-    row[1] = '';
-    expect(rowIsInvalid(row, map)).toBe(true);
+  describe('title validation', () => {
+    it('returns true when title exceeds 25 characters', () => {
+      const row = [...VALID_ROW];
+      row[0] = 'F'.repeat(26);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns false when title is exactly 25 characters', () => {
+      const row = [...VALID_ROW];
+      row[0] = 'A'.repeat(25);
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false when title is empty', () => {
+      const row = [...VALID_ROW];
+      row[0] = '';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when title contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[0] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when title contains HTML tags', () => {
+      const row = [...VALID_ROW];
+      row[0] = '<b>Mr</b>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when title contains special characters', () => {
+      const row = [...VALID_ROW];
+      row[0] = 'Mr; DROP TABLE';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
-  it('returns true when firstName exceeds 100 characters', () => {
-    const row = [...VALID_ROW];
-    row[1] = 'A'.repeat(101);
-    expect(rowIsInvalid(row, map)).toBe(true);
+  describe('firstName validation', () => {
+    it('returns true when firstName is missing', () => {
+      const row = [...VALID_ROW];
+      row[1] = '';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when firstName exceeds 100 characters', () => {
+      const row = [...VALID_ROW];
+      row[1] = 'A'.repeat(101);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns false for hyphenated first name', () => {
+      const row = [...VALID_ROW];
+      row[1] = 'Mary-Jane';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false for name with apostrophe', () => {
+      const row = [...VALID_ROW];
+      row[1] = "O'Brien";
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false for Welsh accented name', () => {
+      const row = [...VALID_ROW];
+      row[1] = 'Siân';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when firstName contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[1] = '<script>alert("xss")</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when firstName contains HTML injection', () => {
+      const row = [...VALID_ROW];
+      row[1] = '<img src=x onerror=alert(1)>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when firstName contains SQL injection', () => {
+      const row = [...VALID_ROW];
+      row[1] = "John'; DROP TABLE claimants;--";
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when firstName contains numbers', () => {
+      const row = [...VALID_ROW];
+      row[1] = 'J0hn';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
-  it('returns true when lastName is missing', () => {
-    const row = [...VALID_ROW];
-    row[2] = '';
-    expect(rowIsInvalid(row, map)).toBe(true);
+  describe('lastName validation', () => {
+    it('returns true when lastName is missing', () => {
+      const row = [...VALID_ROW];
+      row[2] = '';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when lastName exceeds 100 characters', () => {
+      const row = [...VALID_ROW];
+      row[2] = 'B'.repeat(101);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns false for hyphenated last name', () => {
+      const row = [...VALID_ROW];
+      row[2] = 'Smith-Jones';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when lastName contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[2] = '<script>alert("xss")</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when lastName contains special characters', () => {
+      const row = [...VALID_ROW];
+      row[2] = 'Smith@Jones';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
-  it('returns true when lastName exceeds 100 characters', () => {
-    const row = [...VALID_ROW];
-    row[2] = 'B'.repeat(101);
-    expect(rowIsInvalid(row, map)).toBe(true);
+  describe('address1 validation', () => {
+    it('returns true when address1 is missing', () => {
+      const row = [...VALID_ROW];
+      row[5] = '';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when address1 exceeds 150 characters', () => {
+      const row = [...VALID_ROW];
+      row[5] = 'C'.repeat(151);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns false for address with number and street', () => {
+      const row = [...VALID_ROW];
+      row[5] = '42 Baker Street';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false for address with forward slash', () => {
+      const row = [...VALID_ROW];
+      row[5] = '1/2 High Street';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false for address with Welsh characters', () => {
+      const row = [...VALID_ROW];
+      row[5] = '14 Stryd yr Ŵyl';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false for address with comma and period', () => {
+      const row = [...VALID_ROW];
+      row[5] = "St. Mary's Road, Apt 3";
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when address1 contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[5] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when address1 contains HTML injection', () => {
+      const row = [...VALID_ROW];
+      row[5] = '<a href="evil.com">click</a>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
-  it('returns true when address1 is missing', () => {
-    const row = [...VALID_ROW];
-    row[5] = '';
-    expect(rowIsInvalid(row, map)).toBe(true);
+  describe('address2 validation', () => {
+    it('returns true when address2 exceeds 50 characters', () => {
+      const row = [...VALID_ROW];
+      row[6] = 'G'.repeat(51);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns false when address2 is empty', () => {
+      const row = [...VALID_ROW];
+      row[6] = '';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when address2 contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[6] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
-  it('returns true when address1 exceeds 150 characters', () => {
-    const row = [...VALID_ROW];
-    row[5] = 'C'.repeat(151);
-    expect(rowIsInvalid(row, map)).toBe(true);
+  describe('town validation', () => {
+    it('returns true when town is missing', () => {
+      const row = [...VALID_ROW];
+      row[7] = '';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when town exceeds 50 characters', () => {
+      const row = [...VALID_ROW];
+      row[7] = 'D'.repeat(51);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns false for hyphenated town', () => {
+      const row = [...VALID_ROW];
+      row[7] = 'Stratford-upon-Avon';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns false for Welsh town name', () => {
+      const row = [...VALID_ROW];
+      row[7] = 'Llanfairpwllgwyngyll';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when town contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[7] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when town contains numbers', () => {
+      const row = [...VALID_ROW];
+      row[7] = 'London1';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when town contains special characters', () => {
+      const row = [...VALID_ROW];
+      row[7] = 'London@City';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
-  it('returns true when town is missing', () => {
-    const row = [...VALID_ROW];
-    row[7] = '';
-    expect(rowIsInvalid(row, map)).toBe(true);
-  });
+  describe('country validation', () => {
+    it('returns true when country is missing', () => {
+      const row = [...VALID_ROW];
+      row[8] = '';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
 
-  it('returns true when town exceeds 50 characters', () => {
-    const row = [...VALID_ROW];
-    row[7] = 'D'.repeat(51);
-    expect(rowIsInvalid(row, map)).toBe(true);
-  });
+    it('returns true when country exceeds 50 characters', () => {
+      const row = [...VALID_ROW];
+      row[8] = 'E'.repeat(51);
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
 
-  it('returns true when country is missing', () => {
-    const row = [...VALID_ROW];
-    row[8] = '';
-    expect(rowIsInvalid(row, map)).toBe(true);
-  });
+    it('returns false for valid country', () => {
+      const row = [...VALID_ROW];
+      row[8] = 'Wales';
+      expect(rowIsInvalid(row, map)).toBe(false);
+    });
 
-  it('returns true when country exceeds 50 characters', () => {
-    const row = [...VALID_ROW];
-    row[8] = 'E'.repeat(51);
-    expect(rowIsInvalid(row, map)).toBe(true);
-  });
+    it('returns true when country contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[8] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
 
-  it('returns true when title exceeds 25 characters', () => {
-    const row = [...VALID_ROW];
-    row[0] = 'F'.repeat(26);
-    expect(rowIsInvalid(row, map)).toBe(true);
-  });
+    it('returns true when country contains numbers', () => {
+      const row = [...VALID_ROW];
+      row[8] = 'England1';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
 
-  it('returns false when title is exactly 25 characters', () => {
-    const row = [...VALID_ROW];
-    row[0] = 'F'.repeat(25);
-    expect(rowIsInvalid(row, map)).toBe(false);
-  });
-
-  it('returns true when address2 exceeds 50 characters', () => {
-    const row = [...VALID_ROW];
-    row[6] = 'G'.repeat(51);
-    expect(rowIsInvalid(row, map)).toBe(true);
+    it('returns true when country contains hyphens', () => {
+      const row = [...VALID_ROW];
+      row[8] = 'United-Kingdom';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
   describe('dob validation', () => {
@@ -281,6 +476,12 @@ describe('rowIsInvalid()', () => {
       row[3] = cellToString(exactly100);
       expect(rowIsInvalid(row, map)).toBe(false);
     });
+
+    it('returns true when dob contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[3] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 
   describe('email validation', () => {
@@ -312,6 +513,18 @@ describe('rowIsInvalid()', () => {
       const row = [...VALID_ROW];
       row[4] = 'valid.email+tag@example.co.uk';
       expect(rowIsInvalid(row, map)).toBe(false);
+    });
+
+    it('returns true when email contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[4] = '<script>alert(1)</script>@example.com';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it('returns true when email contains javascript protocol', () => {
+      const row = [...VALID_ROW];
+      row[4] = 'javascript:alert(1)@example.com';
+      expect(rowIsInvalid(row, map)).toBe(true);
     });
   });
 
@@ -351,10 +564,58 @@ describe('rowIsInvalid()', () => {
       row[9] = 'sw1a 1aa';
       expect(rowIsInvalid(row, map)).toBe(false);
     });
+
+    it('returns true when postcode contains XSS payload', () => {
+      const row = [...VALID_ROW];
+      row[9] = '<script>alert(1)</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+  });
+
+  describe('XSS and injection across all fields', () => {
+    it.each([
+      ['title', 0],
+      ['firstName', 1],
+      ['lastName', 2],
+      ['address1', 5],
+      ['address2', 6],
+      ['town', 7],
+      ['country', 8],
+    ])('returns true for script tag injection in %s', (_field, index) => {
+      const row = [...VALID_ROW];
+      row[index] = '<script>alert("xss")</script>';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it.each([
+      ['title', 0],
+      ['firstName', 1],
+      ['lastName', 2],
+      ['address1', 5],
+      ['address2', 6],
+      ['town', 7],
+      ['country', 8],
+    ])('returns true for event handler injection in %s', (_field, index) => {
+      const row = [...VALID_ROW];
+      row[index] = 'foo" onmouseover="alert(1)';
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
+
+    it.each([
+      ['title', 0],
+      ['firstName', 1],
+      ['lastName', 2],
+      ['address1', 5],
+      ['address2', 6],
+      ['town', 7],
+      ['country', 8],
+    ])('returns true for SQL injection attempt in %s', (_field, index) => {
+      const row = [...VALID_ROW];
+      row[index] = "'; DROP TABLE claimants;--";
+      expect(rowIsInvalid(row, map)).toBe(true);
+    });
   });
 });
-
-// ─── validateSpreadsheetData ──────────────────────────────────────────────────
 
 describe('validateSpreadsheetData()', () => {
   it('returns fileEmpty when spreadsheet has no rows', () => {
@@ -418,5 +679,12 @@ describe('validateSpreadsheetData()', () => {
     invalidRow2[2] = '';
     const buffer = buildBuffer([HEADER_ROW, VALID_ROW, invalidRow1, invalidRow2]);
     expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3, 4] });
+  });
+
+  it('returns ok with XSS row flagged as invalid', () => {
+    const xssRow = [...VALID_ROW];
+    xssRow[1] = '<script>alert(1)</script>';
+    const buffer = buildBuffer([HEADER_ROW, xssRow]);
+    expect(validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [2] });
   });
 });

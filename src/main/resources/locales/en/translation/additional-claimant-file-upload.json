@@ -4,13 +4,15 @@
   "section1": {
     "heading": "Download and complete the spreadsheet template",
     "p1": "Download the spreadsheet template or use you own if it follows the same format.",
-    "link": "Spreadsheet template (CSV, 12KB)",
-    "linkUrl": "/resources/csv/group-claims-template.csv"
+    "link": "Group claims template (xlsx, 12KB)",
+    "linkUrl": "/resources/xlsx/group-claims-template.xlsx",
+    "p3": "If you are using your own file, ensure your header row includes these exact columns:",
+    "columnNames": ["First name", "Last name", "Address line 1", "Town or city", "Country"]
   },
   "section2": {
-    "heading": "Save in CSV format",
+    "heading": "Save in Excel format",
     "p1": "Follow these steps:",
-    "steps": ["select 'File'", "select 'Save as' or 'Export to'", "save as the format 'Comma Separated Values (.csv)'"]
+    "steps": ["select 'File'", "select 'Save as' or 'Export to'", "save as the format 'Excel (.xlsx or .xls)'"]
   },
   "section3": {
     "heading": "Upload spreadsheet",

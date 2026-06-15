@@ -50,11 +50,7 @@ const getTranslationsGroupRepresentative = (userCase: CaseWithId, translations: 
 };
 
 function buildAdditionalClaimantCards(userCase: CaseWithId, translations: AnyRecord) {
-  const claimants = userCase.additionalClaimants || [];
-
-  if (claimants.length === 0) {
-    return translations.notProvided;
-  }
+  const claimants = userCase?.additionalClaimants;
 
   // Loop through the claimants and construct the summary cards markup
   return claimants
@@ -146,11 +142,13 @@ export const getGroupClaimDetails = (userCase: CaseWithId, translations: AnyReco
     metaRows.push(
       addSummaryHtmlRow(
         translations.groupClaimDetails.additionalClaimantDocument,
-        '<a class="govuk-link" href="' +
-          userCase.additionalClaimantSpreadsheet.document_binary_url +
-          '">' +
-          userCase.additionalClaimantSpreadsheet.document_filename +
-          '</a>',
+        userCase?.additionalClaimantSpreadsheet?.document_binary_url
+          ? '<a class="govuk-link" href="' +
+              userCase?.additionalClaimantSpreadsheet?.document_binary_url +
+              '">' +
+              userCase?.additionalClaimantSpreadsheet?.document_filename +
+              '</a>'
+          : translations.notProvided,
         createChangeAction(
           PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
@@ -173,7 +171,25 @@ export const getGroupClaimDetails = (userCase: CaseWithId, translations: AnyReco
     return { metaRows, cardsHtml: '', postRows: [] };
   }
 
-  const cardsHtml = buildAdditionalClaimantCards(userCase, translations);
+  let cardsHtml = '';
+
+  const claimantsLength = userCase?.additionalClaimants?.length || 0;
+
+  if (claimantsLength === 0) {
+    metaRows.push(
+      addSummaryRow(
+        translations.groupClaimDetails.additionalClaimants,
+        translations.notProvided,
+        createChangeAction(
+          PageUrls.GROUP_REPRESENTATIVE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.groupClaimDetails.groupRepresentative
+        )
+      )
+    );
+  } else {
+    cardsHtml = buildAdditionalClaimantCards(userCase, translations);
+  }
 
   const postRows: SummaryListRow[] = [
     addSummaryRow(

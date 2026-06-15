@@ -95,6 +95,9 @@ export default class ReviewAdditionalClaimantsController {
     // 3. Standard routing rules on successful validation
     let redirectUrl;
     if (req.body.addAdditionalClaimant === YesOrNo.NO || additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
+      if (req.session?.additonalClaimantsRedirectCheckAnswer) {
+        req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+      }
       redirectUrl = setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
     } else {
       redirectUrl = setUrlLanguage(

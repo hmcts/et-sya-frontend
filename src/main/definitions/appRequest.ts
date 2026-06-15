@@ -42,6 +42,7 @@ export interface AppSession extends Session {
   additionalClaimantNewFlow?: boolean;
   additionalClaimantInvalidRows?: string;
   additionalClaimantUploadedFileName?: string;
+  additonalClaimantsRedirectCheckAnswer?: boolean;
 }
 
 export interface UserDetails {

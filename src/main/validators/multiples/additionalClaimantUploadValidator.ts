@@ -134,6 +134,14 @@ export const cellToString = (cell: unknown): string => {
   return String(cell).trim();
 };
 
+const NAME_PATTERN = /^[\p{L}\p{M}'\- ]+$/u;
+const ADDRESS_PATTERN = /^[\p{L}\p{M}\p{N}'\-.,/ ]+$/u;
+const TOWN_PATTERN = /^[\p{L}\p{M}'\- ]+$/u;
+const COUNTRY_PATTERN = /^[\p{L}\p{M} ]+$/u;
+const DOB_PATTERN = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const POSTCODE_PATTERN = /^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/i;
+
 /**
  * Validates a single spreadsheet row against business rules.
  */
@@ -149,36 +157,41 @@ export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boo
   const country = get(row, map, 'country');
   const postcode = get(row, map, 'postcode');
 
-  if (title && title.length > 25) {
+  if (title) {
+    if (title.length > 25) {
+      return true;
+    }
+    if (!NAME_PATTERN.test(title)) {
+      return true;
+    }
+  }
+
+  if (!firstName || firstName.length > 100 || !NAME_PATTERN.test(firstName)) {
     return true;
   }
 
-  if (!firstName || firstName.length > 100) {
+  if (!lastName || lastName.length > 100 || !NAME_PATTERN.test(lastName)) {
     return true;
   }
 
-  if (!lastName || lastName.length > 100) {
+  if (!addrLine1 || addrLine1.length > 150 || !ADDRESS_PATTERN.test(addrLine1)) {
     return true;
   }
 
-  if (!addrLine1 || addrLine1.length > 150) {
+  if (addrLine2 && (addrLine2.length > 50 || !ADDRESS_PATTERN.test(addrLine2))) {
     return true;
   }
 
-  if (!town || town.length > 50) {
+  if (!town || town.length > 50 || !TOWN_PATTERN.test(town)) {
     return true;
   }
 
-  if (!country || country.length > 50) {
-    return true;
-  }
-
-  if (addrLine2 && addrLine2.length > 50) {
+  if (!country || country.length > 50 || !COUNTRY_PATTERN.test(country)) {
     return true;
   }
 
   if (dob) {
-    const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(dob);
+    const match = DOB_PATTERN.exec(dob);
 
     if (!match) {
       return true;
@@ -212,7 +225,7 @@ export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boo
       return true;
     }
 
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    if (!EMAIL_PATTERN.test(email)) {
       return true;
     }
   }
@@ -222,7 +235,7 @@ export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boo
       return true;
     }
 
-    if (!/^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/i.test(postcode)) {
+    if (!POSTCODE_PATTERN.test(postcode)) {
       return true;
     }
   }

@@ -57,6 +57,10 @@ export default class AdditionalClaimantFileUploadController {
       return res.redirect(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD);
     }
 
+    if (req.session?.additonalClaimantsRedirectCheckAnswer) {
+      req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    }
+
     const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };

@@ -68,7 +68,7 @@ export const validateGroupClaimsCheckDetails = (req?: AppRequest, userCase?: Rec
     return false;
   }
 
-  const { caseType, additionalClaimants, leadClaimant } = userCase;
+  const { caseType, additionalClaimants, leadClaimant, additionalClaimantSpreadsheet } = userCase;
 
   if (caseType === CaseType.SINGLE) {
     return true;
@@ -78,7 +78,8 @@ export const validateGroupClaimsCheckDetails = (req?: AppRequest, userCase?: Rec
     return false;
   }
 
-  const hasAdditionalClaimants = Array.isArray(additionalClaimants) && additionalClaimants.length > 0;
+  const hasAdditionalClaimants =
+    (Array.isArray(additionalClaimants) && additionalClaimants.length > 0) || additionalClaimantSpreadsheet;
   const claimantErrors = validateAdditionalClaimants(req);
   const hasLeadClaimantSelection = leadClaimant === YesOrNo.YES || leadClaimant === YesOrNo.NO;
   const hasClaimantErrors = claimantErrors.length > 0;

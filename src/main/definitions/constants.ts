@@ -432,7 +432,7 @@ export const ALLOWED_FILE_FORMATS = [
   'potx',
   'ppsx',
   'rtf',
-  'csv',
+  'xlsx',
 ];
 
 export const ALLOWED_FILE_FORMATS_ADDITIONAL_CLAIMANTS = ['xls', 'xlt', 'xla', 'xlsx', 'xltx'];
@@ -552,7 +552,7 @@ export const DOCUMENT_CONTENT_TYPES = {
   DOC: ['doc', 'application/vnd.ms-word'],
   XLS: ['xls', 'application/vnd.ms-excel'],
   PPT: ['ppt', 'application/vnd.ms-powerpoint'],
-  CSV: ['csv', 'text/csv'],
+  CSV: ['xlsx', 'text/xlsx'],
   GZ: ['gz', 'application/gzip'],
   GIF: ['gif', 'image/gif'],
   JPEG: ['jpeg', 'image/jpeg'],

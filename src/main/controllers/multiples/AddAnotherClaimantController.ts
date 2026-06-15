@@ -50,6 +50,11 @@ export default class AddAnotherClaimantController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl: string;
+    if (req.session?.returnUrl) {
+      req.session.returnUrl = undefined;
+      req.session.additonalClaimantsRedirectCheckAnswer = true;
+    }
+
     if (AddAdditionalClaimant.MANUAL === req.body.addClaimantMethod) {
       if (req.session?.userCase?.additionalClaimantSpreadsheet) {
         req.session.userCase.additionalClaimantSpreadsheet = undefined;

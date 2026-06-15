@@ -4,17 +4,15 @@
   "section1": {
     "heading": "[W] Download and complete the spreadsheet template",
     "p1": "[W] Download the spreadsheet template or use you own if it follows the same format.",
-    "link": "[W] Spreadsheet template (CSV, 12KB)",
-    "linkUrl": "/resources/csv/group-claims-template-cy.csv"
+    "link": "[W] Group claims template (xlsx, 12KB)",
+    "linkUrl": "/resources/xlsx/group-claims-template-cy.xlsx",
+    "p3": "[W] If you are using your own file, ensure your header row includes these exact columns:",
+    "columnNames": ["First name", "Last name", "Address line 1", "Town or city", "Country"]
   },
   "section2": {
-    "heading": "[W] Save in CSV format",
+    "heading": "[W] Save in Excel format",
     "p1": "[W] Follow these steps:",
-    "steps": [
-      "[W] select 'File'",
-      "[W] select 'Save as' or 'Export to'",
-      "[W] save as the format 'Comma Separated Values (.csv)'"
-    ]
+    "steps": ["select 'File'", "select 'Save as' or 'Export to'", "save as the format 'Excel (.xlsx or .xls)'"]
   },
   "section3": {
     "heading": "[W] Upload spreadsheet",
@@ -35,7 +33,7 @@
       "backEndError": "[W] Backend error occurred while processing the file. Please try again later.",
       "fileEmpty": "[W] The uploaded file is empty. Upload a file with data.",
       "noDataRows": "[W] The uploaded file does not contain any data rows. Please upload a file with data.",
-      "dataRowsExceedsMax": "The uploaded file has exceeded the maximum of {{additionalErrorInfo}} rows.",
+      "dataRowsExceedsMax": "[W] The uploaded file has exceeded the maximum of {{additionalErrorInfo}} rows.",
       "mappingError": "[W] The additional claimant mapping from the uploaded file has failed. The file needs to follow the template, try again."
     }
   },

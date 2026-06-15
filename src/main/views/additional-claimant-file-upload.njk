@@ -34,6 +34,15 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ h1 }}</h1>
 
+      {% set section1ColumnNames %}
+        <p class="govuk-body">{{ section1.p3 }}</p>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for columns in section1.columnNames %}
+            <li>{{ columns }}</li>
+          {% endfor %}
+        </ul>
+      {% endset %}
+
       {% set section2BodyHtml %}
         <p class="govuk-body">{{ section2.p1 }}</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -78,8 +87,6 @@
         {% endif %}
       {% endset %}
 
-      {% set section1BodyHtml %}<p class="govuk-body govuk-!-margin-bottom-3">{{ section1.p1 }}</p>{% endset %}
-
       <form class="form" id="main-form" method="post" action="{{postAddress}}?_csrf={{ csrfToken }}" novalidate="novalidate" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value={{ csrfToken }}>
 
@@ -88,7 +95,7 @@
             {
               id: "section-1",
               title: section1.heading,
-              body: section1BodyHtml | safe,
+              bodyText: section1.p1,
               collapsible: false,
               links: [
               {
@@ -96,7 +103,8 @@
                 text: section1.link,
                 download: true
               }
-            ]
+            ],
+              footer: section1ColumnNames | safe
             },
             {
               id: "section-2",

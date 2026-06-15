@@ -31,8 +31,9 @@
             </h2>
           </div>
           <div class="app-step-nav__panel{{ ' js-panel' if collapsible }}" id="step-panel-{{ step.id }}-{{ position }}">
-            {% if step.body %}
-              {# Changed from <p> to <div> to safely handle complex layout/form tags passed as body content #}
+            {% if step.bodyText %}
+              <p class="govuk-body govuk-!-margin-bottom-3">{{ step.bodyText }}</p>
+            {% elif step.body %}
               <div class="app-step-nav__body-container">
                 {{ step.body }}
               </div>
@@ -55,6 +56,9 @@
                   </li>
                 {% endfor %}
               </ol>
+            {% endif %}
+            {% if step.footer %}
+              {{ step.footer }}
             {% endif %}
           </div>
         </li>
