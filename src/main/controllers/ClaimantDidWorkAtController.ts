@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 import { updateWorkAddress } from './helpers/WorkAddressHelper';
 
@@ -34,9 +35,11 @@ export default class ClaimantDidWorkAtController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    req.params.respondentNumber = req.session.claimantRespondentNumber ?? '1';
+    const respondentIndex = getRespondentIndex(req);
     const isYes = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
-    if (isYes && req.session.userCase?.respondents?.[0]) {
-      updateWorkAddress(req.session.userCase, req.session.userCase.respondents[0]);
+    if (isYes && req.session.userCase?.respondents?.[respondentIndex]) {
+      updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
     }
     const redirectUrl = isYes ? PageUrls.CLAIMANT_ACAS_CERT_NUM : PageUrls.CLAIMANT_WORK_POSTCODE_ENTER;
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
@@ -44,7 +47,8 @@ export default class ClaimantDidWorkAtController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const respondent = req.session.userCase?.respondents?.[0];
+    req.params.respondentNumber = req.session.claimantRespondentNumber ?? '1';
+    const respondent = req.session.userCase?.respondents?.[getRespondentIndex(req)];
     const content = getPageContent(req, this.formContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_DID_WORK_AT,
