@@ -131,6 +131,14 @@ export const cellToString = (cell: unknown): string => {
     return `${dd}/${mm}/${cell.getFullYear()}`;
   }
 
+  if (typeof cell === 'object' && 'text' in cell) {
+    const text = cell.text;
+    if (typeof text === 'string' || typeof text === 'number') {
+      return String(text).trim();
+    }
+    return '';
+  }
+
   return String(cell).trim();
 };
 

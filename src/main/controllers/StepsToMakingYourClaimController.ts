@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { AddAdditionalClaimant, CaseType, CaseWithId, YesOrNo } from '../definitions/case';
+import { CaseType, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -17,18 +17,6 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StepsToMakingYourClaimController');
-
-function getAddClaimantNextPage(userCase: CaseWithId) {
-  if (userCase?.addClaimantMethod === AddAdditionalClaimant.SPREADSHEET) {
-    return PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD;
-  }
-
-  if ((userCase?.additionalClaimants?.length || 0) > 0) {
-    return PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
-  }
-
-  return PageUrls.ADD_ANOTHER_CLAIMANT;
-}
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -92,10 +80,13 @@ export default class StepsToMakingYourClaimController {
           ...(userCase?.caseType === CaseType.MULTIPLE
             ? [
                 {
-                  url: setUrlLanguage(req, getAddClaimantNextPage(userCase)),
+                  url: setUrlLanguage(req, PageUrls.ADD_ANOTHER_CLAIMANT),
                   linkTxt: (l: AnyRecord): string => l.section2.link1Text,
                   status: (): string =>
-                    getSectionStatus(userCase?.groupClaimsCheck, userCase?.additionalClaimants?.length),
+                    getSectionStatus(
+                      userCase?.groupClaimsCheck,
+                      userCase?.additionalClaimants?.length ?? userCase?.additionalClaimantSpreadsheet?.document_size
+                    ),
                 },
                 {
                   url: setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE.toString()),

@@ -150,7 +150,7 @@ export default class AdditionalClaimantFileUploadController {
 
   public remove = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.session.userCase) {
-      req.session.userCase.additionalClaimantSpreadsheet = undefined;
+      req.session.userCase.additionalClaimantSpreadsheet = null;
     }
     req.session.additionalClaimantUploadedFileName = undefined;
     req.session.errors = [];

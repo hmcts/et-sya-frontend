@@ -126,32 +126,31 @@ export default class ReviewAdditionalClaimantsController {
       TranslationKeys.REVIEW_ADDITIONAL_CLAIMANTS,
     ]);
     const languageParam = req.url?.includes('lng=cy') ? '?lng=cy' : '';
-    const userCase = req.session?.userCase;
     let additionalClaimants: ClaimantSummaryCard[] = [];
 
-    if (!userCase?.additionalClaimantSpreadsheet) {
-      additionalClaimants = claimants.map((c, index) => ({
-        name: formatName(c),
-        dob: formatDob(c.dob),
-        address: formatAddress(c),
-        email: c.email || '',
-        removeUrl: `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?additionalClaimant=${index}${
-          languageParam ? '&' + languageParam.substring(1) : ''
-        }`,
-        changeNameUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
-          languageParam ? '&' + languageParam.substring(1) : ''
-        }`,
-        changeDobUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
-          languageParam ? '&' + languageParam.substring(1) : ''
-        }`,
-        changeAddressUrl: `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=${index}${
-          languageParam ? '&' + languageParam.substring(1) : ''
-        }`,
-        changeEmailUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
-          languageParam ? '&' + languageParam.substring(1) : ''
-        }`,
-      }));
-    }
+    console.log('claimants', claimants.length);
+
+    additionalClaimants = claimants.map((c, index) => ({
+      name: formatName(c),
+      dob: formatDob(c.dob),
+      address: formatAddress(c),
+      email: c.email || '',
+      removeUrl: `${PageUrls.REMOVE_ADDITIONAL_CLAIMANT}?additionalClaimant=${index}${
+        languageParam ? '&' + languageParam.substring(1) : ''
+      }`,
+      changeNameUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
+        languageParam ? '&' + languageParam.substring(1) : ''
+      }`,
+      changeDobUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
+        languageParam ? '&' + languageParam.substring(1) : ''
+      }`,
+      changeAddressUrl: `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=${index}${
+        languageParam ? '&' + languageParam.substring(1) : ''
+      }`,
+      changeEmailUrl: `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=${index}${
+        languageParam ? '&' + languageParam.substring(1) : ''
+      }`,
+    }));
 
     // Clear the editing index when arriving at review
     req.session.userCase.currentAdditionalClaimantIndex = undefined;

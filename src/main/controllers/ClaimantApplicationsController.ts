@@ -32,6 +32,7 @@ export default class ClaimantApplicationsController {
     };
     //reset return url to prevent redirect loop after deleting a draft claim
     req.session.returnUrl = undefined;
+    req.session.additonalClaimantsRedirectCheckAnswer = undefined;
     const userCases = await getUserCasesByLastModified(req);
     if (userCases.length === 0) {
       req.session.hasUserCases = false;

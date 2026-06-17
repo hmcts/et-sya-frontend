@@ -10,6 +10,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
+import { clearAdditionalClaimantTransientFields } from '../helpers/multiples/ReviewAdditionalClaimantsHelper';
 
 const logger = getLogger('AddAnotherClaimantController');
 
@@ -55,22 +56,36 @@ export default class AddAnotherClaimantController {
       req.session.additonalClaimantsRedirectCheckAnswer = true;
     }
 
-    if (AddAdditionalClaimant.MANUAL === req.body.addClaimantMethod) {
-      if (req.session?.userCase?.additionalClaimantSpreadsheet) {
-        req.session.userCase.additionalClaimantSpreadsheet = undefined;
-        req.session.userCase.additionalClaimants = undefined;
+    const previousMethod = req.session.userCase.addClaimantMethod;
+    const newMethod = req.body.addClaimantMethod;
+    const methodChanged = previousMethod !== newMethod;
+
+    if (methodChanged) {
+      req.session.userCase.groupClaimsCheck = undefined;
+    }
+
+    if (newMethod === AddAdditionalClaimant.MANUAL) {
+      if (methodChanged) {
+        req.session.userCase.additionalClaimantSpreadsheet = null;
       }
-      req.session.additionalClaimantNewFlow = true;
-      redirectUrl = `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=new-claimant`;
+
+      if (req.session.userCase.additionalClaimants?.length > 0) {
+        redirectUrl = PageUrls.REVIEW_ADDITIONAL_CLAIMANTS;
+      } else {
+        clearAdditionalClaimantTransientFields(req);
+        req.session.additionalClaimantNewFlow = true;
+        redirectUrl = `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=new-claimant`;
+      }
     } else {
-      if (!req.session?.userCase?.additionalClaimantSpreadsheet) {
-        req.session.userCase.additionalClaimants = undefined;
+      if (methodChanged) {
+        req.session.userCase.additionalClaimants = null;
       }
       redirectUrl = PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD;
     }
+
     logger.info(
       `Handling add another claimant submission. Selected method: ${
-        req.body.addClaimantMethod || 'none'
+        newMethod || 'none'
       }, redirecting to: ${redirectUrl}`
     );
     return handlePostLogic(req, res, this.form, logger, redirectUrl);
