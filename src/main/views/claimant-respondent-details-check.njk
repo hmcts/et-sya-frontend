@@ -23,11 +23,11 @@
         }) }}
       {% endfor %}
 
-      <p class="govuk-body">
-        <a href="{{ PageUrls.CLAIMANT_RESPONDENT_ADD_REDIRECT + languageParam }}" class="govuk-link">
-          {{ addAnotherRespondent }}
-        </a>
-      </p>
+      {{ govukButton({
+        text: addAnotherRespondent,
+        href: PageUrls.CLAIMANT_RESPONDENT_ADD_REDIRECT + languageParam,
+        classes: "govuk-button--secondary"
+      }) }}
 
       <form method="post" action="" novalidate="true">
         <input type="hidden" name="_csrf" value={{ csrfToken }}>
