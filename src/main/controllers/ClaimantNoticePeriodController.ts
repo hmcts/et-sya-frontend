@@ -19,7 +19,7 @@ export default class ClaimantNoticePeriodController {
   private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {
-      noticePeriod: getYesNoInlineRadioField('claimant-notice-period', l => l.legend),
+      noticePeriod: { ...getYesNoInlineRadioField('claimant-notice-period', l => l.legend), isPageHeading: false },
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

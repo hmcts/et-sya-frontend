@@ -23,6 +23,16 @@ describe('ClaimantDidWorkAtController', () => {
     respondentAddressPostcode: 'SW1A 1AA',
   };
 
+  const secondRespondent = {
+    respondentNumber: 2,
+    respondentName: 'Beta Corp',
+    respondentAddress1: '99 Side Road',
+    respondentAddress2: 'Unit 5',
+    respondentAddressTown: 'Cardiff',
+    respondentAddressCountry: 'Wales',
+    respondentAddressPostcode: 'CF10 1AA',
+  };
+
   describe('get()', () => {
     it('should render the claimant did work at page', () => {
       const controller = new ClaimantDidWorkAtController();
@@ -49,6 +59,24 @@ describe('ClaimantDidWorkAtController', () => {
       expect(renderArgs.addressCountry).toEqual('England');
       expect(renderArgs.addressPostcode).toEqual('SW1A 1AA');
     });
+
+    it('should show the newly added respondent, not the first, when adding another respondent', () => {
+      const controller = new ClaimantDidWorkAtController();
+      const response = mockResponse();
+      const request = mockRequest({
+        t,
+        userCase: { respondents: [respondent, secondRespondent] },
+        session: { claimantRespondentNumber: '2' },
+      });
+
+      controller.get(request, response);
+
+      const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.respondentName).toEqual('Beta Corp');
+      expect(renderArgs.addressLine1).toEqual('99 Side Road');
+      expect(renderArgs.addressTown).toEqual('Cardiff');
+      expect(renderArgs.addressPostcode).toEqual('CF10 1AA');
+    });
   });
 
   describe('post()', () => {
@@ -74,6 +102,23 @@ describe('ClaimantDidWorkAtController', () => {
       expect(req.session.userCase.workAddress1).toEqual('1 Main Street');
       expect(req.session.userCase.workAddressTown).toEqual('London');
       expect(req.session.userCase.workAddressPostcode).toEqual('SW1A 1AA');
+    });
+
+    it('should copy the newly added respondent address, not the first, when adding another respondent', async () => {
+      const body = { claimantWorkAddressQuestion: YesOrNo.YES };
+      const controller = new ClaimantDidWorkAtController();
+      const req = mockRequestEmpty({
+        body,
+        userCase: { respondents: [respondent, secondRespondent] },
+        session: { claimantRespondentNumber: '2' },
+      });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(req.session.userCase.workAddress1).toEqual('99 Side Road');
+      expect(req.session.userCase.workAddressTown).toEqual('Cardiff');
+      expect(req.session.userCase.workAddressPostcode).toEqual('CF10 1AA');
     });
 
     it('should redirect to CLAIMANT_WORK_POSTCODE_ENTER when No is selected (AC3)', async () => {
