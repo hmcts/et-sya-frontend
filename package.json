@@ -192,8 +192,7 @@
     "underscore": "^1.13.8",
     "yauzl": "3.2.1",
     "picomatch": "^4.0.4",
-    "ip-address": "^10.1.1",
-    "js-yaml": "^4.2.0"
+    "ip-address": "^10.1.1"
   },
   "packageManager": "yarn@4.12.0"
 }
