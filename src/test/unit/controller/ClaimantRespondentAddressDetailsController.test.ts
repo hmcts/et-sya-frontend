@@ -1,5 +1,6 @@
 import ClaimantRespondentAddressDetailsController from '../../../main/controllers/ClaimantRespondentAddressDetailsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -55,20 +56,31 @@ describe('ClaimantRespondentAddressDetailsController', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to CLAIMANT_DID_WORK_AT on valid address submission', async () => {
-      const body = {
-        respondentAddress1: '56 High Street',
-        respondentAddressTown: 'London',
-        respondentAddressCountry: 'England',
-        respondentAddressPostcode: 'SW17 0RN',
-      };
+    const body = {
+      respondentAddress1: '56 High Street',
+      respondentAddressTown: 'London',
+      respondentAddressCountry: 'England',
+      respondentAddressPostcode: 'SW17 0RN',
+    };
+
+    it('should redirect to CLAIMANT_DID_WORK_AT when the claimant worked for the employer', async () => {
       const controller = new ClaimantRespondentAddressDetailsController();
-      const req = mockRequestEmpty({ body });
+      const req = mockRequestEmpty({ body, userCase: { pastEmployer: YesOrNo.YES } });
       const res = mockResponse();
 
       await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DID_WORK_AT);
+    });
+
+    it('should redirect to CLAIMANT_ACAS_CERT_NUM when the claimant did not work for the employer', async () => {
+      const controller = new ClaimantRespondentAddressDetailsController();
+      const req = mockRequestEmpty({ body, userCase: { pastEmployer: YesOrNo.NO } });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_ACAS_CERT_NUM);
     });
   });
 });
