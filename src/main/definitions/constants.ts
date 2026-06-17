@@ -456,6 +456,13 @@ export const InterceptPaths = {
   SUBMIT_BUNDLES_HEARING_DOCS_CYA: '/submitBundlesHearingDocsCya',
 } as const;
 
+export const ChangeDetailsRedirect = {
+  ANSWERS: 'answers',
+  REP_ANSWERS: 'rep-answers',
+  REP_ABOUT_YOU: 'rep-about-you',
+  RESPONDENT: 'respondent',
+} as const;
+
 export const ErrorPages = {
   NOT_FOUND: '/not-found',
 };

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
+import { ChangeDetailsRedirect, ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
 
 import { setChangeAnswersUrlLanguage, setCheckAnswersLanguage } from './helpers/LanguageHelper';
 import { ValidRespondentUrls } from './helpers/RespondentHelpers';
@@ -27,20 +27,20 @@ export default class ChangeDetailsController {
       secure: true, // Ensures the cookie is only sent over HTTPS
       sameSite: 'strict', // Helps prevent CSRF attacks
     });
-    if (req.query.redirect === 'answers') {
+    if (req.query.redirect === ChangeDetailsRedirect.ANSWERS) {
       redirectUrl = req.url.replace(InterceptPaths.ANSWERS_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CHECK_ANSWERS);
-    } else if (req.query.redirect === 'rep-answers') {
+    } else if (req.query.redirect === ChangeDetailsRedirect.REP_ANSWERS) {
       redirectUrl = req.url.replace(InterceptPaths.REP_ANSWERS_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CLAIMANT_REP_CHECK_ANSWERS);
-    } else if (req.query.redirect === 'rep-about-you') {
+    } else if (req.query.redirect === ChangeDetailsRedirect.REP_ABOUT_YOU) {
       redirectUrl = req.url.replace(InterceptPaths.REP_ABOUT_YOU_CHANGE, languageParam);
       const caseId = getRepAboutYouCaseId(req);
       if (!caseId) {
         return res.redirect(ErrorPages.NOT_FOUND);
       }
       req.session.repAboutYouCaseId = caseId;
-    } else if (req.query.redirect === 'respondent') {
+    } else if (req.query.redirect === ChangeDetailsRedirect.RESPONDENT) {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, languageParam);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK);
     } else {
