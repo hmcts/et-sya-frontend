@@ -278,7 +278,7 @@ describe('AdditionalClaimantFileUploadController', () => {
 
       await controller.remove(req, res);
 
-      expect(req.session.userCase.additionalClaimantSpreadsheet).toBeUndefined();
+      expect(req.session.userCase.additionalClaimantSpreadsheet).toBeNull();
       expect(req.session.additionalClaimantUploadedFileName).toBeUndefined();
       expect(req.session.errors).toEqual([]);
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD);
