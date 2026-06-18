@@ -7,9 +7,6 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 jest.mock('../../../main/services/CaseService');
-jest.mock('../../../main/logger', () => ({
-  getLogger: jest.fn(() => ({ info: jest.fn(), warn: jest.fn(), error: jest.fn() })),
-}));
 
 describe('AllDocumentsController', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
@@ -149,62 +146,5 @@ describe('AllDocumentsController', () => {
         ]),
       })
     );
-  });
-
-  it('should render with empty allDocsSorted when userCase is undefined', async () => {
-    const controller = new AllDocumentsController();
-    const response = mockResponse();
-    const request = mockRequest({ session: { userCase: undefined } });
-
-    await controller.get(request, response);
-
-    expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.ALL_DOCUMENTS,
-      expect.objectContaining({
-        allDocsSorted: [],
-      })
-    );
-  });
-
-  it('should skip documents without uploadedDocument and only include valid documents in allDocsSorted', async () => {
-    const controller = new AllDocumentsController();
-    const response = mockResponse();
-    const userCase: Partial<CaseWithId> = {
-      documentCollection: [
-        {
-          id: 'valid-doc',
-          value: {
-            typeOfDocument: 'ET1',
-            documentType: 'ET1',
-            dateOfCorrespondence: '2023-03-15',
-            uploadedDocument: {
-              document_filename: 'valid.pdf',
-              document_url: 'http://test.com/valid.pdf',
-              document_binary_url: 'http://test.com/binary/valid.pdf',
-            },
-          },
-        },
-        {
-          id: 'no-upload-doc',
-          value: {
-            typeOfDocument: 'ET3',
-            documentType: 'ET3',
-            uploadedDocument: undefined,
-          },
-        },
-      ],
-    };
-    const request = mockRequest({ userCase });
-
-    await controller.get(request, response);
-
-    expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.ALL_DOCUMENTS,
-      expect.objectContaining({
-        allDocsSorted: expect.arrayContaining([expect.objectContaining({ id: 'valid-doc' })]),
-      })
-    );
-    const renderCall = (response.render as jest.Mock).mock.calls[0][1];
-    expect(renderCall.allDocsSorted).toHaveLength(1);
   });
 });

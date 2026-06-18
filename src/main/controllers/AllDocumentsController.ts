@@ -38,23 +38,17 @@ export default class AllDocumentsController {
     logger.info('Retrieved documentCollection for caseId: ' + userCase?.id);
     const docCollection = userCase?.documentCollection?.length ? userCase.documentCollection : [];
     const bundleDocuments = userCase?.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
-    const allDocs = [...docCollection, ...bundleDocuments].filter(it => {
-      if (!it.value?.uploadedDocument) {
-        logger.warn(`Document id ${it.id} has no uploadedDocument, skipping`);
-        return false;
-      }
-      return true;
-    });
+    const allDocs = [...docCollection, ...bundleDocuments];
 
-    if (allDocs.length) {
+    if (allDocs?.length) {
       const caseApi = getCaseApi(req.session.user?.accessToken);
 
       await Promise.all(
         allDocs.map(async it => {
-          const uploadedDocument = it.value.uploadedDocument;
-          it.downloadLink = createDownloadLink(uploadedDocument);
+          it.downloadLink = createDownloadLink(it.value.uploadedDocument);
 
           const dateOfCorrespondence = it.value.dateOfCorrespondence;
+          const uploadedDocument = it.value.uploadedDocument;
 
           try {
             const createdOnDate = dateOfCorrespondence
@@ -65,7 +59,7 @@ export default class AllDocumentsController {
           } catch (err) {
             uploadedDocument.createdOn = DefaultValues.STRING_DASH;
             logger.error(
-              `Error for: ${userCase?.ethosCaseReference} - failed to fetch metadata for document: ${userCase?.ethosCaseReference} ${err.message}`
+              `Error for: ${userCase.ethosCaseReference} - failed to fetch metadata for document: ${userCase.ethosCaseReference} ${err.message}`
             );
           }
         })
