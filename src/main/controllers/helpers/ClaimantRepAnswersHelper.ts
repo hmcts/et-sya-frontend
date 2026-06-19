@@ -112,6 +112,19 @@ export type ClaimantRepSessionFields = Pick<
 
 const hasValue = (value?: string): boolean => !!value?.trim();
 
+/**
+ * Determines whether the rep's case contact email (claimantRepEmail) differs from the email
+ * associated with their IDAM sign-in. When they differ, case communications go to the new
+ * address while the rep must still sign in with their original IDAM email.
+ */
+export const repEmailDiffersFromLoginEmail = (userCase?: CaseWithId, loginEmail?: string): boolean => {
+  const caseEmail = userCase?.claimantRepEmail;
+  if (!hasValue(caseEmail) || !hasValue(loginEmail)) {
+    return false;
+  }
+  return caseEmail.trim().toLowerCase() !== loginEmail.trim().toLowerCase();
+};
+
 export const syncRepPhoneFields = (userCase: CaseWithId): void => {
   if (hasValue(userCase.representativePhoneNumber)) {
     userCase.telNumber = userCase.representativePhoneNumber;

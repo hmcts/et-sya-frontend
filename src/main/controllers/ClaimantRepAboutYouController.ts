@@ -78,6 +78,8 @@ export default class ClaimantRepAboutYouController {
       TranslationKeys.CLAIMANT_REP_ABOUT_YOU,
     ]);
 
+    const aboutYouRows = getClaimantRepAboutYouDetails(userCase, translations, { loginEmail });
+
     res.render(TranslationKeys.CLAIMANT_REP_ABOUT_YOU, {
       ...content,
       ...translations,
@@ -85,7 +87,7 @@ export default class ClaimantRepAboutYouController {
       languageParam,
       userCase,
       backLinkUrl: PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId) + languageParam,
-      aboutYouRows: getClaimantRepAboutYouDetails(userCase, translations, { loginEmail }),
+      aboutYouRows,
       contactTribunalUrl: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
     });
   };

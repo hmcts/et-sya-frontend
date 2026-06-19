@@ -7,6 +7,7 @@ import {
   getClaimantRespondentSection,
   getRepresentativeDetails,
   populateClaimantRepDetailsFromCase,
+  repEmailDiffersFromLoginEmail,
 } from '../../../../main/controllers/helpers/ClaimantRepAnswersHelper';
 import {
   CaseWithId,
@@ -447,6 +448,27 @@ describe('ClaimantRepAnswersHelper', () => {
       const rows = getClaimantClaimDetails({ ...baseCase, linkedCases: undefined }, translations);
       const linkedRow = rows.find(r => r.key.text === 'Linked cases');
       expect(linkedRow.value.text).toBe('Not provided');
+    });
+  });
+
+  describe('repEmailDiffersFromLoginEmail', () => {
+    it('should return true when the case email differs from the sign-in email', () => {
+      const userCase = { claimantRepEmail: 'new-case@example.com' } as CaseWithId;
+      expect(repEmailDiffersFromLoginEmail(userCase, 'login@idam.com')).toBe(true);
+    });
+
+    it('should return false when the emails match regardless of case and whitespace', () => {
+      const userCase = { claimantRepEmail: '  LOGIN@idam.com ' } as CaseWithId;
+      expect(repEmailDiffersFromLoginEmail(userCase, 'login@idam.com')).toBe(false);
+    });
+
+    it('should return false when the case email is missing', () => {
+      expect(repEmailDiffersFromLoginEmail({} as CaseWithId, 'login@idam.com')).toBe(false);
+    });
+
+    it('should return false when the login email is missing', () => {
+      const userCase = { claimantRepEmail: 'new-case@example.com' } as CaseWithId;
+      expect(repEmailDiffersFromLoginEmail(userCase, undefined)).toBe(false);
     });
   });
 });

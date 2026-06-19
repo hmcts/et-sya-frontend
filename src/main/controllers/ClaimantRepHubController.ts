@@ -45,6 +45,7 @@ import {
   applyPreservedClaimantRepSessionFields,
   getClaimantRepAboutYouUrl,
   populateClaimantRepDetailsFromCase,
+  repEmailDiffersFromLoginEmail,
 } from './helpers/ClaimantRepAnswersHelper';
 import { isClaimantRepresentedByOrganisation } from './helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from './helpers/HearingHelpers';
@@ -206,6 +207,8 @@ export default class ClaimantRepHubController {
 
     const showMultipleData = await showMutipleData(userCase);
     const showNoLongerRepresentedNotification = userCase?.claimantRepresentativeRemoved === YesOrNo.YES;
+    const loginEmail = req.session.user?.email;
+    const showEmailChangedNote = repEmailDiffersFromLoginEmail(userCase, loginEmail);
 
     res.render(TranslationKeys.CLAIMANT_REP_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -246,6 +249,8 @@ export default class ClaimantRepHubController {
       showMultipleData,
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
       showNoLongerRepresentedNotification,
+      showEmailChangedNote,
+      loginEmail,
       claimantRepresentedByOrganisation,
     });
   };

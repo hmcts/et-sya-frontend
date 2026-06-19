@@ -214,5 +214,33 @@ describe('ClaimantRepHubController', () => {
       const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
       expect(renderArgs).toHaveProperty('languageParam');
     });
+
+    it('should show the email changed note when the case email differs from the sign-in email', async () => {
+      const req = mockRequest({ session: { user: { accessToken: 'token', email: 'login@idam.com' } } });
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      jest
+        .spyOn(ApiFormatter, 'fromApiFormat')
+        .mockReturnValue({ id: 'case-123', claimantRepEmail: 'new-case@example.com' } as any);
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.showEmailChangedNote).toBe(true);
+      expect(renderArgs.loginEmail).toBe('login@idam.com');
+    });
+
+    it('should not show the email changed note when the case email matches the sign-in email', async () => {
+      const req = mockRequest({ session: { user: { accessToken: 'token', email: 'wsmith@tpf.com' } } });
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.showEmailChangedNote).toBe(false);
+    });
   });
 });
