@@ -24,7 +24,10 @@ export default class DidClaimantHaveWrittenContractController {
   private readonly form: Form;
   private readonly formContent: FormContent = {
     fields: {
-      claimantWrittenContract: getYesNoInlineRadioField('did-claimant-have-written-contract', l => l.heading),
+      claimantWrittenContract: {
+        ...getYesNoInlineRadioField('did-claimant-have-written-contract', l => l.heading),
+        isPageHeading: false,
+      },
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { getLogger } from '../logger';
@@ -24,7 +25,13 @@ export default class ClaimantRespondentAddressDetailsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     req.params.respondentNumber = req.session.claimantRespondentNumber ?? '1';
-    await handlePostLogicForRespondent(req, res, this.form, logger, PageUrls.CLAIMANT_DID_WORK_AT);
+    // If the claimant never worked for the employer, the "did you work at this address" question
+    // does not apply, so skip straight to the Acas certificate question.
+    const redirectUrl =
+      req.session.userCase?.pastEmployer === YesOrNo.NO
+        ? PageUrls.CLAIMANT_ACAS_CERT_NUM
+        : PageUrls.CLAIMANT_DID_WORK_AT;
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()
