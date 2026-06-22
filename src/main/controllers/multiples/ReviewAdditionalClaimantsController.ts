@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
-import { validateAdditionalClaimants } from '../../components/form/group-claims-validator';
 import { isFieldFilledIn } from '../../components/form/validator';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
@@ -65,22 +64,12 @@ export default class ReviewAdditionalClaimantsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    // 1. Run all claimant data validation
-    const claimantErrors = validateAdditionalClaimants(req);
     const additionalClaimantCount = req.session?.userCase?.additionalClaimants?.length || 0;
     req.session.errors = req.session.errors || [];
 
-    // When max claimants are reached, the radios are hidden and we implicitly continue.
     if (additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS && !req.body.addAdditionalClaimant) {
       req.body.addAdditionalClaimant = YesOrNo.NO;
       req.session.userCase.addAdditionalClaimant = YesOrNo.NO;
-    }
-
-    // 2. Error redirects with validation failures
-    if (claimantErrors.length > 0) {
-      req.session.errors.push(...claimantErrors);
-      req.session.userCase.addAdditionalClaimant = undefined; // Clear the user's selection on error to prevent confusion on return
-      return res.redirect(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS + getLanguageParam(req.url));
     }
 
     if (req.body.addAdditionalClaimant === YesOrNo.NO && additionalClaimantCount === 0) {
@@ -92,7 +81,6 @@ export default class ReviewAdditionalClaimantsController {
       return res.redirect(setUrlLanguage(req, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS));
     }
 
-    // 3. Standard routing rules on successful validation
     let redirectUrl;
     if (req.body.addAdditionalClaimant === YesOrNo.NO || additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
       if (req.session?.additionalClaimantsRedirectCheckAnswer) {

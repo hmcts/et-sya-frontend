@@ -76,17 +76,6 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
     sectionCount++;
   }
 
-  const allSectionsCompleted = !!(
-    userCase?.personalDetailsCheck === YesOrNo.YES &&
-    userCase?.groupClaimsCheck === YesOrNo.YES &&
-    userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
-    userCase?.claimDetailsCheck === YesOrNo.YES
-  );
-
-  if (allSectionsCompleted) {
-    sectionCount++;
-  }
-
   const overallStatus: AnyRecord = {
     sectionCount,
     totalSections,

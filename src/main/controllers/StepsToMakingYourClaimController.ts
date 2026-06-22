@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseType, YesOrNo } from '../definitions/case';
+import { AddAdditionalClaimant, CaseType, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -48,6 +48,18 @@ export default class StepsToMakingYourClaimController {
       userCase?.claimDetailsCheck === YesOrNo.YES
     );
 
+    const getAdditionalClaimantsValue = (): number | undefined => {
+      if (!userCase?.addClaimantMethod) {
+        return undefined;
+      }
+
+      if (userCase.addClaimantMethod === AddAdditionalClaimant.SPREADSHEET) {
+        return userCase?.additionalClaimantSpreadsheet?.document_size || -1;
+      }
+
+      return userCase?.additionalClaimants?.length || -1;
+    };
+
     const sections = [
       {
         title: (l: AnyRecord): string => l.section1.title,
@@ -82,11 +94,7 @@ export default class StepsToMakingYourClaimController {
                 {
                   url: setUrlLanguage(req, PageUrls.ADD_ANOTHER_CLAIMANT),
                   linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-                  status: (): string =>
-                    getSectionStatus(
-                      userCase?.groupClaimsCheck,
-                      userCase?.additionalClaimantSpreadsheet?.document_size ?? userCase?.additionalClaimants?.length
-                    ),
+                  status: (): string => getSectionStatus(userCase?.groupClaimsCheck, getAdditionalClaimantsValue()),
                 },
                 {
                   url: setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE.toString()),

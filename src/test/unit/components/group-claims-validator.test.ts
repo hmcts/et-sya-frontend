@@ -3,177 +3,113 @@ import {
   validateGroupClaimsCheckDetails,
 } from '../../../main/components/form/group-claims-validator';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
-import { mockRequest } from '../mocks/mockRequest';
 
 describe('group-claims-validator', () => {
   describe('validateAdditionalClaimants', () => {
-    it('should return no errors for valid claimants', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
+    it('should return true for valid claimants', () => {
+      const result = validateAdditionalClaimants([
         {
           firstName: 'Jane',
           lastName: 'Doe',
           address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
         },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toHaveLength(0);
+      ]);
+      expect(result).toBe(true);
     });
 
-    it('should return nameRequired error when firstName is missing', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'nameRequired' }]));
-    });
-
-    it('should return nameRequired error when lastName is missing', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'nameRequired' }]));
-    });
-
-    it('should return nameRequired error when firstName is whitespace only', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: '   ',
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'nameRequired' }]));
-    });
-
-    it('should return addressRequired error when address object is missing', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [{ firstName: 'Jane', lastName: 'Doe' }];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(
-        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
-      );
-    });
-
-    it('should return addressRequired error when AddressLine1 is missing', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          lastName: 'Doe',
-          address: { PostTown: 'London', Country: 'England' },
-        },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(
-        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
-      );
-    });
-
-    it('should return addressRequired error when PostTown is missing', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', Country: 'England' },
-        },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(
-        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
-      );
-    });
-
-    it('should return addressRequired error when Country is missing', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', PostTown: 'London' },
-        },
-      ];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(
-        expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
-      );
-    });
-
-    it('should return both name and address errors for a claimant missing both', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [{}];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toEqual(
-        expect.arrayContaining([
-          { propertyName: 'hiddenErrorField', errorType: 'nameRequired' },
-          { propertyName: 'hiddenErrorField', errorType: 'addressRequired' },
+    it('should return false when firstName is missing', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            lastName: 'Doe',
+            address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+          },
         ])
-      );
+      ).toBe(false);
     });
 
-    it('should return no errors when additionalClaimants is undefined', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = undefined;
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toHaveLength(0);
+    it('should return false when lastName is missing', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            firstName: 'Jane',
+            address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+          },
+        ])
+      ).toBe(false);
     });
 
-    it('should return no errors for empty array', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [];
-
-      const errors = validateAdditionalClaimants(req);
-
-      expect(errors).toHaveLength(0);
+    it('should return false when firstName is whitespace only', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            firstName: '   ',
+            lastName: 'Doe',
+            address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+          },
+        ])
+      ).toBe(false);
     });
 
-    it('should validate multiple claimants and return errors for each invalid one', () => {
-      const req = mockRequest({});
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Valid',
-          lastName: 'Claimant',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-        { firstName: 'Missing', lastName: 'Address' },
-      ];
+    it('should return false when address object is missing', () => {
+      expect(validateAdditionalClaimants([{ firstName: 'Jane', lastName: 'Doe' }])).toBe(false);
+    });
 
-      const errors = validateAdditionalClaimants(req);
+    it('should return false when AddressLine1 is missing', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            firstName: 'Jane',
+            lastName: 'Doe',
+            address: { PostTown: 'London', Country: 'England' },
+          },
+        ])
+      ).toBe(false);
+    });
 
-      expect(errors).toHaveLength(1);
-      expect(errors[0].errorType).toBe('addressRequired');
+    it('should return false when PostTown is missing', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            firstName: 'Jane',
+            lastName: 'Doe',
+            address: { AddressLine1: '1 Main St', Country: 'England' },
+          },
+        ])
+      ).toBe(false);
+    });
+
+    it('should return false when Country is missing', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            firstName: 'Jane',
+            lastName: 'Doe',
+            address: { AddressLine1: '1 Main St', PostTown: 'London' },
+          },
+        ])
+      ).toBe(false);
+    });
+
+    it('should return false when a claimant is missing both name and address', () => {
+      expect(validateAdditionalClaimants([{}])).toBe(false);
+    });
+
+    it('should return true when additionalClaimants is empty array', () => {
+      expect(validateAdditionalClaimants([])).toBe(true);
+    });
+
+    it('should return false when any one of multiple claimants is invalid', () => {
+      expect(
+        validateAdditionalClaimants([
+          {
+            firstName: 'Valid',
+            lastName: 'Claimant',
+            address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+          },
+          { firstName: 'Missing', lastName: 'Address' },
+        ])
+      ).toBe(false);
     });
   });
 
@@ -183,101 +119,87 @@ describe('group-claims-validator', () => {
     });
 
     it('should return true for SINGLE case type', () => {
-      const req = mockRequest({});
-      const userCase = { caseType: CaseType.SINGLE };
-
-      expect(validateGroupClaimsCheckDetails(req, userCase)).toBe(true);
+      expect(validateGroupClaimsCheckDetails(undefined, { caseType: CaseType.SINGLE })).toBe(true);
     });
 
     it('should return false when caseType is neither SINGLE nor MULTIPLE', () => {
-      const req = mockRequest({});
-      const userCase = { caseType: 'Unknown' };
-
-      expect(validateGroupClaimsCheckDetails(req, userCase)).toBe(false);
+      expect(validateGroupClaimsCheckDetails(undefined, { caseType: 'Unknown' })).toBe(false);
     });
 
     it('should return true for MULTIPLE with valid claimants and lead claimant selection', () => {
-      const req = mockRequest({});
-      req.session.errors = [];
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-      ];
       const userCase = {
         caseType: CaseType.MULTIPLE,
-        additionalClaimants: req.session.userCase.additionalClaimants,
+        additionalClaimants: [
+          {
+            firstName: 'Jane',
+            lastName: 'Doe',
+            address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+          },
+        ],
         leadClaimant: YesOrNo.YES,
       };
-
-      expect(validateGroupClaimsCheckDetails(req, userCase)).toBe(true);
+      expect(validateGroupClaimsCheckDetails(undefined, userCase)).toBe(true);
     });
 
     it('should return false for MULTIPLE with no additional claimants', () => {
-      const req = mockRequest({});
-      req.session.errors = [];
-      req.session.userCase.additionalClaimants = [];
-      const userCase = {
-        caseType: CaseType.MULTIPLE,
-        leadClaimant: YesOrNo.YES,
-      };
-
-      expect(validateGroupClaimsCheckDetails(req, userCase)).toBe(false);
+      expect(
+        validateGroupClaimsCheckDetails(undefined, {
+          caseType: CaseType.MULTIPLE,
+          additionalClaimants: [],
+          leadClaimant: YesOrNo.YES,
+        })
+      ).toBe(false);
     });
 
     it('should return false for MULTIPLE with no lead claimant selection', () => {
-      const req = mockRequest({});
-      req.session.errors = [];
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-      ];
-      const userCase = {
-        caseType: CaseType.MULTIPLE,
-        additionalClaimants: req.session.userCase.additionalClaimants,
-      };
-
-      expect(validateGroupClaimsCheckDetails(req, userCase)).toBe(false);
+      expect(
+        validateGroupClaimsCheckDetails(undefined, {
+          caseType: CaseType.MULTIPLE,
+          additionalClaimants: [
+            {
+              firstName: 'Jane',
+              lastName: 'Doe',
+              address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+            },
+          ],
+        })
+      ).toBe(false);
     });
 
-    it('should return false and push errors for MULTIPLE with invalid claimants', () => {
-      const req = mockRequest({});
-      req.session.errors = [];
-      req.session.userCase.additionalClaimants = [{ firstName: 'Jane' }]; // missing lastName and address
-      const userCase = {
-        caseType: CaseType.MULTIPLE,
-        additionalClaimants: req.session.userCase.additionalClaimants,
-        leadClaimant: YesOrNo.YES,
-      };
-
-      const result = validateGroupClaimsCheckDetails(req, userCase);
-
-      expect(result).toBe(false);
-      expect(req.session.errors.length).toBeGreaterThan(0);
+    it('should return false for MULTIPLE with invalid claimants', () => {
+      expect(
+        validateGroupClaimsCheckDetails(undefined, {
+          caseType: CaseType.MULTIPLE,
+          additionalClaimants: [{ firstName: 'Jane' }],
+          leadClaimant: YesOrNo.YES,
+        })
+      ).toBe(false);
     });
 
-    it('should accept leadClaimant NO as valid selection', () => {
-      const req = mockRequest({});
-      req.session.errors = [];
-      req.session.userCase.additionalClaimants = [
-        {
-          firstName: 'Jane',
-          lastName: 'Doe',
-          address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
-        },
-      ];
-      const userCase = {
-        caseType: CaseType.MULTIPLE,
-        additionalClaimants: req.session.userCase.additionalClaimants,
-        leadClaimant: YesOrNo.NO,
-      };
+    it('should return true when leadClaimant is NO', () => {
+      expect(
+        validateGroupClaimsCheckDetails(undefined, {
+          caseType: CaseType.MULTIPLE,
+          additionalClaimants: [
+            {
+              firstName: 'Jane',
+              lastName: 'Doe',
+              address: { AddressLine1: '1 Main St', PostTown: 'London', Country: 'England' },
+            },
+          ],
+          leadClaimant: YesOrNo.NO,
+        })
+      ).toBe(true);
+    });
 
-      expect(validateGroupClaimsCheckDetails(req, userCase)).toBe(true);
+    it('should return true for MULTIPLE with a valid spreadsheet and lead claimant selection', () => {
+      expect(
+        validateGroupClaimsCheckDetails(undefined, {
+          caseType: CaseType.MULTIPLE,
+          additionalClaimantSpreadsheet: { document_size: 1024 },
+          leadClaimant: YesOrNo.YES,
+        })
+      ).toBe(true);
     });
   });
 });
