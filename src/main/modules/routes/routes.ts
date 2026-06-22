@@ -156,7 +156,9 @@ import { csrfProtection } from '../csrf';
 const handleUploads = multer({
   limits: {
     fileSize: FILE_SIZE_LIMIT,
-  },
+    fields: 20,
+    fieldNestingDepth: 1,
+  } as NonNullable<multer.Options['limits']>,
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
     req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
     return callback(null, !req.fileTooLarge);
