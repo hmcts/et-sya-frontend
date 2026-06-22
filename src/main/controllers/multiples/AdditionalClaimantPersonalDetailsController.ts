@@ -75,6 +75,8 @@ export default class AdditionalClaimantPersonalDetailsController {
 
   constructor() {
     this.form = new Form(<FormFields>this.personalDetailsContent.fields);
+    // get is registered as an unbound route handler, so bind it to preserve `this`.
+    this.get = this.get.bind(this);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -114,9 +116,9 @@ export default class AdditionalClaimantPersonalDetailsController {
     return handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
-  @AdditionalClaimantCheck()
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  @AdditionalClaimantCheck()
+  public get(req: AppRequest, res: Response): void {
     const content = getPageContent(req, this.personalDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS,
@@ -140,7 +142,7 @@ export default class AdditionalClaimantPersonalDetailsController {
     res.render(TranslationKeys.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS, {
       ...content,
     });
-  };
+  }
 
   /**
    * Loads an existing claimant's data back into the form fields.

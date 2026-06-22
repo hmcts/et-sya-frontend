@@ -459,7 +459,11 @@ export const ASSIGN_CLAIM_USER = 'assignClaimUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
-export const FILE_SIZE_LIMIT = 83886500;
+
+export const FILE_SIZE_LIMIT = {
+  FIVE_MB: 5 * 1024 * 1024,
+  EIGHTY_MB: 80 * 1024 * 1024,
+};
 
 export const inScopeLocations = [].concat(
   postcode_Glasgow,

@@ -85,7 +85,7 @@ export default class StepsToMakingYourClaimController {
                   status: (): string =>
                     getSectionStatus(
                       userCase?.groupClaimsCheck,
-                      userCase?.additionalClaimants?.length ?? userCase?.additionalClaimantSpreadsheet?.document_size
+                      userCase?.additionalClaimantSpreadsheet?.document_size ?? userCase?.additionalClaimants?.length
                     ),
                 },
                 {

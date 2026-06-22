@@ -40,8 +40,9 @@ export class AdditionalClaimantSpreadsheetService {
 
   public async validateSpreadsheet(req: AppRequest): Promise<ValidationError> {
     const maxRowsFlag = await getFlagValue('groupClaimsFileUploadMaxRows', null);
-    const maxDataRowsForUpload = maxRowsFlag !== undefined && maxRowsFlag !== null ? Number(maxRowsFlag) : 50;
-    const result = await validateSpreadsheetData(req.file!.buffer, maxDataRowsForUpload);
+    const parsedMaxRows = Number(maxRowsFlag);
+    const maxDataRowsForUpload = Number.isFinite(parsedMaxRows) && parsedMaxRows > 0 ? parsedMaxRows : 50;
+    const result = await validateSpreadsheetData(req.file.buffer, maxDataRowsForUpload);
 
     if (result.status === 'fileEmpty') {
       return { propertyName: 'additionalClaimantSpreadsheetName', errorType: 'fileEmpty' };

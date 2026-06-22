@@ -529,9 +529,6 @@ export const setAdditionalClaimantsApiFormat = (
   if (additionalClaimant === undefined) {
     return;
   }
-  if (additionalClaimant === null) {
-    return [];
-  }
   return additionalClaimant.map(claimant => {
     const address = claimant.address;
     return {

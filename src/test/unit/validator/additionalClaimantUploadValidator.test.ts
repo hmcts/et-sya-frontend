@@ -68,6 +68,14 @@ describe('cellToString()', () => {
   it('pads single digit day and month with leading zero', () => {
     expect(cellToString(new Date(2000, 0, 1))).toBe('01/01/2000');
   });
+
+  it('extracts the result from a formula cell', () => {
+    expect(cellToString({ formula: '=A1&" "&B1"', result: 'John Smith' })).toBe('John Smith');
+  });
+
+  it('handles a formula cell whose result is a Date', () => {
+    expect(cellToString({ formula: '=TODAY()', result: new Date(1990, 5, 15) })).toBe('15/06/1990');
+  });
 });
 
 describe('buildHeaderMap()', () => {

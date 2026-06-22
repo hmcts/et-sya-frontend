@@ -95,7 +95,7 @@ export default class ReviewAdditionalClaimantsController {
     // 3. Standard routing rules on successful validation
     let redirectUrl;
     if (req.body.addAdditionalClaimant === YesOrNo.NO || additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
-      if (req.session?.additonalClaimantsRedirectCheckAnswer) {
+      if (req.session?.additionalClaimantsRedirectCheckAnswer) {
         req.session.returnUrl = PageUrls.CHECK_ANSWERS;
       }
       redirectUrl = setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
@@ -127,9 +127,6 @@ export default class ReviewAdditionalClaimantsController {
     ]);
     const languageParam = req.url?.includes('lng=cy') ? '?lng=cy' : '';
     let additionalClaimants: ClaimantSummaryCard[] = [];
-
-    console.log('claimants', claimants.length);
-
     additionalClaimants = claimants.map((c, index) => ({
       name: formatName(c),
       dob: formatDob(c.dob),

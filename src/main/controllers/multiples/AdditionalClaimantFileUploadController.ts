@@ -57,7 +57,7 @@ export default class AdditionalClaimantFileUploadController {
       return res.redirect(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD);
     }
 
-    if (req.session?.additonalClaimantsRedirectCheckAnswer) {
+    if (req.session?.additionalClaimantsRedirectCheckAnswer) {
       req.session.returnUrl = PageUrls.CHECK_ANSWERS;
     }
 
@@ -150,7 +150,7 @@ export default class AdditionalClaimantFileUploadController {
 
   public remove = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.session.userCase) {
-      req.session.userCase.additionalClaimantSpreadsheet = null;
+      req.session.userCase.additionalClaimantSpreadsheet = undefined;
     }
     req.session.additionalClaimantUploadedFileName = undefined;
     req.session.errors = [];

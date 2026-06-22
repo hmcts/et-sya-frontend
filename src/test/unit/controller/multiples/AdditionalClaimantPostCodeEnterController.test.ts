@@ -1,6 +1,7 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
 import AdditionalClaimantPostCodeEnterController from '../../../../main/controllers/multiples/AdditionalClaimantPostCodeEnterController';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
+import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 jest.spyOn(CaseHelper, 'handlePostLogic').mockImplementation(() => Promise.resolve());
@@ -16,7 +17,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
 
   it('should render the additional claimant postcode enter page', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
 
     new AdditionalClaimantPostCodeEnterController().get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.ADDRESS_POSTCODE_ENTER, expect.anything());
@@ -25,7 +26,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
 
   it('should set edit index from query and clear previous selected addresses', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     request.query = { additionalClaimant: '0' };
     request.session.userCase.additionalClaimantAddressTypes = [{ label: 'old' }];
     request.session.userCase.additionalClaimantAddresses = [{ fullAddress: 'old' }];
@@ -39,7 +40,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
 
   it('should prepopulate postcode and address fields when editing an existing claimant', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     request.session.userCase.currentAdditionalClaimantIndex = 0;
     request.session.userCase.additionalClaimants = [
       {
@@ -67,7 +68,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
 
   it('should not throw when editing a claimant without an address object', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     request.session.userCase.currentAdditionalClaimantIndex = 0;
     request.session.userCase.additionalClaimants = [
       {
@@ -83,7 +84,7 @@ describe('Additional Claimant Postcode Enter Controller', () => {
 
   it('should render heading with claimant full name on postcode enter page', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     request.query = { additionalClaimant: '0' };
     request.session.userCase.additionalClaimants = [
       {
@@ -166,5 +167,15 @@ describe('Additional Claimant Postcode Enter Controller', () => {
       `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_SELECT}?additionalClaimant=1`,
       true
     );
+  });
+
+  it('should redirect via CaseStateCheck when the case state is not awaiting submission', () => {
+    const response = mockResponse();
+    const request = mockRequest({ userCase: { state: CaseState.SUBMITTED } });
+
+    new AdditionalClaimantPostCodeEnterController().get(request, response);
+
+    expect(response.render).not.toHaveBeenCalled();
+    expect(response.redirect).toHaveBeenCalled();
   });
 });

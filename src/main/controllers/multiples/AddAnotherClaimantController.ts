@@ -53,7 +53,7 @@ export default class AddAnotherClaimantController {
     let redirectUrl: string;
     if (req.session?.returnUrl) {
       req.session.returnUrl = undefined;
-      req.session.additonalClaimantsRedirectCheckAnswer = true;
+      req.session.additionalClaimantsRedirectCheckAnswer = true;
     }
 
     const previousMethod = req.session.userCase.addClaimantMethod;
@@ -66,7 +66,7 @@ export default class AddAnotherClaimantController {
 
     if (newMethod === AddAdditionalClaimant.MANUAL) {
       if (methodChanged) {
-        req.session.userCase.additionalClaimantSpreadsheet = null;
+        req.session.userCase.additionalClaimantSpreadsheet = undefined;
       }
 
       if (req.session.userCase.additionalClaimants?.length > 0) {
@@ -78,7 +78,7 @@ export default class AddAnotherClaimantController {
       }
     } else {
       if (methodChanged) {
-        req.session.userCase.additionalClaimants = null;
+        req.session.userCase.additionalClaimants = undefined;
       }
       redirectUrl = PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD;
     }

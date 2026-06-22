@@ -162,14 +162,21 @@ import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitio
 import { csrfProtection } from '../csrf';
 
 const handleUploads = multer({
-  limits: {
-    fileSize: FILE_SIZE_LIMIT,
-  },
+  limits: { fileSize: FILE_SIZE_LIMIT.EIGHTY_MB },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT.EIGHTY_MB;
     return callback(null, !req.fileTooLarge);
   },
 });
+
+const handleUploadsWithLimit = (fileSizeLimit: number) =>
+  multer({
+    limits: { fileSize: fileSizeLimit },
+    fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
+      req.fileTooLarge = parseInt(req.headers['content-length']) > fileSizeLimit;
+      return callback(null, !req.fileTooLarge);
+    },
+  });
 
 const describeWhatHappenedLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -501,7 +508,7 @@ export class Routes {
     app.get(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD, new AdditionalClaimantFileUploadController().get);
     app.post(
       PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD_POSTVALIDATE,
-      handleUploads.single('additionalClaimantSpreadsheetName'),
+      handleUploadsWithLimit(FILE_SIZE_LIMIT.FIVE_MB).single('additionalClaimantSpreadsheetName'),
       csrfProtection,
       new AdditionalClaimantFileUploadController().postValidate
     );
