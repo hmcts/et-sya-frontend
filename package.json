@@ -193,7 +193,7 @@
     "yauzl": "3.2.1",
     "picomatch": "^4.0.4",
     "ip-address": "^10.1.1",
-    "undici": "^6.27.0"
+    "undici": "^7.25.0"
   },
   "packageManager": "yarn@4.12.0"
 }
