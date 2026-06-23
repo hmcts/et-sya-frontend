@@ -25,10 +25,13 @@ export default class ClaimantRespondentAddressDetailsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     req.params.respondentNumber = req.session.claimantRespondentNumber ?? '1';
-    // If the claimant never worked for the employer, the "did you work at this address" question
-    // does not apply, so skip straight to the Acas certificate question.
+    // The "did you work at this address" question only applies to the first respondent. For
+    // additional respondents (2nd and subsequent employers) we only collect the name, address
+    // and Acas certificate, so skip straight to the Acas certificate question. The question is
+    // also skipped when the claimant never worked for the employer.
+    const isFirstRespondent = req.params.respondentNumber === '1';
     const redirectUrl =
-      req.session.userCase?.pastEmployer === YesOrNo.NO
+      !isFirstRespondent || req.session.userCase?.pastEmployer === YesOrNo.NO
         ? PageUrls.CLAIMANT_ACAS_CERT_NUM
         : PageUrls.CLAIMANT_DID_WORK_AT;
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);

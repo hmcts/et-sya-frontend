@@ -82,5 +82,16 @@ describe('ClaimantRespondentAddressDetailsController', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_ACAS_CERT_NUM);
     });
+
+    it('should redirect to CLAIMANT_ACAS_CERT_NUM for additional respondents even when the claimant worked for the employer', async () => {
+      const controller = new ClaimantRespondentAddressDetailsController();
+      const req = mockRequestEmpty({ body, userCase: { pastEmployer: YesOrNo.YES } });
+      req.session.claimantRespondentNumber = '2';
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_ACAS_CERT_NUM);
+    });
   });
 });
