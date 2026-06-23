@@ -1,0 +1,13 @@
+{
+  "title": "[W]Your email address",
+  "h1": "[W]Your email address",
+  "emailLabel": "[W]Enter your email address for this case",
+  "hint": "[W]This is separate from the email address you use to sign in. You can use a different email for each case you represent.",
+  "submitBtn": "[W]Submit",
+  "errors": {
+    "claimantRepEmail": {
+      "required": "[W]Enter your email address",
+      "invalid": "[W]Enter an email address in the correct format, for example name@example.com"
+    }
+  }
+}

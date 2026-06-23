@@ -14,6 +14,19 @@ export interface AppRequest<T = Partial<AnyRecord>> extends Request {
 export interface AppSession extends Session {
   visitedContactTribunalSelection?: boolean;
   returnUrl: string;
+  repAboutYouCaseId?: string;
+  claimantRepAboutYouPendingDisplay?: Pick<
+    CaseWithId,
+    | 'representativeName'
+    | 'representativeOrgName'
+    | 'claimantRepEmail'
+    | 'repAddress1'
+    | 'repAddress2'
+    | 'repAddressTown'
+    | 'repAddressCountry'
+    | 'repAddressPostcode'
+    | 'representativePhoneNumber'
+  >;
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;

@@ -9,6 +9,10 @@
   "appointLegalRepresentative": "[W]Appoint a legal representative",
   "sectionAboutYou": "[W]About you",
   "personalDetails": "[W]View and edit your personal details",
+  "emailChangedNote": {
+    "p1": "[W]Communications about this case will be sent to your new email address.",
+    "p2": "[W]You will still need to use your original email address to sign in:"
+  },
   "section1": "[W]The claim",
   "section2": "[W]The response",
   "section3": "[W]Your hearings",

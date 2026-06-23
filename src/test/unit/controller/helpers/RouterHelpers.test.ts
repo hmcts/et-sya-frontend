@@ -194,6 +194,12 @@ describe('Router Helpers - returnValidUrl', () => {
     expect(result).toContain('lng=en');
   });
 
+  it('should return a dynamic URL for claimant rep routes with UUID case id', () => {
+    const caseId = 'a4396b10-6928-4711-a3ba-89fcf6adb779';
+    const result = returnValidUrl(`/claimant-rep-edit-name/${caseId}?lng=en`);
+    expect(result).toEqual(`/claimant-rep-edit-name/${caseId}?lng=en`);
+  });
+
   it('should return the ET1 base URL path when it starts with ET1_BASE_URL', () => {
     const originalEnv = process.env.ET1_BASE_URL;
     process.env.ET1_BASE_URL = 'http://et1.test';

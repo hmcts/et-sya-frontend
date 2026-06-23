@@ -1,0 +1,37 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: back,
+    href: backLinkUrl
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% block errorSummary %}
+        {% include "error-summary.njk" %}
+      {% endblock %}
+
+      <h1 class="govuk-heading-xl">{{ h1 }}</h1>
+
+      {{ govukSummaryList({
+        rows: aboutYouRows
+      }) }}
+
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
+
+      <h2 class="govuk-heading-m">{{ tellTheTribunal.heading }}</h2>
+      <p class="govuk-body">
+        {{ tellTheTribunal.textBeforeLink }}
+        <a class="govuk-link" href="{{ contactTribunalUrl }}">{{ tellTheTribunal.contactLink }}</a>{{ tellTheTribunal.textAfterLink }}
+      </p>
+    </div>
+  </div>
+{% endblock %}
