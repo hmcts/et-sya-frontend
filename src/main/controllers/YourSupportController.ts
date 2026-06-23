@@ -33,6 +33,18 @@ const YOUR_SUPPORT_TEMPLATE = 'your-support';
 const YOUR_SUPPORT_FIELD = 'reasonableAdjustments';
 const YOUR_SUPPORT_REDIRECT_ERROR = 'yourSupportRedirect';
 
+const formatError = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.stack || error.message;
+  }
+
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+};
+
 export default class YourSupportController {
   private s2sService?: IS2SService;
   private readonly form: Form;
@@ -101,7 +113,7 @@ export default class YourSupportController {
       res.redirect(results.url);
     } catch (error) {
       req.session.errors.push({ propertyName: YOUR_SUPPORT_REDIRECT_ERROR, errorType: 'required' });
-      logger.error('Error starting CUI journey', error);
+      logger.error(`Error starting CUI journey: ${formatError(error)}`);
       res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
     }
   };
