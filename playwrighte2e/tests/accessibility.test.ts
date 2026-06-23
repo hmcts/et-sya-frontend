@@ -5,7 +5,7 @@ import { PageUrls } from '../../src/main/definitions/constants';
 import { test } from '../fixtures/common.fixture';
 
 const envUrl = process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net';
-const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB];
+const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB, PageUrls.MANIFEST_URL];
 
 async function expectNoErrors(page: Page): Promise<void> {
   const accessibilityScanResults = await new AxeBuilder({ page })

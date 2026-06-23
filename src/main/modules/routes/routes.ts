@@ -67,6 +67,7 @@ import JudgmentDetailsController from '../../controllers/JudgmentDetailsControll
 import LinkedCasesController from '../../controllers/LinkedCasesController';
 import LipOrRepController from '../../controllers/LipOrRepController';
 import MakingClaimAsLegalRepController from '../../controllers/MakingClaimAsLegalRepController';
+import ManifestController from '../../controllers/ManifestController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
 import NewJobPayController from '../../controllers/NewJobPayController';
@@ -208,6 +209,7 @@ export class Routes {
     app.post(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().post);
     app.get(PageUrls.COOKIE_PREFERENCES, new CookiePreferencesController().get);
     app.get(PageUrls.ACCESSIBILITY_STATEMENT, new AccessibilityStatementController().get);
+    app.get(PageUrls.MANIFEST_URL, new ManifestController().get);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().get);
