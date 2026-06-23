@@ -436,6 +436,7 @@ export const PageUrls = {
   CLAIMANT_REP_EDIT_EMAIL: '/claimant-rep-edit-email/:caseId',
   CLAIMANT_REP_CHECK_ANSWERS: '/claimant-rep-check-your-answers',
   CLAIMANT_REP_CLAIM_SUBMITTED: '/claimant-rep-claim-submitted',
+  MANIFEST_URL: '/assets/manifest.json',
 } as const;
 
 export const InterceptPaths = {
