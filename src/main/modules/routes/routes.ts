@@ -64,8 +64,11 @@ import ClaimantPastNoticeTypeController from '../../controllers/ClaimantPastNoti
 import ClaimantPayController from '../../controllers/ClaimantPayController';
 import ClaimantPensionController from '../../controllers/ClaimantPensionController';
 import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWorkController';
+import ClaimantRepAboutYouController from '../../controllers/ClaimantRepAboutYouController';
 import ClaimantRepCheckAnswersController from '../../controllers/ClaimantRepCheckAnswersController';
 import ClaimantRepClaimSubmittedController from '../../controllers/ClaimantRepClaimSubmittedController';
+import ClaimantRepEditEmailController from '../../controllers/ClaimantRepEditEmailController';
+import ClaimantRepEditNameController from '../../controllers/ClaimantRepEditNameController';
 import ClaimantRepHubController from '../../controllers/ClaimantRepHubController';
 import ClaimantRespondentAddRedirectController from '../../controllers/ClaimantRespondentAddRedirectController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
@@ -649,6 +652,12 @@ export class Routes {
     app.get(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().post);
     app.get(PageUrls.CLAIMANT_REP_HUB, new ClaimantRepHubController().get);
+    app.get(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().get);
+    app.post(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().post);
+    app.get(PageUrls.CLAIMANT_REP_EDIT_NAME, new ClaimantRepEditNameController().get);
+    app.post(PageUrls.CLAIMANT_REP_EDIT_NAME, new ClaimantRepEditNameController().post);
+    app.get(PageUrls.CLAIMANT_REP_EDIT_EMAIL, new ClaimantRepEditEmailController().get);
+    app.post(PageUrls.CLAIMANT_REP_EDIT_EMAIL, new ClaimantRepEditEmailController().post);
     app.get(PageUrls.CLAIMANT_REP_CHECK_ANSWERS, new ClaimantRepCheckAnswersController().get);
     app.get(PageUrls.CLAIMANT_REP_CLAIM_SUBMITTED, new ClaimantRepClaimSubmittedController().get);
     app.get(InterceptPaths.SUBMIT_REP_CASE, new SubmitRepCaseController().get);

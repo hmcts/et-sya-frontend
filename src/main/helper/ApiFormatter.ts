@@ -1,8 +1,14 @@
 import { isDateEmpty } from '../components/form/date-validator';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { populateClaimantRepDetailsFromCase } from '../controllers/helpers/ClaimantRepAnswersHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
-import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
+import {
+  CreateCaseBody,
+  RepresentativeRequestBody,
+  RespondentRequestBody,
+  UpdateCaseBody,
+} from '../definitions/api/caseApiBody';
 import {
   CaseApiDataResponse,
   CaseData,
@@ -82,7 +88,7 @@ export function toApiFormatCreate(
 
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
   const isRepresentedClaimant = fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES;
-  return {
+  const userCase: CaseWithId = {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
@@ -125,6 +131,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
       : undefined,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
+    representativePhoneNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
     address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
     address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
     addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
@@ -251,8 +258,45 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     leadClaimant: fromApiCaseData?.case_data?.leadClaimant,
     caseStayed: fromApiCaseData?.case_data?.batchCaseStayed,
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
+    representativeName: fromApiCaseData.case_data?.representativeClaimantType?.name_of_representative,
+    representativeOrgName: fromApiCaseData.case_data?.representativeClaimantType?.name_of_organisation,
+    claimantRepEmail: fromApiCaseData.case_data?.representativeClaimantType?.representative_email_address,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+  };
+  populateClaimantRepDetailsFromCase(userCase);
+  return userCase;
+}
+
+export function getClaimantRepAboutYouUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
+  const caseData: UpdateCaseBody['case_data'] = {
+    caseType: caseItem.caseType,
+    typesOfClaim: caseItem.typeOfClaim,
+    claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
+    caseSource: CcdDataModel.CASE_SOURCE,
+    claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+    representativeClaimantType: {
+      name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
+      name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
+      representative_email_address: caseItem.claimantRepEmail,
+    },
+  };
+
+  const repCollection = setRepCollectionApiFormat(caseItem);
+  if (repCollection) {
+    caseData.repCollection = repCollection;
+  }
+
+  if (caseItem.representativePhoneNumber) {
+    caseData.claimantType = {
+      claimant_phone_number: caseItem.representativePhoneNumber,
+    };
+  }
+
+  return {
+    case_id: caseItem.id,
+    case_type_id: caseItem.caseTypeId,
+    case_data: caseData,
   };
 }
 
@@ -287,7 +331,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimant_email_address: isRepresentedClaimant
           ? caseItem.representedClaimantEmail ?? caseItem.email
           : caseItem.email,
-        claimant_phone_number: caseItem.telNumber,
+        claimant_phone_number: caseItem.representativePhoneNumber ?? caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
         claimant_addressUK: {
           AddressLine1: isRepresentedClaimant
@@ -374,9 +418,44 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
+      representativeClaimantType: {
+        name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
+        name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
+        representative_email_address: caseItem.claimantRepEmail,
+      },
+      repCollection: setRepCollectionApiFormat(caseItem),
     },
   };
 }
+
+const hasRepAddress = (caseItem: CaseWithId): boolean =>
+  !!caseItem.repAddress1?.trim() && !!caseItem.repAddressTown?.trim() && !!caseItem.repAddressCountry?.trim();
+
+export const setRepCollectionApiFormat = (caseItem: CaseWithId): RepresentativeRequestBody[] | undefined => {
+  if (!hasRepAddress(caseItem)) {
+    return undefined;
+  }
+
+  const claimantRep = caseItem.representatives?.find(rep => !rep.respondentId) ?? caseItem.representatives?.[0];
+
+  return [
+    {
+      id: claimantRep?.ccdId,
+      value: {
+        name_of_representative: caseItem.representativeName ?? claimantRep?.nameOfRepresentative,
+        name_of_organisation: caseItem.representativeOrgName ?? claimantRep?.nameOfOrganisation,
+        representative_email_address: caseItem.claimantRepEmail ?? claimantRep?.representativeEmailAddress,
+        representative_address: {
+          AddressLine1: caseItem.repAddress1,
+          AddressLine2: caseItem.repAddress2,
+          PostTown: caseItem.repAddressTown,
+          Country: caseItem.repAddressCountry,
+          PostCode: caseItem.repAddressPostcode,
+        },
+      },
+    },
+  ];
+};
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
   const mimeType = getFileExtension(document?.originalDocumentName);
@@ -498,6 +577,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
 export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
   return representatives?.map(rep => {
     return {
+      ccdId: rep.id,
       respondentId: rep.value.respondentId,
       nameOfRepresentative: rep.value.name_of_representative,
       nameOfOrganisation: rep.value.name_of_organisation,

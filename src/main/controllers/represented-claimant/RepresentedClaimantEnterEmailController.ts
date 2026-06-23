@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
+import { isValidEmailAddressWhenProvided } from '../../components/form/validator';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
@@ -33,6 +34,7 @@ export default class RepresentedClaimantEnterEmailController {
           autocomplete: 'email',
           maxLength: 100,
         },
+        validator: isValidEmailAddressWhenProvided,
       },
     },
     submit: submitButton,

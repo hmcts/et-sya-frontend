@@ -1,10 +1,12 @@
 import RepresentativePhoneNumberController from '../../../main/controllers/RepresentativePhoneNumberController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import * as ClaimantRepAboutYouHelper from '../../../main/controllers/helpers/ClaimantRepAboutYouHelper';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+jest.spyOn(ClaimantRepAboutYouHelper, 'ensureClaimantRepCaseLoaded').mockResolvedValue(true);
 
 describe('Representative Phone Number Controller', () => {
   const t = {
@@ -13,14 +15,26 @@ describe('Representative Phone Number Controller', () => {
   };
 
   describe('get()', () => {
-    it('should render the Representative Phone Number page', () => {
+    it('should render the Representative Phone Number page', async () => {
       const controller = new RepresentativePhoneNumberController();
       const response = mockResponse();
       const request = mockRequest({ t });
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       expect(response.render).toHaveBeenCalledWith('representative-phone-number', expect.anything());
+    });
+
+    it('should use Submit button label in rep-about-you flow', async () => {
+      const controller = new RepresentativePhoneNumberController();
+      const response = mockResponse();
+      const request = mockRequest({ t });
+      request.session.repAboutYouCaseId = 'case-123';
+
+      await controller.get(request, response);
+
+      const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.form.submit.text({ submitBtn: 'Submit', submit: 'Save and continue' })).toBe('Submit');
     });
   });
 

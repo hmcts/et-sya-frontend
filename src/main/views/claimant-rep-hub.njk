@@ -48,6 +48,12 @@
                       </li>
                     {% endfor %}
                   </ul>
+                  {% if loop.first and showEmailChangedNote %}
+                    <div class="govuk-inset-text govuk-!-margin-bottom-5">
+                      <p class="govuk-body">{{ emailChangedNote.p1 }}</p>
+                      <p class="govuk-body">{{ emailChangedNote.p2 }} <b>{{ loginEmail }}</b></p>
+                    </div>
+                  {% endif %}
                 </li>
               {% endfor %}
             </ol>

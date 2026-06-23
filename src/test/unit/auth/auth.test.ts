@@ -36,11 +36,20 @@ describe('getRedirectUrl', () => {
 });
 
 describe('getUserDetails', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('should exchange a code for a token and decode a JWT to get the user details', async () => {
     mockedAxios.post.mockResolvedValue({
       data: {
         access_token: token,
         id_token: token,
+      },
+    });
+    mockedAxios.get.mockResolvedValue({
+      data: {
+        roles: ['caseworker'],
       },
     });
 
@@ -70,6 +79,41 @@ describe('getUserDetails', () => {
       givenName: 'Citizen',
       familyName: 'Tester',
       id: 'a4396b10-6928-4711-a3ba-89fcf6adb779',
+      isCitizen: true,
+    });
+    expect(mockedAxios.get).not.toHaveBeenCalled();
+  });
+
+  test('should fetch citizen role from userinfo when the id_token omits roles', async () => {
+    const localSimulatorToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIn0.fake-signature';
+
+    mockedAxios.post.mockResolvedValue({
+      data: {
+        access_token: 'access-token',
+        id_token: localSimulatorToken,
+      },
+    });
+    mockedAxios.get.mockResolvedValue({
+      data: {
+        uid: '6abc957b-e8f5-3487-84c5-a736eb6605b9',
+        given_name: 'A',
+        family_name: 'User',
+        roles: ['citizen'],
+      },
+    });
+
+    const result = await getUserDetails('http://localhost', '123', AuthUrls.CALLBACK);
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringMatching(/\/userinfo$/), {
+      headers: { Authorization: 'Bearer access-token' },
+    });
+    expect(result).toStrictEqual({
+      accessToken: 'access-token',
+      email: 'test.test@gmail.com',
+      givenName: 'A',
+      familyName: 'User',
+      id: '6abc957b-e8f5-3487-84c5-a736eb6605b9',
       isCitizen: true,
     });
   });

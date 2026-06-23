@@ -165,6 +165,9 @@ export const TranslationKeys = {
 
   // non-hmcts claimant rep
   CLAIMANT_REP_HUB: 'claimant-rep-hub',
+  CLAIMANT_REP_ABOUT_YOU: 'claimant-rep-about-you',
+  CLAIMANT_REP_EDIT_NAME: 'claimant-rep-edit-name',
+  CLAIMANT_REP_EDIT_EMAIL: 'claimant-rep-edit-email',
   CLAIMANT_REP_CHECK_ANSWERS: 'claimant-rep-check-your-answers',
   CLAIMANT_REP_CLAIM_SUBMITTED: 'claimant-rep-claim-submitted',
   REPRESENTATIVE_DETAILS: 'representative-details',
@@ -428,6 +431,9 @@ export const PageUrls = {
   CLAIMANT_COMPENSATION: '/claimant-compensation',
   CLAIMANT_TRIBUNAL_RECOMMENDATION: '/claimant-tribunal-recommendation',
   CLAIMANT_REP_HUB: '/claimant-rep-hub/:caseId',
+  CLAIMANT_REP_ABOUT_YOU: '/claimant-rep-about-you/:caseId',
+  CLAIMANT_REP_EDIT_NAME: '/claimant-rep-edit-name/:caseId',
+  CLAIMANT_REP_EDIT_EMAIL: '/claimant-rep-edit-email/:caseId',
   CLAIMANT_REP_CHECK_ANSWERS: '/claimant-rep-check-your-answers',
   CLAIMANT_REP_CLAIM_SUBMITTED: '/claimant-rep-claim-submitted',
 } as const;
@@ -436,6 +442,7 @@ export const InterceptPaths = {
   CHANGE_DETAILS: '*/change',
   ANSWERS_CHANGE: '/change?redirect=answers',
   REP_ANSWERS_CHANGE: '/change?redirect=rep-answers',
+  REP_ABOUT_YOU_CHANGE: '/change?redirect=rep-about-you',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
   SUBMIT_REP_CASE: '/submitRepCase',
@@ -447,6 +454,13 @@ export const InterceptPaths = {
   TRIBUNAL_RESPONSE_STORE_CYA: '/tribunalResponseStoreCya',
   STORE_RESPONDENT_CYA: '/storeRespondentCya',
   SUBMIT_BUNDLES_HEARING_DOCS_CYA: '/submitBundlesHearingDocsCya',
+} as const;
+
+export const ChangeDetailsRedirect = {
+  ANSWERS: 'answers',
+  REP_ANSWERS: 'rep-answers',
+  REP_ABOUT_YOU: 'rep-about-you',
+  RESPONDENT: 'respondent',
 } as const;
 
 export const ErrorPages = {
@@ -753,6 +767,10 @@ export const VALID_DYNAMIC_URL_PATTERNS = [
 export const VALID_DYNAMIC_URL_BASES = [
   'respondent',
   'citizen-hub',
+  'claimant-rep-hub',
+  'claimant-rep-about-you',
+  'claimant-rep-edit-name',
+  'claimant-rep-edit-email',
   'no-acas-reason',
   'work-postcode-enter',
   'acas-cert-num',

@@ -1,0 +1,24 @@
+{
+  "title": "[W]About you",
+  "h1": "[W]About you",
+  "submitBtn": "[W]Submit",
+  "aboutYouDetails": {
+    "name": "[W]Name",
+    "organisation": "[W]Organisation",
+    "typeOfOrganisation": "[W]Type of organisation",
+    "address": "[W]Address",
+    "email": "[W]Email",
+    "phone": "[W]Phone"
+  },
+  "tellTheTribunal": {
+    "heading": "[W]Tell the tribunal",
+    "textBeforeLink": "[W]If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
+    "contactLink": "[W]contact the tribunal",
+    "textAfterLink": "[W]."
+  },
+  "errors": {
+    "hiddenErrorField": {
+      "invalid": "[W]You must complete your name, address and email before you can submit"
+    }
+  }
+}

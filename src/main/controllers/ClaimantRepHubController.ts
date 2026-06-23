@@ -41,6 +41,12 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from './helpers/CitizenHubHelper';
 import { getProgressBarItems } from './helpers/CitizenHubProgressBarHelper';
+import {
+  applyPreservedClaimantRepSessionFields,
+  getClaimantRepAboutYouUrl,
+  populateClaimantRepDetailsFromCase,
+  repEmailDiffersFromLoginEmail,
+} from './helpers/ClaimantRepAnswersHelper';
 import { isClaimantRepresentedByOrganisation } from './helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from './helpers/HearingHelpers';
 import {
@@ -64,7 +70,8 @@ import { getMultiplePanelData, showMutipleData } from './helpers/multiples/Multi
 
 const logger = getLogger('ClaimantRepHubController');
 
-const repSectionIndexToLinkNames: HubLinkNames[][] = [...sectionIndexToLinkNames];
+// Rep hub uses a custom "About you" section; exclude the shared citizen-hub AboutYou section
+const repSectionIndexToLinkNames: HubLinkNames[][] = sectionIndexToLinkNames.slice(1);
 
 export default class ClaimantRepHubController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -73,6 +80,8 @@ export default class ClaimantRepHubController {
     try {
       const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
       req.session.userCase = fromApiFormat(caseData.data);
+      populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail: req.session.user?.email });
+      applyPreservedClaimantRepSessionFields(req.session.userCase, req.session.claimantRepAboutYouPendingDisplay);
     } catch (error) {
       logger.error(`Error loading case ${caseId}: ${error.message}`);
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
@@ -132,6 +141,9 @@ export default class ClaimantRepHubController {
     await activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
 
     updateHubLinkStatuses(userCase, hubLinksStatuses);
+    hubLinksStatuses[HubLinkNames.AboutYou] = HubLinkStatus.OPTIONAL;
+
+    const aboutYouStatus = hubLinksStatuses[HubLinkNames.AboutYou];
 
     const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
 
@@ -154,10 +166,10 @@ export default class ClaimantRepHubController {
       links: [
         {
           linkTxt: (l: AnyRecord): string => l.personalDetails,
-          status: (l: AnyRecord): string => l[HubLinkStatus.NOT_YET_AVAILABLE],
-          shouldShow: false,
-          url: () => '',
-          statusColor: () => statusColorMap.get(HubLinkStatus.NOT_YET_AVAILABLE),
+          status: (l: AnyRecord): string => l[aboutYouStatus],
+          shouldShow: shouldHubLinkBeClickable(aboutYouStatus, HubLinkNames.AboutYou),
+          url: () => getClaimantRepAboutYouUrl(userCase.id, languageParam),
+          statusColor: () => statusColorMap.get(aboutYouStatus),
         },
       ],
     };
@@ -195,6 +207,8 @@ export default class ClaimantRepHubController {
 
     const showMultipleData = await showMutipleData(userCase);
     const showNoLongerRepresentedNotification = userCase?.claimantRepresentativeRemoved === YesOrNo.YES;
+    const loginEmail = req.session.user?.email;
+    const showEmailChangedNote = repEmailDiffersFromLoginEmail(userCase, loginEmail);
 
     res.render(TranslationKeys.CLAIMANT_REP_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -235,6 +249,8 @@ export default class ClaimantRepHubController {
       showMultipleData,
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
       showNoLongerRepresentedNotification,
+      showEmailChangedNote,
+      loginEmail,
       claimantRepresentedByOrganisation,
     });
   };

@@ -1,8 +1,13 @@
 import {
+  applyPreservedClaimantRepSessionFields,
   getClaimantClaimDetails,
   getClaimantPersonalDetails,
+  getClaimantRepAboutYouDetails,
+  getClaimantRepAboutYouUrl,
   getClaimantRespondentSection,
   getRepresentativeDetails,
+  populateClaimantRepDetailsFromCase,
+  repEmailDiffersFromLoginEmail,
 } from '../../../../main/controllers/helpers/ClaimantRepAnswersHelper';
 import {
   CaseWithId,
@@ -13,6 +18,7 @@ import {
   Sex,
   YesOrNo,
 } from '../../../../main/definitions/case';
+import { InterceptPaths, PageUrls } from '../../../../main/definitions/constants';
 import { CaseState, ClaimTypeDiscrimination, ClaimTypePay } from '../../../../main/definitions/definition';
 import et1DetailsJson from '../../../../main/resources/locales/en/translation/et1-details.json';
 
@@ -70,6 +76,14 @@ const translations = {
   discriminationClaims: { Age: 'Age' },
   payClaims: { Arrears: 'Arrears' },
   tellUsWhatYouWant: { compensation: 'Compensation only' },
+  aboutYouDetails: {
+    name: 'Name',
+    organisation: 'Organisation',
+    typeOfOrganisation: 'Type of organisation',
+    address: 'Address',
+    email: 'Email',
+    phone: 'Phone',
+  },
 };
 
 const baseCase = {
@@ -78,6 +92,180 @@ const baseCase = {
 } as CaseWithId;
 
 describe('ClaimantRepAnswersHelper', () => {
+  describe('getClaimantRepAboutYouUrl', () => {
+    it('should build the about you page url for a case', () => {
+      expect(getClaimantRepAboutYouUrl('case-123', '')).toBe('/claimant-rep-about-you/case-123');
+    });
+  });
+
+  describe('applyPreservedClaimantRepSessionFields', () => {
+    it('should keep an updated representative name after reloading case data from the api', () => {
+      const userCase = {
+        ...baseCase,
+        claimantRepresentative: {
+          name_of_representative: 'Old Name',
+        },
+      };
+      applyPreservedClaimantRepSessionFields(userCase, {
+        representativeName: 'Updated Name',
+      });
+
+      expect(userCase.representativeName).toBe('Updated Name');
+      expect(userCase.claimantRepresentative?.name_of_representative).toBe('Updated Name');
+    });
+  });
+
+  describe('populateClaimantRepDetailsFromCase', () => {
+    it('should populate representative fields from case data when not already set', () => {
+      const userCase = {
+        ...baseCase,
+        claimantRepresentative: {
+          name_of_representative: 'Wolfie Smith',
+          name_of_organisation: 'Tooting Popular Front',
+        },
+        telNumber: '0208 123 1234',
+        representatives: [
+          {
+            nameOfRepresentative: 'Rep From Collection',
+            nameOfOrganisation: 'Collection Org',
+            representativeAddress: {
+              AddressLine1: '1 Tooting Broadway',
+              PostTown: 'London',
+              PostCode: 'SW17 1NE',
+              Country: 'England',
+            },
+          },
+        ],
+      };
+
+      populateClaimantRepDetailsFromCase(userCase);
+
+      expect(userCase.representativeName).toBe('Wolfie Smith');
+      expect(userCase.representativeOrgName).toBe('Tooting Popular Front');
+      expect(userCase.representativePhoneNumber).toBe('0208 123 1234');
+      expect(userCase.repAddress1).toBe('1 Tooting Broadway');
+      expect(userCase.repAddressTown).toBe('London');
+      expect(userCase.repAddressPostcode).toBe('SW17 1NE');
+      expect(userCase.repAddressCountry).toBe('England');
+    });
+
+    it('should sync representative phone number from telNumber', () => {
+      const userCase = {
+        ...baseCase,
+        telNumber: '0208 123 1234',
+      };
+
+      populateClaimantRepDetailsFromCase(userCase);
+
+      expect(userCase.representativePhoneNumber).toBe('0208 123 1234');
+    });
+
+    it('should default email to the login email when not set on the case', () => {
+      const userCase = {
+        ...baseCase,
+        representativeName: 'Wolfie Smith',
+      };
+
+      populateClaimantRepDetailsFromCase(userCase, { loginEmail: 'rep@example.com' });
+
+      expect(userCase.claimantRepEmail).toBe('rep@example.com');
+      expect(userCase.claimantRepresentative?.representative_email_address).toBe('rep@example.com');
+    });
+
+    it('should not overwrite existing representative fields', () => {
+      const userCase = {
+        ...baseCase,
+        representativeName: 'Existing Name',
+        claimantRepresentative: {
+          name_of_representative: 'Wolfie Smith',
+        },
+      };
+
+      populateClaimantRepDetailsFromCase(userCase);
+
+      expect(userCase.representativeName).toBe('Existing Name');
+    });
+  });
+
+  describe('getClaimantRepAboutYouDetails', () => {
+    it('should return summary rows with change links only on editable fields', () => {
+      const userCase = {
+        ...baseCase,
+        id: 'case-123',
+        representativeType: 'Trade Union',
+        representativeOrgName: 'Tooting Popular Front',
+        representativeName: 'Wolfie Smith',
+        repAddress1: '1 Tooting Broadway',
+        repAddressTown: 'London',
+        repAddressPostcode: 'SW17 1NE',
+        representativePhoneNumber: '0208 123 1234',
+        claimantRepEmail: 'WSmith@TPF.com',
+      };
+      const rows = getClaimantRepAboutYouDetails(userCase, translations);
+      expect(rows).toHaveLength(6);
+      expect(rows[0].value.text).toBe('Wolfie Smith');
+      expect(rows[0].actions.items[0].href).toBe(
+        PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', 'case-123') + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+      expect(rows[1].actions).toBeUndefined();
+      expect(rows[2].actions).toBeUndefined();
+      expect(rows[4].value.html).toContain('WSmith@TPF.com');
+      expect(rows[4].actions.items[0].href).toBe(
+        PageUrls.CLAIMANT_REP_EDIT_EMAIL.replace(':caseId', 'case-123') + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+      expect(rows[5].actions.items[0].href).toBe(
+        PageUrls.REPRESENTATIVE_PHONE_NUMBER + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+    });
+
+    it('should not append language param to change links', () => {
+      const userCase = {
+        ...baseCase,
+        id: 'case-123',
+        representativeName: 'Wolfie Smith',
+        repAddress1: '1 Tooting Broadway',
+        repAddressTown: 'London',
+        repAddressCountry: 'England',
+        claimantRepEmail: 'WSmith@TPF.com',
+      };
+      const rows = getClaimantRepAboutYouDetails(userCase, translations);
+      expect(rows[0].actions.items[0].href).toBe(
+        PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', 'case-123') + InterceptPaths.REP_ABOUT_YOU_CHANGE
+      );
+    });
+
+    it('should display representative details from claimantRepresentative when session fields are unset', () => {
+      const userCase = {
+        ...baseCase,
+        id: 'case-123',
+        claimantRepresentative: {
+          name_of_representative: 'Wolfie Smith',
+          name_of_organisation: 'Tooting Popular Front',
+          representative_email_address: 'WSmith@TPF.com',
+        },
+        representatives: [
+          {
+            nameOfRepresentative: 'Wolfie Smith',
+            nameOfOrganisation: 'Tooting Popular Front',
+            representativeAddress: {
+              AddressLine1: '1 Tooting Broadway',
+              PostTown: 'London',
+              PostCode: 'SW17 1NE',
+              Country: 'England',
+            },
+          },
+        ],
+        telNumber: '0208 123 1234',
+      };
+      const rows = getClaimantRepAboutYouDetails(userCase, translations);
+      expect(rows[0].value.text).toBe('Wolfie Smith');
+      expect(rows[1].value.text).toBe('Tooting Popular Front');
+      expect(rows[3].value.text).toContain('1 Tooting Broadway');
+      expect(rows[4].value.html).toContain('WSmith@TPF.com');
+      expect(rows[5].value.text).toBe('0208 123 1234');
+    });
+  });
+
   describe('getRepresentativeDetails', () => {
     it('should return rows with provided values', () => {
       const userCase = {
@@ -260,6 +448,27 @@ describe('ClaimantRepAnswersHelper', () => {
       const rows = getClaimantClaimDetails({ ...baseCase, linkedCases: undefined }, translations);
       const linkedRow = rows.find(r => r.key.text === 'Linked cases');
       expect(linkedRow.value.text).toBe('Not provided');
+    });
+  });
+
+  describe('repEmailDiffersFromLoginEmail', () => {
+    it('should return true when the case email differs from the sign-in email', () => {
+      const userCase = { claimantRepEmail: 'new-case@example.com' } as CaseWithId;
+      expect(repEmailDiffersFromLoginEmail(userCase, 'login@idam.com')).toBe(true);
+    });
+
+    it('should return false when the emails match regardless of case and whitespace', () => {
+      const userCase = { claimantRepEmail: '  LOGIN@idam.com ' } as CaseWithId;
+      expect(repEmailDiffersFromLoginEmail(userCase, 'login@idam.com')).toBe(false);
+    });
+
+    it('should return false when the case email is missing', () => {
+      expect(repEmailDiffersFromLoginEmail({} as CaseWithId, 'login@idam.com')).toBe(false);
+    });
+
+    it('should return false when the login email is missing', () => {
+      const userCase = { claimantRepEmail: 'new-case@example.com' } as CaseWithId;
+      expect(repEmailDiffersFromLoginEmail(userCase, undefined)).toBe(false);
     });
   });
 });
