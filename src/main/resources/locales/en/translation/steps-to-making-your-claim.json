@@ -7,7 +7,8 @@
     "title": "Your details",
     "link1Text": "Personal details",
     "link2Text": "Contact details",
-    "link3Text": "Your preferences"
+    "link3Text": "Your preferences",
+    "link4Text": "Tell us about the support you require"
   },
   "section2": {
     "title": "Employment and respondent details",
@@ -20,10 +21,6 @@
     "link2Text": "Tell us what you want from your claim"
   },
   "section4": {
-    "title": "Your Support",
-    "link1Text": "Tell us about the support you require"
-  },
-  "section5": {
     "title": "Check and submit",
     "link1Text": "Check your answers"
   },

@@ -177,7 +177,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
       translations.personalDetails.disability,
       getTranslationsReasonableAdjustments(userCase, translations),
       createChangeAction(
-        PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+        PageUrls.YOUR_SUPPORT + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
         translations.personalDetails.disability
       )

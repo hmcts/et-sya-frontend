@@ -83,7 +83,6 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
-import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
@@ -266,8 +265,6 @@ export class Routes {
     app.post(PageUrls.PAY, new PayController().post);
     app.get(PageUrls.BENEFITS, new BenefitsController().get);
     app.post(PageUrls.BENEFITS, new BenefitsController().post);
-    app.get(PageUrls.REASONABLE_ADJUSTMENTS, new ReasonableAdjustmentsController().get);
-    app.post(PageUrls.REASONABLE_ADJUSTMENTS, new ReasonableAdjustmentsController().post);
     app.get(PageUrls.NEW_JOB, new NewJobController().get);
     app.post(PageUrls.NEW_JOB, new NewJobController().post);
     app.get(PageUrls.NEW_JOB_PAY, new NewJobPayController().get);
@@ -377,6 +374,7 @@ export class Routes {
     );
 
     app.get(PageUrls.YOUR_SUPPORT, new YourSupportController().get);
+    app.post(PageUrls.YOUR_SUPPORT, new YourSupportController().post);
     app.get(PageUrls.YOUR_SUPPORT_REDIRECT, new YourSupportController().redirectToCuiJourney);
     app.get(PageUrls.YOUR_SUPPORT_CALLBACK, new YourSupportController().callback);
     app.get(PageUrls.YOUR_SUPPORT_CONFIRMATION, new YourSupportController().confirmation);

@@ -1,72 +1,107 @@
 import { Response } from 'express';
 
-//import { CaseStateCheck } from '../decorators/CaseStateCheck';
+import { Form } from '../components/form/form';
+import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-//import { CaseFlags } from '../definitions/case';
+import { CaseFlags, YesOrNo } from '../definitions/case';
 import { AuthUrls, PageUrls, TranslationKeys } from '../definitions/constants';
+import { CaseState } from '../definitions/definition';
+import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-//import { fromApiFormat } from '../helper/ApiFormatter';
+import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-//import { handlePostLogic } from './helpers/CaseHelpers';
-
-//import { getCaseApi } from './../services/CaseService';
+import { getCaseApi } from './../services/CaseService';
 import {
   type CUIClientAuth,
   type CUIStartJourneyAuth,
   type CUIStartJourneyRequest,
   getCuiService,
 } from './../services/CuiService';
-import { IS2SService, getS2SService } from './../services/S2SService';
+import type { IS2SService } from './../services/S2SService';
 import { getServiceUrl } from './../utils/getServiceUrl';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageCode } from './helpers/RouterHelpers';
+import { getLanguageCode, returnValidUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('YourSupportController');
 
 export default class YourSupportController {
-  private readonly s2sService: IS2SService;
+  private s2sService?: IS2SService;
+  private readonly form: Form;
 
-  constructor() {
-    this.s2sService = getS2SService();
+  private readonly yourSupportContent: FormContent = {
+    fields: {
+      reasonableAdjustments: {
+        id: 'reasonableAdjustments',
+        type: 'text',
+        hidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: true,
+      },
+    },
+  };
+
+  constructor(s2sService?: IS2SService) {
+    this.s2sService = s2sService;
+    this.form = new Form(<FormFields>this.yourSupportContent.fields);
   }
 
-  //@CaseStateCheck()
+  @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const userCase = req.session?.userCase;
-    const cancelLink = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
-    const startLink = setUrlLanguage(req, PageUrls.YOUR_SUPPORT_REDIRECT);
-
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.YOUR_SUPPORT, { returnObjects: true }),
-    };
+    const content = getPageContent(req, this.yourSupportContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.YOUR_SUPPORT,
+    ]);
+    const cancelLink = this.getExitUrl(req);
     const sessionErrors = req.session?.errors || [];
     req.session.errors = [];
 
     res.render('your-support', {
-      ...translations,
+      ...content,
       cancelLink,
       sessionErrors,
-      startLink,
+      supportNo: YesOrNo.NO,
+      supportYes: YesOrNo.YES,
     });
   };
 
-  //@CaseStateCheck()
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    setUserCase(req, this.form);
+
+    if (req.session.userCase?.reasonableAdjustments === YesOrNo.YES) {
+      return this.redirectToCuiJourney(req, res);
+    }
+
+    if (req.session.userCase?.reasonableAdjustments === YesOrNo.NO) {
+      req.session.errors = [];
+
+      if (req.session.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+        await handleUpdateDraftCase(req, logger);
+      }
+
+      return res.redirect(this.getExitUrl(req, true));
+    }
+
+    req.session.errors = [{ propertyName: 'reasonableAdjustments', errorType: 'required' }];
+    return res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
+  };
+
   public redirectToCuiJourney = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
     const caseId = String(userCase?.id ?? '');
     const logoutUrl = getServiceUrl(req, AuthUrls.LOGOUT);
     const cuiService = getCuiService(logoutUrl);
     req.session.errors = [];
-    const claimantFlags = userCase?.claimantFlags;
+    const claimantExternalFlags = userCase?.claimantExternalFlags;
     const existingFlags = {
-      ...claimantFlags,
-      partyName: claimantFlags?.partyName || userCase?.claimantName || '',
+      ...claimantExternalFlags,
+      partyName: claimantExternalFlags?.partyName || userCase?.claimantName || '',
       roleOnCase:
-        claimantFlags?.roleOnCase ||
+        claimantExternalFlags?.roleOnCase ||
         (userCase?.claimantRepresentativeOrganisationPolicy ? 'Representative' : 'Claimant'),
-      details: claimantFlags?.details ?? [],
+      details: claimantExternalFlags?.details ?? [],
     } as unknown as CUIStartJourneyRequest['existingFlags'];
 
     try {
@@ -79,7 +114,7 @@ export default class YourSupportController {
           masterFlagCode: 'RA0001',
         } as CUIStartJourneyRequest,
         {
-          serviceToken: await this.s2sService.getToken(),
+          serviceToken: await this.getS2SService().getToken(),
           idamToken: req.session.user?.accessToken,
         } as CUIStartJourneyAuth
       );
@@ -89,7 +124,6 @@ export default class YourSupportController {
         return res.redirect(PageUrls.HOME);
       }
 
-      //redirect to cui journey
       return res.redirect(results.url);
     } catch (error) {
       req.session.errors.push({ propertyName: 'yourSupportRedirect', errorType: 'required' });
@@ -98,7 +132,6 @@ export default class YourSupportController {
     }
   };
 
-  //@CaseStateCheck()
   public callback = async (req: AppRequest, res: Response): Promise<void> => {
     const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     const userCase = req.session?.userCase;
@@ -109,50 +142,46 @@ export default class YourSupportController {
 
     try {
       const result = await cuiService.getJourneyData(id, {
-        serviceToken: await this.s2sService.getToken(),
+        serviceToken: await this.getS2SService().getToken(),
       } as CUIClientAuth);
       if (result.correlationId !== caseId) {
-        // throw an error the data does not match the case
         throw new Error('Correlation ID does not match case ID');
       }
       if (result.action !== 'submit') {
-        // if the user did not complete the journey, redirect them back to the case page without updating anything
         logger.info(
           `CUI journey completed with action "${result.action}", redirecting back to case page without updating flags`
         );
-        return res.redirect(PageUrls.CITIZEN_HUB.replace(':caseId', caseId));
+        return res.redirect(this.getExitUrl(req, true));
       }
-
-      console.log('CUI journey result:', JSON.stringify(result, null, 2));
 
       if (!result.replacementFlags) {
         throw new Error('CUI journey completed without replacement flags');
       }
 
-      // const claimantFlags = {
-      //   ...userCase.claimantFlags,
-      //   ...result.replacementFlags,
-      //   details: result.replacementFlags.details ?? [],
-      // } as unknown as CaseFlags;
+      const claimantExternalFlags = {
+        ...userCase.claimantExternalFlags,
+        ...result.replacementFlags,
+        details: result.replacementFlags.details ?? [],
+      } as unknown as CaseFlags;
 
-      // req.session.userCase = {
-      //   ...userCase,
-      //   claimantFlags,
-      // };
-      //const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
-      //req.session.userCase = fromApiFormat(response.data);
-      //await this.saveSession(req);
-      return res.redirect(PageUrls.YOUR_SUPPORT_CONFIRMATION);
+      req.session.userCase = {
+        ...userCase,
+        claimantExternalFlags,
+      };
+
+      const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
+      req.session.userCase = fromApiFormat(response.data);
+      await this.saveSession(req);
+
+      return res.redirect(this.getCuiCompletionUrl(req));
     } catch (error) {
       logger.error('Error retrieving CUI journey data', error);
       return res.redirect(PageUrls.HOME);
     }
   };
 
-  //@CaseStateCheck()
   public confirmation = async (req: AppRequest, res: Response): Promise<void> => {
-    const userCase = req.session?.userCase;
-    const link = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
+    const link = this.getExitUrl(req);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -168,7 +197,46 @@ export default class YourSupportController {
     });
   };
 
-  /*   private saveSession(req: AppRequest): Promise<void> {
+  private getExitUrl(req: AppRequest, consumeReturnUrl = false): string {
+    if (req.session?.returnUrl) {
+      const returnUrl = req.session.returnUrl;
+      if (consumeReturnUrl) {
+        req.session.returnUrl = undefined;
+      }
+      return returnValidUrl(returnUrl);
+    }
+
+    const userCase = req.session?.userCase;
+
+    if (userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+      return setUrlLanguage(req, PageUrls.PERSONAL_DETAILS_CHECK);
+    }
+
+    if (userCase?.id) {
+      return setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
+    }
+
+    return setUrlLanguage(req, PageUrls.CLAIMANT_APPLICATIONS);
+  }
+
+  private getCuiCompletionUrl(req: AppRequest): string {
+    if (req.session?.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+      return this.getExitUrl(req, true);
+    }
+
+    return setUrlLanguage(req, PageUrls.YOUR_SUPPORT_CONFIRMATION);
+  }
+
+  private getS2SService(): IS2SService {
+    if (!this.s2sService) {
+      const { getS2SService } = require('./../services/S2SService') as typeof import('./../services/S2SService');
+      this.s2sService = getS2SService();
+    }
+
+    return this.s2sService;
+  }
+
+  private saveSession(req: AppRequest): Promise<void> {
     return new Promise((resolve, reject) => {
       req.session.save(error => {
         if (error) {
@@ -178,5 +246,5 @@ export default class YourSupportController {
         }
       });
     });
-  } */
+  }
 }

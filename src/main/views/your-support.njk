@@ -13,16 +13,25 @@
 
   {% block errorSummary %}
     {% set yourSupportRedirectError = getError('yourSupportRedirect') %}
+    {% set reasonableAdjustmentsError = getError('reasonableAdjustments') %}
+    {% set errors = [] %}
+    {% if yourSupportRedirectError %}
+      {% set _ = errors.push({
+        text: yourSupportRedirectError.text,
+        href: '#start-support-request'
+      }) %}
+    {% endif %}
+    {% if reasonableAdjustmentsError %}
+      {% set _ = errors.push({
+        text: reasonableAdjustmentsError.text,
+        href: '#start-support-request'
+      }) %}
+    {% endif %}
     {{
       govukErrorSummary({
         titleText: errorSummaryTitle,
-        errorList: [
-          {
-            text: yourSupportRedirectError.text,
-            href: '#start-support-request'
-          }
-        ]
-      }) if yourSupportRedirectError
+        errorList: errors
+      }) if errors.length > 0
     }}
   {% endblock %}
       
@@ -32,33 +41,65 @@
 </h1>
 <p class="govuk-body">{{ p }}</p>
 <div>
+    <p class="govuk-body">{{ detailsSummary.subheading }}</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>{{ detailsSummary.bullet1 }} </li>
       <li>{{ detailsSummary.bullet2 }} </li>        
       <li>{{ detailsSummary.bullet3 }} </li>
+      <li>{{ detailsSummary.bullet4 }} </li>
     </ul>
     <p class="govuk-body ">{{ detailsSummary.p }}</p>
     {% for item in details %}
       <h2 class="govuk-heading-m">{{ item.header }}</h2>
-      {% for paragraph in item.paragraphs %}
-        <p class="govuk-body">{{ paragraph.text }}</p>
-      {% endfor %}
+      {% if item.blocks %}
+        {% for contentBlock in item.blocks %}
+          {% if contentBlock.paragraph %}
+            <p class="govuk-body">{{ contentBlock.paragraph }}</p>
+          {% elif contentBlock.bulletList %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for bullet in contentBlock.bulletList %}
+                <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for paragraph in item.paragraphs %}
+          <p class="govuk-body">{{ paragraph.text }}</p>
+        {% endfor %}
+      {% endif %}
     {% endfor %}
 </div>
 
-<div class="govuk-button-group">
-  {{ govukButton({
-    text: startNow,
-    preventDoubleClick: true,
-    href: startLink,
-    isStartButton: true,
-    attributes: {
-      id: 'start-support-request'
-    }
-  })  }}
+{% block form %}
+  <form class="form" id="main-form" method="post" action="" novalidate="true">
+    <input type="hidden" name="_csrf" value={{ csrfToken }}>
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: continueToQuestions,
+        preventDoubleClick: true,
+        name: 'reasonableAdjustments',
+        value: supportYes,
+        attributes: {
+          id: 'start-support-request'
+        }
+      })  }}
 
-  {% if cancelLink %}
-    <a class="govuk-link" href={{ cancelLink }}>{{ cancel }}</a>
-  {% endif %}
-</div>
+      {{ govukButton({
+        text: noSupport,
+        classes: 'govuk-button--secondary',
+        preventDoubleClick: true,
+        name: 'reasonableAdjustments',
+        value: supportNo,
+        attributes: {
+          id: 'no-support-request'
+        }
+      })  }}
+
+      {% if cancelLink %}
+        <a class="govuk-link" href={{ cancelLink }}>{{ cancel }}</a>
+      {% endif %}
+    </div>
+  </form>
+{% endblock %}
 {% endblock %}

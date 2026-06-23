@@ -205,12 +205,31 @@ describe('Should return data in api format', () => {
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       createdDate: '19 August 2022',
       lastModified: '19 August 2022',
-      claimantFlags,
+      claimantExternalFlags: claimantFlags,
     };
 
     const apiData = toApiFormat(caseItem);
 
-    expect(apiData.case_data.claimantFlags).toEqual(claimantFlags);
+    expect(apiData.case_data.claimantExternalFlags).toEqual(claimantFlags);
+  });
+
+  it('should include claimant external flags in user case format', () => {
+    const claimantFlags: CaseFlags = {
+      partyName: 'John Doe',
+      roleOnCase: 'Claimant',
+      details: [],
+    };
+    const apiCaseData = {
+      ...mockedApiData,
+      case_data: {
+        ...mockedApiData.case_data,
+        claimantExternalFlags: claimantFlags,
+      },
+    } as CaseApiDataResponse;
+
+    const userCase = fromApiFormat(apiCaseData);
+
+    expect(userCase.claimantExternalFlags).toEqual(claimantFlags);
   });
 });
 

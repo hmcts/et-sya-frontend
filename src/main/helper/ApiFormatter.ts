@@ -226,6 +226,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     ...(fromApiCaseData.case_data?.claimantFlags !== undefined
       ? { claimantFlags: fromApiCaseData.case_data.claimantFlags }
       : {}),
+    ...(fromApiCaseData.case_data?.claimantExternalFlags !== undefined
+      ? { claimantExternalFlags: fromApiCaseData.case_data.claimantExternalFlags }
+      : {}),
   };
 }
 
@@ -335,8 +338,8 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
     },
   };
 
-  if (caseItem.claimantFlags !== undefined) {
-    updateCaseBody.case_data.claimantFlags = caseItem.claimantFlags;
+  if (caseItem.claimantExternalFlags !== undefined) {
+    updateCaseBody.case_data.claimantExternalFlags = caseItem.claimantExternalFlags;
   }
 
   return updateCaseBody;

@@ -224,11 +224,7 @@ export interface Case {
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
   claimantName?: string;
 
-  caseFlags?: CaseFlags;
-  claimantFlags?: CaseFlags;
   claimantExternalFlags?: CaseFlags;
-  respondentFlags?: CaseFlags;
-  respondentExternalFlags?: CaseFlags;
 }
 
 export const enum StillWorking {

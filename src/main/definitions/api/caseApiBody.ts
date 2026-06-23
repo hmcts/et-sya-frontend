@@ -32,7 +32,7 @@ interface CaseDataApiBody {
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
   claimantTse?: ClaimantTse;
-  claimantFlags?: CaseFlags;
+  claimantExternalFlags?: CaseFlags;
 }
 
 export interface CreateCaseBody {

@@ -66,6 +66,15 @@ export default class StepsToMakingYourClaimController {
             linkTxt: (l: AnyRecord): string => l.section1.link3Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimantContactPreference),
           },
+          {
+            url: setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),
+            linkTxt: (l: AnyRecord): string => l.section1.link4Text,
+            status: (): string =>
+              getSectionStatus(
+                userCase?.personalDetailsCheck,
+                userCase?.reasonableAdjustments || userCase?.claimantExternalFlags?.details?.length
+              ),
+          },
         ],
       },
       {
@@ -115,19 +124,8 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),
-            linkTxt: (l: AnyRecord): string => l.section4.link1Text,
-            status: (): string =>
-              userCase?.claimantFlags?.details?.length ? sectionStatus.completed : sectionStatus.notStarted,
-          },
-        ],
-      },
-      {
-        title: (l: AnyRecord): string => l.section5.title,
-        links: [
-          {
             url: (): string => (allSectionsCompleted ? setUrlLanguage(req, PageUrls.PCQ.toString()) : ''),
-            linkTxt: (l: AnyRecord): string => l.section5.link1Text,
+            linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
         ],
