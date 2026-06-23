@@ -8,7 +8,6 @@ import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
-import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { assignFormData, getPageContent } from '../helpers/FormHelpers';
 import { setUrlLanguageFromSessionLanguage } from '../helpers/LanguageHelper';
@@ -138,8 +137,7 @@ export default class AdditionalClaimantFileUploadController {
 
     assignFormData(req.session.userCase, this.form.getFormFields());
 
-    const maxRowsFlag = await getFlagValue('groupClaimsFileUploadMaxRows', null);
-    const maxDataRowsForUpload = maxRowsFlag !== undefined && maxRowsFlag !== null ? Number(maxRowsFlag) : 50;
+    const maxDataRowsForUpload = spreadsheetService.getMaxDataRowsForUpload();
     res.render(TranslationKeys.ADDITIONAL_CLAIMANT_FILE_UPLOAD, {
       ...content,
       postAddress: PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD,

@@ -3,13 +3,11 @@ import { AdditionalClaimantSpreadsheetService } from '../../../../main/controlle
 import AdditionalClaimantFileUploadController from '../../../../main/controllers/multiples/AdditionalClaimantFileUploadController';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
-import * as launchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { mockFile } from '../../mocks/mockFile';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
 jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
-jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValue(50);
 
 const uploadResponse: DocumentUploadResponse = {
   originalDocumentName: 'claimants.xlsx',
@@ -55,8 +53,8 @@ describe('AdditionalClaimantFileUploadController', () => {
       );
     });
 
-    it('should pass maxDataRowsForUpload from LaunchDarkly flag', async () => {
-      jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValueOnce(100);
+    it('should pass maxDataRowsForUpload from spreadsheet service', async () => {
+      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'getMaxDataRowsForUpload').mockReturnValueOnce(100);
       const req = mockRequestWithTranslation({ t }, {});
       const res = mockResponse();
 
@@ -68,8 +66,8 @@ describe('AdditionalClaimantFileUploadController', () => {
       );
     });
 
-    it('should default maxDataRowsForUpload to 50 when flag returns null', async () => {
-      jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValueOnce(null);
+    it('should use fallback maxDataRowsForUpload when service returns 50', async () => {
+      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'getMaxDataRowsForUpload').mockReturnValueOnce(50);
       const req = mockRequestWithTranslation({ t }, {});
       const res = mockResponse();
 

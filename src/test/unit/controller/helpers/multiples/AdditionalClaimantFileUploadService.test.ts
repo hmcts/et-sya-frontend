@@ -2,7 +2,6 @@ import { handleUploadDocument } from '../../../../../main/controllers/helpers/Ca
 import { getAdditionalClaimantSpreadsheetError } from '../../../../../main/controllers/helpers/ErrorHelpers';
 import { AdditionalClaimantSpreadsheetService } from '../../../../../main/controllers/helpers/multiples/AdditionalClaimantFileUploadService';
 import { fromApiFormatDocument } from '../../../../../main/helper/ApiFormatter';
-import * as launchDarkly from '../../../../../main/modules/featureFlag/launchDarkly';
 import * as validator from '../../../../../main/validators/multiples/additionalClaimantUploadValidator';
 import { mockFile } from '../../../mocks/mockFile';
 import { mockRequest } from '../../../mocks/mockRequest';
@@ -14,6 +13,7 @@ jest.mock('../../../../../main/helper/ApiFormatter');
 describe('AdditionalClaimantSpreadsheetService', () => {
   let service: AdditionalClaimantSpreadsheetService;
   let req = mockRequest({});
+  const originalGroupClaimsMaxRows = process.env.GROUP_CLAIMS_MAX_ROWS;
 
   const mockDocument = {
     document_url: 'http://test/doc',
@@ -84,10 +84,6 @@ describe('AdditionalClaimantSpreadsheetService', () => {
   });
 
   describe('validateSpreadsheet', () => {
-    beforeEach(() => {
-      jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValue(50);
-    });
-
     it('should return fileEmpty error', async () => {
       jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'fileEmpty',
@@ -149,8 +145,8 @@ describe('AdditionalClaimantSpreadsheetService', () => {
       expect(req.session.additionalClaimantInvalidRows).toBeUndefined();
     });
 
-    it('should use LaunchDarkly value when present', async () => {
-      jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValueOnce(100);
+    it('should use configured max rows when present', async () => {
+      jest.spyOn(service, 'getMaxDataRowsForUpload').mockReturnValueOnce(100);
 
       const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
@@ -162,8 +158,8 @@ describe('AdditionalClaimantSpreadsheetService', () => {
       expect(validateSpy).toHaveBeenCalledWith(req.file.buffer, 100);
     });
 
-    it('should default max rows to 50 when LaunchDarkly returns null', async () => {
-      jest.spyOn(launchDarkly, 'getFlagValue').mockResolvedValueOnce(null);
+    it('should default max rows to 50 when config value is invalid', async () => {
+      jest.spyOn(service, 'getMaxDataRowsForUpload').mockReturnValueOnce(50);
 
       const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
@@ -173,6 +169,34 @@ describe('AdditionalClaimantSpreadsheetService', () => {
       await service.validateSpreadsheet(req);
 
       expect(validateSpy).toHaveBeenCalledWith(req.file.buffer, 50);
+    });
+  });
+
+  describe('getMaxDataRowsForUpload', () => {
+    afterEach(() => {
+      if (originalGroupClaimsMaxRows === undefined) {
+        delete process.env.GROUP_CLAIMS_MAX_ROWS;
+      } else {
+        process.env.GROUP_CLAIMS_MAX_ROWS = originalGroupClaimsMaxRows;
+      }
+    });
+
+    it('should use GROUP_CLAIMS_MAX_ROWS when it is set', () => {
+      process.env.GROUP_CLAIMS_MAX_ROWS = '100';
+
+      expect(service.getMaxDataRowsForUpload()).toBe(100);
+    });
+
+    it('should use config max rows when GROUP_CLAIMS_MAX_ROWS is not set', () => {
+      delete process.env.GROUP_CLAIMS_MAX_ROWS;
+
+      expect(service.getMaxDataRowsForUpload()).toBe(50);
+    });
+
+    it('should fall back to default max rows when GROUP_CLAIMS_MAX_ROWS is invalid', () => {
+      process.env.GROUP_CLAIMS_MAX_ROWS = 'not-a-number';
+
+      expect(service.getMaxDataRowsForUpload()).toBe(50);
     });
   });
 

@@ -1,13 +1,15 @@
+import config from 'config';
+
 import { AppRequest } from '../../../definitions/appRequest';
 import { Document } from '../../../definitions/case';
 import { fromApiFormatDocument } from '../../../helper/ApiFormatter';
 import { getLogger } from '../../../logger';
-import { getFlagValue } from '../../../modules/featureFlag/launchDarkly';
 import { validateSpreadsheetData } from '../../../validators/multiples/additionalClaimantUploadValidator';
 import { handleUploadDocument } from '../CaseHelpers';
 import { getAdditionalClaimantSpreadsheetError } from '../ErrorHelpers';
 
 const logger = getLogger('AdditionalClaimantFileUploadService');
+const DEFAULT_MAX_ROWS_FOR_UPLOAD = 50;
 
 export type ValidationError = {
   propertyName: string;
@@ -16,6 +18,13 @@ export type ValidationError = {
 } | null;
 
 export class AdditionalClaimantSpreadsheetService {
+  public getMaxDataRowsForUpload(): number {
+    const configuredMaxRows = process.env.GROUP_CLAIMS_MAX_ROWS ?? config.get('limits.groupClaimsFileUploadMaxRows');
+    const parsedMaxRows = Number(configuredMaxRows);
+
+    return Number.isFinite(parsedMaxRows) && parsedMaxRows > 0 ? parsedMaxRows : DEFAULT_MAX_ROWS_FOR_UPLOAD;
+  }
+
   public validatePreconditions(req: AppRequest): ValidationError {
     if (req.fileTooLarge) {
       return { propertyName: 'additionalClaimantSpreadsheetName', errorType: 'invalidFileSize' };
@@ -39,9 +48,7 @@ export class AdditionalClaimantSpreadsheetService {
   }
 
   public async validateSpreadsheet(req: AppRequest): Promise<ValidationError> {
-    const maxRowsFlag = await getFlagValue('groupClaimsFileUploadMaxRows', null);
-    const parsedMaxRows = Number(maxRowsFlag);
-    const maxDataRowsForUpload = Number.isFinite(parsedMaxRows) && parsedMaxRows > 0 ? parsedMaxRows : 50;
+    const maxDataRowsForUpload = this.getMaxDataRowsForUpload();
     const result = await validateSpreadsheetData(req.file.buffer, maxDataRowsForUpload);
 
     if (result.status === 'fileEmpty') {
