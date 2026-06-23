@@ -22,7 +22,11 @@ import {
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
-import { buildTransferredCaseRedirectUrl, handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
+import {
+  buildTransferredCaseRedirectUrl,
+  createFallbackTransferInfo,
+  handleTransferredCaseRedirect,
+} from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -79,10 +83,11 @@ export default class CitizenHubController {
         );
       } catch (error) {
         logger.error(error.message);
-        if (await handleTransferredCaseRedirect(req, res, req.params.caseId)) {
+        if (await handleTransferredCaseRedirect(req, res, req.params.caseId, error)) {
           return;
         }
         if (isTransferredToEcmCaseError(error) || isCaseNotFoundError(error)) {
+          req.session.caseTransferInfo = createFallbackTransferInfo(req.params.caseId);
           return res.redirect(buildTransferredCaseRedirectUrl(req, req.params.caseId));
         }
         return res.redirect('/not-found');

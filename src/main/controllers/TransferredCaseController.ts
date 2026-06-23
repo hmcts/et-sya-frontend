@@ -4,16 +4,11 @@ import { CaseTransferInfoResponse } from '../definitions/api/caseTransferInfoRes
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { getLogger } from '../logger';
-import { getCaseApi } from '../services/CaseService';
+import { getCaseApi, isCaseNotFoundError } from '../services/CaseService';
+
+import { createFallbackTransferInfo } from './helpers/CaseTransferHelper';
 
 const logger = getLogger('TransferredCaseController');
-
-const fallbackTransferInfo = (caseId: string): CaseTransferInfoResponse => ({
-  transferred: true,
-  transferType: 'ECM',
-  originalCaseId: caseId,
-  transferComplete: false,
-});
 
 export default class TransferredCaseController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -26,10 +21,15 @@ export default class TransferredCaseController {
         logger.info(`Fetched transfer info for case ID ${caseId}: ${JSON.stringify(transferInfo)}`, '');
         req.session.caseTransferInfo = transferInfo;
       } catch (error) {
-        logger.error(error instanceof Error ? error.message : String(error));
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        if (isCaseNotFoundError(error)) {
+          logger.info(`Transfer info not available for case ID ${caseId}: ${errorMessage}`);
+        } else {
+          logger.error(errorMessage);
+        }
         if (caseId) {
           logger.info(`Falling back to default transfer info for case ID ${caseId}`, '');
-          transferInfo = fallbackTransferInfo(caseId);
+          transferInfo = createFallbackTransferInfo(caseId);
         } else {
           return res.redirect('/not-found');
         }
@@ -38,7 +38,7 @@ export default class TransferredCaseController {
 
     if (!transferInfo?.transferred) {
       if (caseId) {
-        transferInfo = fallbackTransferInfo(caseId);
+        transferInfo = createFallbackTransferInfo(caseId);
       } else {
         return res.redirect('/not-found');
       }
