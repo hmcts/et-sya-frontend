@@ -85,7 +85,10 @@ describe('ClaimantRespondentAddressDetailsController', () => {
 
     it('should redirect to CLAIMANT_ACAS_CERT_NUM for additional respondents even when the claimant worked for the employer', async () => {
       const controller = new ClaimantRespondentAddressDetailsController();
-      const req = mockRequestEmpty({ body, userCase: { pastEmployer: YesOrNo.YES } });
+      const req = mockRequestEmpty({
+        body,
+        userCase: { pastEmployer: YesOrNo.YES, respondents: [{}, {}] as any },
+      });
       req.session.claimantRespondentNumber = '2';
       const res = mockResponse();
 
