@@ -23,9 +23,9 @@ import {
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
 import {
-  buildTransferredCaseRedirectUrl,
   createFallbackTransferInfo,
   handleTransferredCaseRedirect,
+  saveSessionAndRedirectToTransferredCase,
 } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
@@ -87,8 +87,13 @@ export default class CitizenHubController {
           return;
         }
         if (isTransferredToEcmCaseError(error) || isCaseNotFoundError(error)) {
-          req.session.caseTransferInfo = createFallbackTransferInfo(req.params.caseId);
-          return res.redirect(buildTransferredCaseRedirectUrl(req, req.params.caseId));
+          await saveSessionAndRedirectToTransferredCase(
+            req,
+            res,
+            req.params.caseId,
+            createFallbackTransferInfo(req.params.caseId)
+          );
+          return;
         }
         return res.redirect('/not-found');
       }

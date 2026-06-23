@@ -10,12 +10,16 @@ import { createFallbackTransferInfo } from './helpers/CaseTransferHelper';
 
 const logger = getLogger('TransferredCaseController');
 
+const hasMatchingTransferInfo = (caseId: string, transferInfo?: CaseTransferInfoResponse): boolean => {
+  return !!transferInfo?.transferred && String(transferInfo.originalCaseId) === String(caseId);
+};
+
 export default class TransferredCaseController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const caseId = (req.query.caseId as string) || req.session.caseTransferInfo?.originalCaseId;
     let transferInfo: CaseTransferInfoResponse | undefined = req.session.caseTransferInfo;
 
-    if (caseId && transferInfo?.originalCaseId !== caseId) {
+    if (caseId && !hasMatchingTransferInfo(caseId, transferInfo)) {
       try {
         transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
         logger.info(`Fetched transfer info for case ID ${caseId}: ${JSON.stringify(transferInfo)}`, '');
@@ -30,6 +34,7 @@ export default class TransferredCaseController {
         if (caseId) {
           logger.info(`Falling back to default transfer info for case ID ${caseId}`, '');
           transferInfo = createFallbackTransferInfo(caseId);
+          req.session.caseTransferInfo = transferInfo;
         } else {
           return res.redirect('/not-found');
         }
@@ -39,6 +44,7 @@ export default class TransferredCaseController {
     if (!transferInfo?.transferred) {
       if (caseId) {
         transferInfo = createFallbackTransferInfo(caseId);
+        req.session.caseTransferInfo = transferInfo;
       } else {
         return res.redirect('/not-found');
       }
