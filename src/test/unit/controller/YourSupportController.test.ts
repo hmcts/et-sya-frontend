@@ -45,7 +45,7 @@ describe('Your Support Controller', () => {
     expect(req.session.returnUrl).toBeUndefined();
   });
 
-  it('should redirect to personal details check after a draft CUI journey is submitted', async () => {
+  it('should redirect to the confirmation page after a draft CUI journey is submitted', async () => {
     const claimantExternalFlags: CaseFlags = {
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
@@ -77,6 +77,6 @@ describe('Your Support Controller', () => {
     expect(getJourneyData).toHaveBeenCalledWith('journey-id', { serviceToken: 's2s-token' });
     expect(handleUpdateDraftCaseMock).toHaveBeenCalledWith(req, expect.anything());
     expect(req.session.userCase.claimantExternalFlags).toEqual(claimantExternalFlags);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
   });
 });

@@ -1,10 +1,10 @@
 {
-  "title": "You have sent your request to the tribunal/court",
-  "h1": "You have sent your request to the tribunal/court",
+  "title": "You have added your support request to your claim",
+  "h1": "You have added your support request to your claim",
   "h2": "What happens next",
   "legend": "",
-  "p": "we have have the details",
-  "buttonText": "Continue to next step",
+  "p": "Once you submit your claim, the tribunal will review your support request and contact you if it needs any more information. You can tell us if your support needs change after you submit your claim.",
+  "buttonText": "Continue your claim",
   "textAreaHint": "You can describe to us what you need",
   "errors": {
     "reasonableAdjustmentsDetail": {
