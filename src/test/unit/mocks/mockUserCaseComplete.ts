@@ -105,6 +105,7 @@ export default {
   addressCountry: 'United',
   addressTown: 'Test',
   telNumber: '075',
+  representativePhoneNumber: '075',
   firstName: 'Jane',
   lastName: 'Doe',
   representedClaimantFirstName: 'Jane',
@@ -127,8 +128,11 @@ export default {
   avgWeeklyHrs: 5,
   claimantPensionContribution: YesOrNoOrNotSure.YES,
   claimantPensionWeeklyContribution: 15,
+  claimantRepEmail: undefined,
   claimantRepresentative: undefined,
   claimantRepresentativeRemoved: undefined,
+  representativeName: undefined,
+  representativeOrgName: undefined,
   employeeBenefits: YesOrNo.YES,
   jobTitle: 'Developer',
   noticePeriod: YesOrNo.YES,
@@ -311,6 +315,7 @@ export default {
   bundleDocuments: [],
   representatives: [
     {
+      ccdId: '123',
       hasMyHMCTSAccount: YesOrNo.YES,
       nameOfOrganisation: undefined,
       nameOfRepresentative: undefined,

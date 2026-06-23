@@ -1,7 +1,14 @@
 {
-    "services": {
-        "s2s": {
-            "url": "S2S_URL"
-        }
+  "services": {
+    "s2s": {
+      "url": "S2S_URL"
+    },
+    "addressLookup": {
+      "url": "ADDRESS_LOOK_UP_URL",
+      "token": "ADDRESS_LOOKUP_TOKEN"
+    },
+    "launchDarkly": {
+      "key": "LAUNCH_DARKLY_SDK_KEY"
     }
+  }
 }

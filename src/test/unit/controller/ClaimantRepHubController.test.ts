@@ -5,9 +5,9 @@ import * as CaseHelpers from '../../../main/controllers/helpers/CaseHelpers';
 import * as CitizenHubHelper from '../../../main/controllers/helpers/CitizenHubHelper';
 import * as TribunalHelper from '../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
 import * as MultiplePanelHelper from '../../../main/controllers/helpers/multiples/MultiplePanelHelper';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
-import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
@@ -105,7 +105,7 @@ describe('ClaimantRepHubController', () => {
       expect(renderArgs.sections).toHaveLength(8);
     });
 
-    it('should include the "About you" section as the first section', async () => {
+    it('should include the "About you" section as the first section with a clickable personal details link', async () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.params = { caseId: 'case-123' };
@@ -115,10 +115,45 @@ describe('ClaimantRepHubController', () => {
 
       const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
       const aboutYouSection = renderArgs.sections[0];
-      const l = { sectionAboutYou: 'About you' };
+      const l = {
+        sectionAboutYou: 'About you',
+        personalDetails: 'View and edit your personal details',
+        optional: 'Optional',
+      };
+      const personalDetailsLink = aboutYouSection.links[0];
+
       expect(aboutYouSection.title(l)).toBe('About you');
       expect(aboutYouSection.links).toHaveLength(1);
-      expect(aboutYouSection.links[0].shouldShow).toBe(false);
+      expect(personalDetailsLink.linkTxt(l)).toBe('View and edit your personal details');
+      expect(personalDetailsLink.status(l)).toBe('Optional');
+      expect(personalDetailsLink.shouldShow).toBe(true);
+      expect(personalDetailsLink.url()).toBe(
+        PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', 'case-123') + languages.ENGLISH_URL_PARAMETER
+      );
+      expect(personalDetailsLink.statusColor()).toBe('--blue');
+    });
+
+    it('should keep the About you link clickable when hub status was not yet available', async () => {
+      const req = mockRequest({});
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      const existingStatuses = new HubLinksStatuses();
+      existingStatuses[HubLinkNames.AboutYou] = HubLinkStatus.NOT_YET_AVAILABLE;
+      existingStatuses['documents'] = HubLinkStatus.READY_TO_VIEW;
+      jest
+        .spyOn(ApiFormatter, 'fromApiFormat')
+        .mockReturnValue({ id: 'case-123', hubLinksStatuses: existingStatuses } as any);
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      const personalDetailsLink = renderArgs.sections[0].links[0];
+
+      expect(personalDetailsLink.shouldShow).toBe(true);
+      expect(personalDetailsLink.url()).toBe(
+        PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', 'case-123') + languages.ENGLISH_URL_PARAMETER
+      );
     });
 
     it('should include "View claimant contact details" in The Claim section', async () => {
@@ -178,6 +213,34 @@ describe('ClaimantRepHubController', () => {
 
       const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
       expect(renderArgs).toHaveProperty('languageParam');
+    });
+
+    it('should show the email changed note when the case email differs from the sign-in email', async () => {
+      const req = mockRequest({ session: { user: { accessToken: 'token', email: 'login@idam.com' } } });
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      jest
+        .spyOn(ApiFormatter, 'fromApiFormat')
+        .mockReturnValue({ id: 'case-123', claimantRepEmail: 'new-case@example.com' } as any);
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.showEmailChangedNote).toBe(true);
+      expect(renderArgs.loginEmail).toBe('login@idam.com');
+    });
+
+    it('should not show the email changed note when the case email matches the sign-in email', async () => {
+      const req = mockRequest({ session: { user: { accessToken: 'token', email: 'wsmith@tpf.com' } } });
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.showEmailChangedNote).toBe(false);
     });
   });
 });

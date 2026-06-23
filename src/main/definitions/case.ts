@@ -241,6 +241,7 @@ export interface Case {
   repAddressCountry?: string;
   repAddressPostcode?: string;
   representativePhoneNumber?: string;
+  claimantRepEmail?: string;
   // Represented Claimant
   representedClaimantDateOfBirth?: CaseDate;
   representedClaimantEnterPostcode?: string;
@@ -372,6 +373,7 @@ export interface Document {
 }
 
 export interface Representative {
+  ccdId?: string;
   respondentId?: string;
   hasMyHMCTSAccount?: YesOrNo;
   nameOfRepresentative?: string;

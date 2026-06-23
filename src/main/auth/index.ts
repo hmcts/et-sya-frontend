@@ -41,20 +41,51 @@ export const getUserDetails = async (
 
   const response = await axios.post(tokenUrl, data, { headers });
   const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
+  const accessToken = response.data.access_token;
+
+  let roles = jwt.roles;
+  let uid = jwt.uid;
+  let givenName = jwt.given_name;
+  let familyName = jwt.family_name;
+
+  // Local IdAM simulators (e.g. RSE/CFTLIB) often omit roles from the id_token but expose them via /o/userinfo.
+  if (!roles || !uid || !givenName || !familyName) {
+    const userInfo = await fetchUserInfo(tokenUrl, accessToken);
+    roles = roles ?? userInfo.roles;
+    uid = uid ?? userInfo.uid;
+    givenName = givenName ?? userInfo.given_name;
+    familyName = familyName ?? userInfo.family_name;
+  }
 
   return {
-    accessToken: response.data.access_token,
-    id: jwt.uid,
+    accessToken,
+    id: uid,
     email: jwt.sub,
-    givenName: jwt.given_name,
-    familyName: jwt.family_name,
-    isCitizen: jwt.roles ? jwt.roles.includes(CITIZEN_ROLE) : false,
+    givenName,
+    familyName,
+    isCitizen: roles ? roles.includes(CITIZEN_ROLE) : false,
   };
+};
+
+const getUserInfoUrl = (tokenUrl: string): string => tokenUrl.replace(/\/token\/?$/, '/userinfo');
+
+const fetchUserInfo = async (tokenUrl: string, accessToken: string): Promise<IdamUserInfo> => {
+  const response = await axios.get(getUserInfoUrl(tokenUrl), {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return response.data;
 };
 
 export interface IdTokenJwtPayload {
   uid: string;
   sub: string;
+  given_name: string;
+  family_name: string;
+  roles: string[];
+}
+
+export interface IdamUserInfo {
+  uid: string;
   given_name: string;
   family_name: string;
   roles: string[];

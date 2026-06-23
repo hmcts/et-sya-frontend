@@ -14,7 +14,13 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import {
+  ensureClaimantRepCaseLoaded,
+  getRepAboutYouPageContent,
+  handleRepAboutYouFieldPost,
+  isClaimantRepAboutYouFlow,
+} from './helpers/ClaimantRepAboutYouHelper';
+import { assignFormData } from './helpers/FormHelpers';
 import { fillRepresentativeAddressFields } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RepresentativeAddressDetailsController');
@@ -96,13 +102,19 @@ export default class RepresentativeAddressDetailsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (isClaimantRepAboutYouFlow(req)) {
+      return handleRepAboutYouFieldPost(req, res, this.form, logger);
+    }
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_PHONE_NUMBER);
   };
 
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (isClaimantRepAboutYouFlow(req) && !(await ensureClaimantRepCaseLoaded(req))) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
     const representativeAddressTypes = req.session.userCase.representativeAddressTypes;
-    const content = getPageContent(req, this.addressDetailsContent, [
+    const content = getRepAboutYouPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.REPRESENTATIVE_ADDRESS_DETAILS,
       TranslationKeys.ENTER_ADDRESS,

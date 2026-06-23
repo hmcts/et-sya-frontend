@@ -1,7 +1,10 @@
 import RepresentativePostCodeEnterController from '../../../main/controllers/RepresentativePostCodeEnterController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Representative PostCode Enter Controller', () => {
   const t = {
@@ -62,6 +65,20 @@ describe('Representative PostCode Enter Controller', () => {
       await new RepresentativePostCodeEnterController().post(req, res);
 
       expect(req.session.userCase.representativeEnterPostcode).toEqual('EC1A 1BB');
+    });
+
+    it('should not call updateDraftCase when editing from claimant rep about you', async () => {
+      const updateSpy = jest.spyOn(CaseHelper, 'handleUpdateDraftCase');
+      updateSpy.mockClear();
+      const body = { representativeEnterPostcode: 'SW1A 1AA' };
+      const req = mockRequest({ body });
+      req.session.repAboutYouCaseId = '1234';
+      const res = mockResponse();
+
+      await new RepresentativePostCodeEnterController().post(req, res);
+
+      expect(updateSpy).not.toHaveBeenCalled();
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_SELECT);
     });
   });
 });

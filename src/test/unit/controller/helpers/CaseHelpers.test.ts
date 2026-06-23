@@ -6,6 +6,7 @@ import {
   deleteDraftCase,
   getSectionStatus,
   getSectionStatusForEmployment,
+  handleUpdateClaimantRepAboutYou,
   handleUpdateDraftCase,
   handleUpdateHubLinksStatuses,
   handleUploadDocument,
@@ -468,6 +469,31 @@ describe('handle update draft case', () => {
       } as unknown as import('../../../../main/definitions/case').CaseWithId;
       await expect(deleteDraftCase(req, mockLogger)).rejects.toThrow(error);
       expect(mockLogger.error).toHaveBeenCalledWith('delete failed');
+    });
+  });
+
+  describe('handleUpdateClaimantRepAboutYou', () => {
+    it('should save submitted case rep details to session without calling the draft update API', async () => {
+      caseApi.updateClaimantRepAboutYou = jest.fn();
+      mockClient.mockReturnValue(caseApi);
+
+      const req = mockRequest({
+        session: {
+          user: { email: 'rep@example.com' },
+          userCase: {
+            id: '1780654507465167',
+            state: CaseState.SUBMITTED,
+            representativeName: 'Updated Name',
+            claimantRepEmail: 'new@example.com',
+          },
+        },
+      });
+
+      await handleUpdateClaimantRepAboutYou(req, mockLogger);
+
+      expect(caseApi.updateClaimantRepAboutYou).not.toHaveBeenCalled();
+      expect(req.session.claimantRepAboutYouPendingDisplay?.claimantRepEmail).toBe('new@example.com');
+      expect(req.session.userCase.updateDraftCaseError).toBeUndefined();
     });
   });
 });
