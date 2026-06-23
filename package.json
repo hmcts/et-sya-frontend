@@ -81,7 +81,7 @@
     "i18next-http-middleware": "^3.3.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.23",
-    "multer": "2.1.1",
+    "multer": "2.2.0",
     "nunjucks": "^3.2.4",
     "postcode": "^5.1.0",
     "prettier": "^2.8.7",
@@ -174,7 +174,7 @@
     "pino-std-serializers": "^7.0.0",
     "tough-cookie": "^5.0.0",
     "minimist": "^1.2.6",
-    "node-gyp": "^12.2.0",
+    "node-gyp": "^13.0.0",
     "semver": "^7.5.2",
     "jsdom": "^29.0.0",
     "shelljs": "^0.10.0",
@@ -194,7 +194,8 @@
     "underscore": "^1.13.8",
     "yauzl": "3.2.1",
     "picomatch": "^4.0.4",
-    "ip-address": "^10.1.1"
+    "ip-address": "^10.1.1",
+    "undici": "^7.25.0"
   },
   "packageManager": "yarn@4.12.0"
 }
