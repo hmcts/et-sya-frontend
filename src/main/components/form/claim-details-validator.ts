@@ -45,6 +45,14 @@ export const validateRepresentativeDetails = (userCase: Record<string, any>): bo
   return !(!representativeName || !repAddress1);
 };
 
+export const validateClaimantRepAboutYou = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const { representativeName, repAddress1, claimantRepEmail } = userCase;
+  return !(!representativeName || !repAddress1 || !claimantRepEmail);
+};
+
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
   if (!userCase) {
     return false;

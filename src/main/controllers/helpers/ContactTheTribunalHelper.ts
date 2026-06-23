@@ -13,26 +13,32 @@ import { createRadioBtnsForHearings } from './FormHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 /**
- * Determines whether the claimant is legally represented by an organisation.
+ * Determines whether the claimant is represented by an HMCTS organisation account.
  *
- * This method checks if:
- * - The `claimantRepresentedQuestion` field exists and is set to `YesOrNo.YES`.
- * - And either:
- *   - The claimant's representative organisation policy contains a non-empty `Organisation`
- *     object with a valid `OrganisationID`, **or**
- *   - The claimant representative object includes a non-empty `myHmctsOrganisation`.
- *
- * @param {CaseWithId} userCase - The case data object containing claimant and representative details.
- * @returns {boolean} `true` if the claimant is represented by an organisation, otherwise `false`.
+ * Returns true when either:
+ * - `claimantRepresentativeOrganisationPolicy.Organisation.OrganisationID` is set, or
+ * - `claimantRepresentative.myHmctsOrganisation` is present.
  */
-export const isClaimantRepresentedByOrganisation = (userCase: CaseWithId): boolean => {
+export const isClaimantRepresentedByOrganisation = (userCase?: CaseWithId): boolean => {
+  return (
+    (ObjectUtils.isNotEmpty(userCase?.claimantRepresentativeOrganisationPolicy?.Organisation) &&
+      StringUtils.isNotBlank(userCase?.claimantRepresentativeOrganisationPolicy?.Organisation?.OrganisationID)) ||
+    (ObjectUtils.isNotEmpty(userCase?.claimantRepresentative) &&
+      ObjectUtils.isNotEmpty(userCase?.claimantRepresentative?.myHmctsOrganisation))
+  );
+};
+
+/**
+ * Determines whether claimant is represented by a non-HMCTS representative.
+ *
+ * Non-HMCTS representation is when claimant has selected represented flow
+ * but is not represented via an HMCTS organisation account.
+ */
+export const isClaimantRepresentedByNonHmctsRepresentative = (userCase: CaseWithId): boolean => {
   return (
     userCase?.claimantRepresentedQuestion !== undefined &&
-    userCase.claimantRepresentedQuestion === YesOrNo.YES &&
-    ((ObjectUtils.isNotEmpty(userCase?.claimantRepresentativeOrganisationPolicy?.Organisation) &&
-      StringUtils.isNotBlank(userCase.claimantRepresentativeOrganisationPolicy.Organisation.OrganisationID)) ||
-      (ObjectUtils.isNotEmpty(userCase.claimantRepresentative) &&
-        ObjectUtils.isNotEmpty(userCase.claimantRepresentative.myHmctsOrganisation)))
+    userCase?.claimantRepresentedQuestion === YesOrNo.YES &&
+    !isClaimantRepresentedByOrganisation(userCase)
   );
 };
 

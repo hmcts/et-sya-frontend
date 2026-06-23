@@ -18,6 +18,14 @@ import localesCy from '../../resources/locales/cy/translation/common.json';
 import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
+import { isClaimantRepCaseEligibleForDraftUpdate } from './ClaimantRepAboutYouHelper';
+import {
+  applyPreservedClaimantRepSessionFields,
+  populateClaimantRepDetailsFromCase,
+  preserveClaimantRepSessionFields,
+  syncClaimantRepresentativeFromSessionFields,
+  syncRepPhoneFields,
+} from './ClaimantRepAnswersHelper';
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
@@ -75,6 +83,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const repAddressCountry = req.session.userCase.repAddressCountry;
       const repAddressPostcode = req.session.userCase.repAddressPostcode;
       const representativePhoneNumber = req.session.userCase.representativePhoneNumber;
+      const claimantRepEmail = req.session.userCase.claimantRepEmail;
       const representativeDetailsCheck = req.session.userCase.representativeDetailsCheck;
       const representedClaimantFirstName = req.session.userCase.representedClaimantFirstName;
       const representedClaimantLastName = req.session.userCase.representedClaimantLastName;
@@ -112,6 +121,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.repAddressCountry ??= repAddressCountry;
       req.session.userCase.repAddressPostcode ??= repAddressPostcode;
       req.session.userCase.representativePhoneNumber ??= representativePhoneNumber;
+      req.session.userCase.claimantRepEmail ??= claimantRepEmail;
       req.session.userCase.representativeDetailsCheck ??= representativeDetailsCheck;
 
       req.session.userCase.representedClaimantFirstName ??= representedClaimantFirstName;
@@ -127,7 +137,50 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.representedClaimantDetailsCheck ??= representedClaimantDetailsCheck;
 
       req.session.userCase.claimantWrittenContract ??= claimantWrittenContract;
+      syncClaimantRepresentativeFromSessionFields(req.session.userCase);
       req.session.userCase.updateDraftCaseError = undefined;
+      req.session.save();
+    } catch (error) {
+      req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)
+        ? localesCy.updateDraftErrorMessage
+        : locales.updateDraftErrorMessage;
+      req.session.returnUrl = req.url;
+      req.session.save();
+      logger.error(error.message);
+    }
+  }
+};
+
+const saveClaimantRepAboutYouToSession = (req: AppRequest): void => {
+  const loginEmail = req.session.user?.email;
+  populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
+  syncRepPhoneFields(req.session.userCase);
+  syncClaimantRepresentativeFromSessionFields(req.session.userCase);
+  req.session.claimantRepAboutYouPendingDisplay = preserveClaimantRepSessionFields(req.session.userCase);
+  req.session.userCase.updateDraftCaseError = undefined;
+};
+
+export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: Logger): Promise<void> => {
+  if (!req.session.errors?.length) {
+    try {
+      if (!isClaimantRepCaseEligibleForDraftUpdate(req.session.userCase)) {
+        saveClaimantRepAboutYouToSession(req);
+        logger.info(
+          `Saved claimant rep about you details to session for submitted case id: ${req.session.userCase.id}`
+        );
+        req.session.save();
+        return;
+      }
+
+      const preserved = preserveClaimantRepSessionFields(req.session.userCase);
+      const hubLinksStatuses = req.session.userCase.hubLinksStatuses;
+      saveClaimantRepAboutYouToSession(req);
+      const response = await getCaseApi(req.session.user?.accessToken).updateClaimantRepAboutYou(req.session.userCase);
+      logger.info(`Updated claimant rep about you for case id: ${req.session.userCase.id}`);
+      req.session.userCase = fromApiFormat(response.data);
+      req.session.userCase.hubLinksStatuses ??= hubLinksStatuses;
+      applyPreservedClaimantRepSessionFields(req.session.userCase, preserved);
+      saveClaimantRepAboutYouToSession(req);
       req.session.save();
     } catch (error) {
       req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)

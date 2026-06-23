@@ -1,0 +1,24 @@
+{
+  "title": "About you",
+  "h1": "About you",
+  "submitBtn": "Submit",
+  "aboutYouDetails": {
+    "name": "Name",
+    "organisation": "Organisation",
+    "typeOfOrganisation": "Type of organisation",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "tellTheTribunal": {
+    "heading": "Tell the tribunal",
+    "textBeforeLink": "If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
+    "contactLink": "contact the tribunal",
+    "textAfterLink": "."
+  },
+  "errors": {
+    "hiddenErrorField": {
+      "invalid": "You must complete your name, address and email before you can submit"
+    }
+  }
+}

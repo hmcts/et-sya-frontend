@@ -10,6 +10,11 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { convertJsonArrayToTitleCase, handlePostLogic } from './helpers/CaseHelpers';
+import {
+  ensureClaimantRepCaseLoaded,
+  handleRepAboutYouPostLogic,
+  isClaimantRepAboutYouFlow,
+} from './helpers/ClaimantRepAboutYouHelper';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLink, getRepresentativeAddressTypes, getSelectTitle } from './helpers/RepresentativePostCodeHelper';
 
@@ -37,11 +42,17 @@ export default class RepresentativePostCodeSelectController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (isClaimantRepAboutYouFlow(req)) {
+      return handleRepAboutYouPostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_ADDRESS_DETAILS);
+    }
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_ADDRESS_DETAILS);
   };
 
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (isClaimantRepAboutYouFlow(req) && !(await ensureClaimantRepCaseLoaded(req))) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
     const response = convertJsonArrayToTitleCase(
       await getAddressesForPostcode(req.session.userCase.representativeEnterPostcode)
     );

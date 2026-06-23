@@ -64,8 +64,11 @@ import ClaimantPastNoticeTypeController from '../../controllers/ClaimantPastNoti
 import ClaimantPayController from '../../controllers/ClaimantPayController';
 import ClaimantPensionController from '../../controllers/ClaimantPensionController';
 import ClaimantPlaceOfWorkController from '../../controllers/ClaimantPlaceOfWorkController';
+import ClaimantRepAboutYouController from '../../controllers/ClaimantRepAboutYouController';
 import ClaimantRepCheckAnswersController from '../../controllers/ClaimantRepCheckAnswersController';
 import ClaimantRepClaimSubmittedController from '../../controllers/ClaimantRepClaimSubmittedController';
+import ClaimantRepEditEmailController from '../../controllers/ClaimantRepEditEmailController';
+import ClaimantRepEditNameController from '../../controllers/ClaimantRepEditNameController';
 import ClaimantRepHubController from '../../controllers/ClaimantRepHubController';
 import ClaimantRespondentAddRedirectController from '../../controllers/ClaimantRespondentAddRedirectController';
 import ClaimantRespondentAddressController from '../../controllers/ClaimantRespondentAddressController';
@@ -110,6 +113,7 @@ import JudgmentDetailsController from '../../controllers/JudgmentDetailsControll
 import LinkedCasesController from '../../controllers/LinkedCasesController';
 import LipOrRepController from '../../controllers/LipOrRepController';
 import MakingClaimAsLegalRepController from '../../controllers/MakingClaimAsLegalRepController';
+import ManifestController from '../../controllers/ManifestController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
 import NewJobPayController from '../../controllers/NewJobPayController';
@@ -250,6 +254,7 @@ export class Routes {
     app.post(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().post);
     app.get(PageUrls.COOKIE_PREFERENCES, new CookiePreferencesController().get);
     app.get(PageUrls.ACCESSIBILITY_STATEMENT, new AccessibilityStatementController().get);
+    app.get(PageUrls.MANIFEST_URL, new ManifestController().get);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().get);
@@ -649,6 +654,12 @@ export class Routes {
     app.get(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().post);
     app.get(PageUrls.CLAIMANT_REP_HUB, new ClaimantRepHubController().get);
+    app.get(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().get);
+    app.post(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().post);
+    app.get(PageUrls.CLAIMANT_REP_EDIT_NAME, new ClaimantRepEditNameController().get);
+    app.post(PageUrls.CLAIMANT_REP_EDIT_NAME, new ClaimantRepEditNameController().post);
+    app.get(PageUrls.CLAIMANT_REP_EDIT_EMAIL, new ClaimantRepEditEmailController().get);
+    app.post(PageUrls.CLAIMANT_REP_EDIT_EMAIL, new ClaimantRepEditEmailController().post);
     app.get(PageUrls.CLAIMANT_REP_CHECK_ANSWERS, new ClaimantRepCheckAnswersController().get);
     app.get(PageUrls.CLAIMANT_REP_CLAIM_SUBMITTED, new ClaimantRepClaimSubmittedController().get);
     app.get(InterceptPaths.SUBMIT_REP_CASE, new SubmitRepCaseController().get);

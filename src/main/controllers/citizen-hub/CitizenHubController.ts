@@ -42,7 +42,10 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
-import { isClaimantRepresentedByOrganisation } from '../helpers/ContactTheTribunalHelper';
+import {
+  isClaimantRepresentedByNonHmctsRepresentative,
+  isClaimantRepresentedByOrganisation,
+} from '../helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
@@ -68,7 +71,6 @@ export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
     const welshEnabled = await getFlagValue('welsh-language', null);
-    const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(req.session.userCase);
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {
@@ -83,6 +85,8 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
+    const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(userCase);
+    const showAboutYouForNonHmctsRep = isClaimantRepresentedByNonHmctsRepresentative(userCase);
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
@@ -144,10 +148,12 @@ export default class CitizenHubController {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
         links: sectionIndexToLinkNames[index].map(linkName => {
           const status = hubLinksStatuses[linkName];
+          const isVisible = linkName !== HubLinkNames.AboutYou || showAboutYouForNonHmctsRep;
           return {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
             shouldShow: shouldHubLinkBeClickable(status, linkName),
+            isVisible: () => isVisible,
             url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
             statusColor: () => statusColorMap.get(status),
           };
