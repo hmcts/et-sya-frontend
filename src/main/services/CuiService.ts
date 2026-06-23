@@ -9,7 +9,10 @@ export type {
   CUIClientOptions,
   CUIStartJourneyAuth,
   CUIStartJourneyRequest,
+  CUIStartJourneyResponse,
   CUIClientAuth,
+  CUIFlagDetails,
+  CUIJourneyData,
 } from '@hmcts/cui-client';
 
 export const getCuiService = (loginUrl: string | null = null): CUIClient => {

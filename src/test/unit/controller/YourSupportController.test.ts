@@ -3,11 +3,9 @@ import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseFlags, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
-import * as CaseService from '../../../main/services/CaseService';
 import * as CuiService from '../../../main/services/CuiService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { mockedApiData } from '../mocks/mockedApiData';
 
 const handleUpdateDraftCaseMock = jest
   .spyOn(CaseHelper, 'handleUpdateDraftCase')
@@ -60,17 +58,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: claimantExternalFlags,
     });
-    const updateDraftCase = jest.fn().mockResolvedValue({
-      data: {
-        ...mockedApiData,
-        case_data: {
-          ...mockedApiData.case_data,
-          claimantExternalFlags,
-        },
-      },
-    });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue({ updateDraftCase } as unknown as CaseService.CaseApi);
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
@@ -87,7 +75,7 @@ describe('Your Support Controller', () => {
     await controller.callback(req, res);
 
     expect(getJourneyData).toHaveBeenCalledWith('journey-id', { serviceToken: 's2s-token' });
-    expect(updateDraftCase).toHaveBeenCalled();
+    expect(handleUpdateDraftCaseMock).toHaveBeenCalledWith(req, expect.anything());
     expect(req.session.userCase.claimantExternalFlags).toEqual(claimantExternalFlags);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
   });
