@@ -1,6 +1,7 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
 import AdditionalClaimantPersonalDetailsController from '../../../../main/controllers/multiples/AdditionalClaimantPersonalDetailsController';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
+import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
@@ -18,7 +19,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
 
   it('should render and retain existing form state when opening without an edit index', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     request.session.userCase.additionalClaimantTitle = 'Mx';
     request.session.userCase.additionalClaimantFirstName = 'Old';
     request.session.userCase.additionalClaimantLastName = 'Value';
@@ -41,7 +42,7 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
 
   it('should set index from query and prepopulate when editing an existing claimant', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     request.query = { additionalClaimant: '0' };
     request.session.userCase.additionalClaimants = [
       {
@@ -216,5 +217,15 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     expect(response.redirect).toHaveBeenCalledWith(
       `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=new-claimant`
     );
+  });
+
+  it('should redirect via CaseStateCheck when the case state is not awaiting submission', () => {
+    const response = mockResponse();
+    const request = mockRequest({ userCase: { state: CaseState.SUBMITTED } });
+
+    new AdditionalClaimantPersonalDetailsController().get(request, response);
+
+    expect(response.render).not.toHaveBeenCalled();
+    expect(response.redirect).toHaveBeenCalled();
   });
 });

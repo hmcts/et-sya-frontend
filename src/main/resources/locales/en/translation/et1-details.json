@@ -40,7 +40,8 @@
     "addressLabel": "Address",
     "emailLabel": "Email address",
     "groupRepresentative": "Do you agree to be the group claim representative?",
-    "removeClaimant": "Remove claimant"
+    "removeClaimant": "Remove claimant",
+    "additionalClaimantDocument": "Additional claimant document"
   },
   "contactDetails": {
     "header": "Contact details",

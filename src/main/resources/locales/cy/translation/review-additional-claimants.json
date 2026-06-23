@@ -17,6 +17,8 @@
   "yes": "[W] Yes",
   "no": "[W] No",
   "cancel": "[W] Cancel",
+  "additionalClaimantDocument": "[W] Additional claimant document",
+  "documentLabel": "[W] Document",
   "errors": {
     "addAdditionalClaimant": {
       "required": "[W] You have not selected a value. You need to select an answer before continuing."

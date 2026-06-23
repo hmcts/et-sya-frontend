@@ -46,6 +46,8 @@ export default class RemoveAdditionalClaimantController {
 
   constructor() {
     this.form = new Form(<FormFields>this.removeContent.fields);
+    // get is registered as an unbound route handler, so bind it to preserve `this`.
+    this.get = this.get.bind(this);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -68,9 +70,9 @@ export default class RemoveAdditionalClaimantController {
     return handlePostLogic(req, res, this.form, logger, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   };
 
-  @AdditionalClaimantCheck()
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  @AdditionalClaimantCheck()
+  public get(req: AppRequest, res: Response): void {
     const indexStr = req.query?.additionalClaimant as string;
     const index = Number.parseInt(indexStr, 10);
     logger.info(`Rendering remove other claimant page. Query index: ${indexStr || 'none'}`);
@@ -85,5 +87,5 @@ export default class RemoveAdditionalClaimantController {
     res.render(TranslationKeys.REMOVE_ADDITIONAL_CLAIMANT, {
       ...content,
     });
-  };
+  }
 }

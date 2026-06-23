@@ -2,6 +2,7 @@ import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
 import RemoveAdditionalClaimantController from '../../../../main/controllers/multiples/RemoveAdditionalClaimantController';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
+import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
@@ -19,7 +20,7 @@ describe('RemoveAdditionalClaimantController', () => {
 
   it('should render remove claimant page', () => {
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({ t, userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
 
     new RemoveAdditionalClaimantController().get(request, response);
 
@@ -74,5 +75,15 @@ describe('RemoveAdditionalClaimantController', () => {
     await new RemoveAdditionalClaimantController().post(request, response);
 
     expect(request.session.userCase.additionalClaimants).toHaveLength(1);
+  });
+
+  it('should redirect via CaseStateCheck when the case state is not awaiting submission', () => {
+    const response = mockResponse();
+    const request = mockRequest({ userCase: { state: CaseState.SUBMITTED } });
+
+    new RemoveAdditionalClaimantController().get(request, response);
+
+    expect(response.render).not.toHaveBeenCalled();
+    expect(response.redirect).toHaveBeenCalled();
   });
 });

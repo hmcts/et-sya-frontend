@@ -148,6 +148,7 @@ import CitizenHubController from '../../controllers/citizen-hub/CitizenHubContro
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
 import AddAnotherClaimantController from '../../controllers/multiples/AddAnotherClaimantController';
+import AdditionalClaimantFileUploadController from '../../controllers/multiples/AdditionalClaimantFileUploadController';
 import AdditionalClaimantPersonalDetailsController from '../../controllers/multiples/AdditionalClaimantPersonalDetailsController';
 import AdditionalClaimantPostCodeEnterController from '../../controllers/multiples/AdditionalClaimantPostCodeEnterController';
 import AdditionalClaimantPostCodeSelectController from '../../controllers/multiples/AdditionalClaimantPostCodeSelectController';
@@ -161,14 +162,21 @@ import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitio
 import { csrfProtection } from '../csrf';
 
 const handleUploads = multer({
-  limits: {
-    fileSize: FILE_SIZE_LIMIT,
-  },
+  limits: { fileSize: FILE_SIZE_LIMIT.EIGHTY_MB },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT.EIGHTY_MB;
     return callback(null, !req.fileTooLarge);
   },
 });
+
+const handleUploadsWithLimit = (fileSizeLimit: number) =>
+  multer({
+    limits: { fileSize: fileSizeLimit },
+    fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
+      req.fileTooLarge = parseInt(req.headers['content-length']) > fileSizeLimit;
+      return callback(null, !req.fileTooLarge);
+    },
+  });
 
 const describeWhatHappenedLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -497,5 +505,14 @@ export class Routes {
     app.post(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS, new ReviewOtherClaimantsController().post);
     app.get(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().get);
     app.post(PageUrls.REMOVE_ADDITIONAL_CLAIMANT, new RemoveAdditionalClaimantController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD, new AdditionalClaimantFileUploadController().get);
+    app.post(
+      PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD_POSTVALIDATE,
+      handleUploadsWithLimit(FILE_SIZE_LIMIT.FIVE_MB).single('additionalClaimantSpreadsheetName'),
+      csrfProtection,
+      new AdditionalClaimantFileUploadController().postValidate
+    );
+    app.post(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD, new AdditionalClaimantFileUploadController().post);
+    app.get(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD_REMOVE, new AdditionalClaimantFileUploadController().remove);
   }
 }

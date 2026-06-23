@@ -29,11 +29,18 @@ describe('Check your answers confirmation page', () => {
           noticePeriod: YesOrNo.YES,
           isStillWorking: StillWorking.WORKING,
           caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -271,7 +278,32 @@ describe('Check your answers confirmation page', () => {
 
 describe('CYA for Scottish cases', () => {
   beforeAll(async () => {
-    await request(mockApp({ userCase: { caseTypeId: CaseTypeId.SCOTLAND } }))
+    await request(
+      mockApp({
+        userCase: {
+          caseTypeId: CaseTypeId.SCOTLAND,
+          typeOfClaim: [TypesOfClaim.DISCRIMINATION],
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'John Does',
+              respondentAddress1: '102 Petty France, London',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
+              acasCert: YesOrNo.NO,
+              acasCertNum: '12345',
+              noAcasReason: NoAcasNumberReason.ANOTHER,
+            },
+          ],
+        },
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -298,11 +330,19 @@ describe('Check your answers confirmation page - New Job with start date', () =>
           isStillWorking: StillWorking.NO_LONGER_WORKING,
           newJob: YesOrNo.YES,
           newJobStartDate: { year: '2020', month: '04', day: '21' },
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -339,11 +379,19 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
           isStillWorking: StillWorking.NO_LONGER_WORKING,
           newJob: YesOrNo.YES,
           newJobStartDate: undefined,
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -380,11 +428,19 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
           isStillWorking: StillWorking.NO_LONGER_WORKING,
           newJob: YesOrNo.YES,
           newJobStartDate: undefined,
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Doe',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               noAcasReason: NoAcasNumberReason.ANOTHER,
             },

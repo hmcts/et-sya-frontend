@@ -68,7 +68,7 @@ export const validateGroupClaimsCheckDetails = (req?: AppRequest, userCase?: Rec
     return false;
   }
 
-  const { caseType, additionalClaimants, leadClaimant } = userCase;
+  const { caseType, additionalClaimants, leadClaimant, additionalClaimantSpreadsheet } = userCase;
 
   if (caseType === CaseType.SINGLE) {
     return true;
@@ -78,14 +78,15 @@ export const validateGroupClaimsCheckDetails = (req?: AppRequest, userCase?: Rec
     return false;
   }
 
-  const hasAdditionalClaimants = Array.isArray(additionalClaimants) && additionalClaimants.length > 0;
-  const claimantErrors = validateAdditionalClaimants(req);
+  const hasAdditionalClaimants =
+    (Array.isArray(additionalClaimants) && additionalClaimants.length > 0) || Boolean(additionalClaimantSpreadsheet);
+  const claimantErrors = req ? validateAdditionalClaimants(req) : [];
   const hasLeadClaimantSelection = leadClaimant === YesOrNo.YES || leadClaimant === YesOrNo.NO;
   const hasClaimantErrors = claimantErrors.length > 0;
 
   if (hasClaimantErrors) {
     logger.info('Redirecting to review page due to additional claimant validation failures.');
-    req.session.errors.push(...claimantErrors);
+    req?.session?.errors?.push(...claimantErrors);
   }
 
   return !hasClaimantErrors && hasAdditionalClaimants && hasLeadClaimantSelection;

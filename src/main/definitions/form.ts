@@ -74,6 +74,10 @@ export interface FormInput {
   collapsableTitle?: Label;
   maxlength?: number | null;
   values?: [];
+  chooseFilesButtonText?: Label;
+  noFileChosenText?: Label;
+  dropInstructionText?: Label;
+  multiple?: boolean | null;
 }
 
 export type FormError = {

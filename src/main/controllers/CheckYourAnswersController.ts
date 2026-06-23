@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
+import { CheckAnswersValidationCheck } from '../decorators/CheckAnswersValidationCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
@@ -15,16 +16,12 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  @CheckAnswersValidationCheck()
+  public get(req: AppRequest, res: Response): void {
     if (!req.session?.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
-    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim?.length === 0) {
-      req.session.errors ??= [];
-      req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
-    }
-
     req.session.respondentRedirectCheckAnswer = undefined;
 
     const translations: AnyRecord = {
@@ -64,5 +61,5 @@ export default class CheckYourAnswersController {
       languageParam: getLanguageParam(req.url),
       isAddRespondent: newRespondentNum <= 5,
     });
-  };
+  }
 }

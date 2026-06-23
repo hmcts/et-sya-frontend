@@ -40,7 +40,8 @@
     "addressLabel": "[W] Address",
     "emailLabel": "[W] Email address",
     "groupRepresentative": "[W] Do you agree to be the group claim representative?",
-    "removeClaimant": "[W] Remove claimant"
+    "removeClaimant": "[W] Remove claimant",
+    "additionalClaimantDocument": "[W] Additional claimant document"
   },
   "contactDetails": {
     "header": "Manylion cyswllt",

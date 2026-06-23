@@ -237,9 +237,9 @@ describe('Validation', () => {
     it.each([
       { fileName: undefined, expected: undefined },
       { fileName: '', expected: undefined },
-      { fileName: '.csv', expected: undefined },
-      { fileName: '..csv', expected: undefined },
-      { fileName: 'file.csv', expected: undefined },
+      { fileName: '.xlsx', expected: undefined },
+      { fileName: '..xlsx', expected: undefined },
+      { fileName: 'file.xlsx', expected: undefined },
       { fileName: 'file.pdf', expected: undefined },
       { fileName: 'file.doc', expected: undefined },
       { fileName: 'file.docx', expected: undefined },
@@ -265,18 +265,18 @@ describe('Validation', () => {
       { fileName: 'file.potx', expected: undefined },
       { fileName: 'file.ppsx', expected: undefined },
       { fileName: 'file.rtf', expected: undefined },
-      { fileName: 'file Copy(0).csv', expected: undefined },
+      { fileName: 'file Copy(0).xlsx', expected: undefined },
       { fileName: 'file_with_underscore.txt', expected: undefined },
-      { fileName: 'file.file.csv', expected: undefined },
-      { fileName: 'file.csv.csv', expected: undefined },
+      { fileName: 'file.file.xlsx', expected: undefined },
+      { fileName: 'file.xlsx.xlsx', expected: undefined },
       { fileName: 'file.msg', expected: 'invalidFileFormat' },
-      { fileName: 'file.csv.msg', expected: 'invalidFileFormat' },
+      { fileName: 'file.xlsx.msg', expected: 'invalidFileFormat' },
       { fileName: 'file.json', expected: 'invalidFileFormat' },
       { fileName: 'file', expected: 'invalidFileFormat' },
       { fileName: 'file.pfsz', expected: 'invalidFileFormat' },
       { fileName: 'file.pj', expected: 'invalidFileFormat' },
       { fileName: 'file.gjp', expected: 'invalidFileFormat' },
-      { fileName: 'csv', expected: 'invalidFileFormat' },
+      { fileName: 'xlsx', expected: 'invalidFileFormat' },
       { fileName: 'file.', expected: 'invalidFileFormat' },
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
@@ -285,12 +285,12 @@ describe('Validation', () => {
       expect(hasInvalidFileFormat(newFile, undefined)).toEqual(expected);
     });
     it.each([
-      { fileName: 'file Copy(0).csv', expected: undefined },
+      { fileName: 'file Copy(0).xlsx', expected: undefined },
       { fileName: 'file_with_underscore.txt', expected: undefined },
-      { fileName: 'file.file.csv', expected: undefined },
-      { fileName: 'file.csv.csv', expected: undefined },
-      { fileName: 'file?.csv', expected: 'invalidFileName' },
-      { fileName: 'file<1>.csv', expected: 'invalidFileName' },
+      { fileName: 'file.file.xlsx', expected: undefined },
+      { fileName: 'file.xlsx.xlsx', expected: undefined },
+      { fileName: 'file?.xlsx', expected: 'invalidFileName' },
+      { fileName: 'file<1>.xlsx', expected: 'invalidFileName' },
     ])('Check filename %o', ({ fileName, expected }) => {
       expect(hasInvalidName(fileName)).toEqual(expected);
     });

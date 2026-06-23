@@ -44,6 +44,8 @@ export default class AdditionalClaimantPostCodeEnterController {
 
   constructor() {
     this.form = new Form(<FormFields>this.postCodeContent.fields);
+    // get is registered as an unbound route handler, so bind it to preserve `this`.
+    this.get = this.get.bind(this);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -76,9 +78,9 @@ export default class AdditionalClaimantPostCodeEnterController {
     return handlePostLogic(req, res, this.form, logger, postcodeSelectUrl, true);
   };
 
-  @AdditionalClaimantCheck()
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  @AdditionalClaimantCheck()
+  public get(req: AppRequest, res: Response): void {
     const indexParam = req.query?.additionalClaimant as string;
     if (indexParam === 'new-claimant') {
       if (req.session.userCase.currentAdditionalClaimantIndex === undefined) {
@@ -113,7 +115,7 @@ export default class AdditionalClaimantPostCodeEnterController {
       link: getAdditionalClaimantAddressLink(req),
       title: getEnterTitle(req),
     });
-  };
+  }
 
   /**
    * Cleans up a postcode string to make it easier to compare.

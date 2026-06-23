@@ -1,6 +1,11 @@
 import { AddAdditionalClaimant, CaseType, CaseWithId, YesOrNo } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
-import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
+import {
+  SummaryListRow,
+  addSummaryHtmlRow,
+  addSummaryRow,
+  createChangeAction,
+} from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { formatAddress, formatDob, formatName } from './multiples/ReviewAdditionalClaimantsHelper';
@@ -45,11 +50,7 @@ const getTranslationsGroupRepresentative = (userCase: CaseWithId, translations: 
 };
 
 function buildAdditionalClaimantCards(userCase: CaseWithId, translations: AnyRecord) {
-  const claimants = userCase.additionalClaimants || [];
-
-  if (claimants.length === 0) {
-    return translations.notProvided;
-  }
+  const claimants = userCase?.additionalClaimants;
 
   // Loop through the claimants and construct the summary cards markup
   return claimants
@@ -139,6 +140,21 @@ export const getGroupClaimDetails = (userCase: CaseWithId, translations: AnyReco
 
   if (userCase?.caseType === CaseType.MULTIPLE && userCase.addClaimantMethod === AddAdditionalClaimant.SPREADSHEET) {
     metaRows.push(
+      addSummaryHtmlRow(
+        translations.groupClaimDetails.additionalClaimantDocument,
+        userCase?.additionalClaimantSpreadsheet?.document_binary_url
+          ? '<a class="govuk-link" href="' +
+              userCase?.additionalClaimantSpreadsheet?.document_binary_url +
+              '">' +
+              userCase?.additionalClaimantSpreadsheet?.document_filename +
+              '</a>'
+          : translations.notProvided,
+        createChangeAction(
+          PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.groupClaimDetails.groupRepresentative
+        )
+      ),
       addSummaryRow(
         translations.groupClaimDetails.groupRepresentative,
         getTranslationsGroupRepresentative(userCase, translations),
@@ -155,7 +171,25 @@ export const getGroupClaimDetails = (userCase: CaseWithId, translations: AnyReco
     return { metaRows, cardsHtml: '', postRows: [] };
   }
 
-  const cardsHtml = buildAdditionalClaimantCards(userCase, translations);
+  let cardsHtml = '';
+
+  const claimantsLength = userCase?.additionalClaimants?.length || 0;
+
+  if (claimantsLength === 0) {
+    metaRows.push(
+      addSummaryRow(
+        translations.groupClaimDetails.additionalClaimants,
+        translations.notProvided,
+        createChangeAction(
+          PageUrls.GROUP_REPRESENTATIVE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.groupClaimDetails.groupRepresentative
+        )
+      )
+    );
+  } else {
+    cardsHtml = buildAdditionalClaimantCards(userCase, translations);
+  }
 
   const postRows: SummaryListRow[] = [
     addSummaryRow(

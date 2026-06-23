@@ -2,6 +2,7 @@ import { getAddressesForPostcode } from '../../../../main/address';
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
 import AdditionalClaimantPostCodeSelectController from '../../../../main/controllers/multiples/AdditionalClaimantPostCodeSelectController';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
+import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
@@ -134,7 +135,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should set current edit index from query and render postcode select page with resolved addresses', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.query = { additionalClaimant: '1' };
     req.session.userCase.additionalClaimantEnterPostcode = 'SW1H 9AJ';
@@ -159,7 +160,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should not overwrite entered postcode with empty stored claimant postcode before lookup', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.session.userCase.currentAdditionalClaimantIndex = 0;
     req.session.userCase.additionalClaimants = [{ firstName: 'Jane', lastName: 'Doe' }];
@@ -182,7 +183,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should prepopulate editable address fields from current claimant when editing from review flow', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.session.userCase.currentAdditionalClaimantIndex = 0;
     req.session.userCase.additionalClaimants = [
@@ -221,7 +222,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should not prepopulate claimant address fields when entered postcode differs from stored claimant postcode', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.session.userCase.currentAdditionalClaimantIndex = 0;
     req.session.userCase.additionalClaimants = [
@@ -260,7 +261,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should set currentAdditionalClaimantIndex for new-claimant query when additionalClaimants exist', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.query = { additionalClaimant: 'new-claimant' };
     req.session.additionalClaimantNewFlow = true;
@@ -274,7 +275,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should fill address fields from selected address when no address fields are populated', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.session.userCase.additionalClaimantAddressTypes = 0 as never;
     req.session.userCase.additionalClaimantEnterPostcode = 'SW1A 2AA';
@@ -298,7 +299,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
   });
 
   it('should highlight selected address type in the dropdown', async () => {
-    const req = mockRequest({});
+    const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
     const res = mockResponse();
     req.session.userCase.additionalClaimantAddressTypes = 0 as never;
     req.session.userCase.additionalClaimantEnterPostcode = 'SW1A 2AA';
@@ -339,6 +340,16 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
     expect(req.session.userCase.additionalClaimants).toHaveLength(1);
     expect(req.session.userCase.additionalClaimants[0].firstName).toBe('Alice');
     expect(req.session.userCase.additionalClaimants[0].address.AddressLine1).toBe('5 High St');
+  });
+
+  it('should redirect via CaseStateCheck when the case state is not awaiting submission', async () => {
+    const req = mockRequest({ userCase: { state: CaseState.SUBMITTED } });
+    const res = mockResponse();
+
+    await new AdditionalClaimantPostCodeSelectController().get(req, res);
+
+    expect(res.render).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalled();
   });
 
   describe('utility methods', () => {
@@ -431,14 +442,14 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
 
     describe('fillAdditionalClaimantAddressFields', () => {
       it('should do nothing when selectedAddressType is NaN', () => {
-        const req = mockRequest({});
+        const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
         controller.fillAdditionalClaimantAddressFields('invalid', req);
 
         expect(req.session.userCase.additionalClaimantAddress1).toBeUndefined();
       });
 
       it('should do nothing when selected address does not exist', () => {
-        const req = mockRequest({});
+        const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
         req.session.userCase.additionalClaimantAddresses = [];
         controller.fillAdditionalClaimantAddressFields('5', req);
 
@@ -446,7 +457,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
       });
 
       it('should populate address fields from matching address', () => {
-        const req = mockRequest({});
+        const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
         req.session.userCase.additionalClaimantAddresses = [
           {
             street1: '10 Downing St',
@@ -467,7 +478,7 @@ describe('AdditionalClaimantPostCodeSelectController', () => {
 
     describe('clearAdditionalClaimantTransientFields', () => {
       it('should clear all transient fields', () => {
-        const req = mockRequest({});
+        const req = mockRequest({ userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } });
         req.session.additionalClaimantNewFlow = true;
         req.session.userCase.currentAdditionalClaimantIndex = 0;
         req.session.userCase.additionalClaimantTitle = 'Mr';

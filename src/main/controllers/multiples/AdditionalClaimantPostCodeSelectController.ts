@@ -109,6 +109,8 @@ export default class AdditionalClaimantPostCodeSelectController {
 
   constructor() {
     this.form = new Form(<FormFields>this.postCodeSelectContent.fields);
+    // get is registered as an unbound route handler, so bind it to preserve `this`.
+    this.get = this.get.bind(this);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -142,9 +144,9 @@ export default class AdditionalClaimantPostCodeSelectController {
     return handlePostLogic(req, res, this.form, logger, PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
   };
 
-  @AdditionalClaimantCheck()
   @CaseStateCheck()
-  public get = async (req: AppRequest, res: Response): Promise<void> => {
+  @AdditionalClaimantCheck()
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const selectedAddressType = req.session.userCase.additionalClaimantAddressTypes;
     await this.editAdditionalClaimantData(req, selectedAddressType);
 
@@ -176,7 +178,7 @@ export default class AdditionalClaimantPostCodeSelectController {
       link: getAdditionalClaimantAddressLink(req),
       title: getSelectTitle(req),
     });
-  };
+  }
 
   private async editAdditionalClaimantData(req: AppRequest<Partial<AnyRecord>>, selectedAddressType: AddressType[]) {
     const indexParam = req.query?.additionalClaimant as string;

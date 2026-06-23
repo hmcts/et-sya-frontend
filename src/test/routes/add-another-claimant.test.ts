@@ -35,7 +35,7 @@ describe(`on POST ${PageUrls.ADD_ANOTHER_CLAIMANT}`, () => {
       .send({ addClaimantMethod: AddAdditionalClaimant.SPREADSHEET })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REVIEW_ADDITIONAL_CLAIMANTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD);
       });
   });
 

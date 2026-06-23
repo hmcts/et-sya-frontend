@@ -95,6 +95,9 @@ export default class ReviewAdditionalClaimantsController {
     // 3. Standard routing rules on successful validation
     let redirectUrl;
     if (req.body.addAdditionalClaimant === YesOrNo.NO || additionalClaimantCount >= MAX_ADDITIONAL_CLAIMANTS) {
+      if (req.session?.additionalClaimantsRedirectCheckAnswer) {
+        req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+      }
       redirectUrl = setUrlLanguage(req, PageUrls.GROUP_REPRESENTATIVE);
     } else {
       redirectUrl = setUrlLanguage(
@@ -123,9 +126,8 @@ export default class ReviewAdditionalClaimantsController {
       TranslationKeys.REVIEW_ADDITIONAL_CLAIMANTS,
     ]);
     const languageParam = req.url?.includes('lng=cy') ? '?lng=cy' : '';
-    req.session.additionalClaimantNewFlow = false;
-
-    const additionalClaimants: ClaimantSummaryCard[] = claimants.map((c, index) => ({
+    let additionalClaimants: ClaimantSummaryCard[] = [];
+    additionalClaimants = claimants.map((c, index) => ({
       name: formatName(c),
       dob: formatDob(c.dob),
       address: formatAddress(c),
@@ -154,6 +156,7 @@ export default class ReviewAdditionalClaimantsController {
       ...content,
       additionalClaimants,
       canAddAnotherClaimant,
+      addAnotherClaimantLink: PageUrls.ADD_ANOTHER_CLAIMANT,
     });
   };
 
@@ -174,6 +177,7 @@ export default class ReviewAdditionalClaimantsController {
       };
       delete fields.addAdditionalClaimant;
     }
+
     return { ...this.reviewContent, fields };
   };
 }

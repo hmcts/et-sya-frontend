@@ -312,6 +312,7 @@ export default {
   caseStayed: YesOrNo.YES,
   claimantRepresentativeOrganisationPolicy: undefined,
   addClaimantMethod: AddAdditionalClaimant.MANUAL,
+  additionalClaimantSpreadsheet: undefined,
   additionalClaimants: [
     {
       title: 'Mr',
