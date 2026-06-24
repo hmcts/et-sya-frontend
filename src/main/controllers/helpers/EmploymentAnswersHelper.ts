@@ -314,7 +314,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
           ),
           addSummaryRow(
             translations.employmentDetails.payPeriod,
-            userCase.newJobPayInterval ?? translations.notProvided,
+            getTranslationsPayInterval(userCase?.newJobPayInterval, translations),
             createChangeAction(
               PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
               translations.change,
