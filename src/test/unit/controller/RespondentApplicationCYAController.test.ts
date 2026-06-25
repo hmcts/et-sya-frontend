@@ -26,4 +26,13 @@ describe('Tribunal Response CYA Controller', () => {
     await controller.get(request, response);
     expect(request.session.userCase.isRespondingToRequestOrOrder).toBe(false);
   });
+
+  it('should redirect to not-found when selectedGenericTseApplication is missing from session', async () => {
+    const controller = new RespondentApplicationCYAController();
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({}, translationJsons);
+    request.session.userCase.selectedGenericTseApplication = undefined;
+    await controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+  });
 });
