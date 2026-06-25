@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { getLanguageParam, returnValidUrl } from '../controllers/helpers/RouterHelpers';
+import { returnSafeCitizenHubUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
@@ -25,14 +25,12 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
   let redirectUrl: string | null = null;
 
   if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    if (NumberUtils.isNumericValue(userCase?.id)) {
-      redirectUrl = `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`;
-    } else {
-      redirectUrl = PageUrls.CLAIMANT_APPLICATIONS;
-    }
+    redirectUrl = NumberUtils.isNumericValue(userCase?.id)
+      ? returnSafeCitizenHubUrl(userCase.id, req)
+      : PageUrls.CLAIMANT_APPLICATIONS;
   }
   if (redirectUrl) {
-    res.redirect(returnValidUrl(redirectUrl));
+    res.redirect(redirectUrl);
     return true;
   }
   return false;
