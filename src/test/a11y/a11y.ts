@@ -7,7 +7,7 @@ const pa11y = require('pa11y');
 const envUrl = process.env.TEST_URL || 'http://localhost:3002';
 const options = ['WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2'];
 // Ignore pages that are passing in WAVE evaluation tool
-const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB];
+const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB, PageUrls.MANIFEST_URL];
 
 class PallyIssue {
   code: string;
