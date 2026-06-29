@@ -159,7 +159,10 @@ describe('CaseTransferHelper', () => {
     it('should return false when session save fails', async () => {
       const req = mockRequest({});
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
-      req.session.save = jest.fn((done?: (err?: Error) => void) => done?.(new Error('session save failed')));
+      req.session.save = jest.fn((done?: (err?: Error) => void) => {
+        done?.(new Error('session save failed'));
+        return req.session;
+      });
       const res = mockResponse();
 
       const redirected = await saveSessionAndRedirectToTransferredCase(

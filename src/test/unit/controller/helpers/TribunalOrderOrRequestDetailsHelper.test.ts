@@ -570,7 +570,8 @@ describe('Tribunal order or request Details helper', () => {
     });
 
     it('should return early when hubLinksStatuses is not defined', async () => {
-      const userCase = { ...mockUserCaseWithCitizenHubLinks, hubLinksStatuses: undefined };
+      const userCase = { ...mockUserCaseWithCitizenHubLinks };
+      delete userCase.hubLinksStatuses;
 
       await activateTribunalOrdersAndRequestsLink([], userCase);
 
