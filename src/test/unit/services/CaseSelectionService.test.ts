@@ -247,7 +247,7 @@ describe('Case Selection Service using Case Api', () => {
     expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
   });
 
-  test('Should redirect to transferred page when submitted case is transferred', async () => {
+  test('Should redirect to citizen hub when submitted case loads successfully', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
         id: '12234',
@@ -284,7 +284,8 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
   });
 
   test('Should redirect to transferred page when getUserCase fails for transferred case', async () => {

@@ -81,9 +81,6 @@ export default class CitizenHubController {
         req.session.userCase = fromApiFormat(
           (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
         );
-        if (await handleTransferredCaseRedirect(req, res, req.params.caseId)) {
-          return;
-        }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         logger.error(errorMessage);
@@ -91,13 +88,15 @@ export default class CitizenHubController {
           return;
         }
         if (isTransferredToEcmCaseError(error) || isCaseNotFoundError(error)) {
-          await saveSessionAndRedirectToTransferredCase(
+          const redirected = await saveSessionAndRedirectToTransferredCase(
             req,
             res,
             req.params.caseId,
             createFallbackTransferInfo(req.params.caseId)
           );
-          return;
+          if (redirected) {
+            return;
+          }
         }
         return res.redirect('/not-found');
       }

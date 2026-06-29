@@ -9,6 +9,7 @@ import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '..
 import { getLanguageParam } from './RouterHelpers';
 
 const logger = getLogger('CaseTransferHelper');
+const SESSION_SAVE_TIMEOUT_MS = 10000;
 
 export const createFallbackTransferInfo = (caseId: string): CaseTransferInfoResponse => ({
   transferred: true,
@@ -31,7 +32,12 @@ export const saveSessionAndRedirectToTransferredCase = async (
 
   try {
     await new Promise<void>((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error(`Session save timed out after ${SESSION_SAVE_TIMEOUT_MS}ms`));
+      }, SESSION_SAVE_TIMEOUT_MS);
+
       req.session.save(err => {
+        clearTimeout(timeout);
         if (err) {
           reject(err);
         } else {
@@ -60,7 +66,7 @@ export const handleTransferredCaseRedirect = async (
   originalError?: unknown
 ): Promise<boolean> => {
   try {
-    const caseApi = await getCaseApi(req.session.user?.accessToken);
+    const caseApi = getCaseApi(req.session.user?.accessToken);
     const transferInfo = await caseApi.getCaseTransferInfo(caseId);
     const transferInfoData = transferInfo.data;
 

@@ -175,5 +175,25 @@ describe('CaseTransferHelper', () => {
       expect(redirected).toBe(false);
       expect(res.redirect).not.toHaveBeenCalled();
     });
+
+    it('should return false when session save times out', async () => {
+      jest.useFakeTimers();
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.session.save = jest.fn();
+      const res = mockResponse();
+
+      const redirectPromise = saveSessionAndRedirectToTransferredCase(
+        req,
+        res,
+        '20548',
+        createFallbackTransferInfo('20548')
+      );
+      jest.advanceTimersByTime(10000);
+
+      await expect(redirectPromise).resolves.toBe(false);
+      expect(res.redirect).not.toHaveBeenCalled();
+      jest.useRealTimers();
+    });
   });
 });

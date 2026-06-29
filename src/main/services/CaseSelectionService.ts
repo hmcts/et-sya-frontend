@@ -151,9 +151,6 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     }
 
     req.session.userCase = fromApiFormat(response.data);
-    if (await handleTransferredCaseRedirect(req, res, caseId)) {
-      return;
-    }
 
     req.session.save();
     return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
@@ -164,8 +161,15 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
       return;
     }
     if (isTransferredToEcmCaseError(err) || isCaseNotFoundError(err)) {
-      await saveSessionAndRedirectToTransferredCase(req, res, caseId, createFallbackTransferInfo(caseId));
-      return;
+      const redirected = await saveSessionAndRedirectToTransferredCase(
+        req,
+        res,
+        caseId,
+        createFallbackTransferInfo(caseId)
+      );
+      if (redirected) {
+        return;
+      }
     }
     const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
       ? PageUrls.HOME + languages.WELSH_URL_PARAMETER

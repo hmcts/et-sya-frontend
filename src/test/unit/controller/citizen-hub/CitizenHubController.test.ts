@@ -76,7 +76,7 @@ describe('Citizen Hub Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
   });
 
-  it('should redirect to transferred page when case loads but transfer info says transferred', async () => {
+  it('should render citizen hub when case loads successfully even if transfer info says transferred', async () => {
     const controller = new CitizenHubController();
     caseApi.getUserCase = jest.fn().mockResolvedValueOnce({
       data: {
@@ -100,8 +100,9 @@ describe('Citizen Hub Controller', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
-    expect(res.render).not.toHaveBeenCalled();
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
+    expect(res.redirect).not.toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.render).toHaveBeenCalled();
   });
 
   it('should redirect to transferred page when case is transferred to ECM', async () => {
