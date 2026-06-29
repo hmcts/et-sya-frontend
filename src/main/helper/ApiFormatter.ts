@@ -223,9 +223,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
-    ...(fromApiCaseData.case_data?.claimantFlags !== undefined
-      ? { claimantFlags: fromApiCaseData.case_data.claimantFlags }
-      : {}),
     ...(fromApiCaseData.case_data?.claimantExternalFlags !== undefined
       ? { claimantExternalFlags: fromApiCaseData.case_data.claimantExternalFlags }
       : {}),

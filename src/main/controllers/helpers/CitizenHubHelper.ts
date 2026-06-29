@@ -41,6 +41,10 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
 
+  hubLinksStatuses[HubLinkNames.YourSupport] = userCase.claimantExternalFlags?.details?.length
+    ? HubLinkStatus.SUBMITTED
+    : HubLinkStatus.OPTIONAL;
+
   hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = shouldShowViewRespondentContactDetails(userCase)
     ? HubLinkStatus.READY_TO_VIEW
     : HubLinkStatus.NOT_YET_AVAILABLE;
@@ -281,6 +285,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   };
   return new Map<string, string>([
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
+    [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + baseUrls[languageParam]],
     [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
     [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS + baseUrls[languageParam]],
@@ -290,7 +295,6 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
     [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS + baseUrls[languageParam]],
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],
-    [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + baseUrls[languageParam]],
   ]);
 };
 

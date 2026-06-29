@@ -378,6 +378,7 @@ export class Routes {
     app.get(PageUrls.YOUR_SUPPORT_REDIRECT, new YourSupportController().redirectToCuiJourney);
     app.get(PageUrls.YOUR_SUPPORT_CALLBACK, new YourSupportController().callback);
     app.get(PageUrls.YOUR_SUPPORT_CONFIRMATION, new YourSupportController().confirmation);
+    app.get(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION, new YourSupportController().submittedConfirmation);
 
     // R92 - Non-system user - Store
     app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);

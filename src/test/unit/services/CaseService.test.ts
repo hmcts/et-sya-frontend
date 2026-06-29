@@ -4,6 +4,7 @@ import { clone } from 'lodash';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import {
   AgreedDocuments,
+  CaseFlags,
   CaseType,
   CaseTypeId,
   CaseWithId,
@@ -538,6 +539,7 @@ describe('Rethrowing errors for removeClaimantRepresentative', () => {
 describe('update case from claimant actions', () => {
   beforeEach(() => {
     mockedAxios.put.mockClear();
+    mockedAxios.post.mockClear();
   });
 
   it('should update hub links statuses', async () => {
@@ -552,6 +554,44 @@ describe('update case from claimant actions', () => {
 
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockHubLinkStatusesRequest);
+  });
+
+  it('should only send claimantExternalFlags when updating a submitted case from your support', async () => {
+    const claimantExternalFlags: CaseFlags = {
+      roleOnCase: 'Claimant',
+      details: [],
+    };
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      claimantExternalFlags,
+    };
+
+    await api.updateSubmittedCaseFlags(caseItem);
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(JavaApiUrls.UPDATE_SUBMITTED_CASE, {
+      case_id: '1234',
+      case_type_id: CaseTypeId.ENGLAND_WALES,
+      case_data: {
+        claimantExternalFlags,
+      },
+    });
+  });
+
+  it('should not update submitted case flags without claimantExternalFlags', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+
+    await expect(api.updateSubmittedCaseFlags(caseItem)).rejects.toThrow('claimantExternalFlags must be set');
+    expect(mockedAxios.post).not.toHaveBeenCalled();
   });
 
   it('should update respondent application as viewed', async () => {

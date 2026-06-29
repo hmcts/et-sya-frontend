@@ -161,6 +161,7 @@ export const TranslationKeys = {
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
   YOUR_SUPPORT: 'your-support',
   YOUR_SUPPORT_CONFIRMATION: 'your-support-confirmation',
+  YOUR_SUPPORT_SUBMITTED_CONFIRMATION: 'your-support-submitted-confirmation',
 } as const;
 
 export const PageUrls = {
@@ -310,6 +311,7 @@ export const PageUrls = {
   YOUR_SUPPORT_REDIRECT: '/your-support-redirect',
   YOUR_SUPPORT_CALLBACK: '/your-support/:id',
   YOUR_SUPPORT_CONFIRMATION: '/your-support-confirmation',
+  YOUR_SUPPORT_SUBMITTED_CONFIRMATION: '/your-support-submitted-confirmation',
 } as const;
 
 export const InterceptPaths = {
@@ -357,6 +359,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
+  UPDATE_SUBMITTED_CASE: 'cases/update-case-submitted',
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',

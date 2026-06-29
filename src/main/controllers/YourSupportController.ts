@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseFlags, YesOrNo } from '../definitions/case';
 import { AuthUrls, PageUrls, TranslationKeys } from '../definitions/constants';
@@ -12,7 +11,10 @@ import { getLogger } from '../logger';
 
 import {
   type CUIClient,
+  type CUIFlag,
   type CUIFlagDetails,
+  type CUIFlagItem,
+  type CUIFlagPath,
   type CUIJourneyData,
   type CUIStartJourneyAuth,
   type CUIStartJourneyRequest,
@@ -21,7 +23,7 @@ import {
 } from './../services/CuiService';
 import type { IS2SService } from './../services/S2SService';
 import { getServiceUrl } from './../utils/getServiceUrl';
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, handleUpdateSubmittedCaseFlags, setUserCase } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageCode, returnValidUrl } from './helpers/RouterHelpers';
@@ -30,8 +32,22 @@ const logger = getLogger('YourSupportController');
 const CUI_MASTER_FLAG_CODE = 'RA0001';
 const CUI_SUBMIT_ACTION = 'submit';
 const YOUR_SUPPORT_TEMPLATE = 'your-support';
+const YOUR_SUPPORT_CONFIRMATION_TEMPLATE = 'your-support-confirmation';
+const YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE = 'your-support-submitted-confirmation';
 const YOUR_SUPPORT_FIELD = 'reasonableAdjustments';
 const YOUR_SUPPORT_REDIRECT_ERROR = 'yourSupportRedirect';
+const CUI_FLAG_OPTIONAL_FIELDS = [
+  'subTypeValue',
+  'subTypeValue_cy',
+  'subTypeKey',
+  'otherDescription',
+  'otherDescription_cy',
+  'flagComment',
+  'flagComment_cy',
+  'flagUpdateComment',
+  'dateTimeModified',
+  'status',
+];
 
 const formatError = (error: unknown): string => {
   if (error instanceof Error) {
@@ -66,8 +82,12 @@ export default class YourSupportController {
     this.form = new Form(<FormFields>this.yourSupportContent.fields);
   }
 
-  @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (!this.canAccessYourSupport(req)) {
+      res.redirect(this.getFallbackUrl(req));
+      return;
+    }
+
     const content = getPageContent(req, this.yourSupportContent, [
       TranslationKeys.COMMON,
       TranslationKeys.YOUR_SUPPORT,
@@ -80,12 +100,18 @@ export default class YourSupportController {
       ...content,
       cancelLink,
       sessionErrors,
+      showNoSupport: this.isDraftCase(req),
       supportNo: YesOrNo.NO,
       supportYes: YesOrNo.YES,
     });
   };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (!this.canAccessYourSupport(req)) {
+      res.redirect(this.getFallbackUrl(req));
+      return;
+    }
+
     setUserCase(req, this.form);
 
     switch (req.session.userCase?.reasonableAdjustments) {
@@ -141,19 +167,23 @@ export default class YourSupportController {
 
   public confirmation = async (req: AppRequest, res: Response): Promise<void> => {
     const link = this.getExitUrl(req);
+    this.renderConfirmation(
+      req,
+      res,
+      TranslationKeys.YOUR_SUPPORT_CONFIRMATION,
+      YOUR_SUPPORT_CONFIRMATION_TEMPLATE,
+      link
+    );
+  };
 
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.YOUR_SUPPORT_CONFIRMATION, { returnObjects: true }),
-    };
-    const sessionErrors = req.session?.errors || [];
-    req.session.errors = [];
-
-    res.render('your-support-confirmation', {
-      ...translations,
-      sessionErrors,
-      link,
-    });
+  public submittedConfirmation = async (req: AppRequest, res: Response): Promise<void> => {
+    this.renderConfirmation(
+      req,
+      res,
+      TranslationKeys.YOUR_SUPPORT_SUBMITTED_CONFIRMATION,
+      YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE,
+      this.getExitUrl(req)
+    );
   };
 
   private async redirectNoSupport(req: AppRequest, res: Response): Promise<void> {
@@ -168,7 +198,7 @@ export default class YourSupportController {
   }
 
   private async updateDraftCaseIfNeeded(req: AppRequest): Promise<void> {
-    if (req.session.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    if (this.isDraftCase(req)) {
       await handleUpdateDraftCase(req, logger);
     }
   }
@@ -199,11 +229,94 @@ export default class YourSupportController {
     const claimantExternalFlags = userCase?.claimantExternalFlags;
 
     return {
-      ...claimantExternalFlags,
-      partyName: claimantExternalFlags?.partyName || userCase?.claimantName || '',
+      partyName: claimantExternalFlags?.partyName || this.getPartyName(req),
       roleOnCase: claimantExternalFlags?.roleOnCase || this.getRoleOnCase(req),
-      details: claimantExternalFlags?.details ?? [],
-    } as unknown as CUIFlagDetails;
+      details: this.getExistingFlagDetails(claimantExternalFlags?.details),
+    };
+  }
+
+  private getExistingFlagDetails(details: CaseFlags['details'] = []): CUIFlagItem[] {
+    return details.map(flagItem => {
+      const cuiFlagItem = {
+        value: this.getExistingFlagValue(flagItem.value as AnyRecord),
+      } as Partial<CUIFlagItem>;
+
+      if (flagItem.id) {
+        cuiFlagItem.id = flagItem.id;
+      }
+
+      return cuiFlagItem as CUIFlagItem;
+    });
+  }
+
+  private getExistingFlagValue(flagValue: AnyRecord): CUIFlag {
+    const cuiFlag: AnyRecord = {
+      name: flagValue.name ?? '',
+      name_cy: flagValue.name_cy ?? '',
+      dateTimeCreated: flagValue.dateTimeCreated ?? '',
+      path: this.getExistingFlagPath(flagValue.path),
+      hearingRelevant: flagValue.hearingRelevant ?? 'No',
+      flagCode: flagValue.flagCode ?? '',
+      availableExternally: flagValue.availableExternally ?? 'Yes',
+    };
+
+    CUI_FLAG_OPTIONAL_FIELDS.forEach(field => {
+      if (flagValue[field] !== undefined) {
+        cuiFlag[field] = flagValue[field];
+      }
+    });
+
+    return cuiFlag as CUIFlag;
+  }
+
+  private getExistingFlagPath(path: unknown): CUIFlagPath[] {
+    if (!Array.isArray(path)) {
+      return [];
+    }
+
+    return path
+      .map(pathItem => this.getExistingFlagPathItem(pathItem))
+      .filter((pathItem): pathItem is CUIFlagPath => !!pathItem);
+  }
+
+  private getExistingFlagPathItem(pathItem: unknown): CUIFlagPath | undefined {
+    const pathItemRecord = pathItem as AnyRecord;
+    const id = pathItemRecord?.id ? { id: pathItemRecord.id } : {};
+
+    if (pathItemRecord?.name) {
+      return {
+        ...id,
+        name: pathItemRecord.name,
+      };
+    }
+
+    if (typeof pathItemRecord?.value === 'string') {
+      return {
+        ...id,
+        name: pathItemRecord.value,
+      };
+    }
+
+    if (pathItemRecord?.value?.name) {
+      return {
+        ...id,
+        name: pathItemRecord.value.name,
+      };
+    }
+
+    return undefined;
+  }
+
+  private getPartyName(req: AppRequest): string {
+    const userCase = req.session?.userCase;
+    return (
+      userCase?.claimantName ||
+      [userCase?.firstName, userCase?.lastName].filter(Boolean).join(' ') ||
+      [req.session?.claimantFirstName, req.session?.claimantLastName].filter(Boolean).join(' ') ||
+      [req.session?.user?.givenName, req.session?.user?.familyName].filter(Boolean).join(' ') ||
+      userCase?.claimantExternalFlags?.partyName ||
+      ''
+    );
   }
 
   private getRoleOnCase(req: AppRequest): string {
@@ -237,9 +350,13 @@ export default class YourSupportController {
     }
 
     this.setReplacementFlags(req, result.replacementFlags);
-    await handleUpdateDraftCase(req, logger);
+    if (this.isDraftCase(req)) {
+      await handleUpdateDraftCase(req, logger);
+    } else {
+      await handleUpdateSubmittedCaseFlags(req, logger);
+    }
 
-    if (req.session.userCase?.updateDraftCaseError) {
+    if (this.isDraftCase(req) && req.session.userCase?.updateDraftCaseError) {
       throw new Error('Failed to save CUI replacement flags');
     }
   }
@@ -248,6 +365,11 @@ export default class YourSupportController {
     const claimantExternalFlags = {
       ...req.session.userCase?.claimantExternalFlags,
       ...replacementFlags,
+      partyName: replacementFlags.partyName || this.getPartyName(req),
+      roleOnCase:
+        replacementFlags.roleOnCase ||
+        req.session.userCase?.claimantExternalFlags?.roleOnCase ||
+        this.getRoleOnCase(req),
       details: replacementFlags.details ?? [],
     } as unknown as CaseFlags;
 
@@ -263,6 +385,23 @@ export default class YourSupportController {
 
   private getCaseId(req: AppRequest): string {
     return String(req.session?.userCase?.id ?? '');
+  }
+
+  private canAccessYourSupport(req: AppRequest): boolean {
+    return this.isDraftCase(req) || !!req.session?.userCase?.id;
+  }
+
+  private isDraftCase(req: AppRequest): boolean {
+    return req.session?.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS;
+  }
+
+  private getFallbackUrl(req: AppRequest): string {
+    const userCase = req.session?.userCase;
+    if (userCase?.id) {
+      return setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
+    }
+
+    return setUrlLanguage(req, PageUrls.CLAIMANT_APPLICATIONS);
   }
 
   private getExitUrl(req: AppRequest, consumeReturnUrl = false): string {
@@ -288,11 +427,32 @@ export default class YourSupportController {
   }
 
   private getCuiCompletionUrl(req: AppRequest): string {
-    if (req.session?.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-      return this.getExitUrl(req, true);
-    }
+    const confirmationUrl = this.isDraftCase(req)
+      ? PageUrls.YOUR_SUPPORT_CONFIRMATION
+      : PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION;
 
-    return setUrlLanguage(req, PageUrls.YOUR_SUPPORT_CONFIRMATION);
+    return setUrlLanguage(req, confirmationUrl);
+  }
+
+  private renderConfirmation(
+    req: AppRequest,
+    res: Response,
+    translationKey: string,
+    template: string,
+    link: string
+  ): void {
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(translationKey, { returnObjects: true }),
+    };
+    const sessionErrors = req.session?.errors || [];
+    req.session.errors = [];
+
+    res.render(template, {
+      ...translations,
+      sessionErrors,
+      link,
+    });
   }
 
   private getS2SService(): IS2SService {

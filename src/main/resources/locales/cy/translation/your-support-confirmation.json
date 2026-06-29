@@ -1,0 +1,14 @@
+{
+  "title": "Rydych wedi ychwanegu eich cais am gymorth at eich hawliad",
+  "h1": "Rydych wedi ychwanegu eich cais am gymorth at eich hawliad",
+  "h2": "Beth sy'n digwydd nesaf",
+  "legend": "Eich cymorth",
+  "p": "Ar ôl ichi gyflwyno eich hawliad, bydd y tribiwnlys yn adolygu eich cais am gymorth ac yn cysylltu â chi os bydd angen mwy o wybodaeth arno. Gallwch ddweud wrthym os bydd eich anghenion cymorth yn newid ar ôl ichi gyflwyno eich hawliad.",
+  "buttonText": "Parhau â'ch hawliad",
+  "textAreaHint": "Gallwch ddisgrifio'r hyn sydd ei angen arnoch",
+  "errors": {
+    "reasonableAdjustmentsDetail": {
+      "required": "Rhowch fanylion y cymorth sydd ei angen arnoch"
+    }
+  }
+}

@@ -46,6 +46,14 @@ export interface UpdateCaseBody {
   case_data: CaseDataApiBody;
 }
 
+export interface UpdateSubmittedCaseFlagsBody {
+  case_id: string;
+  case_type_id: string;
+  case_data: {
+    claimantExternalFlags: CaseFlags;
+  };
+}
+
 export interface RespondentRequestBody {
   value: RespondentType;
   id?: string;

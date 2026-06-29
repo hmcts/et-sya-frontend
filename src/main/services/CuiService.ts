@@ -11,7 +11,10 @@ export type {
   CUIStartJourneyRequest,
   CUIStartJourneyResponse,
   CUIClientAuth,
+  CUIFlag,
   CUIFlagDetails,
+  CUIFlagItem,
+  CUIFlagPath,
   CUIJourneyData,
 } from '@hmcts/cui-client';
 

@@ -180,8 +180,8 @@ describe('Should return data in api format', () => {
     expect(apiData).toEqual(mockEt1DataModelUpdate);
   });
 
-  it('should include claimant flags in api update format', () => {
-    const claimantFlags: CaseFlags = {
+  it('should include claimant external flags in api update format', () => {
+    const claimantExternalFlags: CaseFlags = {
       partyName: 'John Doe',
       roleOnCase: 'Claimant',
       details: [
@@ -205,15 +205,34 @@ describe('Should return data in api format', () => {
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       createdDate: '19 August 2022',
       lastModified: '19 August 2022',
-      claimantExternalFlags: claimantFlags,
+      claimantExternalFlags,
     };
 
     const apiData = toApiFormat(caseItem);
 
-    expect(apiData.case_data.claimantExternalFlags).toEqual(claimantFlags);
+    expect(apiData.case_data.claimantExternalFlags).toEqual(claimantExternalFlags);
   });
 
   it('should include claimant external flags in user case format', () => {
+    const claimantExternalFlags: CaseFlags = {
+      partyName: 'John Doe',
+      roleOnCase: 'Claimant',
+      details: [],
+    };
+    const apiCaseData = {
+      ...mockedApiData,
+      case_data: {
+        ...mockedApiData.case_data,
+        claimantExternalFlags,
+      },
+    } as CaseApiDataResponse;
+
+    const userCase = fromApiFormat(apiCaseData);
+
+    expect(userCase.claimantExternalFlags).toEqual(claimantExternalFlags);
+  });
+
+  it('should not map claimant flags from api format to claimant external flags in user case format', () => {
     const claimantFlags: CaseFlags = {
       partyName: 'John Doe',
       roleOnCase: 'Claimant',
@@ -223,13 +242,13 @@ describe('Should return data in api format', () => {
       ...mockedApiData,
       case_data: {
         ...mockedApiData.case_data,
-        claimantExternalFlags: claimantFlags,
+        claimantFlags,
       },
     } as CaseApiDataResponse;
 
     const userCase = fromApiFormat(apiCaseData);
 
-    expect(userCase.claimantExternalFlags).toEqual(claimantFlags);
+    expect(userCase.claimantExternalFlags).toBeUndefined();
   });
 });
 
