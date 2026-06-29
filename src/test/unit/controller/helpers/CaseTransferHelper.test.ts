@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   createFallbackTransferInfo,
   handleTransferredCaseRedirect,
+  saveSessionAndRedirectToTransferredCase,
   shouldFallbackToTransferredCase,
 } from '../../../../main/controllers/helpers/CaseTransferHelper';
 import { PageUrls } from '../../../../main/definitions/constants';
@@ -148,6 +149,25 @@ describe('CaseTransferHelper', () => {
       const res = mockResponse();
 
       const redirected = await handleTransferredCaseRedirect(req, res, '20548');
+
+      expect(redirected).toBe(false);
+      expect(res.redirect).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('saveSessionAndRedirectToTransferredCase', () => {
+    it('should return false when session save fails', async () => {
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.session.save = jest.fn((done?: (err?: Error) => void) => done?.(new Error('session save failed')));
+      const res = mockResponse();
+
+      const redirected = await saveSessionAndRedirectToTransferredCase(
+        req,
+        res,
+        '20548',
+        createFallbackTransferInfo('20548')
+      );
 
       expect(redirected).toBe(false);
       expect(res.redirect).not.toHaveBeenCalled();

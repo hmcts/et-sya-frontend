@@ -153,6 +153,17 @@ describe('Case Selection Service using Case Api', () => {
     expect(result).toStrictEqual([]);
   });
 
+  test('Should return empty array when getUserCases throws', async () => {
+    const req = mockRequest({});
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCases = jest.fn().mockRejectedValue(new Error('api unavailable'));
+
+    const result = await getUserCasesByLastModified(req);
+
+    expect(result).toStrictEqual([]);
+  });
+
   test('Should hit error block and return empty array', async () => {
     const response = {
       data: [{ invalidData: 1234 }],
@@ -288,6 +299,30 @@ describe('Case Selection Service using Case Api', () => {
         new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
       );
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
+  });
+
+  test('Should redirect to transferred page when getUserCase fails for ECM case but transfer-info says not transferred', async () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValue(
+        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+      );
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: false,
+        transferType: 'ECM',
+        transferComplete: false,
+      },
+    });
 
     await selectUserCase(req, res, '12234');
 

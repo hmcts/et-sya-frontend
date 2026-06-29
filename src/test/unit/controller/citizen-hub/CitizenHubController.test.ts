@@ -138,6 +138,29 @@ describe('Citizen Hub Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
   });
 
+  it('should redirect to transferred page when ECM error occurs but transfer-info says not transferred', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValueOnce(
+        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+      );
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValueOnce({
+      data: {
+        transferred: false,
+        transferType: 'ECM',
+        transferComplete: false,
+      } as CaseTransferInfoResponse,
+    });
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.params.caseId = '1234';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+  });
+
   it('should assign mock user when in test', async () => {
     const controller = new CitizenHubController();
     caseApi.getUserCase = jest.fn().mockResolvedValue(

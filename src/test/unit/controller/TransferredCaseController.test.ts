@@ -138,4 +138,71 @@ describe('Transferred Case Controller tests', () => {
 
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
+
+  it('should render fallback page when transfer info says case is not transferred', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: '1234' };
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+      if (options?.returnObjects) {
+        return {
+          h1: 'Your case has been transferred',
+          noAccessBodyEcm: 'ECM body',
+          noAccessBodyCrossCountry: 'Cross country body',
+        };
+      }
+      return key;
+    });
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: false,
+        transferType: 'ECM',
+        transferComplete: false,
+      } as CaseTransferInfoResponse,
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        showNewCaseNumber: false,
+        transferComplete: false,
+        noAccessBody: 'ECM body',
+      })
+    );
+  });
+
+  it('should render fallback page when case not found error is returned from transfer info api', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: '1234' };
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+      if (options?.returnObjects) {
+        return {
+          h1: 'Your case has been transferred',
+          noAccessBodyEcm: 'ECM body',
+          noAccessBodyCrossCountry: 'Cross country body',
+        };
+      }
+      return key;
+    });
+    caseApi.getCaseTransferInfo = jest
+      .fn()
+      .mockRejectedValue(new Error('Error getting case transfer info: status code 404, CaseNotFoundException'));
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        showNewCaseNumber: false,
+        transferComplete: false,
+      })
+    );
+  });
 });

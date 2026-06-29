@@ -118,6 +118,11 @@ describe('Retrieve individual case', () => {
     await api.getCaseTransferInfo(caseId);
     expect(mockedAxios.get).toHaveBeenCalledWith(`${JavaApiUrls.GET_CASE_TRANSFER_INFO}${caseId}/transfer-info`);
   });
+
+  it('should throw when case transfer info request fails', async () => {
+    mockedAxios.get.mockRejectedValueOnce(error);
+    await expect(api.getCaseTransferInfo('1646225213651590')).rejects.toThrow('Error getting case transfer info:');
+  });
 });
 
 describe('Axios get to retrieve draft cases', () => {
@@ -146,6 +151,10 @@ describe('isTransferredToEcmCaseError', () => {
   it('should return false for generic fetch errors', () => {
     expect(isTransferredToEcmCaseError(new Error('Error getting user case: status code 404'))).toBe(false);
   });
+
+  it('should return true for non-Error ECM values', () => {
+    expect(isTransferredToEcmCaseError('CASE_TRANSFERRED_TO_ECM')).toBe(true);
+  });
 });
 
 describe('isCaseNotFoundError', () => {
@@ -159,6 +168,10 @@ describe('isCaseNotFoundError', () => {
 
   it('should return false for generic fetch errors', () => {
     expect(isCaseNotFoundError(new Error('Error getting user case: status code 500'))).toBe(false);
+  });
+
+  it('should return true for non-Error 404 values', () => {
+    expect(isCaseNotFoundError('Request failed with status code 404')).toBe(true);
   });
 });
 
