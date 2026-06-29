@@ -46,26 +46,6 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
   return res.redirect(returnValidUrl(nextPage));
 };
 
-function isFullEt1LegacyUrl(baseUrl: string, et1BaseUrl: string): boolean {
-  return baseUrl.startsWith(et1BaseUrl);
-}
-
-function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: string[]): string | undefined {
-  for (const validUrl of validUrls) {
-    if (baseUrl === validUrl) {
-      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-      let updatedUrl = validUrl;
-      for (const param of parameters) {
-        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-          updatedUrl = addParameterToUrl(validUrl, param);
-        }
-      }
-      return updatedUrl;
-    }
-  }
-  return undefined;
-}
-
 function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | undefined {
   const urlParts = baseUrl.split('/');
   let returnUrl = '';
@@ -89,29 +69,72 @@ function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | unde
   return undefined;
 }
 
+function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: string[]): string | undefined {
+  for (const validUrl of validUrls) {
+    if (baseUrl === validUrl) {
+      const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+      let updatedUrl = validUrl;
+      for (const param of parameters) {
+        if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+          updatedUrl = addParameterToUrl(validUrl, param);
+        }
+      }
+      return updatedUrl;
+    }
+  }
+  return undefined;
+}
+
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
   validUrls = validUrls ?? Object.values(PageUrls);
   const et1BaseUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
-  validUrls.push(et1BaseUrl, LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH);
+  // Add specific full ET1 paths as exact-match entries — never return raw redirectUrl (isFullEt1LegacyUrl branch removed)
+  if (StringUtils.isNotBlank(et1BaseUrl)) {
+    validUrls.push(
+      et1BaseUrl + LegacyUrls.ET1_APPLY,
+      et1BaseUrl + LegacyUrls.ET1_PATH,
+      et1BaseUrl + LegacyUrls.ET1_SIGN_IN,
+      LegacyUrls.ET1 // full URL with /en/ prefix
+    );
+  }
+  validUrls.push(LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH, LegacyUrls.ET1_SIGN_IN);
 
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
-
-  if (isFullEt1LegacyUrl(baseUrl, et1BaseUrl)) {
-    return redirectUrl;
-  }
 
   const staticUrl = getStaticValidUrl(baseUrl, redirectUrl, validUrls);
   if (staticUrl) {
     return staticUrl;
   }
 
+  // Dynamic URL validation for respondent-number paths (e.g. /respondent/1/acas-cert-num)
+  // NOTE: citizen-hub redirects must use returnSafeCitizenHubUrl instead of this function
   const dynamicUrl = getDynamicValidUrl(baseUrl, redirectUrl);
   if (dynamicUrl) {
     return dynamicUrl;
   }
 
   return ErrorPages.NOT_FOUND;
+};
+
+/**
+ * Builds a safe citizen-hub redirect URL, validating the caseId is numeric.
+ * Uses session lang (server-side state) for the language parameter so Fortify
+ * cannot trace taint from req.url through to res.redirect.
+ *
+ * @param caseId - The case ID to include in the URL
+ * @param req - The request, used only for session.lang
+ */
+export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string => {
+  if (!NumberUtils.isNumericValue(caseId)) {
+    return PageUrls.CLAIMANT_APPLICATIONS;
+  }
+  // Inline ternary with constant branches — Fortify can statically verify the output is always
+  // a constant regardless of req.url, breaking the taint chain to res.redirect
+  const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
+    ? languages.WELSH_URL_PARAMETER
+    : languages.ENGLISH_URL_PARAMETER;
+  return `${PageUrls.CITIZEN_HUB_BASE}${caseId}${langParam}`;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {

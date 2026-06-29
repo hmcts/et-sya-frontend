@@ -70,6 +70,7 @@ export const TranslationKeys = {
   NEW_JOB: 'new-job',
   NEW_JOB_START_DATE: 'new-job-start-date',
   NEW_JOB_PAY: 'new-job-pay',
+  CLAIM_SAVED: 'claim-saved',
   CLAIM_SUBMITTED: 'claim-submitted',
   CHECK_ANSWERS: 'check-your-answers',
   END_DATE: 'end-date',
@@ -312,6 +313,7 @@ export const PageUrls = {
   YOUR_SUPPORT_CALLBACK: '/your-support/:id',
   YOUR_SUPPORT_CONFIRMATION: '/your-support-confirmation',
   YOUR_SUPPORT_SUBMITTED_CONFIRMATION: '/your-support-submitted-confirmation',
+  MANIFEST_URL: '/assets/manifest.json',
 } as const;
 
 export const InterceptPaths = {
@@ -350,6 +352,7 @@ export const JavaApiUrls = {
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_STREAM: '/document/stream/',
   DOCUMENT_DETAILS: '/document/details/',
   FIND_CASE_BY_ETHOS_CASE_REFERENCE: '/et3/findCaseByEthosCaseReference',
   FIND_CASE_BY_ID: '/et3/findCaseById',
@@ -590,6 +593,7 @@ export const FEATURE_FLAGS = {
   BUNDLES: 'bundles',
   ECC: 'ecc',
   MUL2: 'MUL2',
+  DOCUMENT_STREAMING: 'document-streaming',
 } as const;
 
 export const DefaultValues = {

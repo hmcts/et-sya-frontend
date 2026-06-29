@@ -167,6 +167,14 @@ describe('createRadioBtnsForHearings - create radio buttons for selecting a hear
       const label = createLabelForHearing(collection[0]);
       expect(label).toEqual('3333 Hearing - RCJ - 4 July 2040');
     });
+    it('should return undefined when hearing is undefined', () => {
+      const label = createLabelForHearing(undefined);
+      expect(label).toEqual(undefined);
+    });
+    it('should return undefined when hearing value is undefined', () => {
+      const label = createLabelForHearing({ id: '1', value: undefined });
+      expect(label).toEqual(undefined);
+    });
     it('should return undefined if hearing status is not Listed', () => {
       collection[0].value.hearingDateCollection[0].value.listedDate = new Date('2038-07-04T14:00:00.000');
       collection[0].value.hearingDateCollection[0].value.Hearing_status = 'Heard';
