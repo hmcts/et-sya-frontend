@@ -5,6 +5,11 @@ import {
   translateOverallStatus,
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import {
+  createFallbackTransferInfo,
+  handleTransferredCaseRedirect,
+  saveSessionAndRedirectToTransferredCase,
+} from '../controllers/helpers/CaseTransferHelper';
 import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
@@ -15,7 +20,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { getCaseApi } from './CaseService';
+import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from './CaseService';
 
 const logger = getLogger('CaseSelectionService');
 
@@ -48,12 +53,12 @@ export const formatRespondents = (respondents?: Respondent[]): string => {
   return respondents.map(respondent => respondent.respondentName).join('<br />');
 };
 
+export const getCitizenHubUrl = (caseId: string, languageParam: string): string => {
+  return `/citizen-hub/${caseId}${languageParam}`;
+};
+
 export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): string => {
-  if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    return `/claimant-application/${userCase.id}${languageParam}`;
-  } else {
-    return `/citizen-hub/${userCase.id}${languageParam}`;
-  }
+  return `/claimant-application/${userCase.id}${languageParam}`;
 };
 
 export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
@@ -114,9 +119,19 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
       });
     }
   } catch (err) {
-    logger.error(err.message);
+    logger.error(err instanceof Error ? err.message : String(err));
     return [];
   }
+};
+
+const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string => {
+  const languageParam = getLanguageParam(req.url);
+  if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    return req.url.includes(languages.WELSH_URL_PARAMETER)
+      ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
+      : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
+  }
+  return getCitizenHubUrl(userCase.id, languageParam);
 };
 
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
@@ -133,16 +148,25 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
         ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
         : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
       return res.redirect(redirectUrl);
-    } else {
-      req.session.userCase = fromApiFormat(response.data);
-      req.session.save();
-      const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-        ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
-        : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
-      return res.redirect(redirectUrl);
     }
+
+    req.session.userCase = fromApiFormat(response.data);
+    if (await handleTransferredCaseRedirect(req, res, caseId)) {
+      return;
+    }
+
+    req.session.save();
+    return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
   } catch (err) {
-    logger.error(err.message);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    logger.error(errorMessage);
+    if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
+      return;
+    }
+    if (isTransferredToEcmCaseError(err) || isCaseNotFoundError(err)) {
+      await saveSessionAndRedirectToTransferredCase(req, res, caseId, createFallbackTransferInfo(caseId));
+      return;
+    }
     const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
       ? PageUrls.HOME + languages.WELSH_URL_PARAMETER
       : PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;

@@ -76,6 +76,34 @@ describe('Citizen Hub Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
   });
 
+  it('should redirect to transferred page when case loads but transfer info says transferred', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest.fn().mockResolvedValueOnce({
+      data: {
+        id: '1234',
+        created_date: '2022-08-19T09:19:25.79202',
+        last_modified: '2022-08-19T09:19:25.817549',
+      },
+    });
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValueOnce({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1234',
+        originalEthosCaseReference: '60000001/2022',
+        transferComplete: false,
+      } as CaseTransferInfoResponse,
+    });
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.params.caseId = '1234';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.render).not.toHaveBeenCalled();
+  });
+
   it('should redirect to transferred page when case is transferred to ECM', async () => {
     const controller = new CitizenHubController();
     caseApi.getUserCase = jest

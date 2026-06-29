@@ -29,15 +29,21 @@ export const saveSessionAndRedirectToTransferredCase = async (
 ): Promise<boolean> => {
   req.session.caseTransferInfo = transferInfo;
 
-  await new Promise<void>((resolve, reject) => {
-    req.session.save(err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
+  try {
+    await new Promise<void>((resolve, reject) => {
+      req.session.save(err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
     });
-  });
+  } catch (saveError) {
+    const saveErrorMessage = saveError instanceof Error ? saveError.message : String(saveError);
+    logger.error(`Failed to save session before transferred case redirect for case ID ${caseId}: ${saveErrorMessage}`);
+    return false;
+  }
 
   res.redirect(buildTransferredCaseRedirectUrl(req, caseId));
   return true;

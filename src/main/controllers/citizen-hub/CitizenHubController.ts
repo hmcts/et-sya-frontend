@@ -81,8 +81,12 @@ export default class CitizenHubController {
         req.session.userCase = fromApiFormat(
           (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
         );
+        if (await handleTransferredCaseRedirect(req, res, req.params.caseId)) {
+          return;
+        }
       } catch (error) {
-        logger.error(error.message);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error(errorMessage);
         if (await handleTransferredCaseRedirect(req, res, req.params.caseId, error)) {
           return;
         }
@@ -100,6 +104,9 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
+    if (!userCase.hubLinksStatuses) {
+      userCase.hubLinksStatuses = new HubLinksStatuses();
+    }
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);

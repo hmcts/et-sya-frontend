@@ -26,7 +26,12 @@ describe('Case Selection Service using Case Api', () => {
     downloadClaimPdf: jest.fn(),
     updateDraftCase: jest.fn(),
     getUserCase: jest.fn(),
+    getCaseTransferInfo: jest.fn(),
   };
+
+  beforeEach(() => {
+    mockApiClient.getCaseTransferInfo.mockRejectedValue(new Error('not transferred'));
+  });
 
   afterEach(() => {
     mockApiClient.getUserCases.mockClear();
@@ -34,6 +39,7 @@ describe('Case Selection Service using Case Api', () => {
     mockApiClient.downloadClaimPdf.mockClear();
     mockApiClient.updateDraftCase.mockClear();
     mockApiClient.getUserCase.mockClear();
+    mockApiClient.getCaseTransferInfo.mockClear();
   });
 
   test('Should Return user cases by last modified date', async () => {
@@ -190,10 +196,102 @@ describe('Case Selection Service using Case Api', () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
     await selectUserCase(req, res, '12234');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('Should select submitted User Case and redirect to Citizen Hub in English language', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: {
+        id: '12234',
+        state: CaseState.SUBMITTED,
+        last_modified: '2019-02-12T14:25:39.015',
+        created_date: '2019-02-12T14:25:39.015',
+        case_data: {
+          caseType: CaseType.SINGLE,
+          typesOfClaim: ['discrimination', 'payRelated'],
+          claimantRepresentedQuestion: YesOrNo.YES,
+          caseSource: 'ET1 Online',
+        },
+      },
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
+  });
+
+  test('Should redirect to transferred page when submitted case is transferred', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: {
+        id: '12234',
+        state: CaseState.SUBMITTED,
+        last_modified: '2019-02-12T14:25:39.015',
+        created_date: '2019-02-12T14:25:39.015',
+        case_data: {
+          caseType: CaseType.SINGLE,
+          typesOfClaim: ['discrimination', 'payRelated'],
+          claimantRepresentedQuestion: YesOrNo.YES,
+          caseSource: 'ET1 Online',
+        },
+      },
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '12234',
+        transferComplete: false,
+      },
+    });
+
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
+  });
+
+  test('Should redirect to transferred page when getUserCase fails for transferred case', async () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValue(
+        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+      );
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
   });
 
   test('Should select User Case and redirect to Claim Steps in Welsh language if current language is Welsh', async () => {
@@ -222,6 +320,7 @@ describe('Case Selection Service using Case Api', () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
     await selectUserCase(req, res, '12234');
 

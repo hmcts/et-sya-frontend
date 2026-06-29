@@ -123,7 +123,7 @@ export default class ContactTheTribunalSelectedController {
           userCase.contactApplicationFile = fromApiFormatDocument(result.data);
         }
       } catch (error) {
-        logger.info(error);
+        logger.info(error instanceof Error ? error.message : String(error));
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
         return res.redirect(
           PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', selectedOption) + languageParam

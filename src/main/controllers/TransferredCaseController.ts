@@ -22,7 +22,7 @@ export default class TransferredCaseController {
     if (caseId && !hasMatchingTransferInfo(caseId, transferInfo)) {
       try {
         transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
-        logger.info(`Fetched transfer info for case ID ${caseId}: ${JSON.stringify(transferInfo)}`, '');
+        logger.info(`Fetched transfer info for case ID ${caseId}`);
         req.session.caseTransferInfo = transferInfo;
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
@@ -32,7 +32,7 @@ export default class TransferredCaseController {
           logger.error(errorMessage);
         }
         if (caseId) {
-          logger.info(`Falling back to default transfer info for case ID ${caseId}`, '');
+          logger.info(`Falling back to default transfer info for case ID ${caseId}`);
           transferInfo = createFallbackTransferInfo(caseId);
           req.session.caseTransferInfo = transferInfo;
         } else {

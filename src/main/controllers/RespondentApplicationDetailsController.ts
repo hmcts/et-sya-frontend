@@ -48,14 +48,14 @@ export default class RespondentApplicationDetailsController {
     try {
       allResponses = await getAllResponses(selectedApplication, translations, req);
     } catch (e) {
-      logger.error(e);
+      logger.error(e instanceof Error ? e.message : String(e));
       return res.redirect(ErrorPages.NOT_FOUND);
     }
     let decisionContent;
     try {
       decisionContent = await getDecisionContent(selectedApplication, translations);
     } catch (e) {
-      logger.error(e);
+      logger.error(e instanceof Error ? e.message : String(e));
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
