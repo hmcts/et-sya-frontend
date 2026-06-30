@@ -204,6 +204,54 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('https://localhost:3100/dc/p/journey-id');
   });
 
+  it('should use the logged-in user name as party name when starting a CUI journey', async () => {
+    const startJourney = jest.fn().mockResolvedValue({ url: 'https://localhost:3100/dc/p/journey-id' });
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ startJourney } as unknown as CuiService.CUIClient);
+
+    const controller = new YourSupportController({ getOneTimeToken, getToken });
+    const req = mockRequest({
+      body: { reasonableAdjustments: YesOrNo.YES },
+      session: {
+        user: {
+          accessToken: 'idam-token',
+          email: 'jane@example.com',
+          familyName: 'User',
+          givenName: 'Logged-in',
+          id: 'user-id',
+          isCitizen: true,
+        },
+      },
+      userCase: {
+        claimantExternalFlags: {
+          partyName: 'Jane Old',
+          roleOnCase: 'Claimant',
+          details: [],
+        },
+        firstName: 'Jane',
+        id: '1234',
+        lastName: 'Current',
+        state: CaseState.SUBMITTED,
+      },
+    });
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(startJourney).toHaveBeenCalledWith(
+      expect.objectContaining({
+        existingFlags: expect.objectContaining({
+          partyName: 'Logged-in User',
+        }),
+      }),
+      expect.anything()
+    );
+    expect(res.redirect).toHaveBeenCalledWith('https://localhost:3100/dc/p/journey-id');
+  });
+
   it('should redirect to the confirmation page after a draft CUI journey is submitted', async () => {
     const claimantExternalFlags: CaseFlags = {
       partyName: 'Jane Doe',
@@ -431,7 +479,7 @@ describe('Your Support Controller', () => {
     expect(req.session.userCase.claimantExternalFlags?.partyName).toBe('Logged-in User');
   });
 
-  it('should use the session claimant name before the logged-in user name', async () => {
+  it('should use the logged-in user name before the session claimant name', async () => {
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
     const getJourneyData = jest.fn().mockResolvedValue({
@@ -470,6 +518,6 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
-    expect(req.session.userCase.claimantExternalFlags?.partyName).toBe('Session Claimant');
+    expect(req.session.userCase.claimantExternalFlags?.partyName).toBe('Logged-in User');
   });
 });

@@ -229,7 +229,7 @@ export default class YourSupportController {
     const claimantExternalFlags = userCase?.claimantExternalFlags;
 
     return {
-      partyName: claimantExternalFlags?.partyName || this.getPartyName(req),
+      partyName: this.getPartyName(req),
       roleOnCase: claimantExternalFlags?.roleOnCase || this.getRoleOnCase(req),
       details: this.getExistingFlagDetails(claimantExternalFlags?.details),
     };
@@ -310,13 +310,17 @@ export default class YourSupportController {
   private getPartyName(req: AppRequest): string {
     const userCase = req.session?.userCase;
     return (
+      this.getName(req.session?.user?.givenName, req.session?.user?.familyName) ||
       userCase?.claimantName ||
-      [userCase?.firstName, userCase?.lastName].filter(Boolean).join(' ') ||
-      [req.session?.claimantFirstName, req.session?.claimantLastName].filter(Boolean).join(' ') ||
-      [req.session?.user?.givenName, req.session?.user?.familyName].filter(Boolean).join(' ') ||
+      this.getName(userCase?.firstName, userCase?.lastName) ||
+      this.getName(req.session?.claimantFirstName, req.session?.claimantLastName) ||
       userCase?.claimantExternalFlags?.partyName ||
       ''
     );
+  }
+
+  private getName(firstName?: string, lastName?: string): string {
+    return [firstName, lastName].filter(Boolean).join(' ');
   }
 
   private getRoleOnCase(req: AppRequest): string {
