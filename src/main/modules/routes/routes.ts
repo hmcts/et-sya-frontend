@@ -84,7 +84,6 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
-import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
@@ -146,6 +145,7 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import YourDetailsCYAController from '../../controllers/YourDetailsCYAController';
 import YourDetailsFormController from '../../controllers/YourDetailsFormController';
+import YourSupportController from '../../controllers/YourSupportController';
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import CitizenHubResponseFromRespondentController from '../../controllers/citizen-hub/CitizenHubResponseFromRespondentController';
@@ -267,8 +267,6 @@ export class Routes {
     app.post(PageUrls.PAY, new PayController().post);
     app.get(PageUrls.BENEFITS, new BenefitsController().get);
     app.post(PageUrls.BENEFITS, new BenefitsController().post);
-    app.get(PageUrls.REASONABLE_ADJUSTMENTS, new ReasonableAdjustmentsController().get);
-    app.post(PageUrls.REASONABLE_ADJUSTMENTS, new ReasonableAdjustmentsController().post);
     app.get(PageUrls.NEW_JOB, new NewJobController().get);
     app.post(PageUrls.NEW_JOB, new NewJobController().post);
     app.get(PageUrls.NEW_JOB_PAY, new NewJobPayController().get);
@@ -376,6 +374,13 @@ export class Routes {
       PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
       new RespondentPostCodeSelectController().post
     );
+
+    app.get(PageUrls.YOUR_SUPPORT, new YourSupportController().get);
+    app.post(PageUrls.YOUR_SUPPORT, new YourSupportController().post);
+    app.get(PageUrls.YOUR_SUPPORT_REDIRECT, new YourSupportController().redirectToCuiJourney);
+    app.get(PageUrls.YOUR_SUPPORT_CALLBACK, new YourSupportController().callback);
+    app.get(PageUrls.YOUR_SUPPORT_CONFIRMATION, new YourSupportController().confirmation);
+    app.get(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION, new YourSupportController().submittedConfirmation);
 
     // R92 - Non-system user - Store
     app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);

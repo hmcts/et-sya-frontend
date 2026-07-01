@@ -66,6 +66,15 @@ export default class StepsToMakingYourClaimController {
             linkTxt: (l: AnyRecord): string => l.section1.link3Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimantContactPreference),
           },
+          {
+            url: setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),
+            linkTxt: (l: AnyRecord): string => l.section1.link4Text,
+            status: (): string =>
+              getSectionStatus(
+                userCase?.personalDetailsCheck,
+                userCase?.reasonableAdjustments || userCase?.claimantExternalFlags?.details?.length
+              ),
+          },
         ],
       },
       {

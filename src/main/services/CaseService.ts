@@ -2,6 +2,7 @@ import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
+import { UpdateSubmittedCaseFlagsBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse, CaseAssignmentResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
@@ -82,7 +83,8 @@ export class CaseApi {
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
+      const updateCaseBody = toApiFormat(caseItem);
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, updateCaseBody);
     } catch (error) {
       throw new Error(
         'Error updating draft case: ' + axiosErrorDetails(error, { action: 'updateDraftCase', caseId: caseItem.id })
@@ -111,6 +113,29 @@ export class CaseApi {
       throw new Error(
         'Error updating hub links statuses: ' +
           axiosErrorDetails(error, { action: 'updateHubLinksStatuses', caseId: caseItem.id })
+      );
+    }
+  };
+
+  updateSubmittedCaseFlags = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      if (!caseItem.claimantExternalFlags) {
+        throw new Error('claimantExternalFlags must be set');
+      }
+
+      const updateSubmittedCaseFlagsBody: UpdateSubmittedCaseFlagsBody = {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        case_data: {
+          claimantExternalFlags: caseItem.claimantExternalFlags,
+        },
+      };
+
+      return await this.axios.post(JavaApiUrls.UPDATE_SUBMITTED_CASE, updateSubmittedCaseFlagsBody);
+    } catch (error) {
+      throw new Error(
+        'Error updating submitted case flags: ' +
+          axiosErrorDetails(error, { action: 'updateSubmittedCaseFlags', caseId: caseItem.id })
       );
     }
   };

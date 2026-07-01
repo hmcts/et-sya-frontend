@@ -7,7 +7,7 @@ import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
+import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
 import * as cacheService from '../../../main/services/CacheService';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -222,6 +222,44 @@ describe('Steps to Making your claim Controller', () => {
     request.session.userCase.claimDetailsCheck = YesOrNo.YES;
     await stepsToMakingYourClaimController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
+  });
+
+  it.each([
+    {
+      userCase: {},
+      expectedStatus: sectionStatus.notStarted,
+    },
+    {
+      userCase: { reasonableAdjustments: YesOrNo.NO },
+      expectedStatus: sectionStatus.inProgress,
+    },
+    {
+      userCase: {
+        claimantExternalFlags: {
+          details: [{ id: 'flag-id', value: { name: 'Sign language interpreter' } }],
+        },
+      },
+      expectedStatus: sectionStatus.inProgress,
+    },
+    {
+      userCase: {
+        personalDetailsCheck: YesOrNo.YES,
+        reasonableAdjustments: YesOrNo.NO,
+      },
+      expectedStatus: sectionStatus.completed,
+    },
+  ])('should set your support status to $expectedStatus', async ({ userCase, expectedStatus }) => {
+    const response = mockResponse();
+    const request = mockRequest({
+      session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
+    });
+    Object.assign(request.session.userCase, userCase);
+
+    await stepsToMakingYourClaimController.get(request, response);
+
+    const renderData = (response.render as jest.Mock).mock.calls[0][1];
+    const yourSupportLink = renderData.sections[0].links[3];
+    expect(yourSupportLink.status()).toStrictEqual(expectedStatus);
   });
 
   it('should clear updateDraftCaseError if it exists', async () => {

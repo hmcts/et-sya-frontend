@@ -2,7 +2,7 @@
   "port": 3002,
   "services": {
     "idam": {
-      "clientID": "et-sya",
+      "clientID": "et_sya",
       "authorizationURL": "http://localhost:5062/login",
       "hmctsAccessURL": "http://localhost:5062/o/authorize",
       "clientSecret": "test1234",
@@ -24,6 +24,10 @@
     },
     "launchDarkly": {
       "key": "TO BE PICKED UP FROM ENV"
+    },
+    "cui": {
+      "endpoint": "https://localhost:3100",
+      "hmctsServiceId": "ABA5"
     }
   },
   "session": {

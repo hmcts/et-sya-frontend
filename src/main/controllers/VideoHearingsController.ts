@@ -71,7 +71,7 @@ export default class VideoHearingsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REASONABLE_ADJUSTMENTS);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.YOUR_SUPPORT);
   };
 
   @CaseStateCheck()

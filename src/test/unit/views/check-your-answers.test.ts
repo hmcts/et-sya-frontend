@@ -147,10 +147,7 @@ describe('Check your answers confirmation page', () => {
       'Incorrect href found'
     );
     expect(hearingsLink).equals(PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
-    expect(disabilityLink).equals(
-      PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
-      'Incorrect href found'
-    );
+    expect(disabilityLink).equals(PageUrls.YOUR_SUPPORT + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
   });
 
   it('should display correct url in the change buttons for respondent details row', () => {

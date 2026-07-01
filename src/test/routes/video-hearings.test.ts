@@ -15,33 +15,33 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
-  test("should return the reasonable adjustments page when 'video' and 'save and continue' are selected", async () => {
+  test("should return the your support page when 'video' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: HearingPreference.VIDEO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.YOUR_SUPPORT);
       });
   });
 
-  test("should return the reasonable adjustments page when 'phone' and 'save and continue' are selected", async () => {
+  test("should return the your support page when 'phone' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: HearingPreference.PHONE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.YOUR_SUPPORT);
       });
   });
 
-  test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected, and text is entered in the 'no' subfield", async () => {
+  test("should return the your support page when 'no' and 'save and continue' are selected, and text is entered in the 'no' subfield", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: HearingPreference.NEITHER, hearingAssistance: 'test' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.YOUR_SUPPORT);
       });
   });
 
@@ -61,7 +61,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ hearingPreferences: undefined })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.YOUR_SUPPORT);
       });
   });
 });

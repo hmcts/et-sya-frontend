@@ -160,6 +160,9 @@ export const TranslationKeys = {
   YOUR_DETAILS_FORM: 'your-details-form',
   YOUR_DETAILS_CYA: 'your-details-cya',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
+  YOUR_SUPPORT: 'your-support',
+  YOUR_SUPPORT_CONFIRMATION: 'your-support-confirmation',
+  YOUR_SUPPORT_SUBMITTED_CONFIRMATION: 'your-support-submitted-confirmation',
 } as const;
 
 export const PageUrls = {
@@ -305,6 +308,11 @@ export const PageUrls = {
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
   YOUR_DETAILS_CYA: '/your-details-cya',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
+  YOUR_SUPPORT: '/your-support',
+  YOUR_SUPPORT_REDIRECT: '/your-support-redirect',
+  YOUR_SUPPORT_CALLBACK: '/your-support/:id',
+  YOUR_SUPPORT_CONFIRMATION: '/your-support-confirmation',
+  YOUR_SUPPORT_SUBMITTED_CONFIRMATION: '/your-support-submitted-confirmation',
   MANIFEST_URL: '/assets/manifest.json',
 } as const;
 
@@ -354,6 +362,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
+  UPDATE_SUBMITTED_CASE: 'cases/update-case-submitted',
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
