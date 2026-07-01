@@ -46,7 +46,8 @@
     "reconsider-decision": {
       "caption": "Ystyried penderfyniad o'r newydd",
       "label": "Gwneud cais i benderfyniad gael ei ystyried o'r newydd",
-      "body": "Os ydych yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eich achos chi, gallwch ofyn i farnwr cyflogaeth edrych ar y penderfyniad hwnnw eto."
+      "body": "Os ydych yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eich achos chi, gallwch ofyn i farnwr cyflogaeth edrych ar y penderfyniad hwnnw eto.",
+      "bodyRep": "[W]If the claimant disagrees with a judgment or order made by a legal officer in their case they can ask for an employment judge to look at that decision again."
     },
     "amend": {
       "caption": "Ddiwygio fy hawliad",

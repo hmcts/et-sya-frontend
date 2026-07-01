@@ -46,7 +46,8 @@
     "reconsider-decision": {
       "caption": "Consider a decision afresh",
       "label": "Apply to have a decision considered afresh",
-      "body": "If you disagree with a judgement or order made by a legal officer in your case you can ask an employment judge to look at that decision again."
+      "body": "If you disagree with a judgement or order made by a legal officer in your case you can ask an employment judge to look at that decision again.",
+      "bodyRep": "If the claimant disagrees with a judgment or order made by a legal officer in their case they can ask for an employment judge to look at that decision again."
     },
     "amend": {
       "caption": "Amend my claim",
