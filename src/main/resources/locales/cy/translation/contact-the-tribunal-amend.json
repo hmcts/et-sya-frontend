@@ -1,7 +1,11 @@
 {
   "title": "Ddiwygio fy hawliad",
   "applicationType": "Ddiwygio fy hawliad",
+  "applicationTypeRep": "[W]Amend the claim",
   "applicationTitle": "Gwneud cais i ddiwygio fy hawliad",
+  "applicationTitleRep": "[W]Apply to amend the claim",
+  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",
@@ -33,6 +37,40 @@
         "pam ydych chi eisiau gwneud y diwygiad hwn",
         "pam ydych chi’n gofyn am gael gwneud y diwygiad hwn nawr. Er enghraifft, os ydych eisiau ychwanegu rhywbeth at eich hawliad, esboniwch pam na wnaethoch ei gynnwys yn yr hawliad gwreiddiol. Mae hyn yn neilltuol bwysig os ydych yn ychwanegu math newydd o hawliad ac mae’r terfyn amser wedi mynd heibio",
         "sut bydd y diwygiad hwn o fudd i chi a sut y gallai eich rhoi dan anfantais pe na bai’n cael ei ganiatáu"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "[W]Use this form to apply to amend the claimant’s ET1 claim. The tribunal will decide if the claimant can make the amendment by judging the fairness of the application. This decision may be made at a hearing."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The tribunal also needs to know if the claimant considers the amendment minor or substantial."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]An example of a minor amendment is correcting an error or minor detail made in the claim form."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]An example of a substantial change would be adding a new kind of claim that needed more evidence to be heard by the tribunal."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]Providing details of why the claimant wants to amend the claim and the importance of the amendment will help the tribunal to decide the claimant’s application more quickly."
+    },
+
+    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
+    {
+      "type": "list",
+      "items": [
+        "[W]what the claimant wants to amend in their claim. Be specific and refer to the claim form if possible. For example, tell us whether the claimant wants to add, remove or change details related to the question or section number",
+        "[W]if the claimant considers it a minor or substantial amendment",
+        "[W]why the claimant wants to make this amendment",
+        "[W]why the claimant is asking to make this amendment now. For example, if they wish to add something to their claim, please explain why they did not include this in the original claim. This is particularly important if the claimant is adding a new type of claim and the time limit has passed",
+        "[W]how this amendment will benefit the claimant and how could it disadvantage them if not granted"
       ]
     }
   ]

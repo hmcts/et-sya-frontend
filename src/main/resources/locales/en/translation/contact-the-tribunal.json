@@ -52,7 +52,9 @@
     "amend": {
       "caption": "Amend my claim",
       "label": "Apply to amend my claim",
-      "body": "Request to amend your ET1 claim - including adding or removing claims or details of your claim."
+      "labelRep": "Apply to amend the claim",
+      "body": "Request to amend your ET1 claim - including adding or removing claims or details of your claim.",
+      "bodyRep": "Request to amend the claimant’s ET1 claim - including adding or removing claims or details of the claim"
     },
     "respondent": {
       "caption": "Order the other party",

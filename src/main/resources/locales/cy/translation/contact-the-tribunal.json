@@ -52,7 +52,9 @@
     "amend": {
       "caption": "Ddiwygio fy hawliad",
       "label": "Gwneud cais i ddiwygio fy hawliad",
-      "body": "Gwneud cais i ddiwygio eich hawliad ET1 - gan gynnwys ychwanegu neu ddileu hawliadau neu fanylion eich hawliad."
+      "labelRep": "[W]Apply to amend the claim",
+      "body": "Gwneud cais i ddiwygio eich hawliad ET1 - gan gynnwys ychwanegu neu ddileu hawliadau neu fanylion eich hawliad.",
+      "bodyRep": "[W]Request to amend the claimant’s ET1 claim - including adding or removing claims or details of the claim"
     },
     "respondent": {
       "caption": "Gorchymyn y parti arall",
