@@ -1,7 +1,9 @@
 {
   "title": "Withdraw my claim",
   "applicationType": "Withdraw my claim",
+  "applicationTypeRep": "Withdraw the claim",
   "applicationTitle": "I want to withdraw all or part of my claim",
+  "applicationTitleRep": "The claimant wants to withdraw all or part of their claim",
   "content": [
     {
       "type": "paragraph",
@@ -61,6 +63,71 @@
       "items": [
         "which parts of your claim you want withdrawn and dismissed",
         "if you do not want your claim (or part of it) dismissed, you must explain why"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Use this form when the claimant has reached a settlement or does not want to continue with all or part of their claim."
+    },
+    {
+      "type": "paragraph",
+      "text": "The claimant can withdraw their whole claim or tell us which parts they want to withdraw."
+    },
+    { "type": "paragraph", "text": "This brings their claim or part of it to an end." },
+    { "type": "paragraph", "text": "The claimant can withdraw at any point before or during a hearing." },
+    {
+      "type": "paragraph",
+      "text": "If they’re withdrawing because of a settlement, make sure they have the settlement in writing."
+    },
+
+    { "type": "bold-paragraph", "text": "Withdrawal and dismissal" },
+    {
+      "type": "paragraph",
+      "text": "Once you have told the tribunal the claimant wants to withdraw their claim, the tribunal will usually issue a judgment dismissing the claim or part of the claim."
+    },
+    {
+      "type": "paragraph",
+      "text": "A dismissal judgment stops the claimant from making that claim against the same respondents in the future."
+    },
+    {
+      "type": "paragraph",
+      "text": "The tribunal will use Rule 51 of the Employment Tribunal Rules of Procedure to decide whether a dismissal judgment is issued following a withdrawal."
+    },
+
+    { "type": "bold-paragraph", "text": "Rule 51 of the Employment Tribunal Rules of Procedure" },
+    {
+      "type": "paragraph",
+      "text": "Rule 51 states that where a claim, or part of it, has been withdrawn under Rule 50, the tribunal shall issue a judgment dismissing it (which means that the claimant may not commence a further claim against the other party raising the same, or substantially the same, complaint) unless:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "the claimant has expressed at the time of withdrawal a wish to reserve the right to bring such a further claim and the tribunal is satisfied that there would be legitimate reason for doing so"
+      ]
+    },
+    { "type": "paragraph", "text": "or" },
+    {
+      "type": "list",
+      "items": ["the tribunal believes that to issue such a judgment would not be in the interests of justice"]
+    },
+
+    { "type": "paragraph", "text": "Withdrawal and dismissal through this service will be final unless:" },
+    {
+      "type": "list",
+      "items": [
+        "the tribunal contacts you needing more information",
+        "the claimant has given an acceptable reason why dismissal should not happen"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Details to include in the application:" },
+    {
+      "type": "list",
+      "items": [
+        "which parts of the claim the claimant wants withdrawn and dismissed",
+        "if the claimant does not want their claim (or part of it) dismissed, they must explain why"
       ]
     }
   ]

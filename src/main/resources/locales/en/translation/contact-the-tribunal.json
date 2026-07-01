@@ -19,7 +19,9 @@
     "withdraw": {
       "caption": "Withdraw my claim",
       "label": "Give notice that I want to withdraw all or part of my claim",
-      "body": "When you've reached a settlement or do not want to continue with your claim."
+      "labelRep": "Give notice that the claimant wants to withdraw all or part of their claim",
+      "body": "When you've reached a settlement or do not want to continue with your claim.",
+      "bodyRep": "When the claimant has reached a settlement and does not want to continue with their claim."
     },
     "change-details": {
       "caption": "Change my personal details",

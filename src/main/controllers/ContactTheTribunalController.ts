@@ -31,7 +31,8 @@ export default class ContactTheTribunalController {
     const applicationsAccordionItems = getApplicationsAccordionItems(
       req,
       bundlesEnabled,
-      claimantRepresentedByOrganisation
+      claimantRepresentedByOrganisation,
+      claimantRepresentedByNonHmctsRepresentative
     );
 
     const content = getPageContent(req, <FormContent>{}, [

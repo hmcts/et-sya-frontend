@@ -19,7 +19,9 @@
     "withdraw": {
       "caption": "Tynnu fy hawliad yn ôl",
       "label": "Rhoi gwybod fy mod eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
-      "body": "Pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau â’ch hawliad."
+      "labelRep": "[W]Give notice that the claimant wants to withdraw all or part of their claim",
+      "body": "Pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau â’ch hawliad.",
+      "bodyRep": "[W]When the claimant has reached a settlement and does not want to continue with their claim."
     },
     "change-details": {
       "caption": "Newid fy manylion personol",

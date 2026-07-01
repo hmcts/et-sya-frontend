@@ -1,6 +1,8 @@
 {
   "genericGuidance": "Gallwch lwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i’ch cais. Peidiwch â llwytho unrhyw ddeunydd arall.",
+  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
   "contactApplicationText": "Rhowch fanylion eich cais yn y blwch testun neu uwchlwythwch ffeil",
+  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
   "contactTemplateText": "Rhowch fanylion eich cais. Nodwch ba atebydd neu atebwyr y mae eich cais yn ymwneud ag ef/â nhw. Defnyddiwch y blwch a’r cyfleuster llwytho ffeil os oes angen.",
   "subTitle": "Cofiwch:",
   "genericGuidanceItem1": "Os ydych yn tynnu llun o lythyr, rhowch ef ar arwyneb gwastad a thynnwch y llun o uchder",
