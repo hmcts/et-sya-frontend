@@ -5,6 +5,7 @@ import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
+import { YesOrNo } from '../../definitions/case';
 import {
   DefaultValues,
   ErrorPages,
@@ -46,6 +47,13 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
   return res.redirect(returnValidUrl(nextPage));
 };
 
+function isDynamicUrlIdSegment(urlPart: string): boolean {
+  if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+    return true;
+  }
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(urlPart);
+}
+
 function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | undefined {
   const urlParts = baseUrl.split('/');
   let returnUrl = '';
@@ -53,7 +61,7 @@ function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | unde
     const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
     if (matchedUrlPart) {
       returnUrl += `/${matchedUrlPart}`;
-    } else if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+    } else if (isDynamicUrlIdSegment(urlPart)) {
       returnUrl += `/${urlPart}`;
     }
   }
@@ -188,5 +196,14 @@ export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery 
 };
 
 export const isReturnUrlIsCheckAnswers = (req: AppRequest): boolean => {
-  return req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS);
+  return (
+    req.session.returnUrl?.includes(PageUrls.CHECK_ANSWERS) ||
+    req.session.returnUrl?.includes(PageUrls.CLAIMANT_REP_CHECK_ANSWERS)
+  );
+};
+
+export const getClaimStepsUrl = (req: AppRequest): string => {
+  return req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+    ? PageUrls.CLAIM_STEPS_NON_HMCTS
+    : PageUrls.CLAIM_STEPS;
 };

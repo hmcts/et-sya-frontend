@@ -1,0 +1,10 @@
+{
+  "title": "[W]Did the claimant work at this address?",
+  "legend": "[W]Did the claimant work at",
+  "hintText": "[W]Select 'Yes' if this is the address where you were based. Select 'No' if you were based at a different address or worked from home.",
+  "errors": {
+    "claimantWorkAddressQuestion": {
+      "required": "[W]Tell us if the claimant worked at this address"
+    }
+  }
+}

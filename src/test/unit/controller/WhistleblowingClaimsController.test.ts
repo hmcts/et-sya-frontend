@@ -1,7 +1,7 @@
 import WhistleblowingClaimsController from '../../../main/controllers/WhistleblowingClaimsController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -111,6 +111,23 @@ describe('Whistleblowing Claims Controller', () => {
         whistleblowingClaim: YesOrNo.NO,
         whistleblowingEntityName: undefined,
       });
+    });
+
+    it('should redirect to LINKED_CASES for standard LIP flow', async () => {
+      const req = mockRequest({ body: { whistleblowingClaim: YesOrNo.NO } });
+      const res = mockResponse();
+      await new WhistleblowingClaimsController().post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.LINKED_CASES);
+    });
+
+    it('should redirect to CLAIMANT_LINKED_CASES for non-HMCTS rep flow', async () => {
+      const req = mockRequest({
+        body: { whistleblowingClaim: YesOrNo.NO },
+        userCase: { claimantRepresentedQuestion: YesOrNo.YES },
+      });
+      const res = mockResponse();
+      await new WhistleblowingClaimsController().post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_LINKED_CASES);
     });
   });
 });

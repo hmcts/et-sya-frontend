@@ -1,0 +1,48 @@
+{
+  "title": "[W]Discrimination claim",
+  "h1": "[W]Discrimination claim",
+  "legend": "[W]What type of discrimination is the claimant claiming?",
+  "hint": "[W]Select all that apply.",
+  "detailsSummary": "[W]What is discrimination?",
+  "detailsText": {
+    "p1": "[W]Discrimination is when someone is treated unfairly and the treatment is related to any of the protected characteristics from the 2010 Equality Act. The claimant has rights at work if they have experienced discrimination.",
+    "p2": "[W]See the",
+    "govukLinkText": "[W]GOV.UK guidance (opens in new tab)",
+    "govukLinkUrl": "https://www.gov.uk/guidance/equality-act-2010-guidance",
+    "p2Suffix": "[W]for further information on protected characteristics and workplace rights."
+  },
+  "age": {
+    "checkbox": "[W]Age"
+  },
+  "disability": {
+    "checkbox": "[W]Disability"
+  },
+  "genderReassignment": {
+    "checkbox": "[W]Gender reassignment"
+  },
+  "marriageOrCivilPartnership": {
+    "checkbox": "[W]Marriage or civil partnership"
+  },
+  "pregnancyOrMaternity": {
+    "checkbox": "[W]Pregnancy or maternity"
+  },
+  "race": {
+    "checkbox": "[W]Race",
+    "hint": "[W]including colour, nationality, and ethnic or national origins"
+  },
+  "religionOrBelief": {
+    "checkbox": "[W]Religion or belief"
+  },
+  "sex": {
+    "checkbox": "[W]Sex",
+    "hint": "[W]including equal pay"
+  },
+  "sexualOrientation": {
+    "checkbox": "[W]Sexual orientation"
+  },
+  "errors": {
+    "claimTypeDiscrimination": {
+      "required": "[W]Please select at least one type of discrimination."
+    }
+  }
+}

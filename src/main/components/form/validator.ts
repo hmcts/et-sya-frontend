@@ -53,6 +53,26 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   }
 };
 
+const isEmailFormatValid = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+export const isValidEmailAddress: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return 'required';
+  }
+  if (!isEmailFormatValid(value as string)) {
+    return 'invalid';
+  }
+};
+
+export const isValidEmailAddressWhenProvided: Validator = value => {
+  if (value === null || value === '' || (value as string).trim().length === 0) {
+    return;
+  }
+  if (!isEmailFormatValid(value as string)) {
+    return 'invalid';
+  }
+};
+
 export const isValidUKTelNumber: Validator = value => {
   if (value === null || value === '') {
     return;

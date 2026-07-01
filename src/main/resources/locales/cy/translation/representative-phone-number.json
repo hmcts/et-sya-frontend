@@ -1,0 +1,11 @@
+{
+  "title": "[W]Representative's phone number",
+  "h1": "[W]What is the representative's phone number? (optional)",
+  "phoneNumber": "[W]Enter the representative's phone number",
+  "errors": {
+    "representativePhoneNumber": {
+      "invalid": "[W]Enter a valid UK telephone number or leave the field blank",
+      "nonnumeric": "[W]Enter a UK telephone number, like 01623 960 001 or 07700 900 983, or leave the field blank"
+    }
+  }
+}

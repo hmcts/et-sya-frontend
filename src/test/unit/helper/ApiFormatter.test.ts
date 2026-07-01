@@ -141,6 +141,8 @@ describe('Should return data in api format', () => {
       linkedCases: YesOrNo.YES,
       linkedCasesDetail: 'Linked Cases Detail',
       claimDetailsCheck: YesOrNo.YES,
+      representativeDetailsCheck: undefined,
+      representedClaimantDetailsCheck: undefined,
       workAddress1: 'Respondent Address',
       workAddress2: 'That Road',
       workAddressTown: 'Anytown',
@@ -269,14 +271,27 @@ describe('Format Case Data to Frontend Model', () => {
       addressCountry: undefined,
       addressTown: undefined,
       telNumber: undefined,
+      representativePhoneNumber: undefined,
       firstName: undefined,
+      representedClaimantFirstName: undefined,
+      representedClaimantLastName: undefined,
+      representedClaimantDateOfBirth: undefined,
+      representedClaimantEmail: undefined,
+      representedClaimantAddress1: undefined,
+      representedClaimantAddress2: undefined,
+      representedClaimantAddressTown: undefined,
+      representedClaimantAddressCountry: undefined,
+      representedClaimantAddressPostcode: undefined,
       genericTseApplicationCollection: undefined,
       tseApplicationStoredCollection: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,
+      claimantRepEmail: undefined,
       claimantRepresentative: undefined,
       claimantRepresentativeRemoved: undefined,
+      representativeName: undefined,
+      representativeOrgName: undefined,
       employeeBenefits: undefined,
       endDate: undefined,
       newJob: undefined,
@@ -306,6 +321,8 @@ describe('Format Case Data to Frontend Model', () => {
       claimantHearingLanguagePreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
+      representativeDetailsCheck: undefined,
+      representedClaimantDetailsCheck: undefined,
       claimSummaryText: undefined,
       claimTypeDiscrimination: undefined,
       claimTypePay: undefined,
@@ -417,17 +434,32 @@ describe('Format Case Data to Frontend Model', () => {
         description: 'ET1 WELSH - R600227/21/75',
         id: '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
         type: 'ET1',
+        dateOfCorrespondence: undefined,
       },
       address1: undefined,
       address2: undefined,
+      addressEnterPostcode: undefined,
       addressPostcode: undefined,
       addressCountry: undefined,
       addressTown: undefined,
       telNumber: undefined,
+      representativePhoneNumber: undefined,
       firstName: undefined,
+      representedClaimantFirstName: undefined,
+      representedClaimantLastName: undefined,
+      representedClaimantDateOfBirth: undefined,
+      representedClaimantEmail: 'janedoe@exmaple.com',
+      representedClaimantAddress1: undefined,
+      representedClaimantAddress2: undefined,
+      representedClaimantAddressTown: undefined,
+      representedClaimantAddressCountry: undefined,
+      representedClaimantAddressPostcode: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,
+      claimantRepEmail: undefined,
+      claimantRepresentative: undefined,
+      claimantRepresentativeRemoved: undefined,
       employeeBenefits: undefined,
       endDate: undefined,
       newJob: undefined,
@@ -457,6 +489,8 @@ describe('Format Case Data to Frontend Model', () => {
       claimantHearingLanguagePreference: 'Welsh',
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
+      representativeDetailsCheck: undefined,
+      representedClaimantDetailsCheck: undefined,
       claimSummaryText: undefined,
       claimTypeDiscrimination: undefined,
       claimTypePay: undefined,
@@ -475,7 +509,9 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressTown: undefined,
       workAddressCountry: undefined,
       workAddressPostcode: undefined,
+      workEnterPostcode: undefined,
       et3ResponseReceived: false,
+      et3DueDate: undefined,
       claimSummaryFile: undefined,
       submittedDate: undefined,
       hubLinksStatuses: undefined,
@@ -492,7 +528,7 @@ describe('Format Case Data to Frontend Model', () => {
       sendNotificationCollection: undefined,
       genericTseApplicationCollection: undefined,
       tseApplicationStoredCollection: undefined,
-      bundleDocuments: [],
+      hearingCollection: undefined,
       documentCollection: [
         {
           id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
@@ -510,7 +546,6 @@ describe('Format Case Data to Frontend Model', () => {
           id: '3db71007-d42c-43d5-a51b-57957f78ced3',
           value: {
             typeOfDocument: 'ET1',
-
             uploadedDocument: {
               document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
               document_filename: 'ET1_WELSH_Sunday_Ayeni_R600227_21_75.pdf',
@@ -520,8 +555,86 @@ describe('Format Case Data to Frontend Model', () => {
           },
         },
       ],
+      representatives: undefined,
+      bundleDocuments: [],
+      multipleFlag: undefined,
+      leadClaimant: undefined,
+      caseStayed: undefined,
+      claimantRepresentativeOrganisationPolicy: undefined,
       id: '1234',
     });
+  });
+
+  it('should map represented claimant name and date of birth to claimantIndType', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      representedClaimantFirstName: 'Jane',
+      representedClaimantLastName: 'Doe',
+      representedClaimantDateOfBirth: { day: '05', month: '11', year: '2000' },
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.claimantIndType.claimant_first_names).toEqual('Jane');
+    expect(apiData.case_data.claimantIndType.claimant_last_name).toEqual('Doe');
+    expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual('2000-11-05');
+  });
+
+  it('should map represented claimant email and address to claimantType', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representedClaimantEmail: 'represented@example.com',
+      representedClaimantAddress1: '1 High Street',
+      representedClaimantAddress2: 'Flat 2',
+      representedClaimantAddressTown: 'London',
+      representedClaimantAddressCountry: 'United Kingdom',
+      representedClaimantAddressPostcode: 'SW1A 1AA',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.claimantType.claimant_email_address).toEqual('represented@example.com');
+    expect(apiData.case_data.claimantType.claimant_addressUK).toEqual({
+      AddressLine1: '1 High Street',
+      AddressLine2: 'Flat 2',
+      PostTown: 'London',
+      PostCode: 'SW1A 1AA',
+      Country: 'United Kingdom',
+    });
+  });
+
+  it('should map represented claimant address and email from API response', () => {
+    const representedApiData: CaseApiDataResponse = {
+      id: '5678',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {
+        claimantRepresentedQuestion: YesOrNo.YES,
+        claimantType: {
+          claimant_email_address: 'represented@example.com',
+          claimant_addressUK: {
+            AddressLine1: '1 High Street',
+            AddressLine2: 'Flat 2',
+            PostTown: 'London',
+            PostCode: 'SW1A 1AA',
+            Country: 'United Kingdom',
+          },
+        },
+      },
+    };
+
+    const result = fromApiFormat(representedApiData);
+    expect(result.representedClaimantEmail).toEqual('represented@example.com');
+    expect(result.representedClaimantAddress1).toEqual('1 High Street');
+    expect(result.representedClaimantAddress2).toEqual('Flat 2');
+    expect(result.representedClaimantAddressTown).toEqual('London');
+    expect(result.representedClaimantAddressPostcode).toEqual('SW1A 1AA');
+    expect(result.representedClaimantAddressCountry).toEqual('United Kingdom');
   });
 
   it('date formatter should return null when date is empty', () => {

@@ -1,0 +1,26 @@
+{
+  "title": "[W]Place of work",
+  "h1": "[W]What address did the claimant work at?",
+  "errors": {
+    "workAddress1": {
+      "required": "[W]Enter the first line of the address the claimant worked at - up to 100 characters",
+      "invalid": "[W]Enter a valid first line of the address the claimant worked at - up to 100 characters"
+    },
+    "workAddress2": {
+      "required": "[W]Enter the second line of the address the claimant worked at - up to 50 characters",
+      "invalid": "[W]Enter a valid second line of the address the claimant worked at - up to 50 characters"
+    },
+    "workAddressTown": {
+      "required": "[W]Enter a town or city for the address the claimant worked at - up to 50 characters",
+      "invalid": "[W]Enter a valid town or city for the address the claimant worked at - up to 50 characters"
+    },
+    "workAddressCountry": {
+      "required": "[W]Enter a country for the address the claimant worked at - up to 50 characters",
+      "invalid": "[W]Enter a valid country for the address the claimant worked at - up to 50 characters"
+    },
+    "workAddressPostcode": {
+      "required": "[W]Enter a postcode. For example, SW1 1AA",
+      "invalid": "[W]Enter a valid postcode"
+    }
+  }
+}

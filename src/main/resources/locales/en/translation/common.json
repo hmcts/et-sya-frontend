@@ -110,6 +110,20 @@
     },
     "respondentAddressTypes": {
       "notSelected": "Select an address"
+    },
+    "representativeEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "representativeAddressTypes": {
+      "notSelected": "Select an address"
+    },
+    "representedClaimantEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "representedClaimantAddressTypes": {
+      "notSelected": "Select an address"
     }
   },
   "selectAddress": "Select an address",
@@ -123,6 +137,19 @@
   "addressPostcodeSelectTitle": "Address postcode select",
   "respondentPostcodeEnterTitle": "Respondent postcode enter",
   "respondentPostcodeSelectTitle": "Respondent postcode select",
+  "representativePostcodeEnterTitle": "Representative's contact address",
+  "representativePostcodeSelectTitle": "Select an address",
+  "representativeManualAddress": "The representative's address is outside the UK",
+
+  "representedClaimantEnterPostcodeTitle": "What is the claimant's address",
+  "representedClaimantSelectPostcodeTitle": "Select an address",
+  "representedClaimantEnterEmailTitle": "Claimant's email address",
+  "representedClaimantEnterEmailHeading": "Claimant’s email address",
+  "representedClaimantEnterEmailDescription": "It will help to process your claim quicker if you can provide the claimant’s email address",
+  "representedClaimantEnterEmailLabel": "Enter the claimant’s email address",
+  "representedClaimantDetailsCheckTitle": "Represented claimant's Details check",
+  "representedClaimantDetailsCheckHeading": "Represented claimant's Details check",
+  "representedClaimantManualAddress": "The Claimant lives outside the UK",
   "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details.",
   "beta": "beta",
   "Legal officer": "Legal officer",

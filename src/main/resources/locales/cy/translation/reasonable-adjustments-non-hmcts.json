@@ -1,0 +1,22 @@
+{
+  "title": "<place-holder>",
+  "h1": "<place-holder>",
+  "legend": "<place-holder>",
+  "p": "<place-holder>",
+  "detailsSummary": {
+    "heading": "<place-holder>",
+    "p": "<place-holder>",
+    "bullet1": "<place-holder>",
+    "bullet2": "<place-holder>",
+    "bullet3": "<place-holder>"
+  },
+  "yes": "<place-holder>",
+  "noSupport": "<place-holder>",
+  "adjustmentDetailTextLabel": "<place-holder>",
+  "textAreaHint": "<place-holder>",
+  "errors": {
+    "reasonableAdjustmentsDetail": {
+      "required": "<place-holder>"
+    }
+  }
+}

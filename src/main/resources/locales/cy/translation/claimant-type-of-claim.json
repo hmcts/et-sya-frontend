@@ -1,0 +1,33 @@
+{
+  "title": "[W]Type of claim",
+  "h1": "[W]What type of claim is the claimant making?",
+  "hint": "[W]You can choose all that apply to the claimant. Further information will be asked for later in the claim. <br><br><span class=\"govuk-!-font-weight-bold\">Select all that apply</span>",
+  "discrimination": {
+    "checkbox": "[W]Discrimination of any type",
+    "hint": "[W]for example, because of the claimant's sex, ethnicity, disability or other characteristic"
+  },
+  "payRelated": {
+    "checkbox": "[W]Pay-related claim"
+  },
+  "unfairDismissal": {
+    "checkbox": "[W]Unfair dismissal",
+    "hint": "[W]including constructive dismissal"
+  },
+  "whistleBlowing": {
+    "checkbox": "[W]Whistleblowing",
+    "hint": "[W]including dismissal or any other unfair treatment after whistleblowing"
+  },
+  "otherTypesOfClaims": {
+    "checkbox": "[W]Other type of claim",
+    "explain": "[W]Tell us briefly what type of claim the claimant is making. You can describe the details of the claim later."
+  },
+  "errors": {
+    "typeOfClaim": {
+      "required": "[W]Please select at least one of the options below to choose the type of claim."
+    },
+    "otherClaim": {
+      "required": "[W]Tell us briefly what type of claim the claimant is making",
+      "tooLong": "[W]Description must be 100 characters or less"
+    }
+  }
+}

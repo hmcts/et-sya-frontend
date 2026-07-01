@@ -1,0 +1,11 @@
+{
+  "pageTitle": "[W]Represented Claimant's email",
+  "pageHeader": "[W]Claimant’s email address",
+  "description": "[W]It will help to process your claim quicker if you provide the claimant's email address.",
+  "label": "[W]Enter the claimant’s email address",
+  "errors": {
+    "representedClaimantEmail": {
+      "invalid": "[W]Enter an email address in the correct format, for example name@example.com"
+    }
+  }
+}

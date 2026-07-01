@@ -1,0 +1,49 @@
+{
+  "title": "[W]Check your answers",
+  "h1": "[W]Check your answers",
+  "description": "[W]Check your answers before submitting your claim.",
+  "applicationDetails": {
+    "header": "[W]Application details",
+    "typeOfClaim": "[W]Claim type"
+  },
+  "repDetails": {
+    "header": "[W]Your details as the representative",
+    "typeOfRepresentative": "[W]Type of representative",
+    "organisationName": "[W]Name of the representative's organisation",
+    "representativeName": "[W]Representative's name",
+    "representativeAddress": "[W]Representative's address",
+    "representativeTelephone": "[W]Representative's telephone number",
+    "howToBeContacted": "[W]How would you like us to contact you?",
+    "contactLanguage": "[W]What language do you want us to use when we contact you?",
+    "hearingLanguage": "[W]If a hearing is required, what language do you want to speak at a hearing?",
+    "hearingPreferences": "[W]Can you and the claimant attend hearings by video and phone?",
+    "disability": "[W]Does anyone in the claimant party have a physical, mental or learning disability or health condition that means they need support during the case?"
+  },
+  "claimantDetails": {
+    "header": "[W]Claimant details",
+    "firstName": "[W]Claimant's first name",
+    "lastName": "[W]Claimant's last name",
+    "dob": "[W]Date of birth",
+    "sex": "[W]Sex",
+    "preferredTitle": "[W]Preferred title",
+    "address": "[W]Address",
+    "email": "[W]Email address"
+  },
+  "respondentDetails": {
+    "header": "[W]Respondent details",
+    "respondentName": "[W]Name of respondent",
+    "respondentAddress": "[W]Respondent address",
+    "acasNumber": "[W]Do you have an Acas certificate number?"
+  },
+  "claimDetails": {
+    "header": "[W]Claim details",
+    "claimTypeDiscrimination": "[W]What type of discrimination claim are you making?",
+    "claimTypePay": "[W]What type of pay claim are you making?",
+    "describeWhatHappened": "[W]Describe what happened to you",
+    "ifClaimSuccessful": "[W]What do you want if your claim is successful",
+    "linkedCases": "[W]Linked cases"
+  },
+  "submitBtn": "[W]Submit",
+  "addAnotherRespondent": "[W]Add another respondent",
+  "submitError": "[W]Sorry, we're having technical problems processing your application. Please try again in a few minutes."
+}

@@ -1,0 +1,17 @@
+{
+  "title": "[W]Communication preference",
+  "h1": "[W]Communication preference (Optional)",
+  "label": "[W]How would you like us to contact you?",
+  "email": "[W]Email",
+  "post": "[W]Post",
+  "languageLabel": "[W]What language do you want us to use when we contact you?",
+  "languageHint": "[W]We'll send you emails and documents as we progress your case. Choose which language you'd like these in.",
+  "welsh": "[W]Welsh",
+  "english": "[W]English",
+  "hearingLabel": "[W]If a hearing is required, what language do you want to speak at a hearing?",
+  "errors": {
+    "claimantContactPreference": {
+      "required": "[W]Tell us whether you want to be contacted by email or by post"
+    }
+  }
+}

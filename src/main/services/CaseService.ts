@@ -90,6 +90,19 @@ export class CaseApi {
     }
   };
 
+  updateClaimantRepAboutYou = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      const updateBody = toApiFormat(caseItem);
+      delete updateBody.case_data.hubLinksStatuses;
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, updateBody);
+    } catch (error) {
+      throw new Error(
+        'Error updating claimant rep about you: ' +
+          axiosErrorDetails(error, { action: 'updateClaimantRepAboutYou', caseId: caseItem.id })
+      );
+    }
+  };
+
   deleteDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.post(JavaApiUrls.DELETE_DRAFT_CASE, toApiFormat(caseItem));
