@@ -2,6 +2,8 @@
   "title": "Order the other party",
   "applicationType": "Order the other party",
   "applicationTitle": "Order the other party to do something",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",
@@ -17,6 +19,24 @@
         "why it is relevant to your claim",
         "if you have already asked the other party to do or provide this thing. If you have, tell us when you asked and what their response was",
         "if you have not asked the other party to do or provide this thing yet, explain why"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Use this form to ask the tribunal to order the other party to do or provide something."
+    },
+
+    { "type": "bold-paragraph", "text": "Details to include in the application:" },
+
+    {
+      "type": "list",
+      "items": [
+        "what the claimant wants the other party to do. For example: the claimant may want the other party to provide information, documents, or further details of their response",
+        "why it is relevant to the claimant’s claim",
+        "if the claimant has already asked the other party to do or provide this thing. If they have, tell us when they asked and what the other party’s response was",
+        "if the claimant has not asked the other party to do or provide this thing yet, explain why"
       ]
     }
   ]
