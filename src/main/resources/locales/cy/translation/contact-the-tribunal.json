@@ -40,7 +40,8 @@
     "vary": {
       "caption": "Amrywio neu ddirymu gorchymyn",
       "label": "Gwneud cais i amrywio neu ddirymu gorchymyn",
-      "body": "Gwneud cais i amrywio neu ddirymu gorchymyn y mae'r tribiwnlys wedi ei gyhoeddi. Er enghraifft, efallai y bydd angen mwy o amser arnoch i gyflwyno rhywbeth neu eisiau newid nifer y tudalennau yn eich dogfennau gwrandawiad."
+      "body": "Gwneud cais i amrywio neu ddirymu gorchymyn y mae'r tribiwnlys wedi ei gyhoeddi. Er enghraifft, efallai y bydd angen mwy o amser arnoch i gyflwyno rhywbeth neu eisiau newid nifer y tudalennau yn eich dogfennau gwrandawiad.",
+      "bodyRep": "[W]Apply to vary or revoke an order the tribunal has issued. For example, you or the claimant may need more time to submit something or want to change the number of pages in your hearing documents."
     },
     "reconsider-decision": {
       "caption": "Ystyried penderfyniad o'r newydd",

@@ -40,7 +40,8 @@
     "vary": {
       "caption": "Vary or revoke an order",
       "label": "Apply to vary or revoke an order",
-      "body": "Apply to vary or revoke an order the tribunal has issued. For example, you may need more time to submit something or want to change the number of pages in your hearing documents,"
+      "body": "Apply to vary or revoke an order the tribunal has issued. For example, you may need more time to submit something or want to change the number of pages in your hearing documents,",
+      "bodyRep": "Apply to vary or revoke an order the tribunal has issued. For example, you or the claimant may need more time to submit something or want to change the number of pages in your hearing documents."
     },
     "reconsider-decision": {
       "caption": "Consider a decision afresh",
