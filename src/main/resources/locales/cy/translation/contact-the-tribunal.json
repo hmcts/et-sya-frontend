@@ -26,7 +26,9 @@
     "change-details": {
       "caption": "Newid fy manylion personol",
       "label": "Rwyf eisiau newid fy manylion personol",
-      "body": "Newid y manylion personol y bu i chi eu rhoi wrth wneud eich hawliad."
+      "labelRep": "[W]The claimant wants to change their personal details",
+      "body": "Newid y manylion personol y bu i chi eu rhoi wrth wneud eich hawliad.",
+      "bodyRep": "[W]Change the personal details the claimant gave when making their claim."
     },
     "postpone": {
       "caption": "Gohirio gwrandawiad",

@@ -1,7 +1,9 @@
 {
   "title": "Newid fy manylion personol",
   "applicationType": "Newid fy manylion personol",
+  "applicationTypeRep": "[W]Change the claimant’s personal details",
   "applicationTitle": "Rwyf eisiau newid fy manylion personol",
+  "applicationTitleRep": "[W]The claimant wants to change their personal details",
   "content": [
     {
       "type": "paragraph",
@@ -24,6 +26,31 @@
         "cyfeiriad cyswllt neu gyfeiriad cartref",
         "rhif ffôn",
         "cyfeiriad e-bost"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "[W]Use this form to apply to change the personal details the claimant gave when making their claim."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]If the claimant changes their postal or email address, we’ll send any letters to the new address if they become unrepresented."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]If they change their telephone number, we’ll contact them using the new number if they become unrepresented."
+    },
+    { "type": "bold-paragraph", "text": "[W]Details the claimant can apply to change:" },
+    {
+      "type": "list",
+      "items": [
+        "[W]name",
+        "[W]sex and preferred title",
+        "[W]contact or home address",
+        "[W]telephone number",
+        "[W]email address"
       ]
     }
   ]
