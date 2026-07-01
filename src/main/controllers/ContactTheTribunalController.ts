@@ -5,7 +5,11 @@ import { FEATURE_FLAGS, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { getApplicationsAccordionItems, isClaimantRepresentedByOrganisation } from './helpers/ContactTheTribunalHelper';
+import {
+  getApplicationsAccordionItems,
+  isClaimantRepresentedByNonHmctsRepresentative,
+  isClaimantRepresentedByOrganisation,
+} from './helpers/ContactTheTribunalHelper';
 import { getPageContent } from './helpers/FormHelpers';
 
 /**
@@ -16,6 +20,9 @@ export default class ContactTheTribunalController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
     const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(req.session.userCase);
+    const claimantRepresentedByNonHmctsRepresentative = isClaimantRepresentedByNonHmctsRepresentative(
+      req.session.userCase
+    );
 
     // Set flag to indicate user has visited the selection page
     // This allows FormSubmissionCheck to verify proper flow
@@ -36,6 +43,7 @@ export default class ContactTheTribunalController {
       hideContactUs: true,
       applicationsAccordionItems,
       claimantRepresentedByOrganisation,
+      isClaimantRepresentedByNonHmctsRepresentative: claimantRepresentedByNonHmctsRepresentative,
       welshEnabled,
     });
   }
