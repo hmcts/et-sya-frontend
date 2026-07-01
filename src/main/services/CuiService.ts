@@ -3,6 +3,7 @@ import https from 'https';
 import { CUIClient, type CUIClientConfig, type CUIClientOptions } from '@hmcts/cui-client';
 import config from 'config';
 
+export { CUIActions, mergeCUIFlagItems } from '@hmcts/cui-client';
 export type { CUIClient } from '@hmcts/cui-client';
 export type {
   CUIClientConfig,
@@ -15,6 +16,7 @@ export type {
   CUIFlagDetails,
   CUIFlagItem,
   CUIFlagPath,
+  CUIJourneyAction,
   CUIJourneyData,
 } from '@hmcts/cui-client';
 

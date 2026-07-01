@@ -629,6 +629,36 @@ describe('Your Support Controller', () => {
     expect(req.session.userCase.claimantExternalFlags?.partyName).toBe('Logged-in User');
   });
 
+  it('should use Claimant as party name when no name is available', async () => {
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockResolvedValue({
+      action: 'submit',
+      correlationId: '1234',
+      replacementFlags: {
+        roleOnCase: 'Claimant',
+        details: [],
+      },
+    });
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+
+    const controller = new YourSupportController({ getOneTimeToken, getToken });
+    const req = mockRequest({
+      userCase: {
+        id: '1234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await controller.callback(req, res);
+
+    expect(req.session.userCase.claimantExternalFlags?.partyName).toBe('Claimant');
+  });
+
   it('should use the logged-in user name before the session claimant name', async () => {
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');

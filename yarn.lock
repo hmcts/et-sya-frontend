@@ -2593,12 +2593,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/cui-client@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@hmcts/cui-client@npm:1.0.0"
+"@hmcts/cui-client@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@hmcts/cui-client@npm:1.0.1"
   dependencies:
     axios: "npm:^1.9.0"
-  checksum: 10/9136153431f8309fcf409264f34a56d107e62a4efb3797f79fdf6781d560a8351d544cbcd4b2dc619cb0d3b4391de0c617626dcfb1fb8aeb9df93b6200240f46
+  checksum: 10/d3425079aa1390f3c71741c6fa125c051b50c4b86f1a9d4c3f4e7aad62c1187ed6a4f88043b11e25b4ec15dd0106e987486d69bd53986a85e937c89395d5adf9
   languageName: node
   linkType: hard
 
@@ -9614,7 +9614,7 @@ __metadata:
     "@codeceptjs/allure-legacy": "npm:^1.0.2"
     "@faker-js/faker": "npm:^9.0.0"
     "@hmcts/cookie-manager": "npm:^1.0.0"
-    "@hmcts/cui-client": "npm:^1.0.0"
+    "@hmcts/cui-client": "npm:^1.0.1"
     "@hmcts/info-provider": "npm:^1.0.0"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.0"
     "@hmcts/nodejs-logging": "npm:^4.0.4"

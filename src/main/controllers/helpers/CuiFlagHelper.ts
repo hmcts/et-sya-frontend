@@ -1,6 +1,12 @@
 import type { CaseFlags } from '../../definitions/case';
 import type { AnyRecord } from '../../definitions/util-types';
-import type { CUIFlag, CUIFlagDetails, CUIFlagItem, CUIFlagPath } from '../../services/CuiService';
+import {
+  type CUIFlag,
+  type CUIFlagDetails,
+  type CUIFlagItem,
+  type CUIFlagPath,
+  mergeCUIFlagItems,
+} from '../../services/CuiService';
 
 const CUI_FLAG_OPTIONAL_FIELDS = [
   'subTypeValue',
@@ -14,9 +20,6 @@ const CUI_FLAG_OPTIONAL_FIELDS = [
   'dateTimeModified',
   'status',
 ];
-
-type ClaimantExternalFlagDetail = NonNullable<CaseFlags['details']>[number] | CUIFlagItem;
-type ClaimantExternalFlagDetails = ClaimantExternalFlagDetail[];
 
 export const buildCuiFlagDetails = (
   claimantExternalFlags: CaseFlags | undefined,
@@ -36,9 +39,10 @@ export const mergeClaimantExternalFlags = (
   partyName: string,
   roleOnCase: string
 ): CaseFlags => {
-  const existingDetails: ClaimantExternalFlagDetails = existingFlags?.details ?? [];
-  const replacementDetails: ClaimantExternalFlagDetails = replacementFlags.details ?? [];
-  const details = replacementDetails.length ? mergeFlagDetails(existingDetails, replacementDetails) : existingDetails;
+  const details = mergeCUIFlagItems(
+    (existingFlags?.details ?? []) as unknown as CUIFlagItem[],
+    replacementFlags.details
+  );
 
   return {
     ...existingFlags,
@@ -119,25 +123,4 @@ const getExistingFlagPathItem = (pathItem: unknown): CUIFlagPath | undefined => 
   }
 
   return undefined;
-};
-
-const mergeFlagDetails = (
-  existingDetails: ClaimantExternalFlagDetails = [],
-  replacementDetails: ClaimantExternalFlagDetails = []
-): ClaimantExternalFlagDetails => {
-  const mergedDetails = [...existingDetails];
-
-  replacementDetails.forEach(replacementDetail => {
-    const existingIndex = replacementDetail?.id
-      ? mergedDetails.findIndex(existingDetail => existingDetail.id === replacementDetail.id)
-      : -1;
-
-    if (existingIndex >= 0) {
-      mergedDetails[existingIndex] = replacementDetail;
-    } else {
-      mergedDetails.push(replacementDetail);
-    }
-  });
-
-  return mergedDetails;
 };

@@ -10,6 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import {
+  CUIActions,
   type CUIClient,
   type CUIFlagDetails,
   type CUIJourneyData,
@@ -28,7 +29,6 @@ import { getLanguageCode, returnValidUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('YourSupportController');
 const CUI_MASTER_FLAG_CODE = 'RA0001';
-const CUI_SUBMIT_ACTION = 'submit';
 const YOUR_SUPPORT_TEMPLATE = 'your-support';
 const YOUR_SUPPORT_CONFIRMATION_TEMPLATE = 'your-support-confirmation';
 const YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE = 'your-support-submitted-confirmation';
@@ -221,9 +221,8 @@ export default class YourSupportController {
       this.getName(req.session?.user?.givenName, req.session?.user?.familyName) ||
       userCase?.claimantName ||
       this.getName(userCase?.firstName, userCase?.lastName) ||
-      this.getName(req.session?.claimantFirstName, req.session?.claimantLastName) ||
       userCase?.claimantExternalFlags?.partyName ||
-      ''
+      'Claimant'
     );
   }
 
@@ -253,7 +252,7 @@ export default class YourSupportController {
   }
 
   private isSubmittedJourney(result: CUIJourneyData): boolean {
-    return result.action === CUI_SUBMIT_ACTION;
+    return result.action === CUIActions.SUBMIT;
   }
 
   private async saveSubmittedJourney(req: AppRequest, result: CUIJourneyData): Promise<void> {
