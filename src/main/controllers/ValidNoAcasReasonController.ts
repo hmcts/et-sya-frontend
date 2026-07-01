@@ -65,9 +65,9 @@ export default class ValidNoAcasReasonController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? PageUrls.CLAIM_STEPS
+      ? PageUrls.NEW_ACCOUNT_LANDING
       : PageUrls.CONTACT_ACAS;
-    if (PageUrls.CLAIM_STEPS === redirectUrl) {
+    if (PageUrls.NEW_ACCOUNT_LANDING === redirectUrl) {
       await handleClaimStepsRedirect(req, res, this.form, redirectUrl, logger);
     } else {
       handlePostLogicPreLogin(req, res, this.form, redirectUrl);

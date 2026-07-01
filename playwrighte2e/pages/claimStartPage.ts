@@ -97,19 +97,58 @@ export class ClaimStartPage extends BasePage {
     );
   }
 
+  async verifyClaimingOnYourOwnOrWithOthersText(): Promise<void> {
+    await this.webAction.verifyTextPresentOnPage(
+      'text=You can make a claim to an employment tribunal on your own, where you are the only claimant. You can also make a claim with another person, or a group of people against the same employer or organisation if you share similar issues in fact and law.'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=If you’re claiming with other people, we only need their basic personal details. We do not need details about their claim.'
+    );
+  }
+
   async verifyWhoCanActAsARepresentativeGuidanceText(): Promise<void> {
     await this.webAction.verifyTextPresentOnPage('text=Free representation can include:');
     await this.webAction.verifyTextPresentOnPage('text=friends');
     await this.webAction.verifyTextPresentOnPage('text=colleagues');
     await this.webAction.verifyTextPresentOnPage('text=family members');
     await this.webAction.verifyTextPresentOnPage('text=trade unions (if one is available to you)');
-    await this.webAction.verifyTextPresentOnPage('text=Citizens Advice advisers');
-    await this.webAction.verifyTextPresentOnPage('text=advisers from law clinics or law centres');
-    await this.webAction.verifyTextPresentOnPage('text=Paid representation be through legal professionals, including:');
+    await this.webAction.verifyTextPresentOnPage('text=Citizens Advice advisors');
+    await this.webAction.verifyTextPresentOnPage('text=advisors from law clinics or law centres');
+    await this.webAction.verifyTextPresentOnPage(
+      'text=Paid representation can be with legal professionals, including:'
+    );
     await this.webAction.verifyTextPresentOnPage("text=barristers (called 'advocates' in Scotland)");
     await this.webAction.verifyTextPresentOnPage('text=legal executives');
     await this.webAction.verifyTextPresentOnPage(
       'text=claims management companies (regulated by the Financial Conduct Authority (FCA))'
+    );
+  }
+
+  async verifyHowToGetALegalRepresentativeText(): Promise<void> {
+    await this.webAction.verifyTextPresentOnPage('text=The following links open in a new tab');
+    await this.webAction.verifyTextPresentOnPage(
+      'text=Find a solicitor in England and Wales - list of solicitors run by The Law Society'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=Find a solicitor in Scotland - database of solicitors run by The Law Society of Scotland'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=Free Representation Unit (FRU) - charity providing legal advice, case preparation and advocacy for people not eligible for legal aid or who cannot afford lawyers (this service is not available in Scotland)'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=In Scotland, some university law clinics can provide advice and representation. You can find a list at The Scottish University Law Clinic Network (SULCN)'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=local ‘law centres’ - not-for-profit legal practices providing legal aid for people who cannot afford lawyers'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=A trade union may be able to pay for a solicitor and free legal advice is available from Citizens Advice or Citizens Advice Scotland.'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=The Equality Advisory and Support Service can help with discrimination claims.'
+    );
+    await this.webAction.verifyTextPresentOnPage(
+      'text=Some people may also be able to get help to pay for legal advice through legal aid.'
     );
   }
 
@@ -180,29 +219,36 @@ export class ClaimStartPage extends BasePage {
   async createSingleMyselfCase(): Promise<void> {
     await this.initialPageFlow();
 
+    await this.webAction.verifyTextPresentOnPage('text=Claiming on your own or on behalf of someone else');
+    await this.webAction.verifyTextPresentOnPage('text=Claiming on your own or with others');
+    await this.webAction.verifyTextPresentOnPage('text=Who can act as a representative');
+    await this.webAction.verifyTextPresentOnPage('text=How to get a legal representative');
+    await this.webAction.verifyTextPresentOnPage('text=Representatives');
     await this.webAction.verifyTextPresentOnPage(
-      'text=Are you making the claim for yourself, or representing someone else?'
+      'text=A representative is someone who can act for you to complete the claim, write to the employment tribunal or present your case at a hearing.'
     );
-    await this.webAction.verifyTextPresentOnPage('text=Who can act as a representative?');
-    await this.webAction.verifyTextPresentOnPage('text=How to find and get a representative?');
-    await this.webAction.verifyTextPresentOnPage('text=I’m representing myself and making my own claim');
     await this.webAction.verifyTextPresentOnPage(
-      'text=I’m making a claim for someone else and acting as their representative'
+      'text=You do not need a representative to make a claim. You can add a representative at any point if you want to.'
     );
-    await this.webAction.clickElementByText('Who can act as a representative?');
+    await this.webAction.verifyTextPresentOnPage('text=I’m claiming for myself');
+    await this.webAction.verifyTextPresentOnPage('text=I’m claiming on behalf of someone else');
+    await this.webAction.verifyTextPresentOnPage('text=I’m a legal representative representing a claimant');
+    await this.webAction.clickElementByText('Claiming on your own or with others');
+    await this.verifyClaimingOnYourOwnOrWithOthersText();
+    await this.webAction.clickElementByText('Who can act as a representative');
     await this.verifyWhoCanActAsARepresentativeGuidanceText();
-    await this.webAction.clickElementByText('How to find and get a representative?');
+    await this.webAction.clickElementByText('How to get a legal representative');
     await this.webAction.checkElementById('#lip-or-representative');
     await this.clickContinue();
 
-    //Are you making a claim on your own or with others Page
-    await this.delay(2000);
-    await this.webAction.verifyTextPresentOnPage('text=Are you making a claim on your own or with others?');
-    await this.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
-    await this.webAction.verifyTextPresentOnPage('text=I’m claiming on my own');
-    await this.webAction.verifyTextPresentOnPage('text=I’m claiming with another person or other people');
-    await this.webAction.checkElementById('#single-or-multiple-claim');
-    await this.webAction.clickElementByText('Continue');
+    // //Are you making a claim on your own or with others Page
+    // await this.delay(2000);
+    // await this.webAction.verifyTextPresentOnPage('text=Are you making a claim on your own or with others?');
+    // await this.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
+    // await this.webAction.verifyTextPresentOnPage('text=I’m claiming on my own');
+    // await this.webAction.verifyTextPresentOnPage('text=I’m claiming with another person or other people');
+    // await this.webAction.checkElementById('#single-or-multiple-claim');
+    // await this.webAction.clickElementByText('Continue');
 
     //Where you can make your claim Page....
     await this.delay(2000);

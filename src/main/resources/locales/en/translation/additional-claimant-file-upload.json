@@ -1,0 +1,45 @@
+{
+  "title": "Add claimants using a spreadsheet",
+  "h1": "Add claimants using a spreadsheet",
+  "section1": {
+    "heading": "Download and complete the spreadsheet template",
+    "p1": "Download the spreadsheet template or use you own if it follows the same format.",
+    "link": "Group claims template (xlsx, 12KB)",
+    "linkUrl": "/resources/xlsx/group-claims-template.xlsx",
+    "p3": "If you are using your own file, ensure your header row includes these exact columns, with the correct spelling:",
+    "columnNames": ["First name", "Last name", "Address line 1", "Town or city", "Country"]
+  },
+  "section2": {
+    "heading": "Save in Excel format",
+    "p1": "Follow these steps:",
+    "steps": ["select 'File'", "select 'Save as' or 'Export to'", "save as the format 'Excel (.xlsx or .xls)'"]
+  },
+  "section3": {
+    "heading": "Upload spreadsheet",
+    "p1": "Select 'Choose file', browse to your saved spreadsheet and select it.",
+    "buttonLabel": "Choose file"
+  },
+  "fileUpload": {
+    "chooseFiles": "Choose file",
+    "dropInstruction": "or drop file",
+    "noFileChosen": "No file chosen"
+  },
+  "errors": {
+    "additionalClaimantSpreadsheetName": {
+      "required": "Please upload a spreadsheet",
+      "invalidFileSize": "The file size must be less than 5MB",
+      "invalidFileFormat": "The selected file must be an Excel spreadsheet (.xlsx or .xls)",
+      "invalidRowData": "The following rows contain invalid data: {{additionalErrorInfo}}.",
+      "backEndError": "Backend error occurred while processing the file. Please try again later.",
+      "fileEmpty": "The uploaded file is empty. Upload a file with data.",
+      "noDataRows": "The uploaded file does not contain any data rows. Please upload a file with data.",
+      "dataRowsExceedsMax": "The uploaded file has exceeded the maximum of {{additionalErrorInfo}} rows."
+    }
+  },
+  "successTitle": "Success",
+  "successHeading": "Document upload successful",
+  "successBody": "has been uploaded.",
+  "uploadedDocument": "Uploaded document",
+  "uploadedTag": "Uploaded",
+  "removeLink": "Remove"
+}

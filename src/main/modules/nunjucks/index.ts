@@ -37,7 +37,7 @@ export class Nunjucks {
     );
 
     nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
-      const { sessionErrors, errors } = this.ctx;
+      const { sessionErrors, errors, additionalErrorInfo } = this.ctx;
 
       if (!sessionErrors?.length) {
         return false;
@@ -52,7 +52,14 @@ export class Nunjucks {
         return false;
       }
 
-      return { text: errors[fieldName][fieldError.errorType] };
+      let text = errors[fieldName][fieldError.errorType];
+
+      // Interpolate any placeholders using values from the render context
+      if (additionalErrorInfo) {
+        text = text.replace('{{additionalErrorInfo}}', additionalErrorInfo);
+      }
+
+      return { text };
     });
 
     nunEnv.addGlobal('getErrors', function (items: FormFields[]): {
