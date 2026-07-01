@@ -81,7 +81,8 @@
     "strike": {
       "caption": "Dileu’r ymateb",
       "label": "Dileu’r cyfan neu ran o’r ymateb",
-      "body": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o ymateb y parti arall."
+      "body": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o ymateb y parti arall.",
+      "bodyRep": "[W]The claimant can request that the tribunal strike out all or parts of the other party's response."
     },
     "reconsider-judgement": {
       "caption": "Ailystyried dyfarniad",

@@ -81,7 +81,8 @@
     "strike": {
       "caption": "Strike out the response",
       "label": "Strike out all or part of the response",
-      "body": "You can request that the tribunal strike out all or parts of the other party's response."
+      "body": "You can request that the tribunal strike out all or parts of the other party's response.",
+      "bodyRep": "The claimant can request that the tribunal strike out all or parts of the other party's response."
     },
     "reconsider-judgement": {
       "caption": "Reconsider a judgment",
