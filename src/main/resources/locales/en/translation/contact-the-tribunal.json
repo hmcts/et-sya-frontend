@@ -93,6 +93,7 @@
       "caption": "Contact the tribunal",
       "label": "Contact the tribunal about something else",
       "body": "Tell or ask the tribunal about something relevant to your case, and which is not covered by the other options on this page.",
+      "bodyRep": "Tell or ask the tribunal about something relevant to the claimant's case, which is not covered by the other options on this page.",
       "link": "Contact the tribunal"
     },
     "documents": {
