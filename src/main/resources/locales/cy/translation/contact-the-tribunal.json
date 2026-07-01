@@ -33,7 +33,9 @@
     "postpone": {
       "caption": "Gohirio gwrandawiad",
       "label": "Gwneud cais i ohirio fy ngwrandawiad",
-      "body": "Gofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach."
+      "labelRep": "[W]Apply to postpone a hearing",
+      "body": "Gofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach.",
+      "bodyRep": "[W]Ask the tribunal to postpone the claimant’s hearing to a later date."
     },
     "vary": {
       "caption": "Amrywio neu ddirymu gorchymyn",

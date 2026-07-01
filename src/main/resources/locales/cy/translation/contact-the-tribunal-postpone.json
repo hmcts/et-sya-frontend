@@ -2,6 +2,7 @@
   "title": "Gohirio gwrandawiad",
   "applicationType": "Gohirio gwrandawiad",
   "applicationTitle": "Gwneud cais i ohirio fy ngwrandawiad",
+  "applicationTitleRep": "[W]Apply to postpone a hearing",
   "content": [
     {
       "type": "paragraph",
@@ -16,6 +17,23 @@
         "unrhyw ddogfennau hanfodol i gefnogi eich cais. Er enghraifft, efallai y byddwch eisiau llwytho nodyn meddygol neu ohebiaeth gan dyst na all fod yn bresennol",
         "dyddiadau’r wythnos o fewn y 3 mis nesaf pan na allwch chi, eich tystion neu gynrychiolwyr fynychu gwrandawiad wedi’i aildrefnu",
         "y rhesymau dros pam na allwch fod yn bresennol ar y dyddiadau hynny"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "[W]Use this form to ask the tribunal to postpone the claimant’s hearing to a later date."
+    },
+    { "type": "bold-paragraph", "text": "[W]Details to include in your application:" },
+    {
+      "type": "list",
+      "items": [
+        "[W]which hearing you or the claimant want to postpone. If the hearing you want to postpone is listed over multiple days, tell us which day or days you are applying to postpone",
+        "[W]the reason you or the claimant want to postpone. The tribunal will use this to decide whether to grant your application",
+        "[W]any essential documents to support the application. For example, you may want to upload a medical note or correspondence from a witness who cannot attend",
+        "[W]weekday dates within the next 3 months that you, the claimant or your witnesses cannot attend a rescheduled hearing",
+        "[W]the reason you, the claimant or your witnesses cannot attend on those dates"
       ]
     }
   ]

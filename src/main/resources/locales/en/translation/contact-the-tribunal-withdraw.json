@@ -4,6 +4,8 @@
   "applicationTypeRep": "Withdraw the claim",
   "applicationTitle": "I want to withdraw all or part of my claim",
   "applicationTitleRep": "The claimant wants to withdraw all or part of their claim",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",

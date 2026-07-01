@@ -4,6 +4,8 @@
   "applicationTypeRep": "[W]Withdraw the claim",
   "applicationTitle": "Rwyf eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
   "applicationTitleRep": "[W]The claimant wants to withdraw all or part of their claim",
+  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",

@@ -4,6 +4,8 @@
   "applicationTypeRep": "Change the claimant’s personal details",
   "applicationTitle": "I want to change my personal details",
   "applicationTitleRep": "The claimant wants to change their personal details",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",
