@@ -51,12 +51,15 @@ export const isClaimantRepresentedByNonHmctsRepresentative = (userCase: CaseWith
 export const getApplicationsAccordionItems = (
   req: AppRequest,
   bundlesEnabled: LaunchDarkly.LDFlagValue,
-  claimantRepresentedByOrganisation: boolean
+  claimantRepresentedByOrganisation: boolean,
+  claimantRepresentedByNonHmctsRepresentative = false
 ): AccordionItem[] => {
   const { userCase } = req.session;
   if (!claimantRepresentedByOrganisation) {
     const applicationsToDisplay = getApplicationsToDisplay(bundlesEnabled, userCase);
-    return applicationsToDisplay.map(application => getApplicationsAccordionItem(req, application));
+    return applicationsToDisplay.map(application =>
+      getApplicationsAccordionItem(req, application, claimantRepresentedByNonHmctsRepresentative)
+    );
   } else {
     return [];
   }
@@ -75,13 +78,19 @@ const getApplicationsToDisplay = (bundlesEnabled: LaunchDarkly.LDFlagValue, user
   }
 };
 
-const getApplicationsAccordionItem = (req: AppRequest, application: string): AccordionItem => {
+const getApplicationsAccordionItem = (
+  req: AppRequest,
+  application: string,
+  claimantRepresentedByNonHmctsRepresentative = false
+): AccordionItem => {
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
   };
   const languageParam = getLanguageParam(req.url);
 
-  const label = translations.sections[application].label;
+  const section = translations.sections[application];
+  const label = claimantRepresentedByNonHmctsRepresentative && section.labelRep ? section.labelRep : section.label;
+  const body = claimantRepresentedByNonHmctsRepresentative && section.bodyRep ? section.bodyRep : section.body;
 
   const link =
     application === DOCUMENTS
@@ -90,7 +99,7 @@ const getApplicationsAccordionItem = (req: AppRequest, application: string): Acc
 
   const html =
     '<p class="govuk-body">' +
-    translations.sections[application].body +
+    body +
     '</p>' +
     '<p class="govuk-body"><a class="govuk-link" href="' +
     link +

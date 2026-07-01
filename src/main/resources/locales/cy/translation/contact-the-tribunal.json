@@ -1,6 +1,7 @@
 {
   "title": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "h1": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
+  "h1Rep": "[W]Contact the tribunal about the claimant's case",
   "showAllSections": "Dangos pob adran",
   "hideAllSections": "Cuddio pob adran",
   "showSection": "Dangos",
@@ -18,17 +19,23 @@
     "withdraw": {
       "caption": "Tynnu fy hawliad yn ôl",
       "label": "Rhoi gwybod fy mod eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
-      "body": "Pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau â’ch hawliad."
+      "labelRep": "[W]Give notice that the claimant wants to withdraw all or part of their claim",
+      "body": "Pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau â’ch hawliad.",
+      "bodyRep": "[W]When the claimant has reached a settlement and does not want to continue with their claim."
     },
     "change-details": {
       "caption": "Newid fy manylion personol",
       "label": "Rwyf eisiau newid fy manylion personol",
-      "body": "Newid y manylion personol y bu i chi eu rhoi wrth wneud eich hawliad."
+      "labelRep": "[W]The claimant wants to change their personal details",
+      "body": "Newid y manylion personol y bu i chi eu rhoi wrth wneud eich hawliad.",
+      "bodyRep": "[W]Change the personal details the claimant gave when making their claim."
     },
     "postpone": {
       "caption": "Gohirio gwrandawiad",
       "label": "Gwneud cais i ohirio fy ngwrandawiad",
-      "body": "Gofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach."
+      "labelRep": "[W]Apply to postpone a hearing",
+      "body": "Gofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach.",
+      "bodyRep": "[W]Ask the tribunal to postpone the claimant’s hearing to a later date."
     },
     "vary": {
       "caption": "Amrywio neu ddirymu gorchymyn",

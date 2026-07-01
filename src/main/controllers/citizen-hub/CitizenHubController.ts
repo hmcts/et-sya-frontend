@@ -229,6 +229,7 @@ export default class CitizenHubController {
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
       showNoLongerRepresentedNotification,
       claimantRepresentedByOrganisation,
+      isClaimantRepresentedByNonHmctsRepresentative: showAboutYouForNonHmctsRep,
     });
   }
 }
