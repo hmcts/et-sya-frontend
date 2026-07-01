@@ -64,7 +64,9 @@
     "witness": {
       "caption": "Gorchymyn tyst i fynychu",
       "label": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
-      "body": "Gwneud cais i orchymyn bod tyst yn bresennol i roi tystiolaeth yn eich achos chi."
+      "labelRep": "[W]Order a witness to give evidence",
+      "body": "Gwneud cais i orchymyn bod tyst yn bresennol i roi tystiolaeth yn eich achos chi.",
+      "bodyRep": "[W]Apply to order a witness to attend to give evidence in the claimant’s case."
     },
     "non-compliance": {
       "caption": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio",

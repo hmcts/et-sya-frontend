@@ -2,6 +2,8 @@
   "title": "Gorchymyn tyst i fynychu",
   "applicationType": "Gorchymyn tyst i fynychu",
   "applicationTitle": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
+  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
   "content": [
     { "type": "paragraph", "text": "Gallwch ofyn i’r tribiwnlys orchymyn bod tyst yn bresennol i roi tystiolaeth." },
     {
@@ -51,6 +53,67 @@
         "pam na fyddai gorchymyn i ddatgelu’r dogfennau yn ddigon",
         "os ydych eisoes wedi gofyn i’r tyst neu unrhyw un arall ddarparu’r dogfennau hyn. Os ydych wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch ofyn a beth oedd ei ymateb",
         "os nad ydych wedi gofyn i’r tyst ddarparu’r dogfennau eto, esboniwch pam"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "[W]The claimant can ask the tribunal to order a witness to attend to give evidence."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The witness must be in Great Britain (England, Scotland and Wales). This does not include Northern Ireland."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The tribunal can limit the number of witnesses to be called to give evidence on a particular issue, especially if that issue is not central to the case."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The claimant should realise that, if they call a witness to give evidence on their behalf, they are not generally entitled to challenge or contradict what the witness says."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The claimant may also be liable for the costs incurred by the witness’s attendance."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The claimant should consider whether the evidence of this witness is likely to help their case."
+    },
+
+    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
+    {
+      "type": "list",
+      "items": [
+        "[W]the witness’s full name and address",
+        "[W]why the attendance of this witness is necessary for a fair hearing. The tribunal needs to understand why the evidence is relevant, and why there is no alternative way of establishing the same points at the hearing without ordering a witness to attend",
+        "[W]if you or the claimant has asked this witness to attend voluntarily. If you have, tell us when you asked and what their response was",
+        "[W]If you or the claimant have not asked the witness to attend yet, explain why"
+      ]
+    },
+
+    {
+      "type": "paragraph",
+      "text": "[W]If the order is granted, the witness will be ordered to attend on the first day of the hearing. If the claimant wants them to attend on another day or days, tell us:"
+    },
+
+    {
+      "type": "list",
+      "items": [
+        "[W]the dates apart from the first day of the hearing that the claimant wants the witness to attend",
+        "[W]why their attendance is necessary on those dates"
+      ]
+    },
+    { "type": "paragraph", "text": "[W]If you or the claimant want the witness to bring documents, tell us:" },
+
+    {
+      "type": "list",
+      "items": [
+        "[W]why these documents are relevant to the issues in this case",
+        "[W]why an order to disclose the documents would not be enough",
+        "[W]if you or the claimant have already asked the witness or anyone else to provide these documents. If you have, tell us when you asked and what their response was",
+        "[W]if you or the claimant have not asked the witness to provide the documents yet, explain why"
       ]
     }
   ]

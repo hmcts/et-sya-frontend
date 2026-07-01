@@ -64,7 +64,9 @@
     "witness": {
       "caption": "Order a witness to attend",
       "label": "Order a witness to attend to give evidence",
-      "body": "Apply to order a witness to attend to give evidence in your case."
+      "labelRep": "Order a witness to give evidence",
+      "body": "Apply to order a witness to attend to give evidence in your case.",
+      "bodyRep": "Apply to order a witness to attend to give evidence in the claimant’s case."
     },
     "non-compliance": {
       "caption": "Tell the tribunal the other party has not complied",
