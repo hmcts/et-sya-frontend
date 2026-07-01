@@ -1,6 +1,7 @@
 {
   "title": "Contact the Tribunal",
   "h1": "Contact the tribunal about your case",
+  "h1Rep": "Contact the tribunal about the claimant's case",
   "showAllSections": "Show all sections",
   "hideAllSections": "Hide all sections",
   "showSection": "Show",
@@ -18,17 +19,23 @@
     "withdraw": {
       "caption": "Withdraw my claim",
       "label": "Give notice that I want to withdraw all or part of my claim",
-      "body": "When you've reached a settlement or do not want to continue with your claim."
+      "labelRep": "Give notice that the claimant wants to withdraw all or part of their claim",
+      "body": "When you've reached a settlement or do not want to continue with your claim.",
+      "bodyRep": "When the claimant has reached a settlement and does not want to continue with their claim."
     },
     "change-details": {
       "caption": "Change my personal details",
       "label": "I want to change my personal details",
-      "body": "Change the personal details you gave when making your claim."
+      "labelRep": "The claimant wants to change their personal details",
+      "body": "Change the personal details you gave when making your claim.",
+      "bodyRep": "Change the personal details the claimant gave when making their claim."
     },
     "postpone": {
       "caption": "Postpone a hearing",
       "label": "Apply to postpone my hearing",
-      "body": "Ask the tribunal to postpone your hearing to a later date."
+      "labelRep": "Apply to postpone a hearing",
+      "body": "Ask the tribunal to postpone your hearing to a later date.",
+      "bodyRep": "Ask the tribunal to postpone the claimant’s hearing to a later date."
     },
     "vary": {
       "caption": "Vary or revoke an order",
