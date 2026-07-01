@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseFlags, YesOrNo } from '../definitions/case';
+import { YesOrNo } from '../definitions/case';
 import { AuthUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
@@ -11,10 +11,7 @@ import { getLogger } from '../logger';
 
 import {
   type CUIClient,
-  type CUIFlag,
   type CUIFlagDetails,
-  type CUIFlagItem,
-  type CUIFlagPath,
   type CUIJourneyData,
   type CUIStartJourneyAuth,
   type CUIStartJourneyRequest,
@@ -24,6 +21,7 @@ import {
 import type { IS2SService } from './../services/S2SService';
 import { getServiceUrl } from './../utils/getServiceUrl';
 import { handleUpdateDraftCase, handleUpdateSubmittedCaseFlags, setUserCase } from './helpers/CaseHelpers';
+import { buildCuiFlagDetails, mergeClaimantExternalFlags } from './helpers/CuiFlagHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageCode, returnValidUrl } from './helpers/RouterHelpers';
@@ -36,18 +34,6 @@ const YOUR_SUPPORT_CONFIRMATION_TEMPLATE = 'your-support-confirmation';
 const YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE = 'your-support-submitted-confirmation';
 const YOUR_SUPPORT_FIELD = 'reasonableAdjustments';
 const YOUR_SUPPORT_REDIRECT_ERROR = 'yourSupportRedirect';
-const CUI_FLAG_OPTIONAL_FIELDS = [
-  'subTypeValue',
-  'subTypeValue_cy',
-  'subTypeKey',
-  'otherDescription',
-  'otherDescription_cy',
-  'flagComment',
-  'flagComment_cy',
-  'flagUpdateComment',
-  'dateTimeModified',
-  'status',
-];
 
 const formatError = (error: unknown): string => {
   if (error instanceof Error) {
@@ -226,85 +212,7 @@ export default class YourSupportController {
 
   private getExistingFlags(req: AppRequest): CUIFlagDetails {
     const userCase = req.session?.userCase;
-    const claimantExternalFlags = userCase?.claimantExternalFlags;
-
-    return {
-      partyName: this.getPartyName(req),
-      roleOnCase: claimantExternalFlags?.roleOnCase || this.getRoleOnCase(req),
-      details: this.getExistingFlagDetails(claimantExternalFlags?.details),
-    };
-  }
-
-  private getExistingFlagDetails(details: CaseFlags['details'] = []): CUIFlagItem[] {
-    return details.map(flagItem => {
-      const cuiFlagItem = {
-        value: this.getExistingFlagValue(flagItem.value as AnyRecord),
-      } as Partial<CUIFlagItem>;
-
-      if (flagItem.id) {
-        cuiFlagItem.id = flagItem.id;
-      }
-
-      return cuiFlagItem as CUIFlagItem;
-    });
-  }
-
-  private getExistingFlagValue(flagValue: AnyRecord): CUIFlag {
-    const cuiFlag: AnyRecord = {
-      name: flagValue.name ?? '',
-      name_cy: flagValue.name_cy ?? '',
-      dateTimeCreated: flagValue.dateTimeCreated ?? '',
-      path: this.getExistingFlagPath(flagValue.path),
-      hearingRelevant: flagValue.hearingRelevant ?? 'No',
-      flagCode: flagValue.flagCode ?? '',
-      availableExternally: flagValue.availableExternally ?? 'Yes',
-    };
-
-    CUI_FLAG_OPTIONAL_FIELDS.forEach(field => {
-      if (flagValue[field] !== undefined) {
-        cuiFlag[field] = flagValue[field];
-      }
-    });
-
-    return cuiFlag as CUIFlag;
-  }
-
-  private getExistingFlagPath(path: unknown): CUIFlagPath[] {
-    if (!Array.isArray(path)) {
-      return [];
-    }
-
-    return path
-      .map(pathItem => this.getExistingFlagPathItem(pathItem))
-      .filter((pathItem): pathItem is CUIFlagPath => !!pathItem);
-  }
-
-  private getExistingFlagPathItem(pathItem: unknown): CUIFlagPath | undefined {
-    const pathItemRecord = pathItem as AnyRecord;
-    const id = pathItemRecord?.id ? { id: pathItemRecord.id } : {};
-
-    if (pathItemRecord?.name) {
-      return {
-        ...id,
-        name: pathItemRecord.name,
-      };
-    }
-
-    if (typeof pathItemRecord?.value === 'string') {
-      return {
-        ...id,
-        name: pathItemRecord.value,
-      };
-    }
-
-    if (pathItemRecord?.value?.name) {
-      return {
-        ...id,
-        name: pathItemRecord.value.name,
-      };
-    }
-
-    return undefined;
+    return buildCuiFlagDetails(userCase?.claimantExternalFlags, this.getPartyName(req), this.getRoleOnCase(req));
   }
 
   private getPartyName(req: AppRequest): string {
@@ -349,7 +257,7 @@ export default class YourSupportController {
   }
 
   private async saveSubmittedJourney(req: AppRequest, result: CUIJourneyData): Promise<void> {
-    if (!result.replacementFlags) {
+    if (result.replacementFlags === undefined || result.replacementFlags === null) {
       throw new Error('CUI journey completed without replacement flags');
     }
 
@@ -366,20 +274,14 @@ export default class YourSupportController {
   }
 
   private setReplacementFlags(req: AppRequest, replacementFlags: CUIFlagDetails): void {
-    const claimantExternalFlags = {
-      ...req.session.userCase?.claimantExternalFlags,
-      ...replacementFlags,
-      partyName: replacementFlags.partyName || this.getPartyName(req),
-      roleOnCase:
-        replacementFlags.roleOnCase ||
-        req.session.userCase?.claimantExternalFlags?.roleOnCase ||
-        this.getRoleOnCase(req),
-      details: replacementFlags.details ?? [],
-    } as unknown as CaseFlags;
-
     req.session.userCase = {
       ...req.session.userCase,
-      claimantExternalFlags,
+      claimantExternalFlags: mergeClaimantExternalFlags(
+        req.session.userCase?.claimantExternalFlags,
+        replacementFlags,
+        this.getPartyName(req),
+        this.getRoleOnCase(req)
+      ),
     };
   }
 
