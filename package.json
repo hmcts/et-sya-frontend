@@ -57,7 +57,7 @@
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.17.7",
     "@types/lodash": "^4.14.194",
-    "@types/multer": "^1.4.7",
+    "@types/multer": "^2.1.0",
     "@types/node": "^22.0.0",
     "@types/nunjucks": "^3.2.2",
     "@types/require-directory": "^2.1.2",
@@ -193,7 +193,10 @@
     "yauzl": "3.2.1",
     "picomatch": "^4.0.4",
     "ip-address": "^10.1.1",
-    "undici": "^7.25.0"
+    "multer": "2.2.0",
+    "undici@npm:^6.25.0": "6.27.0",
+    "undici@npm:^7.19.0": "7.28.0",
+    "undici@npm:^7.25.0": "7.28.0"
   },
   "packageManager": "yarn@4.12.0"
 }

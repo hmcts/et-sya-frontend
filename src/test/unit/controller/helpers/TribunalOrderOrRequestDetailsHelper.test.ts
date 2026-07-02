@@ -569,6 +569,15 @@ describe('Tribunal order or request Details helper', () => {
       expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
     });
 
+    it('should return early when hubLinksStatuses is not defined', async () => {
+      const userCase = { ...mockUserCaseWithCitizenHubLinks };
+      delete userCase.hubLinksStatuses;
+
+      await activateTribunalOrdersAndRequestsLink([], userCase);
+
+      expect(userCase.hubLinksStatuses).toBeUndefined();
+    });
+
     it('tribunal orders and requests section should remain as not yet available request when no response required', async () => {
       const userCase = { ...mockUserCaseWithCitizenHubLinks };
 

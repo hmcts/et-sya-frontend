@@ -180,6 +180,10 @@ export const activateTribunalOrdersAndRequestsLink = async (
   items: SendNotificationTypeItem[],
   userCase: CaseWithId
 ): Promise<void> => {
+  if (!userCase.hubLinksStatuses) {
+    return;
+  }
+
   let notices: SendNotificationTypeItem[];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
 

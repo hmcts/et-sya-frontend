@@ -1,0 +1,17 @@
+{
+  "title": "[w]Case overview",
+  "header": "[w]Case overview - ",
+  "caseNumberLabel": "[w]Previous case number",
+  "noAccessHeader": "[w]You cannot access this case online",
+  "noAccessBodyEcm": "[w]This case is now being <strong>managed offline</strong> and is not available through this service.",
+  "noAccessBodyCrossCountry": "[w]This case has been transferred and is not available through this service.",
+  "newCaseNumberBody": "[w]Your new case number is",
+  "transferPendingBody": "[w]Your case is being transferred. Your new case number will be available here once the transfer is complete. Please check back later.",
+  "whatThisMeansHeader": "[w]What this means",
+  "whatThisMeansPointOne": "[w]You cannot view case details or upload documents here.",
+  "whatThisMeansPointTwo": "[w]Updates and decisions will not appear in this service.",
+  "whatHappensNextHeader": "[w]What happens next",
+  "whatHappensNextPointOne": "[w]The tribunal will contact you by <strong>post or email</strong> with updates.",
+  "whatHappensNextPointTwo": "[w]If you have any questions or need to contact the tribunal, you can do so, quoting your new case number",
+  "contactHeader": "[w]Call the Employment Tribunal customer contact centre"
+}

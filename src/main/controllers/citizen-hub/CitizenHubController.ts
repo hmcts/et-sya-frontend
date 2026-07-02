@@ -22,6 +22,7 @@ import {
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
+import { clearCaseTransferInfoIfStale, handleCaseAccessFailure } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -77,12 +78,21 @@ export default class CitizenHubController {
           (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
         );
       } catch (error) {
-        logger.error(error.message);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error(errorMessage);
+        if (await handleCaseAccessFailure(req, res, req.params.caseId)) {
+          return;
+        }
         return res.redirect('/not-found');
       }
     }
 
+    clearCaseTransferInfoIfStale(req, req.params.caseId);
+
     const userCase = req.session.userCase;
+    if (!userCase.hubLinksStatuses) {
+      userCase.hubLinksStatuses = new HubLinksStatuses();
+    }
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);

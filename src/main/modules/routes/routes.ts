@@ -126,6 +126,7 @@ import SubmitRespondentController from '../../controllers/SubmitRespondentContro
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
+import TransferredCaseController from '../../controllers/TransferredCaseController';
 import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
 import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalOrdersAndRequestsController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
@@ -156,7 +157,9 @@ import { csrfProtection } from '../csrf';
 const handleUploads = multer({
   limits: {
     fileSize: FILE_SIZE_LIMIT,
-  },
+    fields: 20,
+    fieldNestingDepth: 1,
+  } as NonNullable<multer.Options['limits']>,
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
     req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
     return callback(null, !req.fileTooLarge);
@@ -235,6 +238,7 @@ export class Routes {
     app.get(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().get);
     app.post(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().post);
     app.get(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().get);
+    app.get(PageUrls.TRANSFERRED_CASE, new TransferredCaseController().get);
     app.post(PageUrls.CASE_NUMBER_CHECK, new CaseNumberController().post);
     app.get(PageUrls.YOUR_DETAILS_FORM, new YourDetailsFormController().get);
     app.post(PageUrls.YOUR_DETAILS_FORM, new YourDetailsFormController().post);

@@ -30,7 +30,13 @@ import {
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
 import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
-import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
+import {
+  CaseApi,
+  UploadedFile,
+  getCaseApi,
+  isCaseNotFoundError,
+  isTransferredToEcmCaseError,
+} from '../../../main/services/CaseService';
 import { mockSimpleRespAppTypeItem } from '../mocks/mockApplications';
 import { mockClaimantTseRequest } from '../mocks/mockClaimantTseRequest';
 import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
@@ -106,6 +112,17 @@ describe('Retrieve individual case', () => {
       })
     );
   });
+
+  it('should send get request to retrieve case transfer info', async () => {
+    const caseId = '1646225213651590';
+    await api.getCaseTransferInfo(caseId);
+    expect(mockedAxios.get).toHaveBeenCalledWith(`${JavaApiUrls.GET_CASE_TRANSFER_INFO}${caseId}/transfer-info`);
+  });
+
+  it('should throw when case transfer info request fails', async () => {
+    mockedAxios.get.mockRejectedValueOnce(error);
+    await expect(api.getCaseTransferInfo('1646225213651590')).rejects.toThrow('Error getting case transfer info:');
+  });
 });
 
 describe('Axios get to retrieve draft cases', () => {
@@ -119,6 +136,42 @@ describe('Axios get to retrieve draft cases', () => {
 describe('getCaseApi', () => {
   test('should create a CaseApi', () => {
     expect(getCaseApi(token)).toBeInstanceOf(CaseApi);
+  });
+});
+
+describe('isTransferredToEcmCaseError', () => {
+  it('should return true for ECM transfer marker', () => {
+    expect(isTransferredToEcmCaseError(new Error('CASE_TRANSFERRED_TO_ECM'))).toBe(true);
+  });
+
+  it('should return true for 410 responses', () => {
+    expect(isTransferredToEcmCaseError(new Error('Request failed with status code 410'))).toBe(true);
+  });
+
+  it('should return false for generic fetch errors', () => {
+    expect(isTransferredToEcmCaseError(new Error('Error getting user case: status code 404'))).toBe(false);
+  });
+
+  it('should return true for non-Error ECM values', () => {
+    expect(isTransferredToEcmCaseError('CASE_TRANSFERRED_TO_ECM')).toBe(true);
+  });
+});
+
+describe('isCaseNotFoundError', () => {
+  it('should return true for 404 responses', () => {
+    expect(isCaseNotFoundError(new Error('Error getting user case: status code 404'))).toBe(true);
+  });
+
+  it('should return true for CaseNotFoundException', () => {
+    expect(isCaseNotFoundError(new Error('CaseNotFoundException: No case found'))).toBe(true);
+  });
+
+  it('should return false for generic fetch errors', () => {
+    expect(isCaseNotFoundError(new Error('Error getting user case: status code 500'))).toBe(false);
+  });
+
+  it('should return true for non-Error 404 values', () => {
+    expect(isCaseNotFoundError('Request failed with status code 404')).toBe(true);
   });
 });
 
@@ -565,7 +618,6 @@ describe('update case from claimant actions', () => {
     await api.changeApplicationStatus(caseItem, HubLinkStatus.VIEWED);
 
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.CHANGE_APPLICATION_STATUS);
-    console.table(mockedAxios.put.mock.calls[0][1]);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ application_id: '1', new_status: HubLinkStatus.VIEWED });
   });
 
