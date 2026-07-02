@@ -14,6 +14,25 @@ const hasMatchingTransferInfo = (caseId: string, transferInfo?: CaseTransferInfo
   return !!transferInfo?.transferred && String(transferInfo.originalCaseId) === String(caseId);
 };
 
+const renderTransferredCasePage = (req: AppRequest, res: Response, transferInfo: CaseTransferInfoResponse): void => {
+  const translations = req.t(TranslationKeys.TRANSFERRED_CASE, { returnObjects: true }) as Record<string, string>;
+  const showNewCaseNumber = transferInfo.transferComplete && !!transferInfo.newEthosCaseReference;
+  const noAccessBody =
+    transferInfo.transferType === 'ECM' ? translations.noAccessBodyEcm : translations.noAccessBodyCrossCountry;
+
+  res.render(TranslationKeys.TRANSFERRED_CASE, {
+    ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+    ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
+    ...translations,
+    caseNumber: transferInfo.originalEthosCaseReference ?? '',
+    replacementCaseNumber: transferInfo.newEthosCaseReference ?? '',
+    destinationOffice: transferInfo.destinationOffice ?? '',
+    transferComplete: transferInfo.transferComplete,
+    showNewCaseNumber,
+    noAccessBody,
+  });
+};
+
 export default class TransferredCaseController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const caseId = (req.query.caseId as string) || req.session.caseTransferInfo?.originalCaseId;
@@ -50,25 +69,6 @@ export default class TransferredCaseController {
       }
     }
 
-    this.renderTransferredCasePage(req, res, transferInfo);
-  }
-
-  private renderTransferredCasePage(req: AppRequest, res: Response, transferInfo: CaseTransferInfoResponse): void {
-    const translations = req.t(TranslationKeys.TRANSFERRED_CASE, { returnObjects: true }) as Record<string, string>;
-    const showNewCaseNumber = transferInfo.transferComplete && !!transferInfo.newEthosCaseReference;
-    const noAccessBody =
-      transferInfo.transferType === 'ECM' ? translations.noAccessBodyEcm : translations.noAccessBodyCrossCountry;
-
-    res.render(TranslationKeys.TRANSFERRED_CASE, {
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
-      ...translations,
-      caseNumber: transferInfo.originalEthosCaseReference ?? '',
-      replacementCaseNumber: transferInfo.newEthosCaseReference ?? '',
-      destinationOffice: transferInfo.destinationOffice ?? '',
-      transferComplete: transferInfo.transferComplete,
-      showNewCaseNumber,
-      noAccessBody,
-    });
+    renderTransferredCasePage(req, res, transferInfo);
   }
 }

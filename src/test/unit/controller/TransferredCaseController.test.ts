@@ -58,6 +58,40 @@ describe('Transferred Case Controller tests', () => {
     );
   });
 
+  it('should render the transferred case page when get is invoked without class context', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.session.caseTransferInfo = {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: '1234',
+      originalEthosCaseReference: '60000001/2022',
+      transferComplete: false,
+    };
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+      if (options?.returnObjects) {
+        return {
+          h1: 'Your case has been transferred',
+          noAccessBodyEcm: 'ECM body',
+          noAccessBodyCrossCountry: 'Cross country body',
+        };
+      }
+      return key;
+    });
+
+    const unboundGet = controller.get;
+    await unboundGet(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        caseNumber: '60000001/2022',
+        noAccessBody: 'ECM body',
+      })
+    );
+  });
+
   it('should fetch transfer info when case id is provided in query', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
