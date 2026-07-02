@@ -2,14 +2,14 @@ import { Response } from 'express';
 
 import { CaseTransferInfoResponse } from '../definitions/api/caseTransferInfoResponse';
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { getLogger } from '../logger';
-import { getCaseApi, isCaseNotFoundError } from '../services/CaseService';
+import { getCaseApi } from '../services/CaseService';
 
 import {
   applyCaseTransferInfoToSession,
   buildTransferredCasePageHeading,
-  createFallbackTransferInfo,
+  clearCaseTransferInfoIfStale,
 } from './helpers/CaseTransferHelper';
 
 const logger = getLogger('TransferredCaseController');
@@ -31,7 +31,6 @@ const renderTransferredCasePage = (req: AppRequest, res: Response, transferInfo:
     pageHeading: buildTransferredCasePageHeading(translations, transferInfo),
     caseNumber: transferInfo.originalEthosCaseReference ?? '',
     replacementCaseNumber: transferInfo.newEthosCaseReference ?? '',
-    destinationOffice: transferInfo.destinationOffice ?? '',
     transferComplete: transferInfo.transferComplete,
     showNewCaseNumber,
     noAccessBody,
@@ -41,37 +40,37 @@ const renderTransferredCasePage = (req: AppRequest, res: Response, transferInfo:
 export default class TransferredCaseController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const caseId = (req.query.caseId as string) || req.session.caseTransferInfo?.originalCaseId;
+
+    if (!caseId) {
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
+
+    clearCaseTransferInfoIfStale(req, caseId);
+
     let transferInfo: CaseTransferInfoResponse | undefined = req.session.caseTransferInfo;
 
-    if (caseId && !hasMatchingTransferInfo(caseId, transferInfo)) {
+    if (!hasMatchingTransferInfo(caseId, transferInfo)) {
       try {
         transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
         logger.info(`Fetched transfer info for case ID ${caseId}`);
+
+        if (!transferInfo?.transferred) {
+          logger.info(`Case ID ${caseId} is not transferred`);
+          return res.redirect(ErrorPages.NOT_FOUND);
+        }
+
         transferInfo = applyCaseTransferInfoToSession(req, transferInfo, caseId);
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
-        if (isCaseNotFoundError(error)) {
-          logger.info(`Transfer info not available for case ID ${caseId}: ${errorMessage}`);
-        } else {
-          logger.error(errorMessage);
-        }
-        if (caseId) {
-          logger.info(`Falling back to default transfer info for case ID ${caseId}`);
-          transferInfo = applyCaseTransferInfoToSession(req, createFallbackTransferInfo(req, caseId), caseId);
-        } else {
-          return res.redirect('/not-found');
-        }
+        logger.error(`Unable to load transfer info for case ID ${caseId}: ${errorMessage}`);
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
-    } else if (caseId && transferInfo) {
+    } else if (transferInfo) {
       transferInfo = applyCaseTransferInfoToSession(req, transferInfo, caseId);
     }
 
     if (!transferInfo?.transferred) {
-      if (caseId) {
-        transferInfo = applyCaseTransferInfoToSession(req, createFallbackTransferInfo(req, caseId), caseId);
-      } else {
-        return res.redirect('/not-found');
-      }
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
 
     renderTransferredCasePage(req, res, transferInfo);

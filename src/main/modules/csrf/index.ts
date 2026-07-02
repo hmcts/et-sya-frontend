@@ -40,7 +40,7 @@ export default class CSRFToken {
           }
           res.locals.csrfToken = generateCsrfToken(req, res);
         } catch (error) {
-          logger.error(`Failed to generate CSRF token: ${error instanceof Error ? error.message : String(error)}`);
+          logger.error('Failed to generate CSRF token:', error);
           // Continue without CSRF token - protection will be skipped for this request
         }
       }

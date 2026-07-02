@@ -4,7 +4,8 @@ import axios from 'axios';
 
 import TransferredCaseController from '../../../main/controllers/TransferredCaseController';
 import { CaseTransferInfoResponse } from '../../../main/definitions/api/caseTransferInfoResponse';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -21,6 +22,15 @@ const transferredCaseTranslations = {
   header: 'Case overview - ',
   noAccessBodyEcm: 'ECM body',
   noAccessBodyCrossCountry: 'Cross country body',
+};
+
+const mockTransferredCaseTranslations = (request: AppRequest): void => {
+  jest.mocked(request.t).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+    if (options?.returnObjects) {
+      return transferredCaseTranslations;
+    }
+    return key;
+  });
 };
 
 describe('Transferred Case Controller tests', () => {
@@ -40,12 +50,7 @@ describe('Transferred Case Controller tests', () => {
       newEthosCaseReference: '18850001/2020',
       transferComplete: true,
     };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
+    mockTransferredCaseTranslations(request);
 
     controller.get(request, response);
     await new Promise(nextTick);
@@ -80,12 +85,7 @@ describe('Transferred Case Controller tests', () => {
       originalEthosCaseReference: '6010106/2024',
       transferComplete: true,
     };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
+    mockTransferredCaseTranslations(request);
 
     controller.get(request, response);
     await new Promise(nextTick);
@@ -119,12 +119,7 @@ describe('Transferred Case Controller tests', () => {
       claimantLastName: 'Rabbit',
       respondentName: "McGregor's Farm",
     };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
+    mockTransferredCaseTranslations(request);
 
     controller.get(request, response);
     await new Promise(nextTick);
@@ -148,12 +143,7 @@ describe('Transferred Case Controller tests', () => {
       originalEthosCaseReference: '60000001/2022',
       transferComplete: false,
     };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
+    mockTransferredCaseTranslations(request);
 
     const unboundGet = controller.get;
     await unboundGet(request, response);
@@ -172,12 +162,7 @@ describe('Transferred Case Controller tests', () => {
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: '1234' };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
+    mockTransferredCaseTranslations(request);
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
         transferred: true,
@@ -202,30 +187,17 @@ describe('Transferred Case Controller tests', () => {
     );
   });
 
-  it('should render fallback page when transfer info cannot be loaded but case id is provided', async () => {
+  it('should redirect to not found when transfer info cannot be loaded with an unrelated error', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: '1234' };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not found'));
 
     controller.get(request, response);
     await new Promise(nextTick);
 
-    expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.TRANSFERRED_CASE,
-      expect.objectContaining({
-        showNewCaseNumber: false,
-        transferComplete: false,
-        noAccessBody: 'ECM body',
-      })
-    );
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 
   it('should redirect to not found when transfer info cannot be loaded and no case id is provided', async () => {
@@ -237,20 +209,14 @@ describe('Transferred Case Controller tests', () => {
     controller.get(request, response);
     await new Promise(nextTick);
 
-    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 
-  it('should render fallback page when transfer info says case is not transferred', async () => {
+  it('should redirect to not found when transfer info says case is not transferred', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: '1234' };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
         transferred: false,
@@ -262,27 +228,14 @@ describe('Transferred Case Controller tests', () => {
     controller.get(request, response);
     await new Promise(nextTick);
 
-    expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.TRANSFERRED_CASE,
-      expect.objectContaining({
-        showNewCaseNumber: false,
-        transferComplete: false,
-        noAccessBody: 'ECM body',
-      })
-    );
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 
-  it('should render fallback page when case not found error is returned from transfer info api', async () => {
+  it('should redirect to not found when case not found error is returned from transfer info api', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: '1234' };
-    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
-      if (options?.returnObjects) {
-        return transferredCaseTranslations;
-      }
-      return key;
-    });
     caseApi.getCaseTransferInfo = jest
       .fn()
       .mockRejectedValue(new Error('Error getting case transfer info: status code 404, CaseNotFoundException'));
@@ -290,12 +243,6 @@ describe('Transferred Case Controller tests', () => {
     controller.get(request, response);
     await new Promise(nextTick);
 
-    expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.TRANSFERRED_CASE,
-      expect.objectContaining({
-        showNewCaseNumber: false,
-        transferComplete: false,
-      })
-    );
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });

@@ -288,7 +288,7 @@ describe('Case Selection Service using Case Api', () => {
     expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
   });
 
-  test('Should redirect to transferred page when getUserCase fails for transferred case', async () => {
+  test('Should redirect to transferred page when getUserCase fails and transfer-info confirms transfer', async () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
@@ -297,16 +297,23 @@ describe('Case Selection Service using Case Api', () => {
     caseApi.getUserCase = jest
       .fn()
       .mockRejectedValue(
-        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+        new Error('Error getting user case: Request failed with status code 404, CaseNotFoundException')
       );
-    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '12234',
+        transferComplete: false,
+      },
+    });
 
     await selectUserCase(req, res, '12234');
 
     expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
   });
 
-  test('Should redirect to transferred page when getUserCase fails for ECM case but transfer-info says not transferred', async () => {
+  test('Should redirect home when getUserCase fails and transfer-info says not transferred', async () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
@@ -315,7 +322,7 @@ describe('Case Selection Service using Case Api', () => {
     caseApi.getUserCase = jest
       .fn()
       .mockRejectedValue(
-        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+        new Error('Error getting user case: Request failed with status code 404, CaseNotFoundException')
       );
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
@@ -327,7 +334,25 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('Should redirect home when getUserCase fails and transfer-info is unavailable', async () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValue(
+        new Error('Error getting user case: Request failed with status code 404, CaseNotFoundException')
+      );
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should select User Case and redirect to Claim Steps in Welsh language if current language is Welsh', async () => {

@@ -5,11 +5,7 @@ import {
   translateOverallStatus,
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
-import {
-  createFallbackTransferInfo,
-  handleTransferredCaseRedirect,
-  saveSessionAndRedirectToTransferredCase,
-} from '../controllers/helpers/CaseTransferHelper';
+import { clearCaseTransferInfoIfStale, handleCaseAccessFailure } from '../controllers/helpers/CaseTransferHelper';
 import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
@@ -20,7 +16,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from './CaseService';
+import { getCaseApi } from './CaseService';
 
 const logger = getLogger('CaseSelectionService');
 
@@ -151,25 +147,15 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     }
 
     req.session.userCase = fromApiFormat(response.data);
+    clearCaseTransferInfoIfStale(req, caseId);
 
     req.session.save();
     return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error(errorMessage);
-    if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
+    if (await handleCaseAccessFailure(req, res, caseId)) {
       return;
-    }
-    if (isTransferredToEcmCaseError(err) || isCaseNotFoundError(err)) {
-      const redirected = await saveSessionAndRedirectToTransferredCase(
-        req,
-        res,
-        caseId,
-        createFallbackTransferInfo(req, caseId)
-      );
-      if (redirected) {
-        return;
-      }
     }
     const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
       ? PageUrls.HOME + languages.WELSH_URL_PARAMETER

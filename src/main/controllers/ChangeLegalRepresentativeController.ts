@@ -64,7 +64,7 @@ export default class ChangeLegalRepresentativeController {
         : await removeClaimantRepresentative(req);
       res.redirect(redirectUrl);
     } catch (error) {
-      logger.info(error instanceof Error ? error.message : String(error));
+      logger.info(error);
       req.session.errors.push({ propertyName: 'legalRep', errorType: 'backEndError' });
       res.redirect(setUrlLanguage(req, PageUrls.CHANGE_LEGAL_REPRESENTATIVE));
     }

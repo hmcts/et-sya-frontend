@@ -15,18 +15,14 @@ import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
-import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
+import { getCaseApi } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
 import {
   clearPrepareDocumentsForHearingFields,
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
-import {
-  createFallbackTransferInfo,
-  handleTransferredCaseRedirect,
-  saveSessionAndRedirectToTransferredCase,
-} from '../helpers/CaseTransferHelper';
+import { clearCaseTransferInfoIfStale, handleCaseAccessFailure } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -84,23 +80,14 @@ export default class CitizenHubController {
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         logger.error(errorMessage);
-        if (await handleTransferredCaseRedirect(req, res, req.params.caseId, error)) {
+        if (await handleCaseAccessFailure(req, res, req.params.caseId)) {
           return;
-        }
-        if (isTransferredToEcmCaseError(error) || isCaseNotFoundError(error)) {
-          const redirected = await saveSessionAndRedirectToTransferredCase(
-            req,
-            res,
-            req.params.caseId,
-            createFallbackTransferInfo(req, req.params.caseId)
-          );
-          if (redirected) {
-            return;
-          }
         }
         return res.redirect('/not-found');
       }
     }
+
+    clearCaseTransferInfoIfStale(req, req.params.caseId);
 
     const userCase = req.session.userCase;
     if (!userCase.hubLinksStatuses) {

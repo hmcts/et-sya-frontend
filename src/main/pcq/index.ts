@@ -98,8 +98,10 @@ export const callPCQHealth = (): Promise<string> => {
     .catch(error => {
       if (error.response) {
         logger.info(`PCQ health error status: ${error.response.status}`);
+      } else if (error.request) {
+        logger.info(`PCQ health error request: ${error.request}`);
       } else {
-        logger.info(`PCQ health error message: ${error instanceof Error ? error.message : String(error)}`);
+        logger.info(`PCQ health error message: ${error.message}`);
       }
       return 'DOWN';
     });
