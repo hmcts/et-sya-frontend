@@ -11,12 +11,65 @@ import { getLanguageParam } from './RouterHelpers';
 const logger = getLogger('CaseTransferHelper');
 const SESSION_SAVE_TIMEOUT_MS = 10000;
 
-export const createFallbackTransferInfo = (caseId: string): CaseTransferInfoResponse => ({
-  transferred: true,
-  transferType: 'ECM',
-  originalCaseId: caseId,
-  transferComplete: false,
-});
+const getMatchingUserCase = (req: AppRequest, caseId: string) => {
+  const userCase = req.session.userCase;
+  return userCase && String(userCase.id) === String(caseId) ? userCase : undefined;
+};
+
+export const enrichTransferInfoWithCaseParties = (
+  req: AppRequest,
+  transferInfo: CaseTransferInfoResponse,
+  caseId: string
+): CaseTransferInfoResponse => {
+  const userCase = getMatchingUserCase(req, caseId);
+  const existingTransferInfo =
+    req.session.caseTransferInfo && String(req.session.caseTransferInfo.originalCaseId) === String(caseId)
+      ? req.session.caseTransferInfo
+      : undefined;
+
+  return {
+    ...transferInfo,
+    claimantFirstName: transferInfo.claimantFirstName ?? existingTransferInfo?.claimantFirstName ?? userCase?.firstName,
+    claimantLastName: transferInfo.claimantLastName ?? existingTransferInfo?.claimantLastName ?? userCase?.lastName,
+    respondentName:
+      transferInfo.respondentName ?? existingTransferInfo?.respondentName ?? userCase?.respondents?.[0]?.respondentName,
+  };
+};
+
+export const applyCaseTransferInfoToSession = (
+  req: AppRequest,
+  transferInfo: CaseTransferInfoResponse,
+  caseId: string
+): CaseTransferInfoResponse => {
+  const enrichedTransferInfo = enrichTransferInfoWithCaseParties(req, transferInfo, caseId);
+  req.session.caseTransferInfo = enrichedTransferInfo;
+  return enrichedTransferInfo;
+};
+
+export const buildTransferredCasePageHeading = (
+  translations: Record<string, string>,
+  transferInfo: CaseTransferInfoResponse
+): string => {
+  const { claimantFirstName, claimantLastName, respondentName } = transferInfo;
+
+  if (claimantFirstName && claimantLastName && respondentName) {
+    return `${translations.header}${claimantFirstName} ${claimantLastName} vs ${respondentName}`;
+  }
+
+  return translations.title;
+};
+
+export const createFallbackTransferInfo = (req: AppRequest, caseId: string): CaseTransferInfoResponse =>
+  enrichTransferInfoWithCaseParties(
+    req,
+    {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: caseId,
+      transferComplete: false,
+    },
+    caseId
+  );
 
 export const buildTransferredCaseRedirectUrl = (req: AppRequest, caseId: string): string => {
   return `${PageUrls.TRANSFERRED_CASE}${getLanguageParam(req.url)}&caseId=${caseId}`;
@@ -28,7 +81,7 @@ export const saveSessionAndRedirectToTransferredCase = async (
   caseId: string,
   transferInfo: CaseTransferInfoResponse
 ): Promise<boolean> => {
-  req.session.caseTransferInfo = transferInfo;
+  applyCaseTransferInfoToSession(req, transferInfo, caseId);
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -81,7 +134,7 @@ export const handleTransferredCaseRedirect = async (
       logger.info(
         `Case ID ${caseId} appears transferred; transfer-info unavailable (${transferErrorMessage}). Using fallback redirect.`
       );
-      return saveSessionAndRedirectToTransferredCase(req, res, caseId, createFallbackTransferInfo(caseId));
+      return saveSessionAndRedirectToTransferredCase(req, res, caseId, createFallbackTransferInfo(req, caseId));
     }
 
     logger.warn(`Case ID ${caseId} transfer check failed: ${transferErrorMessage}`);

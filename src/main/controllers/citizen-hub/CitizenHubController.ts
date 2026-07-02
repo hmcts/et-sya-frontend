@@ -92,7 +92,7 @@ export default class CitizenHubController {
             req,
             res,
             req.params.caseId,
-            createFallbackTransferInfo(req.params.caseId)
+            createFallbackTransferInfo(req, req.params.caseId)
           );
           if (redirected) {
             return;

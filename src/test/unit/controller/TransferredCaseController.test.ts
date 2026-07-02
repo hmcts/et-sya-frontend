@@ -16,6 +16,13 @@ const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
 
+const transferredCaseTranslations = {
+  title: 'Case overview',
+  header: 'Case overview - ',
+  noAccessBodyEcm: 'ECM body',
+  noAccessBodyCrossCountry: 'Cross country body',
+};
+
 describe('Transferred Case Controller tests', () => {
   beforeEach(() => {
     caseApi.getCaseTransferInfo = jest.fn();
@@ -35,11 +42,7 @@ describe('Transferred Case Controller tests', () => {
     };
     (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
-        return {
-          h1: 'Your case has been transferred',
-          noAccessBodyEcm: 'ECM body',
-          noAccessBodyCrossCountry: 'Cross country body',
-        };
+        return transferredCaseTranslations;
       }
       return key;
     });
@@ -50,10 +53,86 @@ describe('Transferred Case Controller tests', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.TRANSFERRED_CASE,
       expect.objectContaining({
+        pageHeading: 'Case overview',
         caseNumber: '60000001/2022',
         replacementCaseNumber: '18850001/2020',
         showNewCaseNumber: true,
         noAccessBody: 'ECM body',
+      })
+    );
+  });
+
+  it('should store party names on case transfer info and build the page heading from them', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({
+      userCase: {
+        id: '1234',
+        firstName: 'Peter',
+        lastName: 'Rabbit',
+        respondents: [{ respondentName: "McGregor's Farm" }],
+      },
+    });
+    request.session.caseTransferInfo = {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: '1234',
+      originalEthosCaseReference: '6010106/2024',
+      transferComplete: true,
+    };
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+      if (options?.returnObjects) {
+        return transferredCaseTranslations;
+      }
+      return key;
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(request.session.caseTransferInfo).toEqual(
+      expect.objectContaining({
+        claimantFirstName: 'Peter',
+        claimantLastName: 'Rabbit',
+        respondentName: "McGregor's Farm",
+      })
+    );
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        pageHeading: "Case overview - Peter Rabbit vs McGregor's Farm",
+      })
+    );
+  });
+
+  it('should build the page heading from stored transfer info when user case is no longer available', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.session.caseTransferInfo = {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: '1234',
+      originalEthosCaseReference: '6010106/2024',
+      transferComplete: true,
+      claimantFirstName: 'Peter',
+      claimantLastName: 'Rabbit',
+      respondentName: "McGregor's Farm",
+    };
+    (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+      if (options?.returnObjects) {
+        return transferredCaseTranslations;
+      }
+      return key;
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        pageHeading: "Case overview - Peter Rabbit vs McGregor's Farm",
       })
     );
   });
@@ -71,11 +150,7 @@ describe('Transferred Case Controller tests', () => {
     };
     (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
-        return {
-          h1: 'Your case has been transferred',
-          noAccessBodyEcm: 'ECM body',
-          noAccessBodyCrossCountry: 'Cross country body',
-        };
+        return transferredCaseTranslations;
       }
       return key;
     });
@@ -99,11 +174,7 @@ describe('Transferred Case Controller tests', () => {
     request.query = { caseId: '1234' };
     (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
-        return {
-          h1: 'Your case has been transferred',
-          noAccessBodyEcm: 'ECM body',
-          noAccessBodyCrossCountry: 'Cross country body',
-        };
+        return transferredCaseTranslations;
       }
       return key;
     });
@@ -138,11 +209,7 @@ describe('Transferred Case Controller tests', () => {
     request.query = { caseId: '1234' };
     (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
-        return {
-          h1: 'Your case has been transferred',
-          noAccessBodyEcm: 'ECM body',
-          noAccessBodyCrossCountry: 'Cross country body',
-        };
+        return transferredCaseTranslations;
       }
       return key;
     });
@@ -180,11 +247,7 @@ describe('Transferred Case Controller tests', () => {
     request.query = { caseId: '1234' };
     (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
-        return {
-          h1: 'Your case has been transferred',
-          noAccessBodyEcm: 'ECM body',
-          noAccessBodyCrossCountry: 'Cross country body',
-        };
+        return transferredCaseTranslations;
       }
       return key;
     });
@@ -216,11 +279,7 @@ describe('Transferred Case Controller tests', () => {
     request.query = { caseId: '1234' };
     (request.t as any).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
       if (options?.returnObjects) {
-        return {
-          h1: 'Your case has been transferred',
-          noAccessBodyEcm: 'ECM body',
-          noAccessBodyCrossCountry: 'Cross country body',
-        };
+        return transferredCaseTranslations;
       }
       return key;
     });

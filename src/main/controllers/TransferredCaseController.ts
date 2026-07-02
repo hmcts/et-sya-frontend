@@ -6,7 +6,11 @@ import { TranslationKeys } from '../definitions/constants';
 import { getLogger } from '../logger';
 import { getCaseApi, isCaseNotFoundError } from '../services/CaseService';
 
-import { createFallbackTransferInfo } from './helpers/CaseTransferHelper';
+import {
+  applyCaseTransferInfoToSession,
+  buildTransferredCasePageHeading,
+  createFallbackTransferInfo,
+} from './helpers/CaseTransferHelper';
 
 const logger = getLogger('TransferredCaseController');
 
@@ -24,6 +28,7 @@ const renderTransferredCasePage = (req: AppRequest, res: Response, transferInfo:
     ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
     ...translations,
+    pageHeading: buildTransferredCasePageHeading(translations, transferInfo),
     caseNumber: transferInfo.originalEthosCaseReference ?? '',
     replacementCaseNumber: transferInfo.newEthosCaseReference ?? '',
     destinationOffice: transferInfo.destinationOffice ?? '',
@@ -42,7 +47,7 @@ export default class TransferredCaseController {
       try {
         transferInfo = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
         logger.info(`Fetched transfer info for case ID ${caseId}`);
-        req.session.caseTransferInfo = transferInfo;
+        transferInfo = applyCaseTransferInfoToSession(req, transferInfo, caseId);
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         if (isCaseNotFoundError(error)) {
@@ -52,18 +57,18 @@ export default class TransferredCaseController {
         }
         if (caseId) {
           logger.info(`Falling back to default transfer info for case ID ${caseId}`);
-          transferInfo = createFallbackTransferInfo(caseId);
-          req.session.caseTransferInfo = transferInfo;
+          transferInfo = applyCaseTransferInfoToSession(req, createFallbackTransferInfo(req, caseId), caseId);
         } else {
           return res.redirect('/not-found');
         }
       }
+    } else if (caseId && transferInfo) {
+      transferInfo = applyCaseTransferInfoToSession(req, transferInfo, caseId);
     }
 
     if (!transferInfo?.transferred) {
       if (caseId) {
-        transferInfo = createFallbackTransferInfo(caseId);
-        req.session.caseTransferInfo = transferInfo;
+        transferInfo = applyCaseTransferInfoToSession(req, createFallbackTransferInfo(req, caseId), caseId);
       } else {
         return res.redirect('/not-found');
       }

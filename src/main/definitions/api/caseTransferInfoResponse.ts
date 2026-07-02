@@ -11,4 +11,7 @@ export interface CaseTransferInfoResponse {
   destinationOffice?: string;
   reasonForCT?: string;
   transferComplete: boolean;
+  claimantFirstName?: string;
+  claimantLastName?: string;
+  respondentName?: string;
 }

@@ -165,7 +165,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
         req,
         res,
         caseId,
-        createFallbackTransferInfo(caseId)
+        createFallbackTransferInfo(req, caseId)
       );
       if (redirected) {
         return;

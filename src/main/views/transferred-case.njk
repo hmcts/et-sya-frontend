@@ -3,7 +3,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ h1 }}</h1>
+      <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
       {% if caseNumber %}
         <p class="govuk-body-l">{{ caseNumberLabel }} {{ caseNumber }}</p>
@@ -11,7 +11,7 @@
       {% endif %}
 
       <h2 class="govuk-heading-l">{{ noAccessHeader }}</h2>
-      <p class="govuk-body">{{ noAccessBody }}</p>
+      <p class="govuk-body">{{ noAccessBody | safe }}</p>
 
       {% if showNewCaseNumber %}
         <p class="govuk-body">{{ newCaseNumberBody }} <strong>{{ replacementCaseNumber }}</strong>.</p>
@@ -24,7 +24,7 @@
       <p class="govuk-body">{{ whatThisMeansPointTwo }}</p>
 
       <h2 class="govuk-heading-m govuk-!-margin-top-8">{{ whatHappensNextHeader }}</h2>
-      <p class="govuk-body">{{ whatHappensNextPointOne }}</p>
+      <p class="govuk-body">{{ whatHappensNextPointOne | safe }}</p>
       {% if showNewCaseNumber %}
         <p class="govuk-body">{{ whatHappensNextPointTwo }} <strong>{{ replacementCaseNumber }}</strong>.</p>
       {% else %}

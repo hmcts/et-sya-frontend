@@ -26,11 +26,33 @@ describe('CaseTransferHelper', () => {
 
   describe('createFallbackTransferInfo', () => {
     it('should create ECM fallback transfer info', () => {
-      expect(createFallbackTransferInfo('20548')).toEqual({
+      const req = mockRequest({});
+      expect(createFallbackTransferInfo(req, '20548')).toEqual({
         transferred: true,
         transferType: 'ECM',
         originalCaseId: '20548',
         transferComplete: false,
+      });
+    });
+
+    it('should include claimant and respondent names from the matching session case', () => {
+      const req = mockRequest({
+        userCase: {
+          id: '20548',
+          firstName: 'Peter',
+          lastName: 'Rabbit',
+          respondents: [{ respondentName: "McGregor's Farm" }],
+        },
+      });
+
+      expect(createFallbackTransferInfo(req, '20548')).toEqual({
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '20548',
+        transferComplete: false,
+        claimantFirstName: 'Peter',
+        claimantLastName: 'Rabbit',
+        respondentName: "McGregor's Farm",
       });
     });
   });
@@ -68,14 +90,28 @@ describe('CaseTransferHelper', () => {
           transferComplete: true,
         },
       });
-      const req = mockRequest({});
+      const req = mockRequest({
+        userCase: {
+          id: '20548',
+          firstName: 'Peter',
+          lastName: 'Rabbit',
+          respondents: [{ respondentName: "McGregor's Farm" }],
+        },
+      });
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
       const res = mockResponse();
 
       const redirected = await handleTransferredCaseRedirect(req, res, '20548');
 
       expect(redirected).toBe(true);
-      expect(req.session.caseTransferInfo?.originalEthosCaseReference).toBe('60000001/2022');
+      expect(req.session.caseTransferInfo).toEqual(
+        expect.objectContaining({
+          originalEthosCaseReference: '60000001/2022',
+          claimantFirstName: 'Peter',
+          claimantLastName: 'Rabbit',
+          respondentName: "McGregor's Farm",
+        })
+      );
       expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
@@ -87,7 +123,14 @@ describe('CaseTransferHelper', () => {
             'Error getting case transfer info: Request failed with status code 404, {"detail":"No static resource cases/20548/transfer-info."}'
           )
         );
-      const req = mockRequest({});
+      const req = mockRequest({
+        userCase: {
+          id: '20548',
+          firstName: 'Peter',
+          lastName: 'Rabbit',
+          respondents: [{ respondentName: "McGregor's Farm" }],
+        },
+      });
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
       const res = mockResponse();
       const originalError = new Error(
@@ -97,7 +140,13 @@ describe('CaseTransferHelper', () => {
       const redirected = await handleTransferredCaseRedirect(req, res, '20548', originalError);
 
       expect(redirected).toBe(true);
-      expect(req.session.caseTransferInfo).toEqual(createFallbackTransferInfo('20548'));
+      expect(req.session.caseTransferInfo).toEqual(
+        expect.objectContaining({
+          claimantFirstName: 'Peter',
+          claimantLastName: 'Rabbit',
+          respondentName: "McGregor's Farm",
+        })
+      );
       expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
@@ -115,7 +164,7 @@ describe('CaseTransferHelper', () => {
       const redirected = await handleTransferredCaseRedirect(req, res, '20548', originalError);
 
       expect(redirected).toBe(true);
-      expect(req.session.caseTransferInfo).toEqual(createFallbackTransferInfo('20548'));
+      expect(req.session.caseTransferInfo).toEqual(createFallbackTransferInfo(req, '20548'));
       expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
@@ -169,7 +218,7 @@ describe('CaseTransferHelper', () => {
         req,
         res,
         '20548',
-        createFallbackTransferInfo('20548')
+        createFallbackTransferInfo(req, '20548')
       );
 
       expect(redirected).toBe(false);
@@ -187,7 +236,7 @@ describe('CaseTransferHelper', () => {
         req,
         res,
         '20548',
-        createFallbackTransferInfo('20548')
+        createFallbackTransferInfo(req, '20548')
       );
       jest.advanceTimersByTime(10000);
 
