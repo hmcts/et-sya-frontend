@@ -94,7 +94,8 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
       et1BaseUrl + LegacyUrls.ET1_APPLY,
       et1BaseUrl + LegacyUrls.ET1_PATH,
       et1BaseUrl + LegacyUrls.ET1_SIGN_IN,
-      LegacyUrls.ET1 // full URL with /en/ prefix
+      et1BaseUrl + '/en' + LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH,
+      et1BaseUrl + '/cy' + LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH
     );
   }
   validUrls.push(LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH, LegacyUrls.ET1_SIGN_IN);
