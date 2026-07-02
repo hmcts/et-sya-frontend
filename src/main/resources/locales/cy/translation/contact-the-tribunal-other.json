@@ -2,6 +2,8 @@
   "title": "Cysylltu â’r tribiwnlys",
   "applicationType": "Cysylltu â’r tribiwnlys",
   "applicationTitle": "Cysylltu â’r tribiwnlys",
+  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
   "content": [
     { "type": "paragraph", "text": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i’ch achos." },
     { "type": "bold-paragraph", "text": "Peidiwch â defnyddio'r ffurflen hon i:" },
@@ -10,6 +12,17 @@
       "items": [
         "geisio cyngor cyfreithiol gan y tribiwnlys. Mae’r tribiwnlys yn gorff barnwrol annibynnol ac ni all roi cyngor cyfreithiol i chi",
         "dweud wrthym am gynigion neu drafodaethau setlo, sy’n breifat ac yn gyfrinachol i’r partïon"
+      ]
+    }
+  ],
+  "contentRep": [
+    { "type": "paragraph", "text": "[W]Tell or ask the tribunal about something relevant to the claimant’s case." },
+    { "type": "bold-paragraph", "text": "[W]Do not use this form to:" },
+    {
+      "type": "list",
+      "items": [
+        "[W]seek legal advice from the tribunal. The tribunal is an independent judicial body and cannot give legal advice",
+        "[W]tell us about settlement offers or discussions, which are private and confidential to the parties"
       ]
     }
   ]

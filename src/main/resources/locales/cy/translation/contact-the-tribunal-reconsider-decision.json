@@ -2,6 +2,8 @@
   "title": "Ystyried penderfyniad o'r newydd",
   "applicationType": "Ystyried penderfyniad o'r newydd",
   "applicationTitle": "Gwneud cais i benderfyniad gael ei ystyried o’r newydd",
+  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",
@@ -24,6 +26,31 @@
         "y dyddiad y cyhoeddodd y tribiwnlys y penderfyniad",
         "pam eich bod eisiau i’r penderfyniad gael ei ystyried o’r newydd",
         "unrhyw wybodaeth ychwanegol berthnasol"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "[W]Use this form to have a judgment or order made by a legal officer considered afresh by an Employment Judge."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]Considered afresh means that if the claimant disagrees with a judgment or order made by a legal officer in their case, they can ask an Employment Judge to look at that decision again."
+    },
+    {
+      "type": "paragraph",
+      "text": "[W]The judge will take the decision afresh on the basis of the same information as was before the legal officer, unless either side chooses to supply additional information."
+    },
+
+    { "type": "bold-paragraph", "text": "[W]Details to include in your application:" },
+    {
+      "type": "list",
+      "items": [
+        "[W]the decision the claimant wants considered afresh",
+        "[W]the date the tribunal issued the decision",
+        "[W]why the claimant wants the decision considered afresh",
+        "[W]any relevant additional information"
       ]
     }
   ]
