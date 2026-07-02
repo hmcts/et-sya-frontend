@@ -3,7 +3,7 @@
   "header": "[w]Case overview - ",
   "caseNumberLabel": "[w]Previous case number",
   "noAccessHeader": "[w]You cannot access this case online",
-  "noAccessBodyEcm": "[w]This case is now being managed <strong>offline</strong> and is not available through this service.",
+  "noAccessBodyEcm": "[w]This case is now being <strong>managed offline</strong> and is not available through this service.",
   "noAccessBodyCrossCountry": "[w]This case has been transferred and is not available through this service.",
   "newCaseNumberBody": "[w]Your new case number is",
   "transferPendingBody": "[w]Your case is being transferred. Your new case number will be available here once the transfer is complete. Please check back later.",
