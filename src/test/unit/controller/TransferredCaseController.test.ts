@@ -25,7 +25,7 @@ const transferredCaseTranslations = {
 };
 
 const mockTransferredCaseTranslations = (request: AppRequest): void => {
-  jest.mocked(request.t).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
+  (request.t as unknown as jest.Mock).mockImplementation((key: string, options?: { returnObjects?: boolean }) => {
     if (options?.returnObjects) {
       return transferredCaseTranslations;
     }
