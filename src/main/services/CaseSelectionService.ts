@@ -5,12 +5,12 @@ import {
   translateOverallStatus,
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
-import { clearCaseTransferInfoIfStale, handleCaseAccessFailure } from '../controllers/helpers/CaseTransferHelper';
+import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../controllers/helpers/CaseTransferHelper';
 import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { PageUrls, languages } from '../definitions/constants';
+import { ErrorPages, PageUrls, languages } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
@@ -154,13 +154,10 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error(errorMessage);
-    if (await handleCaseAccessFailure(req, res, caseId)) {
+    if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
       return;
     }
-    const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-      ? PageUrls.HOME + languages.WELSH_URL_PARAMETER
-      : PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;
-    return res.redirect(redirectUrl);
+    return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
   }
 };
 

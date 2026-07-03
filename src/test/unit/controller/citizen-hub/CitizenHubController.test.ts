@@ -6,7 +6,7 @@ import CitizenHubController from '../../../../main/controllers/citizen-hub/Citiz
 import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { CaseTransferInfoResponse } from '../../../../main/definitions/api/caseTransferInfoResponse';
-import { Applicant, PageUrls } from '../../../../main/definitions/constants';
+import { Applicant, ErrorPages, PageUrls } from '../../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../../main/services/CaseService';
 import * as CaseService from '../../../../main/services/CaseService';
@@ -50,12 +50,32 @@ describe('Citizen Hub Controller', () => {
     req.params.caseId = '1234';
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith('/not-found');
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should redirect to not found without checking transfer info when case api fails with a server error', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValueOnce(new Error('Error getting user case: Request failed with status code 500'));
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.params.caseId = '1234';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 
   it('should redirect to transferred page with case id when transfer info is available', async () => {
     const controller = new CitizenHubController();
-    caseApi.getUserCase = jest.fn().mockRejectedValueOnce(new Error('Error getting user case: status code 500'));
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValueOnce(
+        new Error('Error getting user case: Request failed with status code 404, CaseNotFoundException')
+      );
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValueOnce({
       data: {
         transferred: true,
@@ -175,7 +195,7 @@ describe('Citizen Hub Controller', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith('/not-found');
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 
   it('should assign mock user when in test', async () => {

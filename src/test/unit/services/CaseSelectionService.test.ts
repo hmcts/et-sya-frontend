@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, languages } from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import {
   getUserApplications,
@@ -313,7 +313,7 @@ describe('Case Selection Service using Case Api', () => {
     expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
   });
 
-  test('Should redirect home when getUserCase fails and transfer-info says not transferred', async () => {
+  test('Should redirect to not found when getUserCase fails and transfer-info says not transferred', async () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
@@ -334,10 +334,10 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect home when getUserCase fails and transfer-info is unavailable', async () => {
+  test('Should redirect to not found when getUserCase fails and transfer-info is unavailable', async () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
@@ -352,7 +352,31 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('Should redirect to not found without checking transfer info when getUserCase fails with a server error', async () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest
+      .fn()
+      .mockRejectedValue(new Error('Error getting user case: Request failed with status code 500'));
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '12234',
+        transferComplete: false,
+      },
+    });
+
+    await selectUserCase(req, res, '12234');
+
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should select User Case and redirect to Claim Steps in Welsh language if current language is Welsh', async () => {
@@ -468,7 +492,7 @@ describe('Case Selection Service using Case Api', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER);
   });
 
-  test('Should redirect to home page in English language on error if current language is English', async () => {
+  test('Should redirect to not found in English language on error if current language is English', async () => {
     const response = {
       data: { invalidData: 'rytrfgb' },
       status: 200,
@@ -483,10 +507,10 @@ describe('Case Selection Service using Case Api', () => {
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to home page in Welsh on error if current language is Welsh', async () => {
+  test('Should redirect to not found in Welsh on error if current language is Welsh', async () => {
     const response = {
       data: { invalidData: 'rytrfgb' },
       status: 200,
@@ -501,7 +525,7 @@ describe('Case Selection Service using Case Api', () => {
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.WELSH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER);
   });
 });
 

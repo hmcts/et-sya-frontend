@@ -55,6 +55,7 @@ describe('Transferred Case Controller tests', () => {
     controller.get(request, response);
     await new Promise(nextTick);
 
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.TRANSFERRED_CASE,
       expect.objectContaining({
@@ -144,6 +145,15 @@ describe('Transferred Case Controller tests', () => {
       transferComplete: false,
     };
     mockTransferredCaseTranslations(request);
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1234',
+        originalEthosCaseReference: '60000001/2022',
+        transferComplete: false,
+      } as CaseTransferInfoResponse,
+    });
 
     const unboundGet = controller.get;
     await unboundGet(request, response);
@@ -153,6 +163,50 @@ describe('Transferred Case Controller tests', () => {
       expect.objectContaining({
         caseNumber: '60000001/2022',
         noAccessBody: 'ECM body',
+      })
+    );
+  });
+
+  it('should refetch transfer info when session has a pending transfer that has since completed', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: '1234' };
+    request.session.caseTransferInfo = {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: '1234',
+      originalEthosCaseReference: '60000001/2022',
+      transferComplete: false,
+    };
+    mockTransferredCaseTranslations(request);
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1234',
+        originalEthosCaseReference: '60000001/2022',
+        newEthosCaseReference: '18850001/2020',
+        transferComplete: true,
+      } as CaseTransferInfoResponse,
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(caseApi.getCaseTransferInfo).toHaveBeenCalledWith('1234');
+    expect(request.session.caseTransferInfo).toEqual(
+      expect.objectContaining({
+        transferComplete: true,
+        newEthosCaseReference: '18850001/2020',
+      })
+    );
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        showNewCaseNumber: true,
+        replacementCaseNumber: '18850001/2020',
+        transferComplete: true,
       })
     );
   });
@@ -231,6 +285,28 @@ describe('Transferred Case Controller tests', () => {
     expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 
+  it('should redirect to not found when transfer info originalCaseId does not match requested case', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: '1234' };
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '5678',
+        originalEthosCaseReference: '60000001/2022',
+        transferComplete: true,
+      } as CaseTransferInfoResponse,
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+    expect(response.render).not.toHaveBeenCalled();
+  });
+
   it('should redirect to not found when case not found error is returned from transfer info api', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
@@ -244,5 +320,91 @@ describe('Transferred Case Controller tests', () => {
     await new Promise(nextTick);
 
     expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+  });
+
+  it('should redirect to not found when query case id is an array even if session has transfer info', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: ['1234', '5678'] };
+    request.session.caseTransferInfo = {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: '1234',
+      originalEthosCaseReference: '60000001/2022',
+      transferComplete: true,
+    };
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+  });
+
+  it('should use ECM copy when transfer type is missing from transfer info', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: '1234' };
+    mockTransferredCaseTranslations(request);
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        originalCaseId: '1234',
+        originalEthosCaseReference: '60000001/2022',
+        transferComplete: false,
+      } as CaseTransferInfoResponse,
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        noAccessBody: 'ECM body',
+      })
+    );
+  });
+
+  it('should clear stale session transfer info when query case id differs', async () => {
+    const controller = new TransferredCaseController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.query = { caseId: '5678' };
+    request.session.caseTransferInfo = {
+      transferred: true,
+      transferType: 'ECM',
+      originalCaseId: '1234',
+      originalEthosCaseReference: '60000001/2022',
+      transferComplete: true,
+    };
+    mockTransferredCaseTranslations(request);
+    caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+      data: {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '5678',
+        originalEthosCaseReference: '70000001/2022',
+        transferComplete: true,
+      } as CaseTransferInfoResponse,
+    });
+
+    controller.get(request, response);
+    await new Promise(nextTick);
+
+    expect(request.session.caseTransferInfo).toEqual(
+      expect.objectContaining({
+        originalCaseId: '5678',
+        originalEthosCaseReference: '70000001/2022',
+      })
+    );
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        caseNumber: '70000001/2022',
+      })
+    );
   });
 });

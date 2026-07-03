@@ -1,10 +1,10 @@
 import { Response } from 'express';
 
-import { CaseTransferInfoResponse } from '../../definitions/api/caseTransferInfoResponse';
+import { CaseTransferInfoResponse, CaseTransferType } from '../../definitions/api/caseTransferInfoResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls } from '../../definitions/constants';
 import { getLogger } from '../../logger';
-import { getCaseApi } from '../../services/CaseService';
+import { getCaseApi, isCaseNotFoundError } from '../../services/CaseService';
 
 import { getLanguageParam } from './RouterHelpers';
 
@@ -20,6 +20,35 @@ export const clearCaseTransferInfoIfStale = (req: AppRequest, caseId: string): v
   if (req.session.caseTransferInfo && String(req.session.caseTransferInfo.originalCaseId) !== String(caseId)) {
     req.session.caseTransferInfo = undefined;
   }
+};
+
+export const isTransferInfoForCase = (caseId: string, transferInfo?: CaseTransferInfoResponse): boolean => {
+  return !!transferInfo?.transferred && String(transferInfo.originalCaseId) === String(caseId);
+};
+
+export const getRequestedCaseId = (req: AppRequest): string | undefined => {
+  const { caseId } = req.query;
+
+  if (Array.isArray(caseId)) {
+    return undefined;
+  }
+
+  if (typeof caseId === 'string' && caseId.trim()) {
+    return caseId;
+  }
+
+  return req.session.caseTransferInfo?.originalCaseId;
+};
+
+export const getTransferredCaseNoAccessBody = (
+  translations: Record<string, string>,
+  transferType?: CaseTransferType
+): string => {
+  if (transferType === 'CROSS_COUNTRY') {
+    return translations.noAccessBodyCrossCountry;
+  }
+
+  return translations.noAccessBodyEcm;
 };
 
 export const enrichTransferInfoWithCaseParties = (
@@ -107,25 +136,26 @@ export const saveSessionAndRedirectToTransferredCase = async (
 export const handleTransferredCaseRedirect = async (
   req: AppRequest,
   res: Response,
-  caseId: string
+  caseId: string,
+  accessError?: unknown
 ): Promise<boolean> => {
+  if (accessError !== undefined && !isCaseNotFoundError(accessError)) {
+    return false;
+  }
+
   try {
     const transferInfoData = (await getCaseApi(req.session.user?.accessToken).getCaseTransferInfo(caseId)).data;
 
-    if (transferInfoData?.transferred) {
+    if (isTransferInfoForCase(caseId, transferInfoData)) {
       logger.info(`Case ID ${caseId} has been transferred. Redirecting to transferred case page.`);
       return saveSessionAndRedirectToTransferredCase(req, res, caseId, transferInfoData);
     }
 
-    logger.info(`Case ID ${caseId} is not transferred according to transfer-info response.`);
+    logger.info(`Case ID ${caseId} is not transferred or transfer info does not match requested case.`);
   } catch (transferError) {
     const transferErrorMessage = transferError instanceof Error ? transferError.message : String(transferError);
     logger.warn(`Case ID ${caseId} transfer check failed: ${transferErrorMessage}`);
   }
 
   return false;
-};
-
-export const handleCaseAccessFailure = async (req: AppRequest, res: Response, caseId: string): Promise<boolean> => {
-  return handleTransferredCaseRedirect(req, res, caseId);
 };

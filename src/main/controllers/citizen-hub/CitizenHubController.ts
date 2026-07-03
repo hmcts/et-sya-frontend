@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -22,7 +22,7 @@ import {
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
-import { clearCaseTransferInfoIfStale, handleCaseAccessFailure } from '../helpers/CaseTransferHelper';
+import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -80,10 +80,10 @@ export default class CitizenHubController {
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         logger.error(errorMessage);
-        if (await handleCaseAccessFailure(req, res, req.params.caseId)) {
+        if (await handleTransferredCaseRedirect(req, res, req.params.caseId, error)) {
           return;
         }
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
       }
     }
 
