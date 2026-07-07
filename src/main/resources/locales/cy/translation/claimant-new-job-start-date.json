@@ -1,14 +1,14 @@
 {
   "title": "[W]Start of new job",
   "h1": "[W]Start of new job",
-  "legend": "[W]When did the claimant start their new job? (optional)",
-  "p1": "[W]Tell us about the claimant's new job. If you do not know the exact date then enter the claimant's best estimate.",
+  "legend": "Pryd ddechreuodd yr hawlydd eu swydd newydd? (dewisol)",
+  "p1": "Dywedwch wrthym am swydd newydd yr hawlydd. Os nad ydych yn gwybod yr union ddyddiad, yna nodwch amcangyfrif gorau yr hawlydd.",
   "hint": "[W]For example, 27 3 2007",
   "errors": {
     "newJobStartDate": {
-      "dayRequired": "[W]Enter a day for when the claimant's new job starts. For example, 23",
-      "monthRequired": "[W]Enter a month for when the claimant's new job starts. For example, 08",
-      "yearRequired": "[W]Enter a year for when the claimant's new job starts. For example, 2022",
+      "dayRequired": "Nodwch ddiwrnod ar gyfer dyddiad dechrau swydd newydd yr hawlydd. Er enghraifft, 23",
+      "monthRequired": "Nodwch fis ar gyfer dyddiad dechrau swydd newydd yr hawlydd. Er enghraifft, 08",
+      "yearRequired": "Nodwch flwyddyn ar gyfer dyddiad dechrau swydd newydd yr hawlydd. Er enghraifft, 2022",
       "invalidDateInPast": "[W]Date entered must not be in the past",
       "invalidDateMoreThanTenYearsInFuture": "[W]Enter a date between now and 10 years in the future",
       "dayNotANumber": "[W]Day must only contain numbers. For example, 23",

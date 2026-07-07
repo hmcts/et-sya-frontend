@@ -1,7 +1,7 @@
 {
-  "title": "[W]How many weeks or months in the claimant's notice period?",
-  "h1Weeks": "[W]How many weeks in the claimant's notice period? (optional)",
-  "h1Months": "[W]How many months in the claimant's notice period? (optional)",
+  "title": "Sawl wythnos neu sawl mis yw cyfnod rhybudd yr hawlydd?",
+  "h1Weeks": "Sawl wythnos yw cyfnod rhybudd yr hawlydd? (dewisol)",
+  "h1Months": "Sawl mis yw cyfnod rhybudd yr hawlydd? (dewisol)",
   "hint": "[W]For example, 4",
   "errors": {
     "noticePeriodLength": {

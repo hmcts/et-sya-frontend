@@ -1,22 +1,22 @@
 {
-  "title": "[W]Place of work",
-  "h1": "[W]What address did the claimant work at?",
+  "title": "Lleoliad gwaith",
+  "h1": "Ym mha gyfeiriad wnaeth yr hawlydd weithio?",
   "errors": {
     "workAddress1": {
-      "required": "[W]Enter the first line of the address the claimant worked at - up to 100 characters",
-      "invalid": "[W]Enter a valid first line of the address the claimant worked at - up to 100 characters"
+      "required": "Nodwch linell gyntaf y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 100 o nodau",
+      "invalid": "Nodwch linell gyntaf ddilys y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 100 o nodau"
     },
     "workAddress2": {
-      "required": "[W]Enter the second line of the address the claimant worked at - up to 50 characters",
-      "invalid": "[W]Enter a valid second line of the address the claimant worked at - up to 50 characters"
+      "required": "Nodwch ail linell cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau",
+      "invalid": "Nodwch ail linell ddilys y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
     },
     "workAddressTown": {
-      "required": "[W]Enter a town or city for the address the claimant worked at - up to 50 characters",
-      "invalid": "[W]Enter a valid town or city for the address the claimant worked at - up to 50 characters"
+      "required": "Nodwch dref neu ddinas ar gyfer y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau",
+      "invalid": "Nodwch dref neu ddinas ddilys ar gyfer y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
     },
     "workAddressCountry": {
-      "required": "[W]Enter a country for the address the claimant worked at - up to 50 characters",
-      "invalid": "[W]Enter a valid country for the address the claimant worked at - up to 50 characters"
+      "required": "Nodwch wlad i’r cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau",
+      "invalid": "Nodwch wlad ddilys ar gyfer cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
     },
     "workAddressPostcode": {
       "required": "[W]Enter a postcode. For example, SW1 1AA",

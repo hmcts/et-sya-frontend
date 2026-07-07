@@ -1,8 +1,8 @@
 {
   "title": "[W]Employee benefits",
   "h1": "[W]Employee benefits",
-  "legend": "[W]Does - or did - the claimant receive any employee benefits? (optional)",
-  "label": "[W]Does - or did - the claimant receive any employee benefits?",
+  "legend": "A yw - neu a oedd - yr hawlydd yn cael unrhyw fuddion fel cyflogai? (dewisol)",
+  "label": "A yw - neu a oedd - yr hawlydd yn cael unrhyw fuddion fel cyflogai?",
   "p1": "[W]For example, child care, company car, housing and health insurance.",
   "hint": "[W]Tell us about any benefits",
   "errors": {

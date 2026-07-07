@@ -1,7 +1,7 @@
 {
   "title": "[W]Respondent address",
   "pageHeader": "[W]What is the address of ",
-  "pageText": "[W]You should be able to find the address on the claimant's playslips, contract or other official documents.",
+  "pageText": "Dylai’r cyfeiriad fod ar slipiau cyflog, contract neu ddogfennau swyddogol eraill yr hawlydd.",
   "insetText": "[W]This should be the same respondent address given to Acas.",
   "enterPostcode": "[W]Enter postcode"
 }

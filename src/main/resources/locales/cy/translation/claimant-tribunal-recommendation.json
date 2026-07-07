@@ -1,10 +1,10 @@
 {
   "title": "[W]Tribunal recommendation",
   "h1": "[W]Tribunal recommendation (optional)",
-  "label": "[W]What tribunal recommendation would the claimant like to make?",
+  "label": "Pa argymhelliad tribiwnlys hoffai'r hawlydd wneud?",
   "hint": "[W]Tell us what action the claimant would like the tribunal to recommend your respondent(s) take to reduce the impact of any discrimination which has occurred.",
   "description": [
-    "[W]Tell us what action the claimant would like the tribunal to recommend your respondent(s) take to reduce the impact of any discrimination which has occurred."
+    "Dywedwch wrthym pa gamau gweithredu hoffai'r hawlydd i’r tribiwnlys eu hargymell y dylai eich atebydd/atebwyr eu cymryd i leihau effaith y gwahaniaethu sydd wedi digwydd."
   ],
   "detailsSummaryRecom": "[W]What is a tribunal recommendation?",
   "detailsTextRecom": "[W]If the claimant's employer is found to have discriminated against them, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on the claimant"

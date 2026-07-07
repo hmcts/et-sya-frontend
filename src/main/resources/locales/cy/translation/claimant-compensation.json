@@ -1,10 +1,12 @@
 {
   "title": "[W]Compensation",
   "h1": "[W]Compensation (optional)",
-  "label": "[W]What compensation is the claimant seeking?",
-  "hint": "[W]Try to set out all compensation the claimant is seeking and provide a total if possible.",
-  "amountLabel": "[W]Enter the total compensation amount you are requesting",
-  "description": ["[W]Try to set out all compensation the claimant is seeking and provide a total if possible."],
+  "label": "Faint o iawndal y mae’r hawlydd yn gofyn amdano?",
+  "hint": "Ceisiwch nodi manylion yr holl iawndal y mae’r hawlydd yn gofyn amdano, a nodwch gyfanswm os yn bosib.",
+  "amountLabel": "Nodwch gyfanswm yr iawndal rydych yn ei hawlio",
+  "description": [
+    "Ceisiwch nodi manylion yr holl iawndal y mae’r hawlydd yn gofyn amdano, a nodwch gyfanswm os yn bosib."
+  ],
   "detailsSummaryComp": "[W]Compensation - what can a tribunal award?",
   "detailsTextComp": {
     "p1": "[W]If a tribunal decides the claimant has been unfairly dismissed, they'll normally receive compensation which is made up of:",

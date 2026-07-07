@@ -1,9 +1,9 @@
 {
   "title": "[W]Respondent name",
   "h1": "[W]What is the name of the respondent you're making the claim against?",
-  "p1": "[W]Enter the name of the organisation. If there's no organisation – for example, because the claimant was employed by an individual acting as a sole trader – enter the individual's name.",
-  "p2": "[W]This should be the same as the name of the respondent(s) on the Acas certificate. If they are not the same this claim might be rejected.",
-  "insetText": "[W]You'll be able to add more respondents later if you need to.",
+  "p1": "Nodwch enw’r sefydliad. Os nad yw’n sefydliad - er enghraifft, oherwydd roedd yr hawlydd yn cael ei gyflogi gan unigolyn a oedd yn gweithredu fel unig fasnachwr - nodwch enw’r unigolyn.",
+  "p2": "Dylai hyn fod yr un fath ag enw'r atebydd/atebwyr ar y dystysgrif ACAS. Os nad ydynt yr un fath efallai y bydd y cais hwn yn cael ei wrthod.",
+  "insetText": "Byddwch yn gallu ychwanegu rhagor o atebwyr yn hwyrach ymlaen os ydych angen.",
   "label": "[W]Enter name of respondent",
   "errors": {
     "respondentName": {

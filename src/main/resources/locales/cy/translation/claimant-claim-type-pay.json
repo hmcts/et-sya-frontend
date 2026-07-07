@@ -13,7 +13,7 @@
   "otherPayments": "[W]Other payments",
   "errors": {
     "claimTypePay": {
-      "required": "[W]Tell us what type of pay claim the claimant is making"
+      "required": "Dywedwch wrthym pa fath o hawliad yn ymwneud â thâl mae'r hawlydd yn ei wneud"
     }
   }
 }

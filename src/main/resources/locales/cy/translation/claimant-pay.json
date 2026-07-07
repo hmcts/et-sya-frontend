@@ -1,27 +1,27 @@
 {
-  "title": "[W]Claimant's pay",
-  "h1": "[W]Claimant's pay (optional)",
-  "label": "[W]Claimant's pay",
-  "p1": "[W]For some types of claims, the tribunal will need the average of the claimant's last 12 weeks' pay. Provide your best estimate for the average weekly pay. You can correct it later if needed. Providing the pay information will help the tribunal process the claim.",
-  "p2": "[W]You can get information from payslips. Include any overtime payments, commission and bonuses.",
+  "title": "Cyflog yr hawlydd",
+  "h1": "Cyflog yr hawlydd (dewisol)",
+  "label": "Cyflog yr hawlydd",
+  "p1": "Ar gyfer rhai mathau o hawliadau, bydd y tribiwnlys angen gwybod cyflog yr hawlydd ar gyfartaledd dros y 12 wythnos diwethaf. Darparwch eich amcangyfrif gorau o’u tâl wythnosol ar gyfartaledd. Byddwch yn gallu cywiro hwn nes ymlaen os oes angen. Bydd darparu’r wybodaeth am y cyflog yn helpu’r tribiwnlys i symud yr hawliad yn ei flaen.",
+  "p2": "Gallwch gael gwybodaeth o’ch slipiau cyflog. Cofiwch gynnwys unrhyw daliadau goramser, taliadau ar gomisiwn a bonysau.",
   "payBeforeTax": "[W]Enter pay BEFORE tax and National Insurance",
   "payAfterTax": "[W]Enter pay AFTER tax and National Insurance",
   "weeklyMonthlyAnnual": "[W]Is this the weekly, monthly or annual pay?",
   "errors": {
     "payBeforeTax": {
-      "required": "[W]Tell us at least one amount for the claimant's pay",
+      "required": "Nodwch o leiaf un swm am dâl yr hawlydd",
       "invalidCurrency": "[W]Enter pay before tax and NI in the correct format, for example £600 or £193.54",
       "tooHighCurrency": "[W]Pay before tax and NI must be £9,999,999.99 or less"
     },
     "payAfterTax": {
-      "required": "[W]Tell us at least one amount for the claimant's pay",
+      "required": "Nodwch o leiaf un swm am dâl yr hawlydd",
       "invalidCurrency": "[W]Enter pay after tax and NI in the correct format, for example £600 or £193.54",
       "tooHighCurrency": "[W]Pay after tax and NI must be £9,999,999.99 or less"
     },
     "payInterval": {
-      "payBeforeTax": "[W]Tell us a frequency for the claimant's pay before tax and NI",
-      "payAfterTax": "[W]Tell us a frequency for the claimant's pay after tax and NI",
-      "required": "[W]Tell us the claimant's pay frequency"
+      "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer tâl yr hawlydd cyn treth ac YG.",
+      "payAfterTax": "Dywedwch wrthym pa mor aml ar gyfer tâl yr hawlydd ar ôl treth ac YG.",
+      "required": "Dywedwch wrthym pa mor aml y mae'r hawlydd yn cael eu talu"
     }
   }
 }
