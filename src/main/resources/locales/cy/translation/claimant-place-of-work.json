@@ -19,8 +19,8 @@
       "invalid": "Nodwch wlad ddilys ar gyfer cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
     },
     "workAddressPostcode": {
-      "required": "[W]Enter a postcode. For example, SW1 1AA",
-      "invalid": "[W]Enter a valid postcode"
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Rhowch cod post dilys. Er enghraifft, SW1 1AA"
     }
   }
 }

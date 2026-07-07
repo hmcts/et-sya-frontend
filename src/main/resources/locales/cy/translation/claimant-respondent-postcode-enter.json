@@ -1,7 +1,7 @@
 {
-  "title": "[W]Respondent address",
-  "pageHeader": "[W]What is the address of ",
+  "title": "Cyfeiriad yr atebydd",
+  "pageHeader": "Beth yw cyfeiriad ",
   "pageText": "Dylai’r cyfeiriad fod ar slipiau cyflog, contract neu ddogfennau swyddogol eraill yr hawlydd.",
-  "insetText": "[W]This should be the same respondent address given to Acas.",
+  "insetText": "Dylai hwn fod yr un cyfeiriad ar gyfer yr atebydd a roddwyd i Acas.",
   "enterPostcode": "[W]Enter postcode"
 }

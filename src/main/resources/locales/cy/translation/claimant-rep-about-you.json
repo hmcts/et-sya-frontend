@@ -1,20 +1,20 @@
 {
-  "title": "[W]About you",
-  "h1": "[W]About you",
+  "title": "Amdanoch chi",
+  "h1": "Amdanoch chi",
   "submitBtn": "[W]Submit",
   "aboutYouDetails": {
-    "name": "[W]Name",
+    "name": "Enw",
     "organisation": "[W]Organisation",
     "typeOfOrganisation": "[W]Type of organisation",
-    "address": "[W]Address",
-    "email": "[W]Email",
-    "phone": "[W]Phone"
+    "address": "Cyfeiriad",
+    "email": "E-bost",
+    "phone": "Ffôn"
   },
   "tellTheTribunal": {
     "heading": "[W]Tell the tribunal",
     "textBeforeLink": "[W]If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
     "contactLink": "[W]contact the tribunal",
-    "textAfterLink": "[W]."
+    "textAfterLink": "."
   },
   "errors": {
     "hiddenErrorField": {

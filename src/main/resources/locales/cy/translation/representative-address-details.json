@@ -1,10 +1,10 @@
 {
   "title": "Cyfeiriad y cynrychiolydd",
   "pageHeader": "Beth yw cyfeiriad cyswllt y cynrychiolydd?",
-  "addressLine1": "[W]Address line 1",
-  "addressLine2": "[W]Address line 2 (optional)",
-  "town": "[W]Town or city",
-  "country": "[W]Country",
+  "addressLine1": "Llinell cyfeiriad 1",
+  "addressLine2": "Llinell cyfeiriad 2 (dewisol)",
+  "town": "Tref neu ddinas",
+  "country": "Gwlad",
   "postcode": "[W]Postcode (optional)",
   "errors": {
     "repAddress1": {

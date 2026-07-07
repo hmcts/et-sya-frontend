@@ -1,14 +1,14 @@
 {
   "title": "[W]Respondent name",
-  "h1": "[W]What is the name of the respondent you're making the claim against?",
+  "h1": "Beth yw enw’r atebydd rydych yn gwneud yr hawliad yn ei erbyn?",
   "p1": "Nodwch enw’r sefydliad. Os nad yw’n sefydliad - er enghraifft, oherwydd roedd yr hawlydd yn cael ei gyflogi gan unigolyn a oedd yn gweithredu fel unig fasnachwr - nodwch enw’r unigolyn.",
   "p2": "Dylai hyn fod yr un fath ag enw'r atebydd/atebwyr ar y dystysgrif ACAS. Os nad ydynt yr un fath efallai y bydd y cais hwn yn cael ei wrthod.",
   "insetText": "Byddwch yn gallu ychwanegu rhagor o atebwyr yn hwyrach ymlaen os ydych angen.",
-  "label": "[W]Enter name of respondent",
+  "label": "Rhowch enw’r atebydd",
   "errors": {
     "respondentName": {
-      "required": "[W]Enter a respondent name between 1-100 characters",
-      "invalidLength": "[W]Enter a respondent name between 1-100 characters"
+      "required": "Rhowch enw'r atebydd - rhwng 1-100 o lythrennau",
+      "invalidLength": "Rhowch enw'r atebydd - rhwng 1-100 o lythrennau"
     }
   }
 }

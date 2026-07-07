@@ -3,22 +3,22 @@
   "h1": "Pa fath o hawliad mae'r hawlydd yn ei wneud?",
   "hint": "Gallwch ddewis bob un sy’n berthnasol i'r hawlydd. Fe ofynnir am ragor o wybodaeth yn hwyrach ymlaen yn yr hawliad. <br><br><span class=\"govuk-!-font-weight-bold\">Dewiswch bob un sy'n berthnasol</span>",
   "discrimination": {
-    "checkbox": "[W]Discrimination of any type",
+    "checkbox": "Gwahaniaethu o unrhyw fath",
     "hint": "er enghraifft, oherwydd rhyw, ethnigrwydd, anabledd neu nodwedd arall yr hawlydd"
   },
   "payRelated": {
-    "checkbox": "[W]Pay-related claim"
+    "checkbox": "Hawliad yn ymwneud â thâl"
   },
   "unfairDismissal": {
-    "checkbox": "[W]Unfair dismissal",
-    "hint": "[W]including constructive dismissal"
+    "checkbox": "Diswyddo annheg",
+    "hint": "gan gynnwys diswyddo deongliadol"
   },
   "whistleBlowing": {
-    "checkbox": "[W]Whistleblowing",
-    "hint": "[W]including dismissal or any other unfair treatment after whistleblowing"
+    "checkbox": "Chwythu’r chwiban",
+    "hint": "gan gynnwys diswyddo neu unrhyw fath arall o driniaeth annheg yn dilyn chwythu’r chwiban"
   },
   "otherTypesOfClaims": {
-    "checkbox": "[W]Other type of claim",
+    "checkbox": "Math arall o hawliad",
     "explain": "Dywedwch wrthym yn fras pa fath o hawliad y mae'r hawlydd yn ei wneud. Gallwch ddisgrifio manylion yr hawliad yn nes ymlaen."
   },
   "errors": {
@@ -27,7 +27,7 @@
     },
     "otherClaim": {
       "required": "Dywedwch wrthym yn fras pa fath o hawliad y mae'r hawlydd yn ei wneud",
-      "tooLong": "[W]Description must be 100 characters or less"
+      "tooLong": "Rhaid i’r disgrifiad fod yn 100 llythyren neu lai"
     }
   }
 }

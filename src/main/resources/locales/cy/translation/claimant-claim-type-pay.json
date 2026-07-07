@@ -2,15 +2,15 @@
   "title": "[W]Pay claim",
   "h1": "[W]Pay claim",
   "legend": "[W]What type of pay claim is the claimant making?",
-  "selectAllHint": "[W]Select all that apply.",
-  "detailsSummary": "[W]What are pay claims?",
-  "detailsText": "[W]It is against the law for an employer to withhold pay after an employee has carried out work for them. This can also include unlawful deduction of pay.",
-  "arrears": "[W]Arrears",
+  "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
+  "detailsSummary": "Beth yw hawliadau yn ymwneud â thâl?",
+  "detailsText": "Mae’n erbyn y gyfraith i gyflogwr ddal tâl yn ôl ar ôl i weithiwr wneud gwaith iddynt. Gall hyn hefyd gynnwys didynnu tâl yn anghyfreithlon.",
+  "arrears": "Ôl-daliadau",
   "arrearsHint": "[W]pay you are owed",
-  "holidayPay": "[W]Holiday pay",
-  "noticePay": "[W]Notice pay",
-  "redundancyPay": "[W]Redundancy pay",
-  "otherPayments": "[W]Other payments",
+  "holidayPay": "Tâl gwyliau",
+  "noticePay": "Tâl cyfnod rhybudd",
+  "redundancyPay": "Tâl dileu swydd",
+  "otherPayments": "Taliadau eraill",
   "errors": {
     "claimTypePay": {
       "required": "Dywedwch wrthym pa fath o hawliad yn ymwneud â thâl mae'r hawlydd yn ei wneud"

@@ -1,17 +1,17 @@
 {
-  "title": "[W]Acas certificate for the respondent",
-  "h1": "[W]Acas certificate for the respondent",
-  "legend": "[W]Do you have an Acas certificate number for ",
-  "acasCertNum": "[W]Enter an Acas early conciliation certificate number",
-  "hintText": "[W]Nearly everyone should have this number before they fill in a claim form. You can find it on your Acas certificate. Read more about the ",
-  "linkText": "[W]Acas early conciliation service (opens in new tab)",
+  "title": "Rhif tystysgrif Acas ar gyfer yr atebydd ",
+  "h1": "Rhif tystysgrif Acas ar gyfer yr atebydd ",
+  "legend": "A oes gennych rif tystysgrif Acas ar gyfer yr atebydd ",
+  "acasCertNum": "Nodwch rif tystysgrif cymodi cynnar Acas",
+  "hintText": "Dylai bod gan bron bawb y rhif hwn cyn iddynt lenwi’r ffurflen hawlio. Gallwch ddod o hyd iddo ar eich tystysgrif Acas. Darllenwch fwy am ",
+  "linkText": "wasanaeth cymodi cynnar Acas (yn agor mewn tab newydd)",
   "errors": {
     "acasCert": {
-      "required": "[W]Tell us if you have an Acas early conciliation number for the respondent"
+      "required": "Dywedwch wrthym os oes gennych  rif cymodi cynnar Acas ar gyfer yr Atebydd"
     },
     "acasCertNum": {
-      "required": "[W]Tell us if you have an Acas early conciliation number for the respondent",
-      "invalidAcasNumber": "[W]Enter Acas number in the correct format. For example R123456/12/34"
+      "required": "Dywedwch wrthym os oes gennych  rif cymodi cynnar Acas ar gyfer yr Atebydd",
+      "invalidAcasNumber": "Rhowch rif Acas mewn fformat cywir. Er enghraifft R123456/12/34"
     }
   }
 }

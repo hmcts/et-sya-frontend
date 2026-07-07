@@ -2,10 +2,10 @@
   "title": "Beth hoffai’r hawlydd ei gael allan o'r hawliad?",
   "h1": "Beth hoffai’r hawlydd ei gael allan o'r hawliad? (dewisol)",
   "legend": "Beth hoffai’r hawlydd ei gael os yw ei hawliad yn llwyddiannus?",
-  "detailsSummaryComp": "[W]Compensation - what can a tribunal award?",
+  "detailsSummaryComp": "Iawndal - beth all tribiwnlys ddyfarnu?",
   "detailsTextComp": {
     "p1": "[W]If a tribunal decides the claimant has been unfairly dismissed, they'll normally receive compensation which is made up of:",
-    "li1": "[W]a basic award - fixed sum worked out using a standard formula",
+    "li1": "dyfarniad cyffredin - swm penodol a gyfrifir gan ddefnyddio fformiwla safonol",
     "li2": "[W]a compensatory award - compensation for the actual money lost due to dismissal, or which the claimant expects to lose in future because of their dismissal",
     "p2": "[W]Compensation can be reduced for various reasons and a tribunal will tell you more about this if it applies in the specific circumstances.",
     "p3": "[W]In disciplinary or grievance cases, the claimant may be entitled to an increased award if an employer fails to follow the guidance set out in the",
@@ -14,10 +14,10 @@
     "acasLinkUrl": "https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures",
     "p5": "[W]In certain claims, such as those involving discrimination, a tribunal may compensate the claimant for 'injury to feelings' (individual hurt and distress the claimant may have suffered) in addition to compensation for financial loss."
   },
-  "detailsSummaryRecom": "[W]What is a tribunal recommendation?",
+  "detailsSummaryRecom": "Beth yw argymhelliad tribiwnlys?",
   "detailsTextRecom": "[W]If the claimant's employer is found to have discriminated against them, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on the claimant",
   "compensationOnly": {
-    "checkbox": "[W]Compensation only"
+    "checkbox": "Iawndal yn unig"
   },
   "compensationOnlyHint": "Gofynnir ichi roi amcangyfrif o gyfanswm yr iawndal",
   "tribunalRecommendation": {

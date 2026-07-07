@@ -5,8 +5,8 @@
   "pensionContributions": "[W]Enter their pension contributions - worked out weekly",
   "errors": {
     "claimantPensionWeeklyContribution": {
-      "invalidCurrency": "[W]Enter pension contributions in the correct format, for example £600 or £193.54",
-      "tooHighCurrency": "[W]Pension contributions must be £9,999,999.99 or less"
+      "invalidCurrency": "Rhowch Cyfraniadau pensiwn yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyfraniadau pensiwn fod yn £9,999,999.99 neu lai"
     }
   }
 }
