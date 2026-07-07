@@ -38,7 +38,7 @@
   },
   "acceptedFormats": {
     "label": "Fformatau derbyniol",
-    "p1": "[W]Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {
@@ -46,10 +46,10 @@
       "tooLong": "[W]Description must be 2,500 characters or less"
     },
     "claimSummaryFileName": {
-      "invalidFileFormat": "[W]The file must be a DOC, DOCX, PDF, TXT or RTF",
-      "invalidFileName": "[W]The file name must not contain special characters",
-      "invalidFileSize": "[W]The file must be smaller than 50MB",
-      "backEndError": "[W]There was an error uploading the file. Try again."
+      "invalidFileFormat": "Nid yw'r math o ffeil rydych chi'n ceisio ei uwchlwytho yn cael ei gefnogi gan ein system. Byddwch cystal a newid hon i ffeil gyffredin, e.e. Word, Excel, pdf. os gwelwch yn dda.",
+      "invalidFileName": "Mae enw’r ffeil a ddarparwyd yn annilys. Ni all enw’r ffeil fod yn fwy na 150 llythyren ac ni all gynnwys unrhyw un o’r nodau canlynol: \\/:*?\"|<>",
+      "invalidFileSize": "Mae'r ffeil rydych chi'n ceisio ei lwytho wedi mynd y tu hwnt i'r terfyn maint, ceisiwch leihau maint y ffeil.",
+      "backEndError": "Cafwyd problem wrth geisio llwytho eich ffeil. Rhowch gynnig arni. Os yw hyn yn parhau, cysylltwch â’r adran gefnogaeth."
     }
   }
 }
