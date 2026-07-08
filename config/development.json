@@ -4,15 +4,17 @@
     "idam": {
       "clientID": "et-sya",
       "authorizationURL": "http://localhost:5062/login",
+      "hmctsAccessURL": "http://localhost:5062/o/authorize",
       "clientSecret": "test1234",
-      "tokenURL": "http://localhost:5062/o/token"
+      "tokenURL": "http://localhost:5062/o/token",
+      "endSessionURL": "http://localhost:5062/o/endSession"
     },
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",
       "token": "TO BE PICKED UP FROM ENV"
     },
     "etSyaApi": {
-      "host": "http://localhost:4550/"
+      "host": "http://localhost:8081/"
     },
     "pcq": {
       "url": "https://pcq.aat.platform.hmcts.net/service-endpoint",

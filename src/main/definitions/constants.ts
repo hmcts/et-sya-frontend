@@ -70,6 +70,7 @@ export const TranslationKeys = {
   NEW_JOB: 'new-job',
   NEW_JOB_START_DATE: 'new-job-start-date',
   NEW_JOB_PAY: 'new-job-pay',
+  CLAIM_SAVED: 'claim-saved',
   CLAIM_SUBMITTED: 'claim-submitted',
   CHECK_ANSWERS: 'check-your-answers',
   END_DATE: 'end-date',
@@ -304,6 +305,7 @@ export const PageUrls = {
   CHANGE_LEGAL_REPRESENTATIVE: '/change-legal-representative',
   YOUR_DETAILS_CYA: '/your-details-cya',
   DELETE_DRAFT_CLAIM: '/claimant-application/:id/delete',
+  MANIFEST_URL: '/assets/manifest.json',
 } as const;
 
 export const InterceptPaths = {
