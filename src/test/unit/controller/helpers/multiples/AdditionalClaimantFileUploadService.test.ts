@@ -33,7 +33,6 @@ describe('AdditionalClaimantSpreadsheetService', () => {
       },
     });
 
-    // Safeguard to ensure session object exists for mapping claimants
     if (!req.session) {
       req.session = {} as never;
     }
@@ -84,15 +83,28 @@ describe('AdditionalClaimantSpreadsheetService', () => {
   });
 
   describe('validateSpreadsheet', () => {
+    it('should return required error when file is missing', async () => {
+      req.file = undefined;
+
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'required',
+        },
+      ]);
+    });
+
     it('should return fileEmpty error', async () => {
       jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'fileEmpty',
       } as never);
 
-      await expect(service.validateSpreadsheet(req)).resolves.toEqual({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'fileEmpty',
-      });
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'fileEmpty',
+        },
+      ]);
     });
 
     it('should return noDataRows error', async () => {
@@ -100,10 +112,12 @@ describe('AdditionalClaimantSpreadsheetService', () => {
         status: 'noDataRows',
       } as never);
 
-      await expect(service.validateSpreadsheet(req)).resolves.toEqual({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'noDataRows',
-      });
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'noDataRows',
+        },
+      ]);
     });
 
     it('should return dataRowsExceedsMax error', async () => {
@@ -111,38 +125,100 @@ describe('AdditionalClaimantSpreadsheetService', () => {
         status: 'dataRowsExceedsMax',
       } as never);
 
-      await expect(service.validateSpreadsheet(req)).resolves.toEqual({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'dataRowsExceedsMax',
-      });
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'dataRowsExceedsMax',
+        },
+      ]);
     });
 
-    it('should return invalidRowData and set invalid rows', async () => {
+    it('should return grouped validation errors with per-error row lists', async () => {
       jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
-        invalidRows: [2, 5, 8],
-      });
+        errorsByType: {
+          missingMandatory: [2, 5],
+          invalidEmail: [8],
+        },
+      } as never);
 
-      await expect(service.validateSpreadsheet(req)).resolves.toEqual({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'invalidRowData',
-        fieldName: '2, 5, 8',
-      });
-
-      expect(req.session.additionalClaimantInvalidRows).toBe('2, 5, 8');
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'missingMandatory',
+          fieldName: '2, 5',
+        },
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'invalidFieldSingleRow',
+          fieldName: 'emailAddress',
+          fieldName2: '8',
+        },
+      ]);
     });
 
-    it('should clear invalid rows and return null when spreadsheet is valid', async () => {
-      req.session.additionalClaimantInvalidRows = '2, 3';
-
+    it('should return per-error-type threshold message when an error type has more than 10 rows', async () => {
       jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
-        invalidRows: [],
-      });
+        errorsByType: {
+          invalidTitle: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        },
+      } as never);
 
-      await expect(service.validateSpreadsheet(req)).resolves.toBeNull();
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'invalidFieldTooManyRows',
+          fieldName: 'title',
+          fieldName2: '11',
+        },
+      ]);
+    });
 
-      expect(req.session.additionalClaimantInvalidRows).toBeUndefined();
+    it('should prepend summary errors when there are more than two error types', async () => {
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
+        status: 'ok',
+        errorsByType: {
+          missingMandatory: [2, 3],
+          invalidDob: [3, 4],
+          invalidEmail: [4],
+        },
+      } as never);
+
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'multipleErrorTypesSummary',
+          fieldName: '5',
+          fieldName2: '3',
+        },
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'missingMandatory',
+          fieldName: '2, 3',
+        },
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'invalidFieldMultipleRows',
+          fieldName: 'dateOfBirth',
+          fieldName2: '3, 4',
+        },
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'invalidFieldSingleRow',
+          fieldName: 'emailAddress',
+          fieldName2: '4',
+        },
+      ]);
+    });
+
+    it('should return empty array when spreadsheet is valid', async () => {
+      jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
+        status: 'ok',
+        errorsByType: {},
+      } as never);
+
+      await expect(service.validateSpreadsheet(req)).resolves.toEqual([]);
     });
 
     it('should use configured max rows when present', async () => {
@@ -150,8 +226,8 @@ describe('AdditionalClaimantSpreadsheetService', () => {
 
       const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
-        invalidRows: [],
-      });
+        errorsByType: {},
+      } as never);
 
       await service.validateSpreadsheet(req);
 
@@ -163,8 +239,8 @@ describe('AdditionalClaimantSpreadsheetService', () => {
 
       const validateSpy = jest.spyOn(validator, 'validateSpreadsheetData').mockResolvedValue({
         status: 'ok',
-        invalidRows: [],
-      });
+        errorsByType: {},
+      } as never);
 
       await service.validateSpreadsheet(req);
 

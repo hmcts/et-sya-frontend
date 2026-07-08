@@ -17,7 +17,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toHaveLength(0);
     });
@@ -31,7 +31,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'nameRequired' }]));
     });
@@ -45,7 +45,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'nameRequired' }]));
     });
@@ -60,7 +60,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'nameRequired' }]));
     });
@@ -69,7 +69,7 @@ describe('group-claims-validator', () => {
       const req = mockRequest({});
       req.session.userCase.additionalClaimants = [{ firstName: 'Jane', lastName: 'Doe' }];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(
         expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
@@ -86,7 +86,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(
         expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
@@ -103,7 +103,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(
         expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
@@ -120,7 +120,7 @@ describe('group-claims-validator', () => {
         },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(
         expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'addressRequired' }])
@@ -131,7 +131,7 @@ describe('group-claims-validator', () => {
       const req = mockRequest({});
       req.session.userCase.additionalClaimants = [{}];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toEqual(
         expect.arrayContaining([
@@ -145,7 +145,7 @@ describe('group-claims-validator', () => {
       const req = mockRequest({});
       req.session.userCase.additionalClaimants = undefined;
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toHaveLength(0);
     });
@@ -154,7 +154,7 @@ describe('group-claims-validator', () => {
       const req = mockRequest({});
       req.session.userCase.additionalClaimants = [];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toHaveLength(0);
     });
@@ -170,7 +170,7 @@ describe('group-claims-validator', () => {
         { firstName: 'Missing', lastName: 'Address' },
       ];
 
-      const errors = validateAdditionalClaimants(req);
+      const errors = validateAdditionalClaimants(req.session.userCase.additionalClaimants);
 
       expect(errors).toHaveLength(1);
       expect(errors[0].errorType).toBe('addressRequired');

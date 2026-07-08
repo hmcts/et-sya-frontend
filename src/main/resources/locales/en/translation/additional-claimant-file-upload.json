@@ -6,7 +6,7 @@
     "p1": "Download the spreadsheet template or use you own if it follows the same format.",
     "link": "Group claims template (xlsx, 12KB)",
     "linkUrl": "/resources/xlsx/group-claims-template.xlsx",
-    "p3": "If you are using your own file, ensure your header row includes these exact columns, with the correct spelling:",
+    "p3": "If you are uploading your own file, you must include all of the following mandatory columns in your header row, using the exact spelling shown:",
     "columnNames": ["First name", "Last name", "Address line 1", "Town or city", "Country"]
   },
   "section2": {
@@ -29,11 +29,29 @@
       "required": "Please upload a spreadsheet",
       "invalidFileSize": "The file size must be less than 5MB",
       "invalidFileFormat": "The selected file must be an Excel spreadsheet (.xlsx or .xls)",
-      "invalidRowData": "The following rows contain invalid data: {{additionalErrorInfo}}.",
+      "invalidRowData": "The following rows contain invalid data: {{errorValue}}.",
       "backEndError": "Backend error occurred while processing the file. Please try again later.",
       "fileEmpty": "The uploaded file is empty. Upload a file with data.",
       "noDataRows": "The uploaded file does not contain any data rows. Please upload a file with data.",
-      "dataRowsExceedsMax": "The uploaded file has exceeded the maximum of {{additionalErrorInfo}} rows."
+      "dataRowsExceedsMax": "The uploaded file has exceeded the maximum of {{errorValue}} rows.",
+      "missingMandatory": "There's mandatory data missing for rows {{errorValue}}",
+      "invalidFieldSingleRow": "{{errorValue}} is invalid for row {{errorValue2}}",
+      "invalidFieldMultipleRows": "{{errorValue}} is invalid for rows {{errorValue2}}",
+      "missingMandatoryTooManyRows": "Mandatory data is missing on {{errorValue}} rows.",
+      "invalidFieldTooManyRows": "{{errorValue}} is invalid on {{errorValue2}} rows.",
+      "invalidFieldLabels": {
+        "title": "Title",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "addressLine1": "Address line 1",
+        "addressLine2": "Address line 2",
+        "townOrCity": "Town or city",
+        "country": "Country",
+        "dateOfBirth": "Date of birth",
+        "emailAddress": "Email address",
+        "postcode": "Postcode"
+      },
+      "multipleErrorTypesSummary": "There are {{errorValue}} errors over {{errorValue2}} rows within the uploaded file."
     }
   },
   "successTitle": "Success",

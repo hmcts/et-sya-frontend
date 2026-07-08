@@ -9,6 +9,70 @@ import { AnyRecord } from '../../definitions/util-types';
 import { dateInLocale, dateTimeInLocale, datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import createFilters from './njkFilters';
+const ERROR_VALUE_SEPARATOR = '|';
+const PRIMARY_ERROR_VALUE_PLACEHOLDERS = ['{{errorValue}}'];
+const SECONDARY_ERROR_VALUE_PLACEHOLDERS = ['{{errorValue2}}'];
+
+const replacePlaceholders = (template: string, placeholders: string[], value: string): string => {
+  return placeholders.reduce((resolvedTemplate, placeholder) => {
+    return resolvedTemplate.split(placeholder).join(value);
+  }, template);
+};
+
+/**
+ * Resolves every session error attached to a given field into its
+ * translated, placeholder-interpolated display message(s).
+ */
+export const resolveFieldErrorMessages = (
+  sessionErrors: FormError[] | undefined,
+  errors: AnyRecord,
+  fieldName: string,
+  defaultErrorValue?: string | number
+): string[] => {
+  if (!sessionErrors?.length || !errors?.[fieldName]) {
+    return [];
+  }
+
+  return sessionErrors
+    .filter((error: FormError) => error.propertyName === fieldName)
+    .map((fieldError: FormError) => {
+      const fieldErrorTranslations = errors[fieldName];
+      const template = fieldErrorTranslations[fieldError.errorType];
+      if (typeof template !== 'string') {
+        return null;
+      }
+      const placeholderValue = fieldError.fieldName ?? defaultErrorValue;
+      if (placeholderValue === undefined || placeholderValue === null) {
+        return template;
+      }
+      let rawPrimaryValue = String(placeholderValue);
+      let secondaryValue = fieldError.fieldName2;
+      if (secondaryValue === undefined) {
+        const splitValues = rawPrimaryValue.split(ERROR_VALUE_SEPARATOR);
+        if (splitValues.length > 1) {
+          rawPrimaryValue = splitValues[0];
+          secondaryValue = splitValues.slice(1).join(ERROR_VALUE_SEPARATOR);
+        }
+      }
+      const primaryValue = fieldErrorTranslations.invalidFieldLabels?.[rawPrimaryValue] ?? rawPrimaryValue;
+      let resolvedMessage = replacePlaceholders(template, PRIMARY_ERROR_VALUE_PLACEHOLDERS, primaryValue);
+      resolvedMessage = replacePlaceholders(resolvedMessage, SECONDARY_ERROR_VALUE_PLACEHOLDERS, secondaryValue ?? '');
+      return resolvedMessage;
+    })
+    .filter((text): text is string => !!text);
+};
+
+export const formatInlineFieldError = (fieldMessages: string[]): { text?: string; html?: string } | null => {
+  if (!fieldMessages.length) {
+    return null;
+  }
+
+  if (fieldMessages.length > 1) {
+    return { html: fieldMessages.join('<br>') };
+  }
+
+  return { text: fieldMessages[0] };
+};
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -36,73 +100,40 @@ export class Nunjucks {
       }
     );
 
-    nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
-      const { sessionErrors, errors, additionalErrorInfo } = this.ctx;
-
-      if (!sessionErrors?.length) {
-        return false;
-      }
-
-      const fieldError = sessionErrors.find((error: FormError) => error.propertyName === fieldName);
-      if (!fieldError) {
-        return false;
-      }
-
-      if (!errors?.[fieldName]) {
-        return false;
-      }
-
-      let text = errors[fieldName][fieldError.errorType];
-
-      // Interpolate any placeholders using values from the render context
-      if (additionalErrorInfo) {
-        text = text.replace('{{additionalErrorInfo}}', additionalErrorInfo);
-      }
-
-      return { text };
+    nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; html?: string } | boolean {
+      const { sessionErrors, errors } = this.ctx;
+      const defaultErrorValue = this.ctx.errorValue;
+      const fieldMessages = resolveFieldErrorMessages(sessionErrors, errors, fieldName, defaultErrorValue);
+      const formattedError = formatInlineFieldError(fieldMessages);
+      return formattedError ?? false;
     });
 
-    nunEnv.addGlobal('getErrors', function (items: FormFields[]): {
-      text?: string;
-      href?: string;
-    }[] {
+    nunEnv.addGlobal('getErrors', function (items: FormFields): { text?: string; href?: string }[] {
+      const { sessionErrors, errors } = this.ctx;
+      const defaultErrorValue = this.ctx.errorValue;
+
       return Object.entries(items)
         .flatMap(([fieldName, field]) => {
-          const errors = [];
+          const fieldErrors: { text: string; href: string }[] = [];
 
           if (field.values) {
             for (const value of field.values as unknown as FormField[]) {
               if (value.subFields) {
-                const subFields = Object.entries(value.subFields);
-                subFields.flatMap(([subFieldName, subField]) => {
-                  const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
-                    text?: string;
-                    fieldName?: string;
-                  };
-                  if (subFieldError && subFieldError?.text) {
-                    errors.push({
-                      text: subFieldError.text,
-                      href: `#${subField.id}`,
-                    });
-                  }
+                Object.entries(value.subFields).forEach(([subFieldName, subField]) => {
+                  resolveFieldErrorMessages(sessionErrors, errors, subFieldName, defaultErrorValue).forEach(message => {
+                    fieldErrors.push({ text: message, href: `#${subField.id}` });
+                  });
                 });
               }
             }
           }
+          resolveFieldErrorMessages(sessionErrors, errors, fieldName, defaultErrorValue).forEach(message => {
+            fieldErrors.push({ text: message, href: `#${field.id}` });
+          });
 
-          const error = this.env.globals.getError.call(this, fieldName) as {
-            text?: string;
-            fieldName?: string;
-          };
-          if (error && error?.text) {
-            errors.push({
-              text: error.text,
-              href: `#${field.id}`,
-            });
-          }
-          return errors;
+          return fieldErrors;
         })
-        .filter(e => e);
+        .filter(Boolean);
     });
 
     nunEnv.addGlobal(
