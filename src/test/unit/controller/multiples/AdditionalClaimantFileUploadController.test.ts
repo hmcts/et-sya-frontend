@@ -38,8 +38,6 @@ describe('AdditionalClaimantFileUploadController', () => {
     controller = new AdditionalClaimantFileUploadController();
   });
 
-  // ─── GET ──────────────────────────────────────────────────────────────────
-
   describe('get', () => {
     it('should render the file upload page', async () => {
       const req = mockRequestWithTranslation({ t }, {});
@@ -62,7 +60,7 @@ describe('AdditionalClaimantFileUploadController', () => {
 
       expect(res.render).toHaveBeenCalledWith(
         TranslationKeys.ADDITIONAL_CLAIMANT_FILE_UPLOAD,
-        expect.objectContaining({ additionalErrorInfo: 100 })
+        expect.objectContaining({ errorValue: 100 })
       );
     });
 
@@ -75,24 +73,20 @@ describe('AdditionalClaimantFileUploadController', () => {
 
       expect(res.render).toHaveBeenCalledWith(
         TranslationKeys.ADDITIONAL_CLAIMANT_FILE_UPLOAD,
-        expect.objectContaining({ additionalErrorInfo: 50 })
+        expect.objectContaining({ errorValue: 50 })
       );
     });
 
-    it('should clear additionalClaimantInvalidRows and uploadedFileName from session', async () => {
+    it('should clear uploadedFileName from session', async () => {
       const req = mockRequestWithTranslation({ t }, {});
-      req.session.additionalClaimantInvalidRows = '2, 3';
       req.session.additionalClaimantUploadedFileName = 'claimants.xlsx';
       const res = mockResponse();
 
       await controller.get(req, res);
 
-      expect(req.session.additionalClaimantInvalidRows).toBeUndefined();
       expect(req.session.additionalClaimantUploadedFileName).toBeUndefined();
     });
   });
-
-  // ─── POST ─────────────────────────────────────────────────────────────────
 
   describe('post', () => {
     it('should detect bot submission and return 200', async () => {
@@ -139,8 +133,6 @@ describe('AdditionalClaimantFileUploadController', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
     });
   });
-
-  // ─── POST VALIDATE ────────────────────────────────────────────────────────
 
   describe('postValidate', () => {
     it('should detect bot submission and return 200', async () => {
@@ -198,10 +190,9 @@ describe('AdditionalClaimantFileUploadController', () => {
     it('should push fileEmpty error when spreadsheet is empty', async () => {
       jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validatePreconditions').mockReturnValueOnce(null);
       jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateFileFormat').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'fileEmpty',
-      });
+      jest
+        .spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet')
+        .mockResolvedValueOnce([{ propertyName: 'additionalClaimantSpreadsheetName', errorType: 'fileEmpty' }]);
 
       const req = mockRequest({ body: {}, file: mockFile });
       const res = mockResponse();
@@ -216,10 +207,11 @@ describe('AdditionalClaimantFileUploadController', () => {
     it('should push dataRowsExceedsMax error when too many rows', async () => {
       jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validatePreconditions').mockReturnValueOnce(null);
       jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateFileFormat').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce({
-        propertyName: 'additionalClaimantSpreadsheetName',
-        errorType: 'dataRowsExceedsMax',
-      });
+      jest
+        .spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet')
+        .mockResolvedValueOnce([
+          { propertyName: 'additionalClaimantSpreadsheetName', errorType: 'dataRowsExceedsMax' },
+        ]);
 
       const req = mockRequest({ body: {}, file: mockFile });
       const res = mockResponse();
@@ -231,10 +223,50 @@ describe('AdditionalClaimantFileUploadController', () => {
       ]);
     });
 
-    it('should push uploadFailed error when document upload fails', async () => {
+    it('should keep multiple spreadsheet validation errors on additionalClaimantSpreadsheetName', async () => {
       jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validatePreconditions').mockReturnValueOnce(null);
       jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateFileFormat').mockReturnValueOnce(null);
-      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce(null);
+      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'missingMandatory',
+          fieldName: '2, 4',
+        },
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'invalidFieldSingleRow',
+          fieldName: 'emailAddress',
+          fieldName2: '7',
+        },
+      ]);
+
+      const req = mockRequest({ body: {}, file: mockFile });
+      const res = mockResponse();
+
+      await controller.postValidate(req, res);
+
+      expect(req.session.errors).toEqual([
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'missingMandatory',
+          fieldName: '2, 4',
+        },
+        {
+          propertyName: 'additionalClaimantSpreadsheetName',
+          errorType: 'invalidFieldSingleRow',
+          fieldName: 'emailAddress',
+          fieldName2: '7',
+        },
+      ]);
+    });
+
+    it('should push backEndError when document upload fails', async () => {
+      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validatePreconditions').mockReturnValueOnce(null);
+      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateFileFormat').mockReturnValueOnce(null);
+      jest.spyOn(AdditionalClaimantSpreadsheetService.prototype, 'validateSpreadsheet').mockResolvedValueOnce([]);
+      jest
+        .spyOn(AdditionalClaimantSpreadsheetService.prototype, 'uploadDocument')
+        .mockRejectedValueOnce(new Error('Upload failed'));
 
       const req = mockRequest({ body: {}, file: mockFile });
       const res = mockResponse();
@@ -244,6 +276,7 @@ describe('AdditionalClaimantFileUploadController', () => {
       expect(req.session.errors).toEqual([
         { propertyName: 'additionalClaimantSpreadsheetName', errorType: 'backEndError' },
       ]);
+      expect(res.json).toHaveBeenCalledWith({ redirect: PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD });
     });
 
     it('should push backEndError and redirect when an unexpected error is thrown', async () => {
@@ -264,8 +297,6 @@ describe('AdditionalClaimantFileUploadController', () => {
       expect(res.json).toHaveBeenCalledWith({ redirect: PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD });
     });
   });
-
-  // ─── REMOVE ───────────────────────────────────────────────────────────────
 
   describe('remove', () => {
     it('should clear spreadsheet and uploadedFileName from session and redirect', async () => {

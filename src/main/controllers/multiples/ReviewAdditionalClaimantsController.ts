@@ -66,8 +66,9 @@ export default class ReviewAdditionalClaimantsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     // 1. Run all claimant data validation
-    const claimantErrors = validateAdditionalClaimants(req);
-    const additionalClaimantCount = req.session?.userCase?.additionalClaimants?.length || 0;
+    const additionalClaimants = req.session?.userCase?.additionalClaimants ?? [];
+    const claimantErrors = validateAdditionalClaimants(additionalClaimants);
+    const additionalClaimantCount = additionalClaimants.length || 0;
     req.session.errors = req.session.errors || [];
 
     // When max claimants are reached, the radios are hidden and we implicitly continue.

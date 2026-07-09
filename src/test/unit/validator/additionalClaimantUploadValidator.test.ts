@@ -665,19 +665,24 @@ describe('validateSpreadsheetData()', () => {
 
   it('returns ok with no invalid rows for a valid spreadsheet', async () => {
     const buffer = await buildBuffer([HEADER_ROW, VALID_ROW]);
-    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [] });
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', errorsByType: {} });
   });
 
   it('returns ok with no invalid rows for mandatory-only row', async () => {
     const buffer = await buildBuffer([HEADER_ROW, MANDATORY_ONLY_ROW]);
-    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [] });
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', errorsByType: {} });
   });
 
   it('returns ok with invalid row numbers for failing rows', async () => {
     const invalidRow = [...VALID_ROW];
     invalidRow[1] = '';
     const buffer = await buildBuffer([HEADER_ROW, VALID_ROW, invalidRow]);
-    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3] });
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({
+      status: 'ok',
+      errorsByType: {
+        missingMandatory: [3],
+      },
+    });
   });
 
   it('returns multiple invalid row numbers when multiple rows fail', async () => {
@@ -686,13 +691,23 @@ describe('validateSpreadsheetData()', () => {
     const invalidRow2 = [...VALID_ROW];
     invalidRow2[2] = '';
     const buffer = await buildBuffer([HEADER_ROW, VALID_ROW, invalidRow1, invalidRow2]);
-    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [3, 4] });
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({
+      status: 'ok',
+      errorsByType: {
+        missingMandatory: [3, 4],
+      },
+    });
   });
 
   it('returns ok with XSS row flagged as invalid', async () => {
     const xssRow = [...VALID_ROW];
     xssRow[1] = '<script>alert(1)</script>';
     const buffer = await buildBuffer([HEADER_ROW, xssRow]);
-    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({ status: 'ok', invalidRows: [2] });
+    expect(await validateSpreadsheetData(buffer, DEFAULT_MAX_ROWS)).toEqual({
+      status: 'ok',
+      errorsByType: {
+        invalidFirstName: [2],
+      },
+    });
   });
 });

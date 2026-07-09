@@ -95,8 +95,8 @@ export default class AdditionalClaimantFileUploadController {
 
     try {
       const sheet = await spreadsheetService.validateSpreadsheet(req);
-      if (sheet) {
-        req.session.errors.push(sheet);
+      if (sheet.length > 0) {
+        req.session.errors.push(...sheet);
         await saveAndRedirect();
         return;
       }
@@ -129,10 +129,7 @@ export default class AdditionalClaimantFileUploadController {
       TranslationKeys.ADDITIONAL_CLAIMANT_FILE_UPLOAD,
     ]);
 
-    const additionalClaimantInvalidRows = req.session.additionalClaimantInvalidRows;
     const uploadedFileName = req.session.additionalClaimantUploadedFileName;
-
-    req.session.additionalClaimantInvalidRows = undefined;
     req.session.additionalClaimantUploadedFileName = undefined;
 
     assignFormData(req.session.userCase, this.form.getFormFields());
@@ -141,7 +138,7 @@ export default class AdditionalClaimantFileUploadController {
     res.render(TranslationKeys.ADDITIONAL_CLAIMANT_FILE_UPLOAD, {
       ...content,
       postAddress: PageUrls.ADDITIONAL_CLAIMANT_FILE_UPLOAD,
-      additionalErrorInfo: additionalClaimantInvalidRows || maxDataRowsForUpload,
+      errorValue: maxDataRowsForUpload,
       uploadedFileName,
     });
   };

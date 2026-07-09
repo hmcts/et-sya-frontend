@@ -42,16 +42,12 @@ function validateClaimantsAddresses(claimant: AdditionalClaimant, additionalClai
   }
 }
 
-export const validateAdditionalClaimants = (req: AppRequest): FormError[] => {
+export const validateAdditionalClaimants = (additionalClaimants: AdditionalClaimant[]): FormError[] => {
   const additionalClaimantErrors: FormError[] = [];
-  const claimants = req.session?.userCase?.additionalClaimants;
-  const additionalClaimantCount = claimants?.length || 0;
 
   // Validate structural data if claimants exist
-  if (claimants && Array.isArray(claimants)) {
-    logger.info(`Validating ${additionalClaimantCount} additional claimant(s).`);
-
-    for (const claimant of claimants) {
+  if (additionalClaimants && Array.isArray(additionalClaimants)) {
+    for (const claimant of additionalClaimants) {
       // Validate Name Fields
       validateClaimantsNames(claimant, additionalClaimantErrors);
 
@@ -80,7 +76,7 @@ export const validateGroupClaimsCheckDetails = (req?: AppRequest, userCase?: Rec
 
   const hasAdditionalClaimants =
     (Array.isArray(additionalClaimants) && additionalClaimants.length > 0) || Boolean(additionalClaimantSpreadsheet);
-  const claimantErrors = req ? validateAdditionalClaimants(req) : [];
+  const claimantErrors = additionalClaimants ? validateAdditionalClaimants(additionalClaimants) : [];
   const hasLeadClaimantSelection = leadClaimant === YesOrNo.YES || leadClaimant === YesOrNo.NO;
   const hasClaimantErrors = claimantErrors.length > 0;
 

@@ -84,6 +84,7 @@ export type FormError = {
   propertyName: string;
   errorType: string;
   fieldName?: string;
+  fieldName2?: string;
 };
 
 export type InvalidField = {

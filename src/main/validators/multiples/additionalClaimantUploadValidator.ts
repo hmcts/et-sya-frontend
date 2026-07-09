@@ -12,6 +12,19 @@ type FieldKey =
   | 'country'
   | 'postcode';
 
+export type FieldErrorType =
+  | 'missingMandatory'
+  | 'invalidTitle'
+  | 'invalidFirstName'
+  | 'invalidLastName'
+  | 'invalidAddressLine1'
+  | 'invalidAddressLine2'
+  | 'invalidTown'
+  | 'invalidCountry'
+  | 'invalidDob'
+  | 'invalidEmail'
+  | 'invalidPostcode';
+
 /**
  * Normalises a spreadsheet header by trimming, lowercasing, and removing spaces.
  */
@@ -155,9 +168,47 @@ const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const POSTCODE_PATTERN = /^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/i;
 
 /**
- * Validates a single spreadsheet row against business rules.
+ * Validates a DOB string: format, calendar validity, and age range (16-100).
  */
-export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boolean => {
+const isValidDob = (dob: string): boolean => {
+  const match = DOB_PATTERN.exec(dob);
+
+  if (!match) {
+    return false;
+  }
+
+  const day = Number.parseInt(match[1], 10);
+  const month = Number.parseInt(match[2], 10) - 1;
+  const year = Number.parseInt(match[3], 10);
+
+  const date = new Date(year, month, day);
+
+  if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+    return false;
+  }
+
+  const today = new Date();
+  const minAgeDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+  const maxAgeDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+
+  if (date > minAgeDate) {
+    return false;
+  }
+
+  if (date < maxAgeDate) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Validates a single spreadsheet row against business rules and returns
+ * the set of specific error types found (empty set if the row is valid).
+ */
+export const getRowErrorTypes = (row: unknown[], map: Record<FieldKey, number>): Set<FieldErrorType> => {
+  const errors = new Set<FieldErrorType>();
+
   const title = get(row, map, 'title');
   const firstName = get(row, map, 'firstName');
   const lastName = get(row, map, 'lastName');
@@ -169,100 +220,84 @@ export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boo
   const country = get(row, map, 'country');
   const postcode = get(row, map, 'postcode');
 
-  if (title) {
-    if (title.length > 25) {
-      return true;
-    }
-    if (!NAME_PATTERN.test(title)) {
-      return true;
-    }
+  // Title (optional)
+  if (title && (title.length > 25 || !NAME_PATTERN.test(title))) {
+    errors.add('invalidTitle');
   }
 
-  if (!firstName || firstName.length > 100 || !NAME_PATTERN.test(firstName)) {
-    return true;
+  // First name (mandatory)
+  if (!firstName) {
+    errors.add('missingMandatory');
+  } else if (firstName.length > 100 || !NAME_PATTERN.test(firstName)) {
+    errors.add('invalidFirstName');
   }
 
-  if (!lastName || lastName.length > 100 || !NAME_PATTERN.test(lastName)) {
-    return true;
+  // Last name (mandatory)
+  if (!lastName) {
+    errors.add('missingMandatory');
+  } else if (lastName.length > 100 || !NAME_PATTERN.test(lastName)) {
+    errors.add('invalidLastName');
   }
 
-  if (!addrLine1 || addrLine1.length > 150 || !ADDRESS_PATTERN.test(addrLine1)) {
-    return true;
+  // Address line 1 (mandatory)
+  if (!addrLine1) {
+    errors.add('missingMandatory');
+  } else if (addrLine1.length > 150 || !ADDRESS_PATTERN.test(addrLine1)) {
+    errors.add('invalidAddressLine1');
   }
 
+  // Address line 2 (optional)
   if (addrLine2 && (addrLine2.length > 50 || !ADDRESS_PATTERN.test(addrLine2))) {
-    return true;
+    errors.add('invalidAddressLine2');
   }
 
-  if (!town || town.length > 50 || !TOWN_PATTERN.test(town)) {
-    return true;
+  // Town (mandatory)
+  if (!town) {
+    errors.add('missingMandatory');
+  } else if (town.length > 50 || !TOWN_PATTERN.test(town)) {
+    errors.add('invalidTown');
   }
 
-  if (!country || country.length > 50 || !COUNTRY_PATTERN.test(country)) {
-    return true;
+  // Country (mandatory)
+  if (!country) {
+    errors.add('missingMandatory');
+  } else if (country.length > 50 || !COUNTRY_PATTERN.test(country)) {
+    errors.add('invalidCountry');
   }
 
-  if (dob) {
-    const match = DOB_PATTERN.exec(dob);
-
-    if (!match) {
-      return true;
-    }
-
-    const day = Number.parseInt(match[1], 10);
-    const month = Number.parseInt(match[2], 10) - 1;
-    const year = Number.parseInt(match[3], 10);
-
-    const date = new Date(year, month, day);
-
-    if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
-      return true;
-    }
-
-    const today = new Date();
-    const minAgeDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-    const maxAgeDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
-
-    if (date > minAgeDate) {
-      return true;
-    }
-
-    if (date < maxAgeDate) {
-      return true;
-    }
+  // Date of birth (optional)
+  if (dob && !isValidDob(dob)) {
+    errors.add('invalidDob');
   }
 
-  if (email) {
-    if (email.length > 100) {
-      return true;
-    }
-
-    if (!EMAIL_PATTERN.test(email)) {
-      return true;
-    }
+  // Email (optional)
+  if (email && (email.length > 100 || !EMAIL_PATTERN.test(email))) {
+    errors.add('invalidEmail');
   }
 
-  if (postcode) {
-    if (postcode.length > 14) {
-      return true;
-    }
-
-    if (!POSTCODE_PATTERN.test(postcode)) {
-      return true;
-    }
+  // Postcode (optional)
+  if (postcode && (postcode.length > 14 || !POSTCODE_PATTERN.test(postcode))) {
+    errors.add('invalidPostcode');
   }
 
-  return false;
+  return errors;
 };
 
+/**
+ * Convenience boolean wrapper, kept for any existing callers that only
+ * need a yes/no answer.
+ */
+export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boolean =>
+  getRowErrorTypes(row, map).size > 0;
+
 type SpreadsheetValidationResult =
-  | { status: 'ok'; invalidRows: number[] }
+  | { status: 'ok'; errorsByType: Partial<Record<FieldErrorType, number[]>> }
   | { status: 'fileEmpty' }
   | { status: 'noDataRows' }
   | { status: 'dataRowsExceedsMax' };
 
 /**
- * Validates spreadsheet buffer and returns row numbers that fail validation.
+ * Validates spreadsheet buffer and returns row numbers grouped by error type.
  */
 export const validateSpreadsheetData = async (
   buffer: Buffer,
@@ -295,14 +330,17 @@ export const validateSpreadsheetData = async (
     return { status: 'dataRowsExceedsMax' };
   }
 
-  const invalidNums: number[] = [];
   const headerMap = buildHeaderMap(rows[0]);
+  const errorsByType: Partial<Record<FieldErrorType, number[]>> = {};
 
   dataRows.forEach((row, idx) => {
-    if (rowIsInvalid(row, headerMap)) {
-      invalidNums.push(idx + 2);
-    }
+    const rowNumber = idx + 2;
+    const rowErrors = getRowErrorTypes(row, headerMap);
+
+    rowErrors.forEach(errorType => {
+      (errorsByType[errorType] ??= []).push(rowNumber);
+    });
   });
 
-  return { status: 'ok', invalidRows: invalidNums };
+  return { status: 'ok', errorsByType };
 };
