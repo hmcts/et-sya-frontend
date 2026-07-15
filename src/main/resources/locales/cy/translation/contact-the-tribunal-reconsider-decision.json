@@ -2,8 +2,8 @@
   "title": "Ystyried penderfyniad o'r newydd",
   "applicationType": "Ystyried penderfyniad o'r newydd",
   "applicationTitle": "Gwneud cais i benderfyniad gael ei ystyried o’r newydd",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -17,8 +17,10 @@
       "type": "paragraph",
       "text": "Bydd y barnwr yn ystyried y penderfyniad o’r newydd ar sail yr un wybodaeth ag oedd gerbron y swyddog cyfreithiol, oni bai bod y naill ochr neu’r llall yn dewis darparu gwybodaeth ychwanegol."
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -32,25 +34,27 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]Use this form to have a judgment or order made by a legal officer considered afresh by an Employment Judge."
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i Farnwr Cyflogaeth ystyried dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol o’r newydd."
     },
     {
       "type": "paragraph",
-      "text": "[W]Considered afresh means that if the claimant disagrees with a judgment or order made by a legal officer in their case, they can ask an Employment Judge to look at that decision again."
+      "text": "Mae ystyried o’r newydd yn golygu os ydy'r hawlydd yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eu hachos, gallant ofyn i Farnwr Cyflogaeth edrych ar y penderfyniad hwnnw eto."
     },
     {
       "type": "paragraph",
-      "text": "[W]The judge will take the decision afresh on the basis of the same information as was before the legal officer, unless either side chooses to supply additional information."
+      "text": "Bydd y barnwr yn ystyried y penderfyniad o’r newydd ar sail yr un wybodaeth ag oedd gerbron y swyddog cyfreithiol, oni bai bod y naill ochr neu’r llall yn dewis darparu gwybodaeth ychwanegol."
     },
-
-    { "type": "bold-paragraph", "text": "[W]Details to include in your application:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]the decision the claimant wants considered afresh",
-        "[W]the date the tribunal issued the decision",
-        "[W]why the claimant wants the decision considered afresh",
-        "[W]any relevant additional information"
+        "y penderfyniad mae'r hawlydd eisiau ei ystyried o'r newydd",
+        "y dyddiad y cyhoeddodd y tribiwnlys y penderfyniad",
+        "pam bod yr hawlydd eisiau i'r penderfyniad gael ei ystyried o'r newydd",
+        "unrhyw wybodaeth ychwanegol berthnasol"
       ]
     }
   ]

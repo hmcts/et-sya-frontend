@@ -2,13 +2,16 @@
   "title": "Gohirio gwrandawiad",
   "applicationType": "Gohirio gwrandawiad",
   "applicationTitle": "Gwneud cais i ohirio fy ngwrandawiad",
-  "applicationTitleRep": "[W]Apply to postpone a hearing",
+  "applicationTitleRep": "Gwneud cais i ohirio gwrandawiad",
   "content": [
     {
       "type": "paragraph",
       "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach."
     },
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -23,17 +26,20 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]Use this form to ask the tribunal to postpone the claimant’s hearing to a later date."
+      "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys ohirio gwrandawiad yr hawlydd i ddyddiad diweddarach."
     },
-    { "type": "bold-paragraph", "text": "[W]Details to include in your application:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]which hearing you or the claimant want to postpone. If the hearing you want to postpone is listed over multiple days, tell us which day or days you are applying to postpone",
-        "[W]the reason you or the claimant want to postpone. The tribunal will use this to decide whether to grant your application",
-        "[W]any essential documents to support the application. For example, you may want to upload a medical note or correspondence from a witness who cannot attend",
-        "[W]weekday dates within the next 3 months that you, the claimant or your witnesses cannot attend a rescheduled hearing",
-        "[W]the reason you, the claimant or your witnesses cannot attend on those dates"
+        "pa wrandawiad ydych chi neu'r hawlydd eisiau ei ohirio. Os yw’r gwrandawiad rydych chi’n gofyn i’w ohirio wedi’i restru dros sawl diwrnod, dywedwch wrthym pa ddiwrnod neu ddiwrnodau rydych chi eisiau eu gohirio.",
+        "y rheswm pam ydych chi neu'r hawlydd eisiau ei ohirio. Bydd y tribiwnlys yn defnyddio hyn i benderfynu a ddylid caniatáu eich cais ai peidio.",
+        "unrhyw ddogfennau hanfodol i gefnogi'r cais. Er enghraifft, efallai y byddwch eisiau llwytho nodyn meddygol neu ohebiaeth gan dyst na all fod yn bresennol.",
+        "dyddiadau dyddiau'r wythnos, o fewn y 3 mis nesaf na allwch chi, yr hawlydd neu eich tystion fynychu gwrandawiad wedi'i aildrefnu",
+        "y rheswm na allwch chi, yr hawlydd neu eich tyst fynychu ar y dyddiadau hynny"
       ]
     }
   ]

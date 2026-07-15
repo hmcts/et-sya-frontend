@@ -2,10 +2,13 @@
   "title": "Dileu’r ymateb",
   "applicationType": "Dileu’r ymateb",
   "applicationTitle": "Dileu’r cyfan neu ran o’r ymateb",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
-    { "type": "paragraph", "text": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o’r ymateb." },
+    {
+      "type": "paragraph",
+      "text": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o’r ymateb."
+    },
     {
       "type": "paragraph",
       "text": "Os yw rhywbeth yn cael ei ‘ddileu’ mae'n cael ei dynnu oddi ar yr hawliad neu'r ymateb ac ni ellir dibynnu arno."
@@ -18,7 +21,6 @@
       "type": "paragraph",
       "text": "Rhaid i gais am ddiddymiad fod yn seiliedig ar o leiaf un o agweddau Rheol 38 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth, sef pan:"
     },
-
     {
       "type": "list",
       "items": [
@@ -29,9 +31,10 @@
         "nid yw’n bosib cael gwrandawiad teg bellach"
       ]
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -44,40 +47,40 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]The claimant can request that the tribunal strike out all or parts of the response."
+      "text": "Gall yr hawlydd ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o’r ymateb."
     },
     {
       "type": "paragraph",
-      "text": "[W]If something is ‘struck out’ it is removed from the claim or response and cannot be relied upon."
+      "text": "Os yw rhywbeth yn cael ei ‘ddileu’ mae'n cael ei dynnu oddi ar yr hawliad neu'r ymateb ac ni ellir dibynnu arno."
     },
     {
       "type": "paragraph",
-      "text": "[W]The tribunal can strike out all or parts of the other party's response on their own initiative or after a request from the claimant."
+      "text": "Gall y tribiwnlys ddileu’r cyfan neu rannau o ymateb y parti arall o’i wirfodd ei hun neu yn dilyn cais gan yr hawlydd."
     },
     {
       "type": "paragraph",
-      "text": "[W]A strike out request must be based on at least one of the grounds of Rule 38 of the Employment Tribunals Rules of Procedure, which is when:"
+      "text": "Rhaid i gais am ddiddymiad fod yn seiliedig ar o leiaf un o agweddau Rheol 38 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth, sef pan:"
     },
-
     {
       "type": "list",
       "items": [
-        "[W]the response is scandalous, vexatious or has no reasonable prospect of success",
-        "[W]the proceedings have been conducted in a way that is scandalous, unreasonable or vexatious",
-        "[W]the other party has not complied with tribunal orders or the Rules of Procedure",
-        "[W]the response has not been actively pursued",
-        "[W]it is no longer possible to have a fair hearing"
+        "mae’r ymateb yn dramgwyddus, yn flinderus neu nid oes siawns rhesymol y bydd yn llwyddiannus",
+        "cynhaliwyd yr achos mewn ffordd sy’n",
+        "dramgwyddus, yn afresymol neu’n flinderus nid yw’r atebydd wedi cydymffurfio â gorchmynion y tribiwnlys na’r Rheolau Trefniadaeth",
+        "nid yw’r ymateb wedi’i ddilyn mewn modd gweithredol",
+        "nid yw’n bosib cael gwrandawiad teg bellach"
       ]
     },
-
-    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]why the claimant thinks the response should be struck out",
-        "[W]which ground or grounds in Rule 38 you say applies in the case",
-        "[W]if you are referring to numbered points or paragraphs in a respondent's response, include these numbers or other references"
+        "pam bod yr hawlydd yn credu y dylid dileu’r ymateb",
+        "pa sail neu seiliau yn Rheol 38 rydych chi’n dweud sy’n berthnasol yn yr achos",
+        "os ydych yn cyfeirio at bwyntiau neu baragraffau wedi’u rhifo mewn ymateb y parti arall, dylech gynnwys y rhifau hyn neu gyfeiriadau eraill"
       ]
     }
   ]

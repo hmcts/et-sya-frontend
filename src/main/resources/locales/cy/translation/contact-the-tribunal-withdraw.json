@@ -1,11 +1,11 @@
 {
   "title": "Tynnu fy hawliad yn ôl",
   "applicationType": "Tynnu fy hawliad yn ôl",
-  "applicationTypeRep": "[W]Withdraw the claim",
+  "applicationTypeRep": "Tynnu’r hawliad yn ôl",
   "applicationTitle": "Rwyf eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
-  "applicationTitleRep": "[W]The claimant wants to withdraw all or part of their claim",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "applicationTitleRep": "Mae'r hawlydd eisiau tynnu'r cyfan neu ran o'i hawliad yn ôl.",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -15,14 +15,22 @@
       "type": "paragraph",
       "text": "Gallwch dynnu eich hawliad cyfan yn ôl neu ddweud wrthym pa rannau rydych eisiau eu tynnu’n ôl."
     },
-    { "type": "paragraph", "text": "Daw hyn â’ch hawliad neu ran ohono i ben." },
-    { "type": "paragraph", "text": "Gallwch dynnu’ch hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad." },
+    {
+      "type": "paragraph",
+      "text": "Daw hyn â’ch hawliad neu ran ohono i ben."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gallwch dynnu’ch hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad."
+    },
     {
       "type": "paragraph",
       "text": "Os ydych chi’n tynnu’ch hawliad yn ôl oherwydd setliad, gwnewch yn siŵr bod gennych chi'r setliad yn ysgrifenedig."
     },
-
-    { "type": "bold-paragraph", "text": "Tynnu’n ôl a dileu" },
+    {
+      "type": "bold-paragraph",
+      "text": "Tynnu’n ôl a dileu"
+    },
     {
       "type": "paragraph",
       "text": "Unwaith y byddwch yn dweud wrth y tribiwnlys eich bod eisiau tynnu eich hawliad yn ôl, fel arfer bydd y tribiwnlys yn cyhoeddi dyfarniad yn dileu’r hawliad neu ran o’r hawliad."
@@ -35,8 +43,10 @@
       "type": "paragraph",
       "text": "Bydd y tribiwnlys yn defnyddio Rheol 51 o Reolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth i benderfynu a yw dyfarniad dileu yn cael ei gyhoeddi yn dilyn tynnu hawliad yn ôl."
     },
-
-    { "type": "bold-paragraph", "text": "Rheol 51 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth" },
+    {
+      "type": "bold-paragraph",
+      "text": "Rheol 51 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth"
+    },
     {
       "type": "paragraph",
       "text": "Mae Rheol 51 yn nodi, pan fo hawliad, neu ran ohono, wedi’i dynnu’n ôl o dan Reol 50, bydd y tribiwnlys yn cyhoeddi dyfarniad yn ei ddileu (sy’n golygu na all yr hawlydd ddechrau hawliad pellach yn erbyn y parti arall sy’n codi’r un cwyn, neu gŵyn tebyg) oni bai:"
@@ -47,10 +57,18 @@
         "mae’r hawlydd wedi mynegi ar adeg y tynnu’n ôl ddymuniad i gadw’r hawl i godi hawliad pellach ac mae’r tribiwnlys yn fodlon y byddai rheswm dilys dros wneud hynny"
       ]
     },
-    { "type": "paragraph", "text": "neu" },
-    { "type": "list", "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"] },
-
-    { "type": "paragraph", "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:" },
+    {
+      "type": "paragraph",
+      "text": "neu"
+    },
+    {
+      "type": "list",
+      "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"]
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:"
+    },
     {
       "type": "list",
       "items": [
@@ -58,8 +76,10 @@
         "rydych wedi rhoi rheswm derbyniol pam na ddylid dileu’r hawliad"
       ]
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -71,65 +91,82 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]Use this form when the claimant has reached a settlement or does not want to continue with all or part of their claim."
+      "text": "Defnyddiwch y ffurflen hon pan fydd yr hawlydd wedi cyrraedd setliad neu ddim eisiau parhau gyda’r cyfan neu ran o’u hawliad."
     },
     {
       "type": "paragraph",
-      "text": "[W]The claimant can withdraw their whole claim or tell us which parts they want to withdraw."
-    },
-    { "type": "paragraph", "text": "[W]This brings their claim or part of it to an end." },
-    { "type": "paragraph", "text": "[W]The claimant can withdraw at any point before or during a hearing." },
-    {
-      "type": "paragraph",
-      "text": "[W]If they’re withdrawing because of a settlement, make sure they have the settlement in writing."
-    },
-
-    { "type": "bold-paragraph", "text": "[W]Withdrawal and dismissal" },
-    {
-      "type": "paragraph",
-      "text": "[W]Once you have told the tribunal the claimant wants to withdraw their claim, the tribunal will usually issue a judgment dismissing the claim or part of the claim."
+      "text": "Gall yr hawlydd dynnu eu cais cyfan yn ôl neu ddweud wrthym pa rannau maent eisiau eu tynnu'n ôl."
     },
     {
       "type": "paragraph",
-      "text": "[W]A dismissal judgment stops the claimant from making that claim against the same respondents in the future."
+      "text": "Daw hyn â’ch hawliad neu ran ohono i ben."
     },
     {
       "type": "paragraph",
-      "text": "[W]The tribunal will use Rule 51 of the Employment Tribunal Rules of Procedure to decide whether a dismissal judgment is issued following a withdrawal."
+      "text": "Gal yr hawlydd dynnu eu hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad."
     },
-
-    { "type": "bold-paragraph", "text": "[W]Rule 51 of the Employment Tribunal Rules of Procedure" },
     {
       "type": "paragraph",
-      "text": "[W]Rule 51 states that where a claim, or part of it, has been withdrawn under Rule 50, the tribunal shall issue a judgment dismissing it (which means that the claimant may not commence a further claim against the other party raising the same, or substantially the same, complaint) unless:"
+      "text": "Os ydynt yn tynnu'n ôl oherwydd setliad, gwnewch yn siŵr bod ganddynt y setliad yn ysgrifenedig."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Tynnu’n ôl a dileu"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ar ôl i chi ddweud wrth y tribiwnlys bod yr hawlydd eisiau tynnu eu hawliad yn ôl, bydd y tribiwnlys fel arfer yn cyhoeddi dyfarniad yn dileu’r hawliad neu ran o'r hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae dyfarniad diswyddo yn atal yr hawlydd rhag gwneud yr hawliad hwnnw yn erbyn yr un atebwyr yn y dyfodol."
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd y tribiwnlys yn defnyddio Rheol 51 o Reolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth i benderfynu a yw dyfarniad dileu yn cael ei gyhoeddi yn dilyn tynnu hawliad yn ôl."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Rheol 51 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth"
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae Rheol 51 yn nodi, pan fo hawliad, neu ran ohono, wedi’i dynnu’n ôl o dan Reol 50, bydd y tribiwnlys yn cyhoeddi dyfarniad yn ei ddileu (sy’n golygu na all yr hawlydd ddechrau hawliad pellach yn erbyn y parti arall sy’n codi’r un cwyn, neu gŵyn tebyg) oni bai:"
     },
     {
       "type": "list",
       "items": [
-        "[W]the claimant has expressed at the time of withdrawal a wish to reserve the right to bring such a further claim and the tribunal is satisfied that there would be legitimate reason for doing so"
+        "Mae’r hawlydd wedi mynegi dymuniad ar adeg y tynnu’n ôl i gadw’r hawl i godi hawliad pellach ac mae'r tribiwnlys yn fodlon y byddai rheswm dilys dros wneud hynny"
       ]
     },
-    { "type": "paragraph", "text": "[W]or" },
+    {
+      "type": "paragraph",
+      "text": "neu"
+    },
     {
       "type": "list",
-      "items": ["[W]the tribunal believes that to issue such a judgment would not be in the interests of justice"]
+      "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"]
     },
-
-    { "type": "paragraph", "text": "[W]Withdrawal and dismissal through this service will be final unless:" },
+    {
+      "type": "paragraph",
+      "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]the tribunal contacts you needing more information",
-        "[W]the claimant has given an acceptable reason why dismissal should not happen"
+        "bod y tribiwnlys yn cysylltu â chi yn gofyn am fwy o wybodaeth",
+        "mae'r hawlydd wedi rhoi rheswm derbyniol pam na ddylid dileu’r hawliad"
       ]
     },
-
-    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]which parts of the claim the claimant wants withdrawn and dismissed",
-        "[W]if the claimant does not want their claim (or part of it) dismissed, they must explain why"
+        "pa rannau o’r hawliad mae'r hawlydd eisiau ei dynnu’n ôl a’i ddileu",
+        "os nad ydy'r hawlydd eisiau i’w hawliad (neu ran ohono) gael ei ddileu, rhaid iddynt egluro pam"
       ]
     }
   ]

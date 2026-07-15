@@ -1,11 +1,11 @@
 {
   "title": "Ddiwygio fy hawliad",
   "applicationType": "Ddiwygio fy hawliad",
-  "applicationTypeRep": "[W]Amend the claim",
+  "applicationTypeRep": "Diwygio’r hawliad",
   "applicationTitle": "Gwneud cais i ddiwygio fy hawliad",
-  "applicationTitleRep": "[W]Apply to amend the claim",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "applicationTitleRep": "Gwneud cais i ddiwygio'r hawliad",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -27,8 +27,10 @@
       "type": "paragraph",
       "text": "Bydd darparu manylion ynghylch pam eich bod eisiau diwygio’r hawliad a phwysigrwydd y diwygiad yn helpu'r tribiwnlys i benderfynu ar eich cais yn gyflymach."
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -43,34 +45,36 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]Use this form to apply to amend the claimant’s ET1 claim. The tribunal will decide if the claimant can make the amendment by judging the fairness of the application. This decision may be made at a hearing."
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i ddiwygio hawliad ET1 yr hawlydd. Bydd y tribiwnlys yn penderfynu os caiff yr hawlydd wneud y diwygiad drwy feirniadu tegwch y cais. Mae’n bosib y bydd y penderfyniad hwn yn cael ei wneud mewn gwrandawiad."
     },
     {
       "type": "paragraph",
-      "text": "[W]The tribunal also needs to know if the claimant considers the amendment minor or substantial."
+      "text": "Mae angen i’r tribiwnlys wybod hefyd os yw'r hawlydd yn ystyried y diwygiad yn fân ddiwygiad neu’n ddiwygiad sylweddol."
     },
     {
       "type": "paragraph",
-      "text": "[W]An example of a minor amendment is correcting an error or minor detail made in the claim form."
+      "text": "Gallai enghraifft o fân ddiwygiad fod yn cywiro gwall neu fân fanylion yn y ffurflen hawlio."
     },
     {
       "type": "paragraph",
-      "text": "[W]An example of a substantial change would be adding a new kind of claim that needed more evidence to be heard by the tribunal."
+      "text": "Byddai enghraifft o ddiwygiad sylweddol yn ychwanegu math newydd o hawliad a bod angen i’r tribiwnlys wrando ar fwy o dystiolaeth."
     },
     {
       "type": "paragraph",
-      "text": "[W]Providing details of why the claimant wants to amend the claim and the importance of the amendment will help the tribunal to decide the claimant’s application more quickly."
+      "text": "Bydd darparu manylion ynghylch pam bod yr hawlydd eisiau diwygio’r hawliad a phwysigrwydd y diwygiad yn helpu'r tribiwnlys i benderfynu ar gais yr hawlydd yn gyflymach."
     },
-
-    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]what the claimant wants to amend in their claim. Be specific and refer to the claim form if possible. For example, tell us whether the claimant wants to add, remove or change details related to the question or section number",
-        "[W]if the claimant considers it a minor or substantial amendment",
-        "[W]why the claimant wants to make this amendment",
-        "[W]why the claimant is asking to make this amendment now. For example, if they wish to add something to their claim, please explain why they did not include this in the original claim. This is particularly important if the claimant is adding a new type of claim and the time limit has passed",
-        "[W]how this amendment will benefit the claimant and how could it disadvantage them if not granted"
+        "beth mae'r hawlydd eisiau ei ddiwygio yn eu hawliad. Byddwch yn benodol a chyfeirio at eich ffurflen hawliad os yn bosibl. Er enghraifft, dywedwch wrthym a yw'r hawlydd eisiau ychwanegu, dileu neu newid manylion sy’n gysylltiedig â’r cwestiwn neu rif yr adran.",
+        "os yw'r hawlydd yn ei ystyried yn fân newid neu’n newid sylweddol",
+        "pam bod yr hawlydd eisiau gwneud y diwygiad hwn",
+        "pam bod yr hawlydd yn gofyn am gael gwneud y diwygiad hwn nawr. Er enghraifft, os ydynt eisiau ychwanegu rhywbeth at eu cais, esboniwch pam na wnaethant gynnwys hyn yn yr hawliad gwreiddiol. Mae hyn yn bwysig os yw'r hawlydd yn ychwanegu math newydd o hawliad ac mae’r terfyn amser wedi mynd heibio.",
+        "sut bydd y diwygiad hwn o fudd i'r hawlydd a sut y gallai eu rhoi dan anfantais os nad yw'n cael ei ganiatáu"
       ]
     }
   ]
