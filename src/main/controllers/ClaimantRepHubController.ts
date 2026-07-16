@@ -152,7 +152,8 @@ export default class ClaimantRepHubController {
       links: linkNames.map(linkName => {
         const status = hubLinksStatuses[linkName];
         return {
-          linkTxt: (l: AnyRecord): string => l[linkName],
+          linkTxt: (l: AnyRecord): string =>
+            linkName === HubLinkNames.ContactTribunal ? l.contactTribunalRep : l[linkName],
           status: (l: AnyRecord): string => l[status],
           shouldShow: shouldHubLinkBeClickable(status, linkName),
           url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
