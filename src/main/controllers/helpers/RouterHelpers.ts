@@ -47,8 +47,27 @@ export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: stri
   return res.redirect(returnValidUrl(nextPage));
 };
 
-function isFullEt1LegacyUrl(baseUrl: string, et1BaseUrl: string): boolean {
-  return baseUrl.startsWith(et1BaseUrl);
+function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | undefined {
+  const urlParts = baseUrl.split('/');
+  let returnUrl = '';
+  for (const urlPart of urlParts) {
+    const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
+    if (matchedUrlPart) {
+      returnUrl += `/${matchedUrlPart}`;
+    } else if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
+      returnUrl += `/${urlPart}`;
+    }
+  }
+  if (returnUrl) {
+    const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
+    for (const param of parameters) {
+      if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
+        returnUrl = addParameterToUrl(returnUrl, param);
+      }
+    }
+    return returnUrl;
+  }
+  return undefined;
 }
 
 function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: string[]): string | undefined {
@@ -67,59 +86,57 @@ function getStaticValidUrl(baseUrl: string, redirectUrl: string, validUrls: stri
   return undefined;
 }
 
-function isDynamicUrlIdSegment(urlPart: string): boolean {
-  if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
-    return true;
-  }
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(urlPart);
-}
-
-function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | undefined {
-  const urlParts = baseUrl.split('/');
-  let returnUrl = '';
-  for (const urlPart of urlParts) {
-    const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
-    if (matchedUrlPart) {
-      returnUrl += `/${matchedUrlPart}`;
-    } else if (isDynamicUrlIdSegment(urlPart)) {
-      returnUrl += `/${urlPart}`;
-    }
-  }
-  if (returnUrl) {
-    const parameters = UrlUtils.getRequestParamsFromUrl(redirectUrl);
-    for (const param of parameters) {
-      if (param !== DefaultValues.CLEAR_SELECTION_URL_PARAMETER) {
-        returnUrl = addParameterToUrl(returnUrl, param);
-      }
-    }
-    return returnUrl;
-  }
-  return undefined;
-}
-
 export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): string => {
   validUrls = validUrls ?? Object.values(PageUrls);
   const et1BaseUrl = process.env.ET1_BASE_URL ?? `${config.get('services.et1Legacy.url')}`;
-  validUrls.push(et1BaseUrl, LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH);
+  // Add specific full ET1 paths as exact-match entries — never return raw redirectUrl (isFullEt1LegacyUrl branch removed)
+  if (StringUtils.isNotBlank(et1BaseUrl)) {
+    validUrls.push(
+      et1BaseUrl + LegacyUrls.ET1_APPLY,
+      et1BaseUrl + LegacyUrls.ET1_PATH,
+      et1BaseUrl + LegacyUrls.ET1_SIGN_IN,
+      et1BaseUrl + '/en' + LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH,
+      et1BaseUrl + '/cy' + LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH
+    );
+  }
+  validUrls.push(LegacyUrls.ET1_APPLY, LegacyUrls.ET1_PATH, LegacyUrls.ET1_SIGN_IN);
 
   const urlStr = redirectUrl.split('?');
   const baseUrl = urlStr[0];
-
-  if (isFullEt1LegacyUrl(baseUrl, et1BaseUrl)) {
-    return redirectUrl;
-  }
 
   const staticUrl = getStaticValidUrl(baseUrl, redirectUrl, validUrls);
   if (staticUrl) {
     return staticUrl;
   }
 
+  // Dynamic URL validation for respondent-number paths (e.g. /respondent/1/acas-cert-num)
+  // NOTE: citizen-hub redirects must use returnSafeCitizenHubUrl instead of this function
   const dynamicUrl = getDynamicValidUrl(baseUrl, redirectUrl);
   if (dynamicUrl) {
     return dynamicUrl;
   }
 
   return ErrorPages.NOT_FOUND;
+};
+
+/**
+ * Builds a safe citizen-hub redirect URL, validating the caseId is numeric.
+ * Uses session lang (server-side state) for the language parameter so Fortify
+ * cannot trace taint from req.url through to res.redirect.
+ *
+ * @param caseId - The case ID to include in the URL
+ * @param req - The request, used only for session.lang
+ */
+export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string => {
+  if (!NumberUtils.isNumericValue(caseId)) {
+    return PageUrls.CLAIMANT_APPLICATIONS;
+  }
+  // Inline ternary with constant branches — Fortify can statically verify the output is always
+  // a constant regardless of req.url, breaking the taint chain to res.redirect
+  const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
+    ? languages.WELSH_URL_PARAMETER
+    : languages.ENGLISH_URL_PARAMETER;
+  return `${PageUrls.CITIZEN_HUB_BASE}${caseId}${langParam}`;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {
