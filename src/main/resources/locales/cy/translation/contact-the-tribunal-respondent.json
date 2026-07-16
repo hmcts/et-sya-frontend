@@ -2,16 +2,17 @@
   "title": "Gorchymyn y parti arall",
   "applicationType": "Gorchymyn y parti arall",
   "applicationTitle": "Gorchymyn bod y parti arall yn gwneud rhywbeth",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
       "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys orchymyn bod y parti arall yn gwneud neu’n darparu rhywbeth."
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -25,18 +26,19 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]Use this form to ask the tribunal to order the other party to do or provide something."
+      "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys orchymyn bod y parti arall yn gwneud neu’n darparu rhywbeth."
     },
-
-    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]what the claimant wants the other party to do. For example: the claimant may want the other party to provide information, documents, or further details of their response",
-        "[W]why it is relevant to the claimant’s claim",
-        "[W]if the claimant has already asked the other party to do or provide this thing. If they have, tell us when they asked and what the other party’s response was",
-        "[W]if the claimant has not asked the other party to do or provide this thing yet, explain why"
+        "beth mae'r hawlydd eisiau i’r parti arall ei wneud. Er enghraifft: efallai y bydd yr hawlydd eisiau i'r parti arall ddarparu gwybodaeth, dogfennau, neu fanylion pellach am eu hymateb",
+        "pam ei fod yn berthnasol i hawliad yr hawlydd",
+        "os ydy'r hawlydd eisoes wedi gofyn i’r hawlydd wneud neu ddarparu'r peth hwn. Os ydynt wedi gwneud hynny, dywedwch wrthym pryd y gwnaethant ofyn a beth oedd ymateb y parti arall",
+        "os nad ydy'r hawlydd wedi gofyn i’r parti arall wneud neu ddarparu'r peth hwn eto, esboniwch pam"
       ]
     }
   ]

@@ -2,10 +2,13 @@
   "title": "Gorchymyn tyst i fynychu",
   "applicationType": "Gorchymyn tyst i fynychu",
   "applicationTitle": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
-    { "type": "paragraph", "text": "Gallwch ofyn i’r tribiwnlys orchymyn bod tyst yn bresennol i roi tystiolaeth." },
+    {
+      "type": "paragraph",
+      "text": "Gallwch ofyn i’r tribiwnlys orchymyn bod tyst yn bresennol i roi tystiolaeth."
+    },
     {
       "type": "paragraph",
       "text": "Rhaid i’r tyst fod ym Mhrydain Fawr (Cymru, Lloegr a’r Alban). Nid yw hyn yn cynnwys Gogledd Iwerddon."
@@ -18,10 +21,18 @@
       "type": "paragraph",
       "text": "Dylech sylweddoli, os ydych chi’n galw tyst i roi tystiolaeth ar eich rhan, nid oes gennych hawl yn gyffredinol i herio na gwrth-ddweud yr hyn y mae'r tyst yn ei ddweud."
     },
-    { "type": "paragraph", "text": "Efallai y byddwch hefyd yn atebol am y costau o ganlyniad i bresenoldeb y tyst." },
-    { "type": "paragraph", "text": "Dylech ystyried a yw tystiolaeth y tyst hwn yn debygol o helpu eich achos." },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "paragraph",
+      "text": "Efallai y byddwch hefyd yn atebol am y costau o ganlyniad i bresenoldeb y tyst."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dylech ystyried a yw tystiolaeth y tyst hwn yn debygol o helpu eich achos."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -31,12 +42,10 @@
         "Os nad ydych wedi gofyn i’r tyst fynychu eto, esboniwch pam"
       ]
     },
-
     {
       "type": "paragraph",
       "text": "Os bydd y gorchymyn yn cael ei ganiatáu, bydd y tyst yn cael ei orchymyn i fod yn bresennol ar ddiwrnod cyntaf y gwrandawiad. Os ydych eisiau iddo fynychu ar ddiwrnod neu ddiwrnodau eraill, dywedwch wrthym:"
     },
-
     {
       "type": "list",
       "items": [
@@ -44,8 +53,10 @@
         "pam bod ei bresenoldeb yn angenrheidiol ar y dyddiadau hynny"
       ]
     },
-    { "type": "paragraph", "text": "Os ydych eisiau i’r tyst ddod â dogfennau efo nhw, dywedwch wrthym:" },
-
+    {
+      "type": "paragraph",
+      "text": "Os ydych eisiau i’r tyst ddod â dogfennau efo nhw, dywedwch wrthym:"
+    },
     {
       "type": "list",
       "items": [
@@ -59,61 +70,63 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]The claimant can ask the tribunal to order a witness to attend to give evidence."
+      "text": "Gall yr hawlydd ofyn i'r tribiwnlys orchymyn tyst i fod yn bresennol i roi tystiolaeth."
     },
     {
       "type": "paragraph",
-      "text": "[W]The witness must be in Great Britain (England, Scotland and Wales). This does not include Northern Ireland."
+      "text": "Rhaid i’r tyst fod ym Mhrydain Fawr (Cymru, Lloegr a’r Alban). Nid yw hyn yn cynnwys Gogledd Iwerddon."
     },
     {
       "type": "paragraph",
-      "text": "[W]The tribunal can limit the number of witnesses to be called to give evidence on a particular issue, especially if that issue is not central to the case."
+      "text": "Gall y tribiwnlys gyfyngu ar nifer y tystion i gael eu galw i roi tystiolaeth ar fater penodol, yn enwedig os nad yw'r mater hwnnw yn ganolog i'r achos."
     },
     {
       "type": "paragraph",
-      "text": "[W]The claimant should realise that, if they call a witness to give evidence on their behalf, they are not generally entitled to challenge or contradict what the witness says."
+      "text": "Dylai'r hawlydd sylweddoli, os ydynt yn galw tyst i roi tystiolaeth ar eu rhan, nad oes ganddynt hawl yn gyffredinol i herio na gwrth-ddweud yr hyn mae'r tyst yn ei ddweud."
     },
     {
       "type": "paragraph",
-      "text": "[W]The claimant may also be liable for the costs incurred by the witness’s attendance."
+      "text": "Efallai y bydd yr hawlydd hefyd yn atebol am y costau o ganlyniad i bresenoldeb y tyst."
     },
     {
       "type": "paragraph",
-      "text": "[W]The claimant should consider whether the evidence of this witness is likely to help their case."
+      "text": "Dylai'r hawlydd ystyried a yw tystiolaeth y tyst hwn yn debygol o helpu eu hachos."
     },
-
-    { "type": "bold-paragraph", "text": "[W]Details to include in the application:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]the witness’s full name and address",
-        "[W]why the attendance of this witness is necessary for a fair hearing. The tribunal needs to understand why the evidence is relevant, and why there is no alternative way of establishing the same points at the hearing without ordering a witness to attend",
-        "[W]if you or the claimant has asked this witness to attend voluntarily. If you have, tell us when you asked and what their response was",
-        "[W]If you or the claimant have not asked the witness to attend yet, explain why"
+        "enw a chyfeiriad llawn y tyst",
+        "pam fod presenoldeb y tyst hwn yn angenrheidiol ar gyfer gwrandawiad teg. Mae angen i’r tribiwnlys ddeall pam fod y dystiolaeth yn berthnasol, a pham nad oes ffordd amgen o sefydlu’r un pwyntiau yn y gwrandawiad heb orchymyn i’r tyst fod yn bresennol",
+        "os ydych chi neu'r hawlydd wedi gofyn i’r tyst hwn fynychu o’i wirfodd ei hun. Os ydych chi wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch chi ofyn a beth oedd eu hymateb",
+        "Os nad ydych chi neu'r hawlydd wedi gofyn i'r tyst fynychu eto, esboniwch pam"
       ]
     },
-
     {
       "type": "paragraph",
-      "text": "[W]If the order is granted, the witness will be ordered to attend on the first day of the hearing. If the claimant wants them to attend on another day or days, tell us:"
+      "text": "Os bydd y gorchymyn yn cael ei ganiatáu, bydd y tyst yn cael ei orchymyn i fod yn bresennol ar ddiwrnod cyntaf y gwrandawiad. Os ydy'r hawlydd eisiau iddo fynychu ar ddiwrnod arall neu ddiwrnodau eraill, dywedwch wrthym:"
     },
-
     {
       "type": "list",
       "items": [
-        "[W]the dates apart from the first day of the hearing that the claimant wants the witness to attend",
-        "[W]why their attendance is necessary on those dates"
+        "y dyddiadau ar wahân i ddiwrnod cyntaf y gwrandawiad mae'r hawlydd eisiau i'r tyst fynychu",
+        "pam bod ei bresenoldeb yn angenrheidiol ar y dyddiadau hynny"
       ]
     },
-    { "type": "paragraph", "text": "[W]If you or the claimant want the witness to bring documents, tell us:" },
-
+    {
+      "type": "paragraph",
+      "text": "Os ydych chi neu'r hawlydd eisiau i’r tyst ddod â dogfennau efo nhw, dywedwch wrthym:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]why these documents are relevant to the issues in this case",
-        "[W]why an order to disclose the documents would not be enough",
-        "[W]if you or the claimant have already asked the witness or anyone else to provide these documents. If you have, tell us when you asked and what their response was",
-        "[W]if you or the claimant have not asked the witness to provide the documents yet, explain why"
+        "pam fod y dogfennau hyn yn berthnasol i’r materion yn yr achos hwn",
+        "pam na fyddai gorchymyn i ddatgelu’r dogfennau yn ddigon",
+        "os ydych chi neu'r hawlydd eisoes wedi gofyn i'r tyst neu unrhyw un arall ddarparu'r dogfennau hyn. Os ydych chi wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch chi ofyn a beth oedd ei ymateb",
+        "os nad ydych chi neu'r hawlydd wedi gofyn i'r tyst ddarparu'r dogfennau eto, esboniwch pam"
       ]
     }
   ]
