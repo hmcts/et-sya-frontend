@@ -1,11 +1,11 @@
 {
   "title": "Newid fy manylion personol",
   "applicationType": "Newid fy manylion personol",
-  "applicationTypeRep": "[W]Change the claimant’s personal details",
+  "applicationTypeRep": "Newid manylion personol yr hawlydd",
   "applicationTitle": "Rwyf eisiau newid fy manylion personol",
-  "applicationTitleRep": "[W]The claimant wants to change their personal details",
-  "genericGuidanceRep": "[W]Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
-  "contactApplicationTextRep": "[W]Give details of the claimant’s application in the text box or upload a file",
+  "applicationTitleRep": "Mae'r hawlydd eisiau newid eu manylion personol",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -19,7 +19,10 @@
       "type": "paragraph",
       "text": "Os byddwch yn newid eich rhif ffôn, byddwn yn cysylltu â chi ar y rhif newydd os bydd gennym unrhyw gwestiynau am eich hawliad."
     },
-    { "type": "bold-paragraph", "text": "Manylion y gellid gwneud cais i’w newid:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion y gellid gwneud cais i’w newid:"
+    },
     {
       "type": "list",
       "items": [
@@ -34,25 +37,28 @@
   "contentRep": [
     {
       "type": "paragraph",
-      "text": "[W]Use this form to apply to change the personal details the claimant gave when making their claim."
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i newid y manylion personol a bu i'r hawlydd eu rhoi wrth wneud eu hawliad."
     },
     {
       "type": "paragraph",
-      "text": "[W]If the claimant changes their postal or email address, we’ll send any letters to the new address if they become unrepresented."
+      "text": "Os bydd yr hawlydd yn newid eu cyfeiriad post neu eu cyfeiriad e-bost, byddwn yn anfon unrhyw lythyrau i'w cyfeiriad newydd os byddant heb gynrychiolaeth"
     },
     {
       "type": "paragraph",
-      "text": "[W]If they change their telephone number, we’ll contact them using the new number if they become unrepresented."
+      "text": "Os byddant yn newid eu rhif ffôn, byddwn yn cysylltu â nhw ar y rhif newydd os byddant heb gynrychiolaeth."
     },
-    { "type": "bold-paragraph", "text": "[W]Details the claimant can apply to change:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion y gall yr hawlydd wneud cais i’w newid:"
+    },
     {
       "type": "list",
       "items": [
-        "[W]name",
-        "[W]sex and preferred title",
-        "[W]contact or home address",
-        "[W]telephone number",
-        "[W]email address"
+        "enw",
+        "rhyw a’r teitl sydd orau gennych",
+        "cyfeiriad cyswllt neu gyfeiriad cartref",
+        "rhif ffôn",
+        "cyfeiriad e-bost"
       ]
     }
   ]
