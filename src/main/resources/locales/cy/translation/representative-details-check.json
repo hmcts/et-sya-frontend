@@ -7,7 +7,7 @@
   "errors": {
     "representativeDetailsCheck": {
       "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",
-      "invalid": "[W]You must complete the Contact details section before you can mark it as completed"
+      "invalid": "Dylech gwblhau'r adran manylion Cyswllt cyn y gallwch ei farcio wedi'i gwblhau"
     }
   }
 }

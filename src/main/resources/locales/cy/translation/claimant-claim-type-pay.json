@@ -1,7 +1,7 @@
 {
-  "title": "[W]Pay claim",
-  "h1": "[W]Pay claim",
-  "legend": "[W]What type of pay claim is the claimant making?",
+  "title": "Hawliad sy’n ymwneud â thâl",
+  "h1": "Hawliad sy’n ymwneud â thâl",
+  "legend": "Pa fath o hawliad sy’n ymwneud â thâl mae'r hawlydd yn ei wneud?",
   "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
   "detailsSummary": "Beth yw hawliadau yn ymwneud â thâl?",
   "detailsText": "Mae’n erbyn y gyfraith i gyflogwr ddal tâl yn ôl ar ôl i weithiwr wneud gwaith iddynt. Gall hyn hefyd gynnwys didynnu tâl yn anghyfreithlon.",

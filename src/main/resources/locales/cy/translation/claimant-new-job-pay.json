@@ -3,16 +3,16 @@
   "h1": "Beth yw tâl y swydd newydd? (dewisol)",
   "p1": "Mae'r dudalen hon yn ddewisol ond os dewiswch ddweud wrthym y cyflog yna bydd yn rhaid i chi ddweud wrthym a yw'r hawlydd yn cael ei dalu'n wythnosol, yn fisol neu'n flynyddol.",
   "p2": "Dywedwch beth yw y cyflog gros - cyn treth a didyniadau eraill. Fe welwch hyn ar slipiau cyflog newydd yr hawlydd neu gofynnwch i'w cyflogwr am fanylion.",
-  "payBeforeTax": "[W]Enter the pay BEFORE tax and National Insurance amount in pounds",
-  "weeklyMonthlyAnnual": "[W]Is this the weekly, monthly or annual pay?",
+  "payBeforeTax": "Nodwch y cyflog CYN treth ac Yswiriant Gwladol mewn punnoedd",
+  "weeklyMonthlyAnnual": "Ai dyma'r cyflog wythnosol, misol neu flynyddol?",
   "errors": {
     "newJobPay": {
-      "required": "[W]Tell us the pay before tax and NI",
+      "required": "Dywedwch beth yw'r cyflog cyn treth ac YG",
       "invalidCurrency": "Rhowch Cyflog cyn treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
       "tooHighCurrency": "Rhaid i Cyflog cyn treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
     },
     "newJobPayInterval": {
-      "required": "[W]Tell us the pay frequency"
+      "required": "Dywedwch wrthym pa mor aml oedd y tâl"
     }
   }
 }

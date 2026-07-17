@@ -12,7 +12,7 @@
       "invalidDateInPast": "Ni ddylai’r dyddiad fod yn y gorffennol",
       "invalidDateMoreThanTenYearsInFuture": "Rhowch ddyddiad rhwng nawr a 10 mlynedd yn y dyfodol",
       "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
-      "monthNotANumber": "[W]Month must only contain numbers. For example, 04",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
       "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 2022",
       "invalidDate": "Rhaid i ddyddiad dechrau’r swydd newydd fod yn ddyddiad go iawn."
     }

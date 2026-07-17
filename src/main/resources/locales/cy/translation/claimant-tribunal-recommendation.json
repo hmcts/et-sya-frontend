@@ -1,11 +1,11 @@
 {
   "title": "Argymhelliad y tribiwnlys",
-  "h1": "[W]Tribunal recommendation (optional)",
+  "h1": "Argymhelliad y Tribiwnlys (dewisol)",
   "label": "Pa argymhelliad tribiwnlys hoffai'r hawlydd wneud?",
   "hint": "Dywedwch wrthym pa gamau gweithredu hoffai'r hawlydd i’r tribiwnlys eu hargymell y dylai eich atebydd/atebwyr eu cymryd i leihau effaith y gwahaniaethu sydd wedi digwydd.",
   "description": [
     "Dywedwch wrthym pa gamau gweithredu hoffai'r hawlydd i’r tribiwnlys eu hargymell y dylai eich atebydd/atebwyr eu cymryd i leihau effaith y gwahaniaethu sydd wedi digwydd."
   ],
   "detailsSummaryRecom": "Beth yw argymhelliad tribiwnlys?",
-  "detailsTextRecom": "[W]If the claimant's employer is found to have discriminated against them, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on the claimant"
+  "detailsTextRecom": "Os penderfynir bod cyflogwr yr hawlydd wedi gwahaniaethu yn eu herbyn, gall tribiwnlys wneud argymhelliad bod yr atebydd yn cymryd camau penodol i leihau effaith y gwahaniaethu ar yr hawlydd"
 }

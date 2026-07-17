@@ -5,7 +5,7 @@
   "addressLine2": "Llinell cyfeiriad 2 (dewisol)",
   "town": "Tref neu ddinas",
   "country": "Gwlad",
-  "postcode": "[W]Postcode (optional)",
+  "postcode": "Cod post (dewisol)",
   "errors": {
     "repAddress1": {
       "required": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd",

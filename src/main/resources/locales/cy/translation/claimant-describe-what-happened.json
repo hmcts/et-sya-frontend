@@ -4,12 +4,12 @@
   "label": "Disgrifiwch yr hawliad",
   "p1": "Dyma gyfle i esbonio pam fod yr hawlydd yn gwneud hawliad i dribiwnlys cyflogaeth.",
   "p2": "Mae’n bwysig eich bod yn canolbwyntio ar nodi beth ddigwyddodd i'r hawlydd ac esbonio, cyn belled ag y gallwch, pam fod yr hawlydd yn meddwl bod yr hyn a ddigwyddodd yn anghyfreithlon.",
-  "p3": "[W]The claim will be sent to the respondents who will have a chance to reply through the tribunal.",
+  "p3": "Bydd yr hawliad yn cael ei anfon at yr atebwyr, a fydd yn cael cyfle i ymateb trwy’r tribiwnlys.",
   "p4": "Yna bydd y tribiwnlys yn penderfynu (trwy wrandawiad fel arfer) p’un a yw’r atebwyr wedi gweithredu mewn modd anghyfreithlon.",
   "insetText": "Nid oes angen tystiolaeth fanwl arnom, fel copïau o negeseuon e-bost, llythyrau neu ddogfennau eraill, yn y cam hwn.  Cadwch y dogfennau hyn rhag ofn y byddwch eu hangen nes ymlaen. Efallai bydd arnoch angen dod â nhw i wrandawiad.",
   "collapsibleSection1": {
     "linkText": "Beth i ysgrifennu ar gyfer hawliadau gwahaniaethu",
-    "p1": "[W]Describe the events the claimant is complaining about.",
+    "p1": "Disgrifiwch y digwyddiadau mae'r hawlydd yn cwyno amdanynt.",
     "p2": "Ceisiwch roi dyddiadau’r digwyddiadau (a’u nodi mewn trefn cronolegol) a nodi enwau’r pobl eraill oedd yn rhan o’r digwyddiadau. Dylai'r hawlydd esbonio, y gorau y gallant, pam eu bod yn meddwl bod y digwyddiadau hyn yn golygu eu bod wedi bod yn destun gwahaniaethu anghyfreithlon, gan gyfeirio ar y nodweddion gwarchodedig maent yn dibynnu arnynt."
   },
   "collapsibleSection2": {
@@ -20,7 +20,7 @@
   "collapsibleSection3": {
     "linkText": "Beth i ysgrifennu ar gyfer hawliadau chwythu’r chwiban",
     "li1": "Rhowch ddyddiadau pob tro y mae'r hawlydd yn dweud eu bod wedi \"chwythu'r chwiban\" drwy wneud datgeliad gwarchodedig. Ar gyfer pob datgeliad, rhowch grynodeb o’r wybodaeth wnaethant ei datgelu, p’un a wnaed hyn ar lafar ynteu’n ysgrifenedig, yr unigolyn wnaethant ddatgelu’r wybodaeth iddo, pa fath o gamymddwyn oeddent yn ei ddatgelu, a pham roedd y datgeliad er lles y cyhoedd.",
-    "li2": "[W]Explain how the claimant was treated detrimentally (which can include being dismissed) because of the disclosure(s) giving dates and summarising incidents.",
+    "li2": "Esboniwch sut gafodd yr hawlydd eu trin yn niweidiol (a all gynnwys cael eu diswyddo) oherwydd y datgeliad(au), gan nodi dyddiadau a chrynhoi’r digwyddiadau.",
     "li3": "Nodwch enwau’r bobl oedd yn rhan o’r digwyddiadau ac sydd wedi bod yn dyst i’r digwyddiadau hyn.",
     "li4": "Disgrifiwch sut mae'r hawlydd wedi cael ei effeithio gan y driniaeth niweidiol."
   },

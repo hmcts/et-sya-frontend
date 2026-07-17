@@ -23,7 +23,7 @@
   },
   "errors": {
     "typeOfClaim": {
-      "required": "[W]Please select at least one of the options below to choose the type of claim."
+      "required": "Dewiswch o leiaf un o'r opsiynau isod i ddewis eich math o hawliad."
     },
     "otherClaim": {
       "required": "Dywedwch wrthym yn fras pa fath o hawliad y mae'r hawlydd yn ei wneud",

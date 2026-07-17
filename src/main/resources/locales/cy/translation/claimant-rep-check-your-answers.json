@@ -9,25 +9,25 @@
   "repDetails": {
     "header": "Eich manylion fel y cynrychiolydd",
     "typeOfRepresentative": "Math o gynrychiolydd",
-    "organisationName": "[W]Name of the representative's organisation",
+    "organisationName": "Enw sefydliad y cynrychiolydd",
     "representativeName": "Enw’r cynrychiolydd",
     "representativeAddress": "Cyfeiriad y cynrychiolydd",
-    "representativeTelephone": "[W]Representative's telephone number",
-    "howToBeContacted": "[W]How would you like us to contact you?",
+    "representativeTelephone": "Rhif ffôn y cynrychiolydd",
+    "howToBeContacted": "Sut hoffech i ni gysylltu â chi?",
     "contactLanguage": "Pa iaith ydych chi eisiau i ni ei defnyddio pan fyddwn yn cysylltu â chi?",
     "hearingLanguage": "Os bydd gwrandawiad, pa iaith ydych chi eisiau siarad yn y gwrandawiad?",
-    "hearingPreferences": "[W]Can you and the claimant attend hearings by video and phone?",
-    "disability": "[W]Does anyone in the claimant party have a physical, mental or learning disability or health condition that means they need support during the case?"
+    "hearingPreferences": "Allwch chi a'r hawlydd fynychu gwrandawiadau drwy fideo a ffôn?",
+    "disability": "A oes gan unrhyw un ym mharti'r hawlydd anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu eu bod angen cymorth yn ystod yr achos?"
   },
   "claimantDetails": {
     "header": "Manylion yr hawlydd",
-    "firstName": "[W]Claimant's first name",
-    "lastName": "[W]Claimant's last name",
+    "firstName": "Enw cyntaf yr hawlydd",
+    "lastName": "Enw olaf yr hawlydd",
     "dob": "Dyddiad geni",
     "sex": "Rhywedd",
     "preferredTitle": "Teitl o ddewis",
     "address": "Cyfeiriad",
-    "email": "[W]Email address"
+    "email": "Cyfeiriad e-bost"
   },
   "respondentDetails": {
     "header": "Manylion yr Atebydd",
@@ -38,12 +38,12 @@
   "claimDetails": {
     "header": "Manylion yr hawliad",
     "claimTypeDiscrimination": "Pa fath o hawliad yn ymwneud â gwahaniaethu ydych chi’n ei wneud?",
-    "claimTypePay": "[W]What type of pay claim are you making?",
+    "claimTypePay": "Pa fath o hawliad sy’n ymwneud â thâl ydych chi’n ei wneud?",
     "describeWhatHappened": "Disgrifiwch beth ddigwyddodd i chi",
     "ifClaimSuccessful": "Beth ydych chi ei eisiau os yw eich hawliad yn llwyddiannus?",
     "linkedCases": "Achosion cysylltiedig"
   },
-  "submitBtn": "[W]Submit",
+  "submitBtn": "Cyflwyno",
   "addAnotherRespondent": "Ychwanegu atebydd arall",
-  "submitError": "[W]Sorry, we're having technical problems processing your application. Please try again in a few minutes."
+  "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich cais. Rhowch gynnig arall arni ymhen ychydig o funudau."
 }
