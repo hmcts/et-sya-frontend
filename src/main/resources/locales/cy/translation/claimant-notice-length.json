@@ -5,7 +5,7 @@
   "hint": "[W]For example, 4",
   "errors": {
     "noticePeriodLength": {
-      "notANumber": "[W]Number of weeks or months in notice period must be a whole number, like 4 etc."
+      "notANumber": "Rhaid i’r nifer o wythnosau neu fisoedd yn y cyfnod rhybudd fod yn rhif, fel 4 ayyb."
     }
   }
 }

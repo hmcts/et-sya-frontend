@@ -4,12 +4,12 @@
   "label": "[W]Describe the claim",
   "p1": "[W]This is an opportunity to explain why the claimant is making a claim to an employment tribunal.",
   "p2": "[W]It's important that you focus on setting out what happened to the claimant and explain, as far as you can, why the claimant thinks what happened was unlawful.",
-  "p3": "[W]The claim will be sent to the respondents who will have a chance to reply through the tribunal.",
+  "p3": "Bydd yr hawliad yn cael ei anfon at yr atebwyr, a fydd yn cael cyfle i ymateb trwy’r tribiwnlys.",
   "p4": "[W]The tribunal will then decide (usually via a hearing) whether the respondents have acted unlawfully.",
   "insetText": "[W]We do not need detailed evidence, such as copies of emails, letters or other documents at this stage. Keep hold of these documents in case they are needed. You may need to bring them to a hearing.",
   "collapsibleSection1": {
     "linkText": "[W]What to write for discrimination claims",
-    "p1": "[W]Describe the events the claimant is complaining about.",
+    "p1": "Disgrifiwch y digwyddiadau mae'r hawlydd yn cwyno amdanynt.",
     "p2": "[W]Try to give the dates of the events (and set them out in date order) and the names of other people involved. The claimant should explain as best as they can why they consider that these events mean they have been unlawfully discriminated against by reference to the protected characteristics they rely on."
   },
   "collapsibleSection2": {
@@ -20,7 +20,7 @@
   "collapsibleSection3": {
     "linkText": "[W]What to write for whistleblower claims",
     "li1": "[W]Give the dates of each time the claimant says they \"blew the whistle\" by making a protected disclosure. For each disclosure summarise the information they disclosed, whether it was done verbally or in writing, the person to whom you made the disclosure, what kind of wrongdoing they were disclosing, and why the disclosing was in the public interest.",
-    "li2": "[W]Explain how the claimant was treated detrimentally (which can include being dismissed) because of the disclosure(s) giving dates and summarising incidents.",
+    "li2": "Esboniwch sut gafodd yr hawlydd eu trin yn niweidiol (a all gynnwys cael eu diswyddo) oherwydd y datgeliad(au), gan nodi dyddiadau a chrynhoi’r digwyddiadau.",
     "li3": "[W]Give the names of the people involved in and witness to these events and incidents.",
     "li4": "[W]Describe how the claimant has been affected by the detrimental treatment."
   },

@@ -2,7 +2,7 @@
   "title": "[W]Does the respondent make contributions to the claimant's pension? (optional)",
   "legend": "[W]Does the respondent make contributions to the claimant's pension? (optional)",
   "label": "[W]Does the respondent make contributions to the claimant's pension?",
-  "pensionContributions": "[W]Enter their pension contributions - worked out weekly",
+  "pensionContributions": "Rhowch eu cyfraniadau pensiwn - wedi’u cyfrifo ar sail wythnos",
   "errors": {
     "claimantPensionWeeklyContribution": {
       "invalidCurrency": "[W]Enter pension contributions in the correct format, for example £600 or £193.54",

@@ -1,7 +1,7 @@
 {
-  "title": "[W]Pay claim",
-  "h1": "[W]Pay claim",
-  "legend": "[W]What type of pay claim is the claimant making?",
+  "title": "Hawliad sy’n ymwneud â thâl",
+  "h1": "Hawliad sy’n ymwneud â thâl",
+  "legend": "Pa fath o hawliad sy’n ymwneud â thâl mae'r hawlydd yn ei wneud?",
   "selectAllHint": "[W]Select all that apply.",
   "detailsSummary": "[W]What are pay claims?",
   "detailsText": "[W]It is against the law for an employer to withhold pay after an employee has carried out work for them. This can also include unlawful deduction of pay.",

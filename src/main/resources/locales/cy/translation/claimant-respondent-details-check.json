@@ -1,6 +1,6 @@
 {
   "title": "[W]Check the respondent details",
-  "subTitle": "[W]Respondent ",
+  "subTitle": "Atebydd",
   "legend": "[W]Have you completed this section?",
   "hint": "[W]You can change your answers later.",
   "yes": "[W]Yes, I've completed this section",
@@ -13,7 +13,7 @@
     "another": "[W]Another person I'm making a claim with has an Acas early conciliation certificate number",
     "no_power": "[W]Acas doesn't have the power to conciliate on some or all of my claim",
     "employer": "[W]My employer has already been in touch with Acas",
-    "unfair_dismissal": "[W]The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
+    "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim"
   },
   "unProvided": "[W]Not provided",
   "change": "[W]Change",

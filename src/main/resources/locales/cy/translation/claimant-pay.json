@@ -4,9 +4,9 @@
   "label": "[W]Claimant's pay",
   "p1": "[W]For some types of claims, the tribunal will need the average of the claimant's last 12 weeks' pay. Provide your best estimate for the average weekly pay. You can correct it later if needed. Providing the pay information will help the tribunal process the claim.",
   "p2": "[W]You can get information from payslips. Include any overtime payments, commission and bonuses.",
-  "payBeforeTax": "[W]Enter pay BEFORE tax and National Insurance",
-  "payAfterTax": "[W]Enter pay AFTER tax and National Insurance",
-  "weeklyMonthlyAnnual": "[W]Is this the weekly, monthly or annual pay?",
+  "payBeforeTax": "Rhowch y tâl CYN didyniadau treth ac Yswiriant Gwladol",
+  "payAfterTax": "Rhowch y tâl AR ÔL didyniadau treth ac Yswiriant Gwladol",
+  "weeklyMonthlyAnnual": "Ai dyma'r cyflog wythnosol, misol neu flynyddol?",
   "errors": {
     "payBeforeTax": {
       "required": "[W]Tell us at least one amount for the claimant's pay",

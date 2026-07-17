@@ -5,7 +5,7 @@
   "addressLine2": "[W]Address line 2 (optional)",
   "town": "[W]Town or city",
   "country": "[W]Country",
-  "postcode": "[W]Postcode (optional)",
+  "postcode": "Cod post (dewisol)",
   "errors": {
     "repAddress1": {
       "required": "[W]Enter the first line of the representative's address",

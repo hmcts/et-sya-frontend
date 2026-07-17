@@ -12,7 +12,7 @@
       "invalidDateInPast": "[W]Date entered must not be in the past",
       "invalidDateMoreThanTenYearsInFuture": "[W]Enter a date between now and 10 years in the future",
       "dayNotANumber": "[W]Day must only contain numbers. For example, 23",
-      "monthNotANumber": "[W]Month must only contain numbers. For example, 04",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
       "yearNotANumber": "[W]Year must only contain numbers. For example, 2022",
       "invalidDate": "[W]New job start date must be a real date."
     }
