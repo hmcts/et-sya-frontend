@@ -1,78 +1,78 @@
 {
-  "title": "Tell us if you need support",
-  "h1": "Tell us if you need support",
-  "legend": "Your Support",
-  "p": "Some people need support to use HMCTS service. You can ask for:",
+  "title": "Dywedwch wrthym os oes arnoch angen cymorth",
+  "h1": "Dywedwch wrthym os oes arnoch angen cymorth",
+  "legend": "Eich Cymorth",
+  "p": "Mae rhai pobl angen cymorth i gael mynediad at wybodaeth ac i ddefnyddio ein gwasanaethau. Gelwir hyn yn aml yn addasiad rhesymol.",
   "detailsSummary": {
-    "subheading": "Examples of reasonable adjustments are:",
-    "p": "You can also tell us if you're able to attend a remote hearing.",
-    "bullet1": "a language interpreter",
-    "bullet2": "reasonable adjustments for people with a health condition or disability",
-    "bullet3": "special measures to feel safe at court",
-    "bullet4": "regular breaks during a hearing"
+    "subheading": "Dyma enghreifftiau o addasiadau rhesymol:",
+    "p": "Gallwch wneud cais am addasiad rhesymol nawr drwy ddewis 'Ymlaen i'r cwestiynau', neu ar unrhyw adeg ar ôl i chi gyflwyno’ch hawliad. Byddwn yn dweud wrthych sut i wneud hyn.",
+    "bullet1": "mynediad di-risiau os yw'ch achos yn mynd i wrandawiad ac mae'n cael ei gynnal wyneb yn wyneb",
+    "bullet2": "dod â chymorth gyda chi i'r gwrandawiad, fel rhywun rydych chi'n ei adnabod neu gi cymorth",
+    "bullet3": "dogfennau mewn fformat amgen, fel print bras",
+    "bullet4": "seibiannau rheolaidd yn ystod gwrandawiad"
   },
   "details": [
     {
-      "header": "Support before a court or tribunal hearing",
+      "header": "Cymorth cyn gwrandawiad tribiwnlys",
       "blocks": [
         {
-          "paragraph": "If you need support before your hearing. for example a reasonable adjustment for alternative formats like large print. You can ask for support at any time during your case."
+          "paragraph": "Os oes angen cymorth arnoch cyn eich gwrandawiad, er enghraifft addasiad rhesymol ar gyfer fformatau amgen fel print bras, gallwch ofyn am gymorth ar unrhyw adeg yn ystod eich achos."
         }
       ]
     },
     {
-      "header": "Support at a hearing",
+      "header": "Cymorth mewn gwrandawiad",
       "blocks": [
         {
-          "paragraph": "Not everyone has to attend a hearing. If you need to attend a hearing were you know and you can tell us what support you need."
+          "paragraph": "Nid oes rhaid i bawb fynychu gwrandawiad. Byddwn yn rhoi gwybod i chi os oes angen i chi fynychu gwrandawiad - yna gallwch ddweud wrthym pa gymorth y bydd ei angen arnoch. Ystyriwch wrandawiadau o bell a rhai wyneb yn wyneb, rhag ofn bod y math o wrandawiad o’ch dewis ddim yn bosibl."
         }
       ]
     },
     {
-      "header": "Support for someone else",
+      "header": "Cymorth i rywun arall",
       "blocks": [
         {
-          "paragraph": "If someone you're bringing to the hearing needs support, contact us using details on the main page of your account."
+          "paragraph": "Os oes angen cymorth ar rywun sy'n dod gyda chi i'r gwrandawiad, cysylltwch â'r tribiwnlys ar ôl i chi gyflwyno'ch hawliad."
         }
       ]
     },
     {
-      "header": "What happens next",
+      "header": "Gwneud cais am rywbeth arall",
       "blocks": [
         {
-          "paragraph": "Once you've submitted your request for support, it'll be reviewed by HMCTS or a judge. We'll keep you updated on status of request in your account. If we need more information we'll contact you."
+          "paragraph": "Rhaid i chi gysylltu â'r tribiwnlys yn uniongyrchol i wneud cais am rywbeth arall ar eich cyfer chi neu rywun arall sy'n dod i'r llys i'ch cefnogi."
         },
         {
-          "paragraph": "Examples of other support are:"
+          "paragraph": "Dyma enghreifftiau o gymorth arall:"
         },
         {
           "bulletList": [
-            "communication and documents in Welsh or to speak Welsh at your hearing",
-            "a language interpreter",
-            "special measures, like giving evidence in private because you are vulnerable"
+            "cyfathrebu a dogfennau yn y Gymraeg neu i siarad yn y Gymraeg yn eich gwrandawiad",
+            "cyfieithydd",
+            "mesurau arbennig, fel rhoi tystiolaeth yn breifat, oherwydd eich bod yn agored i niwed"
           ]
         },
         {
-          "paragraph": "After you submit your claim, you can contact the tribunal dealing with your claim to ask for something else."
+          "paragraph": "Ar ôl i chi gyflwyno eich hawliad, gallwch gysylltu â’r tribiwnlys sy’n delio â’ch hawliad i ofyn am rywbeth arall."
         }
       ]
     }
   ],
-  "yes": "Yes",
-  "continueToQuestions": "Continue to the questions",
-  "noSupport": "I do not need any support at this time",
-  "adjustmentDetailTextLabel": "Tell us what support you need to request",
-  "textAreaHint": "You can describe to us what you need",
-  "startNow": "Start now",
+  "yes": "Oes",
+  "continueToQuestions": "Ymlaen i'r cwestiynau",
+  "noSupport": "Nac oes, nid oes arnaf angen unrhyw gymorth ar hyn o bryd",
+  "adjustmentDetailTextLabel": "Dywedwch wrthym pa gymorth rydych angen gofyn amdano",
+  "textAreaHint": "Gallwch ddisgrifio beth sydd ei angen arnoch",
+  "startNow": "Dechrau",
   "errors": {
     "reasonableAdjustments": {
-      "required": "Select whether you need support"
+      "required": "Dewiswch a oes arnoch angen cymorth"
     },
     "yourSupportRedirect": {
-      "required": "There was a problem starting your support request. Try again later."
+      "required": "Roedd problem wrth ddechrau eich cais am gymorth. Ceisiwch eto yn nes ymlaen."
     },
     "reasonableAdjustmentsDetail": {
-      "required": "Give details of the support you need"
+      "required": "Rhowch fanylion am y cymorth sydd ei angen arnoch"
     }
   }
 }
