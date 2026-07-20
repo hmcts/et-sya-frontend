@@ -200,11 +200,11 @@ describe('Router Helpers - returnValidUrl', () => {
     expect(result).toEqual(`/claimant-rep-edit-name/${caseId}?lng=en`);
   });
 
-  it('should return the ET1 base URL path when it starts with ET1_BASE_URL', () => {
+  it('should not return an arbitrary path under the ET1 base URL (open redirect prevented)', () => {
     const originalEnv = process.env.ET1_BASE_URL;
     process.env.ET1_BASE_URL = 'http://et1.test';
     const result = returnValidUrl('http://et1.test/some-path');
-    expect(result).toEqual('http://et1.test/some-path');
+    expect(result).toEqual('/not-found');
     process.env.ET1_BASE_URL = originalEnv;
   });
 });
