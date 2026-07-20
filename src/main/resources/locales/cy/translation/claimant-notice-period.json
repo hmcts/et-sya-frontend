@@ -1,6 +1,6 @@
 {
   "title": "A oedd gan yr hawlydd, neu a wnaeth yr hawlydd weithio cyfnod rhybudd?",
   "legend": "A oedd gan yr hawlydd, neu a wnaeth yr hawlydd weithio cyfnod rhybudd (dewisol)?",
-  "yes": "[W]Yes",
-  "no": "[W]No"
+  "yes": "Oedd",
+  "no": "Nac oedd"
 }

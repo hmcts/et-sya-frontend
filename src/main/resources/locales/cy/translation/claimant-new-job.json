@@ -1,8 +1,8 @@
 {
   "title": "A yw’r hawlydd wedi cael swydd newydd?",
   "h1": "A yw’r hawlydd wedi cael swydd newydd? (dewisol)",
-  "yes": "[W]Yes",
-  "no": "[W]No",
+  "yes": "Oes",
+  "no": "Nac oes",
   "errors": {
     "newJob": {
       "required": "Dywedwch wrthym a oes gan yr hawlydd swydd newydd"
