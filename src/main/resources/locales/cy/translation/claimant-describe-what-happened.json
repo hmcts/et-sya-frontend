@@ -43,7 +43,7 @@
   "errors": {
     "claimSummaryText": {
       "required": "Dywedwch wrthym beth ddigwyddodd, neu uwchlwythwch ddogfen sy'n disgrifio'r hawliad.",
-      "tooLong": "[W]Description must be 2,500 characters or less"
+      "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
     },
     "claimSummaryFileName": {
       "invalidFileFormat": "Nid yw'r math o ffeil rydych chi'n ceisio ei uwchlwytho yn cael ei gefnogi gan ein system. Byddwch cystal a newid hon i ffeil gyffredin, e.e. Word, Excel, pdf. os gwelwch yn dda.",
