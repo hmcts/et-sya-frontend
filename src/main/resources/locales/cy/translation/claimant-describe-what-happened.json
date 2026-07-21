@@ -1,55 +1,55 @@
 {
-  "title": "[W]Describe the claim",
-  "h1": "[W]Describe the claim",
-  "label": "[W]Describe the claim",
-  "p1": "[W]This is an opportunity to explain why the claimant is making a claim to an employment tribunal.",
-  "p2": "[W]It's important that you focus on setting out what happened to the claimant and explain, as far as you can, why the claimant thinks what happened was unlawful.",
-  "p3": "[W]The claim will be sent to the respondents who will have a chance to reply through the tribunal.",
-  "p4": "[W]The tribunal will then decide (usually via a hearing) whether the respondents have acted unlawfully.",
-  "insetText": "[W]We do not need detailed evidence, such as copies of emails, letters or other documents at this stage. Keep hold of these documents in case they are needed. You may need to bring them to a hearing.",
+  "title": "Disgrifiwch yr hawliad",
+  "h1": "Disgrifiwch yr hawliad",
+  "label": "Disgrifiwch yr hawliad",
+  "p1": "Dyma gyfle i esbonio pam fod yr hawlydd yn gwneud hawliad i dribiwnlys cyflogaeth.",
+  "p2": "Mae’n bwysig eich bod yn canolbwyntio ar nodi beth ddigwyddodd i'r hawlydd ac esbonio, cyn belled ag y gallwch, pam fod yr hawlydd yn meddwl bod yr hyn a ddigwyddodd yn anghyfreithlon.",
+  "p3": "Bydd yr hawliad yn cael ei anfon at yr atebwyr, a fydd yn cael cyfle i ymateb trwy’r tribiwnlys.",
+  "p4": "Yna bydd y tribiwnlys yn penderfynu (trwy wrandawiad fel arfer) p’un a yw’r atebwyr wedi gweithredu mewn modd anghyfreithlon.",
+  "insetText": "Nid oes angen tystiolaeth fanwl arnom, fel copïau o negeseuon e-bost, llythyrau neu ddogfennau eraill, yn y cam hwn.  Cadwch y dogfennau hyn rhag ofn y byddwch eu hangen nes ymlaen. Efallai bydd arnoch angen dod â nhw i wrandawiad.",
   "collapsibleSection1": {
-    "linkText": "[W]What to write for discrimination claims",
-    "p1": "[W]Describe the events the claimant is complaining about.",
-    "p2": "[W]Try to give the dates of the events (and set them out in date order) and the names of other people involved. The claimant should explain as best as they can why they consider that these events mean they have been unlawfully discriminated against by reference to the protected characteristics they rely on."
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau gwahaniaethu",
+    "p1": "Disgrifiwch y digwyddiadau mae'r hawlydd yn cwyno amdanynt.",
+    "p2": "Ceisiwch roi dyddiadau’r digwyddiadau (a’u nodi mewn trefn cronolegol) a nodi enwau’r pobl eraill oedd yn rhan o’r digwyddiadau. Dylai'r hawlydd esbonio, y gorau y gallant, pam eu bod yn meddwl bod y digwyddiadau hyn yn golygu eu bod wedi bod yn destun gwahaniaethu anghyfreithlon, gan gyfeirio ar y nodweddion gwarchodedig maent yn dibynnu arnynt."
   },
   "collapsibleSection2": {
-    "linkText": "[W]What to write for dismissal claims",
-    "p1": "[W]Describe the circumstances of the claimant's dismissal.",
-    "p2": "[W]Try to give dates of the events (like dismissal meetings) and the names of others involved (such as the person who dismissed the claimant). The claimant should explain as best they can, why they consider their dismissal was unfair."
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau diswyddo",
+    "p1": "Disgrifiwch amgylchiadau diswyddo'r hawlydd.",
+    "p2": "Ceisiwch nodi dyddiadau digwyddiadau (fel cyfarfodydd diswyddo) ac enwau’r bobl eraill oedd yn rhan ohonynt (fel yr unigolyn wnaeth ddiswyddo'r hawlydd). Dylai'r hawlydd esbonio, y gorau y gallant, pam eu bod yn ystyried bod eu diswyddo wedi bod yn annheg."
   },
   "collapsibleSection3": {
-    "linkText": "[W]What to write for whistleblower claims",
-    "li1": "[W]Give the dates of each time the claimant says they \"blew the whistle\" by making a protected disclosure. For each disclosure summarise the information they disclosed, whether it was done verbally or in writing, the person to whom you made the disclosure, what kind of wrongdoing they were disclosing, and why the disclosing was in the public interest.",
-    "li2": "[W]Explain how the claimant was treated detrimentally (which can include being dismissed) because of the disclosure(s) giving dates and summarising incidents.",
-    "li3": "[W]Give the names of the people involved in and witness to these events and incidents.",
-    "li4": "[W]Describe how the claimant has been affected by the detrimental treatment."
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau chwythu’r chwiban",
+    "li1": "Rhowch ddyddiadau pob tro y mae'r hawlydd yn dweud eu bod wedi \"chwythu'r chwiban\" drwy wneud datgeliad gwarchodedig. Ar gyfer pob datgeliad, rhowch grynodeb o’r wybodaeth wnaethant ei datgelu, p’un a wnaed hyn ar lafar ynteu’n ysgrifenedig, yr unigolyn wnaethant ddatgelu’r wybodaeth iddo, pa fath o gamymddwyn oeddent yn ei ddatgelu, a pham roedd y datgeliad er lles y cyhoedd.",
+    "li2": "Esboniwch sut gafodd yr hawlydd eu trin yn niweidiol (a all gynnwys cael eu diswyddo) oherwydd y datgeliad(au), gan nodi dyddiadau a chrynhoi’r digwyddiadau.",
+    "li3": "Nodwch enwau’r bobl oedd yn rhan o’r digwyddiadau ac sydd wedi bod yn dyst i’r digwyddiadau hyn.",
+    "li4": "Disgrifiwch sut mae'r hawlydd wedi cael ei effeithio gan y driniaeth niweidiol."
   },
   "collapsibleSection4": {
-    "linkText": "[W]What to write for 'other' claims",
-    "li1": "[W]The tribunal can only hear cases where legislation gives it power to do so. Explain briefly, what legislation the claimant says covers this claim.",
-    "li2": "[W]Even if the claimant cannot, the most important thing is to explain what was done and so far as they can, why the claimant says it was unlawful. Give dates and brief details of each incident, including the name of the person responsible."
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau ‘eraill’",
+    "li1": "Gall y tribiwnlys ond gwrando achosion lle bo’r ddeddfwriaeth yn rhoi’r pŵer iddo wneud hynny. Eglurwch yn fras pa ddeddfwriaeth y mae'r hawlydd yn dweud sy'n cwmpasu'r hawliad hwn.",
+    "li2": "Hyd yn oed os na all yr hawlydd wneud hynny, y peth pwysicaf yw esbonio beth gafodd ei wneud a, cyn belled ag y gallant, dweud pam mae'r hawlydd yn dweud yr oedd yn anghyfreithlon. Nodwch ddyddiadau a manylion bras am bob digwyddiad, gan gynnwys enw’r unigolyn oedd yn gyfrifol amdanynt."
   },
-  "hint": "[W]Use this to describe the events around the dispute, or add to your claim by uploading a document",
+  "hint": "Defnyddiwch hwn i ddisgrifio’r digwyddiadau sy’n ymwneud â’r anghydfod, neu ychwanegwch at eich hawliad trwy lwytho dogfen.",
   "fileUpload": {
-    "label": "[W]Upload a document that describes the claim (optional)",
-    "linkText": "[W]Or upload your summary as a separate document (optional)",
-    "hint": "[W]Upload a file that describes the claim. Maximum 50MB.",
-    "hintExisting": "[W]Currently uploaded: {{filename}}. Upload a different file to replace it."
+    "label": "Uwchlwythwch ddogfen sy'n disgrifio'r hawliad (dewisol)",
+    "linkText": "Neu uwchlwythwch eich crynodeb fel dogfen ar wahân (dewisol)",
+    "hint": "Uwchlwythwch ffeil sy'n disgrifio'r hawliad. Uchafswm maint o 50MB.",
+    "hintExisting": "Wedi'i uwchlwytho'n barod: {{filename}}. Llwythwch ffeil wahanol i'w disodli."
   },
   "acceptedFormats": {
-    "label": "[W]Accepted formats",
-    "p1": "[W]Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+    "label": "Fformatau derbyniol",
+    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {
-      "required": "[W]Tell us what happened, or upload a document describing the claim.",
-      "tooLong": "[W]Description must be 2,500 characters or less"
+      "required": "Dywedwch wrthym beth ddigwyddodd, neu uwchlwythwch ddogfen sy'n disgrifio'r hawliad.",
+      "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
     },
     "claimSummaryFileName": {
-      "invalidFileFormat": "[W]The file must be a DOC, DOCX, PDF, TXT or RTF",
-      "invalidFileName": "[W]The file name must not contain special characters",
-      "invalidFileSize": "[W]The file must be smaller than 50MB",
-      "backEndError": "[W]There was an error uploading the file. Try again."
+      "invalidFileFormat": "Nid yw'r math o ffeil rydych chi'n ceisio ei uwchlwytho yn cael ei gefnogi gan ein system. Byddwch cystal a newid hon i ffeil gyffredin, e.e. Word, Excel, pdf. os gwelwch yn dda.",
+      "invalidFileName": "Mae enw’r ffeil a ddarparwyd yn annilys. Ni all enw’r ffeil fod yn fwy na 150 llythyren ac ni all gynnwys unrhyw un o’r nodau canlynol: \\/:*?\"|<>",
+      "invalidFileSize": "Mae'r ffeil rydych chi'n ceisio ei lwytho wedi mynd y tu hwnt i'r terfyn maint, ceisiwch leihau maint y ffeil.",
+      "backEndError": "Cafwyd problem wrth geisio llwytho eich ffeil. Rhowch gynnig arni. Os yw hyn yn parhau, cysylltwch â’r adran gefnogaeth."
     }
   }
 }

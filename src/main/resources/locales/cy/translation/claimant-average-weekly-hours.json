@@ -1,15 +1,15 @@
 {
-  "title": "[W]Claimant's average weekly hours",
-  "h1": "[W]Claimant's average weekly hours (optional)",
-  "p1": "[W]If the number of hours worked changed each week (for example, if they had a zero-hours contract), use the final 12 weeks of payslips to work out the weekly average.",
-  "enterAverageHours": "[W]Enter average weekly hours",
-  "hint": "[W]Do not include overtime hours.",
+  "title": "Oriau gwaith wythnosol cyfartalog yr hawlydd",
+  "h1": "Oriau gwaith wythnosol cyfartalog yr hawlydd (dewisol)",
+  "p1": "Os oedd nifer yr oriau yr oedd yr hawlydd yn gweithio yn newid bob wythnos (er enghraifft, os oeddent ar gontract dim oriau), defnyddiwch y 12 wythnos olaf o slipiau cyflog i gyfrifo’r cyfartaledd wythnosol.",
+  "enterAverageHours": "Nodwch eich oriau wythnosol ar gyfartaledd",
+  "hint": "Peidiwch â chynnwys unrhyw oriau goramser.",
   "errors": {
     "avgWeeklyHrs": {
-      "invalid": "[W]Enter average weekly hours in a valid format, for example 0, 10, 35 etc",
-      "exceeded": "[W]Hours must be less than 168 (max number of hours in a week)",
-      "notANumber": "[W]Hours worked in a week must be entered as a number, for example 0, 10, 35 etc.",
-      "negativeNumber": "[W]Hours worked cannot be a negative value. It must be entered as a number, for example 0, 10, 35 etc."
+      "invalid": "Rhowch oriau wythnosol cyfartalog mewn fformat dilys, er enghraifft 0, 10, 35 ac ati",
+      "exceeded": "Rhaid i'r oriau fod yn llai na 168 (nifer uchaf yr oriau mewn wythnos)",
+      "notANumber": "Rhaid nodi oriau a weithiwyd mewn wythnos fel rhif, er enghraifft 0, 10, 35 ayyb.",
+      "negativeNumber": "Ni all oriau a weithir fod yn werth negyddol. Rhaid ei nodi fel rhif, er enghraifft 0, 10, 35 ayb."
     }
   }
 }

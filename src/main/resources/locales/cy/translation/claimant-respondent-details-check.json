@@ -1,29 +1,29 @@
 {
-  "title": "[W]Check the respondent details",
-  "subTitle": "[W]Respondent ",
-  "legend": "[W]Have you completed this section?",
-  "hint": "[W]You can change your answers later.",
-  "yes": "[W]Yes, I've completed this section",
-  "no": "[W]No, I'll come back to it later",
-  "name": "[W]Name",
-  "address": "[W]Address",
-  "acasNum": "[W]Acas certificate number",
-  "noAcasReason": "[W]Why do you not have an Acas number?",
+  "title": "Gwiriwch fanylion yr atebydd",
+  "subTitle": "Atebydd",
+  "legend": "Ydych chi wedi cwblhau’r adran hon?",
+  "hint": "Gallwch newid eich atebion yn hwyrach ymlaen.",
+  "yes": "Do, rwyf wedi cwblhau’r adran hon",
+  "no": "Naddo, rwyf am ddychwelyd i’r adran hon yn hwyrach ymlaen",
+  "name": "Enw",
+  "address": "Cyfeiriad",
+  "acasNum": "Rhif tystysgrif Acas",
+  "noAcasReason": "Pam nad oes gennych rif Acas?",
   "acasReason": {
-    "another": "[W]Another person I'm making a claim with has an Acas early conciliation certificate number",
-    "no_power": "[W]Acas doesn't have the power to conciliate on some or all of my claim",
-    "employer": "[W]My employer has already been in touch with Acas",
-    "unfair_dismissal": "[W]The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
+    "another": "Mae gan rywun arall rwy'n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
+    "no_power": "Nid oes gan Acas y pŵer i gymodi ar fy hawliad neu ran o fy hawliad.",
+    "employer": "Mae fy nghyflogwr eisoes wedi bod mewn cysylltiad ag Acas",
+    "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim"
   },
-  "unProvided": "[W]Not provided",
-  "change": "[W]Change",
-  "addAnotherRespondent": "[W]Add another respondent",
-  "saveAndContinue": "[W]Save and continue",
-  "saveForLater": "[W]Save as draft",
+  "unProvided": "Dim byd wedi ei ddarparu",
+  "change": "Newid",
+  "addAnotherRespondent": "Ychwanegu atebydd arall",
+  "saveAndContinue": "Cadw a pharhau",
+  "saveForLater": "Cadw fel drafft",
   "errors": {
     "employmentAndRespondentCheck": {
-      "required": "[W]Tell us if you have completed this section",
-      "invalid": "[W]You must complete the Employment and respondent details section before you can mark it as completed"
+      "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",
+      "invalid": "Rhaid i chi gwblhau'r adran manylion cyflogaeth a'r atebydd cyn y gallwch ei marcio fel un sydd wedi'i chwblhau."
     }
   }
 }

@@ -1,33 +1,33 @@
 {
-  "title": "[W]What does the claimant want from the claim?",
-  "h1": "[W]What does the claimant want from the claim? (optional)",
-  "legend": "[W]What does the claimant want if their claim is successful?",
-  "detailsSummaryComp": "[W]Compensation - what can a tribunal award?",
+  "title": "Beth hoffai’r hawlydd ei gael allan o'r hawliad?",
+  "h1": "Beth hoffai’r hawlydd ei gael allan o'r hawliad? (dewisol)",
+  "legend": "Beth hoffai’r hawlydd ei gael os yw ei hawliad yn llwyddiannus?",
+  "detailsSummaryComp": "Iawndal - beth all tribiwnlys ddyfarnu?",
   "detailsTextComp": {
-    "p1": "[W]If a tribunal decides the claimant has been unfairly dismissed, they'll normally receive compensation which is made up of:",
-    "li1": "[W]a basic award - fixed sum worked out using a standard formula",
-    "li2": "[W]a compensatory award - compensation for the actual money lost due to dismissal, or which the claimant expects to lose in future because of their dismissal",
-    "p2": "[W]Compensation can be reduced for various reasons and a tribunal will tell you more about this if it applies in the specific circumstances.",
-    "p3": "[W]In disciplinary or grievance cases, the claimant may be entitled to an increased award if an employer fails to follow the guidance set out in the",
-    "p4": "[W]Similarly, awards can be reduced if a tribunal decides the claimant failed to follow the guidance set out in the",
-    "acasLinkText": "[W]Acas Code of Practice on disciplinary and grievance procedures (opens in new tab).",
+    "p1": "Os bydd tribiwnlys yn penderfynu bod yr hawlydd wedi’i ddiswyddo’n annheg, fel arfer byddant yn derbyn iawndal a fydd yn cynnwys:",
+    "li1": "dyfarniad cyffredin - swm penodol a gyfrifir gan ddefnyddio fformiwla safonol",
+    "li2": "dyfarndal cyffredin - iawndal am yr union arian a gollwyd o ganlyniad i ddiswyddo, neu mae'r hawlydd yn disgwyl ei golli yn y dyfodol oherwydd eu diswyddiad",
+    "p2": "Gall iawndal gael ei ostwng am amrywiol resymau a bydd y tribiwnlys yn dweud mwy wrthych am hyn os yw'n berthnasol yn yr amgylchiadau penodol.",
+    "p3": "Mewn achosion disgyblu neu achosion yn ymwneud â chwyn, efallai y bydd gan yr hawlydd hawl i ddyfarniad uwch os bydd cyflogwr yn methu â dilyn y cyfarwyddyd a nodir yn y",
+    "p4": "Yn yr un modd, gellir lleihau dyfarniadau os bydd tribiwnlys yn penderfynu bod yr hawlydd wedi methu â dilyn y cyfarwyddyd a nodir yng",
+    "acasLinkText": "Nghod Ymarfer Acas ar weithdrefnau disgyblu a chwynion (yn agor mewn tab newydd).",
     "acasLinkUrl": "https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures",
-    "p5": "[W]In certain claims, such as those involving discrimination, a tribunal may compensate the claimant for 'injury to feelings' (individual hurt and distress the claimant may have suffered) in addition to compensation for financial loss."
+    "p5": "Gyda rhai hawliadau, megis y rhai hynny sy’n ymwneud â gwahaniaethu, gall tribiwnlys ddigolledu'r hawlydd am ‘anaf i deimladau’ (poen a gofid mae'r hawlydd wedi’i ddioddef) yn ychwanegol at iawndal am golled ariannol."
   },
-  "detailsSummaryRecom": "[W]What is a tribunal recommendation?",
-  "detailsTextRecom": "[W]If the claimant's employer is found to have discriminated against them, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on the claimant",
+  "detailsSummaryRecom": "Beth yw argymhelliad tribiwnlys?",
+  "detailsTextRecom": "Os penderfynir bod cyflogwr yr hawlydd wedi gwahaniaethu yn eu herbyn, gall tribiwnlys wneud argymhelliad bod yr atebydd yn cymryd camau penodol i leihau effaith y gwahaniaethu ar yr hawlydd",
   "compensationOnly": {
-    "checkbox": "[W]Compensation only"
+    "checkbox": "Iawndal yn unig"
   },
-  "compensationOnlyHint": "[W]You'll be asked to provide an estimate of total compensation",
+  "compensationOnlyHint": "Gofynnir ichi roi amcangyfrif o gyfanswm yr iawndal",
   "tribunalRecommendation": {
-    "checkbox": "[W]If claiming discrimination, a tribunal recommendation"
+    "checkbox": "Os ydych yn hawlio gwahaniaethu, argymhelliad gan y tribiwnlys"
   },
-  "tribunalRecommendationHint": "[W]You'll be asked to describe the claimant's request to the tribunal",
+  "tribunalRecommendationHint": "Gofynnir i chi ddisgrifio cais yr hawlydd i'r tribiwnlys",
   "oldJob": {
-    "checkbox": "[W]If claiming unfair dismissal, to get their old job back and be compensated"
+    "checkbox": "Os ydych yn hawlio am ddiswyddo annheg, i gael eu hen swydd yn ôl ac iawndal"
   },
   "anotherJob": {
-    "checkbox": "[W]If claiming unfair dismissal, to get another job with the same employer or associated employer and compensation (re-engagement)"
+    "checkbox": "Os ydych yn hawlio am ddiswyddo annheg, i gael swydd arall gyda’r un cyflogwr neu gyflogwr cysylltiedig ac iawndal (ailgysylltiad)"
   }
 }

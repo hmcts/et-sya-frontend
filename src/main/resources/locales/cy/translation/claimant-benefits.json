@@ -1,13 +1,13 @@
 {
-  "title": "[W]Employee benefits",
-  "h1": "[W]Employee benefits",
-  "legend": "[W]Does - or did - the claimant receive any employee benefits? (optional)",
-  "label": "[W]Does - or did - the claimant receive any employee benefits?",
-  "p1": "[W]For example, child care, company car, housing and health insurance.",
-  "hint": "[W]Tell us about any benefits",
+  "title": "Buddion gweithwyr",
+  "h1": "Buddion gweithwyr",
+  "legend": "A yw - neu a oedd - yr hawlydd yn cael unrhyw fuddion fel cyflogai? (dewisol)",
+  "label": "A yw - neu a oedd - yr hawlydd yn cael unrhyw fuddion fel cyflogai?",
+  "p1": "Er enghraifft, gofal plant, car cwmni, yswiriant tŷ ac iechyd.",
+  "hint": "Dywedwch fwy wrthym am y buddion hynny",
   "errors": {
     "benefitsCharCount": {
-      "tooLong": "[W]Description must be 2500 characters or less"
+      "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
     }
   }
 }

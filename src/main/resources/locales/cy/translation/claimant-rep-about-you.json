@@ -1,24 +1,24 @@
 {
-  "title": "[W]About you",
-  "h1": "[W]About you",
-  "submitBtn": "[W]Submit",
+  "title": "Amdanoch chi",
+  "h1": "Amdanoch chi",
+  "submitBtn": "Cyflwyno",
   "aboutYouDetails": {
-    "name": "[W]Name",
-    "organisation": "[W]Organisation",
-    "typeOfOrganisation": "[W]Type of organisation",
-    "address": "[W]Address",
-    "email": "[W]Email",
-    "phone": "[W]Phone"
+    "name": "Enw",
+    "organisation": "Sefydliad",
+    "typeOfOrganisation": "Math o sefydliad",
+    "address": "Cyfeiriad",
+    "email": "E-bost",
+    "phone": "Ffôn"
   },
   "tellTheTribunal": {
-    "heading": "[W]Tell the tribunal",
-    "textBeforeLink": "[W]If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
-    "contactLink": "[W]contact the tribunal",
-    "textAfterLink": "[W]."
+    "heading": "Dywedwch wrth y tribiwnlys",
+    "textBeforeLink": "Os ydych angen neilltuo'r achos hwn i gydweithiwr neu ddiweddu rhoi'r gorau i gynrychiolaeth yr achos hwn, yna rydych angen",
+    "contactLink": "cysylltu â’r tribiwnlys",
+    "textAfterLink": "."
   },
   "errors": {
     "hiddenErrorField": {
-      "invalid": "[W]You must complete your name, address and email before you can submit"
+      "invalid": "Dylech gwblhau eich enw, cyfeiriad ac e-bost cyn y gallwch gyflwyno"
     }
   }
 }

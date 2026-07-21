@@ -1,25 +1,25 @@
 {
-  "title": "[W]Representative's details",
-  "p1": "[W]All correspondence about the case will be sent to the representative and not the claimant.",
-  "typeOfRepresentative": "[W]Type of representative",
-  "selectAType": "[W]Select a type",
-  "employmentAdvisor": "[W]Employment advisor",
-  "citizensAdviceBureau": "[W]Citizens Advice Bureau",
-  "freeRepresentationUnit": "[W]Free Representation Unit",
-  "lawCentre": "[W]Law centre",
-  "tradeUnion": "[W]Trade union",
-  "solicitor": "[W]Solicitor",
-  "privateIndividual": "[W]Private individual",
-  "tradeAssociation": "[W]Trade association",
-  "other": "[W]Other",
-  "representativeOrgName": "[W]Name of the representative's organisation (optional)",
-  "representativeName": "[W]Representative's name",
+  "title": "Manylion y cynrychiolydd",
+  "p1": "Bydd yr holl ohebiaeth am yr achos yn cael ei hanfon at y cynrychiolydd ac nid at yr hawlydd.",
+  "typeOfRepresentative": "Math o gynrychiolydd",
+  "selectAType": "Dewiswch fath o gynrychiolydd",
+  "employmentAdvisor": "Cynghorydd cyflogaeth",
+  "citizensAdviceBureau": "Cyngor ar Bopeth",
+  "freeRepresentationUnit": "Uned Cynrychiolaeth am Ddim",
+  "lawCentre": "Canolfan y gyfraith",
+  "tradeUnion": "Undeb llafur",
+  "solicitor": "Cyfreithiwr",
+  "privateIndividual": "Unigolyn preifat",
+  "tradeAssociation": "Cymdeithas masnach",
+  "other": "Arall",
+  "representativeOrgName": "Enw sefydliad y cynrychiolydd (dewisol)",
+  "representativeName": "Enw’r cynrychiolydd",
   "errors": {
     "representativeType": {
-      "required": "[W]Select a type of representative"
+      "required": "Dewiswch fath o gynrychiolydd"
     },
     "representativeName": {
-      "required": "[W]Enter the representative's name"
+      "required": "Nodwch enw’r cynrychiolydd"
     }
   }
 }

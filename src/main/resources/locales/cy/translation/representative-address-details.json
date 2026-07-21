@@ -1,27 +1,27 @@
 {
-  "title": "[W]Representative's address",
-  "pageHeader": "[W]What is the representative's contact address?",
-  "addressLine1": "[W]Address line 1",
-  "addressLine2": "[W]Address line 2 (optional)",
-  "town": "[W]Town or city",
-  "country": "[W]Country",
-  "postcode": "[W]Postcode (optional)",
+  "title": "Cyfeiriad y cynrychiolydd",
+  "pageHeader": "Beth yw cyfeiriad cyswllt y cynrychiolydd?",
+  "addressLine1": "Llinell cyfeiriad 1",
+  "addressLine2": "Llinell cyfeiriad 2 (dewisol)",
+  "town": "Tref neu ddinas",
+  "country": "Gwlad",
+  "postcode": "Cod post (dewisol)",
   "errors": {
     "repAddress1": {
-      "required": "[W]Enter the first line of the representative's address",
-      "invalid": "[W]Enter the first line of the representative's address - up to 150 characters"
+      "required": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd",
+      "invalid": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd - hyd at 150 o nodau"
     },
     "repAddress2": {
-      "required": "[W]Enter the second line of the representative's address - up to 50 characters",
-      "invalid": "[W]Enter the second line of the representative's address - up to 50 characters"
+      "required": "Nodwch ail linell cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch ail linell cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
     },
     "repAddressTown": {
-      "required": "[W]Enter a town or city for the representative's address - up to 50 characters",
-      "invalid": "[W]Enter a town or city for the representative's address - up to 50 characters"
+      "required": "Nodwch dref neu ddinas ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch dref neu ddinas ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
     },
     "repAddressCountry": {
-      "required": "[W]Enter a country for the representative's address - up to 50 characters",
-      "invalid": "[W]Enter a country for the representative's address - up to 50 characters"
+      "required": "Nodwch wlad ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch wlad ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
     }
   }
 }

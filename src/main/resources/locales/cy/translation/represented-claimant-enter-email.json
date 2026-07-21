@@ -1,11 +1,11 @@
 {
-  "pageTitle": "[W]Represented Claimant's email",
-  "pageHeader": "[W]Claimant’s email address",
-  "description": "[W]It will help to process your claim quicker if you provide the claimant's email address.",
-  "label": "[W]Enter the claimant’s email address",
+  "pageTitle": "E-bost Hawlydd a Gynrychiolir",
+  "pageHeader": "Cyfeiriad e-bost yr hawlydd",
+  "description": "Bydd yn helpu i brosesu eich hawliad yn gynt os byddwch yn rhoi cyfeiriad e-bost yr hawlydd.",
+  "label": "Rhowch gyfeiriad e-bost yr hawlydd",
   "errors": {
     "representedClaimantEmail": {
-      "invalid": "[W]Enter an email address in the correct format, for example name@example.com"
+      "invalid": "Rhowch gyfeiriad e-bost yn y fformat cywir, er enghraifft enw@enghraifft.com"
     }
   }
 }

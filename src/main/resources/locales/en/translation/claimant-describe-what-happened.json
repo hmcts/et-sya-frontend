@@ -46,10 +46,10 @@
       "tooLong": "Description must be 2,500 characters or less"
     },
     "claimSummaryFileName": {
-      "invalidFileFormat": "The file must be a DOC, DOCX, PDF, TXT or RTF",
-      "invalidFileName": "The file name must not contain special characters",
-      "invalidFileSize": "The file must be smaller than 50MB",
-      "backEndError": "There was an error uploading the file. Try again."
+      "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
+      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",
+      "invalidFileSize": "The file you are trying to upload has exceeded the maximum file size limit, please reduce the size of the file.",
+      "backEndError": "There was an error uploading your file. Please try again. If this error persists please contact support."
     }
   }
 }

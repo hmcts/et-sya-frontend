@@ -1,11 +1,11 @@
 {
-  "title": "[W]Your name",
-  "h1": "[W]Your name",
-  "representativeName": "[W]Your name",
-  "submitBtn": "[W]Submit",
+  "title": "Eich enw",
+  "h1": "Eich enw",
+  "representativeName": "Eich enw",
+  "submitBtn": "Cyflwyno",
   "errors": {
     "representativeName": {
-      "required": "[W]Enter your name"
+      "required": "Nodwch eich enw"
     }
   }
 }

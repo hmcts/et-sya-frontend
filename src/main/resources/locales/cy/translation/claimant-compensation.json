@@ -1,26 +1,28 @@
 {
-  "title": "[W]Compensation",
-  "h1": "[W]Compensation (optional)",
-  "label": "[W]What compensation is the claimant seeking?",
-  "hint": "[W]Try to set out all compensation the claimant is seeking and provide a total if possible.",
-  "amountLabel": "[W]Enter the total compensation amount you are requesting",
-  "description": ["[W]Try to set out all compensation the claimant is seeking and provide a total if possible."],
-  "detailsSummaryComp": "[W]Compensation - what can a tribunal award?",
+  "title": "Iawndal",
+  "h1": "Iawndal (dewisol)",
+  "label": "Faint o iawndal y mae’r hawlydd yn gofyn amdano?",
+  "hint": "Ceisiwch nodi manylion yr holl iawndal y mae’r hawlydd yn gofyn amdano, a nodwch gyfanswm os yn bosib.",
+  "amountLabel": "Nodwch gyfanswm yr iawndal rydych yn ei hawlio",
+  "description": [
+    "Ceisiwch nodi manylion yr holl iawndal y mae’r hawlydd yn gofyn amdano, a nodwch gyfanswm os yn bosib."
+  ],
+  "detailsSummaryComp": "Iawndal - beth all tribiwnlys ddyfarnu?",
   "detailsTextComp": {
-    "p1": "[W]If a tribunal decides the claimant has been unfairly dismissed, they'll normally receive compensation which is made up of:",
-    "li1": "[W]a basic award - fixed sum worked out using a standard formula",
-    "li2": "[W]a compensatory award - compensation for the actual money lost due to dismissal, or which the claimant expects to lose in future because of their dismissal",
-    "p2": "[W]Compensation can be reduced for various reasons and a tribunal will tell you more about this if it applies in the specific circumstances.",
-    "p3": "[W]In disciplinary or grievance cases, the claimant may be entitled to an increased award if an employer fails to follow the guidance set out in the",
-    "p4": "[W]Similarly, awards can be reduced if a tribunal decides the claimant failed to follow the guidance set out in the",
-    "acasLinkText": "[W]Acas Code of Practice on disciplinary and grievance procedures (opens in new tab).",
+    "p1": "Os bydd tribiwnlys yn penderfynu bod yr hawlydd wedi’i ddiswyddo’n annheg, fel arfer byddant yn derbyn iawndal a fydd yn cynnwys:",
+    "li1": "dyfarniad cyffredin - swm penodol a gyfrifir gan ddefnyddio fformiwla safonol",
+    "li2": "dyfarndal cyffredin - iawndal am yr union arian a gollwyd o ganlyniad i ddiswyddo, neu mae'r hawlydd yn disgwyl ei golli yn y dyfodol oherwydd eu diswyddiad",
+    "p2": "Gall iawndal gael ei ostwng am amrywiol resymau a bydd y tribiwnlys yn dweud mwy wrthych am hyn os yw'n berthnasol yn yr amgylchiadau penodol.",
+    "p3": "Mewn achosion disgyblu neu achosion yn ymwneud â chwyn, efallai y bydd gan yr hawlydd hawl i ddyfarniad uwch os bydd cyflogwr yn methu â dilyn y cyfarwyddyd a nodir yn y",
+    "p4": "Yn yr un modd, gellir lleihau dyfarniadau os bydd tribiwnlys yn penderfynu bod yr hawlydd wedi methu â dilyn y cyfarwyddyd a nodir yng",
+    "acasLinkText": "Nghod Ymarfer Acas ar weithdrefnau disgyblu a chwynion (yn agor mewn tab newydd).",
     "acasLinkUrl": "https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures",
-    "p5": "[W]In certain claims, such as those involving discrimination, a tribunal may compensate the claimant for 'injury to feelings' (individual hurt and distress the claimant may have suffered) in addition to compensation for financial loss."
+    "p5": "Gyda rhai hawliadau, megis y rhai hynny sy’n ymwneud â gwahaniaethu, gall tribiwnlys ddigolledu'r hawlydd am ‘anaf i deimladau’ (poen a gofid mae'r hawlydd wedi’i ddioddef) yn ychwanegol at iawndal am golled ariannol."
   },
   "errors": {
     "totalCompensationAmount": {
-      "invalidCurrency": "[W]Enter compensation in the correct format, for example £600 or £193.54",
-      "tooHighCurrency": "[W]Compensation must be £9,999,999.99 or less"
+      "invalidCurrency": "Rhowch Iawndal yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Iawndal fod yn £9,999,999.99 neu lai"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "title": "[W]Was the notice period in weeks or months?",
-  "legend": "[W]Was the notice period in weeks or months? (optional)",
-  "weeks": "[W]Weeks",
-  "months": "[W]Months"
+  "title": "A oedd y cyfnod rhybudd yn wythnosau ynteu’n fisoedd?",
+  "legend": "A oedd y cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+  "weeks": "Wythnosau",
+  "months": "Misoedd"
 }
