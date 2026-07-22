@@ -5,6 +5,7 @@ import { Form } from '../../components/form/form';
 import {
   arePayValuesNull,
   hasInvalidFileFormat,
+  hasInvalidFileFormatAdditionalClaimants,
   hasInvalidName,
   isAcasNumberValid,
   isContent100CharsOrLess,
@@ -236,6 +237,18 @@ export const getClaimSummaryError = (
   }
   if (fileNameInvalid) {
     return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
+  }
+};
+
+export const getAdditionalClaimantSpreadsheetError = (file: Express.Multer.File, logger: Logger): FormError => {
+  const fileFormatInvalid = hasInvalidFileFormatAdditionalClaimants(file, logger);
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+
+  if (fileFormatInvalid) {
+    return { propertyName: 'additionalClaimantSpreadsheetName', errorType: fileFormatInvalid };
+  }
+  if (fileNameInvalid) {
+    return { propertyName: 'additionalClaimantSpreadsheetName', errorType: fileNameInvalid };
   }
 };
 

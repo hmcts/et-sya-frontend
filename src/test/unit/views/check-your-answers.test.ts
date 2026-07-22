@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { CaseType, CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
@@ -28,11 +28,19 @@ describe('Check your answers confirmation page', () => {
           pastEmployer: YesOrNo.YES,
           noticePeriod: YesOrNo.YES,
           isStillWorking: StillWorking.WORKING,
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -64,18 +72,19 @@ describe('Check your answers confirmation page', () => {
     expect(button[6].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 
-  it('should display 5 summary lists', () => {
+  it('should display 6 summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
-    expect(summaryLists.length).equal(5, '5 summary lists not found');
+    expect(summaryLists.length).equal(6, '6 summary lists not found');
   });
 
   it('should display correct headings in the summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(heading2Class);
     expect(summaryLists[0].innerHTML).contains('Application details', 'List heading not found');
     expect(summaryLists[1].innerHTML).contains('Your details', 'List heading not found');
-    expect(summaryLists[2].innerHTML).contains('Employment details', 'List heading not found');
-    expect(summaryLists[3].innerHTML).contains('Respondent 1 details', 'List heading not found');
-    expect(summaryLists[4].innerHTML).contains('Claim details', 'List heading not found');
+    expect(summaryLists[2].innerHTML).contains('Other people in your claim', 'List heading not found');
+    expect(summaryLists[3].innerHTML).contains('Employment details', 'List heading not found');
+    expect(summaryLists[4].innerHTML).contains('Respondent 1 details', 'List heading not found');
+    expect(summaryLists[5].innerHTML).contains('Claim details', 'List heading not found');
   });
 
   it('should display 1 row in Application details summary list', () => {
@@ -90,21 +99,27 @@ describe('Check your answers confirmation page', () => {
     expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
   });
 
-  it('should display 13 rows in Employment Details summary list', () => {
+  it('should display 1 row in Group Claim Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const employmentDetailsList = summaryListSections[2].querySelectorAll(summaryListKeyExcludeHeadingClass);
+    expect(employmentDetailsList.length).equals(1, 'Incorrect number of rows found');
+  });
+
+  it('should display 13 rows in Employment Details summary list', () => {
+    const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const employmentDetailsList = summaryListSections[3].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(employmentDetailsList.length).equals(13, 'Incorrect number of rows found');
   });
 
   it('should display 6 rows in Respondent Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
-    const respondentDetailsList = summaryListSections[3].querySelectorAll(summaryListKeyExcludeHeadingClass);
+    const respondentDetailsList = summaryListSections[4].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(respondentDetailsList.length).equals(6, 'Incorrect number of rows found');
   });
 
   it('should display 6 rows in Claim Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
-    const claimDetailsList = summaryListSections[4].querySelectorAll(summaryListKeyExcludeHeadingClass);
+    const claimDetailsList = summaryListSections[5].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(claimDetailsList.length).equals(7, 'Incorrect number of rows found');
   });
 
@@ -155,7 +170,7 @@ describe('Check your answers confirmation page', () => {
 
   it('should display correct url in the change buttons for respondent details row', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
-    const respondentDetailsList = summaryListSections[3].getElementsByClassName(summaryListLinkClass);
+    const respondentDetailsList = summaryListSections[4].getElementsByClassName(summaryListLinkClass);
     const respondentNameLink = respondentDetailsList[0].getAttribute('href');
     const respondentAddressLink = respondentDetailsList[1].getAttribute('href');
     const workedForRespondentLink = respondentDetailsList[2].getAttribute('href');
@@ -191,7 +206,7 @@ describe('Check your answers confirmation page', () => {
 
   it('should display correct url in the change buttons for employment details row', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
-    const employmentDetailsList = summaryListSections[2].getElementsByClassName(summaryListLinkClass);
+    const employmentDetailsList = summaryListSections[3].getElementsByClassName(summaryListLinkClass);
     const pastEmployerLink = employmentDetailsList[0].getAttribute('href');
     const stillWorkingLink = employmentDetailsList[1].getAttribute('href');
     const jobTitleLink = employmentDetailsList[2].getAttribute('href');
@@ -229,7 +244,7 @@ describe('Check your answers confirmation page', () => {
 
   it('should display correct url in the change buttons for claim details row', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
-    const claimDetailsList = summaryListSections[4].getElementsByClassName(summaryListLinkClass);
+    const claimDetailsList = summaryListSections[5].getElementsByClassName(summaryListLinkClass);
     const typeOfDescriminationList = claimDetailsList[0].getAttribute('href');
     const whatHappenedLink = claimDetailsList[1].getAttribute('href');
     const whatYouWantLink = claimDetailsList[2].getAttribute('href');
@@ -263,7 +278,32 @@ describe('Check your answers confirmation page', () => {
 
 describe('CYA for Scottish cases', () => {
   beforeAll(async () => {
-    await request(mockApp({ userCase: { caseTypeId: CaseTypeId.SCOTLAND } }))
+    await request(
+      mockApp({
+        userCase: {
+          caseTypeId: CaseTypeId.SCOTLAND,
+          typeOfClaim: [TypesOfClaim.DISCRIMINATION],
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'John Does',
+              respondentAddress1: '102 Petty France, London',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
+              acasCert: YesOrNo.NO,
+              acasCertNum: '12345',
+              noAcasReason: NoAcasNumberReason.ANOTHER,
+            },
+          ],
+        },
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -290,11 +330,19 @@ describe('Check your answers confirmation page - New Job with start date', () =>
           isStillWorking: StillWorking.NO_LONGER_WORKING,
           newJob: YesOrNo.YES,
           newJobStartDate: { year: '2020', month: '04', day: '21' },
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -313,8 +361,8 @@ describe('Check your answers confirmation page - New Job with start date', () =>
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[25].innerHTML).contains('New job start date', '21-04-2020');
+    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[26].innerHTML).contains('New job start date', '21-04-2020');
   });
 });
 
@@ -331,11 +379,19 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
           isStillWorking: StillWorking.NO_LONGER_WORKING,
           newJob: YesOrNo.YES,
           newJobStartDate: undefined,
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -354,8 +410,8 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[25].innerHTML).contains('New job start date', '');
+    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[26].innerHTML).contains('New job start date', '');
   });
 });
 
@@ -372,11 +428,19 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
           isStillWorking: StillWorking.NO_LONGER_WORKING,
           newJob: YesOrNo.YES,
           newJobStartDate: undefined,
+          caseType: CaseType.SINGLE,
+          address1: '10 Test Street',
+          addressTown: 'Test Town',
+          addressCountry: 'United Kingdom',
+          addressPostcode: 'AB1 2CD',
+          claimSummaryText: 'This is what happened.',
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Doe',
               respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+              respondentAddressTown: 'London',
+              respondentAddressCountry: 'United Kingdom',
               acasCert: YesOrNo.NO,
               noAcasReason: NoAcasNumberReason.ANOTHER,
             },
@@ -395,7 +459,7 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
 
   it('should show not provided for Discrimination and Pay types of claim', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[34].innerHTML).contains('What type of discrimination claim are you making?', 'Not provided');
-    expect(allKeys[35].innerHTML).contains('What type of pay claim are you making?', 'Not provided');
+    expect(allKeys[35].innerHTML).contains('What type of discrimination claim are you making?', 'Not provided');
+    expect(allKeys[36].innerHTML).contains('What type of pay claim are you making?', 'Not provided');
   });
 });

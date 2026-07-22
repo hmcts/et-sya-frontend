@@ -1,0 +1,346 @@
+import ExcelJS from 'exceljs';
+
+type FieldKey =
+  | 'title'
+  | 'firstName'
+  | 'lastName'
+  | 'dob'
+  | 'email'
+  | 'address1'
+  | 'address2'
+  | 'town'
+  | 'country'
+  | 'postcode';
+
+export type FieldErrorType =
+  | 'missingMandatory'
+  | 'invalidTitle'
+  | 'invalidFirstName'
+  | 'invalidLastName'
+  | 'invalidAddressLine1'
+  | 'invalidAddressLine2'
+  | 'invalidTown'
+  | 'invalidCountry'
+  | 'invalidDob'
+  | 'invalidEmail'
+  | 'invalidPostcode';
+
+/**
+ * Normalises a spreadsheet header by trimming, lowercasing, and removing spaces.
+ */
+const normaliseHeader = (header: string): string => {
+  return header.trim().toLowerCase().replace(/\s+/g, '');
+};
+
+/**
+ * Builds a map of known field keys to their column indexes based on the header row.
+ */
+export const buildHeaderMap = (headerRow: unknown[]): Record<FieldKey, number> => {
+  const map: Partial<Record<FieldKey, number>> = {};
+
+  headerRow.forEach((cell, index) => {
+    const value = normaliseHeader(cellToString(cell));
+
+    switch (value) {
+      case 'title':
+      case 'teitl': {
+        map.title = index;
+        break;
+      }
+
+      case 'firstname':
+      case 'first_name':
+      case 'enwcyntaf': {
+        map.firstName = index;
+        break;
+      }
+
+      case 'lastname':
+      case 'last_name':
+      case 'cyfenw': {
+        map.lastName = index;
+        break;
+      }
+
+      case 'dateofbirth':
+      case 'dob':
+      case 'dyddiadgeni': {
+        map.dob = index;
+        break;
+      }
+
+      case 'email':
+      case 'e-mail':
+      case 'e-bost':
+      case 'ebost': {
+        map.email = index;
+        break;
+      }
+
+      case 'addressline1':
+      case 'llinellcyfeiriad1': {
+        map.address1 = index;
+        break;
+      }
+
+      case 'addressline2':
+      case 'llinellcyfeiriad2': {
+        map.address2 = index;
+        break;
+      }
+
+      case 'town':
+      case 'city':
+      case 'townorcity':
+      case 'trefneuddinas':
+      case 'dinas':
+      case 'tref': {
+        map.town = index;
+        break;
+      }
+
+      case 'country':
+      case 'gwlad': {
+        map.country = index;
+        break;
+      }
+
+      case 'postcode':
+      case 'codpost': {
+        map.postcode = index;
+        break;
+      }
+    }
+  });
+
+  return map as Record<FieldKey, number>;
+};
+
+/**
+ * Internal helper: retrieves a typed value from a row using the header map.
+ */
+const get = (row: unknown[], map: Record<FieldKey, number>, key: FieldKey): string => {
+  const idx = map[key];
+
+  if (idx === undefined) {
+    return '';
+  }
+
+  return cellToString(row[idx]);
+};
+
+/**
+ * Converts a spreadsheet cell into a safe string representation.
+ */
+export const cellToString = (cell: unknown): string => {
+  if (cell === null || cell === undefined) {
+    return '';
+  }
+
+  if (cell instanceof Date) {
+    const dd = String(cell.getDate()).padStart(2, '0');
+    const mm = String(cell.getMonth() + 1).padStart(2, '0');
+
+    return `${dd}/${mm}/${cell.getFullYear()}`;
+  }
+
+  if (typeof cell === 'object' && 'result' in cell) {
+    return cellToString(cell.result);
+  }
+
+  if (typeof cell === 'object' && 'text' in cell) {
+    const text = cell.text;
+    if (typeof text === 'string' || typeof text === 'number') {
+      return String(text).trim();
+    }
+    return '';
+  }
+
+  return String(cell).trim();
+};
+
+const NAME_PATTERN = /^[\p{L}\p{M}'\- ]+$/u;
+const ADDRESS_PATTERN = /^[\p{L}\p{M}\p{N}'\-.,/ ]+$/u;
+const TOWN_PATTERN = /^[\p{L}\p{M}'\- ]+$/u;
+const COUNTRY_PATTERN = /^[\p{L}\p{M} ]+$/u;
+const DOB_PATTERN = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const POSTCODE_PATTERN = /^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/i;
+
+/**
+ * Validates a DOB string: format, calendar validity, and age range (16-100).
+ */
+const isValidDob = (dob: string): boolean => {
+  const match = DOB_PATTERN.exec(dob);
+
+  if (!match) {
+    return false;
+  }
+
+  const day = Number.parseInt(match[1], 10);
+  const month = Number.parseInt(match[2], 10) - 1;
+  const year = Number.parseInt(match[3], 10);
+
+  const date = new Date(year, month, day);
+
+  if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+    return false;
+  }
+
+  const today = new Date();
+  const minAgeDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+  const maxAgeDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+
+  if (date > minAgeDate) {
+    return false;
+  }
+
+  if (date < maxAgeDate) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Validates a single spreadsheet row against business rules and returns
+ * the set of specific error types found (empty set if the row is valid).
+ */
+export const getRowErrorTypes = (row: unknown[], map: Record<FieldKey, number>): Set<FieldErrorType> => {
+  const errors = new Set<FieldErrorType>();
+
+  const title = get(row, map, 'title');
+  const firstName = get(row, map, 'firstName');
+  const lastName = get(row, map, 'lastName');
+  const dob = get(row, map, 'dob');
+  const email = get(row, map, 'email');
+  const addrLine1 = get(row, map, 'address1');
+  const addrLine2 = get(row, map, 'address2');
+  const town = get(row, map, 'town');
+  const country = get(row, map, 'country');
+  const postcode = get(row, map, 'postcode');
+
+  // Title (optional)
+  if (title && (title.length > 25 || !NAME_PATTERN.test(title))) {
+    errors.add('invalidTitle');
+  }
+
+  // First name (mandatory)
+  if (!firstName) {
+    errors.add('missingMandatory');
+  } else if (firstName.length > 100 || !NAME_PATTERN.test(firstName)) {
+    errors.add('invalidFirstName');
+  }
+
+  // Last name (mandatory)
+  if (!lastName) {
+    errors.add('missingMandatory');
+  } else if (lastName.length > 100 || !NAME_PATTERN.test(lastName)) {
+    errors.add('invalidLastName');
+  }
+
+  // Address line 1 (mandatory)
+  if (!addrLine1) {
+    errors.add('missingMandatory');
+  } else if (addrLine1.length > 150 || !ADDRESS_PATTERN.test(addrLine1)) {
+    errors.add('invalidAddressLine1');
+  }
+
+  // Address line 2 (optional)
+  if (addrLine2 && (addrLine2.length > 50 || !ADDRESS_PATTERN.test(addrLine2))) {
+    errors.add('invalidAddressLine2');
+  }
+
+  // Town (mandatory)
+  if (!town) {
+    errors.add('missingMandatory');
+  } else if (town.length > 50 || !TOWN_PATTERN.test(town)) {
+    errors.add('invalidTown');
+  }
+
+  // Country (mandatory)
+  if (!country) {
+    errors.add('missingMandatory');
+  } else if (country.length > 50 || !COUNTRY_PATTERN.test(country)) {
+    errors.add('invalidCountry');
+  }
+
+  // Date of birth (optional)
+  if (dob && !isValidDob(dob)) {
+    errors.add('invalidDob');
+  }
+
+  // Email (optional)
+  if (email && (email.length > 100 || !EMAIL_PATTERN.test(email))) {
+    errors.add('invalidEmail');
+  }
+
+  // Postcode (optional)
+  if (postcode && (postcode.length > 14 || !POSTCODE_PATTERN.test(postcode))) {
+    errors.add('invalidPostcode');
+  }
+
+  return errors;
+};
+
+/**
+ * Convenience boolean wrapper, kept for any existing callers that only
+ * need a yes/no answer.
+ */
+export const rowIsInvalid = (row: unknown[], map: Record<FieldKey, number>): boolean =>
+  getRowErrorTypes(row, map).size > 0;
+
+type SpreadsheetValidationResult =
+  | { status: 'ok'; errorsByType: Partial<Record<FieldErrorType, number[]>> }
+  | { status: 'fileEmpty' }
+  | { status: 'noDataRows' }
+  | { status: 'dataRowsExceedsMax' };
+
+/**
+ * Validates spreadsheet buffer and returns row numbers grouped by error type.
+ */
+export const validateSpreadsheetData = async (
+  buffer: Buffer,
+  maxDataRowsForUpload: number
+): Promise<SpreadsheetValidationResult> => {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(buffer);
+
+  const worksheet = workbook.worksheets[0];
+
+  if (!worksheet) {
+    return { status: 'fileEmpty' };
+  }
+
+  const allRows: unknown[][] = [];
+  worksheet.eachRow(row => {
+    allRows.push((row.values as unknown[]).slice(1)); // ExcelJS row.values is 1-indexed, slice off the empty first element
+  });
+
+  const rows = allRows.filter(row => row.some(cell => cellToString(cell) !== ''));
+
+  if (rows.length === 0) {
+    return { status: 'fileEmpty' };
+  }
+
+  const dataRows = rows.slice(1);
+  if (dataRows.length === 0) {
+    return { status: 'noDataRows' };
+  } else if (dataRows.length > maxDataRowsForUpload) {
+    return { status: 'dataRowsExceedsMax' };
+  }
+
+  const headerMap = buildHeaderMap(rows[0]);
+  const errorsByType: Partial<Record<FieldErrorType, number[]>> = {};
+
+  dataRows.forEach((row, idx) => {
+    const rowNumber = idx + 2;
+    const rowErrors = getRowErrorTypes(row, headerMap);
+
+    rowErrors.forEach(errorType => {
+      (errorsByType[errorType] ??= []).push(rowNumber);
+    });
+  });
+
+  return { status: 'ok', errorsByType };
+};

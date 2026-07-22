@@ -120,6 +120,7 @@ describe('Should return data in api format', () => {
       pastEmployer: YesOrNo.YES,
       isStillWorking: StillWorking.WORKING,
       personalDetailsCheck: YesOrNo.YES,
+      groupClaimsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
@@ -178,6 +179,35 @@ describe('Should return data in api format', () => {
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
   });
+
+  it('should transform case data when additional claimant has no address object yet', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      caseType: CaseType.SINGLE,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+      additionalClaimants: [
+        {
+          firstName: 'Jane',
+          lastName: 'Doe',
+          email: 'jane@example.com',
+          dob: { day: '5', month: '4', year: '2000' },
+        },
+      ],
+    };
+
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.additionalClaimants?.[0].value.dob).toEqual('2000-04-05');
+    expect(apiData.case_data.additionalClaimants?.[0].value.address).toEqual({
+      AddressLine1: undefined,
+      AddressLine2: undefined,
+      PostTown: undefined,
+      Country: undefined,
+      PostCode: undefined,
+    });
+  });
 });
 
 describe('Format document model', () => {
@@ -221,7 +251,29 @@ describe('Format document model', () => {
 describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
     const result = fromApiFormat(mockedApiData);
-    expect(result).toStrictEqual(mockUserCaseComplete);
+    expect(result).toStrictEqual({
+      ...mockUserCaseComplete,
+      additionalClaimants: [
+        {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs',
+          email: 'test@test.com',
+          dob: {
+            day: '00',
+            month: '/2',
+            year: '05/0',
+          },
+          address: {
+            AddressLine1: 'Muffin Mans House',
+            AddressLine2: 'Drewry Lane',
+            PostTown: 'London',
+            Country: 'United Kingdom',
+            PostCode: undefined,
+          },
+        },
+      ],
+    });
   });
 
   it('should format Case Api Response with no applications`', () => {
@@ -232,7 +284,29 @@ describe('Format Case Data to Frontend Model', () => {
 
     const result = fromApiFormat(mock);
 
-    expect(result).toStrictEqual(complete);
+    expect(result).toStrictEqual({
+      ...complete,
+      additionalClaimants: [
+        {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs',
+          email: 'test@test.com',
+          dob: {
+            day: '00',
+            month: '/2',
+            year: '05/0',
+          },
+          address: {
+            AddressLine1: 'Muffin Mans House',
+            AddressLine2: 'Drewry Lane',
+            PostTown: 'London',
+            Country: 'United Kingdom',
+            PostCode: undefined,
+          },
+        },
+      ],
+    });
   });
 
   it('should return undefined for empty field`', () => {
@@ -296,6 +370,7 @@ describe('Format Case Data to Frontend Model', () => {
       isStillWorking: undefined,
       pastEmployer: undefined,
       personalDetailsCheck: undefined,
+      groupClaimsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
       noticeEnds: undefined,
@@ -350,6 +425,9 @@ describe('Format Case Data to Frontend Model', () => {
       leadClaimant: undefined,
       caseStayed: undefined,
       claimantRepresentativeOrganisationPolicy: undefined,
+      addClaimantMethod: undefined,
+      additionalClaimants: undefined,
+      additionalClaimantSpreadsheet: undefined,
     });
   });
 
@@ -447,6 +525,7 @@ describe('Format Case Data to Frontend Model', () => {
       isStillWorking: undefined,
       pastEmployer: undefined,
       personalDetailsCheck: undefined,
+      groupClaimsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
       noticeEnds: undefined,

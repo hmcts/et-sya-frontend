@@ -86,6 +86,7 @@
   "workAddressPageHeader": "What’s the postcode where you worked or work?",
   "workAddressPageText1": "This will usually decide which Employment Tribunal office deals with your claim.  If you worked at home, enter the home postcode at which you work or worked.",
   "workAddressPageText2": "If you’re claiming against someone you did not work for, enter the postcode of where they are based.",
+  "additionalClaimantAddressPageHeader": "Contact or home address of [Full name of another claimant]",
   "manualAddress": "I live outside the UK",
   "respondentManualAddress": "The respondent address is outside the UK",
   "workManualAddress": "My work address is outside the UK",
@@ -110,9 +111,17 @@
     },
     "respondentAddressTypes": {
       "notSelected": "Select an address"
+    },
+    "additionalClaimantEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "additionalClaimantAddressTypes": {
+      "notSelected": "Select an address"
     }
   },
   "selectAddress": "Select an address",
+  "selectAddressHint": "If you cannot find your address, or the details are incorrect, you can type them directly into the fields below.",
   "selectDefaultSeveral": "Several addresses found",
   "selectDefaultSingle": "1 address found",
   "selectDefaultNone": "No addresses found",
@@ -123,6 +132,8 @@
   "addressPostcodeSelectTitle": "Address postcode select",
   "respondentPostcodeEnterTitle": "Respondent postcode enter",
   "respondentPostcodeSelectTitle": "Respondent postcode select",
+  "additionalClaimantPostcodeEnterTitle": "Additional claimant postcode enter",
+  "additionalClaimantPostcodeSelectTitle": "Additional claimant postcode select",
   "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details.",
   "beta": "beta",
   "Legal officer": "Legal officer",
