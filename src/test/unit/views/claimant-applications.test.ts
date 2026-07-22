@@ -192,3 +192,46 @@ describe('Claimant Applications page', () => {
     expect(rowDataClassData[15].innerHTML).contains(mockApplications[2].url, 'Submitted View should pass correct URL');
   });
 });
+
+describe('Claimant Applications page - My claims / Representing tabs', () => {
+  let tabbedHtml: Document;
+  beforeAll(async () => {
+    const personalApp = JSON.parse(JSON.stringify(mockApplications[0]));
+    personalApp.userCase.claimantRepresentedQuestion = YesOrNo.NO;
+    const representingApp = JSON.parse(JSON.stringify(mockApplications[2]));
+    representingApp.userCase.claimantRepresentedQuestion = YesOrNo.YES;
+
+    getUserCasesMock.mockResolvedValue([
+      { id: '12454', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId,
+      { id: '12455', state: CaseState.SUBMITTED } as CaseWithId,
+    ]);
+    getUserAppMock.mockReturnValue([personalApp, representingApp]);
+    await request(
+      mockAppWithRedisClient({
+        session: mockSession([], [], []),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([[CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES]])
+        ),
+      })
+    )
+      .get(PageUrls.CLAIMANT_APPLICATIONS)
+      .then(res => {
+        tabbedHtml = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should render the govuk tabs component with both tab labels', () => {
+    const tabs = tabbedHtml.getElementsByClassName('govuk-tabs');
+    expect(tabs.length).to.be.greaterThan(0, 'Tabs component should be rendered');
+    const tabList = tabbedHtml.getElementsByClassName('govuk-tabs__list')[0];
+    expect(tabList.innerHTML).contains(claimantApplicationsJSON.myClaimsTab, 'My claims tab should exist');
+    expect(tabList.innerHTML).contains(claimantApplicationsJSON.representingTab, 'Representing tab should exist');
+  });
+
+  it('should render a panel for each tab', () => {
+    const myClaimsPanel = tabbedHtml.getElementById('my-claims');
+    const representingPanel = tabbedHtml.getElementById('representing');
+    expect(myClaimsPanel).to.not.be.null;
+    expect(representingPanel).to.not.be.null;
+  });
+});
