@@ -61,7 +61,7 @@ function getDynamicValidUrl(baseUrl: string, redirectUrl: string): string | unde
     const matchedUrlPart = VALID_DYNAMIC_URL_BASES.find(url => url === urlPart);
     if (matchedUrlPart) {
       returnUrl += `/${matchedUrlPart}`;
-    } else if (isDynamicUrlIdSegment(urlPart)) {
+    } else if (NumberUtils.isNumericValue(urlPart) && urlPart.length <= 20) {
       returnUrl += `/${urlPart}`;
     }
   }
