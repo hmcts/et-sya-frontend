@@ -166,6 +166,7 @@
   },
   "resolutions": {
     "@swc/core": "1.3.82",
+    "immutable": "^5.1.8",
     "axios": "^1.13.5",
     "@opentelemetry/instrumentation": "^0.218.0",
     "@opentelemetry/core": "^2.8.0",
