@@ -74,7 +74,7 @@ export const mockApplications: ApplicationTableRecord[] = [
     },
     respondents: 'Globo Corp',
     completionStatus: '0 of 4 tasks completed',
-    url: '/citizen-hub/1234567?lng=en',
+    url: '/claimant-application/1234567?lng=en',
     deleteDraftUrl: '/claimant-application/1234567/delete?lng=en&redirect=claimant-applications',
     claimSubmittedDate: '2022-09-01',
   },

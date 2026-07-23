@@ -4649,12 +4649,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/multer@npm:^1.4.7":
-  version: 1.4.13
-  resolution: "@types/multer@npm:1.4.13"
+"@types/multer@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@types/multer@npm:2.1.0"
   dependencies:
     "@types/express": "npm:*"
-  checksum: 10/f650a9f431007f05a5c51d6359140bea5f77d1299668d45a0791ddbf7789f1c220a3e038039c5e0de6608e273d5ee8001e9649c606d7e0e847e8774ccc5d1d68
+  checksum: 10/405298b6b0b6f4007c87b7bcd69074a96fba8d5a0efcc149788af9bdb45fb9d0ab367ddebec4840eaaa45d05ba682b2a8c3a71101e9e51d6cfaa624034339c1a
   languageName: node
   linkType: hard
 
@@ -9536,7 +9536,7 @@ __metadata:
     "@types/git-rev-sync": "npm:2.0.2"
     "@types/jest": "npm:^29.5.1"
     "@types/lodash": "npm:^4.14.194"
-    "@types/multer": "npm:^1.4.7"
+    "@types/multer": "npm:^2.1.0"
     "@types/node": "npm:^22.0.0"
     "@types/nunjucks": "npm:^3.2.2"
     "@types/redis-mock": "npm:^0.17.1"
@@ -11403,10 +11403,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immutable@npm:^5.1.5":
-  version: 5.1.6
-  resolution: "immutable@npm:5.1.6"
-  checksum: 10/4ba416dac4cc9d1cab4155bd6aefa54d5ca25e56bfee8a1d4edc3f23115b599486edafe76e91f83d22961bd065754fd705b04f052809ec967ccd71817c8dac2a
+"immutable@npm:^5.1.8":
+  version: 5.1.9
+  resolution: "immutable@npm:5.1.9"
+  checksum: 10/dc61ea6f79897320a048f193dec703dff25ad7bb633c3a0294677d2f258764c88da06e7c2b53d1aa51b6657c98d9f1c7341f49735b9b802fe6e834122cf78dcd
   languageName: node
   linkType: hard
 
@@ -14341,18 +14341,6 @@ __metadata:
     concat-stream: "npm:^2.0.0"
     type-is: "npm:^1.6.18"
   checksum: 10/24525113776291c1909e6ca6ee260c41a6dc4bc6dea944485f6cc0d1442a7690829a07f2dcdea5edd5886bb6ab87df795da6ffb6de7289e1c140ec98b8e9d253
-  languageName: node
-  linkType: hard
-
-"multer@npm:^2.0.2":
-  version: 2.1.1
-  resolution: "multer@npm:2.1.1"
-  dependencies:
-    append-field: "npm:^1.0.0"
-    busboy: "npm:^1.6.0"
-    concat-stream: "npm:^2.0.0"
-    type-is: "npm:^1.6.18"
-  checksum: 10/fb22868caaed37d725715c14c60b740b81665265da3a026bb61954414f65b99f76b360128413b8a2a7cc1a95ecae28a42bf831fe172bb79682d19ec105b556bd
   languageName: node
   linkType: hard
 
@@ -18660,10 +18648,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^7.25.0":
+"undici@npm:7.28.0":
   version: 7.28.0
   resolution: "undici@npm:7.28.0"
   checksum: 10/154423b280d623278a61decb437f8a7e581fb18b8c95556ef956b32a58cd668eadbb812d28e20678cb2dc545a566f35a3afc0962307ca801da30f4741117986d
+  languageName: node
+  linkType: hard
+
+"undici@npm:8.6.0":
+  version: 8.6.0
+  resolution: "undici@npm:8.6.0"
+  checksum: 10/a8a66ea9142f3df6ef6cb5ec5c8a2cafb6525f028b74c5dd4066de855bf9b7ad1089b3e516db23c920d1444e8e16f9a1530b6306d3d9046c62386a9c34c4ac3d
   languageName: node
   linkType: hard
 

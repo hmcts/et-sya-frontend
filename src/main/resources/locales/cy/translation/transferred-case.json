@@ -1,0 +1,17 @@
+{
+  "title": "Trosolwg o'r achos",
+  "header": "Trosolwg o'r achos - ",
+  "caseNumberLabel": "Rhif achos blaenorol",
+  "noAccessHeader": "Ni allwch gael mynediad i'r achos hwn ar-lein.",
+  "noAccessBodyEcm": "Mae'r achos hwn bellach yn cael ei <strong>reoli all-lein</strong> ac nid yw ar gael trwy'r gwasanaeth hwn.",
+  "noAccessBodyCrossCountry": "Mae'r achos hwn wedi'i drosglwyddo ac nid yw ar gael trwy'r gwasanaeth hwn.",
+  "newCaseNumberBody": "Eich rhif achos newydd yw",
+  "transferPendingBody": "Mae eich achos yn cael ei drosglwyddo. Bydd eich rhif achos newydd ar gael yma unwaith y bydd y trosglwyddiad wedi'i gwblhau. Gwiriwch yn ôl yn nes ymlaen.",
+  "whatThisMeansHeader": "Beth mae hyn yn ei olygu?",
+  "whatThisMeansPointOne": "Ni allwch weld manylion achos na uwchlwytho dogfennau yma.",
+  "whatThisMeansPointTwo": "Ni fydd diweddariadau a phenderfyniadau yn ymddangos yn y gwasanaeth hwn.",
+  "whatHappensNextHeader": "Beth fydd yn digwydd nesaf",
+  "whatHappensNextPointOne": "Bydd y tribiwnlys yn cysylltu â chi drwy'r <strong>post neu e-bost</strong> gyda diweddariadau.",
+  "whatHappensNextPointTwo": "Os oes gennych unrhyw gwestiynau neu os oes angen i chi gysylltu â'r tribiwnlys, gallwch wneud hynny, gan ddyfynnu eich rhif achos newydd.",
+  "contactHeader": "Ffonio canolfan gyswllt cwsmeriaid y Tribiwnlys Cyflogaeth"
+}

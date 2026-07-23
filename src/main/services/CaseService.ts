@@ -3,6 +3,7 @@ import config from 'config';
 import FormData from 'form-data';
 
 import { CaseApiDataResponse, CaseAssignmentResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
+import { CaseTransferInfoResponse } from '../definitions/api/caseTransferInfoResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
@@ -437,6 +438,18 @@ export class CaseApi {
     }
   };
 
+  getCaseTransferInfo = async (caseId: string): Promise<AxiosResponse<CaseTransferInfoResponse>> => {
+    try {
+      return await this.axios.get<CaseTransferInfoResponse>(
+        `${JavaApiUrls.GET_CASE_TRANSFER_INFO}${caseId}/transfer-info`
+      );
+    } catch (error) {
+      throw new Error(
+        'Error getting case transfer info: ' + axiosErrorDetails(error, { action: 'getCaseTransferInfo', caseId })
+      );
+    }
+  };
+
   submitCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
@@ -566,6 +579,21 @@ export const getCaseApi = (token: string): CaseApi => {
       },
     })
   );
+};
+
+export const isTransferredToEcmCaseError = (error: unknown): boolean => {
+  const message = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase();
+  return (
+    message.includes('case_transferred_to_ecm') ||
+    message.includes('transferred to ecm') ||
+    (message.includes('transferred') && message.includes('legacy')) ||
+    message.includes('status code 410')
+  );
+};
+
+export const isCaseNotFoundError = (error: unknown): boolean => {
+  const message = error instanceof Error ? error.message.toLowerCase() : String(error).toLowerCase();
+  return message.includes('status code 404') || message.includes('casenotfoundexception');
 };
 
 export type UploadedFile =
