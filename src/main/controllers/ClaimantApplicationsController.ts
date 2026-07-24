@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -41,9 +42,24 @@ export default class ClaimantApplicationsController {
       const usersApplications = getUserApplications(userCases, translations, languageParam);
       req.session.userCases = userCases;
       req.session.hasUserCases = true;
+
+      // Split the applications into the claimant rep's own personal claims and the claims they are
+      // representing someone else on (claimantRepresentedQuestion === 'Yes').
+      const representingApplications = usersApplications.filter(
+        app => app.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+      );
+      const myClaimsApplications = usersApplications.filter(
+        app => app.userCase?.claimantRepresentedQuestion !== YesOrNo.YES
+      );
+      // Only show the "My claims" / "Representing" tabs when the user has both types of claim.
+      const showTabs = myClaimsApplications.length > 0 && representingApplications.length > 0;
+
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,
+        myClaimsApplications,
+        representingApplications,
+        showTabs,
         currentUrl: PageUrls.CLAIMANT_APPLICATIONS,
       });
     }

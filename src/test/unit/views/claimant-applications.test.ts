@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { setImmediate as nodeSetImmediate } from 'timers';
 
 import { expect } from 'chai';
 import request from 'supertest';
@@ -10,6 +11,12 @@ import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
 import * as caseSelectionService from '../../../main/services/CaseSelectionService';
 import { mockAppWithRedisClient, mockRedisClient, mockSession } from '../mocks/mockApp';
 import { mockApplications } from '../mocks/mockApplications';
+
+const testGlobal = globalThis as unknown as Record<string, unknown>;
+
+if (typeof testGlobal.setImmediate !== 'function') {
+  testGlobal.setImmediate = nodeSetImmediate;
+}
 
 const claimantApplicationsJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/claimant-applications.json'),
@@ -43,7 +50,7 @@ describe('Claimant Applications page', () => {
   beforeAll(async () => {
     getUserCasesMock.mockResolvedValue(userCases);
     getUserAppMock.mockReturnValue(mockApplications);
-    await request(
+    const res = await request(
       mockAppWithRedisClient({
         session: mockSession([], [], []),
         redisClient: mockRedisClient(
@@ -54,12 +61,12 @@ describe('Claimant Applications page', () => {
           ])
         ),
       })
-    )
-      .get(PageUrls.CLAIMANT_APPLICATIONS)
-      .then(res => {
-        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-      });
-  });
+    ).get(PageUrls.CLAIMANT_APPLICATIONS);
+
+    expect(res.status).to.equal(200, `Expected claimant applications page to return 200, got ${res.status}`);
+
+    htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+  }, 15000);
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(claimantApplicationsJSON.title, 'Page title does not exist');
@@ -190,5 +197,48 @@ describe('Claimant Applications page', () => {
       'Submitted View should have navigation link data attribute'
     );
     expect(rowDataClassData[15].innerHTML).contains(mockApplications[2].url, 'Submitted View should pass correct URL');
+  });
+});
+
+describe('Claimant Applications page - My claims / Representing tabs', () => {
+  let tabbedHtml: Document;
+  beforeAll(async () => {
+    const personalApp = JSON.parse(JSON.stringify(mockApplications[0]));
+    personalApp.userCase.claimantRepresentedQuestion = YesOrNo.NO;
+    const representingApp = JSON.parse(JSON.stringify(mockApplications[2]));
+    representingApp.userCase.claimantRepresentedQuestion = YesOrNo.YES;
+
+    getUserCasesMock.mockResolvedValue([
+      { id: '12454', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId,
+      { id: '12455', state: CaseState.SUBMITTED } as CaseWithId,
+    ]);
+    getUserAppMock.mockReturnValue([personalApp, representingApp]);
+    const res = await request(
+      mockAppWithRedisClient({
+        session: mockSession([], [], []),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([[CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES]])
+        ),
+      })
+    ).get(PageUrls.CLAIMANT_APPLICATIONS);
+
+    expect(res.status).to.equal(200, `Expected claimant applications tabbed page to return 200, got ${res.status}`);
+
+    tabbedHtml = new DOMParser().parseFromString(res.text, 'text/html');
+  }, 15000);
+
+  it('should render the govuk tabs component with both tab labels', () => {
+    const tabs = tabbedHtml.getElementsByClassName('govuk-tabs');
+    expect(tabs.length).to.be.greaterThan(0, 'Tabs component should be rendered');
+    const tabList = tabbedHtml.getElementsByClassName('govuk-tabs__list')[0];
+    expect(tabList.innerHTML).contains(claimantApplicationsJSON.myClaimsTab, 'My claims tab should exist');
+    expect(tabList.innerHTML).contains(claimantApplicationsJSON.representingTab, 'Representing tab should exist');
+  });
+
+  it('should render a panel for each tab', () => {
+    const myClaimsPanel = tabbedHtml.getElementById('my-claims');
+    const representingPanel = tabbedHtml.getElementById('representing');
+    expect(myClaimsPanel).to.not.be.null;
+    expect(representingPanel).to.not.be.null;
   });
 });

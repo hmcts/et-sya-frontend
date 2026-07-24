@@ -1,67 +1,6 @@
 {% extends "template.njk" %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
-
-{% set draftApplications = [] %}
-{% set submittedApplications = [] %}
-
-{% for app in usersApplications %}
-
-  {% if app.respondents === 'undefined' and app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
-    {% set draftApplications = (draftApplications.push([
-      {
-        text: app.userCase.createdDate
-      }, {
-        text: app.userCase.id
-      }, {
-        text: app.userCase.typeOfClaimString
-      }, {
-        text: noRespondents
-      }, {
-        text: app.completionStatus
-      }, {
-        text: app.userCase.lastModified
-      }, {
-        html:
-          '<a class="govuk-link govuk-!-margin-right-3" href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' +
-          '<a class="govuk-link" href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '">' + delete + '</a>'
-      }
-    ]), draftApplications) %}
-  {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
-    {% set draftApplications = (draftApplications.push([
-      {
-        text: app.userCase.createdDate
-      }, {
-        text: app.userCase.id
-      }, {
-        text: app.userCase.typeOfClaimString
-      }, {
-        text: app.respondents | safe
-      }, {
-        text: app.completionStatus
-      }, {
-        text: app.userCase.lastModified
-      }, {
-        html:
-                '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' + '&nbsp' + '&nbsp' +
-                ' <a class="govuk-link" href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '" style="margin-left: 1em;">' + delete + '</a>'
-      }
-    ]), draftApplications) %}
-  {% else %}
-    {% set submittedApplications = (submittedApplications.push([
-      {
-        text: dateStringToLocale(app.claimSubmittedDate)
-      }, {
-        html: '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + app.userCase.ethosCaseReference + '</a>'
-      }, {
-        text: app.userCase.typeOfClaimString
-      }, {
-        text: app.respondents | safe
-      }, {
-        text: app.userCase.lastModified
-      }
-    ]), submittedApplications) %}
-  {% endif %}
-{% endfor %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "claimant-applications-section.njk" import applicationsSection with context %}
 
 {% block content %}
 
@@ -72,72 +11,24 @@
       <p class="govuk-body"><a class="govuk-link" href={{ p1Link }}>{{ p1 }}</a></p>
       <p class="govuk-body"><a class="govuk-link" href={{ p2Link }}>{{ p2 }}</a></p>
 
-    {% if draftApplications.length != 0 %}
-      <h2 class="govuk-heading-l">{{ h1 }}</h2>
-      <p class="govuk-body">{{ p3 }}</p>
-
-      <div class="scrollableTable">
-      {{ govukTable({
-          caption: h1,
-          captionClasses: "govuk-visually-hidden",
-          firstCellIsHeader: false,
-          head: [
-            {
-              text: col1
-            },
-            {
-              text: col2
-            },
-            {
-              text: col3
-            },
-            {
-              text: col4
-            },
-            {
-              text: col5
-            },
-            {
-              text: col6
-            },
-            {
-              text: col7
-            }
-          ],
-          rows: draftApplications
-        }) }}
-      </div>
+    {% if showTabs %}
+      {{ govukTabs({
+        items: [
+          {
+            label: myClaimsTab,
+            id: "my-claims",
+            panel: { html: applicationsSection(myClaimsApplications) }
+          },
+          {
+            label: representingTab,
+            id: "representing",
+            panel: { html: applicationsSection(representingApplications) }
+          }
+        ]
+      }) }}
+    {% else %}
+      {{ applicationsSection(usersApplications) }}
     {% endif %}
-
-    {% if submittedApplications.length != 0 %}
-      <h2 class="govuk-heading-l">{{ h2 }}</h2>
-
-      <div class="scrollableTable">
-      {{ govukTable({
-          caption: h2,
-          captionClasses: "govuk-visually-hidden",
-          firstCellIsHeader: false,
-          head: [
-            {
-              text: dateSubmitted
-            },
-            {
-              text: caseNumber
-            },
-            {
-              text: col3
-            },
-            {
-              text: col4
-            },
-            {
-              text: col6
-            }
-          ],
-          rows: submittedApplications
-        }) }}
-      </div>
-    {% endif %}
-  </div>
+    </div>
 </div>
 {% endblock %}
