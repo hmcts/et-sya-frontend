@@ -1,24 +1,24 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "legend": "<place-holder>",
-  "p1": "<place-holder>",
-  "hint": "<place-holder>",
+  "title": "Dyddiad geni'r hawlydd",
+  "h1": "Dyddiad geni'r hawlydd (dewisol)",
+  "legend": "Beth yw dyddiad geni'r hawlydd?",
+  "p1": "Fe ddefnyddir y manylion hyn i symud yr hawliad yn ei flaen.",
+  "hint": "Er enghraifft, 23 04 1981",
   "errors": {
     "representedClaimantDateOfBirth": {
-      "dayRequired": "<place-holder>",
-      "monthRequired": "<place-holder>",
-      "yearRequired": "<place-holder>",
-      "dayNotANumber": "<place-holder>",
-      "monthNotANumber": "<place-holder>",
-      "yearNotANumber": "<place-holder>",
-      "dayInvalid": "<place-holder>",
-      "monthInvalid": "<place-holder>",
-      "yearInvalid": "<place-holder>",
-      "invalidDate": "<place-holder>",
-      "invalidDateInFuture": "<place-holder>",
-      "invalidDateTooFarInPast": "<place-holder>",
-      "invalidDateTooRecent": "<place-holder>"
+      "dayRequired": "Nodwch ddiwrnod ar gyfer dyddiad geni'r hawlydd. Er enghraifft, 23",
+      "monthRequired": "Nodwch fis ar gyfer dyddiad geni'r hawlydd. Er enghraifft, 04",
+      "yearRequired": "Nodwch flwyddyn ar gyfer dyddiad geni'r hawlydd. Er enghraifft, 1981",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i'r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 1981",
+      "dayInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "monthInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "yearInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "invalidDate": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "invalidDateInFuture": "Rhaid i’r dyddiad fod yn y gorffennol.",
+      "invalidDateTooFarInPast": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol.",
+      "invalidDateTooRecent": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol."
     }
   }
 }

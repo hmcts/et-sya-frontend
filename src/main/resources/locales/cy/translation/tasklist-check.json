@@ -9,7 +9,7 @@
   "errors": {
     "personalDetailsCheck": {
       "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",
-      "invalid": "<placeholder>"
+      "invalid": "Rhaid i chi gwblhau'r adran 'Eich manylion' cyn y gallwch ei marcio fel un sydd wedi'i chwblhau."
     },
     "employmentAndRespondentCheck": {
       "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",

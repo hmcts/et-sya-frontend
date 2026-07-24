@@ -1,27 +1,27 @@
 {
-  "title": "<place-holder>",
-  "pageHeader": "<place-holder>",
-  "addressLine1": "<place-holder>",
-  "addressLine2": "<place-holder>",
-  "town": "<place-holder>",
-  "country": "<place-holder>",
-  "postcode": "<place-holder>",
+  "title": "Cyfeiriad y cynrychiolydd",
+  "pageHeader": "Beth yw cyfeiriad cyswllt y cynrychiolydd?",
+  "addressLine1": "Llinell cyfeiriad 1",
+  "addressLine2": "Llinell cyfeiriad 2 (dewisol)",
+  "town": "Tref neu ddinas",
+  "country": "Gwlad",
+  "postcode": "Cod post (dewisol)",
   "errors": {
     "representedClaimantAddress1": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd",
+      "invalid": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd - hyd at 150 o nodau"
     },
     "representedClaimantAddress2": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "Nodwch ail linell cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch ail linell cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
     },
     "representedClaimantAddressTown": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "Nodwch dref neu ddinas ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch dref neu ddinas ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
     },
     "representedClaimantAddressCountry": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "Nodwch wlad ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch wlad ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
     }
   }
 }
