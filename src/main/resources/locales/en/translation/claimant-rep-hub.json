@@ -1,0 +1,26 @@
+{
+  "title": "Case overview",
+  "h1": "Case overview",
+  "header": "Case overview - ",
+  "caseNumber": "Case number ",
+  "iWantTo": "I want to...",
+  "viewEt1Claims": "View my case list",
+  "contactTribunalMyCase": "Contact the tribunal about the claimant's case",
+  "findLegalAdvice": "Find legal advice (opens in new tab)",
+  "appointLegalRepresentative": "Appoint a legal representative",
+  "sectionAboutYou": "About you",
+  "personalDetails": "View and edit your personal details",
+  "emailChangedNote": {
+    "p1": "Communications about this case will be sent to your new email address.",
+    "p2": "You will still need to use your original email address to sign in:"
+  },
+  "section1": "The claim",
+  "section2": "The response",
+  "section3": "Your hearings",
+  "section4": "Applications to the tribunal",
+  "section5": "Notifications from the tribunal",
+  "section6": "Judgments from the tribunal",
+  "section7": "Case documents",
+  "viewClaimantContactDetails": "View claimant contact details",
+  "returnToApplications": "Return to your applications"
+}

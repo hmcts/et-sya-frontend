@@ -16,6 +16,7 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
 
   for (const respondent of respondents) {
     if (
+      !respondent.respondentName ||
       !respondent.respondentAddress1 ||
       !respondent.respondentAddressTown ||
       !respondent.respondentAddressCountry ||
@@ -36,14 +37,38 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
   return true;
 };
 
+export const validateRepresentativeDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const { representativeName, repAddress1 } = userCase;
+  return !(!representativeName || !repAddress1);
+};
+
+export const validateClaimantRepAboutYou = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const { representativeName, repAddress1, claimantRepEmail } = userCase;
+  return !(!representativeName || !repAddress1 || !claimantRepEmail);
+};
+
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
   if (!userCase) {
     return false;
   }
 
-  const { typeOfClaim, claimSummaryFile, claimSummaryText } = userCase;
+  const { typeOfClaim, claimSummaryFile, claimSummaryText, claimTypeDiscrimination, claimTypePay } = userCase;
 
   if (!typeOfClaim || !Array.isArray(typeOfClaim) || typeOfClaim.length === 0) {
+    return false;
+  }
+
+  if (typeOfClaim.includes('discrimination') && (!claimTypeDiscrimination || claimTypeDiscrimination.length === 0)) {
+    return false;
+  }
+
+  if (typeOfClaim.includes('payRelated') && (!claimTypePay || claimTypePay.length === 0)) {
     return false;
   }
 
@@ -54,4 +79,26 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
     claimSummaryText && typeof claimSummaryText === 'string' && claimSummaryText.trim() !== '';
 
   return !(!hasClaimSummaryFile && !hasClaimSummaryText);
+};
+
+export const validateRepresentedClaimantDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const {
+    representedClaimantFirstName,
+    representedClaimantLastName,
+    representedClaimantAddress1,
+    representedClaimantAddressTown,
+    representedClaimantAddressCountry,
+    representedClaimantEmail,
+  } = userCase;
+  return !!(
+    representedClaimantFirstName &&
+    representedClaimantLastName &&
+    representedClaimantAddress1 &&
+    representedClaimantAddressTown &&
+    representedClaimantAddressCountry &&
+    representedClaimantEmail
+  );
 };

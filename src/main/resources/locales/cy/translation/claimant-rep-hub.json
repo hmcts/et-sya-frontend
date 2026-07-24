@@ -1,0 +1,26 @@
+{
+  "title": "Trosolwg o’r achos",
+  "h1": "Trosolwg o’r achos",
+  "header": "Trosolwg o’r achos - ",
+  "caseNumber": "Rhif yr achos",
+  "iWantTo": "Rwyf eisiau...",
+  "viewEt1Claims": "Gweld fy rhestr achosion",
+  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn ag achos yr hawlydd",
+  "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
+  "appointLegalRepresentative": "Penodi cynrychiolydd cyfreithiol",
+  "sectionAboutYou": "Amdanoch chi",
+  "personalDetails": "Gweld a golygu eich manylion personol",
+  "emailChangedNote": {
+    "p1": "Bydd gohebiaeth am yr achos hwn yn cael ei hanfon i'ch cyfeiriad e-bost newydd.",
+    "p2": "Byddwch yn dal angen defnyddio eich cyfeiriad e-bost gwreiddiol i fewngofnodi:"
+  },
+  "section1": "Yr hawliad",
+  "section2": "Yr ymateb",
+  "section3": "Eich gwrandawiadau",
+  "section4": "Ceisiadau i’r tribiwnlys",
+  "section5": "Hysbysiadau gan y tribiwnlys",
+  "section6": "Dyfarniadau gan y tribiwnlys",
+  "section7": "Dogfennau’r achos",
+  "viewClaimantContactDetails": "Gweld manylion cyswllt yr hawlydd",
+  "returnToApplications": "Dychwelyd i’ch ceisiadau"
+}

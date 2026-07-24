@@ -1,0 +1,27 @@
+{
+  "title": "Cyfeiriad y cynrychiolydd",
+  "pageHeader": "Beth yw cyfeiriad cyswllt y cynrychiolydd?",
+  "addressLine1": "Llinell cyfeiriad 1",
+  "addressLine2": "Llinell cyfeiriad 2 (dewisol)",
+  "town": "Tref neu ddinas",
+  "country": "Gwlad",
+  "postcode": "Cod post (dewisol)",
+  "errors": {
+    "repAddress1": {
+      "required": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd",
+      "invalid": "Nodwch linell gyntaf cyfeiriad y cynrychiolydd - hyd at 150 o nodau"
+    },
+    "repAddress2": {
+      "required": "Nodwch ail linell cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch ail linell cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
+    },
+    "repAddressTown": {
+      "required": "Nodwch dref neu ddinas ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch dref neu ddinas ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
+    },
+    "repAddressCountry": {
+      "required": "Nodwch wlad ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau",
+      "invalid": "Nodwch wlad ar gyfer cyfeiriad y cynrychiolydd - hyd at 50 o nodau"
+    }
+  }
+}

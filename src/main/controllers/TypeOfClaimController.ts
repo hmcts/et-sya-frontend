@@ -11,7 +11,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { assignFormData, getPageContent, getTypeOfClaimFormValues } from './helpers/FormHelpers';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -29,33 +29,7 @@ export default class TypeOfClaimController {
         hint: l => l.hint,
         validator: atLeastOneFieldIsChecked,
         values: [
-          {
-            id: 'discrimination',
-            name: 'typeOfClaim',
-            label: l => l.discrimination.checkbox,
-            value: TypesOfClaim.DISCRIMINATION,
-            hint: h => h.discrimination.hint,
-          },
-          {
-            id: 'payRelatedClaim',
-            name: 'typeOfClaim',
-            label: l => l.payRelated.checkbox,
-            value: TypesOfClaim.PAY_RELATED_CLAIM,
-          },
-          {
-            id: 'unfairDismissal',
-            name: 'typeOfClaim',
-            label: l => l.unfairDismissal.checkbox,
-            value: TypesOfClaim.UNFAIR_DISMISSAL,
-            hint: h => h.unfairDismissal.hint,
-          },
-          {
-            id: 'whistleBlowing',
-            name: 'typeOfClaim',
-            label: l => l.whistleBlowing.checkbox,
-            value: TypesOfClaim.WHISTLE_BLOWING,
-            hint: h => h.whistleBlowing.hint,
-          },
+          ...getTypeOfClaimFormValues(),
           {
             id: 'otherTypes',
             name: 'typeOfClaim',

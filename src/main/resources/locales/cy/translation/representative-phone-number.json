@@ -1,0 +1,11 @@
+{
+  "title": "Rhif ffôn y cynrychiolydd",
+  "h1": "Beth yw rhif ffôn y cynrychiolydd? (dewisol)",
+  "phoneNumber": "Nodwch rif ffôn y cynrychiolydd ",
+  "errors": {
+    "representativePhoneNumber": {
+      "invalid": "Nodwch rif ffôn dilys yn y DU neu gadewch y blwch yn wag",
+      "nonnumeric": "Nodwch rhif ffôn yn y DU, fel 01623 960 001, 07700 900 983 neu gadewch y blwch yn wag"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Manylion y cynrychiolydd",
+  "p1": "Bydd yr holl ohebiaeth am yr achos yn cael ei hanfon at y cynrychiolydd ac nid at yr hawlydd.",
+  "typeOfRepresentative": "Math o gynrychiolydd",
+  "selectAType": "Dewiswch fath o gynrychiolydd",
+  "employmentAdvisor": "Cynghorydd cyflogaeth",
+  "citizensAdviceBureau": "Cyngor ar Bopeth",
+  "freeRepresentationUnit": "Uned Cynrychiolaeth am Ddim",
+  "lawCentre": "Canolfan y gyfraith",
+  "tradeUnion": "Undeb llafur",
+  "solicitor": "Cyfreithiwr",
+  "privateIndividual": "Unigolyn preifat",
+  "tradeAssociation": "Cymdeithas masnach",
+  "other": "Arall",
+  "representativeOrgName": "Enw sefydliad y cynrychiolydd (dewisol)",
+  "representativeName": "Enw’r cynrychiolydd",
+  "errors": {
+    "representativeType": {
+      "required": "Dewiswch fath o gynrychiolydd"
+    },
+    "representativeName": {
+      "required": "Nodwch enw’r cynrychiolydd"
+    }
+  }
+}
