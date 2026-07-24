@@ -1,17 +1,17 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "p1": "<place-holder>",
-  "representedClaimantFirstName": "<place-holder>",
-  "representedClaimantLastName": "<place-holder>",
+  "title": "Enw’r hawlydd",
+  "h1": "Enw’r hawlydd",
+  "p1": "Nodwch enw llawn yr hawlydd.",
+  "representedClaimantFirstName": "Enw cyntaf yr hawlydd",
+  "representedClaimantLastName": "Enw olaf yr hawlydd",
   "errors": {
     "representedClaimantFirstName": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "Nodwch enw'r hawlydd",
+      "invalid": "Nodwch enw cyntaf yr hawlydd"
     },
     "representedClaimantLastName": {
-      "required": "<place-holder>",
-      "invalid": "<place-holder>"
+      "required": "Nodwch enw'r hawlydd",
+      "invalid": "Nodwch enw olaf yr hawlydd"
     }
   }
 }

@@ -1,22 +1,22 @@
 {
-  "title": "<place-holder>",
-  "h1": "<place-holder>",
-  "legend": "<place-holder>",
-  "p": "<place-holder>",
+  "title": "Cymorth ychwanegol yn ystod yr achos (dewisol)",
+  "h1": "Cymorth ychwanegol yn ystod yr achos (dewisol)",
+  "legend": "A oes gan unrhyw un ym mharti'r hawlydd anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu eu bod angen cymorth yn ystod yr achos?",
+  "p": "Mae rhai pobl angen cymorth i gael gafael ar wybodaeth a defnyddio ein gwasanaethau. Rydym yn galw hyn yn addasiad rhesymol. Mae angen i'r barnwr neu GLlTEF gytuno ar rai addasiadau rhesymol. Gallwch drafod hyn gyda'r tribiwnlys os bydd eich anghenion yn newid.",
   "detailsSummary": {
-    "heading": "<place-holder>",
-    "p": "<place-holder>",
-    "bullet1": "<place-holder>",
-    "bullet2": "<place-holder>",
-    "bullet3": "<place-holder>"
+    "heading": "Pa gymorth sydd ar gael?",
+    "p": "Gall addasiadau rhesymol gynnwys:",
+    "bullet1": "dogfennau mewn fformatau, lliwiau a ffontiau eraill",
+    "bullet2": "help gyda cyfathrebu, gweld, gwrando, siarad neu gymorth gan gyfieithydd/dehonglydd",
+    "bullet3": "cymorth gyda mynediad a symudedd, os bydd gwrandawiad yn cael ei gynnal wyneb yn wyneb"
   },
-  "yes": "<place-holder>",
-  "noSupport": "<place-holder>",
-  "adjustmentDetailTextLabel": "<place-holder>",
-  "textAreaHint": "<place-holder>",
+  "yes": "Oes",
+  "noSupport": "Nac oes, nid oes arnaf angen unrhyw gymorth ar hyn o bryd",
+  "adjustmentDetailTextLabel": "Dywedwch wrthym pa gymorth rydych angen gofyn amdano ",
+  "textAreaHint": "Gallwch ddisgrifio beth sydd ei angen arnoch",
   "errors": {
     "reasonableAdjustmentsDetail": {
-      "required": "<place-holder>"
+      "required": "Rhowch fanylion y gefnogaeth y mae arnoch ei hangen"
     }
   }
 }
