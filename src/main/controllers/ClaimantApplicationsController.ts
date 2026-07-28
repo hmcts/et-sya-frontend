@@ -47,16 +47,16 @@ export default class ClaimantApplicationsController {
       const languageParam = getLanguageParam(req.url);
       const myClaimsApplications = getUserApplications(myClaimsCases, translations, languageParam);
       const representingApplications = getUserApplications(representingCases, translations, languageParam);
-      const usersApplications = [...myClaimsApplications, ...representingApplications];
       req.session.userCases = userCases;
       req.session.hasUserCases = true;
 
-      // Only show the "My claims" / "Representing" tabs when the user has both types of claim.
+      // Only show the "My Applications" / "Representing others" tabs when the user has both their
+      // own claims and claims they are representing. Otherwise the single non-empty set is shown
+      // on its own, so each set is only ever rendered in its own view.
       const showTabs = myClaimsApplications.length > 0 && representingApplications.length > 0;
 
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
-        usersApplications,
         myClaimsApplications,
         representingApplications,
         showTabs,

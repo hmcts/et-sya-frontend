@@ -112,7 +112,15 @@ describe('Axios get to retrieve draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
     await api.getUserCases();
 
-    expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases');
+    expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases', { params: undefined });
+  });
+
+  it('should pass the caseUserRole as a query param when provided', async () => {
+    await api.getUserCases('[CLAIMANTNONLEGALREPRESENTATIVE]');
+
+    expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases', {
+      params: { caseUserRole: '[CLAIMANTNONLEGALREPRESENTATIVE]' },
+    });
   });
 });
 

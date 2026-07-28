@@ -50,7 +50,9 @@ describe('Claimant Applications Controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.CLAIMANT_APPLICATIONS,
       expect.objectContaining({
-        usersApplications: mockApplications,
+        myClaimsApplications: mockApplications,
+        representingApplications: [],
+        showTabs: false,
         currentUrl: PageUrls.CLAIMANT_APPLICATIONS,
       })
     );

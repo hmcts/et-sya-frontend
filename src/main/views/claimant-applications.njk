@@ -27,7 +27,8 @@
         ]
       }) }}
     {% else %}
-      {{ applicationsSection(usersApplications) }}
+      {% set singleApplications = myClaimsApplications if myClaimsApplications.length else representingApplications %}
+      {{ applicationsSection(singleApplications) }}
     {% endif %}
     </div>
 </div>
