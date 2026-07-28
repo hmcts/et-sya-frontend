@@ -36,8 +36,8 @@ export default class ClaimantApplicationsController {
     // Fetch each tab's cases by the user's assigned case role: their own claims ([CREATOR])
     // and the claims they are representing someone else on ([CLAIMANTNONLEGALREPRESENTATIVE]).
     const [myClaimsCases, representingCases] = await Promise.all([
-      getUserCasesByLastModified(req, Roles.CREATOR_ROLE_WITH_BRACKETS),
-      getUserCasesByLastModified(req, Roles.CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS),
+      getUserCasesByLastModified(req, Roles.CREATOR_ROLE_WITHOUT_BRACKETS),
+      getUserCasesByLastModified(req, Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS),
     ]);
     const userCases = [...myClaimsCases, ...representingCases];
     if (userCases.length === 0) {

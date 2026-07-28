@@ -6,9 +6,6 @@
   "p1Link": "/claimant-application/newClaim?lng=en",
   "p2": "Add an existing claim",
   "p2Link": "/case-number-check?lng=en",
-  "title": "ET1 claims",
-  "h1": "Draft claims",
-  "h2": "Submitted claims",
   "noRespondents": "Not yet provided",
   "col1": "Date created",
   "col2": "Reference",
@@ -20,6 +17,6 @@
   "p3": "For privacy purposes, a draft claim will be deleted 12 months after the date it's created.",
   "caseNumber": "Case number",
   "dateSubmitted": "Date submitted",
-  "myClaimsTab": "My Applications111",
+  "myClaimsTab": "My Applications122",
   "representingTab": "Representing others"
 }

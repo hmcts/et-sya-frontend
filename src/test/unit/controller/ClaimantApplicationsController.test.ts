@@ -35,9 +35,9 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should render claimant applications page', async () => {
-    // Own claims ([CREATOR]) return the user's cases; representing ([CLAIMANTNONLEGALREPRESENTATIVE]) returns none.
+    // Own claims (CREATOR) return the user's cases; representing (CLAIMANTNONLEGALREPRESENTATIVE) returns none.
     getUserCasesMock.mockImplementation(async (_req, role) =>
-      role === Roles.CREATOR_ROLE_WITH_BRACKETS ? userCases : []
+      role === Roles.CREATOR_ROLE_WITHOUT_BRACKETS ? userCases : []
     );
     getUserAppMock.mockImplementation(cases => (cases.length ? mockApplications : []));
     const claimantApplicationsController = new ClaimantApplicationsController();
@@ -67,7 +67,7 @@ describe('Claimant Applications Controller', () => {
     const representingApp = { userCase: { id: 'rep-1' } } as ApplicationTableRecord;
     // Each role returns its own case; getUserApplications maps each case list to its record.
     getUserCasesMock.mockImplementation(async (_req, role) =>
-      role === Roles.CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS ? [repCase] : [creatorCase]
+      role === Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS ? [repCase] : [creatorCase]
     );
     getUserAppMock.mockImplementation(cases => (cases.some(c => c.id === 'rep-1') ? [representingApp] : [personalApp]));
 
@@ -90,7 +90,7 @@ describe('Claimant Applications Controller', () => {
     const representingApp = { userCase: { id: 'rep-1' } } as ApplicationTableRecord;
     // Only the representing ([CLAIMANTNONLEGALREPRESENTATIVE]) role returns a case.
     getUserCasesMock.mockImplementation(async (_req, role) =>
-      role === Roles.CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS ? [repCase] : []
+      role === Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS ? [repCase] : []
     );
     getUserAppMock.mockImplementation(cases => (cases.some(c => c.id === 'rep-1') ? [representingApp] : []));
 
