@@ -9,7 +9,7 @@ import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
+import { CaseApiParams, DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -30,9 +30,11 @@ export class CaseApi {
     }
   };
 
-  getUserCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
+  getUserCases = async (caseUserRole?: string): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
     try {
-      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
+      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES, {
+        params: caseUserRole ? { [CaseApiParams.CASE_USER_ROLE]: caseUserRole } : undefined,
+      });
     } catch (error) {
       throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
     }

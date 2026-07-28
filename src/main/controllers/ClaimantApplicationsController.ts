@@ -1,8 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Roles, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -33,24 +32,25 @@ export default class ClaimantApplicationsController {
     };
     //reset return url to prevent redirect loop after deleting a draft claim
     req.session.returnUrl = undefined;
-    const userCases = await getUserCasesByLastModified(req);
+
+    // Fetch each tab's cases by the user's assigned case role: their own claims ([CREATOR])
+    // and the claims they are representing someone else on ([CLAIMANTNONLEGALREPRESENTATIVE]).
+    const [myClaimsCases, representingCases] = await Promise.all([
+      getUserCasesByLastModified(req, Roles.CREATOR_ROLE_WITH_BRACKETS),
+      getUserCasesByLastModified(req, Roles.CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS),
+    ]);
+    const userCases = [...myClaimsCases, ...representingCases];
     if (userCases.length === 0) {
       req.session.hasUserCases = false;
       return res.redirect(PageUrls.HOME);
     } else {
       const languageParam = getLanguageParam(req.url);
-      const usersApplications = getUserApplications(userCases, translations, languageParam);
+      const myClaimsApplications = getUserApplications(myClaimsCases, translations, languageParam);
+      const representingApplications = getUserApplications(representingCases, translations, languageParam);
+      const usersApplications = [...myClaimsApplications, ...representingApplications];
       req.session.userCases = userCases;
       req.session.hasUserCases = true;
 
-      // Split the applications into the claimant rep's own personal claims and the claims they are
-      // representing someone else on (claimantRepresentedQuestion === 'Yes').
-      const representingApplications = usersApplications.filter(
-        app => app.userCase?.claimantRepresentedQuestion === YesOrNo.YES
-      );
-      const myClaimsApplications = usersApplications.filter(
-        app => app.userCase?.claimantRepresentedQuestion !== YesOrNo.YES
-      );
       // Only show the "My claims" / "Representing" tabs when the user has both types of claim.
       const showTabs = myClaimsApplications.length > 0 && representingApplications.length > 0;
 

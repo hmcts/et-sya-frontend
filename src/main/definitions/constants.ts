@@ -801,6 +801,14 @@ export const CaseAssignmentResponse = {
 export const Roles = {
   CREATOR_ROLE_WITH_BRACKETS: '[CREATOR]',
   CREATOR_ROLE_WITHOUT_BRACKETS: 'CREATOR',
+  CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS: '[CLAIMANTNONLEGALREPRESENTATIVE]',
   ERROR_APPLICATION_NOT_FOUND: 'Selected application not found, userCase.id: %s, appId: %s',
   ERROR_NOTIFICATION_NOT_FOUND: 'Selected order not found, userCase.id: %s, orderId: %s',
+} as const;
+
+// Query-string parameters accepted by the et-sya-api case endpoints.
+export const CaseApiParams = {
+  // Maps to CASE_USER_ROLE_API_PARAMETER_NAME on cases/user-cases; filters cases by the
+  // caller's assigned role. Confirm the exact wire name matches the backend constant.
+  CASE_USER_ROLE: 'caseUserRole',
 } as const;

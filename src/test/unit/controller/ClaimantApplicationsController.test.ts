@@ -1,7 +1,7 @@
 import ClaimantApplicationsController from '../../../main/controllers/ClaimantApplicationsController';
 import * as translateTypesOfClaim from '../../../main/controllers/helpers/ApplicationTableRecordTranslationHelper';
-import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseWithId } from '../../../main/definitions/case';
+import { PageUrls, Roles, TranslationKeys } from '../../../main/definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../../../main/definitions/definition';
 import * as caseSelectionService from '../../../main/services/CaseSelectionService';
 import { mockApplications } from '../mocks/mockApplications';
@@ -35,8 +35,11 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should render claimant applications page', async () => {
-    getUserCasesMock.mockResolvedValue(userCases);
-    getUserAppMock.mockReturnValue(mockApplications);
+    // Own claims ([CREATOR]) return the user's cases; representing ([CLAIMANTNONLEGALREPRESENTATIVE]) returns none.
+    getUserCasesMock.mockImplementation(async (_req, role) =>
+      role === Roles.CREATOR_ROLE_WITH_BRACKETS ? userCases : []
+    );
+    getUserAppMock.mockImplementation(cases => (cases.length ? mockApplications : []));
     const claimantApplicationsController = new ClaimantApplicationsController();
     const request = mockRequest({});
     const response = mockResponse();
@@ -56,14 +59,15 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should split applications into "My claims" and "Representing" and show tabs when both exist', async () => {
-    const personalApp = {
-      userCase: { id: 'personal-1', claimantRepresentedQuestion: YesOrNo.NO },
-    } as ApplicationTableRecord;
-    const representingApp = {
-      userCase: { id: 'rep-1', claimantRepresentedQuestion: YesOrNo.YES },
-    } as ApplicationTableRecord;
-    getUserCasesMock.mockResolvedValue(userCases);
-    getUserAppMock.mockReturnValue([personalApp, representingApp]);
+    const creatorCase = { id: 'personal-1' } as CaseWithId;
+    const repCase = { id: 'rep-1' } as CaseWithId;
+    const personalApp = { userCase: { id: 'personal-1' } } as ApplicationTableRecord;
+    const representingApp = { userCase: { id: 'rep-1' } } as ApplicationTableRecord;
+    // Each role returns its own case; getUserApplications maps each case list to its record.
+    getUserCasesMock.mockImplementation(async (_req, role) =>
+      role === Roles.CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS ? [repCase] : [creatorCase]
+    );
+    getUserAppMock.mockImplementation(cases => (cases.some(c => c.id === 'rep-1') ? [representingApp] : [personalApp]));
 
     const request = mockRequest({});
     const response = mockResponse();
@@ -80,11 +84,13 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should not show tabs when the user has only one type of claim', async () => {
-    const representingApp = {
-      userCase: { id: 'rep-1', claimantRepresentedQuestion: YesOrNo.YES },
-    } as ApplicationTableRecord;
-    getUserCasesMock.mockResolvedValue(userCases);
-    getUserAppMock.mockReturnValue([representingApp]);
+    const repCase = { id: 'rep-1' } as CaseWithId;
+    const representingApp = { userCase: { id: 'rep-1' } } as ApplicationTableRecord;
+    // Only the representing ([CLAIMANTNONLEGALREPRESENTATIVE]) role returns a case.
+    getUserCasesMock.mockImplementation(async (_req, role) =>
+      role === Roles.CLAIMANT_NON_LEGAL_REP_WITH_BRACKETS ? [repCase] : []
+    );
+    getUserAppMock.mockImplementation(cases => (cases.some(c => c.id === 'rep-1') ? [representingApp] : []));
 
     const request = mockRequest({});
     const response = mockResponse();
