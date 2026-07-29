@@ -22,7 +22,7 @@ import {
 } from '../../../main/definitions/case';
 import { TseAdminDecisionItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { CcdDataModel, JavaApiUrls, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
+import { CaseApiParams, CcdDataModel, JavaApiUrls, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -116,10 +116,10 @@ describe('Axios get to retrieve draft cases', () => {
   });
 
   it('should pass the caseUserRole as a query param when provided', async () => {
-    await api.getUserCases('[CLAIMANTNONLEGALREPRESENTATIVE]');
+    await api.getUserCases('CLAIMANTNONLEGALREPRESENTATIVE');
 
     expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases', {
-      params: { caseUserRole: '[CLAIMANTNONLEGALREPRESENTATIVE]' },
+      params: { [CaseApiParams.CASE_USER_ROLE]: 'CLAIMANTNONLEGALREPRESENTATIVE' },
     });
   });
 });
