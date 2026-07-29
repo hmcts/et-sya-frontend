@@ -6,20 +6,37 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormat } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
+import { getPreloginCaseData } from '../services/CacheService';
+import { getCaseApi } from '../services/CaseService';
 
-import { getSectionStatus, getSectionStatusForEmployment } from './helpers/CaseHelpers';
+import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
+const logger = getLogger('StepsToMakingYourClaimNonHmctsController');
+
 export default class StepsToMakingYourClaimNonHmctsController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS,
     ]);
     const { userCase } = req.session;
+
+    if (req.app?.locals?.redisClient && req.session.guid) {
+      const redisClient = req.app.locals.redisClient;
+      const caseData = await getPreloginCaseData(redisClient, req.session.guid);
+      if (userCase?.id === undefined) {
+        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
+        logger.info(`Created Draft Case - ${newCase.data.id}`);
+        req.session.userCase = fromApiFormat(newCase.data);
+      }
+      setUserCaseWithRedisData(req, caseData);
+    }
 
     const allSectionsCompleted = !!(
       userCase?.representativeDetailsCheck === YesOrNo.YES &&
