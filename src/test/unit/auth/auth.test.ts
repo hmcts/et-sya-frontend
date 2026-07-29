@@ -27,15 +27,19 @@ describe('getRedirectUrl', () => {
     );
   });
 
-  test('should use HMCTS Access authorize URL when HMCTS_ACCESS is true', () => {
+  test('should use HMCTS Access authorize URL with prompt=login when HMCTS_ACCESS is true', () => {
     process.env.HMCTS_ACCESS = 'true';
     expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK, guid, languageParam)).toBe(
-      `${hmctsAccessLoginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback&state=${guid}&ui_locales=${languageParam}&scope=openid%20profile%20roles`
+      `${hmctsAccessLoginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback&state=${guid}&ui_locales=${languageParam}&scope=openid%20profile%20roles&prompt=login`
     );
   });
 });
 
 describe('getUserDetails', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('should exchange a code for a token and decode a JWT to get the user details', async () => {
     mockedAxios.post.mockResolvedValue({
       data: {
