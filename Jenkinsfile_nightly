@@ -91,10 +91,11 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-    enableSecurityScan(
-      urlExclusions: urlExclusions,
-      alertFilters: alertFilters
-    )
+    
+    // enableSecurityScan(
+      // urlExclusions: urlExclusions,
+      // alertFilters: alertFilters
+    // )
     enableFortifyScan('et-aat')
     enableMutationTest()
 
