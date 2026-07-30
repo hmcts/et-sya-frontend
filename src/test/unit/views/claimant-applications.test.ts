@@ -207,6 +207,8 @@ describe('Claimant Applications page - My claims / Representing tabs', () => {
     personalApp.userCase.claimantRepresentedQuestion = YesOrNo.NO;
     const representingApp = JSON.parse(JSON.stringify(mockApplications[2]));
     representingApp.userCase.claimantRepresentedQuestion = YesOrNo.YES;
+    representingApp.userCase.firstName = 'Alice';
+    representingApp.userCase.lastName = 'Claimant';
 
     getUserCasesMock.mockResolvedValue([
       { id: '12454', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId,
@@ -240,5 +242,31 @@ describe('Claimant Applications page - My claims / Representing tabs', () => {
     const representingPanel = tabbedHtml.getElementById('representing');
     expect(myClaimsPanel).to.not.be.null;
     expect(representingPanel).to.not.be.null;
+  });
+
+  it('should show the Claimant column (replacing Respondents) only in the "Representing others" tab', () => {
+    const representingPanel = tabbedHtml.getElementById('representing');
+    const myClaimsPanel = tabbedHtml.getElementById('my-claims');
+
+    // Representing table: has the Claimant column + name, and no Respondents column.
+    expect(representingPanel.innerHTML).contains(
+      '>' + claimantApplicationsJSON.claimantNameCol + '<',
+      'Claimant column heading should exist in the representing table'
+    );
+    expect(representingPanel.innerHTML).contains('Alice Claimant', 'Represented claimant name should be shown');
+    expect(representingPanel.innerHTML).to.not.contain(
+      '>' + claimantApplicationsJSON.col4 + '<',
+      'Respondents column should be dropped from the representing table'
+    );
+
+    // My claims table: keeps Respondents, has no Claimant column.
+    expect(myClaimsPanel.innerHTML).contains(
+      '>' + claimantApplicationsJSON.col4 + '<',
+      'Respondents column should remain in the My claims table'
+    );
+    expect(myClaimsPanel.innerHTML).to.not.contain(
+      '>' + claimantApplicationsJSON.claimantNameCol + '<',
+      'Claimant column should not appear in the My claims table'
+    );
   });
 });

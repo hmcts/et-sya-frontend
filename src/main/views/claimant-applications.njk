@@ -22,7 +22,7 @@
           {
             label: representingTab,
             id: "representing",
-            panel: { html: applicationsSection(representingApplications) }
+            panel: { html: applicationsSection(representingApplications, true) }
           }
         ]
       }) }}
@@ -31,7 +31,7 @@
         {{ applicationsSection(myClaimsApplications) }}
       {% else %}
         <h2 class="govuk-heading-l">{{ representingTab }}</h2>
-        {{ applicationsSection(representingApplications) }}
+        {{ applicationsSection(representingApplications, true) }}
       {% endif %}
     {% endif %}
     </div>
