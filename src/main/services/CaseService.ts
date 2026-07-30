@@ -441,7 +441,7 @@ export class CaseApi {
   getCaseTransferInfo = async (caseId: string): Promise<AxiosResponse<CaseTransferInfoResponse>> => {
     try {
       return await this.axios.get<CaseTransferInfoResponse>(
-        `${JavaApiUrls.GET_CASE_TRANSFER_INFO}${caseId}/transfer-info`
+        JavaApiUrls.GET_CASE_TRANSFER_INFO.replace('{caseId}', caseId)
       );
     } catch (error) {
       throw new Error(

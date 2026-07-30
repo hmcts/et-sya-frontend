@@ -4,7 +4,7 @@ import { CaseTransferInfoResponse, CaseTransferType } from '../../definitions/ap
 import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls } from '../../definitions/constants';
 import { getLogger } from '../../logger';
-import { getCaseApi, isCaseNotFoundError } from '../../services/CaseService';
+import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
 
 import { getLanguageParam } from './RouterHelpers';
 
@@ -139,7 +139,7 @@ export const handleTransferredCaseRedirect = async (
   caseId: string,
   accessError?: unknown
 ): Promise<boolean> => {
-  if (accessError !== undefined && !isCaseNotFoundError(accessError)) {
+  if (accessError !== undefined && !isCaseNotFoundError(accessError) && !isTransferredToEcmCaseError(accessError)) {
     return false;
   }
 

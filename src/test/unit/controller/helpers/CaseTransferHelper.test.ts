@@ -218,7 +218,31 @@ describe('CaseTransferHelper', () => {
       expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
-    it('should not redirect when getUserCase fails with a non-404 error', async () => {
+    it('should redirect when getUserCase failed with a 410 ECM transfer error and transfer-info confirms transfer', async () => {
+      caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
+        data: {
+          transferred: true,
+          transferType: 'ECM',
+          originalCaseId: '20548',
+          transferComplete: false,
+        },
+      });
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      const res = mockResponse();
+
+      const redirected = await handleTransferredCaseRedirect(
+        req,
+        res,
+        '20548',
+        new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
+      );
+
+      expect(redirected).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+    });
+
+    it('should not redirect when getUserCase fails with a non-transfer error', async () => {
       caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
         data: {
           transferred: true,
