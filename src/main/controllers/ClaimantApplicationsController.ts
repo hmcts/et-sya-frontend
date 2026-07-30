@@ -48,9 +48,6 @@ export default class ClaimantApplicationsController {
       req.session.userCases = userCases;
       req.session.hasUserCases = true;
 
-      // Only show the "My Applications" / "Representing others" tabs when the user has both their
-      // own claims and claims they are representing. Otherwise the single non-empty set is shown
-      // on its own, so each set is only ever rendered in its own view.
       const showTabs = myClaimsApplications.length > 0 && representingApplications.length > 0;
 
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
