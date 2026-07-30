@@ -527,6 +527,9 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 };
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
+  if (!responseDate) {
+    return undefined;
+  }
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
   return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }
