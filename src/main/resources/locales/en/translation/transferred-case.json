@@ -12,7 +12,7 @@
   "whatThisMeansPointTwo": "Updates and decisions will not appear in this service.",
   "whatHappensNextHeader": "What happens next",
   "whatHappensNextPointOne": "The tribunal will contact you by <strong>post or email</strong> with updates.",
-  "whatHappensNextPointTwo": "If you have any questions or need to contact the tribunal, you can do so, quoting your new case number",
-  "whatHappensNextPointTwoNoCaseNumber": "If you have any questions or need to contact the tribunal, you can do so",
+  "whatHappensNextPointTwoWithNewCaseNumber": "If you have any questions or need to contact the tribunal, you can do so, quoting your new case number",
+  "whatHappensNextPointTwoWithOldCaseNumber": "If you have any questions or need to contact the tribunal, you can do so, quoting your old case number",
   "contactHeader": "Call the Employment Tribunal customer contact centre"
 }

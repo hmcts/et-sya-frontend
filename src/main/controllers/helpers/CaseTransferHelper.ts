@@ -51,6 +51,17 @@ export const getTransferredCaseNoAccessBody = (
   return translations.noAccessBodyEcm;
 };
 
+export const getTransferredCaseWhatHappensNextPointTwo = (
+  translations: Record<string, string>,
+  showNewCaseNumber: boolean
+): string => {
+  if (showNewCaseNumber) {
+    return translations.whatHappensNextPointTwoWithNewCaseNumber;
+  }
+
+  return translations.whatHappensNextPointTwoWithOldCaseNumber;
+};
+
 export const enrichTransferInfoWithCaseParties = (
   req: AppRequest,
   transferInfo: CaseTransferInfoResponse,

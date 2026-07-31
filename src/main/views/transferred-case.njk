@@ -6,7 +6,7 @@
       <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
       {% if caseNumber %}
-        <p class="govuk-body-l">{{ caseNumberLabel }} {{ caseNumber }}</p>
+        <p class="govuk-body-l">{{ caseNumberLabel }} <strong>{{ caseNumber }}</strong></p>
         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
       {% endif %}
 
@@ -25,11 +25,7 @@
 
       <h2 class="govuk-heading-m govuk-!-margin-top-8">{{ whatHappensNextHeader }}</h2>
       <p class="govuk-body">{{ whatHappensNextPointOne | safe }}</p>
-      {% if showNewCaseNumber %}
-        <p class="govuk-body">{{ whatHappensNextPointTwo }} <strong>{{ replacementCaseNumber }}</strong>.</p>
-      {% else %}
-        <p class="govuk-body">{{ whatHappensNextPointTwoNoCaseNumber }}.</p>
-      {% endif %}
+      <p class="govuk-body">{{ whatHappensNextPointTwo }}.</p>
 
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 

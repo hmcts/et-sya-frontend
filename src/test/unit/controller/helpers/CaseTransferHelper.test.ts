@@ -6,6 +6,7 @@ import {
   clearCaseTransferInfoIfStale,
   getRequestedCaseId,
   getTransferredCaseNoAccessBody,
+  getTransferredCaseWhatHappensNextPointTwo,
   handleTransferredCaseRedirect,
   saveSessionAndRedirectToTransferredCase,
 } from '../../../../main/controllers/helpers/CaseTransferHelper';
@@ -88,6 +89,25 @@ describe('CaseTransferHelper', () => {
 
     it('should default to ECM copy when transfer type is missing', () => {
       expect(getTransferredCaseNoAccessBody(translations)).toBe('ECM body');
+    });
+  });
+
+  describe('getTransferredCaseWhatHappensNextPointTwo', () => {
+    const whatHappensNextTranslations = {
+      whatHappensNextPointTwoWithNewCaseNumber: 'quoting your new case number',
+      whatHappensNextPointTwoWithOldCaseNumber: 'quoting your old case number',
+    };
+
+    it('should return new case number copy when showNewCaseNumber is true', () => {
+      expect(getTransferredCaseWhatHappensNextPointTwo(whatHappensNextTranslations, true)).toBe(
+        'quoting your new case number'
+      );
+    });
+
+    it('should return old case number copy when showNewCaseNumber is false', () => {
+      expect(getTransferredCaseWhatHappensNextPointTwo(whatHappensNextTranslations, false)).toBe(
+        'quoting your old case number'
+      );
     });
   });
 

@@ -12,6 +12,7 @@ import {
   clearCaseTransferInfoIfStale,
   getRequestedCaseId,
   getTransferredCaseNoAccessBody,
+  getTransferredCaseWhatHappensNextPointTwo,
   isTransferInfoForCase,
 } from './helpers/CaseTransferHelper';
 
@@ -29,6 +30,7 @@ const renderTransferredCasePage = (req: AppRequest, res: Response, transferInfo:
   const translations = req.t(TranslationKeys.TRANSFERRED_CASE, { returnObjects: true }) as Record<string, string>;
   const showNewCaseNumber = transferInfo.transferComplete && !!transferInfo.newEthosCaseReference;
   const noAccessBody = getTransferredCaseNoAccessBody(translations, transferInfo.transferType);
+  const whatHappensNextPointTwo = getTransferredCaseWhatHappensNextPointTwo(translations, showNewCaseNumber);
 
   res.render(TranslationKeys.TRANSFERRED_CASE, {
     ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -40,6 +42,7 @@ const renderTransferredCasePage = (req: AppRequest, res: Response, transferInfo:
     transferComplete: transferInfo.transferComplete,
     showNewCaseNumber,
     noAccessBody,
+    whatHappensNextPointTwo,
   });
 };
 
