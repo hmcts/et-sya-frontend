@@ -86,6 +86,7 @@
     "header": "Claim details",
     "claimTypeDiscrimination": "What type of discrimination claim are you making?",
     "claimTypePay": "What type of pay claim are you making?",
+    "dateOfLastEvent": "What is the date of the most recent event you are complaining about?",
     "describeWhatHappened": "Describe what happened to you",
     "ifClaimSuccessful": "What do you want if your claim is successful",
     "expectedCompensation": "What compensation are you seeking",

@@ -153,6 +153,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
     compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
     otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
+    dateOfLastEvent: parseDateFromString(fromApiCaseData?.case_data?.claimantOtherType?.dateOfLastEvent),
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     createdDate: convertFromTimestampString(fromApiCaseData.created_date, req),
@@ -282,6 +283,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimant_benefits_detail: caseItem.benefitsCharCount,
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
         claimant_employed_to: formatDate(caseItem.endDate),
+        dateOfLastEvent: formatDate(caseItem.dateOfLastEvent),
       },
       newEmploymentType: {
         new_job: caseItem.newJob,

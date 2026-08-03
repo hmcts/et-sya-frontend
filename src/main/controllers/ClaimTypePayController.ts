@@ -66,7 +66,7 @@ export default class ClaimTypePayController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.DATE_OF_LAST_EVENT);
   };
 
   @CaseStateCheck()
