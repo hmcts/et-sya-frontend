@@ -86,6 +86,7 @@
     "header": "Manylion yr hawliad",
     "claimTypeDiscrimination": "Pa fath o hawliad yn ymwneud â gwahaniaethu ydych chi’n ei wneud?",
     "claimTypePay": "Pa fath o hawliad tâl ydych chi'n ei wneud?",
+    "dateOfLastEvent": "[W]What is the date of the most recent event you are complaining about?",
     "describeWhatHappened": "Disgrifiwch beth ddigwyddodd i chi",
     "ifClaimSuccessful": "Beth ydych chi ei eisiau os yw eich hawliad yn llwyddiannus?",
     "expectedCompensation": "Pa iawndal ydych yn ei geisio?",

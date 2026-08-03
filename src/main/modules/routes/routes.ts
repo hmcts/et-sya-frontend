@@ -50,6 +50,7 @@ import ContactTheTribunalSelectedController from '../../controllers/ContactTheTr
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
+import DateOfLastEventController from '../../controllers/DateOfLastEventController';
 import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -283,6 +284,8 @@ export class Routes {
     app.post(PageUrls.CLAIM_TYPE_DISCRIMINATION, new ClaimTypeDiscriminationController().post);
     app.get(PageUrls.CLAIM_TYPE_PAY, new ClaimTypePayController().get);
     app.post(PageUrls.CLAIM_TYPE_PAY, new ClaimTypePayController().post);
+    app.get(PageUrls.DATE_OF_LAST_EVENT, new DateOfLastEventController().get);
+    app.post(PageUrls.DATE_OF_LAST_EVENT, new DateOfLastEventController().post);
     app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, describeWhatHappenedController.get);
     app.post(
       PageUrls.DESCRIBE_WHAT_HAPPENED,
