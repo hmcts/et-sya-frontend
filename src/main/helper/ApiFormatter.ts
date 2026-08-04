@@ -98,6 +98,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
+    caseUserRole: fromApiCaseData.caseUserRole ?? fromApiCaseData.case_data?.caseUserRole,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
     caseType: fromApiCaseData.case_data?.caseType,
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
@@ -527,6 +528,9 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 };
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
+  if (!responseDate) {
+    return undefined;
+  }
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
   return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }

@@ -801,6 +801,11 @@ export const CaseAssignmentResponse = {
 export const Roles = {
   CREATOR_ROLE_WITH_BRACKETS: '[CREATOR]',
   CREATOR_ROLE_WITHOUT_BRACKETS: 'CREATOR',
+  CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS: 'CLAIMANTNONLEGALREPRESENTATIVE',
   ERROR_APPLICATION_NOT_FOUND: 'Selected application not found, userCase.id: %s, appId: %s',
   ERROR_NOTIFICATION_NOT_FOUND: 'Selected order not found, userCase.id: %s, orderId: %s',
+} as const;
+
+export const CaseApiParams = {
+  CASE_USER_ROLE: 'case_user_role',
 } as const;

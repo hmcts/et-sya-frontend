@@ -272,6 +272,7 @@ export const enum NoAcasNumberReason {
 export interface CaseWithId extends Case {
   id: string;
   state: CaseState;
+  caseUserRole?: string;
 }
 
 export const enum YesOrNo {

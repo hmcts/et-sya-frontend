@@ -5,7 +5,7 @@ import {
   translateOverallStatus,
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
-import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
+import { getClaimStepsUrl, getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
@@ -90,9 +90,9 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
   return translateOverallStatus(overallStatus, translations);
 };
 
-export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseWithId[]> => {
+export const getUserCasesByLastModified = async (req: AppRequest, caseUserRole?: string): Promise<CaseWithId[]> => {
   try {
-    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases();
+    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases(caseUserRole);
     if (cases.data.length === 0) {
       return [];
     } else {
@@ -136,9 +136,10 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     } else {
       req.session.userCase = fromApiFormat(response.data);
       req.session.save();
+      const claimStepsUrl = getClaimStepsUrl(req);
       const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-        ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
-        : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
+        ? claimStepsUrl + languages.WELSH_URL_PARAMETER
+        : claimStepsUrl + languages.ENGLISH_URL_PARAMETER;
       return res.redirect(redirectUrl);
     }
   } catch (err) {

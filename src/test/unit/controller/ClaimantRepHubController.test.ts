@@ -50,7 +50,7 @@ describe('ClaimantRepHubController', () => {
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_REP_HUB, expect.anything());
     });
 
-    it('should redirect to CLAIMANT_APPLICATIONS when case load fails', async () => {
+    it('should redirect to /not-found when case load fails', async () => {
       const req = mockRequest({});
       const res = mockResponse();
       req.params = { caseId: 'case-123' };
@@ -58,7 +58,7 @@ describe('ClaimantRepHubController', () => {
 
       await controller.get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+      expect(res.redirect).toHaveBeenCalledWith('/not-found');
     });
 
     it('should initialise hubLinksStatuses when not present on userCase', async () => {

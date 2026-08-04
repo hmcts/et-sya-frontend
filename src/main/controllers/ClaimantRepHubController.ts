@@ -82,9 +82,10 @@ export default class ClaimantRepHubController {
       req.session.userCase = fromApiFormat(caseData.data);
       populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail: req.session.user?.email });
       applyPreservedClaimantRepSessionFields(req.session.userCase, req.session.claimantRepAboutYouPendingDisplay);
+      logger.info('loading cases');
     } catch (error) {
       logger.error(`Error loading case ${caseId}: ${error.message}`);
-      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+      return res.redirect('/not-found');
     }
 
     const userCase = req.session.userCase;
