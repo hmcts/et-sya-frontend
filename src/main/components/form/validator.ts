@@ -56,7 +56,7 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
 const isEmailFormatValid = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
 export const isValidEmailAddress: Validator = value => {
-  if (!value || (value as string).trim().length === 0) {
+  if (StringUtils.isBlank(value as string)) {
     return 'required';
   }
   if (!isEmailFormatValid(value as string)) {
@@ -65,7 +65,7 @@ export const isValidEmailAddress: Validator = value => {
 };
 
 export const isValidEmailAddressWhenProvided: Validator = value => {
-  if (value === null || value === '' || (value as string).trim().length === 0) {
+  if (StringUtils.isBlank(value as string)) {
     return;
   }
   if (!isEmailFormatValid(value as string)) {

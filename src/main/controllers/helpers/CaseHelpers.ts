@@ -61,8 +61,8 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workEnterPostcode = req.session.userCase.workEnterPostcode;
       const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
       const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
-      const representativeEnterPostcode = req.session.userCase.representativeEnterPostcode;
-      const representedClaimantEnterPostcode = req.session.userCase.representedClaimantEnterPostcode;
+      const representativePostcode = req.session.userCase.representativeEnterPostcode;
+      const representedClaimantPostcode = req.session.userCase.representedClaimantEnterPostcode;
       const addressAddresses = req.session.userCase.addressAddresses;
       const workAddresses = req.session.userCase.workAddresses;
       const respondentAddresses = req.session.userCase.respondentAddresses;
@@ -99,8 +99,8 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       req.session.userCase.addressEnterPostcode ??= addressEnterPostcode;
       req.session.userCase.respondentEnterPostcode ??= respondentEnterPostcode;
-      req.session.userCase.representativeEnterPostcode ??= representativeEnterPostcode;
-      req.session.userCase.representedClaimantEnterPostcode ??= representedClaimantEnterPostcode;
+      req.session.userCase.representativeEnterPostcode ??= representativePostcode;
+      req.session.userCase.representedClaimantEnterPostcode ??= representedClaimantPostcode;
       req.session.userCase.addressAddresses = addressAddresses;
       req.session.userCase.workAddresses = workAddresses;
       req.session.userCase.respondentAddresses = respondentAddresses;
@@ -151,7 +151,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-const saveClaimantRepAboutYouToSession = (req: AppRequest): void => {
+const saveClaimantRepresentativeInfoToSession = (req: AppRequest): void => {
   const loginEmail = req.session.user?.email;
   populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
   syncRepPhoneFields(req.session.userCase);
@@ -164,7 +164,7 @@ export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: L
   if (!req.session.errors?.length) {
     try {
       if (!isClaimantRepCaseEligibleForDraftUpdate(req.session.userCase)) {
-        saveClaimantRepAboutYouToSession(req);
+        saveClaimantRepresentativeInfoToSession(req);
         logger.info(
           `Saved claimant rep about you details to session for submitted case id: ${req.session.userCase.id}`
         );
@@ -174,13 +174,13 @@ export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: L
 
       const preserved = preserveClaimantRepSessionFields(req.session.userCase);
       const hubLinksStatuses = req.session.userCase.hubLinksStatuses;
-      saveClaimantRepAboutYouToSession(req);
+      saveClaimantRepresentativeInfoToSession(req);
       const response = await getCaseApi(req.session.user?.accessToken).updateClaimantRepAboutYou(req.session.userCase);
       logger.info(`Updated claimant rep about you for case id: ${req.session.userCase.id}`);
       req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.hubLinksStatuses ??= hubLinksStatuses;
       applyPreservedClaimantRepSessionFields(req.session.userCase, preserved);
-      saveClaimantRepAboutYouToSession(req);
+      saveClaimantRepresentativeInfoToSession(req);
       req.session.save();
     } catch (error) {
       req.session.userCase.updateDraftCaseError = req.url?.includes(languages.WELSH_URL_POSTFIX)

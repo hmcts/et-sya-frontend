@@ -1,3 +1,5 @@
+import StringUtils from '../../utils/StringUtils';
+
 export const validatePersonalDetails = (userCase: Record<string, any>): boolean => {
   if (!userCase) {
     return false;
@@ -42,15 +44,16 @@ export const validateRepresentativeDetails = (userCase: Record<string, any>): bo
     return false;
   }
   const { representativeName, repAddress1 } = userCase;
-  return !(!representativeName || !repAddress1);
+  return StringUtils.isNotBlank(representativeName) && StringUtils.isNotBlank(repAddress1);
 };
 
 export const validateClaimantRepAboutYou = (userCase: Record<string, any>): boolean => {
-  if (!userCase) {
+  const isValidRepresentative: boolean = validateRepresentativeDetails(userCase);
+  if (!isValidRepresentative) {
     return false;
   }
-  const { representativeName, repAddress1, claimantRepEmail } = userCase;
-  return !(!representativeName || !repAddress1 || !claimantRepEmail);
+  const { claimantRepEmail } = userCase;
+  return StringUtils.isNotBlank(claimantRepEmail);
 };
 
 export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
@@ -93,12 +96,12 @@ export const validateRepresentedClaimantDetails = (userCase: Record<string, any>
     representedClaimantAddressCountry,
     representedClaimantEmail,
   } = userCase;
-  return !!(
-    representedClaimantFirstName &&
-    representedClaimantLastName &&
-    representedClaimantAddress1 &&
-    representedClaimantAddressTown &&
-    representedClaimantAddressCountry &&
-    representedClaimantEmail
+  return (
+    StringUtils.isNotBlank(representedClaimantFirstName) &&
+    StringUtils.isNotBlank(representedClaimantLastName) &&
+    StringUtils.isNotBlank(representedClaimantAddress1) &&
+    StringUtils.isNotBlank(representedClaimantAddressTown) &&
+    StringUtils.isNotBlank(representedClaimantAddressCountry) &&
+    StringUtils.isNotBlank(representedClaimantEmail)
   );
 };
