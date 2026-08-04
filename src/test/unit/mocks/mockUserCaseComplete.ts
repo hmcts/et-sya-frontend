@@ -124,6 +124,7 @@ export default {
   state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
   caseType: CaseType.SINGLE,
   caseTypeId: CaseTypeId.ENGLAND_WALES,
+  caseUserRole: 'CREATOR',
   claimantRepresentedQuestion: YesOrNo.YES,
   avgWeeklyHrs: 5,
   claimantPensionContribution: YesOrNoOrNotSure.YES,

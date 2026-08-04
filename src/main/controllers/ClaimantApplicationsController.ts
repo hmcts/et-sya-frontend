@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId } from '../definitions/case';
 import { PageUrls, Roles, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -11,6 +12,11 @@ import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantApplicationsController');
+
+// The matched role returned by /user-cases may or may not carry brackets (e.g. "[CREATOR]" vs
+// "CREATOR"); normalise before comparing against the bracket-free Roles constants.
+const matchesCaseUserRole = (userCase: CaseWithId, role: string): boolean =>
+  (userCase.caseUserRole ?? '').replace(/[[\]]/g, '').toUpperCase() === role;
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -33,16 +39,20 @@ export default class ClaimantApplicationsController {
     //reset return url to prevent redirect loop after deleting a draft claim
     req.session.returnUrl = undefined;
 
-    // Fetch each tab's cases by the user's assigned case role: their own claims ([CREATOR])
-    // and the claims they are representing someone else on ([CLAIMANTNONLEGALREPRESENTATIVE]).
-    const myClaimsCases = await getUserCasesByLastModified(req, Roles.CREATOR_ROLE_WITHOUT_BRACKETS);
-    const representingCases = await getUserCasesByLastModified(req, Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS);
-    const userCases = [...myClaimsCases, ...representingCases];
+    // A single /user-cases call returns the user's own claims ([CREATOR]) and the claims they are
+    // representing someone else on ([CLAIMANTNONLEGALREPRESENTATIVE]) — the backend auto-expands the
+    // default/CREATOR request to include both. Each case carries its matched role in caseUserRole,
+    // which we use to split them into the two tabs.
+    const userCases = await getUserCasesByLastModified(req);
     if (userCases.length === 0) {
       req.session.hasUserCases = false;
       return res.redirect(PageUrls.HOME);
     } else {
       const languageParam = getLanguageParam(req.url);
+      const myClaimsCases = userCases.filter(c => matchesCaseUserRole(c, Roles.CREATOR_ROLE_WITHOUT_BRACKETS));
+      const representingCases = userCases.filter(c =>
+        matchesCaseUserRole(c, Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS)
+      );
       const myClaimsApplications = getUserApplications(myClaimsCases, translations, languageParam);
       const representingApplications = getUserApplications(representingCases, translations, languageParam);
       req.session.userCases = userCases;

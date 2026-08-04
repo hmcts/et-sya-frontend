@@ -237,6 +237,18 @@ describe('Format Case Data to Frontend Model', () => {
     expect(result).toStrictEqual(complete);
   });
 
+  it('should read caseUserRole from the top-level of the response', () => {
+    const mock: CaseApiDataResponse = {
+      id: '1234',
+      caseUserRole: 'CLAIMANTNONLEGALREPRESENTATIVE',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {},
+    };
+    expect(fromApiFormat(mock).caseUserRole).toEqual('CLAIMANTNONLEGALREPRESENTATIVE');
+  });
+
   it('should return undefined for empty field`', () => {
     const mockedApiDataEmpty: CaseApiDataResponse = {
       id: '1234',
@@ -255,6 +267,7 @@ describe('Format Case Data to Frontend Model', () => {
       createdDate: '19 August 2022',
       lastModified: '19 August 2022',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      caseUserRole: undefined,
       caseType: undefined,
       typeOfClaim: undefined,
       caseTypeId: undefined,
@@ -421,6 +434,7 @@ describe('Format Case Data to Frontend Model', () => {
       createdDate: '19 August 2022',
       lastModified: '19 August 2022',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      caseUserRole: undefined,
       caseType: undefined,
       typeOfClaim: undefined,
       caseTypeId: undefined,

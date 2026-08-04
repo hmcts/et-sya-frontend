@@ -19,6 +19,7 @@ describe('Claimant Applications Controller', () => {
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
+      caseUserRole: Roles.CREATOR_ROLE_WITHOUT_BRACKETS,
     },
   ];
 
@@ -35,10 +36,8 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should render claimant applications page', async () => {
-    // Own claims (CREATOR) return the user's cases; representing (CLAIMANTNONLEGALREPRESENTATIVE) returns none.
-    getUserCasesMock.mockImplementation(async (_req, role) =>
-      role === Roles.CREATOR_ROLE_WITHOUT_BRACKETS ? userCases : []
-    );
+    // A single call returns all the user's cases; here just the CREATOR case, so representing is empty.
+    getUserCasesMock.mockResolvedValue(userCases);
     getUserAppMock.mockImplementation(cases => (cases.length ? mockApplications : []));
     const claimantApplicationsController = new ClaimantApplicationsController();
     const request = mockRequest({});
@@ -61,14 +60,12 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should split applications into "My claims" and "Representing" and show tabs when both exist', async () => {
-    const creatorCase = { id: 'personal-1' } as CaseWithId;
-    const repCase = { id: 'rep-1' } as CaseWithId;
+    const creatorCase = { id: 'personal-1', caseUserRole: Roles.CREATOR_ROLE_WITHOUT_BRACKETS } as CaseWithId;
+    const repCase = { id: 'rep-1', caseUserRole: Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS } as CaseWithId;
     const personalApp = { userCase: { id: 'personal-1' } } as ApplicationTableRecord;
     const representingApp = { userCase: { id: 'rep-1' } } as ApplicationTableRecord;
-    // Each role returns its own case; getUserApplications maps each case list to its record.
-    getUserCasesMock.mockImplementation(async (_req, role) =>
-      role === Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS ? [repCase] : [creatorCase]
-    );
+    // One call returns both cases; the controller splits them by caseUserRole.
+    getUserCasesMock.mockResolvedValue([creatorCase, repCase]);
     getUserAppMock.mockImplementation(cases => (cases.some(c => c.id === 'rep-1') ? [representingApp] : [personalApp]));
 
     const request = mockRequest({});
@@ -86,12 +83,10 @@ describe('Claimant Applications Controller', () => {
   });
 
   it('should not show tabs when the user has only one type of claim', async () => {
-    const repCase = { id: 'rep-1' } as CaseWithId;
+    const repCase = { id: 'rep-1', caseUserRole: Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS } as CaseWithId;
     const representingApp = { userCase: { id: 'rep-1' } } as ApplicationTableRecord;
-    // Only the representing ([CLAIMANTNONLEGALREPRESENTATIVE]) role returns a case.
-    getUserCasesMock.mockImplementation(async (_req, role) =>
-      role === Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS ? [repCase] : []
-    );
+    // Only a representing case is returned, so the "My claims" list is empty and no tabs are shown.
+    getUserCasesMock.mockResolvedValue([repCase]);
     getUserAppMock.mockImplementation(cases => (cases.some(c => c.id === 'rep-1') ? [representingApp] : []));
 
     const request = mockRequest({});
