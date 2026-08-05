@@ -50,6 +50,7 @@ export const mockEt1DataModelUpdate = {
     claimantRepresentedQuestion: 'Yes',
     claimantWorkAddressQuestion: 'Yes',
     claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+    hubLinksStatuses: undefined,
     caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'John',
@@ -89,6 +90,7 @@ export const mockEt1DataModelUpdate = {
       claimant_benefits_detail: 'Some benefits',
       claimant_employed_notice_period: '2022-08-11',
       claimant_employed_to: '2017-05-11',
+      dateOfLastEvent: null,
     },
     newEmploymentType: {
       new_job: 'Yes',
