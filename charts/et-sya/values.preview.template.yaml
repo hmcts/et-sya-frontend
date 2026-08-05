@@ -6,6 +6,7 @@ nodejs:
   devmemoryRequests: 512Mi
   environment:
     ET_SYA_API_HOST: http://et-cos-aat.service.core-compute-aat.internal
+    HMCTS_ACCESS: 'true'
   keyVaults:
     et:
       resourceGroup: et
