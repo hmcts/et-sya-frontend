@@ -9,7 +9,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, DateOfLastEventFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
@@ -41,27 +41,6 @@ export default class DateOfLastEventController {
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    date_of_last_event.values = [
-      {
-        label: (l: AnyRecord): string => l.dateFormat.day,
-        name: 'day',
-        classes: 'govuk-input--width-2',
-        attributes: { maxLength: 2 },
-      },
-      {
-        label: (l: AnyRecord): string => l.dateFormat.month,
-        name: 'month',
-        classes: 'govuk-input--width-2',
-        attributes: { maxLength: 2 },
-      },
-      {
-        label: (l: AnyRecord): string => l.dateFormat.year,
-        name: 'year',
-        classes: 'govuk-input--width-4',
-        attributes: { maxLength: 4 },
-      },
-    ];
-    this.dateOfLastEventFormContent.fields = { dateOfLastEvent: date_of_last_event };
     const content = getPageContent(req, this.dateOfLastEventFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DATE_OF_LAST_EVENT,
