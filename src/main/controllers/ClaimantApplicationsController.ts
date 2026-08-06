@@ -54,7 +54,7 @@ export default class ClaimantApplicationsController {
         matchesCaseUserRole(c, Roles.CLAIMANT_NON_LEGAL_REP_WITHOUT_BRACKETS)
       );
       const myClaimsApplications = getUserApplications(myClaimsCases, translations, languageParam);
-      const representingApplications = getUserApplications(representingCases, translations, languageParam);
+      const representingApplications = getUserApplications(representingCases, translations, languageParam, true);
       req.session.userCases = userCases;
       req.session.hasUserCases = true;
 
