@@ -113,6 +113,7 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
+  dateOfLastEvent?: CaseDate;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;

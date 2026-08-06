@@ -205,6 +205,7 @@ export default {
       idamId: undefined,
     },
   ],
+  dateOfLastEvent: undefined,
   et3DueDate: undefined,
   et3ResponseReceived: true,
   claimSummaryFile: {
