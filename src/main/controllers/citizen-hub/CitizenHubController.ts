@@ -143,23 +143,25 @@ export default class CitizenHubController {
 
     const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
 
-    const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
-      return {
-        title: (l: AnyRecord): string => l[`section${index + 1}`],
-        links: sectionIndexToLinkNames[index].map(linkName => {
-          const status = hubLinksStatuses[linkName];
-          const isVisible = linkName !== HubLinkNames.AboutYou || showAboutYouForNonHmctsRep;
-          return {
-            linkTxt: (l: AnyRecord): string => l[linkName],
-            status: (l: AnyRecord): string => l[status],
-            shouldShow: shouldHubLinkBeClickable(status, linkName),
-            isVisible: () => isVisible,
-            url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
-            statusColor: () => statusColorMap.get(status),
-          };
-        }),
-      };
-    });
+    const sections = Array.from(Array(sectionIndexToLinkNames.length))
+      .map((__ignored, index) => {
+        return {
+          title: (l: AnyRecord): string => l[`section${index + 1}`],
+          links: sectionIndexToLinkNames[index].map(linkName => {
+            const status = hubLinksStatuses[linkName];
+            return {
+              linkTxt: (l: AnyRecord): string => l[linkName],
+              status: (l: AnyRecord): string => l[status],
+              shouldShow: shouldHubLinkBeClickable(status, linkName),
+              isVisible: () => true,
+              url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
+              statusColor: () => statusColorMap.get(status),
+            };
+          }),
+        };
+      })
+      // The "About you" section is not shown on the citizen hub for anyone.
+      .filter((__section, index) => !sectionIndexToLinkNames[index].includes(HubLinkNames.AboutYou));
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const generalNotifications = filterOutSpecialNotifications(notifications);
