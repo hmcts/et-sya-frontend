@@ -22,7 +22,8 @@ const logger = getLogger('CaseSelectionService');
 export const getUserApplications = (
   userCases: CaseWithId[],
   translations: AnyRecord,
-  languageParam: string
+  languageParam: string,
+  isRepresenting = false
 ): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
 
@@ -31,7 +32,7 @@ export const getUserApplications = (
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
-      url: getRedirectUrl(uCase, languageParam),
+      url: getRedirectUrl(uCase, languageParam, isRepresenting),
       claimSubmittedDate: formatDate(uCase.submittedDate),
       deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}&redirect=claimant-applications`,
     };
@@ -48,9 +49,11 @@ export const formatRespondents = (respondents?: Respondent[]): string => {
   return respondents.map(respondent => respondent.respondentName).join('<br />');
 };
 
-export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): string => {
+export const getRedirectUrl = (userCase: CaseWithId, languageParam: string, isRepresenting = false): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
     return `/claimant-application/${userCase.id}${languageParam}`;
+  } else if (isRepresenting) {
+    return `/claimant-rep-hub/${userCase.id}${languageParam}`;
   } else {
     return `/citizen-hub/${userCase.id}${languageParam}`;
   }

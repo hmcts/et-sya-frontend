@@ -239,7 +239,7 @@ describe('Citizen hub page', () => {
       expect(aboutYouLink).toBeUndefined();
     });
 
-    it('should show the About you task link for non-HMCTS represented claimants', async () => {
+    it('should not show the About you task link for non-HMCTS represented claimants', async () => {
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
       mockFromApiFormat.mockReturnValue({
@@ -260,8 +260,7 @@ describe('Citizen hub page', () => {
       const aboutYouLink = Array.from(htmlRes.querySelectorAll('a')).find(
         link => link.textContent.trim() === 'About you'
       );
-      expect(aboutYouLink).toBeDefined();
-      expect(aboutYouLink.getAttribute('href')).toBe(PageUrls.REPRESENTATIVE_DETAILS_CHECK);
+      expect(aboutYouLink).toBeUndefined();
     });
 
     it('should not show the About you task link for HMCTS represented claimants', async () => {
