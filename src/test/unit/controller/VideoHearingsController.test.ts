@@ -1,5 +1,6 @@
 import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -30,5 +31,6 @@ describe('Hearing Preferences Controller', () => {
     await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({ hearingPreferences: ['Phone'] });
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HEARING_PANEL_PREFERENCE);
   });
 });

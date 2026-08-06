@@ -86,6 +86,7 @@ export default {
   id: '1234',
   createdDate: '19 August 2022',
   lastModified: '19 August 2022',
+  dateOfLastEvent: undefined,
   typeOfClaim: ['discrimination', 'payRelated'],
   dobDate: {
     day: '05',
@@ -142,6 +143,8 @@ export default {
   claimantContactPreference: EmailOrPost.EMAIL,
   claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
   claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
+  claimantHearingPanelPreference: undefined,
+  claimantHearingPanelPreferenceWhy: undefined,
   employmentAndRespondentCheck: YesOrNo.YES,
   claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
   claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
