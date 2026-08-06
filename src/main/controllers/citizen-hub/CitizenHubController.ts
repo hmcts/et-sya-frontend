@@ -77,7 +77,9 @@ export default class CitizenHubController {
           (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
         );
       } catch (error) {
-        logger.error(error.message);
+        logger.error(
+          `CitizenHub GET failed - caseId: ${req.params.caseId}, userId: ${req.session.user?.id}, error: ${error.message}\n${error.stack}`
+        );
         return res.redirect('/not-found');
       }
     }

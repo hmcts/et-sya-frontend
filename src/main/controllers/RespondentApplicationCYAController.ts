@@ -5,6 +5,7 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
+import { getLogger } from '../logger';
 
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -12,10 +13,18 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
+const logger = getLogger('RespondentApplicationCYAController');
+
 export default class RespondentApplicationCYAController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
+
+    if (!userCase?.selectedGenericTseApplication) {
+      logger.warn(`selectedGenericTseApplication not found in session for caseId: ${userCase?.id}`);
+      return res.redirect('/not-found');
+    }
+
     userCase.isRespondingToRequestOrOrder = false;
 
     const content = getPageContent(req, <FormContent>{}, [

@@ -148,16 +148,10 @@ describe('Case Selection Service using Case Api', () => {
   });
 
   test('Should hit error block and return empty array', async () => {
-    const response = {
-      data: [{ invalidData: 1234 }],
-      status: 500,
-      statusText: '',
-    };
-
     const req = mockRequest({});
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getUserCases = jest.fn().mockResolvedValue(response);
+    caseApi.getUserCases = jest.fn().mockRejectedValue(new Error('API error'));
 
     const result = await getUserCasesByLastModified(req);
 
@@ -309,36 +303,24 @@ describe('Case Selection Service using Case Api', () => {
   });
 
   test('Should redirect to home page in English language on error if current language is English', async () => {
-    const response = {
-      data: { invalidData: 'rytrfgb' },
-      status: 200,
-      statusText: '',
-    };
-
     const req = mockRequest({});
     req.url = PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('API error'));
     await selectUserCase(req, res, '12234');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to home page in Welsh on error if current language is Welsh', async () => {
-    const response = {
-      data: { invalidData: 'rytrfgb' },
-      status: 200,
-      statusText: '',
-    };
-
     const req = mockRequest({});
     req.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('API error'));
     await selectUserCase(req, res, '12234');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.WELSH_URL_PARAMETER);

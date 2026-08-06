@@ -42,6 +42,9 @@ import {
 } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
 import { TypeItem } from '../definitions/util-types';
+import { getLogger } from '../logger';
+
+const logger = getLogger('ApiFormatter');
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -403,6 +406,10 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 };
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
+  if (!responseDate) {
+    logger.warn(`convertFromTimestampString called with missing responseDate: ${JSON.stringify(responseDate)}`);
+    return undefined;
+  }
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
   return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }
