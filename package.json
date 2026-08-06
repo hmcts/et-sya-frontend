@@ -195,7 +195,7 @@
     "ip-address": "10.3.1",
     "undici": "7.29.0",
     "body-parser": "^1.20.6",
-    "js-yaml@npm:^4.1.1": "npm:4.3.0",
+    "js-yaml@npm:^4.1.1": "npm:js-yaml@4.3.1",
     "immutable": "^5.1.8"
   },
   "packageManager": "yarn@4.12.0"
