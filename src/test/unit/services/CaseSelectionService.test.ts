@@ -5,6 +5,7 @@ import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import {
+  getRedirectUrl,
   getUserApplications,
   getUserCasesByLastModified,
   selectUserCase,
@@ -379,5 +380,27 @@ describe('get User applications', () => {
     ];
     const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations, '?lng=en');
     expect(result).toStrictEqual(mockApplications);
+  });
+});
+
+describe('getRedirectUrl', () => {
+  it('should redirect draft claims to the claimant-application page', () => {
+    const userCase = { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en')).toBe('/claimant-application/12345?lng=en');
+  });
+
+  it('should redirect submitted claims to the citizen-hub by default', () => {
+    const userCase = { id: '12345', state: CaseState.SUBMITTED } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en')).toBe('/citizen-hub/12345?lng=en');
+  });
+
+  it('should redirect submitted representing claims to the claimant-rep-hub', () => {
+    const userCase = { id: '12345', state: CaseState.SUBMITTED } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en', true)).toBe('/claimant-rep-hub/12345?lng=en');
+  });
+
+  it('should redirect draft representing claims to the claimant-application page', () => {
+    const userCase = { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en', true)).toBe('/claimant-application/12345?lng=en');
   });
 });
