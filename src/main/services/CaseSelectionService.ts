@@ -5,11 +5,12 @@ import {
   translateOverallStatus,
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../controllers/helpers/CaseTransferHelper';
 import { getClaimStepsUrl, getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { PageUrls, languages } from '../definitions/constants';
+import { ErrorPages, PageUrls, languages } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
@@ -47,6 +48,10 @@ export const formatRespondents = (respondents?: Respondent[]): string => {
     return 'undefined';
   }
   return respondents.map(respondent => respondent.respondentName).join('<br />');
+};
+
+export const getCitizenHubUrl = (caseId: string, languageParam: string): string => {
+  return `/citizen-hub/${caseId}${languageParam}`;
 };
 
 export const getRedirectUrl = (userCase: CaseWithId, languageParam: string, isRepresenting = false): string => {
@@ -117,9 +122,17 @@ export const getUserCasesByLastModified = async (req: AppRequest, caseUserRole?:
       });
     }
   } catch (err) {
-    logger.error(err.message);
+    logger.error(err instanceof Error ? err.message : String(err));
     return [];
   }
+};
+
+const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string => {
+  const languageParam = getLanguageParam(req.url);
+  if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    return getClaimStepsUrl(req) + languageParam;
+  }
+  return getCitizenHubUrl(userCase.id, languageParam);
 };
 
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
@@ -136,21 +149,20 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
         ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
         : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
       return res.redirect(redirectUrl);
-    } else {
-      req.session.userCase = fromApiFormat(response.data);
-      req.session.save();
-      const claimStepsUrl = getClaimStepsUrl(req);
-      const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-        ? claimStepsUrl + languages.WELSH_URL_PARAMETER
-        : claimStepsUrl + languages.ENGLISH_URL_PARAMETER;
-      return res.redirect(redirectUrl);
     }
+
+    req.session.userCase = fromApiFormat(response.data);
+    clearCaseTransferInfoIfStale(req, caseId);
+
+    req.session.save();
+    return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
   } catch (err) {
-    logger.error(err.message);
-    const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
-      ? PageUrls.HOME + languages.WELSH_URL_PARAMETER
-      : PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;
-    return res.redirect(redirectUrl);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    logger.error(errorMessage);
+    if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
+      return;
+    }
+    return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
   }
 };
 
