@@ -10,7 +10,7 @@ import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
+import { CaseApiParams, DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -31,9 +31,11 @@ export class CaseApi {
     }
   };
 
-  getUserCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
+  getUserCases = async (caseUserRole?: string): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
     try {
-      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
+      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES, {
+        params: caseUserRole ? { [CaseApiParams.CASE_USER_ROLE]: caseUserRole } : undefined,
+      });
     } catch (error) {
       throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
     }
@@ -87,6 +89,19 @@ export class CaseApi {
     } catch (error) {
       throw new Error(
         'Error updating draft case: ' + axiosErrorDetails(error, { action: 'updateDraftCase', caseId: caseItem.id })
+      );
+    }
+  };
+
+  updateClaimantRepAboutYou = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      const updateBody = toApiFormat(caseItem);
+      delete updateBody.case_data.hubLinksStatuses;
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, updateBody);
+    } catch (error) {
+      throw new Error(
+        'Error updating claimant rep about you: ' +
+          axiosErrorDetails(error, { action: 'updateClaimantRepAboutYou', caseId: caseItem.id })
       );
     }
   };

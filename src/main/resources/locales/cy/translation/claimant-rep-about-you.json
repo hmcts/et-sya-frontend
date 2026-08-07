@@ -1,0 +1,24 @@
+{
+  "title": "Amdanoch chi",
+  "h1": "Amdanoch chi",
+  "submitBtn": "Cyflwyno",
+  "aboutYouDetails": {
+    "name": "Enw",
+    "organisation": "Sefydliad",
+    "typeOfOrganisation": "Math o sefydliad",
+    "address": "Cyfeiriad",
+    "email": "E-bost",
+    "phone": "Ffôn"
+  },
+  "tellTheTribunal": {
+    "heading": "Dywedwch wrth y tribiwnlys",
+    "textBeforeLink": "Os ydych angen neilltuo'r achos hwn i gydweithiwr neu ddiweddu rhoi'r gorau i gynrychiolaeth yr achos hwn, yna rydych angen",
+    "contactLink": "cysylltu â’r tribiwnlys",
+    "textAfterLink": "."
+  },
+  "errors": {
+    "hiddenErrorField": {
+      "invalid": "Dylech gwblhau eich enw, cyfeiriad ac e-bost cyn y gallwch gyflwyno"
+    }
+  }
+}

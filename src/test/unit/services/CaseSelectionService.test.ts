@@ -5,6 +5,7 @@ import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { ErrorPages, PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import {
+  getRedirectUrl,
   getUserApplications,
   getUserCasesByLastModified,
   selectUserCase,
@@ -165,23 +166,17 @@ describe('Case Selection Service using Case Api', () => {
   });
 
   test('Should hit error block and return empty array', async () => {
-    const response = {
-      data: [{ invalidData: 1234 }],
-      status: 500,
-      statusText: '',
-    };
-
     const req = mockRequest({});
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getUserCases = jest.fn().mockResolvedValue(response);
+    caseApi.getUserCases = jest.fn().mockRejectedValue(new Error('Failed to retrieve cases'));
 
     const result = await getUserCasesByLastModified(req);
 
     expect(result).toStrictEqual([]);
   });
 
-  test('Should select User Case and redirect to Claim Steps in English language if current language is English', async () => {
+  test('Should select represented User Case and redirect to non-HMCTS Claim Steps in English language', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
         id: '12234',
@@ -211,7 +206,7 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should select submitted User Case and redirect to Citizen Hub in English language', async () => {
@@ -379,7 +374,7 @@ describe('Case Selection Service using Case Api', () => {
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should select User Case and redirect to Claim Steps in Welsh language if current language is Welsh', async () => {
+  test('Should select represented User Case and redirect to non-HMCTS Claim Steps in Welsh language', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
         id: '12234',
@@ -409,7 +404,7 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS + languages.WELSH_URL_PARAMETER);
   });
 
   test('Should redirect to new claim in English language if undefined and current language is English', async () => {
@@ -493,36 +488,26 @@ describe('Case Selection Service using Case Api', () => {
   });
 
   test('Should redirect to not found in English language on error if current language is English', async () => {
-    const response = {
-      data: { invalidData: 'rytrfgb' },
-      status: 200,
-      statusText: '',
-    };
-
     const req = mockRequest({});
     req.url = PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('Failed to retrieve case'));
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
     await selectUserCase(req, res, '12234');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to not found in Welsh on error if current language is Welsh', async () => {
-    const response = {
-      data: { invalidData: 'rytrfgb' },
-      status: 200,
-      statusText: '',
-    };
-
     const req = mockRequest({});
     req.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('Failed to retrieve case'));
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
     await selectUserCase(req, res, '12234');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER);
@@ -581,5 +566,27 @@ describe('get User applications', () => {
     ];
     const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations, '?lng=en');
     expect(result).toStrictEqual(mockApplications);
+  });
+});
+
+describe('getRedirectUrl', () => {
+  it('should redirect draft claims to the claimant-application page', () => {
+    const userCase = { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en')).toBe('/claimant-application/12345?lng=en');
+  });
+
+  it('should redirect submitted claims to the citizen-hub by default', () => {
+    const userCase = { id: '12345', state: CaseState.SUBMITTED } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en')).toBe('/citizen-hub/12345?lng=en');
+  });
+
+  it('should redirect submitted representing claims to the claimant-rep-hub', () => {
+    const userCase = { id: '12345', state: CaseState.SUBMITTED } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en', true)).toBe('/claimant-rep-hub/12345?lng=en');
+  });
+
+  it('should redirect draft representing claims to the claimant-application page', () => {
+    const userCase = { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS } as CaseWithId;
+    expect(getRedirectUrl(userCase, '?lng=en', true)).toBe('/claimant-application/12345?lng=en');
   });
 });

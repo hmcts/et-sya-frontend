@@ -1,0 +1,11 @@
+{
+  "pageTitle": "E-bost Hawlydd a Gynrychiolir",
+  "pageHeader": "Cyfeiriad e-bost yr hawlydd",
+  "description": "Bydd yn helpu i brosesu eich hawliad yn gynt os byddwch yn rhoi cyfeiriad e-bost yr hawlydd.",
+  "label": "Rhowch gyfeiriad e-bost yr hawlydd",
+  "errors": {
+    "representedClaimantEmail": {
+      "invalid": "Rhowch gyfeiriad e-bost yn y fformat cywir, er enghraifft enw@enghraifft.com"
+    }
+  }
+}

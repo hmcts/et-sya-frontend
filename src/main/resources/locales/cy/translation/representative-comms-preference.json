@@ -1,0 +1,17 @@
+{
+  "title": "Y dull cyfathrebu sydd orau gennych",
+  "h1": "Y dull cyfathrebu sydd orau gennych (dewisol)",
+  "label": "Sut hoffech i ni gysylltu â chi?",
+  "email": "E-bost",
+  "post": "Trwy’r post",
+  "languageLabel": "Pa iaith ydych chi eisiau i ni ei defnyddio pan fyddwn yn cysylltu â chi?",
+  "languageHint": "Byddwn yn anfon negeseuon e-bost a dogfennau atoch wrth i’ch achos fynd yn ei flaen. Dewiswch ym mha iaith yr hoffech gael y rhain.",
+  "welsh": "Cymraeg",
+  "english": "Saesneg",
+  "hearingLabel": "Os bydd gwrandawiad, pa iaith ydych chi eisiau siarad yn y gwrandawiad?",
+  "errors": {
+    "claimantContactPreference": {
+      "required": "Dywedwch wrthym a ydych am inni gysylltu â chi drwy e-bost neu drwy'r post"
+    }
+  }
+}

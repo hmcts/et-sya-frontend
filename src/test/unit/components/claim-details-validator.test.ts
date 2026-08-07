@@ -2,6 +2,7 @@ import {
   validateClaimCheckDetails,
   validateEmploymentAndRespondentDetails,
   validatePersonalDetails,
+  validateRepresentedClaimantDetails,
 } from '../../../main/components/form/claim-details-validator';
 
 describe('claimDetailsValidator', () => {
@@ -69,6 +70,7 @@ describe('claimDetailsValidator', () => {
       const userCase = {
         respondents: [
           {
+            respondentName: 'Acme Ltd',
             respondentAddress1: '123 Street',
             respondentAddressTown: 'Town',
             respondentAddressCountry: 'Country',
@@ -81,10 +83,27 @@ describe('claimDetailsValidator', () => {
       expect(validateEmploymentAndRespondentDetails(userCase)).toBe(true);
     });
 
+    it('should return false if respondentName is missing', () => {
+      const userCase = {
+        respondents: [
+          {
+            respondentAddress1: '123 Street',
+            respondentAddressTown: 'Town',
+            respondentAddressCountry: 'Country',
+            respondentAddressPostcode: 'AB12 3CD',
+            acasCert: 'No',
+            noAcasReason: 'Valid reason',
+          },
+        ],
+      };
+      expect(validateEmploymentAndRespondentDetails(userCase)).toBe(false);
+    });
+
     it('should return false if acasCert is "Yes" and acasCertNum is not provided', () => {
       const userCase = {
         respondents: [
           {
+            respondentName: 'Acme Ltd',
             respondentAddress1: '123 Street',
             respondentAddressTown: 'Town',
             respondentAddressCountry: 'Country',
@@ -100,6 +119,7 @@ describe('claimDetailsValidator', () => {
       const userCase = {
         respondents: [
           {
+            respondentName: 'Acme Ltd',
             respondentAddress1: '123 Street',
             respondentAddressTown: 'Town',
             respondentAddressCountry: 'Country',
@@ -110,6 +130,34 @@ describe('claimDetailsValidator', () => {
         ],
       };
       expect(validateEmploymentAndRespondentDetails(userCase)).toBe(true);
+    });
+  });
+
+  describe('validateRepresentedClaimantDetails', () => {
+    it('should return false if userCase is undefined', () => {
+      expect(validateRepresentedClaimantDetails(undefined)).toBe(false);
+    });
+
+    it('should return false if any mandatory represented claimant field is missing', () => {
+      const userCase = {
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(false);
+    });
+
+    it('should return true if all mandatory represented claimant fields are present', () => {
+      const userCase = {
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+        representedClaimantAddressCountry: 'England',
+        representedClaimantEmail: 'jane.doe@example.com',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(true);
     });
   });
 
@@ -136,6 +184,7 @@ describe('claimDetailsValidator', () => {
     it('should return true if claimSummaryFile is an object with required properties', () => {
       const userCase = {
         typeOfClaim: ['discrimination'],
+        claimTypeDiscrimination: ['Age'],
         claimSummaryFile: {
           document_binary_url: 'http://example.com/binary',
           document_filename: 'file.pdf',
@@ -146,13 +195,45 @@ describe('claimDetailsValidator', () => {
     });
 
     it('should return true if claimSummaryFile is a non-empty string', () => {
-      const userCase = { typeOfClaim: ['discrimination'], claimSummaryFile: 'file-url' };
+      const userCase = {
+        typeOfClaim: ['discrimination'],
+        claimTypeDiscrimination: ['Age'],
+        claimSummaryFile: 'file-url',
+      };
       expect(validateClaimCheckDetails(userCase)).toBe(true);
     });
 
     it('should return false if claimSummaryFile and claimSummaryText are both missing', () => {
-      const userCase = { typeOfClaim: ['discrimination'] };
+      const userCase = { typeOfClaim: ['discrimination'], claimTypeDiscrimination: ['Age'] };
       expect(validateClaimCheckDetails(userCase)).toBe(false);
+    });
+
+    it('should return false if discrimination is selected but claimTypeDiscrimination is empty', () => {
+      const userCase = { typeOfClaim: ['discrimination'], claimSummaryText: 'Summary' };
+      expect(validateClaimCheckDetails(userCase)).toBe(false);
+    });
+
+    it('should return false if pay-related is selected but claimTypePay is empty', () => {
+      const userCase = { typeOfClaim: ['payRelated'], claimSummaryText: 'Summary' };
+      expect(validateClaimCheckDetails(userCase)).toBe(false);
+    });
+
+    it('should return true when discrimination claim has claimTypeDiscrimination and claimSummaryText', () => {
+      const userCase = {
+        typeOfClaim: ['discrimination'],
+        claimTypeDiscrimination: ['Age'],
+        claimSummaryText: 'Summary',
+      };
+      expect(validateClaimCheckDetails(userCase)).toBe(true);
+    });
+
+    it('should return true when pay claim has claimTypePay and claimSummaryText', () => {
+      const userCase = {
+        typeOfClaim: ['payRelated'],
+        claimTypePay: ['Arrears'],
+        claimSummaryText: 'Summary',
+      };
+      expect(validateClaimCheckDetails(userCase)).toBe(true);
     });
   });
 });

@@ -1,0 +1,15 @@
+{
+  "title": "Oriau gwaith wythnosol cyfartalog yr hawlydd",
+  "h1": "Oriau gwaith wythnosol cyfartalog yr hawlydd (dewisol)",
+  "p1": "Os oedd nifer yr oriau yr oedd yr hawlydd yn gweithio yn newid bob wythnos (er enghraifft, os oeddent ar gontract dim oriau), defnyddiwch y 12 wythnos olaf o slipiau cyflog i gyfrifo’r cyfartaledd wythnosol.",
+  "enterAverageHours": "Nodwch eich oriau wythnosol ar gyfartaledd",
+  "hint": "Peidiwch â chynnwys unrhyw oriau goramser.",
+  "errors": {
+    "avgWeeklyHrs": {
+      "invalid": "Rhowch oriau wythnosol cyfartalog mewn fformat dilys, er enghraifft 0, 10, 35 ac ati",
+      "exceeded": "Rhaid i'r oriau fod yn llai na 168 (nifer uchaf yr oriau mewn wythnos)",
+      "notANumber": "Rhaid nodi oriau a weithiwyd mewn wythnos fel rhif, er enghraifft 0, 10, 35 ayyb.",
+      "negativeNumber": "Ni all oriau a weithir fod yn werth negyddol. Rhaid ei nodi fel rhif, er enghraifft 0, 10, 35 ayb."
+    }
+  }
+}

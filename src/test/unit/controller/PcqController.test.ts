@@ -3,6 +3,7 @@ import config from 'config';
 
 import PcqController from '../../../main/controllers/PcqController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import * as invokePCQ from '../../../main/pcq/index';
 import { mockRequest } from '../mocks/mockRequest';
@@ -166,5 +167,31 @@ describe('PCQGetController', () => {
     await new Promise(process.nextTick);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+  });
+
+  test('Should redirect to CLAIMANT_REP_CHECK_ANSWERS when PCQ disabled and user is a rep', async () => {
+    mockedConfig.get.mockReturnValueOnce('false');
+
+    const req = mockRequest({ userCase: { claimantRepresentedQuestion: YesOrNo.YES } });
+    const res = mockResponse();
+
+    await controller.get(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_REP_CHECK_ANSWERS);
+  });
+
+  test('Should redirect to CLAIMANT_REP_CHECK_ANSWERS when PCQ health DOWN and user is a rep', async () => {
+    mockedConfig.get.mockReturnValueOnce('true');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+
+    const req = mockRequest({ userCase: { claimantRepresentedQuestion: YesOrNo.YES } });
+    const res = mockResponse();
+
+    mockedAxios.get.mockRejectedValueOnce({ message: 'DOWN' });
+
+    await controller.get(req, res);
+    await new Promise(process.nextTick);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_REP_CHECK_ANSWERS);
   });
 });

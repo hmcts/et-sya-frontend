@@ -6,7 +6,7 @@ import {
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../controllers/helpers/CaseTransferHelper';
-import { getLanguageParam } from '../controllers/helpers/RouterHelpers';
+import { getClaimStepsUrl, getLanguageParam } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
@@ -23,7 +23,8 @@ const logger = getLogger('CaseSelectionService');
 export const getUserApplications = (
   userCases: CaseWithId[],
   translations: AnyRecord,
-  languageParam: string
+  languageParam: string,
+  isRepresenting = false
 ): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
 
@@ -32,7 +33,7 @@ export const getUserApplications = (
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
-      url: getRedirectUrl(uCase, languageParam),
+      url: getRedirectUrl(uCase, languageParam, isRepresenting),
       claimSubmittedDate: formatDate(uCase.submittedDate),
       deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}&redirect=claimant-applications`,
     };
@@ -53,8 +54,14 @@ export const getCitizenHubUrl = (caseId: string, languageParam: string): string 
   return `/citizen-hub/${caseId}${languageParam}`;
 };
 
-export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): string => {
-  return `/claimant-application/${userCase.id}${languageParam}`;
+export const getRedirectUrl = (userCase: CaseWithId, languageParam: string, isRepresenting = false): string => {
+  if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    return `/claimant-application/${userCase.id}${languageParam}`;
+  } else if (isRepresenting) {
+    return `/claimant-rep-hub/${userCase.id}${languageParam}`;
+  } else {
+    return `/citizen-hub/${userCase.id}${languageParam}`;
+  }
 };
 
 export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
@@ -91,9 +98,9 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
   return translateOverallStatus(overallStatus, translations);
 };
 
-export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseWithId[]> => {
+export const getUserCasesByLastModified = async (req: AppRequest, caseUserRole?: string): Promise<CaseWithId[]> => {
   try {
-    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases();
+    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases(caseUserRole);
     if (cases.data.length === 0) {
       return [];
     } else {
@@ -123,9 +130,7 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
 const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string => {
   const languageParam = getLanguageParam(req.url);
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    return req.url.includes(languages.WELSH_URL_PARAMETER)
-      ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
-      : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
+    return getClaimStepsUrl(req) + languageParam;
   }
   return getCitizenHubUrl(userCase.id, languageParam);
 };

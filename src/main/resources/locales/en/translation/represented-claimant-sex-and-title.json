@@ -1,0 +1,16 @@
+{
+  "title": "Claimant's sex and preferred title",
+  "h1": "Claimant's sex and preferred title",
+  "male": "Male",
+  "female": "Female",
+  "sex": "What is the claimant's sex? (optional)",
+  "preferNotToSay": "Prefer not to say",
+  "preferredTitle": "What is their preferred title? (optional)",
+  "errors": {
+    "preferredTitle": {
+      "required": "Select a list option from the \"What is the claimant's preferred title\" dropdown",
+      "lengthError": "The claimant's preferred title must be a minimum of 2 characters",
+      "numberError": "Tell us the claimant's preferred title. This must not include numbers"
+    }
+  }
+}

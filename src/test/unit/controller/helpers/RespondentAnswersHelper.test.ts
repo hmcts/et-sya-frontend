@@ -1,5 +1,6 @@
 import {
   getAcasReason,
+  getClaimantRespondentDetailsSection,
   getRespondentDetailsSection,
   getRespondentSection,
 } from '../../../../main/controllers/helpers/RespondentAnswersHelper';
@@ -14,8 +15,8 @@ import mockUserCase from '../../mocks/mockUserCase';
 describe('getAcasReason', () => {
   const translations: AnyRecord = {
     acasReason: {
-      another: 'Another person I’m making a claim with has an Acas early conciliation certificate number',
-      no_power: 'Acas doesn’t have the power to conciliate on some or all of my claim',
+      another: "Another person I'm making a claim with has an Acas early conciliation certificate number",
+      no_power: "Acas doesn't have the power to conciliate on some or all of my claim",
       employer: 'My employer has already been in touch with Acas',
       unfair_dismissal:
         'The claim consists only of a complaint of unfair dismissal which contains an application for interim relief',
@@ -360,5 +361,46 @@ describe('getRespondentDetailsSection', () => {
         html: 'Another person I’m making a claim with has an Acas early conciliation certificate number',
       },
     });
+  });
+});
+
+describe('getClaimantRespondentDetailsSection', () => {
+  const translations = {
+    name: 'Name',
+    address: 'Address',
+    acasNum: 'Acas certificate number',
+    noAcasReason: 'Why do you not have an Acas Number?',
+    change: 'Change',
+    unProvided: 'Not provided',
+    acasReason: {
+      another: 'Another person',
+      no_power: 'No power',
+      employer: 'Employer in touch',
+      unfair_dismissal: 'Unfair dismissal',
+    },
+  };
+
+  it('should return name, address and acas rows for a basic respondent', () => {
+    const respondent = { respondentName: 'Acme Corp', acasCertNum: 'R123/11/11' } as any;
+    const rows = getClaimantRespondentDetailsSection(respondent, translations);
+    expect(rows).toHaveLength(3);
+    expect(rows[0].value.text).toBe('Acme Corp');
+    expect(rows[2].value.html).toBe('R123/11/11');
+  });
+
+  it('should include noAcasReason row when acasCert is NO', () => {
+    const respondent = {
+      respondentName: 'Acme',
+      acasCert: 'No',
+      noAcasReason: 'Another person',
+    } as any;
+    const rows = getClaimantRespondentDetailsSection(respondent, translations);
+    expect(rows).toHaveLength(4);
+  });
+
+  it('should show unProvided when acasCertNum is undefined', () => {
+    const respondent = { respondentName: 'Acme', acasCertNum: undefined } as any;
+    const rows = getClaimantRespondentDetailsSection(respondent, translations);
+    expect(rows[2].value.html).toBe('Not provided');
   });
 });

@@ -64,15 +64,20 @@ export default class ReasonableAdjustmentsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.PERSONAL_DETAILS_CHECK);
+    const nextPage =
+      req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+        ? PageUrls.REPRESENTATIVE_DETAILS_CHECK
+        : PageUrls.PERSONAL_DETAILS_CHECK;
+    await handlePostLogic(req, res, this.form, logger, nextPage);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.reasonableAdjustmentsContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.REASONABLE_ADJUSTMENTS,
-    ]);
+    const isRepresented = req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES;
+    const translationKey = isRepresented
+      ? TranslationKeys.REASONABLE_ADJUSTMENTS_NON_HMCTS
+      : TranslationKeys.REASONABLE_ADJUSTMENTS;
+    const content = getPageContent(req, this.reasonableAdjustmentsContent, [TranslationKeys.COMMON, translationKey]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('reasonable-adjustments', {
       ...content,

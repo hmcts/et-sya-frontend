@@ -29,6 +29,7 @@ export const mockedApiData: CaseApiDataResponse = {
   created_date: '2022-08-19T09:19:25.79202',
   last_modified: '2022-08-19T09:19:25.817549',
   case_data: {
+    caseUserRole: 'CREATOR',
     ethosCaseReference: '123456/2022',
     feeGroupReference: '1234',
     caseType: CaseType.SINGLE,

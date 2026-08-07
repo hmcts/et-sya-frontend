@@ -1,0 +1,17 @@
+{
+  "title": "Rhif tystysgrif Acas ar gyfer yr atebydd ",
+  "h1": "Rhif tystysgrif Acas ar gyfer yr atebydd ",
+  "legend": "A oes gennych rif tystysgrif Acas ar gyfer yr atebydd ",
+  "acasCertNum": "Nodwch rif tystysgrif cymodi cynnar Acas",
+  "hintText": "Dylai bod gan bron bawb y rhif hwn cyn iddynt lenwi’r ffurflen hawlio. Gallwch ddod o hyd iddo ar eich tystysgrif Acas. Darllenwch fwy am ",
+  "linkText": "wasanaeth cymodi cynnar Acas (yn agor mewn tab newydd)",
+  "errors": {
+    "acasCert": {
+      "required": "Dywedwch wrthym os oes gennych  rif cymodi cynnar Acas ar gyfer yr Atebydd"
+    },
+    "acasCertNum": {
+      "required": "Dywedwch wrthym os oes gennych  rif cymodi cynnar Acas ar gyfer yr Atebydd",
+      "invalidAcasNumber": "Rhowch rif Acas mewn fformat cywir. Er enghraifft R123456/12/34"
+    }
+  }
+}

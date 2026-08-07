@@ -1,0 +1,25 @@
+{
+  "title": "Representative's details",
+  "p1": "All correspondence about the case will be sent to the representative and not the claimant.",
+  "typeOfRepresentative": "Type of representative",
+  "selectAType": "Select a type",
+  "employmentAdvisor": "Employment advisor",
+  "citizensAdviceBureau": "Citizens Advice Bureau",
+  "freeRepresentationUnit": "Free Representation Unit",
+  "lawCentre": "Law centre",
+  "tradeUnion": "Trade union",
+  "solicitor": "Solicitor",
+  "privateIndividual": "Private individual",
+  "tradeAssociation": "Trade association",
+  "other": "Other",
+  "representativeOrgName": "Name of the representative's organisation (optional)",
+  "representativeName": "Representative's name",
+  "errors": {
+    "representativeType": {
+      "required": "Select a type of representative"
+    },
+    "representativeName": {
+      "required": "Enter the representative's name"
+    }
+  }
+}
