@@ -129,7 +129,7 @@ const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string =>
 
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
-    req.session.userCase = undefined;
+    Reflect.deleteProperty(req.session, 'userCase');
     // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
     const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
       ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
