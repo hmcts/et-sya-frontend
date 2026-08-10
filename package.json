@@ -196,6 +196,8 @@
     "multer": "2.2.0",
     "undici": "7.29.0",
     "body-parser": "^1.20.6",
+    "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.1",
+    "js-yaml@npm:^4.1.0": "npm:js-yaml@4.3.1",
     "js-yaml@npm:^4.1.1": "npm:js-yaml@4.3.1",
     "immutable": "^5.1.8"
   },

@@ -176,6 +176,13 @@ describe('CaseTransferHelper', () => {
         `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
       );
     });
+
+    it('should fall back to claimant applications when caseId is not numeric', () => {
+      const req = mockRequest({});
+      req.url = `${PageUrls.CITIZEN_HUB.replace(':caseId', 'not-a-number')}${languages.ENGLISH_URL_PARAMETER}`;
+
+      expect(buildTransferredCaseRedirectUrl(req, 'not-a-number')).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    });
   });
 
   describe('handleTransferredCaseRedirect', () => {
