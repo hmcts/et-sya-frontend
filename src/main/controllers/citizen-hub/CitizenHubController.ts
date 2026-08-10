@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
-import { ErrorPages, PageUrls, TranslationKeys } from '../../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -83,7 +83,11 @@ export default class CitizenHubController {
         if (await handleTransferredCaseRedirect(req, res, req.params.caseId, error)) {
           return;
         }
-        return res.redirect(ErrorPages.NOT_FOUND + getLanguageParam(req.url));
+        // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+        const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+          ? ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER
+          : ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER;
+        return res.redirect(redirectUrl);
       }
     }
 
