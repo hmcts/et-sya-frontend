@@ -93,7 +93,7 @@ describe('Citizen Hub Controller', () => {
     controller.get(req, res);
     await new Promise(nextTick);
     expect(req.session.caseTransferInfo?.originalEthosCaseReference).toBe('60000001/2022');
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
   });
 
   it('should render citizen hub when case loads successfully even if transfer info says transferred', async () => {
@@ -121,7 +121,7 @@ describe('Citizen Hub Controller', () => {
     controller.get(req, res);
     await new Promise(nextTick);
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
-    expect(res.redirect).not.toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).not.toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
     expect(res.render).toHaveBeenCalled();
   });
 
@@ -146,7 +146,7 @@ describe('Citizen Hub Controller', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
   });
 
   it('should redirect to transferred page when case is not found in CCD', async () => {
@@ -172,7 +172,7 @@ describe('Citizen Hub Controller', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
   });
 
   it('should redirect to not found when transfer-info says case is not transferred', async () => {
