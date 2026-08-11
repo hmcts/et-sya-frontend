@@ -2,8 +2,10 @@ import { Response } from 'express';
 
 import { CaseTransferInfoResponse, CaseTransferType } from '../../definitions/api/caseTransferInfoResponse';
 import { AppRequest } from '../../definitions/appRequest';
+import { PageUrls, languages } from '../../definitions/constants';
 import { getLogger } from '../../logger';
 import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
+import NumberUtils from '../../utils/NumberUtils';
 
 import { returnSafeTransferredCaseUrl } from './RouterHelpers';
 
@@ -32,8 +34,8 @@ export const getRequestedCaseId = (req: AppRequest): string | undefined => {
     return undefined;
   }
 
-  if (typeof caseId === 'string' && caseId.trim()) {
-    return caseId;
+  if (typeof caseId === 'string' && NumberUtils.isNumericValue(caseId.trim())) {
+    return caseId.trim();
   }
 
   return req.session.caseTransferInfo?.originalCaseId;
@@ -114,8 +116,12 @@ export const saveSessionAndRedirectToTransferredCase = async (
   caseId: string,
   transferInfo: CaseTransferInfoResponse
 ): Promise<boolean> => {
+  if (!NumberUtils.isNumericValue(caseId)) {
+    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    return true;
+  }
+
   applyCaseTransferInfoToSession(req, transferInfo, caseId);
-  const redirectUrl = buildTransferredCaseRedirectUrl(req, caseId);
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -139,6 +145,10 @@ export const saveSessionAndRedirectToTransferredCase = async (
     );
   }
 
+  // Language comes from constant branches only; caseId stays in session, not in the Location header
+  const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
+    ? PageUrls.TRANSFERRED_CASE + languages.WELSH_URL_PARAMETER
+    : PageUrls.TRANSFERRED_CASE + languages.ENGLISH_URL_PARAMETER;
   res.redirect(redirectUrl);
   return true;
 };
