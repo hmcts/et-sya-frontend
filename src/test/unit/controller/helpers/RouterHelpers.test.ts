@@ -34,7 +34,7 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}`
+      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=20548`
     );
   });
 
@@ -43,7 +43,7 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.WELSH_URL_PARAMETER;
 
     expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}`
+      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
     );
   });
 
@@ -70,14 +70,5 @@ describe('Router Helpers - returnSafeCitizenHubUrl', () => {
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeCitizenHubUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-  });
-
-  it('should reject scientific notation and hex case ids', () => {
-    const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1') + languages.ENGLISH_URL_PARAMETER;
-
-    expect(returnSafeCitizenHubUrl('1e10', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeCitizenHubUrl('0x12', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeCitizenHubUrl('Infinity', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
 });

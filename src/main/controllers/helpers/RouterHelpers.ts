@@ -119,41 +119,41 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
 };
 
 /**
- * Builds a safe citizen-hub redirect URL from a digit-only case id.
- * Only 1-20 digit ids are embedded in the path. Language uses constant query values only.
+ * Builds a safe citizen-hub redirect URL, validating the caseId is numeric.
+ * Language is chosen from constant query values only, so the redirect target is
+ * not treated as unvalidated/unsafe input.
  *
  * @param caseId - The case ID to include in the URL
  * @param req - The request, used only to select a constant language parameter
  */
 export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string => {
-  const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
-  if (!safeCaseId) {
+  if (!NumberUtils.isNumericValue(caseId)) {
     return PageUrls.CLAIMANT_APPLICATIONS;
   }
-  // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+  // Language comes from constant branches only, so the redirect URL is safe
   const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
     ? languages.WELSH_URL_PARAMETER
     : languages.ENGLISH_URL_PARAMETER;
-  return `${PageUrls.CITIZEN_HUB_BASE}${safeCaseId}${langParam}`;
+  return `${PageUrls.CITIZEN_HUB_BASE}${caseId}${langParam}`;
 };
 
 /**
- * Builds a safe transferred-case redirect URL.
- * caseId must be digit-only but is not placed in the Location header; callers must persist
- * transfer details in session before redirecting. Language uses constant query values only.
+ * Builds a safe transferred-case redirect URL, validating the caseId is numeric.
+ * Language is chosen from constant query values only, so the redirect target is
+ * not treated as unvalidated/unsafe input.
  *
- * @param caseId - The case ID being transferred (validated, not embedded in the URL)
+ * @param caseId - The case ID to include as a query parameter
  * @param req - The request, used only to select a constant language parameter
  */
 export const returnSafeTransferredCaseUrl = (caseId: string, req: AppRequest): string => {
-  if (!NumberUtils.getSafeCaseIdDigits(caseId)) {
+  if (!NumberUtils.isNumericValue(caseId)) {
     return PageUrls.CLAIMANT_APPLICATIONS;
   }
-  // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+  // Language comes from constant branches only, so the redirect URL is safe
   const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
     ? languages.WELSH_URL_PARAMETER
     : languages.ENGLISH_URL_PARAMETER;
-  return `${PageUrls.TRANSFERRED_CASE}${langParam}`;
+  return `${PageUrls.TRANSFERRED_CASE}${langParam}&caseId=${caseId}`;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {

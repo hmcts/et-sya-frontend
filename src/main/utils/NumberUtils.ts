@@ -33,18 +33,6 @@ export default class NumberUtils {
   }
 
   /**
-   * Returns a digit-only case id (1-20 digits) or undefined.
-   * Prefer this over Number() when embedding ids in redirect URLs.
-   */
-  public static getSafeCaseIdDigits(stringValue: string): string | undefined {
-    if (!stringValue) {
-      return undefined;
-    }
-    const match = /^(\d{1,20})$/.exec(stringValue.trim());
-    return match?.[1];
-  }
-
-  /**
    * Converts string value to number. If string value is not a numeric value returns undefined.
    * @param stringValue value that will be converted to number type
    * @return numeric correspondence of the given string value
