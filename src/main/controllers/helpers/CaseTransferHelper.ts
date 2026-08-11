@@ -2,10 +2,8 @@ import { Response } from 'express';
 
 import { CaseTransferInfoResponse, CaseTransferType } from '../../definitions/api/caseTransferInfoResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import { PageUrls } from '../../definitions/constants';
 import { getLogger } from '../../logger';
 import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
-import NumberUtils from '../../utils/NumberUtils';
 
 import { returnSafeTransferredCaseUrl } from './RouterHelpers';
 
@@ -30,14 +28,14 @@ export const isTransferInfoForCase = (caseId: string, transferInfo?: CaseTransfe
 export const getRequestedCaseId = (req: AppRequest): string | undefined => {
   const { caseId } = req.query;
 
-  if (typeof caseId === 'string') {
-    const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
-    if (safeCaseId) {
-      return safeCaseId;
-    }
+  if (Array.isArray(caseId)) {
+    return undefined;
   }
 
-  // Ignore arrays / non-numeric query values and fall back to session
+  if (typeof caseId === 'string' && caseId.trim()) {
+    return caseId;
+  }
+
   return req.session.caseTransferInfo?.originalCaseId;
 };
 
@@ -116,12 +114,8 @@ export const saveSessionAndRedirectToTransferredCase = async (
   caseId: string,
   transferInfo: CaseTransferInfoResponse
 ): Promise<boolean> => {
-  if (!NumberUtils.getSafeCaseIdDigits(caseId)) {
-    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
-    return true;
-  }
-
   applyCaseTransferInfoToSession(req, transferInfo, caseId);
+  const redirectUrl = buildTransferredCaseRedirectUrl(req, caseId);
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -140,13 +134,12 @@ export const saveSessionAndRedirectToTransferredCase = async (
     });
   } catch (saveError) {
     const saveErrorMessage = saveError instanceof Error ? saveError.message : String(saveError);
-    logger.error(`Failed to save session before transferred case redirect for case ID ${caseId}: ${saveErrorMessage}.`);
-    // Without a persisted session, transferred-case cannot resolve the case (no caseId in Location)
-    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
-    return true;
+    logger.error(
+      `Failed to save session before transferred case redirect for case ID ${caseId}: ${saveErrorMessage}. Redirecting anyway.`
+    );
   }
 
-  res.redirect(buildTransferredCaseRedirectUrl(req, caseId));
+  res.redirect(redirectUrl);
   return true;
 };
 
