@@ -141,6 +141,8 @@ export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string
  * Builds a safe transferred-case redirect URL, validating the caseId is numeric.
  * Language is chosen from constant query values only, so the redirect target is
  * not treated as unvalidated/unsafe input.
+ * caseId must remain in the query string so transferred-case and citizen-hub
+ * navigation can resolve the correct case after redirect.
  *
  * @param caseId - The case ID to include as a query parameter
  * @param req - The request, used only to select a constant language parameter
@@ -153,6 +155,7 @@ export const returnSafeTransferredCaseUrl = (caseId: string, req: AppRequest): s
   const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
     ? languages.WELSH_URL_PARAMETER
     : languages.ENGLISH_URL_PARAMETER;
+  // Keep caseId in the Location; session alone is not enough for overview → details hops
   return `${PageUrls.TRANSFERRED_CASE}${langParam}&caseId=${caseId}`;
 };
 
