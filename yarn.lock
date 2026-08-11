@@ -3798,13 +3798,13 @@ __metadata:
   linkType: hard
 
 "@playwright/test@npm:^1.51.0":
-  version: 1.60.0
-  resolution: "@playwright/test@npm:1.60.0"
+  version: 1.62.1
+  resolution: "@playwright/test@npm:1.62.1"
   dependencies:
-    playwright: "npm:1.60.0"
+    playwright: "npm:1.62.1"
   bin:
     playwright: cli.js
-  checksum: 10/a13d369014e1934b0aa484c5d59537f5249af0fe006ac4ecbcbe14c673221412706193ea2d9cf3b2c0cc69e3ddbb4daddb006f0bedfdeb05f687776ed8c35f5f
+  checksum: 10/a84fdc2b0c0f01131fa4c0f0aaebf2698a618ca4a459e3b71ebec4b0b8a5be5b7b1a3cfc063e316d4d75f403a04078d214baf69c4bcbc9606ba12be696d4ff14
   languageName: node
   linkType: hard
 
@@ -4649,12 +4649,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/multer@npm:^1.4.7":
-  version: 1.4.13
-  resolution: "@types/multer@npm:1.4.13"
+"@types/multer@npm:^2.1.0":
+  version: 2.2.0
+  resolution: "@types/multer@npm:2.2.0"
   dependencies:
     "@types/express": "npm:*"
-  checksum: 10/f650a9f431007f05a5c51d6359140bea5f77d1299668d45a0791ddbf7789f1c220a3e038039c5e0de6608e273d5ee8001e9649c606d7e0e847e8774ccc5d1d68
+  checksum: 10/b12d8c3a77eeb81a2513e7db1404cb89d12b06eab5e92ba82f6f02b775e23e89bb4fcdc9724aa70a025c458aca9e8feb66f27c7062d1db683fd8c5664e14bec8
   languageName: node
   linkType: hard
 
@@ -9244,15 +9244,15 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^29.0.0":
-  version: 29.15.4
-  resolution: "eslint-plugin-jest@npm:29.15.4"
+  version: 29.16.0
+  resolution: "eslint-plugin-jest@npm:29.16.0"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.0.0"
   peerDependencies:
     "@typescript-eslint/eslint-plugin": ^8.0.0
     eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
     jest: "*"
-    typescript: ">=4.8.4 <7.0.0"
+    typescript: ">=4.8.4 <8.0.0"
   peerDependenciesMeta:
     "@typescript-eslint/eslint-plugin":
       optional: true
@@ -9260,7 +9260,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/5b8e710828983fd1b1093fbe85248ebced7650ddc9d953cba8840cce89a43fd040be23848b47b26a68e2bebe9395e9acc3c64577f39a78c6b4dde0659636b764
+  checksum: 10/f57ddcfe950dde5792bee08a7dfe10e7a557c35a23a7e37f7c174e17271993b9310f180d253e3f4fbe31f205ffc1cff111131b47e24471601bef50493e4403a8
   languageName: node
   linkType: hard
 
@@ -9536,7 +9536,7 @@ __metadata:
     "@types/git-rev-sync": "npm:2.0.2"
     "@types/jest": "npm:^29.5.1"
     "@types/lodash": "npm:^4.14.194"
-    "@types/multer": "npm:^1.4.7"
+    "@types/multer": "npm:^2.1.0"
     "@types/node": "npm:^22.0.0"
     "@types/nunjucks": "npm:^3.2.2"
     "@types/redis-mock": "npm:^0.17.1"
@@ -9774,13 +9774,14 @@ __metadata:
   linkType: hard
 
 "express-rate-limit@npm:^8.3.1":
-  version: 8.5.2
-  resolution: "express-rate-limit@npm:8.5.2"
+  version: 8.6.2
+  resolution: "express-rate-limit@npm:8.6.2"
   dependencies:
+    debug: "npm:^4.4.3"
     ip-address: "npm:^10.2.0"
   peerDependencies:
     express: ">= 4.11"
-  checksum: 10/de2aa4582d3b1b1d242fdb8dba7b3b1c64e3a58dfa7a40d370681c175a61321fb550c6b190d755f47cefdf28f35eaad6c99ea196f99caec8caaffc2462fea1ae
+  checksum: 10/cf9d2a286821a650890366ed14f3d582293175b6f540e3f64b5fd276201cacef6c1e218448dd54f4a1e860de48c395e3d8ddda4d4a032812266a19d8d947208a
   languageName: node
   linkType: hard
 
@@ -12797,17 +12798,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:4.3.0, js-yaml@npm:^4.0.0, js-yaml@npm:^4.1.0":
-  version: 4.3.0
-  resolution: "js-yaml@npm:4.3.0"
-  dependencies:
-    argparse: "npm:^2.0.1"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 10/2bcec3a8118d7f744badeb04e14366578d234a736f353d41fe35d2305e4ce2409a8e041d277f07cd6bbc8aaa12128d650a68ce43247072519bede20962d2126f
-  languageName: node
-  linkType: hard
-
 "js-yaml@npm:^3.13.1, js-yaml@npm:^3.4.6, js-yaml@npm:^3.5.1, js-yaml@npm:^3.5.4":
   version: 3.14.2
   resolution: "js-yaml@npm:3.14.2"
@@ -12817,6 +12807,17 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10/172e0b6007b0bf0fc8d2469c94424f7dd765c64a047d2b790831fecef2204a4054eabf4d911eb73ab8c9a3256ab8ba1ee8d655b789bf24bf059c772acc2075a1
+  languageName: node
+  linkType: hard
+
+"js-yaml@npm:js-yaml@4.3.1":
+  version: 4.3.1
+  resolution: "js-yaml@npm:4.3.1"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 10/2ce71b5d632abbd77da80447bf860e8a0264e54bffe94840984887d58b023761495b523727547904517a6107a1ef189854b361e0fc44995ee13a84f222d7bd42
   languageName: node
   linkType: hard
 
@@ -14344,18 +14345,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"multer@npm:^2.0.2":
-  version: 2.1.1
-  resolution: "multer@npm:2.1.1"
-  dependencies:
-    append-field: "npm:^1.0.0"
-    busboy: "npm:^1.6.0"
-    concat-stream: "npm:^2.0.0"
-    type-is: "npm:^1.6.18"
-  checksum: 10/fb22868caaed37d725715c14c60b740b81665265da3a026bb61954414f65b99f76b360128413b8a2a7cc1a95ecae28a42bf831fe172bb79682d19ec105b556bd
-  languageName: node
-  linkType: hard
-
 "multi-sort-stream@npm:^1.0.3, multi-sort-stream@npm:^1.0.4":
   version: 1.0.4
   resolution: "multi-sort-stream@npm:1.0.4"
@@ -15488,27 +15477,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.60.0":
-  version: 1.60.0
-  resolution: "playwright-core@npm:1.60.0"
+"playwright-core@npm:1.62.1":
+  version: 1.62.1
+  resolution: "playwright-core@npm:1.62.1"
   bin:
     playwright-core: cli.js
-  checksum: 10/66c0f83d627e673261c848dd6fe1f2856d5b5b6859268acb61a45c00f5bf926e596a351a9c481a3a4e82a45022c7c6b5d99ebc3906fc6876ac582ed6f7e16190
+  checksum: 10/2dab88793a6a5cbfa27641664548ded72a4f869d7eab8d3541e070081b5e09595253aa3dbd42eb4e6eca1b03d96a727c60704359b5b309e71ca58b12549a4c06
   languageName: node
   linkType: hard
 
-"playwright@npm:1.60.0":
-  version: 1.60.0
-  resolution: "playwright@npm:1.60.0"
+"playwright@npm:1.62.1":
+  version: 1.62.1
+  resolution: "playwright@npm:1.62.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.60.0"
+    playwright-core: "npm:1.62.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10/8569770637ee35d08cca3b53a5b56c21e9236bd1ac4718456d5988fb8acd51c5b3cc2cf90748363a36199529e870a9b6c68d6fc9e19571261cd867005d6331c1
+  checksum: 10/f99546873ab2545160ad5a0145fef8e2c1d805efd1ba77356f5b0ee3d8688192b3a2af08cd948bece36ca386fdfad889ef7e53b7aaad309940744c0bbccc0a19
   languageName: node
   linkType: hard
 
@@ -19494,8 +19483,8 @@ __metadata:
   linkType: hard
 
 "ws@npm:^8.21.0":
-  version: 8.21.1
-  resolution: "ws@npm:8.21.1"
+  version: 8.21.3
+  resolution: "ws@npm:8.21.3"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -19504,7 +19493,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10/8493bc543072763d7bacffb2282c9d7954dc5c599c9df4c2d15f91c217f63e293a33ffc70756e3f2bf8c5d85bc6069ad7d9983c382d4713c807b083ffb1b1719
+  checksum: 10/8856922c26fd2d106931c16310d9a0bc2d6d37ed8771352bfa0d2a36df0ab5cb1f6528c6db8213f3333cf4ce93925e56f13604df0454cb0d4289fef922bebcdd
   languageName: node
   linkType: hard
 
