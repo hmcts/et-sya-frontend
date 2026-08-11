@@ -119,16 +119,15 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
 };
 
 /**
- * Builds a safe citizen-hub redirect URL from a numeric case id.
- * The id is rebuilt via Number so only a validated numeric value is used in the path.
- * Language is chosen from constant query values only.
+ * Builds a safe citizen-hub redirect URL from a digit-only case id.
+ * Only 1-20 digit ids are embedded in the path. Language uses constant query values only.
  *
  * @param caseId - The case ID to include in the URL
  * @param req - The request, used only to select a constant language parameter
  */
 export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string => {
-  const safeCaseId = NumberUtils.convertStringToNumber(caseId);
-  if (safeCaseId === undefined) {
+  const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
+  if (!safeCaseId) {
     return PageUrls.CLAIMANT_APPLICATIONS;
   }
   // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
@@ -140,14 +139,14 @@ export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string
 
 /**
  * Builds a safe transferred-case redirect URL.
- * caseId is validated but not placed in the Location header; transfer details are already
- * stored in session before redirect. Language is chosen from constant query values only.
+ * caseId must be digit-only but is not placed in the Location header; callers must persist
+ * transfer details in session before redirecting. Language uses constant query values only.
  *
  * @param caseId - The case ID being transferred (validated, not embedded in the URL)
  * @param req - The request, used only to select a constant language parameter
  */
 export const returnSafeTransferredCaseUrl = (caseId: string, req: AppRequest): string => {
-  if (!NumberUtils.isNumericValue(caseId)) {
+  if (!NumberUtils.getSafeCaseIdDigits(caseId)) {
     return PageUrls.CLAIMANT_APPLICATIONS;
   }
   // Language comes from constant branches only, so the redirect URL is not treated as unvalidated

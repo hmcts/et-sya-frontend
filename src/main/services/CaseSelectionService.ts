@@ -121,7 +121,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
   if (caseId === 'newClaim') {
     Reflect.deleteProperty(req.session, 'userCase');
     // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-    const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+    const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
       ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
       : PageUrls.CHECKLIST + languages.ENGLISH_URL_PARAMETER;
     return res.redirect(redirectUrl);
@@ -130,7 +130,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     if (response.data === undefined || response.data === null) {
       // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-      const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+      const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
         ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
         : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
       return res.redirect(redirectUrl);
@@ -142,7 +142,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     req.session.save();
     if (req.session.userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
       // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-      const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+      const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
         ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
         : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
       return res.redirect(redirectUrl);
@@ -155,7 +155,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
       return;
     }
     // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-    const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+    const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
       ? ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER
       : ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER;
     return res.redirect(redirectUrl);

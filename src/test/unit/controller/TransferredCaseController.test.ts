@@ -327,24 +327,35 @@ describe('Transferred Case Controller tests', () => {
     expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 
-  it('should redirect to not found when query case id is an array even if session has transfer info', async () => {
+  it('should use session transfer info when query case id is an array', async () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.query = { caseId: ['1234', '5678'] };
+    mockTransferredCaseTranslations(request);
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
       originalCaseId: '1234',
       originalEthosCaseReference: '60000001/2022',
       transferComplete: true,
+      claimantFirstName: 'Peter',
+      claimantLastName: 'Rabbit',
+      respondentName: "McGregor's Farm",
     };
 
     controller.get(request, response);
     await new Promise(nextTick);
 
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+    expect(response.redirect).not.toHaveBeenCalled();
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.TRANSFERRED_CASE,
+      expect.objectContaining({
+        caseNumber: '60000001/2022',
+        transferComplete: true,
+      })
+    );
   });
 
   it('should use ECM copy when transfer type is missing from transfer info', async () => {

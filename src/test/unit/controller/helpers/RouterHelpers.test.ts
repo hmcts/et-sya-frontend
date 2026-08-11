@@ -71,4 +71,13 @@ describe('Router Helpers - returnSafeCitizenHubUrl', () => {
 
     expect(returnSafeCitizenHubUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
+
+  it('should reject scientific notation and hex case ids', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeCitizenHubUrl('1e10', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeCitizenHubUrl('0x12', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeCitizenHubUrl('Infinity', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+  });
 });
