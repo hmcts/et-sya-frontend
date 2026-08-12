@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { Session } from 'express-session';
 
+import { CaseTransferInfoResponse } from './api/caseTransferInfoResponse';
 import { CaseWithId } from './case';
 import { FormError } from './form';
 import { AnyRecord } from './util-types';
@@ -42,6 +43,7 @@ export interface AppSession extends Session {
   additionalClaimantNewFlow?: boolean;
   additionalClaimantUploadedFileName?: string;
   additionalClaimantsRedirectCheckAnswer?: boolean;
+  caseTransferInfo?: CaseTransferInfoResponse;
 }
 
 export interface UserDetails {

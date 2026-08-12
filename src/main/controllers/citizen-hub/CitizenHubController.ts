@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -22,6 +22,7 @@ import {
   clearTseFields,
   handleUpdateHubLinksStatuses,
 } from '../helpers/CaseHelpers';
+import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -77,12 +78,25 @@ export default class CitizenHubController {
           (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
         );
       } catch (error) {
-        logger.error(error.message);
-        return res.redirect('/not-found');
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        logger.error(errorMessage);
+        if (await handleTransferredCaseRedirect(req, res, req.params.caseId, error)) {
+          return;
+        }
+        // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+        const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+          ? ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER
+          : ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER;
+        return res.redirect(redirectUrl);
       }
     }
 
+    clearCaseTransferInfoIfStale(req, req.params.caseId);
+
     const userCase = req.session.userCase;
+    if (!userCase.hubLinksStatuses) {
+      userCase.hubLinksStatuses = new HubLinksStatuses();
+    }
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
