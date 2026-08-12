@@ -59,9 +59,6 @@ export default class RepresentedClaimantEnterEmailController {
       TranslationKeys.COMMON,
       TranslationKeys.REPRESENTED_CLAIMANT_ENTER_EMAIL,
     ]);
-    // Do not seed the email from the claimant record on first load. Only populate it once the
-    // representative has explicitly provided it (flag set on submit). Skip assignFormData and shape
-    // the view model instead, so the stored case is never mutated.
     const emailProvided = req.session.userCase?.representedClaimantEmailProvided === YesOrNo.YES;
     const userCase = emailProvided ? content.userCase : { ...content.userCase, representedClaimantEmail: undefined };
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ENTER_EMAIL, {

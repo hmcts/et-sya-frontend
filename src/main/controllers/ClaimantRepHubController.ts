@@ -219,13 +219,22 @@ export default class ClaimantRepHubController {
       ...req.t(TranslationKeys.CLAIMANT_REP_HUB, { returnObjects: true }),
       PageUrls,
       userCase,
-      progressBarItems: getProgressBarItems(userCase, translations, req.url),
+      // Rep hub uses non-possessive progress bar labels ("Hearing details"/"Claim decision").
+      progressBarItems: getProgressBarItems(
+        userCase,
+        { ...translations, details: translations.detailsRep, decision: translations.decisionRep },
+        req.url
+      ),
       sections: allSections,
       respondentBannerContent,
       judgmentBannerContent,
       decisionBannerContent,
       claimantTribunalResponseBannerContent,
       hideContactUs: true,
+      // This is the representative's own hub. Suppress the claimant-facing "you are now being legally
+      // represented" banner and bypass the claimant-represented gate so the rep still sees case
+      // notifications (e.g. the claim submitted banner).
+      isClaimantRepHub: true,
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
       claimantRepresented: userCase.claimantRepresentative,
       showAcknowledgementAlert: getAcknowledgementAlert(userCase, hubLinksStatuses),

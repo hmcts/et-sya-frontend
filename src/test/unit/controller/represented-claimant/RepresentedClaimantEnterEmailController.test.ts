@@ -27,7 +27,6 @@ describe('Represented Claimant Enter Email Controller', () => {
     it('should NOT populate the email on first load when it has not been explicitly provided', async () => {
       const controller = new RepresentedClaimantEnterEmailController();
       const response = mockResponse();
-      // Email is seeded from the claimant record but the flag is not set.
       const request = mockRequest({ t, userCase: { representedClaimantEmail: 'seeded@claimant.com' } });
 
       await controller.get(request, response);
