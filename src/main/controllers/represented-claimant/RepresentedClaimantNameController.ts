@@ -4,13 +4,14 @@ import { Form } from '../../components/form/form';
 import { isFieldFilledIn } from '../../components/form/validator';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
-import { renderPage } from '../helpers/NonHmctsControllerHelper';
+import { getPageContent } from '../helpers/FormHelpers';
 
 const logger = getLogger('RepresentedClaimantNameController');
 
@@ -44,11 +45,24 @@ export default class RepresentedClaimantNameController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const userCase = (req.session.userCase ??= {} as CaseWithId);
+    userCase.representedClaimantNameProvided =
+      req.body?.representedClaimantFirstName?.trim() || req.body?.representedClaimantLastName?.trim()
+        ? YesOrNo.YES
+        : YesOrNo.NO;
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_DATE_OF_BIRTH);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
-    renderPage(req, res, this.form, this.formContent, TranslationKeys.REPRESENTED_CLAIMANT_NAME);
+    const content = getPageContent(req, this.formContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.REPRESENTED_CLAIMANT_NAME,
+    ]);
+    const nameProvided = req.session.userCase?.representedClaimantNameProvided === YesOrNo.YES;
+    const userCase = nameProvided
+      ? content.userCase
+      : { ...content.userCase, representedClaimantFirstName: undefined, representedClaimantLastName: undefined };
+    res.render(TranslationKeys.REPRESENTED_CLAIMANT_NAME, { ...content, userCase });
   };
 }

@@ -93,6 +93,8 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const representedClaimantAddressCountry = req.session.userCase.representedClaimantAddressCountry;
       const representedClaimantAddressPostcode = req.session.userCase.representedClaimantAddressPostcode;
       const representedClaimantEmail = req.session.userCase.representedClaimantEmail;
+      const representedClaimantNameProvided = req.session.userCase.representedClaimantNameProvided;
+      const representedClaimantEmailProvided = req.session.userCase.representedClaimantEmailProvided;
       const representedClaimantDetailsCheck = req.session.userCase.representedClaimantDetailsCheck;
       const claimantWrittenContract = req.session.userCase.claimantWrittenContract;
       req.session.userCase = fromApiFormat(response.data);
@@ -133,6 +135,8 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.representedClaimantAddressCountry ??= representedClaimantAddressCountry;
       req.session.userCase.representedClaimantAddressPostcode ??= representedClaimantAddressPostcode;
       req.session.userCase.representedClaimantEmail ??= representedClaimantEmail;
+      req.session.userCase.representedClaimantNameProvided ??= representedClaimantNameProvided;
+      req.session.userCase.representedClaimantEmailProvided ??= representedClaimantEmailProvided;
       req.session.userCase.representedClaimantDetailsCheck ??= representedClaimantDetailsCheck;
 
       req.session.userCase.claimantWrittenContract ??= claimantWrittenContract;

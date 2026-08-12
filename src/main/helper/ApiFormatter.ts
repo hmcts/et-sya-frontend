@@ -172,6 +172,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
     representativeDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.representativeDetailsCheck,
     representedClaimantDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantDetailsCheck,
+    representedClaimantNameProvided: fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantNameProvided,
+    representedClaimantEmailProvided:
+      fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantEmailProvided,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
@@ -406,6 +409,8 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimDetailsCheck: caseItem.claimDetailsCheck,
         representativeDetailsCheck: caseItem.representativeDetailsCheck,
         representedClaimantDetailsCheck: caseItem.representedClaimantDetailsCheck,
+        representedClaimantNameProvided: caseItem.representedClaimantNameProvided,
+        representedClaimantEmailProvided: caseItem.representedClaimantEmailProvided,
       },
       claimantWorkAddress: {
         claimant_work_address: {

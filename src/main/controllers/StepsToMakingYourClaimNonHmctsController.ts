@@ -68,10 +68,13 @@ export default class StepsToMakingYourClaimNonHmctsController {
           {
             url: setUrlLanguage(req, PageUrls.REPRESENTED_CLAIMANT_NAME.toString()),
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
+            // The claimant name/address are auto-seeded from the claimant record on load, so they
+            // can't indicate progress. Use the explicit "name provided" flag as the progress signal
+            // so the section stays "Not started" (even across refreshes) until the rep enters details.
             status: (): string =>
               getSectionStatus(
                 userCase?.representedClaimantDetailsCheck,
-                userCase?.representedClaimantFirstName || userCase?.representedClaimantAddress1
+                userCase?.representedClaimantNameProvided === YesOrNo.YES ? YesOrNo.YES : undefined
               ),
           },
         ],

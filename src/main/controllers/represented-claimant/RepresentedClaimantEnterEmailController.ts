@@ -4,12 +4,13 @@ import { Form } from '../../components/form/form';
 import { isValidEmailAddressWhenProvided } from '../../components/form/validator';
 import { CaseStateCheck } from '../../decorators/CaseStateCheck';
 import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
-import { assignFormData, getPageContent } from '../helpers/FormHelpers';
+import { getPageContent } from '../helpers/FormHelpers';
 import {
   getEnterEmailDescription,
   getEnterEmailHeading,
@@ -46,6 +47,9 @@ export default class RepresentedClaimantEnterEmailController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const userCase = (req.session.userCase ??= {} as CaseWithId);
+    userCase.representedClaimantEmailProvided = req.body?.representedClaimantEmail?.trim() ? YesOrNo.YES : YesOrNo.NO;
+    logger.info('representedClaimantEmailProvided', userCase.representedClaimantEmailProvided);
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK);
   };
 
@@ -55,9 +59,14 @@ export default class RepresentedClaimantEnterEmailController {
       TranslationKeys.COMMON,
       TranslationKeys.REPRESENTED_CLAIMANT_ENTER_EMAIL,
     ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
+    // Do not seed the email from the claimant record on first load. Only populate it once the
+    // representative has explicitly provided it (flag set on submit). Skip assignFormData and shape
+    // the view model instead, so the stored case is never mutated.
+    const emailProvided = req.session.userCase?.representedClaimantEmailProvided === YesOrNo.YES;
+    const userCase = emailProvided ? content.userCase : { ...content.userCase, representedClaimantEmail: undefined };
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ENTER_EMAIL, {
       ...content,
+      userCase,
       title: getEnterEmailTitle(req),
       heading: getEnterEmailHeading(req),
       description: getEnterEmailDescription(req),
