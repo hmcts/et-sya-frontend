@@ -179,8 +179,8 @@ export default class ClaimantRepHubController {
     sections[0].links.push({
       linkTxt: (l: AnyRecord): string => l.viewClaimantContactDetails,
       status: (l: AnyRecord): string => l[HubLinkStatus.READY_TO_VIEW],
-      shouldShow: false,
-      url: () => '',
+      shouldShow: true,
+      url: () => PageUrls.CLAIMANT_CONTACT_DETAILS.replace(':caseId', userCase.id) + languageParam,
       statusColor: () => statusColorMap.get(HubLinkStatus.READY_TO_VIEW),
     });
 

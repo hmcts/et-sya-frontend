@@ -46,6 +46,7 @@ import ClaimantBenefitsController from '../../controllers/ClaimantBenefitsContro
 import ClaimantClaimTypeDiscriminationController from '../../controllers/ClaimantClaimTypeDiscriminationController';
 import ClaimantClaimTypePayController from '../../controllers/ClaimantClaimTypePayController';
 import ClaimantCompensationController from '../../controllers/ClaimantCompensationController';
+import ClaimantContactDetailsController from '../../controllers/ClaimantContactDetailsController';
 import ClaimantDescribeWhatHappenedController from '../../controllers/ClaimantDescribeWhatHappenedController';
 import ClaimantDidWorkAtController from '../../controllers/ClaimantDidWorkAtController';
 import ClaimantEmploymentDetailsController from '../../controllers/ClaimantEmploymentDetailsController';
@@ -658,6 +659,7 @@ export class Routes {
     app.get(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().get);
     app.post(PageUrls.REPRESENTED_CLAIMANT_SEX_AND_TITLE, new RepresentedClaimantSexAndTitleController().post);
     app.get(PageUrls.CLAIMANT_REP_HUB, new ClaimantRepHubController().get);
+    app.get(PageUrls.CLAIMANT_CONTACT_DETAILS, new ClaimantContactDetailsController().get);
     app.get(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().get);
     app.post(PageUrls.CLAIMANT_REP_ABOUT_YOU, new ClaimantRepAboutYouController().post);
     app.get(PageUrls.CLAIMANT_REP_EDIT_NAME, new ClaimantRepEditNameController().get);

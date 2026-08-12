@@ -184,6 +184,8 @@ describe('ClaimantRepHubController', () => {
         (link: { linkTxt: (l: unknown) => string }) => link.linkTxt(l) === 'View claimant contact details'
       );
       expect(claimantContactLink).toBeDefined();
+      expect(claimantContactLink.shouldShow).toBe(true);
+      expect(claimantContactLink.url()).toContain('/claimant-contact-details/');
     });
 
     it('should pass showSubmittedAlert based on case state', async () => {
