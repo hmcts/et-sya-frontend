@@ -90,6 +90,22 @@ describe('NumberUtils tests', () => {
       expect(NumberUtils.isEmpty(value)).toStrictEqual(result);
     });
   });
+  describe('getSafeCaseIdDigits tests', () => {
+    it.each([
+      { value: undefined, result: undefined },
+      { value: null, result: undefined },
+      { value: '', result: undefined },
+      { value: 'abc', result: undefined },
+      { value: '1e10', result: undefined },
+      { value: '12234', result: '12234' },
+      { value: ' 12234 ', result: '12234' },
+      { value: 12234, result: '12234' },
+      { value: 1786637776090539, result: '1786637776090539' },
+      { value: '1786637776090539', result: '1786637776090539' },
+    ])('returns digit-only case id for %o', ({ value, result }) => {
+      expect(NumberUtils.getSafeCaseIdDigits(value as string | number)).toStrictEqual(result);
+    });
+  });
   describe('convertStringToNumber tests', () => {
     it.each([
       { value: undefined, result: undefined },

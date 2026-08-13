@@ -147,7 +147,8 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
         : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
       return res.redirect(redirectUrl);
     }
-    return res.redirect(returnSafeCitizenHubUrl(req.session.userCase.id, req));
+    // Use the route caseId (always a string) rather than userCase.id, which the API may return as a number
+    return res.redirect(returnSafeCitizenHubUrl(caseId, req));
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error(errorMessage);

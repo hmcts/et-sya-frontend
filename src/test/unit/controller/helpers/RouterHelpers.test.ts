@@ -65,6 +65,15 @@ describe('Router Helpers - returnSafeCitizenHubUrl', () => {
     );
   });
 
+  it('should build citizen-hub url when caseId is a number from the API', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeCitizenHubUrl(1786637776090539, req)).toBe(
+      `${PageUrls.CITIZEN_HUB_BASE}1786637776090539${languages.ENGLISH_URL_PARAMETER}`
+    );
+  });
+
   it('should fall back to claimant applications when caseId is not numeric', () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;

@@ -125,7 +125,7 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
  * @param caseId - The case ID to include in the URL
  * @param req - The request, used only to select a constant language parameter
  */
-export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string => {
+export const returnSafeCitizenHubUrl = (caseId: string | number, req: AppRequest): string => {
   const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
   if (!safeCaseId) {
     return PageUrls.CLAIMANT_APPLICATIONS;
@@ -146,7 +146,7 @@ export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string
  * @param caseId - The case ID to include as a query parameter
  * @param req - The request, used only to select a constant language parameter
  */
-export const returnSafeTransferredCaseUrl = (caseId: string, req: AppRequest): string => {
+export const returnSafeTransferredCaseUrl = (caseId: string | number, req: AppRequest): string => {
   const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
   if (!safeCaseId) {
     return PageUrls.CLAIMANT_APPLICATIONS;
