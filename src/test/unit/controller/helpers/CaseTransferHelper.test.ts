@@ -199,7 +199,7 @@ describe('CaseTransferHelper', () => {
       req.url = `${PageUrls.CITIZEN_HUB.replace(':caseId', '20548')}${languages.WELSH_URL_PARAMETER}`;
 
       expect(buildTransferredCaseRedirectUrl(req, '20548')).toBe(
-        `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}`
+        `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
       );
     });
 
@@ -244,7 +244,7 @@ describe('CaseTransferHelper', () => {
           respondentName: "McGregor's Farm",
         })
       );
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
     it('should redirect when getUserCase failed with a 404 and transfer-info confirms transfer', async () => {
@@ -268,7 +268,7 @@ describe('CaseTransferHelper', () => {
       );
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
     it('should redirect when getUserCase failed with a 410 ECM transfer error and transfer-info confirms transfer', async () => {
@@ -292,7 +292,7 @@ describe('CaseTransferHelper', () => {
       );
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
     it('should not redirect when getUserCase fails with a non-transfer error', async () => {
@@ -395,10 +395,10 @@ describe('CaseTransferHelper', () => {
       const redirected = await saveSessionAndRedirectToTransferredCase(req, res, '20548', transferredCaseInfo);
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
-    it('should redirect to claimant applications when session save fails', async () => {
+    it('should still redirect to transferred case with caseId when session save fails', async () => {
       const req = mockRequest({});
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
       req.session.save = jest.fn((done?: (err?: Error) => void) => {
@@ -410,10 +410,10 @@ describe('CaseTransferHelper', () => {
       const redirected = await saveSessionAndRedirectToTransferredCase(req, res, '20548', transferredCaseInfo);
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
-    it('should redirect to claimant applications when session save times out', async () => {
+    it('should still redirect to transferred case with caseId when session save times out', async () => {
       jest.useFakeTimers();
       const req = mockRequest({});
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
@@ -424,7 +424,7 @@ describe('CaseTransferHelper', () => {
       jest.advanceTimersByTime(10000);
 
       await expect(redirectPromise).resolves.toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
       jest.useRealTimers();
     });
   });

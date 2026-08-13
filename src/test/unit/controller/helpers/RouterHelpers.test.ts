@@ -34,7 +34,7 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}`
+      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=20548`
     );
   });
 
@@ -43,7 +43,7 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.WELSH_URL_PARAMETER;
 
     expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}`
+      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
     );
   });
 

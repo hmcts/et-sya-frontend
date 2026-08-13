@@ -138,22 +138,25 @@ export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string
 };
 
 /**
- * Builds a safe transferred-case redirect URL.
- * caseId must be digit-only but is not placed in the Location header; callers must persist
- * transfer details in session before redirecting. Language uses constant query values only.
+ * Builds a safe transferred-case redirect URL from a digit-only case id.
+ * caseId must remain in the query string so transferred-case and citizen-hub
+ * navigation can resolve the correct case after redirect.
+ * Language uses constant query values only.
  *
- * @param caseId - The case ID being transferred (validated, not embedded in the URL)
+ * @param caseId - The case ID to include as a query parameter
  * @param req - The request, used only to select a constant language parameter
  */
 export const returnSafeTransferredCaseUrl = (caseId: string, req: AppRequest): string => {
-  if (!NumberUtils.getSafeCaseIdDigits(caseId)) {
+  const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
+  if (!safeCaseId) {
     return PageUrls.CLAIMANT_APPLICATIONS;
   }
   // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
   const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
     ? languages.WELSH_URL_PARAMETER
     : languages.ENGLISH_URL_PARAMETER;
-  return `${PageUrls.TRANSFERRED_CASE}${langParam}`;
+  // Keep caseId in the Location; session alone is not enough for overview → details hops
+  return `${PageUrls.TRANSFERRED_CASE}${langParam}&caseId=${safeCaseId}`;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {

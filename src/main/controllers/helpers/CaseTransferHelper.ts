@@ -122,6 +122,7 @@ export const saveSessionAndRedirectToTransferredCase = async (
   }
 
   applyCaseTransferInfoToSession(req, transferInfo, caseId);
+  const redirectUrl = buildTransferredCaseRedirectUrl(req, caseId);
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -140,13 +141,12 @@ export const saveSessionAndRedirectToTransferredCase = async (
     });
   } catch (saveError) {
     const saveErrorMessage = saveError instanceof Error ? saveError.message : String(saveError);
-    logger.error(`Failed to save session before transferred case redirect for case ID ${caseId}: ${saveErrorMessage}.`);
-    // Without a persisted session, transferred-case cannot resolve the case (no caseId in Location)
-    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
-    return true;
+    logger.error(
+      `Failed to save session before transferred case redirect for case ID ${caseId}: ${saveErrorMessage}. Redirecting anyway.`
+    );
   }
 
-  res.redirect(buildTransferredCaseRedirectUrl(req, caseId));
+  res.redirect(redirectUrl);
   return true;
 };
 

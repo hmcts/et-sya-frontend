@@ -376,7 +376,7 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
   });
 
   test('Should redirect to not found when getUserCase fails and transfer-info says not transferred', async () => {
