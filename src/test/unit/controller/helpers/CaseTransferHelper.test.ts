@@ -70,11 +70,37 @@ describe('CaseTransferHelper', () => {
       expect(getRequestedCaseId(req)).toBeUndefined();
     });
 
+    it('should fall back to session when query case id is an array', () => {
+      const req = mockRequest({});
+      req.query = { caseId: ['1234', '5678'] };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '5678',
+        transferComplete: true,
+      };
+
+      expect(getRequestedCaseId(req)).toBe('5678');
+    });
+
     it('should return undefined when query case id is blank', () => {
       const req = mockRequest({});
       req.query = { caseId: '   ' };
 
       expect(getRequestedCaseId(req)).toBeUndefined();
+    });
+
+    it('should fall back to session when query case id is not numeric', () => {
+      const req = mockRequest({});
+      req.query = { caseId: 'not-a-number' };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '5678',
+        transferComplete: true,
+      };
+
+      expect(getRequestedCaseId(req)).toBe('5678');
     });
   });
 
@@ -349,7 +375,30 @@ describe('CaseTransferHelper', () => {
   });
 
   describe('saveSessionAndRedirectToTransferredCase', () => {
-    it('should still redirect when session save fails', async () => {
+    it('should redirect to claimant applications when caseId is not digit-only', async () => {
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      const res = mockResponse();
+
+      const redirected = await saveSessionAndRedirectToTransferredCase(req, res, 'not-a-number', transferredCaseInfo);
+
+      expect(redirected).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+      expect(req.session.save).not.toHaveBeenCalled();
+    });
+
+    it('should redirect to transferred case when session save succeeds', async () => {
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      const res = mockResponse();
+
+      const redirected = await saveSessionAndRedirectToTransferredCase(req, res, '20548', transferredCaseInfo);
+
+      expect(redirected).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+    });
+
+    it('should still redirect to transferred case with caseId when session save fails', async () => {
       const req = mockRequest({});
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
       req.session.save = jest.fn((done?: (err?: Error) => void) => {
@@ -364,7 +413,7 @@ describe('CaseTransferHelper', () => {
       expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
     });
 
-    it('should still redirect when session save times out', async () => {
+    it('should still redirect to transferred case with caseId when session save times out', async () => {
       jest.useFakeTimers();
       const req = mockRequest({});
       req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');

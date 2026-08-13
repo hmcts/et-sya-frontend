@@ -2,8 +2,10 @@ import { Response } from 'express';
 
 import { CaseTransferInfoResponse, CaseTransferType } from '../../definitions/api/caseTransferInfoResponse';
 import { AppRequest } from '../../definitions/appRequest';
+import { PageUrls } from '../../definitions/constants';
 import { getLogger } from '../../logger';
 import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
+import NumberUtils from '../../utils/NumberUtils';
 
 import { returnSafeTransferredCaseUrl } from './RouterHelpers';
 
@@ -28,14 +30,14 @@ export const isTransferInfoForCase = (caseId: string, transferInfo?: CaseTransfe
 export const getRequestedCaseId = (req: AppRequest): string | undefined => {
   const { caseId } = req.query;
 
-  if (Array.isArray(caseId)) {
-    return undefined;
+  if (typeof caseId === 'string') {
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
+    if (safeCaseId) {
+      return safeCaseId;
+    }
   }
 
-  if (typeof caseId === 'string' && caseId.trim()) {
-    return caseId;
-  }
-
+  // Ignore arrays / non-numeric query values and fall back to session
   return req.session.caseTransferInfo?.originalCaseId;
 };
 
@@ -114,6 +116,11 @@ export const saveSessionAndRedirectToTransferredCase = async (
   caseId: string,
   transferInfo: CaseTransferInfoResponse
 ): Promise<boolean> => {
+  if (!NumberUtils.getSafeCaseIdDigits(caseId)) {
+    res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    return true;
+  }
+
   applyCaseTransferInfoToSession(req, transferInfo, caseId);
   const redirectUrl = buildTransferredCaseRedirectUrl(req, caseId);
 
