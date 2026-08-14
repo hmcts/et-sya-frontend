@@ -134,6 +134,7 @@ export default {
   claimantRepresentativeRemoved: undefined,
   representativeName: undefined,
   representativeOrgName: undefined,
+  representativeType: undefined,
   employeeBenefits: YesOrNo.YES,
   jobTitle: 'Developer',
   noticePeriod: YesOrNo.YES,

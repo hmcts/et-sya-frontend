@@ -814,3 +814,27 @@ export const Roles = {
 export const CaseApiParams = {
   CASE_USER_ROLE: 'case_user_role',
 } as const;
+
+/**
+ * Maps the type of representative captured on the representative details page to the
+ * representative_occupation fixed list (fl_RepresentativeOccupation) held in CCD. CCD only accepts
+ * these codes, so an unmapped value is dropped from the Claimant Representative tab in ExUI.
+ */
+export const REPRESENTATIVE_TYPE_TO_OCCUPATION: Record<string, string> = {
+  'Employment Advisor': 'Employment advisor',
+  'Citizens Advice Bureau': 'CAB',
+  'Free Representation Unit': 'FRU',
+  'Law Centre': 'Law Centre',
+  'Trade Union': 'Union',
+  Solicitor: 'Solicitor',
+  'Private Individual': 'Private Individual',
+  'Trade Association': 'Trade Association',
+  Other: 'Other',
+} as const;
+
+export const OCCUPATION_TO_REPRESENTATIVE_TYPE: Record<string, string> = Object.fromEntries(
+  Object.entries(REPRESENTATIVE_TYPE_TO_OCCUPATION).map(([representativeType, occupation]) => [
+    occupation,
+    representativeType,
+  ])
+);
