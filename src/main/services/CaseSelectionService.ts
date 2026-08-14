@@ -6,11 +6,11 @@ import {
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../controllers/helpers/CaseTransferHelper';
-import { returnSafeCitizenHubUrl } from '../controllers/helpers/RouterHelpers';
+import { returnSafeCitizenHubUrl, returnSafePageUrl } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { ErrorPages, PageUrls, languages } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
@@ -120,20 +120,12 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
     Reflect.deleteProperty(req.session, 'userCase');
-    // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-    const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
-      ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
-      : PageUrls.CHECKLIST + languages.ENGLISH_URL_PARAMETER;
-    return res.redirect(redirectUrl);
+    return res.redirect(returnSafePageUrl(PageUrls.CHECKLIST, req));
   }
   try {
     const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     if (response.data === undefined || response.data === null) {
-      // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-      const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
-        ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
-        : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
-      return res.redirect(redirectUrl);
+      return res.redirect(returnSafePageUrl(PageUrls.LIP_OR_REPRESENTATIVE, req));
     }
 
     req.session.userCase = fromApiFormat(response.data);
@@ -141,11 +133,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
 
     req.session.save();
     if (req.session.userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-      // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-      const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
-        ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
-        : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
-      return res.redirect(redirectUrl);
+      return res.redirect(returnSafePageUrl(PageUrls.CLAIM_STEPS, req));
     }
     // Use the route caseId (always a string) rather than userCase.id, which the API may return as a number
     return res.redirect(returnSafeCitizenHubUrl(caseId, req));
@@ -155,11 +143,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
       return;
     }
-    // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-    const redirectUrl = req.url?.includes(languages.WELSH_URL_POSTFIX)
-      ? ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER
-      : ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER;
-    return res.redirect(redirectUrl);
+    return res.redirect(returnSafePageUrl(ErrorPages.NOT_FOUND, req));
   }
 };
 

@@ -47,7 +47,7 @@ describe('Transferred Case Controller tests', () => {
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '60000001/2022',
       newEthosCaseReference: '18850001/2020',
       transferComplete: true,
@@ -76,7 +76,7 @@ describe('Transferred Case Controller tests', () => {
     const response = mockResponse();
     const request = mockRequest({
       userCase: {
-        id: '1234',
+        id: '1786637776090539',
         firstName: 'Peter',
         lastName: 'Rabbit',
         respondents: [{ respondentName: "McGregor's Farm" }],
@@ -85,7 +85,7 @@ describe('Transferred Case Controller tests', () => {
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '6010106/2024',
       transferComplete: true,
     };
@@ -116,7 +116,7 @@ describe('Transferred Case Controller tests', () => {
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '6010106/2024',
       transferComplete: true,
       claimantFirstName: 'Peter',
@@ -143,7 +143,7 @@ describe('Transferred Case Controller tests', () => {
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '60000001/2022',
       transferComplete: false,
     };
@@ -152,7 +152,7 @@ describe('Transferred Case Controller tests', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         originalEthosCaseReference: '60000001/2022',
         transferComplete: false,
       } as CaseTransferInfoResponse,
@@ -174,11 +174,11 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '60000001/2022',
       transferComplete: false,
     };
@@ -187,7 +187,7 @@ describe('Transferred Case Controller tests', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         originalEthosCaseReference: '60000001/2022',
         newEthosCaseReference: '18850001/2020',
         transferComplete: true,
@@ -197,7 +197,7 @@ describe('Transferred Case Controller tests', () => {
     controller.get(request, response);
     await new Promise(nextTick);
 
-    expect(caseApi.getCaseTransferInfo).toHaveBeenCalledWith('1234');
+    expect(caseApi.getCaseTransferInfo).toHaveBeenCalledWith('1786637776090539');
     expect(request.session.caseTransferInfo).toEqual(
       expect.objectContaining({
         transferComplete: true,
@@ -218,13 +218,13 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     mockTransferredCaseTranslations(request);
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
         transferred: true,
         transferType: 'CROSS_COUNTRY',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         originalEthosCaseReference: '60000001/2022',
         transferComplete: false,
       } as CaseTransferInfoResponse,
@@ -233,7 +233,7 @@ describe('Transferred Case Controller tests', () => {
     controller.get(request, response);
     await new Promise(nextTick);
 
-    expect(caseApi.getCaseTransferInfo).toHaveBeenCalledWith('1234');
+    expect(caseApi.getCaseTransferInfo).toHaveBeenCalledWith('1786637776090539');
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.TRANSFERRED_CASE,
       expect.objectContaining({
@@ -250,7 +250,7 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not found'));
 
     controller.get(request, response);
@@ -275,7 +275,7 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
         transferred: false,
@@ -294,12 +294,12 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '5678',
+        originalCaseId: '1999888877776666',
         originalEthosCaseReference: '60000001/2022',
         transferComplete: true,
       } as CaseTransferInfoResponse,
@@ -316,7 +316,7 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     caseApi.getCaseTransferInfo = jest
       .fn()
       .mockRejectedValue(new Error('Error getting case transfer info: status code 404, CaseNotFoundException'));
@@ -331,11 +331,11 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: ['1234', '5678'] };
+    request.query = { caseId: ['1786637776090539', '1999888877776666'] };
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '60000001/2022',
       transferComplete: true,
       claimantFirstName: 'Peter',
@@ -359,7 +359,7 @@ describe('Transferred Case Controller tests', () => {
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '60000001/2022',
       transferComplete: true,
     };
@@ -376,12 +376,12 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '1234' };
+    request.query = { caseId: '1786637776090539' };
     mockTransferredCaseTranslations(request);
     caseApi.getCaseTransferInfo = jest.fn().mockResolvedValue({
       data: {
         transferred: true,
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         originalEthosCaseReference: '60000001/2022',
         transferComplete: false,
       } as CaseTransferInfoResponse,
@@ -402,11 +402,11 @@ describe('Transferred Case Controller tests', () => {
     const controller = new TransferredCaseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.query = { caseId: '5678' };
+    request.query = { caseId: '1999888877776666' };
     request.session.caseTransferInfo = {
       transferred: true,
       transferType: 'ECM',
-      originalCaseId: '1234',
+      originalCaseId: '1786637776090539',
       originalEthosCaseReference: '60000001/2022',
       transferComplete: true,
     };
@@ -415,7 +415,7 @@ describe('Transferred Case Controller tests', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '5678',
+        originalCaseId: '1999888877776666',
         originalEthosCaseReference: '70000001/2022',
         transferComplete: true,
       } as CaseTransferInfoResponse,
@@ -426,7 +426,7 @@ describe('Transferred Case Controller tests', () => {
 
     expect(request.session.caseTransferInfo).toEqual(
       expect.objectContaining({
-        originalCaseId: '5678',
+        originalCaseId: '1999888877776666',
         originalEthosCaseReference: '70000001/2022',
       })
     );

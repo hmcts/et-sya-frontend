@@ -33,15 +33,23 @@ export default class NumberUtils {
   }
 
   /**
-   * Returns a digit-only case id (1-20 digits) or undefined.
-   * Prefer this over Number() when embedding ids in redirect URLs.
+   * Returns a 16-digit case id or undefined.
+   * Prefer this over Number() when embedding ids in redirect URLs / Location headers.
    * Accepts string or number because CCD/API responses may deserialize ids as numbers.
+   *
+   * CCD case ids are 16 digits, and claimants may enter them hyphenated as
+   * 1111-2222-3333-4444. Hyphens are stripped; the value is not padded.
    */
   public static getSafeCaseIdDigits(stringValue?: string | number | null): string | undefined {
     if (stringValue === undefined || stringValue === null || stringValue === '') {
       return undefined;
     }
-    const match = /^(\d{1,20})$/.exec(String(stringValue).trim());
+    const trimmed = String(stringValue).trim();
+    const hyphenatedMatch = /^(\d{4})-(\d{4})-(\d{4})-(\d{4})$/.exec(trimmed);
+    if (hyphenatedMatch) {
+      return `${hyphenatedMatch[1]}${hyphenatedMatch[2]}${hyphenatedMatch[3]}${hyphenatedMatch[4]}`;
+    }
+    const match = /^(\d{16})$/.exec(trimmed);
     return match?.[1];
   }
 
