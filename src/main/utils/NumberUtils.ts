@@ -37,7 +37,7 @@ export default class NumberUtils {
    * Prefer this over Number() when embedding ids in redirect URLs.
    * Accepts string or number because CCD/API responses may deserialize ids as numbers.
    */
-  public static getSafeCaseIdDigits(stringValue: string | number): string | undefined {
+  public static getSafeCaseIdDigits(stringValue?: string | number | null): string | undefined {
     if (stringValue === undefined || stringValue === null || stringValue === '') {
       return undefined;
     }

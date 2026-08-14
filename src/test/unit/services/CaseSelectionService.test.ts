@@ -247,6 +247,40 @@ describe('Case Selection Service using Case Api', () => {
     expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
   });
 
+  test('Should stringify numeric API case ids and redirect using the route caseId', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: {
+        id: 1786637776090539,
+        state: CaseState.SUBMITTED,
+        last_modified: '2019-02-12T14:25:39.015',
+        created_date: '2019-02-12T14:25:39.015',
+        case_data: {
+          caseType: CaseType.SINGLE,
+          typesOfClaim: ['discrimination', 'payRelated'],
+          claimantRepresentedQuestion: YesOrNo.YES,
+          caseSource: 'ET1 Online',
+        },
+      },
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+
+    await selectUserCase(req, res, '1786637776090539');
+
+    expect(req.session.userCase.id).toBe('1786637776090539');
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+  });
+
   test('Should redirect to claimant applications when submitted case has a non-numeric id', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {

@@ -23,6 +23,36 @@ describe('FormSubmissionCheck Decorator', () => {
         expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
       });
 
+      it('should redirect to citizen hub when userCase id is a number from the API', () => {
+        const req = mockRequest({
+          userCase: { id: 1786637776090539 as unknown as string },
+        });
+        req.session.visitedContactTribunalSelection = false;
+        req.url = '/contact-the-tribunal/withdraw';
+        req.get = jest.fn();
+        const res = mockResponse();
+
+        const result = checkFormSubmissionAndRedirect(req, res);
+
+        expect(result).toBe(true);
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+      });
+
+      it('should not redirect when userCase id is not digit-only', () => {
+        const req = mockRequest({
+          userCase: { id: '1e10' },
+        });
+        req.session.visitedContactTribunalSelection = false;
+        req.url = '/contact-the-tribunal/withdraw';
+        req.get = jest.fn();
+        const res = mockResponse();
+
+        const result = checkFormSubmissionAndRedirect(req, res);
+
+        expect(result).toBe(false);
+        expect(res.redirect).not.toHaveBeenCalled();
+      });
+
       it('should redirect to citizen hub when visitedContactTribunalSelection flag is undefined', () => {
         const req = mockRequest({
           userCase: { id: '12345' },

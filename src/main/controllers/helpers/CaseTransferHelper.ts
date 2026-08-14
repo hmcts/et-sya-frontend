@@ -30,15 +30,16 @@ export const isTransferInfoForCase = (caseId: string, transferInfo?: CaseTransfe
 export const getRequestedCaseId = (req: AppRequest): string | undefined => {
   const { caseId } = req.query;
 
-  if (typeof caseId === 'string') {
-    const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
-    if (safeCaseId) {
-      return safeCaseId;
-    }
+  // Fail closed on HTTP parameter pollution rather than substituting another case
+  if (Array.isArray(caseId)) {
+    return undefined;
   }
 
-  // Ignore arrays / non-numeric query values and fall back to session
-  return req.session.caseTransferInfo?.originalCaseId;
+  if (typeof caseId === 'string') {
+    return NumberUtils.getSafeCaseIdDigits(caseId);
+  }
+
+  return NumberUtils.getSafeCaseIdDigits(req.session.caseTransferInfo?.originalCaseId);
 };
 
 export const getTransferredCaseNoAccessBody = (

@@ -97,11 +97,16 @@ describe('NumberUtils tests', () => {
       { value: '', result: undefined },
       { value: 'abc', result: undefined },
       { value: '1e10', result: undefined },
+      { value: '0x12', result: undefined },
+      { value: 'Infinity', result: undefined },
       { value: '12234', result: '12234' },
       { value: ' 12234 ', result: '12234' },
+      { value: '0', result: '0' },
       { value: 12234, result: '12234' },
       { value: 1786637776090539, result: '1786637776090539' },
       { value: '1786637776090539', result: '1786637776090539' },
+      { value: '12345678901234567890', result: '12345678901234567890' },
+      { value: '123456789012345678901', result: undefined },
     ])('returns digit-only case id for %o', ({ value, result }) => {
       expect(NumberUtils.getSafeCaseIdDigits(value as string | number)).toStrictEqual(result);
     });

@@ -25,9 +25,8 @@ export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boole
   let redirectUrl: string | null = null;
 
   if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    redirectUrl = NumberUtils.isNumericValue(userCase?.id)
-      ? returnSafeCitizenHubUrl(userCase.id, req)
-      : PageUrls.CLAIMANT_APPLICATIONS;
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(userCase?.id);
+    redirectUrl = safeCaseId ? returnSafeCitizenHubUrl(safeCaseId, req) : PageUrls.CLAIMANT_APPLICATIONS;
   }
   if (redirectUrl) {
     res.redirect(redirectUrl);

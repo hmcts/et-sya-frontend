@@ -63,14 +63,31 @@ describe('CaseTransferHelper', () => {
       expect(getRequestedCaseId(req)).toBe('5678');
     });
 
-    it('should return undefined when query case id is an array', () => {
+    it('should stringify a numeric session case id when query is missing', () => {
       const req = mockRequest({});
-      req.query = { caseId: ['1234', '5678'] };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: 1786637776090539,
+        transferComplete: true,
+      };
+
+      expect(getRequestedCaseId(req)).toBe('1786637776090539');
+    });
+
+    it('should return undefined when session case id is not digit-only', () => {
+      const req = mockRequest({});
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: 'not-a-number',
+        transferComplete: true,
+      };
 
       expect(getRequestedCaseId(req)).toBeUndefined();
     });
 
-    it('should fall back to session when query case id is an array', () => {
+    it('should return undefined when query case id is an array', () => {
       const req = mockRequest({});
       req.query = { caseId: ['1234', '5678'] };
       req.session.caseTransferInfo = {
@@ -80,17 +97,23 @@ describe('CaseTransferHelper', () => {
         transferComplete: true,
       };
 
-      expect(getRequestedCaseId(req)).toBe('5678');
+      expect(getRequestedCaseId(req)).toBeUndefined();
     });
 
     it('should return undefined when query case id is blank', () => {
       const req = mockRequest({});
       req.query = { caseId: '   ' };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '5678',
+        transferComplete: true,
+      };
 
       expect(getRequestedCaseId(req)).toBeUndefined();
     });
 
-    it('should fall back to session when query case id is not numeric', () => {
+    it('should return undefined when query case id is not numeric', () => {
       const req = mockRequest({});
       req.query = { caseId: 'not-a-number' };
       req.session.caseTransferInfo = {
@@ -100,7 +123,7 @@ describe('CaseTransferHelper', () => {
         transferComplete: true,
       };
 
-      expect(getRequestedCaseId(req)).toBe('5678');
+      expect(getRequestedCaseId(req)).toBeUndefined();
     });
   });
 

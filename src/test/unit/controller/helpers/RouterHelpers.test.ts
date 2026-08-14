@@ -53,6 +53,23 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
 
     expect(returnSafeTransferredCaseUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
+
+  it('should build transferred-case url when caseId is a number from the API', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeTransferredCaseUrl(1786637776090539, req)).toBe(
+      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=1786637776090539`
+    );
+  });
+
+  it('should reject scientific notation and hex case ids', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeTransferredCaseUrl('1e10', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeTransferredCaseUrl('0x12', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+  });
 });
 
 describe('Router Helpers - returnSafeCitizenHubUrl', () => {

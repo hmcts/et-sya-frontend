@@ -24,9 +24,9 @@ describe('CaseStateCheck Decorator', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
     });
 
-    it('should redirect to citizen hub when userCase has id and state is not AWAITING_SUBMISSION_TO_HMCTS', () => {
+    it('should redirect to citizen hub when userCase id is a number from the API', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.SUBMITTED },
+        userCase: { id: 1786637776090539 as unknown as string, state: CaseState.SUBMITTED },
       });
       req.url = '/some-path';
       const res = mockResponse();
@@ -34,7 +34,20 @@ describe('CaseStateCheck Decorator', () => {
       const result = checkCaseStateAndRedirect(req, res);
 
       expect(result).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+    });
+
+    it('should redirect to CLAIMANT_APPLICATIONS when userCase id is not digit-only', () => {
+      const req = mockRequest({
+        userCase: { id: '1e10', state: CaseState.SUBMITTED },
+      });
+      req.url = '/some-path';
+      const res = mockResponse();
+
+      const result = checkCaseStateAndRedirect(req, res);
+
+      expect(result).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
     });
 
     it('should redirect to citizen hub with language param when userCase has id and state is not AWAITING_SUBMISSION_TO_HMCTS', () => {
