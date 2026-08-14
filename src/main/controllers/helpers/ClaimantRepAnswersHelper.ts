@@ -256,11 +256,6 @@ const setRepAddressFromApi = (userCase: CaseWithId, address?: Et1Address): void 
   }
 };
 
-/**
- * Legacy fallback only. Claimant representative details now live on representativeClaimantType.
- * Cases saved before that change kept them in repCollection, which otherwise holds the respondents'
- * representatives, so only entries that are not linked to a respondent may be read back here.
- */
 const getClaimantRepresentativeEntry = (userCase: CaseWithId): Representative | undefined =>
   userCase.representatives?.find(rep => !rep.respondentId && hasValue(rep.nameOfRepresentative)) ??
   userCase.representatives?.find(rep => !rep.respondentId);

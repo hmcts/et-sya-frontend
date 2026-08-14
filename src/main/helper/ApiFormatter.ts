@@ -428,8 +428,7 @@ const hasRepAddress = (caseItem: CaseWithId): boolean =>
 /**
  * Builds the claimant representative details for CCD. Everything about the claimant's own
  * representative belongs on representativeClaimantType, which backs the "Claimant Representative"
- * tab. It must never be written to repCollection: that collection holds the respondents'
- * representatives and backs the "Respondent Representative" tab.
+ * tab.
  */
 export const setClaimantRepApiFormat = (caseItem: CaseWithId): ClaimantRepresentative => {
   const claimantRepresentative: ClaimantRepresentative = {
@@ -454,8 +453,6 @@ export const setClaimantRepApiFormat = (caseItem: CaseWithId): ClaimantRepresent
     };
   }
 
-  // representativePhoneNumber mirrors the claimant's own telNumber when the claimant is not
-  // represented, so only keep it once the case actually holds claimant representative details.
   const hasClaimantRepDetails =
     !!claimantRepresentative.name_of_representative ||
     !!claimantRepresentative.name_of_organisation ||

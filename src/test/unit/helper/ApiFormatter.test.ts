@@ -691,8 +691,6 @@ describe('Format Case Data to Frontend Model', () => {
         PostCode: 'SW1A 1AA',
       },
     });
-    // repCollection holds the respondents' representatives and backs the
-    // "Respondent Representative" tab, so it must never carry claimant rep details
     expect(apiData.case_data.repCollection).toBeUndefined();
   });
 
