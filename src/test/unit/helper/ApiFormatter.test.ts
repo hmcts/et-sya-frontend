@@ -252,7 +252,6 @@ describe('Format Case Data to Frontend Model', () => {
       ethosCaseReference: undefined,
       createdDate: '19 August 2022',
       lastModified: '19 August 2022',
-      dateOfLastEvent: undefined,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: undefined,
       typeOfClaim: undefined,

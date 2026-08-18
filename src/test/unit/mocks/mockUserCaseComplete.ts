@@ -86,7 +86,6 @@ export default {
   id: '1234',
   createdDate: '19 August 2022',
   lastModified: '19 August 2022',
-  dateOfLastEvent: undefined,
   typeOfClaim: ['discrimination', 'payRelated'],
   dobDate: {
     day: '05',

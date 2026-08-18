@@ -1,5 +1,6 @@
 import DateOfLastEventController from '../../../main/controllers/DateOfLastEventController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -8,14 +9,29 @@ describe('Date of last event Controller', () => {
     'date-of-last-event': {},
     common: {},
   };
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+  });
 
-  it('should render date of last event page', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('should render date of last event page when the ERA feature is enabled', async () => {
     const controller = new DateOfLastEventController();
     const response = mockResponse();
     const request = mockRequest({ t });
-
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.DATE_OF_LAST_EVENT, expect.anything());
+  });
+
+  it('should redirect to describe what happened when the ERA feature is disabled', async () => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+    const response = mockResponse();
+
+    await new DateOfLastEventController().get(mockRequest({ t }), response);
+
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
   });
 
   it('should redirect to describe-what-happened on valid date post', async () => {
@@ -81,5 +97,22 @@ describe('Date of last event Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should not save a date when the ERA feature is disabled', async () => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+    const req = mockRequest({
+      body: {
+        'dateOfLastEvent-day': '15',
+        'dateOfLastEvent-month': '05',
+        'dateOfLastEvent-year': '2023',
+      },
+    });
+    const res = mockResponse();
+
+    await new DateOfLastEventController().post(req, res);
+
+    expect(req.session.userCase.dateOfLastEvent).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
   });
 });

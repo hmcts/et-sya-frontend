@@ -4,11 +4,12 @@ import { Form } from '../components/form/form';
 import { isContent500CharsOrLess, isFieldFilledIn } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -80,6 +81,10 @@ export default class HearingPanelPreferenceController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
+      res.redirect(PageUrls.REASONABLE_ADJUSTMENTS);
+      return;
+    }
     if (Array.isArray(req.body.claimantHearingPanelPreferenceWhy)) {
       req.body.claimantHearingPanelPreferenceWhy =
         req.body.claimantHearingPanelPreferenceWhy.find((val: string) => val && val.trim().length > 0) || undefined;
@@ -91,7 +96,11 @@ export default class HearingPanelPreferenceController {
   };
 
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
+      res.redirect(PageUrls.REASONABLE_ADJUSTMENTS);
+      return;
+    }
     const content = getPageContent(req, this.hearingPanelPreferenceContent, [
       TranslationKeys.COMMON,
       TranslationKeys.HEARING_PANEL_PREFERENCE,

@@ -592,6 +592,7 @@ export const FEATURE_FLAGS = {
   ECC: 'ecc',
   MUL2: 'MUL2',
   DOCUMENT_STREAMING: 'document-streaming',
+  ERA_OCTOBER_2026: 'eraOctober2026',
 } as const;
 
 export const DefaultValues = {
