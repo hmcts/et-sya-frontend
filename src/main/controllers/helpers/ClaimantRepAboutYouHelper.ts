@@ -5,7 +5,6 @@ import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId } from '../../definitions/case';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import { CaseState } from '../../definitions/definition';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -22,6 +21,7 @@ import {
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { getPageContent } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
+import { fillRepresentativeAddressFields } from './RespondentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 const logger = getLogger('ClaimantRepAboutYouHelper');
@@ -50,11 +50,77 @@ export const getRepAboutYouPageContent = (
 export const getClaimantRepAboutYouPageUrl = (caseId: string, req: AppRequest): string =>
   PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + getLanguageParam(req.url);
 
-export const isClaimantRepCaseEligibleForDraftUpdate = (userCase?: CaseWithId): boolean =>
-  userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS;
+export const getRepAboutYouReturnUrl = (req: AppRequest): string =>
+  PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(
+    ':caseId',
+    req.session.repAboutYouCaseId ?? req.params?.caseId ?? req.session.userCase?.id
+  );
+
+/**
+ * Applies the address the representative picked from a postcode lookup and reports whether one was
+ * applied. The list also holds an "N addresses found" placeholder, which carries no index and so
+ * leaves the address untouched.
+ */
+export const applySelectedAddress = (userCase?: CaseWithId): boolean => {
+  const selected = userCase?.representativeAddressTypes as unknown;
+  if (selected === undefined) {
+    return false;
+  }
+
+  let applied = false;
+  if (typeof selected === 'string' || typeof selected === 'number') {
+    const index = Number(selected);
+    const addressCount = userCase.representativeAddresses?.length ?? 0;
+    if (String(selected).trim() !== '' && Number.isInteger(index) && index >= 0 && index < addressCount) {
+      fillRepresentativeAddressFields(index, userCase);
+      applied = true;
+    }
+  }
+
+  userCase.representativeAddressTypes = undefined;
+  return applied;
+};
+
+/**
+ * Keeps what the representative has just entered as the details shown when the page reloads.
+ * Without it, the details preserved from an earlier save are re-applied over their unsaved edits.
+ */
+export const rememberRepAboutYouEdits = (req: AppRequest): void => {
+  req.session.claimantRepAboutYouPendingDisplay = preserveClaimantRepSessionFields(req.session.userCase);
+};
 
 export const clearRepAboutYouFlow = (req: AppRequest): void => {
   req.session.repAboutYouCaseId = undefined;
+};
+
+const isSameCase = (userCase: CaseWithId | undefined, caseId: string): boolean =>
+  !!userCase?.id && String(userCase.id) === String(caseId);
+
+type RepAddressLookup = Pick<
+  CaseWithId,
+  'representativeEnterPostcode' | 'representativeAddresses' | 'representativeAddressTypes'
+>;
+
+/**
+ * The postcode lookup lives only in the session, so it has to survive a reload of the case from the
+ * API - otherwise the addresses found disappear before they can be picked from.
+ */
+const preserveRepAddressLookup = (userCase?: CaseWithId): RepAddressLookup | undefined =>
+  userCase
+    ? {
+        representativeEnterPostcode: userCase.representativeEnterPostcode,
+        representativeAddresses: userCase.representativeAddresses,
+        representativeAddressTypes: userCase.representativeAddressTypes,
+      }
+    : undefined;
+
+const applyRepAddressLookup = (userCase: CaseWithId, lookup?: RepAddressLookup): void => {
+  if (!lookup) {
+    return;
+  }
+  userCase.representativeEnterPostcode ??= lookup.representativeEnterPostcode;
+  userCase.representativeAddresses ??= lookup.representativeAddresses;
+  userCase.representativeAddressTypes ??= lookup.representativeAddressTypes;
 };
 
 export const refreshClaimantRepSession = (req: AppRequest, caseId: string): void => {
@@ -66,19 +132,21 @@ export const refreshClaimantRepSession = (req: AppRequest, caseId: string): void
 };
 
 export const loadClaimantRepCase = async (req: AppRequest, caseId: string, forceReload = false): Promise<boolean> => {
-  if (!forceReload && req.session.userCase?.id === caseId) {
+  if (!forceReload && isSameCase(req.session.userCase, caseId)) {
     refreshClaimantRepSession(req, caseId);
     return true;
   }
 
   try {
-    const preservedFields =
-      req.session.userCase?.id === caseId ? preserveClaimantRepSessionFields(req.session.userCase) : undefined;
+    const sameCase = isSameCase(req.session.userCase, caseId);
+    const preservedFields = sameCase ? preserveClaimantRepSessionFields(req.session.userCase) : undefined;
+    const addressLookup = sameCase ? preserveRepAddressLookup(req.session.userCase) : undefined;
     const pendingDisplay = req.session.claimantRepAboutYouPendingDisplay;
     const loginEmail = req.session.user?.email;
     const caseData = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     req.session.userCase = fromApiFormat(caseData.data);
     populateClaimantRepDetailsFromCase(req.session.userCase, { loginEmail });
+    applyRepAddressLookup(req.session.userCase, addressLookup);
     applyPreservedClaimantRepSessionFields(req.session.userCase, preservedFields);
     applyPreservedClaimantRepSessionFields(req.session.userCase, pendingDisplay);
     syncClaimantRepresentativeFromSessionFields(req.session.userCase);
@@ -95,7 +163,7 @@ export const ensureClaimantRepCaseLoaded = async (req: AppRequest): Promise<bool
   if (!caseId) {
     return false;
   }
-  if (req.session.userCase?.id === caseId) {
+  if (isSameCase(req.session.userCase, caseId)) {
     refreshClaimantRepSession(req, caseId);
     return true;
   }

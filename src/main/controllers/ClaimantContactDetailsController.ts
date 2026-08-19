@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
@@ -22,7 +22,7 @@ export default class ClaimantContactDetailsController {
       req.session.userCase = fromApiFormat(caseData.data);
     } catch (error) {
       logger.error(`Error loading case ${caseId}: ${error.message}`);
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
 
     const translations: AnyRecord = {

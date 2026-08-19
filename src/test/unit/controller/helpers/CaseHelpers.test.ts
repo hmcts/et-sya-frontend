@@ -473,8 +473,10 @@ describe('handle update draft case', () => {
   });
 
   describe('handleUpdateClaimantRepAboutYou', () => {
-    it('should save submitted case rep details to session without calling the draft update API', async () => {
-      caseApi.updateClaimantRepAboutYou = jest.fn();
+    it('should update the rep details on a submitted case', async () => {
+      caseApi.updateClaimantRepAboutYou = jest
+        .fn()
+        .mockResolvedValue({ data: { id: '1780654507465167', case_data: {} } });
       mockClient.mockReturnValue(caseApi);
 
       const req = mockRequest({
@@ -491,9 +493,28 @@ describe('handle update draft case', () => {
 
       await handleUpdateClaimantRepAboutYou(req, mockLogger);
 
-      expect(caseApi.updateClaimantRepAboutYou).not.toHaveBeenCalled();
+      expect(caseApi.updateClaimantRepAboutYou).toHaveBeenCalledWith(
+        expect.objectContaining({ representativeName: 'Updated Name', claimantRepEmail: 'new@example.com' })
+      );
       expect(req.session.claimantRepAboutYouPendingDisplay?.claimantRepEmail).toBe('new@example.com');
       expect(req.session.userCase.updateDraftCaseError).toBeUndefined();
+    });
+
+    it('should report a failed update so the representative is told', async () => {
+      caseApi.updateClaimantRepAboutYou = jest.fn().mockRejectedValue(new Error('update failed'));
+      mockClient.mockReturnValue(caseApi);
+
+      const req = mockRequest({
+        session: {
+          user: { email: 'rep@example.com' },
+          userCase: { id: '1780654507465167', state: CaseState.SUBMITTED, representativeName: 'Updated Name' },
+        },
+      });
+
+      await handleUpdateClaimantRepAboutYou(req, mockLogger);
+
+      expect(req.session.userCase.updateDraftCaseError).toBeDefined();
+      expect(mockLogger.error).toHaveBeenCalledWith('update failed');
     });
   });
 });

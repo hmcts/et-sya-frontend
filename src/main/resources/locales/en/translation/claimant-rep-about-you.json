@@ -1,7 +1,30 @@
 {
   "title": "About you",
   "h1": "About you",
-  "submitBtn": "Submit",
+  "submitBtn": "Save",
+  "name": "Name",
+  "organisation": "Organisation",
+  "typeOfRepresentative": "Type of representative",
+  "selectAType": "Select a type",
+  "employmentAdvisor": "Employment advisor",
+  "citizensAdviceBureau": "Citizens Advice Bureau",
+  "freeRepresentationUnit": "Free Representation Unit",
+  "lawCentre": "Law centre",
+  "tradeUnion": "Trade union",
+  "solicitor": "Solicitor",
+  "privateIndividual": "Private individual",
+  "tradeAssociation": "Trade association",
+  "other": "Other",
+  "enterPostcode": "Enter a UK postcode",
+  "findAddress": "Find address",
+  "selectAddress": "Select an address",
+  "useThisAddress": "Use this address",
+  "buildingAndStreet": "Building and street",
+  "addressLine2": "Address line 2",
+  "addressLine3": "Address line 3",
+  "postcode": "Postcode",
+  "email": "Email",
+  "phone": "Phone",
   "aboutYouDetails": {
     "name": "Name",
     "organisation": "Organisation",
@@ -10,15 +33,39 @@
     "email": "Email",
     "phone": "Phone"
   },
-  "tellTheTribunal": {
-    "heading": "Tell the tribunal",
-    "textBeforeLink": "If you need to assign this case to a colleague or end your cease representation of this case, then you need to ",
-    "contactLink": "contact the tribunal",
-    "textAfterLink": "."
-  },
   "errors": {
     "hiddenErrorField": {
       "invalid": "You must complete your name, address and email before you can submit"
+    },
+    "representativeName": {
+      "required": "Enter your name"
+    },
+    "representativeType": {
+      "required": "Select a type of representative"
+    },
+    "representativeEnterPostcode": {
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA"
+    },
+    "repAddress1": {
+      "required": "Enter a building and street",
+      "invalid": "Enter a building and street - up to 150 characters"
+    },
+    "repAddress2": {
+      "required": "Enter address line 2 - up to 50 characters",
+      "invalid": "Enter address line 2 - up to 50 characters"
+    },
+    "repAddressTown": {
+      "required": "Enter address line 3 - up to 50 characters",
+      "invalid": "Enter address line 3 - up to 50 characters"
+    },
+    "claimantRepEmail": {
+      "required": "Enter your email address",
+      "invalid": "Enter an email address in the correct format, for example name@example.com"
+    },
+    "representativePhoneNumber": {
+      "invalid": "Enter a valid UK telephone number or leave the field blank",
+      "nonnumeric": "Enter a UK telephone number, like 01623 960 001 or 07700 900 983, or leave the field blank"
     }
   }
 }

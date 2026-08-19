@@ -274,26 +274,24 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
   return userCase;
 }
 
+/**
+ * The About you page can be used once the case has been submitted, so it sends only the details
+ * that page owns - everything else on the case is left as the tribunal holds it. The
+ * representative's phone number belongs on representativeClaimantType, not on claimantType, so the
+ * claimant's own contact details are never touched from here.
+ */
 export function getClaimantRepAboutYouUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
-  const caseData: UpdateCaseBody['case_data'] = {
-    caseType: caseItem.caseType,
-    typesOfClaim: caseItem.typeOfClaim,
-    claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
-    caseSource: CcdDataModel.CASE_SOURCE,
-    claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
-    representativeClaimantType: setClaimantRepApiFormat(caseItem),
-  };
-
-  if (caseItem.representativePhoneNumber) {
-    caseData.claimantType = {
-      claimant_phone_number: caseItem.representativePhoneNumber,
-    };
-  }
-
   return {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
-    case_data: caseData,
+    case_data: {
+      caseType: caseItem.caseType,
+      typesOfClaim: caseItem.typeOfClaim,
+      claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
+      caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+      representativeClaimantType: setClaimantRepApiFormat(caseItem),
+    },
   };
 }
 
@@ -422,8 +420,12 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
   };
 }
 
-const hasRepAddress = (caseItem: CaseWithId): boolean =>
-  !!caseItem.repAddress1?.trim() && !!caseItem.repAddressTown?.trim() && !!caseItem.repAddressCountry?.trim();
+/**
+ * The About you page collects the building and street but no country, so an address is sent as soon
+ * as its first line is known - requiring a country would silently drop the address the
+ * representative entered.
+ */
+const hasRepAddress = (caseItem: CaseWithId): boolean => !!caseItem.repAddress1?.trim();
 
 /**
  * Builds the claimant representative details for CCD. Everything about the claimant's own
