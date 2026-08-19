@@ -8,6 +8,7 @@ import {
   getRepresentativeDetails,
   populateClaimantRepDetailsFromCase,
   repEmailDiffersFromLoginEmail,
+  setClaimantRepEmailFromLoginEmail,
 } from '../../../../main/controllers/helpers/ClaimantRepAnswersHelper';
 import {
   CaseWithId,
@@ -469,6 +470,29 @@ describe('ClaimantRepAnswersHelper', () => {
     it('should return false when the login email is missing', () => {
       const userCase = { claimantRepEmail: 'new-case@example.com' } as CaseWithId;
       expect(repEmailDiffersFromLoginEmail(userCase, undefined)).toBe(false);
+    });
+  });
+
+  describe('setClaimantRepEmailFromLoginEmail', () => {
+    it('should default the rep email to the sign-in email when the claimant is represented', () => {
+      const userCase = { claimantRepresentedQuestion: YesOrNo.YES } as CaseWithId;
+      setClaimantRepEmailFromLoginEmail(userCase, 'rep@idam.com');
+      expect(userCase.claimantRepEmail).toEqual('rep@idam.com');
+    });
+
+    it('should not overwrite a rep email already held on the case', () => {
+      const userCase = {
+        claimantRepresentedQuestion: YesOrNo.YES,
+        claimantRepEmail: 'case@example.com',
+      } as CaseWithId;
+      setClaimantRepEmailFromLoginEmail(userCase, 'rep@idam.com');
+      expect(userCase.claimantRepEmail).toEqual('case@example.com');
+    });
+
+    it('should not set a rep email for a claimant representing themselves', () => {
+      const userCase = { claimantRepresentedQuestion: YesOrNo.NO } as CaseWithId;
+      setClaimantRepEmailFromLoginEmail(userCase, 'claimant@idam.com');
+      expect(userCase.claimantRepEmail).toBeUndefined();
     });
   });
 });

@@ -3,12 +3,7 @@ import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRe
 import { populateClaimantRepDetailsFromCase } from '../controllers/helpers/ClaimantRepAnswersHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
-import {
-  CreateCaseBody,
-  RepresentativeRequestBody,
-  RespondentRequestBody,
-  UpdateCaseBody,
-} from '../definitions/api/caseApiBody';
+import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import {
   CaseApiDataResponse,
   CaseData,
@@ -30,6 +25,7 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { ClaimantRepresentative } from '../definitions/complexTypes/ClaimantRepresentative';
 import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
@@ -37,6 +33,8 @@ import {
   AllDocumentTypes,
   CcdDataModel,
   ET3_SUPPORTING,
+  OCCUPATION_TO_REPRESENTATIVE_TYPE,
+  REPRESENTATIVE_TYPE_TO_OCCUPATION,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
@@ -265,6 +263,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     representativeName: fromApiCaseData.case_data?.representativeClaimantType?.name_of_representative,
     representativeOrgName: fromApiCaseData.case_data?.representativeClaimantType?.name_of_organisation,
     claimantRepEmail: fromApiCaseData.case_data?.representativeClaimantType?.representative_email_address,
+    representativeType:
+      OCCUPATION_TO_REPRESENTATIVE_TYPE[
+        fromApiCaseData.case_data?.representativeClaimantType?.representative_occupation
+      ],
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
   };
@@ -279,17 +281,8 @@ export function getClaimantRepAboutYouUpdateCaseBody(caseItem: CaseWithId): Upda
     claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
     caseSource: CcdDataModel.CASE_SOURCE,
     claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
-    representativeClaimantType: {
-      name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
-      name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
-      representative_email_address: caseItem.claimantRepEmail,
-    },
+    representativeClaimantType: setClaimantRepApiFormat(caseItem),
   };
-
-  const repCollection = setRepCollectionApiFormat(caseItem);
-  if (repCollection) {
-    caseData.repCollection = repCollection;
-  }
 
   if (caseItem.representativePhoneNumber) {
     caseData.claimantType = {
@@ -424,12 +417,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
-      representativeClaimantType: {
-        name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
-        name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
-        representative_email_address: caseItem.claimantRepEmail,
-      },
-      repCollection: setRepCollectionApiFormat(caseItem),
+      representativeClaimantType: setClaimantRepApiFormat(caseItem),
     },
   };
 }
@@ -437,30 +425,46 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
 const hasRepAddress = (caseItem: CaseWithId): boolean =>
   !!caseItem.repAddress1?.trim() && !!caseItem.repAddressTown?.trim() && !!caseItem.repAddressCountry?.trim();
 
-export const setRepCollectionApiFormat = (caseItem: CaseWithId): RepresentativeRequestBody[] | undefined => {
-  if (!hasRepAddress(caseItem)) {
-    return undefined;
+/**
+ * Builds the claimant representative details for CCD. Everything about the claimant's own
+ * representative belongs on representativeClaimantType, which backs the "Claimant Representative"
+ * tab.
+ */
+export const setClaimantRepApiFormat = (caseItem: CaseWithId): ClaimantRepresentative => {
+  const claimantRepresentative: ClaimantRepresentative = {
+    name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
+    name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
+    representative_email_address:
+      caseItem.claimantRepEmail ?? caseItem.claimantRepresentative?.representative_email_address,
+  };
+
+  const occupation = REPRESENTATIVE_TYPE_TO_OCCUPATION[caseItem.representativeType];
+  if (occupation) {
+    claimantRepresentative.representative_occupation = occupation;
   }
 
-  const claimantRep = caseItem.representatives?.find(rep => !rep.respondentId) ?? caseItem.representatives?.[0];
+  if (hasRepAddress(caseItem)) {
+    claimantRepresentative.representative_address = {
+      AddressLine1: caseItem.repAddress1,
+      AddressLine2: caseItem.repAddress2,
+      PostTown: caseItem.repAddressTown,
+      Country: caseItem.repAddressCountry,
+      PostCode: caseItem.repAddressPostcode,
+    };
+  }
 
-  return [
-    {
-      id: claimantRep?.ccdId,
-      value: {
-        name_of_representative: caseItem.representativeName ?? claimantRep?.nameOfRepresentative,
-        name_of_organisation: caseItem.representativeOrgName ?? claimantRep?.nameOfOrganisation,
-        representative_email_address: caseItem.claimantRepEmail ?? claimantRep?.representativeEmailAddress,
-        representative_address: {
-          AddressLine1: caseItem.repAddress1,
-          AddressLine2: caseItem.repAddress2,
-          PostTown: caseItem.repAddressTown,
-          Country: caseItem.repAddressCountry,
-          PostCode: caseItem.repAddressPostcode,
-        },
-      },
-    },
-  ];
+  const hasClaimantRepDetails =
+    !!claimantRepresentative.name_of_representative ||
+    !!claimantRepresentative.name_of_organisation ||
+    !!claimantRepresentative.representative_email_address ||
+    !!claimantRepresentative.representative_occupation ||
+    !!claimantRepresentative.representative_address;
+
+  if (hasClaimantRepDetails && caseItem.representativePhoneNumber) {
+    claimantRepresentative.representative_phone_number = caseItem.representativePhoneNumber;
+  }
+
+  return claimantRepresentative;
 };
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {

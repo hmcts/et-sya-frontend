@@ -33,6 +33,7 @@ import {
   formatDate,
   fromApiFormat,
   fromApiFormatDocument,
+  getClaimantRepAboutYouUpdateCaseBody,
   getDocId,
   getDueDate,
   getFileExtension,
@@ -307,6 +308,7 @@ describe('Format Case Data to Frontend Model', () => {
       claimantRepresentativeRemoved: undefined,
       representativeName: undefined,
       representativeOrgName: undefined,
+      representativeType: undefined,
       employeeBenefits: undefined,
       endDate: undefined,
       newJob: undefined,
@@ -655,6 +657,181 @@ describe('Format Case Data to Frontend Model', () => {
     expect(result.representedClaimantAddressTown).toEqual('London');
     expect(result.representedClaimantAddressPostcode).toEqual('SW1A 1AA');
     expect(result.representedClaimantAddressCountry).toEqual('United Kingdom');
+  });
+
+  it('should map claimant representative details to representativeClaimantType only', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeName: 'Rep Name',
+      representativeOrgName: 'Rep Org',
+      claimantRepEmail: 'rep@example.com',
+      representativePhoneNumber: '07123456789',
+      repAddress1: '1 High Street',
+      repAddress2: 'Flat 2',
+      repAddressTown: 'London',
+      repAddressCountry: 'United Kingdom',
+      repAddressPostcode: 'SW1A 1AA',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.representativeClaimantType).toEqual({
+      name_of_representative: 'Rep Name',
+      name_of_organisation: 'Rep Org',
+      representative_email_address: 'rep@example.com',
+      representative_phone_number: '07123456789',
+      representative_address: {
+        AddressLine1: '1 High Street',
+        AddressLine2: 'Flat 2',
+        PostTown: 'London',
+        Country: 'United Kingdom',
+        PostCode: 'SW1A 1AA',
+      },
+    });
+    expect(apiData.case_data.repCollection).toBeUndefined();
+  });
+
+  it('should map claimant representative details to representativeClaimantType on the about you update', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeName: 'Rep Name',
+      claimantRepEmail: 'rep@example.com',
+      repAddress1: '1 High Street',
+      repAddressTown: 'London',
+      repAddressCountry: 'United Kingdom',
+      repAddressPostcode: 'SW1A 1AA',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+
+    const apiData = getClaimantRepAboutYouUpdateCaseBody(caseItem);
+    expect(apiData.case_data.representativeClaimantType.representative_address).toEqual({
+      AddressLine1: '1 High Street',
+      AddressLine2: undefined,
+      PostTown: 'London',
+      Country: 'United Kingdom',
+      PostCode: 'SW1A 1AA',
+    });
+    expect(apiData.case_data.repCollection).toBeUndefined();
+  });
+
+  it.each([
+    { representativeType: 'Employment Advisor', expected: 'Employment advisor' },
+    { representativeType: 'Citizens Advice Bureau', expected: 'CAB' },
+    { representativeType: 'Free Representation Unit', expected: 'FRU' },
+    { representativeType: 'Trade Union', expected: 'Union' },
+    { representativeType: 'Law Centre', expected: 'Law Centre' },
+    { representativeType: 'Solicitor', expected: 'Solicitor' },
+    { representativeType: 'Private Individual', expected: 'Private Individual' },
+    { representativeType: 'Trade Association', expected: 'Trade Association' },
+    { representativeType: 'Other', expected: 'Other' },
+  ])(
+    'should map the type of representative $representativeType to the CCD occupation $expected',
+    ({ representativeType, expected }) => {
+      const caseItem: CaseWithId = {
+        id: '1234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        claimantRepresentedQuestion: YesOrNo.YES,
+        representativeName: 'Rep Name',
+        representativeType,
+        createdDate: '19 August 2022',
+        lastModified: '19 August 2022',
+      };
+
+      const apiData = toApiFormat(caseItem);
+      expect(apiData.case_data.representativeClaimantType.representative_occupation).toEqual(expected);
+    }
+  );
+
+  it('should read the type of representative back from the CCD occupation', () => {
+    const representedApiData: CaseApiDataResponse = {
+      id: '5678',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {
+        claimantRepresentedQuestion: YesOrNo.YES,
+        representativeClaimantType: {
+          name_of_representative: 'Rep Name',
+          representative_occupation: 'CAB',
+        },
+      },
+    };
+
+    expect(fromApiFormat(representedApiData).representativeType).toEqual('Citizens Advice Bureau');
+  });
+
+  it('should not set an occupation for a type of representative CCD does not accept', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeName: 'Rep Name',
+      representativeType: 'Not a real type',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.representativeClaimantType.representative_occupation).toBeUndefined();
+  });
+
+  it('should not set a representative phone number when there are no claimant representative details', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      claimantRepresentedQuestion: YesOrNo.NO,
+      telNumber: '07123456789',
+      representativePhoneNumber: '07123456789',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+    };
+
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.representativeClaimantType.representative_phone_number).toBeUndefined();
+    expect(apiData.case_data.representativeClaimantType.representative_address).toBeUndefined();
+  });
+
+  it('should read the claimant representative address from representativeClaimantType', () => {
+    const representedApiData: CaseApiDataResponse = {
+      id: '5678',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {
+        claimantRepresentedQuestion: YesOrNo.YES,
+        representativeClaimantType: {
+          name_of_representative: 'Rep Name',
+          name_of_organisation: 'Rep Org',
+          representative_email_address: 'rep@example.com',
+          representative_phone_number: '07123456789',
+          representative_address: {
+            AddressLine1: '1 High Street',
+            AddressLine2: 'Flat 2',
+            PostTown: 'London',
+            PostCode: 'SW1A 1AA',
+            Country: 'United Kingdom',
+          },
+        },
+      },
+    };
+
+    const result = fromApiFormat(representedApiData);
+    expect(result.representativeName).toEqual('Rep Name');
+    expect(result.representativeOrgName).toEqual('Rep Org');
+    expect(result.claimantRepEmail).toEqual('rep@example.com');
+    expect(result.representativePhoneNumber).toEqual('07123456789');
+    expect(result.repAddress1).toEqual('1 High Street');
+    expect(result.repAddress2).toEqual('Flat 2');
+    expect(result.repAddressTown).toEqual('London');
+    expect(result.repAddressPostcode).toEqual('SW1A 1AA');
+    expect(result.repAddressCountry).toEqual('United Kingdom');
   });
 
   it('date formatter should return null when date is empty', () => {

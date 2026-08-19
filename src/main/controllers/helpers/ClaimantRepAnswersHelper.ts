@@ -125,6 +125,22 @@ export const repEmailDiffersFromLoginEmail = (userCase?: CaseWithId, loginEmail?
   return caseEmail.trim().toLowerCase() !== loginEmail.trim().toLowerCase();
 };
 
+/**
+ * A non-HMCTS claimant representative never types their own email during the claim: it is the email
+ * they signed in with. Default it here so representativeClaimantType carries an email address for
+ * the Claimant Representative tab. Claimants representing themselves have no rep email, so this only
+ * applies when the signed-in user is acting as a representative.
+ */
+export const setClaimantRepEmailFromLoginEmail = (userCase: CaseWithId, loginEmail?: string): void => {
+  if (
+    userCase?.claimantRepresentedQuestion === YesOrNo.YES &&
+    !hasValue(userCase.claimantRepEmail) &&
+    hasValue(loginEmail)
+  ) {
+    userCase.claimantRepEmail = loginEmail;
+  }
+};
+
 export const syncRepPhoneFields = (userCase: CaseWithId): void => {
   if (hasValue(userCase.representativePhoneNumber)) {
     userCase.telNumber = userCase.representativePhoneNumber;
@@ -242,8 +258,7 @@ const setRepAddressFromApi = (userCase: CaseWithId, address?: Et1Address): void 
 
 const getClaimantRepresentativeEntry = (userCase: CaseWithId): Representative | undefined =>
   userCase.representatives?.find(rep => !rep.respondentId && hasValue(rep.nameOfRepresentative)) ??
-  userCase.representatives?.find(rep => !rep.respondentId) ??
-  userCase.representatives?.[0];
+  userCase.representatives?.find(rep => !rep.respondentId);
 
 const setRepDetailsFromRepresentativeEntry = (userCase: CaseWithId, representative?: Representative): void => {
   if (!representative) {
@@ -284,6 +299,10 @@ export const populateClaimantRepDetailsFromCase = (
   if (!hasValue(userCase.representativeOrgName) && claimantRep?.name_of_organisation) {
     userCase.representativeOrgName = claimantRep.name_of_organisation;
   }
+  if (!hasValue(userCase.representativePhoneNumber) && claimantRep?.representative_phone_number) {
+    userCase.representativePhoneNumber = claimantRep.representative_phone_number;
+  }
+  setRepAddressFromApi(userCase, claimantRep?.representative_address);
 
   syncRepPhoneFields(userCase);
 

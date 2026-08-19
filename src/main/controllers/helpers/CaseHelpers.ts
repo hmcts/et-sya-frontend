@@ -23,6 +23,7 @@ import {
   applyPreservedClaimantRepSessionFields,
   populateClaimantRepDetailsFromCase,
   preserveClaimantRepSessionFields,
+  setClaimantRepEmailFromLoginEmail,
   syncClaimantRepresentativeFromSessionFields,
   syncRepPhoneFields,
 } from './ClaimantRepAnswersHelper';
@@ -56,6 +57,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
 export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
     try {
+      setClaimantRepEmailFromLoginEmail(req.session.userCase, req.session.user?.email);
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
       logger.info(`Updated draft case id: ${req.session.userCase.id}`);
       const workEnterPostcode = req.session.userCase.workEnterPostcode;
