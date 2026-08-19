@@ -5,7 +5,7 @@ import {
   EnglishOrWelsh,
   HearingPreference,
   Sex,
-  //YesOrNo,
+  YesOrNo,
 } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
@@ -61,7 +61,7 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
   return preferences.length > 0 ? preferences : [translations.notProvided];
 };
 
-/* const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
+const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.reasonableAdjustments) {
     case YesOrNo.YES:
       return translations.oesYesOrNo.yes;
@@ -70,7 +70,7 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
     default:
       return translations.notProvided;
   }
-}; */
+};
 
 export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
@@ -172,8 +172,8 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         translations.change,
         translations.personalDetails.takePartInHearing
       )
-    )
-    /* addSummaryRow(
+    ),
+    addSummaryRow(
       translations.personalDetails.disability,
       getTranslationsReasonableAdjustments(userCase, translations),
       createChangeAction(
@@ -181,7 +181,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         translations.change,
         translations.personalDetails.disability
       )
-    ) */
+    )
   );
 
   return rows;
