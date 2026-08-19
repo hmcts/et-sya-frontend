@@ -281,21 +281,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
  * claimant's own contact details are never touched from here.
  */
 export function getClaimantRepAboutYouUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
-  const caseData: UpdateCaseBody['case_data'] = {
-    caseType: caseItem.caseType,
-    typesOfClaim: caseItem.typeOfClaim,
-    claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
-    caseSource: CcdDataModel.CASE_SOURCE,
-    claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
-    representativeClaimantType: setClaimantRepApiFormat(caseItem),
-  };
-
-  if (caseItem.representativePhoneNumber) {
-    caseData.claimantType = {
-      claimant_phone_number: caseItem.representativePhoneNumber,
-    };
-  }
-
   return {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
