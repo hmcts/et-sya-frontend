@@ -2,7 +2,7 @@ import StepsToMakingYourClaimNonHmctsController from '../../../main/controllers/
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { EmailOrPost, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import { TellUsWhatYouWant, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
 import { AnyRecord } from '../../../main/definitions/util-types';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -204,6 +204,43 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
       const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
       const section2 = renderArgs.sections[1];
       expect(section2.links[0].url).toContain(PageUrls.REPRESENTED_CLAIMANT_NAME);
+    });
+
+    it('should keep section 2 status NOT STARTED despite a seeded name (and across refreshes)', () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const response = mockResponse();
+      // Name/address are auto-seeded from the claimant record but nothing has been genuinely provided.
+      const request = mockRequest({
+        t,
+        userCase: { representedClaimantFirstName: 'Jane', representedClaimantAddress1: '1 High St' },
+      });
+
+      controller.get(request, response);
+
+      const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.sections[1].links[0].status()).toBe(sectionStatus.notStarted);
+    });
+
+    it('should mark section 2 IN PROGRESS once the name has been genuinely provided', () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const response = mockResponse();
+      const request = mockRequest({ t, userCase: { representedClaimantNameProvided: YesOrNo.YES } });
+
+      controller.get(request, response);
+
+      const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.sections[1].links[0].status()).toBe(sectionStatus.inProgress);
+    });
+
+    it('should mark section 2 COMPLETED when representedClaimantDetailsCheck is YES', () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const response = mockResponse();
+      const request = mockRequest({ t, userCase: { representedClaimantDetailsCheck: YesOrNo.YES } });
+
+      controller.get(request, response);
+
+      const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.sections[1].links[0].status()).toBe(sectionStatus.completed);
     });
 
     it('should include section 4 with type of claim and tell us what you want links', () => {

@@ -105,6 +105,18 @@ describe('ClaimantRepHubController', () => {
       expect(renderArgs.sections).toHaveLength(8);
     });
 
+    it('should flag the view as the claimant rep hub so claimant-facing represented banners are suppressed', async () => {
+      const req = mockRequest({});
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      expect(renderArgs.isClaimantRepHub).toBe(true);
+    });
+
     it('should include the "About you" section as the first section with a clickable personal details link', async () => {
       const req = mockRequest({});
       const res = mockResponse();
@@ -172,6 +184,8 @@ describe('ClaimantRepHubController', () => {
         (link: { linkTxt: (l: unknown) => string }) => link.linkTxt(l) === 'View claimant contact details'
       );
       expect(claimantContactLink).toBeDefined();
+      expect(claimantContactLink.shouldShow).toBe(true);
+      expect(claimantContactLink.url()).toContain('/claimant-contact-details/');
     });
 
     it('should pass showSubmittedAlert based on case state', async () => {

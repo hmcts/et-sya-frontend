@@ -175,6 +175,8 @@ export default {
   claimDetailsCheck: YesOrNo.YES,
   representativeDetailsCheck: undefined,
   representedClaimantDetailsCheck: undefined,
+  representedClaimantNameProvided: undefined,
+  representedClaimantEmailProvided: undefined,
   claimantWorkAddressQuestion: YesOrNo.YES,
   workAddress1: 'Respondent Address',
   workAddress2: 'That Road',

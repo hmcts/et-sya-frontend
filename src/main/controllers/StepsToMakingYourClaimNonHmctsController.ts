@@ -71,7 +71,7 @@ export default class StepsToMakingYourClaimNonHmctsController {
             status: (): string =>
               getSectionStatus(
                 userCase?.representedClaimantDetailsCheck,
-                userCase?.representedClaimantFirstName || userCase?.representedClaimantAddress1
+                userCase?.representedClaimantNameProvided === YesOrNo.YES ? YesOrNo.YES : undefined
               ),
           },
         ],

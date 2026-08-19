@@ -166,6 +166,7 @@ export const TranslationKeys = {
 
   // non-hmcts claimant rep
   CLAIMANT_REP_HUB: 'claimant-rep-hub',
+  CLAIMANT_CONTACT_DETAILS: 'claimant-contact-details',
   CLAIMANT_REP_ABOUT_YOU: 'claimant-rep-about-you',
   CLAIMANT_REP_EDIT_NAME: 'claimant-rep-edit-name',
   CLAIMANT_REP_EDIT_EMAIL: 'claimant-rep-edit-email',
@@ -433,6 +434,7 @@ export const PageUrls = {
   CLAIMANT_COMPENSATION: '/claimant-compensation',
   CLAIMANT_TRIBUNAL_RECOMMENDATION: '/claimant-tribunal-recommendation',
   CLAIMANT_REP_HUB: '/claimant-rep-hub/:caseId',
+  CLAIMANT_CONTACT_DETAILS: '/claimant-contact-details/:caseId',
   CLAIMANT_REP_ABOUT_YOU: '/claimant-rep-about-you/:caseId',
   CLAIMANT_REP_EDIT_NAME: '/claimant-rep-edit-name/:caseId',
   CLAIMANT_REP_EDIT_EMAIL: '/claimant-rep-edit-email/:caseId',
