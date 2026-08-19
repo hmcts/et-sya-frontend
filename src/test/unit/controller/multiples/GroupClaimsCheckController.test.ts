@@ -1,6 +1,6 @@
 import * as groupClaimsValidator from '../../../../main/components/form/group-claims-validator';
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import GroupClaimsCheckController from '../../../../main/controllers/multiples/GroupClaimsCheckController';
+import GroupClaimsCheckController from '../../../../main/controllers/multiples/et1-submission/GroupClaimsCheckController';
 import { CaseType, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';

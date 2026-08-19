@@ -206,6 +206,46 @@ describe('Tribunal Notifications Helper', () => {
       ]);
     });
 
+    it('should populate Group Claims Considering claims together notification as Response optional when within response window', async () => {
+      const req = mockRequestWithTranslation({}, translationJsons);
+      req.session.userCase.sendNotificationCollection = [
+        {
+          id: 'group-claim-1',
+          value: {
+            date: '15 August 2026',
+            sendNotificationTitle: 'Considering claims together',
+            sendNotificationGroupClaims: 'Considering claims together',
+            sendNotificationResponseTribunal: 'Yes - view document for details',
+            sendNotificationNotify: 'Both parties',
+            notificationState: 'viewed',
+          },
+        },
+      ];
+      const populatedNotification = await getSendNotifications(req);
+      expect(populatedNotification[0].displayStatus).toEqual('Response optional');
+      expect(populatedNotification[0].statusColor).toEqual('--blue');
+    });
+
+    it('should populate Group Claims Considering claims together notification with standard status when expired', async () => {
+      const req = mockRequestWithTranslation({}, translationJsons);
+      req.session.userCase.sendNotificationCollection = [
+        {
+          id: 'group-claim-1',
+          value: {
+            date: '1 August 2026',
+            sendNotificationTitle: 'Considering claims together',
+            sendNotificationGroupClaims: 'Considering claims together',
+            sendNotificationResponseTribunal: 'Yes - view document for details',
+            sendNotificationNotify: 'Both parties',
+            notificationState: 'viewed',
+          },
+        },
+      ];
+      const populatedNotification = await getSendNotifications(req);
+      expect(populatedNotification[0].displayStatus).toEqual('Viewed');
+      expect(populatedNotification[0].statusColor).toEqual('--green');
+    });
+
     it('should populate page with all empty', async () => {
       const req = mockRequestWithTranslation({}, translationJsons);
       const result = await getSendNotifications(req);

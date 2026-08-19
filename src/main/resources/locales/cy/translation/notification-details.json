@@ -30,5 +30,10 @@
   "date": "Dyddiad anfon",
   "additionalInfo": "Gwybodaeth ychwanegol",
   "No": "Na",
-  "notificationSubject": "Testun yr Hysbysiad"
+  "notificationSubject": "[W] Notification subject",
+  "notificationType": "[W] Notification type",
+  "Considering claims together": "[W] Considering claims together",
+  "partOfGroupClaim": "[W] You're now part of a group claim",
+  "groupClaims": "[W] Group claims",
+  "groupClaimMadeBy": "[W] Group claim notification made by"
 }

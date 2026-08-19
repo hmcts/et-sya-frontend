@@ -1,5 +1,5 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import ReviewOtherClaimantsController from '../../../../main/controllers/multiples/ReviewAdditionalClaimantsController';
+import ReviewOtherClaimantsController from '../../../../main/controllers/multiples/et1-submission/ReviewAdditionalClaimantsController';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';

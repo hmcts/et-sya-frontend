@@ -1,28 +1,28 @@
 import { Response } from 'express';
 
-import { getAddressesForPostcode } from '../../address';
+import { getAddressesForPostcode } from '../../../address';
 import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
-} from '../../components/form/address-validator';
-import { Form } from '../../components/form/form';
-import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
-import { CaseStateCheck } from '../../decorators/CaseStateCheck';
-import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant, AddressType, YesOrNo } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import { FormContent, FormFields } from '../../definitions/form';
-import { saveForLaterButton, submitButton } from '../../definitions/radios';
-import { AnyRecord } from '../../definitions/util-types';
-import { getLogger } from '../../logger';
+} from '../../../components/form/address-validator';
+import { Form } from '../../../components/form/form';
+import { AdditionalClaimantCheck } from '../../../decorators/AdditionalClaimantEditCheck';
+import { CaseStateCheck } from '../../../decorators/CaseStateCheck';
+import { AppRequest } from '../../../definitions/appRequest';
+import { AdditionalClaimant, AddressType, YesOrNo } from '../../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../../definitions/constants';
+import { FormContent, FormFields } from '../../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../../definitions/radios';
+import { AnyRecord } from '../../../definitions/util-types';
+import { getLogger } from '../../../logger';
 import {
   getAdditionalClaimantAddressLink,
   getAdditionalClaimantAddressTypes,
   getSelectTitle,
-} from '../helpers/AdditionalClaimantPostCodeHelper';
-import { convertJsonArrayToTitleCase, handlePostLogic, setUserCase } from '../helpers/CaseHelpers';
-import { assignFormData, getPageContent } from '../helpers/FormHelpers';
+} from '../../helpers/AdditionalClaimantPostCodeHelper';
+import { convertJsonArrayToTitleCase, handlePostLogic, setUserCase } from '../../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../../helpers/FormHelpers';
 
 const logger = getLogger('AdditionalClaimantPostCodeSelectController');
 

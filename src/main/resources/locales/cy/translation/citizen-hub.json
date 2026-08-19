@@ -44,6 +44,7 @@
   "updated": "Wedi ei ddiweddaru",
   "readyToView": "Yn barod i’w gweld",
   "stored": "Wedi’i Storio",
+  "responseOptional": "[W] Response optional",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "submittedBannerText": "Yr amser prosesu presennol yw tua 20 diwrnod gwaith. Gall hyn gynyddu yn ystod cyfnodau prysur.",
   "tribunalRespondedP1": "Mae'r tribiwnlys wedi ymateb i ",
@@ -64,6 +65,17 @@
       "header": "Mae’r tribiwnlys wedi gwrthod y cyfan neu ran o’ch hawliad",
       "link": "Gweld yr hysbysiad gwrthod",
       "p1": "Bydd y tribiwnlys yn cau eich hawliad."
+    },
+    "consideringClaimsTogether": {
+      "banner_title": "Important",
+      "heading": "Considering your claim with others",
+      "description": "A legal officer in your case has proposed to join your claim with others to make a group claim. You can find the reasons why, and details about the other claims in the letter.",
+      "letter_link_text": "View the Considering claims together letter.",
+      "guidance_link_text": "Read our guidance about group claims.",
+      "sub_heading": "What happens next",
+      "next_steps_part_1": "You do not need to do anything. If you want to respond with reasons why you think these claims should not be considered together, or anything else, you must do this as soon as possible and by ",
+      "next_steps_part_2": " at the latest. Other parties can also respond.",
+      "objections_text": "If there are no objections after 7 days, the tribunal will contact you again to say that the case has changed to a group claim."
     },
     "respondentReceived": {
       "header": "Mae'r tribiwnlys wedi cael ymateb gan yr atebydd",
@@ -93,6 +105,7 @@
     "orderOrRequest": {
       "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
+      "multipleNotifications": "Mae’r tribiwnlys wedi anfon hysbysiadau atoch",
       "link": "Gweld yr hysbysiad",
       "respond": "Ymateb i’r Tribiwnlys"
     },

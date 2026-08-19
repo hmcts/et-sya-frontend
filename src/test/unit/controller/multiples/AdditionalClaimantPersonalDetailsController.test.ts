@@ -1,5 +1,5 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import AdditionalClaimantPersonalDetailsController from '../../../../main/controllers/multiples/AdditionalClaimantPersonalDetailsController';
+import AdditionalClaimantPersonalDetailsController from '../../../../main/controllers/multiples/et1-submission/AdditionalClaimantPersonalDetailsController';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';

@@ -44,6 +44,7 @@
   "updated": "Updated",
   "readyToView": "Ready to view",
   "stored": "Stored",
+  "responseOptional": "Response optional",
   "submittedAlert": "You have submitted your claim to the tribunal",
   "submittedBannerText": "The current processing time is approximately 20 working days. This may extend during busy periods.",
   "tribunalRespondedP1": "The tribunal has responded to ",
@@ -64,6 +65,17 @@
       "header": "The tribunal has rejected all or part of your claim",
       "link": "View the claim rejection",
       "p1": "The tribunal will close your claim."
+    },
+    "consideringClaimsTogether": {
+      "banner_title": "Important",
+      "heading": "Considering your claim with others",
+      "description": "A legal officer in your case has proposed to join your claim with others to make a group claim. You can find the reasons why, and details about the other claims in the letter.",
+      "letter_link_text": "View the Considering claims together letter.",
+      "guidance_link_text": "Read our guidance about group claims.",
+      "sub_heading": "What happens next",
+      "next_steps_part_1": "You do not need to do anything. If you want to respond with reasons why you think these claims should not be considered together, or anything else, you must do this as soon as possible and by ",
+      "next_steps_part_2": " at the latest. Other parties can also respond.",
+      "objections_text": "If there are no objections after 7 days, the tribunal will contact you again to say that the case has changed to a group claim."
     },
     "respondentReceived": {
       "header": "The tribunal has received a response from the respondent",
@@ -93,6 +105,7 @@
     "orderOrRequest": {
       "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",
+      "multipleNotifications": "The tribunal has sent you notifications",
       "link": "View the notification",
       "respond": "Respond to the tribunal"
     },
