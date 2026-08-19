@@ -49,7 +49,6 @@ export default class RepresentedClaimantEnterEmailController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = (req.session.userCase ??= {} as CaseWithId);
     userCase.representedClaimantEmailProvided = req.body?.representedClaimantEmail?.trim() ? YesOrNo.YES : YesOrNo.NO;
-    logger.info('representedClaimantEmailProvided', userCase.representedClaimantEmailProvided);
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTED_CLAIMANT_DETAILS_CHECK);
   };
 
