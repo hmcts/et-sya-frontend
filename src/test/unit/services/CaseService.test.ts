@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { clone } from 'lodash';
 
+import { UpdateCaseBody } from '../../../main/definitions/api/caseApiBody';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import {
   AgreedDocuments,
@@ -295,6 +296,51 @@ describe('update case', () => {
       JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
     );
+  });
+
+  it('should update only the about you details for a submitted case', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeName: 'Wolfie Smith',
+      representativeOrgName: 'Tooting Popular Front',
+      representativeType: 'Trade Union',
+      repAddress1: '1 Tooting Broadway',
+      repAddressTown: 'London',
+      repAddressPostcode: 'SE17 1NE',
+      claimantRepEmail: 'WSmith@tpf.com',
+      representativePhoneNumber: '0208 123 1234',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      hubLinksStatuses: new HubLinksStatuses(),
+    };
+
+    await api.updateClaimantRepAboutYou(caseItem);
+
+    const call = mockedAxios.post.mock.calls.find(([url]) => url === JavaApiUrls.UPDATE_CASE_SUBMITTED) as [
+      string,
+      UpdateCaseBody
+    ];
+    expect(call).toBeDefined();
+    const body = call[1];
+    expect(body.case_data.representativeClaimantType).toEqual(
+      expect.objectContaining({
+        name_of_representative: 'Wolfie Smith',
+        name_of_organisation: 'Tooting Popular Front',
+        representative_email_address: 'WSmith@tpf.com',
+        representative_occupation: 'Union',
+        representative_phone_number: '0208 123 1234',
+      })
+    );
+    // nothing outside the About you page is sent, so the rest of the case is left untouched
+    expect(body.case_data.claimantType).toBeUndefined();
+    expect(body.case_data.claimantIndType).toBeUndefined();
+    expect(body.case_data.respondentCollection).toBeUndefined();
+    expect(body.case_data.hubLinksStatuses).toBeUndefined();
   });
 
   it('should submit Claimant TSE application', async () => {
@@ -610,7 +656,7 @@ describe('update case from claimant actions', () => {
     };
     await api.updateHubLinksStatuses(caseItem);
 
-    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_HUB_LINKS_STATUSES);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockHubLinkStatusesRequest);
   });
 

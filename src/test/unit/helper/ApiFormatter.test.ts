@@ -42,6 +42,7 @@ import {
   mapBundlesDocs,
   parseDateFromString,
   returnPreferredTitle,
+  setClaimantRepApiFormat,
   setDocumentValues,
   toApiFormat,
   toApiFormatCreate,
@@ -1083,5 +1084,43 @@ describe('mapBundlesDocs', () => {
 
     const result = mapBundlesDocs(bundlesClaimantCollection, 'Claimant Hearing Document');
     expect(result).toEqual(undefined);
+  });
+});
+
+describe('setClaimantRepApiFormat', () => {
+  const repCase = {
+    id: '1234',
+    representativeName: 'Wolfie Smith',
+    representativeOrgName: 'Tooting Popular Front',
+    representativeType: 'Trade Union',
+    repAddress1: '1 Tooting Broadway',
+    repAddressTown: 'London',
+    repAddressPostcode: 'SE17 1NE',
+    representativePhoneNumber: '0208 123 1234',
+  } as CaseWithId;
+
+  it('should send the address entered without a country', () => {
+    const result = setClaimantRepApiFormat(repCase);
+
+    expect(result.representative_address).toEqual({
+      AddressLine1: '1 Tooting Broadway',
+      AddressLine2: undefined,
+      PostTown: 'London',
+      Country: undefined,
+      PostCode: 'SE17 1NE',
+    });
+    expect(result.representative_phone_number).toEqual('0208 123 1234');
+  });
+
+  it('should send the country when the address was picked from the postcode lookup', () => {
+    const result = setClaimantRepApiFormat({ ...repCase, repAddressCountry: 'ENGLAND' } as CaseWithId);
+
+    expect(result.representative_address.Country).toEqual('ENGLAND');
+  });
+
+  it('should not send an address when no address has been entered', () => {
+    const result = setClaimantRepApiFormat({ ...repCase, repAddress1: undefined } as CaseWithId);
+
+    expect(result.representative_address).toBeUndefined();
   });
 });

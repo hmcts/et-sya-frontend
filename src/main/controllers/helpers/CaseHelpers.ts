@@ -18,7 +18,6 @@ import localesCy from '../../resources/locales/cy/translation/common.json';
 import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
-import { isClaimantRepCaseEligibleForDraftUpdate } from './ClaimantRepAboutYouHelper';
 import {
   applyPreservedClaimantRepSessionFields,
   populateClaimantRepDetailsFromCase,
@@ -169,15 +168,6 @@ const saveClaimantRepresentativeInfoToSession = (req: AppRequest): void => {
 export const handleUpdateClaimantRepAboutYou = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
     try {
-      if (!isClaimantRepCaseEligibleForDraftUpdate(req.session.userCase)) {
-        saveClaimantRepresentativeInfoToSession(req);
-        logger.info(
-          `Saved claimant rep about you details to session for submitted case id: ${req.session.userCase.id}`
-        );
-        req.session.save();
-        return;
-      }
-
       const preserved = preserveClaimantRepSessionFields(req.session.userCase);
       const hubLinksStatuses = req.session.userCase.hubLinksStatuses;
       saveClaimantRepresentativeInfoToSession(req);

@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { convertJsonArrayToTitleCase, handlePostLogic } from './helpers/CaseHelpers';
 import {
   ensureClaimantRepCaseLoaded,
+  getRepAboutYouReturnUrl,
   handleRepAboutYouPostLogic,
   isClaimantRepAboutYouFlow,
 } from './helpers/ClaimantRepAboutYouHelper';
@@ -43,7 +44,8 @@ export default class RepresentativePostCodeSelectController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (isClaimantRepAboutYouFlow(req)) {
-      return handleRepAboutYouPostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_ADDRESS_DETAILS);
+      // The About you page holds the address fields, so the selected address is edited there
+      return handleRepAboutYouPostLogic(req, res, this.form, logger, getRepAboutYouReturnUrl(req));
     }
     await handlePostLogic(req, res, this.form, logger, PageUrls.REPRESENTATIVE_ADDRESS_DETAILS);
   };
