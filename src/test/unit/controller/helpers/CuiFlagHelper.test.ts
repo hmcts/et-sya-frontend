@@ -4,6 +4,7 @@ jest.mock('../../../../main/services/CuiService', () => ({
 
 import { buildCuiFlagDetails, mergeClaimantExternalFlags } from '../../../../main/controllers/helpers/CuiFlagHelper';
 import { CaseFlags } from '../../../../main/definitions/case';
+import type { CUIFlag, CUIFlagDetails } from '../../../../main/services/CuiService';
 
 const { mergeCUIFlagItems: mockMergeCUIFlagItems } = jest.requireMock('../../../../main/services/CuiService') as {
   mergeCUIFlagItems: jest.Mock;
@@ -102,10 +103,23 @@ describe('CuiFlagHelper', () => {
       roleOnCase: 'Existing role',
       details: [{ id: 'existing-flag' }],
     } as unknown as CaseFlags;
-    const replacementFlags = {
+    const replacementFlags: CUIFlagDetails = {
       partyName: '',
       roleOnCase: '',
-      details: [{ id: 'replacement-flag' }],
+      details: [
+        {
+          id: 'replacement-flag',
+          value: {
+            availableExternally: 'Yes' as CUIFlag['availableExternally'],
+            dateTimeCreated: '2026-06-23T13:33:58.833Z',
+            flagCode: 'RA0018',
+            hearingRelevant: 'No' as CUIFlag['hearingRelevant'],
+            name: 'Support filling in forms',
+            name_cy: '',
+            path: [],
+          },
+        },
+      ],
     };
 
     const result = mergeClaimantExternalFlags(existingFlags, replacementFlags, 'Jane Doe', 'Claimant');
