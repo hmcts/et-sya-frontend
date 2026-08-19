@@ -27,7 +27,7 @@
     },
     "cui": {
       "endpoint": "https://localhost:3100",
-      "hmctsServiceId": "ABA5"
+      "hmctsServiceId": "BHA1"
     }
   },
   "session": {
