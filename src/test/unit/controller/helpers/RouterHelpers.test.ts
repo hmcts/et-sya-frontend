@@ -43,6 +43,9 @@ describe('Router Helpers - language helpers', () => {
   it('should return the existing language url parameter format', () => {
     expect(getLanguageParam('/your-support?lng=cy')).toEqual(languages.WELSH_URL_PARAMETER);
     expect(getLanguageParam('/your-support')).toEqual(languages.ENGLISH_URL_PARAMETER);
+  });
+});
+
 describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
   it('should build transferred-case url with English language by default', () => {
     const req = mockRequest({});
