@@ -1,0 +1,61 @@
+{% extends "template.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: getErrors(form.fields)
+    }) if getErrors(form.fields).length > 0
+  }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+
+      <p class="govuk-body">{{ p1 }}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ hearingPanelBullet1 }}</li>
+        <li>{{ hearingPanelBullet2 }}</li>
+      </ul>
+
+      {% set panelGuidanceHtml %}
+        <p class="govuk-body">{{ panelGuidanceP1 }}</p>
+        <p class="govuk-body">{{ panelGuidanceP2 }}</p>
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: panelGuidanceTitle,
+        html: panelGuidanceHtml
+      }) }}
+
+      {% set presidentialGuidanceHtml %}
+        <ul class="govuk-list">
+          <li>
+            <a class="govuk-link" href="{{ presidentialGuidanceEnglandWalesUrl }}" target="_blank" rel="noreferrer noopener">{{ presidentialGuidanceEnglandWalesText }} (opens in new tab)</a>
+          </li>
+          <li>
+            <a class="govuk-link" href="{{ presidentialGuidanceScotlandUrl }}" target="_blank" rel="noreferrer noopener">{{ presidentialGuidanceScotlandText }} (opens in new tab)</a>
+          </li>
+        </ul>
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: presidentialGuidanceTitle,
+        html: presidentialGuidanceHtml
+      }) }}
+
+      <p class="govuk-body">{{ p2 }}</p>
+      <p class="govuk-body">{{ p3 }}</p>
+
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

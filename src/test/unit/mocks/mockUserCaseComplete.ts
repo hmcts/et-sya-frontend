@@ -142,6 +142,8 @@ export default {
   claimantContactPreference: EmailOrPost.EMAIL,
   claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
   claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
+  claimantHearingPanelPreference: undefined,
+  claimantHearingPanelPreferenceWhy: undefined,
   employmentAndRespondentCheck: YesOrNo.YES,
   claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
   claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
@@ -205,6 +207,7 @@ export default {
       idamId: undefined,
     },
   ],
+  dateOfLastEvent: undefined,
   et3DueDate: undefined,
   et3ResponseReceived: true,
   claimSummaryFile: {

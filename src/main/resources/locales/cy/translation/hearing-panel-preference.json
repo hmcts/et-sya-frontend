@@ -1,0 +1,31 @@
+{
+  "title": "Hoffter o ran barnwr neu banel",
+  "h1": "Hoffter o ran barnwr neu banel",
+  "legend": "Sut y mae'n well gennych fod eich achos yn cael ei wrando? (Dewisol)",
+  "p1": "Gall eich achos gael ei wrando gan:",
+  "hearingPanelBullet1": "Barnwr; neu",
+  "hearingPanelBullet2": "Barnwr gyda dau aelod nad ydynt yn gyfreithiol, a elwir yn 'banel'.",
+  "panelGuidanceTitle": "Beth yw panel?",
+  "panelGuidanceP1": "Aelodau nad ydynt yn gyfreithiol yw pobl leyg a benodir oherwydd eu profiad penodol yn y gweithle fel gweithwyr neu reolwyr. Bydd panel yn cynnwys barnwr, aelod â phrofiad o fod yn weithiwr neu'n aelod o undeb, ac aelod â phrofiad o reoli. Mae gan bob un lais cyfartal yn y penderfyniad.",
+  "panelGuidanceP2": "Barnwr fydd yn penderfynu a yw eich achos yn cael ei wrando gan farnwr neu gan banel. Wrth wneud y penderfyniad hwn, bydd y barnwr yn ystyried a yw'r achos yn cynnwys y math o broblem gyfreithiol neu ffeithiol lle gall profiad yr aelodau nad ydynt yn gyfreithiol helpu'r tribiwnlys i ddod i'w benderfyniad.",
+  "presidentialGuidanceTitle": "Mae Arweiniad y Llywyddiaeth yn egluro'r mathau o achosion lle gall y profiad hwn helpu",
+  "presidentialGuidanceEnglandWalesText": "Cyfarwyddiadau ac Arweiniad Ymarfer ar gyfer Tribiwnlysoedd Cyflogaeth (Cymru a Lloegr)",
+  "presidentialGuidanceEnglandWalesUrl": "https://www.judiciary.uk/guidance-and-resources/employment-rules-and-legislation-practice-directions/",
+  "presidentialGuidanceScotlandText": "Cyfarwyddiadau ac Arweiniad ar gyfer Tribiwnlys Cyflogaeth (Yr Alban)",
+  "presidentialGuidanceScotlandUrl": "https://www.judiciary.uk/guidance-and-resources/directions-for-employment-tribunals-scotland/",
+  "p2": "Mae gennych gyfle i ddweud a hoffech i'ch achos gael ei wrando gan farnwr neu banel. Bydd y barnwr yna'n ystyried eich hoffter.",
+  "p3": "Os byddwch yn nodi hoffter, gofynnir i chi roi rhesymau.",
+  "radioNoPreference": "Nid oes gennyf unrhyw hoffter",
+  "radioJudge": "Mae'n well gennyf fod fy nachos yn cael ei wrando gan farnwr",
+  "radioPanel": "Mae'n well gennyf fod fy nachos yn cael ei wrando gan banel sy'n cynnwys aelodau nad ydynt yn gyfreithiol",
+  "reasonLabel": "Give reason",
+  "errors": {
+    "claimantHearingPanelPreference": {
+      "required": "Dewiswch sut y mae'n well gennych fod eich achos yn cael ei wrando"
+    },
+    "claimantHearingPanelPreferenceWhy": {
+      "required": "Eglurwch pam y mae'n well gennych fod eich achos yn cael ei wrando gan farnwr neu banel",
+      "tooLong": "Rhaid i'r esboniad fod yn 500 nod neu lai"
+    }
+  }
+}

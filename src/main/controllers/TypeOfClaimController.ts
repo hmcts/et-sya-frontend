@@ -85,7 +85,7 @@ export default class TypeOfClaimController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    let redirectUrl = PageUrls.DATE_OF_LAST_EVENT.toString();
     const formData = this.form.getParsedBody(req.body);
     const typeOfClaim = formData.typeOfClaim;
     if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {

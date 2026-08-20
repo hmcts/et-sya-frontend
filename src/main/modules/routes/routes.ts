@@ -50,6 +50,7 @@ import ContactTheTribunalSelectedController from '../../controllers/ContactTheTr
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
+import DateOfLastEventController from '../../controllers/DateOfLastEventController';
 import DeleteDraftClaimController from '../../controllers/DeleteDraftClaimController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -61,6 +62,7 @@ import GeneralCorrespondenceNotificationDetailsController from '../../controller
 import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
+import HearingPanelPreferenceController from '../../controllers/HearingPanelPreferenceController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
@@ -233,6 +235,8 @@ export class Routes {
     app.post(PageUrls.TELEPHONE_NUMBER, new TelNumberController().post);
     app.get(PageUrls.VIDEO_HEARINGS, new VideoHearingsController().get);
     app.post(PageUrls.VIDEO_HEARINGS, new VideoHearingsController().post);
+    app.get(PageUrls.HEARING_PANEL_PREFERENCE, new HearingPanelPreferenceController().get);
+    app.post(PageUrls.HEARING_PANEL_PREFERENCE, new HearingPanelPreferenceController().post);
     app.get(PageUrls.CLAIM_STEPS, new StepsToMakingYourClaimController().get);
     app.get(PageUrls.CLAIM_SAVED, new ClaimSavedController().get);
     app.get(PageUrls.RETURN_TO_EXISTING, new ReturnToExistingController().get);
@@ -287,6 +291,8 @@ export class Routes {
     app.post(PageUrls.CLAIM_TYPE_DISCRIMINATION, new ClaimTypeDiscriminationController().post);
     app.get(PageUrls.CLAIM_TYPE_PAY, new ClaimTypePayController().get);
     app.post(PageUrls.CLAIM_TYPE_PAY, new ClaimTypePayController().post);
+    app.get(PageUrls.DATE_OF_LAST_EVENT, new DateOfLastEventController().get);
+    app.post(PageUrls.DATE_OF_LAST_EVENT, new DateOfLastEventController().post);
     app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, describeWhatHappenedController.get);
     app.post(
       PageUrls.DESCRIBE_WHAT_HAPPENED,

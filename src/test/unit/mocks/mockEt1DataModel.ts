@@ -9,7 +9,7 @@ import {
 } from '../../../main/definitions/case';
 import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
-import { HubLinkStatus } from '../../../main/definitions/hub';
+import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
   case_type_id: 'ET_EnglandWales',
@@ -50,6 +50,7 @@ export const mockEt1DataModelUpdate = {
     claimantRepresentedQuestion: 'Yes',
     claimantWorkAddressQuestion: 'Yes',
     claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+    hubLinksStatuses: undefined as HubLinksStatuses | undefined,
     caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'John',
@@ -89,6 +90,7 @@ export const mockEt1DataModelUpdate = {
       claimant_benefits_detail: 'Some benefits',
       claimant_employed_notice_period: '2022-08-11',
       claimant_employed_to: '2017-05-11',
+      dateOfLastEvent: null as string | null,
     },
     newEmploymentType: {
       new_job: 'Yes',
@@ -101,6 +103,8 @@ export const mockEt1DataModelUpdate = {
       reasonable_adjustments_detail: 'Adjustments detail test',
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
+      claimant_hearing_panel_preference: undefined as string,
+      claimant_hearing_panel_preference_why: undefined as string,
       contact_language: EnglishOrWelsh.ENGLISH,
       hearing_language: EnglishOrWelsh.ENGLISH,
     },
@@ -209,6 +213,7 @@ export const submittedCaseResponse = {
         claimant_benefits_detail: 'Some benefits',
         claimant_employed_notice_period: '2022-08-11',
         claimant_employed_to: '2017-05-11',
+        dateOfLastEvent: '2017-05-11',
       },
       newEmploymentType: {
         new_job: 'Yes',
@@ -221,6 +226,8 @@ export const submittedCaseResponse = {
         reasonable_adjustments_detail: 'Adjustments detail test',
         hearing_preferences: [HearingPreference.PHONE],
         hearing_assistance: 'Hearing assistance test',
+        claimant_hearing_panel_preference: undefined as string,
+        claimant_hearing_panel_preference_why: undefined as string,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: YesOrNo.YES,

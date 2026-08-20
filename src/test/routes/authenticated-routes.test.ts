@@ -1,5 +1,9 @@
 import request from 'supertest';
 
+jest.mock('../../main/modules/featureFlag/launchDarkly', () => ({
+  getFlagValue: jest.fn().mockResolvedValue(false),
+}));
+
 import { app } from '../../main/app';
 import { AuthUrls, PageUrls } from '../../main/definitions/constants';
 import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
