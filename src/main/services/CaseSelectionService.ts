@@ -54,10 +54,14 @@ export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): str
 };
 
 export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
-  const totalSections = 4;
+  const totalSections = 5;
   let sectionCount = 0;
 
   if (userCase?.personalDetailsCheck === YesOrNo.YES) {
+    sectionCount++;
+  }
+
+  if (userCase?.groupClaimsCheck === YesOrNo.YES) {
     sectionCount++;
   }
 
@@ -66,16 +70,6 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
   }
 
   if (userCase?.claimDetailsCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  const allSectionsCompleted = !!(
-    userCase?.personalDetailsCheck === YesOrNo.YES &&
-    userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
-    userCase?.claimDetailsCheck === YesOrNo.YES
-  );
-
-  if (allSectionsCompleted) {
     sectionCount++;
   }
 

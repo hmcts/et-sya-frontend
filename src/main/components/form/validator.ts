@@ -1,4 +1,8 @@
-import { ALLOWED_FILE_FORMATS, ValidationErrors } from '../../definitions/constants';
+import {
+  ALLOWED_FILE_FORMATS,
+  ALLOWED_FILE_FORMATS_ADDITIONAL_CLAIMANTS,
+  ValidationErrors,
+} from '../../definitions/constants';
 import { Logger } from '../../logger';
 import StringUtils from '../../utils/StringUtils';
 
@@ -196,6 +200,22 @@ export const hasInvalidFileFormat = (value: Express.Multer.File, logger: Logger)
   return 'invalidFileFormat';
 };
 
+export const hasInvalidFileFormatAdditionalClaimants = (value: Express.Multer.File, logger: Logger): string => {
+  if (!value || !value.originalname) {
+    return;
+  }
+
+  for (const format of ALLOWED_FILE_FORMATS_ADDITIONAL_CLAIMANTS) {
+    if (value.originalname.endsWith('.' + format)) {
+      return;
+    }
+  }
+  if (logger) {
+    logger.info('Invalid file name:' + value.originalname);
+  }
+  return 'invalidFileFormat';
+};
+
 export const isNotPdfFileType = (value: Express.Multer.File): string => {
   if (!value || !value.originalname) {
     return;
@@ -228,6 +248,19 @@ export const isValidCaseReferenceId: Validator = value => {
     return ValidationErrors.REQUIRED;
   }
   if (!(value as string).match(/^[0-9]{16}$/) && !(value as string).match(/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/)) {
+    return ValidationErrors.INVALID_VALUE;
+  }
+};
+
+export const isValidEmailAddress: Validator = value => {
+  // If there is no value (empty string, null, or undefined), consider it valid and exit early
+  if (!value || (value as string).trim() === '') {
+    return;
+  }
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!(value as string).match(emailRegex)) {
     return ValidationErrors.INVALID_VALUE;
   }
 };

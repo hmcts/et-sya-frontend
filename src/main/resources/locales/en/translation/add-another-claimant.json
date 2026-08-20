@@ -1,0 +1,19 @@
+{
+  "title": "Add another claimant to your group claim",
+  "h1": "Add another claimant to your group claim",
+  "p1": "Use this section only if you are making a claim with others.",
+  "p2": "You'll need to provide each claimant's:",
+  "bullet1": "full name",
+  "bullet2": "home or contact address",
+  "p3": "It can also help to process your group claim quicker if you can provide their email address and date of birth.",
+  "legend": "How do you want to add the other claimants?",
+  "radio1": "Enter claimants manually",
+  "radio1Hint": "add up to 5 additional claimants using this online form",
+  "radio2": "Upload a spreadsheet",
+  "radio2Hint": "We recommend this for larger amounts of claimants. We will give you a spreadsheet template to download. This template will contain columns for all the details we need. For each claimant, you can add one row and then upload the sheet into this form.",
+  "errors": {
+    "addClaimantMethod": {
+      "required": "Tell us how you want to add the other claimants"
+    }
+  }
+}

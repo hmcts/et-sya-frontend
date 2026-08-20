@@ -3,6 +3,7 @@ import {
   areDateFieldsFilledIn,
   areDates10YearsApartOrMore,
   convertDateToCaseDate,
+  isAtLeast16YearsOld,
   isDateEmpty,
   isDateInLastTenYears,
   isDateInNextTenYears,
@@ -111,4 +112,19 @@ export const StartDateFormFields = {
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateInPast(value),
+};
+
+export const AdditionalClaimantDobFormFields = {
+  classes: 'govuk-date-input',
+  type: 'date',
+  label: (l: AnyRecord): string => l.dobLabel,
+  labelHidden: false,
+  labelSize: 'm',
+  hint: (l: AnyRecord): string => l.dobHint,
+  values: DateValues,
+  validator: (value: CaseDate): DateTypes =>
+    isDateNotPartial(value) ||
+    (isDateEmpty(value) ? '' : isDateInputInvalid(value)) ||
+    isDateInPast(value) ||
+    isAtLeast16YearsOld(value),
 };

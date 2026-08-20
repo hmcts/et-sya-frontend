@@ -25,6 +25,24 @@
     "phone": "Phone",
     "neither": "Neither"
   },
+  "groupClaimsHeader": "Other people in your claim",
+  "groupClaimDetails": {
+    "claimType": "Claiming on your own or with others",
+    "single": "I’m claiming on my own",
+    "multiple": "I’m claiming with another person or other people",
+    "addAdditionalClaimantsMethod": "How do you want to add the other claimants?",
+    "manually": "Manually",
+    "spreadsheet": "Spreadsheet upload",
+    "additionalClaimants": "Additional claimants",
+    "additionalClaimant": "Additional claimant",
+    "nameLabel": "Name",
+    "dobLabel": "Date of birth",
+    "addressLabel": "Address",
+    "emailLabel": "Email address",
+    "groupRepresentative": "Do you agree to be the group claim representative?",
+    "removeClaimant": "Remove claimant",
+    "additionalClaimantDocument": "Additional claimant document"
+  },
   "contactDetails": {
     "header": "Contact details",
     "telephone": "Telephone number"

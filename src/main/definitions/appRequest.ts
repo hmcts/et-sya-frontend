@@ -40,6 +40,9 @@ export interface AppSession extends Session {
   respondentName?: string;
   csrfInitialized?: boolean;
   deletedCaseIds?: string[];
+  additionalClaimantNewFlow?: boolean;
+  additionalClaimantUploadedFileName?: string;
+  additionalClaimantsRedirectCheckAnswer?: boolean;
   caseTransferInfo?: CaseTransferInfoResponse;
 }
 
