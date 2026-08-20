@@ -33,6 +33,14 @@
   "date": "Date sent",
   "additionalInfo": "Additional information",
   "notificationSubject": "Notification Subject",
+  "notificationRequired": "Notification type",
+  "Which notification is required?": "Which notification is required?",
+  "Considering claims together": "Considering claims together",
+  "You’re now part of a group claim": "You’re now part of a group claim",
+  "You're now part of a group claim": "You're now part of a group claim",
+  "Group claims": "Group claims",
+  "Legal officer": "Legal officer",
+  "Judge": "Judge",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Tell us if you also want to upload supporting material?"

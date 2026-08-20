@@ -33,6 +33,14 @@
   "date": "Dyddiad anfon",
   "additionalInfo": "Gwybodaeth ychwanegol",
   "notificationSubject": "Testun yr Hysbysiad",
+  "notificationRequired": "[W] Notification type",
+  "Which notification is required?": "[W] Which notification is required?",
+  "Considering claims together": "[W] Considering claims together",
+  "You’re now part of a group claim": "[W] You’re now part of a group claim",
+  "You're now part of a group claim": "[W] You're now part of a group claim",
+  "Group claims": "[W] Group claims",
+  "Legal officer": "[W] Legal officer",
+  "Judge": "[W] Judge",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"

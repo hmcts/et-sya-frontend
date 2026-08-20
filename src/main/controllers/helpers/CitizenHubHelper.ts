@@ -5,6 +5,7 @@ import {
   Applicant,
   NotificationSubjects,
   PageUrls,
+  Parties,
   acknowledgementOfClaimDocTypes,
   languages,
 } from '../../definitions/constants';
@@ -139,6 +140,16 @@ export const shouldShowJudgmentReceived = (userCase: CaseWithId, hubLinksStatuse
 export const userCaseContainsGeneralCorrespondence = (notifications: SendNotificationTypeItem[]): boolean => {
   return notifications?.some(it =>
     it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
+  );
+};
+
+export const shouldShowConsideringClaimsTogetherAlert = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(
+    it =>
+      it.value?.sendNotificationGroupClaims === NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER &&
+      it.value?.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+      it.value?.notificationState !== HubLinkStatus.VIEWED &&
+      it.value?.notificationState !== HubLinkStatus.SUBMITTED
   );
 };
 

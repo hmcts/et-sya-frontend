@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
@@ -45,17 +47,34 @@ export const getTribunalOrderOrRequestDetails = (
     addSummaryRow(
       translations.notificationSubject,
       formatNotificationSubjects(item.value.sendNotificationSubject, translations)
-    ),
+    )
+  );
+
+  if (item.value.sendNotificationGroupClaims) {
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.notificationType, translations[item.value.sendNotificationGroupClaims])
+    );
+  }
+
+  respondentRequestOrOrderDetails.push(
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
     addSummaryRow(translations.sentBy, translations.tribunal)
   );
 
   if (item.value.sendNotificationCaseManagement) {
     respondentRequestOrOrderDetails.push(
-      addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement]),
+      addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement])
+    );
+  }
+
+  if (item.value.sendNotificationResponseTribunal) {
+    respondentRequestOrOrderDetails.push(
       addSummaryRow(translations.responseDue, translations[item.value.sendNotificationResponseTribunal])
     );
-    if (item.value.sendNotificationResponseTribunal.startsWith(YesOrNo.YES)) {
+    if (
+      item.value.sendNotificationResponseTribunal.startsWith(YesOrNo.YES) &&
+      item.value.sendNotificationSelectParties
+    ) {
       respondentRequestOrOrderDetails.push(
         addSummaryRow(translations.partyToRespond, translations[item.value.sendNotificationSelectParties])
       );
@@ -87,6 +106,11 @@ export const getTribunalOrderOrRequestDetails = (
     respondentRequestOrOrderDetails.push(
       addSummaryRow(translations.requestMadeBy, translations[item.value.sendNotificationRequestMadeBy]),
       addSummaryRow(translations.fullName, item.value.sendNotificationFullName)
+    );
+  } else if (item.value.sendNotificationGroupClaimsMadeBy) {
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.orderMadeBy, translations[item.value.sendNotificationGroupClaimsMadeBy]),
+      addSummaryRow(translations.fullName, item.value.sendNotificationFullName3)
     );
   }
 
@@ -150,6 +174,15 @@ function isActionableNotification(notification: SendNotificationTypeItem): boole
   if (notification.value.sendNotificationNotify === Parties.RESPONDENT_ONLY) {
     return false;
   }
+  if (isGroupClaimsNotification(notification)) {
+    if (
+      notification.value.notificationState === HubLinkStatus.VIEWED ||
+      notification.value.notificationState === HubLinkStatus.SUBMITTED ||
+      notification.value.notificationState === HubLinkStatus.STORED
+    ) {
+      return false;
+    }
+  }
   if (
     notification.value.notificationState === HubLinkStatus.NOT_VIEWED ||
     notification.value.notificationState === HubLinkStatus.NOT_STARTED_YET
@@ -164,15 +197,67 @@ function isActionableNotification(notification: SendNotificationTypeItem): boole
   );
 }
 
-export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
-  if (sendNotification.value.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)) {
+export const isGroupClaimsNotification = (sendNotification: SendNotificationTypeItem): boolean => {
+  const val = sendNotification?.value;
+  if (!val) {
     return false;
   }
-  if (sendNotification.value.notificationState === HubLinkStatus.NOT_STARTED_YET) {
+  return (
+    val.sendNotificationGroupClaims === NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER ||
+    val.sendNotificationSubject?.includes(NotificationSubjects.GROUP_CLAIMS) ||
+    val.sendNotificationSubject?.includes(NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER)
+  );
+};
+
+export const isGroupClaimsResponseExpired = (sendNotification: SendNotificationTypeItem): boolean => {
+  if (sendNotification?.value?.date) {
+    const dateSent = dayjs(sendNotification.value.date);
+    if (dateSent.isValid()) {
+      const expiryDate = dateSent.add(7, 'day');
+      return dayjs().isAfter(expiryDate, 'day');
+    }
+  }
+  return false;
+};
+
+export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
+  if (!sendNotification?.value) {
+    return false;
+  }
+  const val = sendNotification.value;
+
+  if (val.respondStoredCollection?.some(r => r.value.from === Applicant.CLAIMANT)) {
+    return false;
+  }
+
+  if (isGroupClaimsNotification(sendNotification)) {
+    if (val.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT)) {
+      return false;
+    }
+    if (val.sendNotificationResponseTribunal !== ResponseRequired.YES) {
+      return false;
+    }
+    return !isGroupClaimsResponseExpired(sendNotification);
+  }
+
+  if (val.notificationState === HubLinkStatus.NOT_STARTED_YET) {
     return true;
   }
-  return !!sendNotification.value?.respondNotificationTypeCollection?.some(
+  return !!val.respondNotificationTypeCollection?.some(
     response => response.value?.isClaimantResponseDue === YesOrNo.YES
+  );
+};
+
+export const isResponseOptionalNotification = (sendNotification: SendNotificationTypeItem): boolean => {
+  const val = sendNotification?.value;
+  if (!val) {
+    return false;
+  }
+  return (
+    isGroupClaimsNotification(sendNotification) &&
+    (val.sendNotificationGroupClaims === NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER ||
+      val.sendNotificationSubject?.includes(NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER)) &&
+    anyResponseRequired(sendNotification)
   );
 };
 
@@ -213,6 +298,8 @@ export const activateTribunalOrdersAndRequestsLink = async (
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.SUBMITTED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+  } else if (notices.some(item => isResponseOptionalNotification(item))) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.RESPONSE_OPTIONAL;
   } else if (notices.some(item => item.value.notificationState === HubLinkStatus.VIEWED)) {
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
   }

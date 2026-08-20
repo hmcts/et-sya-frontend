@@ -43,6 +43,7 @@ export const enum HubLinkStatus {
   NOT_STARTED_YET = 'notStartedYet',
   UPDATED = 'updated',
   READY_TO_VIEW = 'readyToView',
+  RESPONSE_OPTIONAL = 'responseOptional',
 }
 
 const COLORS = {
@@ -68,6 +69,7 @@ export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
   [HubLinkStatus.UPDATED, COLORS.BLUE],
   [HubLinkStatus.READY_TO_VIEW, COLORS.BLUE],
+  [HubLinkStatus.RESPONSE_OPTIONAL, COLORS.BLUE],
 ]);
 
 export const displayStatusColorMap = new Map<HubLinkStatus, string>([
@@ -76,6 +78,7 @@ export const displayStatusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.NOT_VIEWED, COLORS.RED],
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
   [HubLinkStatus.STORED, COLORS.YELLOW],
+  [HubLinkStatus.RESPONSE_OPTIONAL, COLORS.BLUE],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [

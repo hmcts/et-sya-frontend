@@ -1,7 +1,10 @@
 {% if showNotificationsBanner %}
+
   {% set htmlForOrderOrRequestReceived %}
     <h3 class="govuk-notification-banner__heading">
-      {% if order.needsResponse %}
+      {% if notificationsNotViewedCount > 1 %}
+        {{ notificationBanner.orderOrRequest.multipleNotifications }}
+      {% elif order.needsResponse %}
         {{ notificationBanner.orderOrRequest.responseRequired }}
       {% else %}
         {{ notificationBanner.orderOrRequest.noResponseRequired }}
@@ -9,7 +12,7 @@
     </h3>
 
     {% for order in notifications %}
-      {% if order.showAlert %}
+      {% if order.showAlert and order.value.sendNotificationGroupClaims !== 'Considering claims together' %}
         <p class="govuk-body">
           {% if order.needsResponse %}
             <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }} - {{ order.value.sendNotificationTitle }}</a>
@@ -19,6 +22,28 @@
         </p>
       {% endif %}
     {% endfor %}
+
+    {% if showConsideringClaimsTogetherAlert %}
+      <h4 class="govuk-heading-m">
+        {{ notificationBanner.consideringClaimsTogether.heading }}
+      </h4>
+      <p class="govuk-body">
+        {{ notificationBanner.consideringClaimsTogether.description }}
+        <a class="govuk-link" href="/multiples/guidance">{{ notificationBanner.consideringClaimsTogether.guidance_link_text }}</a>
+      </p>
+
+      {% for order in notifications %}
+        {% if order.showAlert and order.value.sendNotificationGroupClaims === 'Considering claims together' %}
+          <p class="govuk-body">
+            {% if order.needsResponse %}
+              <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }} - {{ order.value.sendNotificationTitle }}</a>
+            {% else %}
+              <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }} - {{ order.value.sendNotificationTitle }}</a>
+            {% endif %}
+          </p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   {% endset %}
 
   {{ govukNotificationBanner({

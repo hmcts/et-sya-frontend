@@ -1,6 +1,6 @@
 import { getAddressesForPostcode } from '../../../../main/address';
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import AdditionalClaimantPostCodeSelectController from '../../../../main/controllers/multiples/AdditionalClaimantPostCodeSelectController';
+import AdditionalClaimantPostCodeSelectController from '../../../../main/controllers/multiples/et1-submission/AdditionalClaimantPostCodeSelectController';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';

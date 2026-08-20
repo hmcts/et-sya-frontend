@@ -1,5 +1,5 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import SingleOrMultipleController from '../../../../main/controllers/multiples/SingleOrMultipleController';
+import SingleOrMultipleController from '../../../../main/controllers/multiples/et1-submission/SingleOrMultipleController';
 import { CaseType } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';

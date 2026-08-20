@@ -32,6 +32,7 @@ import {
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowConsideringClaimsTogetherAlert,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknowledgement,
@@ -237,6 +238,10 @@ export default class CitizenHubController {
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
       showNoLongerRepresentedNotification,
       claimantRepresentedByOrganisation,
+      showConsideringClaimsTogetherAlert: shouldShowConsideringClaimsTogetherAlert(
+        userCase?.sendNotificationCollection
+      ),
+      notificationsNotViewedCount: generalNotifications?.filter(item => item.showAlert)?.length || 0,
     });
   }
 }

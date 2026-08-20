@@ -1,22 +1,22 @@
 import { Response } from 'express';
 
-import { isValidUKPostcode } from '../../components/form/address-validator';
-import { Form } from '../../components/form/form';
-import { AdditionalClaimantCheck } from '../../decorators/AdditionalClaimantEditCheck';
-import { CaseStateCheck } from '../../decorators/CaseStateCheck';
-import { AppRequest } from '../../definitions/appRequest';
-import { AdditionalClaimant, YesOrNo } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import { FormContent, FormFields } from '../../definitions/form';
-import { saveForLaterButton, submitButton } from '../../definitions/radios';
-import { getLogger } from '../../logger';
+import { isValidUKPostcode } from '../../../components/form/address-validator';
+import { Form } from '../../../components/form/form';
+import { AdditionalClaimantCheck } from '../../../decorators/AdditionalClaimantEditCheck';
+import { CaseStateCheck } from '../../../decorators/CaseStateCheck';
+import { AppRequest } from '../../../definitions/appRequest';
+import { AdditionalClaimant, YesOrNo } from '../../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../../definitions/constants';
+import { FormContent, FormFields } from '../../../definitions/form';
+import { saveForLaterButton, submitButton } from '../../../definitions/radios';
+import { getLogger } from '../../../logger';
 import {
   getAdditionalClaimantAddressLink,
   getAddressPageHeader,
   getEnterTitle,
-} from '../helpers/AdditionalClaimantPostCodeHelper';
-import { handlePostLogic } from '../helpers/CaseHelpers';
-import { assignFormData, getPageContent } from '../helpers/FormHelpers';
+} from '../../helpers/AdditionalClaimantPostCodeHelper';
+import { handlePostLogic } from '../../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../../helpers/FormHelpers';
 
 const logger = getLogger('AdditionalClaimantPostCodeEnterController');
 const FULL_NAME_PLACEHOLDER = '[Full name of another claimant]';
