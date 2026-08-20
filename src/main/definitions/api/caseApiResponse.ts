@@ -22,7 +22,7 @@ export interface CreateCaseResponse {
 }
 
 export interface CaseApiDataResponse {
-  id: string;
+  id: string | number;
   created_date: string;
   last_modified: string;
   jurisdiction?: string;

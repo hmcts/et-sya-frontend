@@ -82,7 +82,8 @@ export function toApiFormatCreate(
 
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
   return {
-    id: fromApiCaseData.id,
+    // API/JSON may deserialize CCD case ids as numbers; keep session/redirect helpers string-safe
+    id: String(fromApiCaseData.id),
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     feeGroupReference: fromApiCaseData.case_data?.feeGroupReference,

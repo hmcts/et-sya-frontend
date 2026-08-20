@@ -26,7 +26,7 @@ mockClient.mockReturnValue(caseApi);
 const transferredCaseInfo: CaseTransferInfoResponse = {
   transferred: true,
   transferType: 'ECM',
-  originalCaseId: '20548',
+  originalCaseId: '1786637776090539',
   transferComplete: false,
 };
 
@@ -46,9 +46,9 @@ describe('CaseTransferHelper', () => {
   describe('getRequestedCaseId', () => {
     it('should return case id from query string', () => {
       const req = mockRequest({});
-      req.query = { caseId: '1234' };
+      req.query = { caseId: '1786637776090539' };
 
-      expect(getRequestedCaseId(req)).toBe('1234');
+      expect(getRequestedCaseId(req)).toBe('1786637776090539');
     });
 
     it('should return session case id when query is missing', () => {
@@ -56,16 +56,46 @@ describe('CaseTransferHelper', () => {
       req.session.caseTransferInfo = {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '5678',
+        originalCaseId: '1999888877776666',
         transferComplete: true,
       };
 
-      expect(getRequestedCaseId(req)).toBe('5678');
+      expect(getRequestedCaseId(req)).toBe('1999888877776666');
+    });
+
+    it('should stringify a numeric session case id when query is missing', () => {
+      const req = mockRequest({});
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: 1786637776090539,
+        transferComplete: true,
+      };
+
+      expect(getRequestedCaseId(req)).toBe('1786637776090539');
+    });
+
+    it('should return undefined when session case id is not digit-only', () => {
+      const req = mockRequest({});
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: 'not-a-number',
+        transferComplete: true,
+      };
+
+      expect(getRequestedCaseId(req)).toBeUndefined();
     });
 
     it('should return undefined when query case id is an array', () => {
       const req = mockRequest({});
-      req.query = { caseId: ['1234', '5678'] };
+      req.query = { caseId: ['1786637776090539', '1999888877776666'] };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1999888877776666',
+        transferComplete: true,
+      };
 
       expect(getRequestedCaseId(req)).toBeUndefined();
     });
@@ -73,6 +103,25 @@ describe('CaseTransferHelper', () => {
     it('should return undefined when query case id is blank', () => {
       const req = mockRequest({});
       req.query = { caseId: '   ' };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1999888877776666',
+        transferComplete: true,
+      };
+
+      expect(getRequestedCaseId(req)).toBeUndefined();
+    });
+
+    it('should return undefined when query case id is not numeric', () => {
+      const req = mockRequest({});
+      req.query = { caseId: 'not-a-number' };
+      req.session.caseTransferInfo = {
+        transferred: true,
+        transferType: 'ECM',
+        originalCaseId: '1999888877776666',
+        transferComplete: true,
+      };
 
       expect(getRequestedCaseId(req)).toBeUndefined();
     });
@@ -117,7 +166,7 @@ describe('CaseTransferHelper', () => {
       req.session.caseTransferInfo = {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1111',
+        originalCaseId: '1786637776090539',
         transferComplete: true,
       };
 
@@ -131,13 +180,13 @@ describe('CaseTransferHelper', () => {
       req.session.caseTransferInfo = {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1111',
+        originalCaseId: '1786637776090539',
         transferComplete: true,
       };
 
-      clearCaseTransferInfoIfStale(req, '1111');
+      clearCaseTransferInfoIfStale(req, '1786637776090539');
 
-      expect(req.session.caseTransferInfo?.originalCaseId).toBe('1111');
+      expect(req.session.caseTransferInfo?.originalCaseId).toBe('1786637776090539');
     });
   });
 
@@ -170,10 +219,10 @@ describe('CaseTransferHelper', () => {
   describe('buildTransferredCaseRedirectUrl', () => {
     it('should preserve Welsh language in redirect url', () => {
       const req = mockRequest({});
-      req.url = `${PageUrls.CITIZEN_HUB.replace(':caseId', '20548')}${languages.WELSH_URL_PARAMETER}`;
+      req.url = `${PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539')}${languages.WELSH_URL_PARAMETER}`;
 
-      expect(buildTransferredCaseRedirectUrl(req, '20548')).toBe(
-        `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
+      expect(buildTransferredCaseRedirectUrl(req, '1786637776090539')).toBe(
+        `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=1786637776090539`
       );
     });
 
@@ -191,23 +240,23 @@ describe('CaseTransferHelper', () => {
         data: {
           transferred: true,
           transferType: 'ECM',
-          originalCaseId: '20548',
+          originalCaseId: '1786637776090539',
           originalEthosCaseReference: '60000001/2022',
           transferComplete: true,
         },
       });
       const req = mockRequest({
         userCase: {
-          id: '20548',
+          id: '1786637776090539',
           firstName: 'Peter',
           lastName: 'Rabbit',
           respondents: [{ respondentName: "McGregor's Farm" }],
         },
       });
-      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
       const res = mockResponse();
 
-      const redirected = await handleTransferredCaseRedirect(req, res, '20548');
+      const redirected = await handleTransferredCaseRedirect(req, res, '1786637776090539');
 
       expect(redirected).toBe(true);
       expect(req.session.caseTransferInfo).toEqual(
@@ -218,7 +267,7 @@ describe('CaseTransferHelper', () => {
           respondentName: "McGregor's Farm",
         })
       );
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
     });
 
     it('should redirect when getUserCase failed with a 404 and transfer-info confirms transfer', async () => {
@@ -226,23 +275,23 @@ describe('CaseTransferHelper', () => {
         data: {
           transferred: true,
           transferType: 'ECM',
-          originalCaseId: '20548',
+          originalCaseId: '1786637776090539',
           transferComplete: false,
         },
       });
       const req = mockRequest({});
-      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
       const res = mockResponse();
 
       const redirected = await handleTransferredCaseRedirect(
         req,
         res,
-        '20548',
+        '1786637776090539',
         new Error('Error getting user case: Request failed with status code 404, CaseNotFoundException')
       );
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
     });
 
     it('should redirect when getUserCase failed with a 410 ECM transfer error and transfer-info confirms transfer', async () => {
@@ -250,23 +299,23 @@ describe('CaseTransferHelper', () => {
         data: {
           transferred: true,
           transferType: 'ECM',
-          originalCaseId: '20548',
+          originalCaseId: '1786637776090539',
           transferComplete: false,
         },
       });
       const req = mockRequest({});
-      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
       const res = mockResponse();
 
       const redirected = await handleTransferredCaseRedirect(
         req,
         res,
-        '20548',
+        '1786637776090539',
         new Error('Error getting user case: Request failed with status code 410, CASE_TRANSFERRED_TO_ECM')
       );
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
     });
 
     it('should not redirect when getUserCase fails with a non-transfer error', async () => {
@@ -274,18 +323,18 @@ describe('CaseTransferHelper', () => {
         data: {
           transferred: true,
           transferType: 'ECM',
-          originalCaseId: '20548',
+          originalCaseId: '1786637776090539',
           transferComplete: false,
         },
       });
       const req = mockRequest({});
-      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
       const res = mockResponse();
 
       const redirected = await handleTransferredCaseRedirect(
         req,
         res,
-        '20548',
+        '1786637776090539',
         new Error('Error getting user case: Request failed with status code 500')
       );
 
@@ -301,7 +350,7 @@ describe('CaseTransferHelper', () => {
       const req = mockRequest({});
       const res = mockResponse();
 
-      const redirected = await handleTransferredCaseRedirect(req, res, '20548');
+      const redirected = await handleTransferredCaseRedirect(req, res, '1786637776090539');
 
       expect(redirected).toBe(false);
       expect(res.redirect).not.toHaveBeenCalled();
@@ -321,7 +370,7 @@ describe('CaseTransferHelper', () => {
       const redirected = await handleTransferredCaseRedirect(
         req,
         res,
-        '20548',
+        '1786637776090539',
         new Error('Error getting user case: Request failed with status code 404, CaseNotFoundException')
       );
 
@@ -334,14 +383,14 @@ describe('CaseTransferHelper', () => {
         data: {
           transferred: true,
           transferType: 'ECM',
-          originalCaseId: '99999',
+          originalCaseId: '1999888877776666',
           transferComplete: false,
         },
       });
       const req = mockRequest({});
       const res = mockResponse();
 
-      const redirected = await handleTransferredCaseRedirect(req, res, '20548');
+      const redirected = await handleTransferredCaseRedirect(req, res, '1786637776090539');
 
       expect(redirected).toBe(false);
       expect(res.redirect).not.toHaveBeenCalled();
@@ -349,33 +398,71 @@ describe('CaseTransferHelper', () => {
   });
 
   describe('saveSessionAndRedirectToTransferredCase', () => {
-    it('should still redirect when session save fails', async () => {
+    it('should redirect to claimant applications when caseId is not digit-only', async () => {
       const req = mockRequest({});
-      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
+      const res = mockResponse();
+
+      const redirected = await saveSessionAndRedirectToTransferredCase(req, res, 'not-a-number', transferredCaseInfo);
+
+      expect(redirected).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+      expect(req.session.save).not.toHaveBeenCalled();
+    });
+
+    it('should redirect to transferred case when session save succeeds', async () => {
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
+      const res = mockResponse();
+
+      const redirected = await saveSessionAndRedirectToTransferredCase(
+        req,
+        res,
+        '1786637776090539',
+        transferredCaseInfo
+      );
+
+      expect(redirected).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
+    });
+
+    it('should still redirect to transferred case with caseId when session save fails', async () => {
+      const req = mockRequest({});
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
       req.session.save = jest.fn((done?: (err?: Error) => void) => {
         done?.(new Error('session save failed'));
         return req.session;
       });
       const res = mockResponse();
 
-      const redirected = await saveSessionAndRedirectToTransferredCase(req, res, '20548', transferredCaseInfo);
+      const redirected = await saveSessionAndRedirectToTransferredCase(
+        req,
+        res,
+        '1786637776090539',
+        transferredCaseInfo
+      );
 
       expect(redirected).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
     });
 
-    it('should still redirect when session save times out', async () => {
+    it('should still redirect to transferred case with caseId when session save times out', async () => {
       jest.useFakeTimers();
       const req = mockRequest({});
-      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548');
+      req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
       req.session.save = jest.fn();
       const res = mockResponse();
 
-      const redirectPromise = saveSessionAndRedirectToTransferredCase(req, res, '20548', transferredCaseInfo);
+      const redirectPromise = saveSessionAndRedirectToTransferredCase(
+        req,
+        res,
+        '1786637776090539',
+        transferredCaseInfo
+      );
       jest.advanceTimersByTime(10000);
 
       await expect(redirectPromise).resolves.toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=20548`);
+      expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
       jest.useRealTimers();
     });
   });
