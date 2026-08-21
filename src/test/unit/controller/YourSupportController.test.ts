@@ -40,6 +40,15 @@ const submittedConfirmationTranslations = {
   p: 'The tribunal will review your support request.',
 };
 
+const getSupportFlag = () => ({
+  id: 'support-flag-id',
+  value: {
+    name: 'Support',
+    flagCode: 'RA0001',
+    status: 'Active',
+  },
+});
+
 describe('Your Support Controller', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -348,7 +357,7 @@ describe('Your Support Controller', () => {
     const claimantExternalFlags: CaseFlags = {
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
-      details: [],
+      details: [getSupportFlag()],
     };
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
@@ -383,7 +392,7 @@ describe('Your Support Controller', () => {
     const claimantExternalFlags: CaseFlags = {
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
-      details: [],
+      details: [getSupportFlag()],
     };
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
@@ -414,7 +423,7 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
   });
 
-  it('should keep existing flags when CUI returns no replacement details', async () => {
+  it('should redirect back without saving when a submitted CUI callback has no returned flag changes', async () => {
     const existingFlags: CaseFlags = {
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
@@ -438,6 +447,10 @@ describe('Your Support Controller', () => {
         roleOnCase: 'Claimant',
         details: [],
       },
+      flagsAsSupplied: {
+        roleOnCase: 'Claimant',
+        details: [],
+      },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
 
@@ -446,7 +459,10 @@ describe('Your Support Controller', () => {
       userCase: {
         claimantExternalFlags: existingFlags,
         id: '1234',
-        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        state: CaseState.SUBMITTED,
+      },
+      session: {
+        returnUrl: PageUrls.CHECK_ANSWERS,
       },
     });
     req.params = { id: 'journey-id' };
@@ -456,8 +472,137 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.userCase.claimantExternalFlags?.details).toEqual(existingFlags.details);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(req.session.returnUrl).toBeUndefined();
+  });
+
+  it('should save when only flags as supplied has details', async () => {
+    const existingFlag = {
+      id: 'existing-flag-id',
+      value: {
+        name: 'Support filling in forms',
+        flagCode: 'RA0018',
+        status: 'Active',
+      },
+    };
+    const modifiedExistingFlag = {
+      ...existingFlag,
+      value: {
+        ...existingFlag.value,
+        status: 'Inactive',
+        flagUpdateComment: 'Updated by CUI',
+      },
+    };
+    const existingFlags: CaseFlags = {
+      partyName: 'Jane Doe',
+      roleOnCase: 'Claimant',
+      details: [existingFlag],
+    };
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockResolvedValue({
+      action: 'submit',
+      correlationId: '1234',
+      replacementFlags: {
+        roleOnCase: 'Claimant',
+        details: [],
+      },
+      flagsAsSupplied: {
+        partyName: 'Jane Doe',
+        roleOnCase: 'Claimant',
+        details: [modifiedExistingFlag],
+      },
+    });
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+
+    const controller = new YourSupportController({ getOneTimeToken, getToken });
+    const req = mockRequest({
+      userCase: {
+        claimantExternalFlags: existingFlags,
+        id: '1234',
+        state: CaseState.SUBMITTED,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await controller.callback(req, res);
+
+    expect(handleUpdateSubmittedCaseFlagsMock).toHaveBeenCalledWith(req, expect.anything());
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([modifiedExistingFlag]);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
+  });
+
+  it('should save supplied flag changes with replacement flags', async () => {
+    const existingFlag = {
+      id: 'existing-flag-id',
+      value: {
+        name: 'Support filling in forms',
+        flagCode: 'RA0018',
+        status: 'Active',
+      },
+    };
+    const modifiedExistingFlag = {
+      ...existingFlag,
+      value: {
+        ...existingFlag.value,
+        status: 'Inactive',
+        flagUpdateComment: 'Updated by CUI',
+      },
+    };
+    const newFlag = {
+      value: {
+        name: 'Screen reader support',
+        flagCode: 'RA0042',
+        status: 'Active',
+      },
+    };
+    const existingFlags: CaseFlags = {
+      partyName: 'Jane Doe',
+      roleOnCase: 'Claimant',
+      details: [existingFlag],
+    };
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockResolvedValue({
+      action: 'submit',
+      correlationId: '1234',
+      replacementFlags: {
+        partyName: 'Jane Doe',
+        roleOnCase: 'Claimant',
+        details: [newFlag],
+      },
+      flagsAsSupplied: {
+        partyName: 'Jane Doe',
+        roleOnCase: 'Claimant',
+        details: [modifiedExistingFlag],
+      },
+    });
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+
+    const controller = new YourSupportController({ getOneTimeToken, getToken });
+    const req = mockRequest({
+      userCase: {
+        claimantExternalFlags: existingFlags,
+        id: '1234',
+        state: CaseState.SUBMITTED,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await controller.callback(req, res);
+
+    expect(handleUpdateSubmittedCaseFlagsMock).toHaveBeenCalledWith(req, expect.anything());
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([modifiedExistingFlag, newFlag]);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
   });
 
   it('should append replacement flags without overwriting existing flag nodes', async () => {
@@ -570,6 +715,10 @@ describe('Your Support Controller', () => {
     const getJourneyData = jest.fn().mockResolvedValue({
       action: 'cancel',
       correlationId: '1234',
+      replacementFlags: {
+        roleOnCase: 'Claimant',
+        details: [getSupportFlag()],
+      },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
 
@@ -600,7 +749,7 @@ describe('Your Support Controller', () => {
       correlationId: 'different-case-id',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
@@ -622,7 +771,7 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
   });
 
-  it('should redirect home when a submitted CUI journey has no replacement flags', async () => {
+  it('should redirect back without saving when a submitted CUI journey has no replacement flags', async () => {
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
     const getJourneyData = jest.fn().mockResolvedValue({
@@ -636,7 +785,7 @@ describe('Your Support Controller', () => {
     const req = mockRequest({
       userCase: {
         id: '1234',
-        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        state: CaseState.SUBMITTED,
       },
     });
     req.params = { id: 'journey-id' };
@@ -646,7 +795,9 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
   });
 
   it('should redirect home when replacement flags cannot be saved to a draft case', async () => {
@@ -660,7 +811,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
@@ -734,7 +885,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
@@ -758,7 +909,7 @@ describe('Your Support Controller', () => {
     expect(req.session.userCase.claimantExternalFlags).toEqual({
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
-      details: [],
+      details: [getSupportFlag()],
     });
   });
 
@@ -770,7 +921,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
@@ -807,7 +958,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
@@ -847,7 +998,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
@@ -877,7 +1028,7 @@ describe('Your Support Controller', () => {
       correlationId: '1234',
       replacementFlags: {
         roleOnCase: 'Claimant',
-        details: [],
+        details: [getSupportFlag()],
       },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);

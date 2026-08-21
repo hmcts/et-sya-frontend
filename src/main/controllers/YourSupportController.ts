@@ -135,7 +135,7 @@ export default class YourSupportController {
       const result = await this.getCuiJourneyData(req);
       this.validateJourneyCorrelationId(req, result);
 
-      if (!this.isSubmittedJourney(result)) {
+      if (!this.isSubmittedJourney(result) || !this.hasChange(result)) {
         logger.info(
           `CUI journey completed with action "${result.action}", redirecting back to case page without updating flags`
         );
@@ -255,12 +255,26 @@ export default class YourSupportController {
     return result.action === CUIActions.SUBMIT;
   }
 
-  private async saveSubmittedJourney(req: AppRequest, result: CUIJourneyData): Promise<void> {
-    if (result.replacementFlags === undefined || result.replacementFlags === null) {
-      throw new Error('CUI journey completed without replacement flags');
+  private hasChange(result: CUIJourneyData): boolean {
+    if (result.replacementFlags?.details?.length) {
+      return true;
     }
 
-    this.setReplacementFlags(req, result.replacementFlags);
+    return !!this.getFlagsAsSupplied(result)?.details?.length;
+  }
+
+  private async saveSubmittedJourney(req: AppRequest, result: CUIJourneyData): Promise<void> {
+    const flagsAsSupplied = this.getFlagsAsSupplied(result);
+    const replacementFlags = result.replacementFlags;
+
+    if (flagsAsSupplied?.details?.length) {
+      this.setReplacementFlags(req, flagsAsSupplied);
+    }
+
+    if (replacementFlags?.details?.length) {
+      this.setReplacementFlags(req, replacementFlags);
+    }
+
     if (this.isDraftCase(req)) {
       await handleUpdateDraftCase(req, logger);
     } else {
@@ -270,6 +284,10 @@ export default class YourSupportController {
     if (this.isDraftCase(req) && req.session.userCase?.updateDraftCaseError) {
       throw new Error('Failed to save CUI replacement flags');
     }
+  }
+
+  private getFlagsAsSupplied(result: CUIJourneyData): CUIFlagDetails | undefined {
+    return (result as AnyRecord).flagsAsSupplied as CUIFlagDetails | undefined;
   }
 
   private setReplacementFlags(req: AppRequest, replacementFlags: CUIFlagDetails): void {
