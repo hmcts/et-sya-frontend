@@ -96,6 +96,18 @@ export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logg
   }
 };
 
+export const handleUpdateSubmittedCaseFlags = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    const response = await getCaseApi(req.session.user?.accessToken).updateSubmittedCaseFlags(req.session.userCase);
+    logger.info(`Updated submitted case flags for case id: ${req.session.userCase.id}`);
+    req.session.userCase = fromApiFormat(response.data);
+    req.session.save();
+  } catch (error) {
+    logger.error(`Failed to update submitted case flags ${req.session.userCase.id}: ${error.message}`);
+    throw error;
+  }
+};
+
 export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
     await getCaseApi(req.session.user?.accessToken).submitClaimantTse(req.session.userCase);

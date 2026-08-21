@@ -64,7 +64,7 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
 const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.reasonableAdjustments) {
     case YesOrNo.YES:
-      return translations.oesYesOrNo.yes + ', ' + userCase.reasonableAdjustmentsDetail;
+      return translations.oesYesOrNo.yes;
     case YesOrNo.NO:
       return translations.oesYesOrNo.no;
     default:
@@ -177,7 +177,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
       translations.personalDetails.disability,
       getTranslationsReasonableAdjustments(userCase, translations),
       createChangeAction(
-        PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+        PageUrls.YOUR_SUPPORT + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
         translations.personalDetails.disability
       )

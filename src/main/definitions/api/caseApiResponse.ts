@@ -1,5 +1,5 @@
 import { OrganisationPolicy } from '../OrganisationPolicy';
-import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
+import { CaseFlags, CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
@@ -81,6 +81,9 @@ export interface CaseData {
   representativeClaimantType?: ClaimantRepresentative;
   claimantRepresentativeRemoved?: YesOrNo;
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
+  caseFlags?: CaseFlags;
+  claimantFlags?: CaseFlags;
+  claimantExternalFlags?: CaseFlags;
 }
 
 export type HearingBundleType = {

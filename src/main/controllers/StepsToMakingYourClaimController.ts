@@ -14,9 +14,10 @@ import { getCaseApi } from '../services/CaseService';
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { addParameterToUrl, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StepsToMakingYourClaimController');
+const YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS: keyof typeof PageUrls = 'CLAIM_STEPS';
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -65,6 +66,18 @@ export default class StepsToMakingYourClaimController {
             url: setUrlLanguage(req, PageUrls.UPDATE_PREFERENCES.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link3Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimantContactPreference),
+          },
+          {
+            url: addParameterToUrl(
+              setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),
+              `redirect=${YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS}`
+            ),
+            linkTxt: (l: AnyRecord): string => l.section1.link4Text,
+            status: (): string =>
+              getSectionStatus(
+                userCase?.personalDetailsCheck,
+                userCase?.reasonableAdjustments || userCase?.claimantExternalFlags?.details?.length
+              ),
           },
         ],
       },

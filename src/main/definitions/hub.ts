@@ -9,6 +9,7 @@ export enum HubLinkNames {
   TribunalOrders = 'tribunalOrders',
   TribunalJudgements = 'tribunalJudgements',
   Documents = 'documents',
+  YourSupport = 'yourSupport',
 }
 
 export class HubLinksStatuses {
@@ -22,6 +23,8 @@ export class HubLinksStatuses {
         this[name] = HubLinkStatus.OPTIONAL;
       } else if (name === HubLinkNames.Documents) {
         this[name] = HubLinkStatus.READY_TO_VIEW;
+      } else if (name === HubLinkNames.YourSupport) {
+        this[name] = HubLinkStatus.OPTIONAL;
       } else {
         this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
       }
@@ -79,7 +82,7 @@ export const displayStatusColorMap = new Map<HubLinkStatus, string>([
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
-  [HubLinkNames.Et1ClaimForm],
+  [HubLinkNames.Et1ClaimForm, HubLinkNames.YourSupport],
   [HubLinkNames.RespondentResponse, HubLinkNames.ViewRespondentContactDetails],
   [HubLinkNames.HearingDetails],
   [HubLinkNames.RequestsAndApplications, HubLinkNames.RespondentApplications, HubLinkNames.ContactTribunal],

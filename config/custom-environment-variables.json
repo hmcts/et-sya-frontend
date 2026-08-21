@@ -1,7 +1,10 @@
 {
-    "services": {
-        "s2s": {
-            "url": "S2S_URL"
-        }
+  "services": {
+    "s2s": {
+      "url": "S2S_URL"
+    },
+    "cui": {
+      "endpoint": "CUI_URL"
     }
+  }
 }
