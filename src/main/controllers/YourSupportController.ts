@@ -34,6 +34,7 @@ const YOUR_SUPPORT_CONFIRMATION_TEMPLATE = 'your-support-confirmation';
 const YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE = 'your-support-submitted-confirmation';
 const YOUR_SUPPORT_FIELD = 'reasonableAdjustments';
 const YOUR_SUPPORT_REDIRECT_ERROR = 'yourSupportRedirect';
+const YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS: keyof typeof PageUrls = 'CLAIM_STEPS';
 
 const formatError = (error: unknown): string => {
   if (error instanceof Error) {
@@ -73,6 +74,8 @@ export default class YourSupportController {
       res.redirect(this.getFallbackUrl(req));
       return;
     }
+
+    this.setReturnUrlFromQuery(req);
 
     const content = getPageContent(req, this.yourSupportContent, [
       TranslationKeys.COMMON,
@@ -152,7 +155,7 @@ export default class YourSupportController {
   };
 
   public confirmation = async (req: AppRequest, res: Response): Promise<void> => {
-    const link = this.getExitUrl(req);
+    const link = this.getExitUrl(req, true);
     this.renderConfirmation(
       req,
       res,
@@ -168,7 +171,7 @@ export default class YourSupportController {
       res,
       TranslationKeys.YOUR_SUPPORT_SUBMITTED_CONFIRMATION,
       YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE,
-      this.getExitUrl(req)
+      this.getExitUrl(req, true)
     );
   };
 
@@ -213,6 +216,12 @@ export default class YourSupportController {
   private getExistingFlags(req: AppRequest): CUIFlagDetails {
     const userCase = req.session?.userCase;
     return buildCuiFlagDetails(userCase?.claimantExternalFlags, this.getPartyName(req), this.getRoleOnCase(req));
+  }
+
+  private setReturnUrlFromQuery(req: AppRequest): void {
+    if (this.isDraftCase(req) && String(req.query?.redirect ?? '') === YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS) {
+      req.session.returnUrl = setUrlLanguage(req, PageUrls[YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS]);
+    }
   }
 
   private getPartyName(req: AppRequest): string {

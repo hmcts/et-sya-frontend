@@ -6,7 +6,7 @@ import StepsToMakingYourClaimController from '../../../main/controllers/StepsToM
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
 import * as cacheService from '../../../main/services/CacheService';
 import * as caseService from '../../../main/services/CaseService';
@@ -49,6 +49,29 @@ describe('Steps to Making your claim Controller', () => {
     const request = mockRequest({ session: mockSession([TypesOfClaim.PAY_RELATED_CLAIM], [], []) });
     stepsToMakingYourClaimController.get(request, response);
     expect(request.session.userCase.typeOfClaim).toEqual([TypesOfClaim.PAY_RELATED_CLAIM]);
+  });
+
+  it('should link to your support with a return marker for claim steps', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
+
+    await stepsToMakingYourClaimController.get(request, response);
+
+    const renderData = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderData.sections[0].links[3].url).toBe(`${PageUrls.YOUR_SUPPORT}?redirect=CLAIM_STEPS`);
+  });
+
+  it('should preserve the language when linking to your support from claim steps', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
+    request.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
+
+    await stepsToMakingYourClaimController.get(request, response);
+
+    const renderData = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderData.sections[0].links[3].url).toBe(
+      `${PageUrls.YOUR_SUPPORT}${languages.WELSH_URL_PARAMETER}&redirect=CLAIM_STEPS`
+    );
   });
 
   it('should create new case, if no case id exists', async () => {

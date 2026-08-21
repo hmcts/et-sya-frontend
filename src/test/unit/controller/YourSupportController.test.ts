@@ -72,6 +72,47 @@ describe('Your Support Controller', () => {
     );
   });
 
+  it('should set the return url when your support is opened from claim steps', async () => {
+    const controller = new YourSupportController();
+    const req = mockRequest({
+      userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+    });
+    req.query = { redirect: 'CLAIM_STEPS' };
+    (req as any).t = jest.fn().mockReturnValue(yourSupportTranslations);
+    const res = mockResponse();
+
+    await controller.get(req, res);
+
+    expect(req.session.returnUrl).toBe(PageUrls.CLAIM_STEPS);
+    expect(res.render).toHaveBeenCalledWith(
+      'your-support',
+      expect.objectContaining({
+        cancelLink: PageUrls.CLAIM_STEPS,
+      })
+    );
+  });
+
+  it('should preserve language in the return url when your support is opened from claim steps', async () => {
+    const controller = new YourSupportController();
+    const req = mockRequest({
+      userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+    });
+    req.query = { redirect: 'CLAIM_STEPS' };
+    req.url = PageUrls.YOUR_SUPPORT + languages.WELSH_URL_PARAMETER;
+    (req as any).t = jest.fn().mockReturnValue(yourSupportTranslations);
+    const res = mockResponse();
+
+    await controller.get(req, res);
+
+    expect(req.session.returnUrl).toBe(PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER);
+    expect(res.render).toHaveBeenCalledWith(
+      'your-support',
+      expect.objectContaining({
+        cancelLink: PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER,
+      })
+    );
+  });
+
   it('should render the submitted support page without the no support option', async () => {
     const controller = new YourSupportController();
     const req = mockRequest({
@@ -853,6 +894,31 @@ describe('Your Support Controller', () => {
         link: PageUrls.PERSONAL_DETAILS_CHECK,
       })
     );
+  });
+
+  it('should render the draft support confirmation page with the claim steps return url', async () => {
+    const controller = new YourSupportController();
+    const req = mockRequest({
+      session: {
+        returnUrl: PageUrls.CLAIM_STEPS,
+      },
+      userCase: {
+        id: '1234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      },
+    });
+    (req as any).t = jest.fn().mockReturnValue(confirmationTranslations);
+    const res = mockResponse();
+
+    await controller.confirmation(req, res);
+
+    expect(res.render).toHaveBeenCalledWith(
+      'your-support-confirmation',
+      expect.objectContaining({
+        link: PageUrls.CLAIM_STEPS,
+      })
+    );
+    expect(req.session.returnUrl).toBeUndefined();
   });
 
   it('should render the submitted support confirmation page', async () => {
