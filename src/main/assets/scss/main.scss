@@ -20,7 +20,7 @@
 
 $govuk-grey: #b1b4b6;
 $govuk-blue: #1d70b8;
-$inset_blue_background: #d2e2f0;
+$inset-blue-background: #d2e2f0;
 $lightgrey-panel: #d3d3d3;
 
 .govuk-phase-banner__text {
@@ -242,7 +242,7 @@ $lightgrey-panel: #d3d3d3;
 // ==========================================================================
 
 .inset-text-blue {
-  background-color: $inset_blue_background;
+  background-color: $inset-blue-background;
   border-left-color: var(--govuk-brand-colour, $govuk-blue);
 }
 
