@@ -113,7 +113,7 @@
     "orderOrRequest": {
       "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
-      "multipleNotifications": "Mae’r tribiwnlys wedi anfon hysbysiadau atoch",
+      "multipleNotifications": "[W] The tribunal has sent you notifications",
       "link": "Gweld yr hysbysiad",
       "respond": "Ymateb i’r Tribiwnlys"
     },
