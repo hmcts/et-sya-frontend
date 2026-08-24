@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import dayjs from 'dayjs';
 
 import { getSendNotifications } from '../../../../main/controllers/helpers/TribunalOrderOrRequestsHelper';
 import { HubLinkStatus } from '../../../../main/definitions/hub';
@@ -212,7 +213,7 @@ describe('Tribunal Notifications Helper', () => {
         {
           id: 'group-claim-1',
           value: {
-            date: '15 August 2026',
+            date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
             sendNotificationTitle: 'Considering claims together',
             sendNotificationGroupClaims: 'Considering claims together',
             sendNotificationResponseTribunal: 'Yes - view document for details',
@@ -232,7 +233,7 @@ describe('Tribunal Notifications Helper', () => {
         {
           id: 'group-claim-1',
           value: {
-            date: '1 August 2026',
+            date: dayjs().subtract(10, 'day').format('D MMMM YYYY'),
             sendNotificationTitle: 'Considering claims together',
             sendNotificationGroupClaims: 'Considering claims together',
             sendNotificationResponseTribunal: 'Yes - view document for details',

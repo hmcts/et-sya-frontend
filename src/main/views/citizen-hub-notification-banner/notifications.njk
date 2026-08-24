@@ -12,7 +12,7 @@
     </h3>
 
     {% for order in notifications %}
-      {% if order.showAlert and order.value.sendNotificationGroupClaims !== 'Considering claims together' %}
+      {% if order.showAlert and not order.isConsideringClaimsTogether %}
         <p class="govuk-body">
           {% if order.needsResponse %}
             <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }} - {{ order.value.sendNotificationTitle }}</a>
@@ -29,11 +29,11 @@
       </h4>
       <p class="govuk-body">
         {{ notificationBanner.consideringClaimsTogether.description }}
-        <a class="govuk-link" href="/multiples/guidance">{{ notificationBanner.consideringClaimsTogether.guidance_link_text }}</a>
+        <a class="govuk-link" href="{{ notificationBanner.guidance_link_url + languageParam }}">{{ notificationBanner.guidance_link_text }}</a>
       </p>
 
       {% for order in notifications %}
-        {% if order.showAlert and order.value.sendNotificationGroupClaims === 'Considering claims together' %}
+        {% if order.showAlert and order.isConsideringClaimsTogether %}
           <p class="govuk-body">
             {% if order.needsResponse %}
               <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }} - {{ order.value.sendNotificationTitle }}</a>

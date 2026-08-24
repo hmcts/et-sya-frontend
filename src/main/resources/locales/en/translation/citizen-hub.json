@@ -66,16 +66,24 @@
       "link": "View the claim rejection",
       "p1": "The tribunal will close your claim."
     },
+    "guidance_link_url": "/multiples/guidance",
+    "guidance_link_text": "Read our guidance about group claims.",
     "consideringClaimsTogether": {
       "banner_title": "Important",
       "heading": "Considering your claim with others",
       "description": "A legal officer in your case has proposed to join your claim with others to make a group claim. You can find the reasons why, and details about the other claims in the letter.",
       "letter_link_text": "View the Considering claims together letter.",
-      "guidance_link_text": "Read our guidance about group claims.",
       "sub_heading": "What happens next",
       "next_steps_part_1": "You do not need to do anything. If you want to respond with reasons why you think these claims should not be considered together, or anything else, you must do this as soon as possible and by ",
       "next_steps_part_2": " at the latest. Other parties can also respond.",
       "objections_text": "If there are no objections after 7 days, the tribunal will contact you again to say that the case has changed to a group claim."
+    },
+    "partOfGroupClaim": {
+      "banner_title": "Important",
+      "heading": "Your claim has changed to a group claim",
+      "description": "The tribunal has ordered that your claim should be considered with others as it includes common or similar issues of fact and law.",
+      "sub_heading": "What happens next",
+      "next_steps": "The case will progress as a group claim. The tribunal will contact you when the group claim is listed for a hearing."
     },
     "respondentReceived": {
       "header": "The tribunal has received a response from the respondent",
@@ -157,6 +165,21 @@
     "stayed": "Your individual claim is stayed. The group claim will progress. You will be notified of the progress of the group claim.",
     "nonLead": "You will be notified of the progress of the group claim.",
     "viewClaim": "View the group claim"
+  },
+  "groupClaims": {
+    "inset": {
+      "header": "You are in a group claim",
+      "leadHeader": "You are the lead case in a group claim",
+      "p1": "The group claim will progress and you can see updates here in your case overview.",
+      "leadP1": "Your case is designated the lead case in a group claim. You can see updates here in your case overview and you will receive notifications on behalf of your group.",
+      "subHeading1": "Group updates",
+      "p2": "Go to 'Group claim requests and applications' to see communication from other parties.",
+      "p3": "Some features may not be available until there are updates to the case. You can still access any previous orders and documents.",
+      "subHeading2": "Guidance",
+      "p4": "Read our ",
+      "p4Url": "/multiples/guidance",
+      "p4UrlText": "guidance about group claims."
+    }
   },
   "Change personal details": "change personal details",
   "Claimant not complied": "tell the tribunal the claimant has not complied",

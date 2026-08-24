@@ -149,6 +149,7 @@ export const setNotificationBannerData = (
 ): SendNotificationTypeItem[] => {
   if (notifications?.length) {
     notifications.forEach(item => {
+      item.isConsideringClaimsTogether = isConsideringClaimsTogether(item);
       const actionableNotification = isActionableNotification(item);
       if (!actionableNotification) {
         item.showAlert = false;
@@ -197,15 +198,25 @@ function isActionableNotification(notification: SendNotificationTypeItem): boole
   );
 }
 
-export const isGroupClaimsNotification = (sendNotification: SendNotificationTypeItem): boolean => {
+export const isConsideringClaimsTogether = (sendNotification: SendNotificationTypeItem): boolean => {
   const val = sendNotification?.value;
   if (!val) {
     return false;
   }
   return (
     val.sendNotificationGroupClaims === NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER ||
-    val.sendNotificationSubject?.includes(NotificationSubjects.GROUP_CLAIMS) ||
     val.sendNotificationSubject?.includes(NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER)
+  );
+};
+
+export const isGroupClaimsNotification = (sendNotification: SendNotificationTypeItem): boolean => {
+  const val = sendNotification?.value;
+  if (!val) {
+    return false;
+  }
+  return (
+    isConsideringClaimsTogether(sendNotification) ||
+    val.sendNotificationSubject?.includes(NotificationSubjects.GROUP_CLAIMS)
   );
 };
 
@@ -255,8 +266,7 @@ export const isResponseOptionalNotification = (sendNotification: SendNotificatio
   }
   return (
     isGroupClaimsNotification(sendNotification) &&
-    (val.sendNotificationGroupClaims === NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER ||
-      val.sendNotificationSubject?.includes(NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER)) &&
+    isConsideringClaimsTogether(sendNotification) &&
     anyResponseRequired(sendNotification)
   );
 };

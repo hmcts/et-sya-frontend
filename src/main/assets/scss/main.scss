@@ -236,6 +236,15 @@ $lightgrey-panel: #d3d3d3;
   text-transform: none;
 }
 
+// ==========================================================================
+// #BLUE INSET TEXT
+// ==========================================================================
+
+.inset-text-blue {
+  border-left-color: var(--govuk-brand-colour, #1d70b8);
+  background-color: #d2e2f0;
+}
+
 @media (max-width: 48.0625em) {
   .scrollableTable {
     .govuk-table {

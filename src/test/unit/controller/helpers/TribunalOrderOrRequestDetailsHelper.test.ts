@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import {
   activateTribunalOrdersAndRequestsLink,
   anyResponseRequired,
@@ -5,6 +7,7 @@ import {
   getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
+  isConsideringClaimsTogether,
   isGroupClaimsResponseExpired,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
@@ -486,7 +489,7 @@ describe('Tribunal order or request Details helper', () => {
       const userCase = { ...mockUserCaseWithCitizenHubLinks };
       const notificationGroupClaim = {
         value: {
-          date: '15 August 2026',
+          date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
           sendNotificationGroupClaims: 'Considering claims together',
           sendNotificationResponseTribunal: ResponseRequired.YES,
           notificationState: HubLinkStatus.VIEWED,
@@ -846,7 +849,7 @@ describe('Tribunal order or request Details helper', () => {
           sendNotificationGroupClaims: 'Considering claims together',
           sendNotificationResponseTribunal: 'Yes - view document for details',
           notificationState: 'viewed',
-          date: '13 August 2026',
+          date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
         },
       };
       expect(anyResponseRequired(item)).toBe(true);
@@ -859,7 +862,7 @@ describe('Tribunal order or request Details helper', () => {
           sendNotificationGroupClaims: 'Considering claims together',
           sendNotificationResponseTribunal: 'Yes - view document for details',
           notificationState: 'viewed',
-          date: '1 August 2026',
+          date: dayjs().subtract(10, 'day').format('D MMMM YYYY'),
         },
       };
       expect(anyResponseRequired(item)).toBe(false);
@@ -871,7 +874,7 @@ describe('Tribunal order or request Details helper', () => {
       const item = {
         id: '1',
         value: {
-          date: '15 August 2026',
+          date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
         },
       };
       expect(isGroupClaimsResponseExpired(item)).toBe(false);
@@ -881,7 +884,7 @@ describe('Tribunal order or request Details helper', () => {
       const item = {
         id: '1',
         value: {
-          date: '1 August 2026',
+          date: dayjs().subtract(10, 'day').format('D MMMM YYYY'),
         },
       };
       expect(isGroupClaimsResponseExpired(item)).toBe(true);
@@ -890,6 +893,36 @@ describe('Tribunal order or request Details helper', () => {
     it('should return false when date is missing or invalid', () => {
       expect(isGroupClaimsResponseExpired({ id: '1', value: {} })).toBe(false);
       expect(isGroupClaimsResponseExpired({ id: '1', value: { date: 'invalid-date' } })).toBe(false);
+    });
+  });
+
+  describe('isConsideringClaimsTogether', () => {
+    it('should return true when sendNotificationGroupClaims is Considering claims together', () => {
+      const item = {
+        value: {
+          sendNotificationGroupClaims: NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER,
+        },
+      };
+      expect(isConsideringClaimsTogether(item)).toBe(true);
+    });
+
+    it('should return true when sendNotificationSubject includes Considering claims together', () => {
+      const item = {
+        value: {
+          sendNotificationSubject: [NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER],
+        },
+      };
+      expect(isConsideringClaimsTogether(item)).toBe(true);
+    });
+
+    it('should return false when notification is not Considering claims together', () => {
+      const item = {
+        value: {
+          sendNotificationGroupClaims: NotificationSubjects.PART_OF_GROUP_CLAIM,
+          sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+        },
+      };
+      expect(isConsideringClaimsTogether(item)).toBe(false);
     });
   });
 });

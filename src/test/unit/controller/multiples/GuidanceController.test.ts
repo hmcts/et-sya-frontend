@@ -1,5 +1,5 @@
 import GuidanceController from '../../../../main/controllers/multiples/GuidanceController';
-import { PageUrls } from '../../../../main/definitions/constants';
+import { PageUrls, Views } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
@@ -18,9 +18,9 @@ describe('Guidance controller', () => {
     guidanceController.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
-      'multiples/guidance',
+      Views.MULTIPLE_GUIDANCE,
       expect.objectContaining({
-        returnUrl: PageUrls.CLAIM_STEPS,
+        returnUrl: `${PageUrls.CLAIM_STEPS}?lng=en`,
       })
     );
   });
@@ -39,9 +39,9 @@ describe('Guidance controller', () => {
     guidanceController.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
-      'multiples/guidance',
+      Views.MULTIPLE_GUIDANCE,
       expect.objectContaining({
-        returnUrl: `${PageUrls.CITIZEN_HUB}/12345`,
+        returnUrl: `${PageUrls.CITIZEN_HUB}/12345?lng=en`,
       })
     );
   });

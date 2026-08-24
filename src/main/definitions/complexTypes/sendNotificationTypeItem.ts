@@ -13,6 +13,7 @@ export interface SendNotificationTypeItem {
   linkText?: string;
   needsResponse?: boolean;
   showAlert?: boolean;
+  isConsideringClaimsTogether?: boolean;
 }
 
 export interface SendNotificationType {

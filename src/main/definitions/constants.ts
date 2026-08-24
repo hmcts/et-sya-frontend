@@ -25,6 +25,7 @@ export const LegacyUrls = {
 export const Views = {
   DOCUMENT_VIEW: 'document-view',
   RESPONSE_FROM_RESPONDENT_VIEW: 'response-from-respondent-view',
+  MULTIPLE_GUIDANCE: 'multiples/guidance',
 } as const;
 
 export const TranslationKeys = {
@@ -553,6 +554,7 @@ export const NotificationSubjects = {
   ECC: 'Employer Contract Claim',
   CONSIDERING_CLAIMS_TOGETHER: 'Considering claims together',
   GROUP_CLAIMS: 'Group claims',
+  PART_OF_GROUP_CLAIM: "You're now part of a group claim",
 } as const;
 
 export const NoticeOfECC = 'Notice of Employer Contract Claim';
