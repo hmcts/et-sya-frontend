@@ -9,7 +9,10 @@
     "roleName": "et-sya"
   },
   "featureFlags": {
-    "welsh": "true"
+    "welsh": "true",
+    "cuiYourSupport": {
+      "enabledCaseTypeIds": []
+    }
   },
   "csrf": {
     "secret": "TO BE PICKED UP FROM ENV"

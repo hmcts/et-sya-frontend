@@ -38,5 +38,10 @@
   },
   "csrf": {
     "secret": "0123456789abcdef0123456789abcdef"
+  },
+  "featureFlags": {
+    "cuiYourSupport": {
+      "enabledCaseTypeIds": ["ET_Scotland"]
+    }
   }
 }
