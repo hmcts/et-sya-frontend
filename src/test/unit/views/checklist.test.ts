@@ -14,7 +14,7 @@ const checklistJson = JSON.parse(checklistJsonRaw);
 const PAGE_URL = '/checklist';
 const titleClass = 'govuk-heading-l';
 const pClass = 'govuk-body-m';
-const panelClass = 'govuk-panel';
+const listClass = 'govuk-list govuk-list--number';
 const buttonClass = 'govuk-button';
 const expectedTitle = checklistJson.pageTitle;
 
@@ -28,11 +28,6 @@ describe('Checklist page', () => {
       });
   });
 
-  it('should display GDS panel component', () => {
-    const panel = htmlRes.getElementsByClassName(panelClass);
-    expect(panel.length).equal(1, '1 panel component does not exist');
-  });
-
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
@@ -40,7 +35,12 @@ describe('Checklist page', () => {
 
   it('should display 5 paragraphs', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(5, '5 paragraphs do not exist');
+    expect(p.length).equal(2, '2 paragraphs do not exist');
+  });
+
+  it('should display list class', () => {
+    const list = htmlRes.getElementsByClassName(listClass);
+    expect(list.length).equal(1, 'list exists');
   });
 
   it('should display continue button', () => {

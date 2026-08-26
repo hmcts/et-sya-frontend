@@ -12,9 +12,8 @@ const newAccountJsonRaw = fs.readFileSync(
 );
 const newAccountJson = JSON.parse(newAccountJsonRaw);
 const PAGE_URL = '/new-account-landing';
-const titleClass = 'govuk-panel__title';
-const pClass = 'govuk-panel__body';
-const panelClass = 'govuk-panel govuk-panel--interruption';
+const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-4';
+const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
 const expectedTitle = newAccountJson.h1;
 const expectedP1 = newAccountJson.p1;
@@ -30,21 +29,16 @@ describe('New Account Landing page', () => {
       });
   });
 
-  it('should display GDS panel component', () => {
-    const panel = htmlRes.getElementsByClassName(panelClass);
-    expect(panel.length).equal(1, 'Single panel component does not exist');
-  });
-
   it('should display panel title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Panel title does not exist');
   });
 
-  it('should display 2 paragraph classes', () => {
+  it('should display 10 paragraph classes', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(2, '2 paragraph class should exist');
-    expect(p[0].innerHTML).contains(expectedP1, 'Could not find P1 text');
-    expect(p[1].innerHTML).contains(expectedP2, 'Could not find P2 text');
+    expect(p.length).equal(10, '10 paragraph class should exist (with cookies)');
+    expect(p[6].innerHTML).contains(expectedP1, 'Could not find P1 text');
+    expect(p[7].innerHTML).contains(expectedP2, 'Could not find P2 text');
   });
 
   it('should display save and continue and save as draft buttons', () => {

@@ -56,6 +56,19 @@
     rows: yourDetails
   }) }}
 
+  <h2 class="govuk-heading-l">{{ groupClaimsHeader }}</h2>
+  {{ govukSummaryList({
+    rows: groupClaimMetaRows
+  }) }}
+  {% if groupClaimCardsHtml %}
+    {{ groupClaimCardsHtml | safe }}
+  {% endif %}
+  {% if groupClaimPostRows | length %}
+    {{ govukSummaryList({
+      rows: groupClaimPostRows
+    }) }}
+  {% endif %}
+
   <h2 class="govuk-heading-l">{{ employmentDetails.header }}</h2>
   {{ govukSummaryList({
     rows: employmentSection

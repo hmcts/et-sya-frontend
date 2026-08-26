@@ -1,5 +1,6 @@
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import {
+  AddAdditionalClaimant,
   CaseType,
   CaseTypeId,
   EmailOrPost,
@@ -112,6 +113,7 @@ export const mockedApiData: CaseApiDataResponse = {
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
+      groupClaimsCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
     },
     claimantWorkAddress: {
@@ -260,5 +262,26 @@ export const mockedApiData: CaseApiDataResponse = {
     multipleFlag: YesOrNo.YES,
     leadClaimant: YesOrNo.YES,
     batchCaseStayed: YesOrNo.YES,
+    addClaimantMethod: AddAdditionalClaimant.MANUAL,
+    additionalClaimants: [
+      {
+        id: '123',
+        value: {
+          title: 'Mr',
+          firstName: 'Joe',
+          lastName: 'Bloggs',
+          email: 'test@test.com',
+          dob: '05/04/2000',
+          address: {
+            AddressLine1: 'Muffin Mans House',
+            AddressLine2: 'Drewry Lane',
+            County: 'West Minister',
+            Country: 'United Kingdom',
+            PostTown: 'London',
+            PostCode: undefined,
+          },
+        },
+      },
+    ],
   },
 };

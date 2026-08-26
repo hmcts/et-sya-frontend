@@ -1,6 +1,7 @@
 import { OrganisationPolicy } from '../OrganisationPolicy';
-import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
+import { AddAdditionalClaimant, CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
+import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -81,6 +82,9 @@ export interface CaseData {
   representativeClaimantType?: ClaimantRepresentative;
   claimantRepresentativeRemoved?: YesOrNo;
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
+  additionalClaimants?: AdditionalClaimantApiModel[];
+  addClaimantMethod?: AddAdditionalClaimant;
+  additionalClaimantSpreadsheet?: Document;
 }
 
 export type HearingBundleType = {
@@ -157,6 +161,11 @@ export interface HearingVenueItem {
 
 export interface RespondentApiModel {
   value?: RespondentType;
+  id?: string;
+}
+
+export interface AdditionalClaimantApiModel {
+  value?: AdditionalClaimantType;
   id?: string;
 }
 
