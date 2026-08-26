@@ -30,7 +30,7 @@ cookieManager.on('UserPreferencesSaved', (preferences: Preferences) => {
 });
 const config = {
   userPreferences: {
-    cookieName: 'cm-user-preferences',
+    cookieName: 'et-sya-cookie-preferences',
   },
   cookieBanner: {
     class: 'cookie-banner',
@@ -60,7 +60,7 @@ const config = {
     {
       categoryName: 'essential',
       optional: false,
-      cookies: ['cm-user-preferences'],
+      cookies: ['et-sya-cookie-preferences'],
     },
     {
       categoryName: 'analytics',
