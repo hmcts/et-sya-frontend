@@ -1,3 +1,5 @@
+import * as crypto from 'node:crypto';
+
 import envConfig from 'config';
 import * as express from 'express';
 import helmet from 'helmet';
@@ -22,6 +24,16 @@ export class Helmet {
   constructor(public config: HelmetConfig, public formActionUrls: string[]) {}
 
   public enableFor(app: express.Express): void {
+    app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+      res.locals.nonce = crypto.randomBytes(16).toString('base64');
+      res.locals.globals = {
+        ...res.locals.globals,
+        nonce: res.locals.nonce,
+        enableTracking: envConfig.has('enableTracking') ? String(envConfig.get('enableTracking')) : 'true',
+      };
+      next();
+    });
+
     // include default helmet functions
     app.use(helmet({ crossOriginEmbedderPolicy: false, crossOriginResourcePolicy: false }));
 
@@ -33,6 +45,7 @@ export class Helmet {
     const idamUrl = process.env.IDAM_WEB_URL ?? envConfig.get('services.idam.authorizationURL').toString();
     const scriptSrc = [
       self,
+      (_req: express.Request, res: express.Response) => `'nonce-${res.locals.nonce}'`,
       ...tagManager,
       dynatrace,
       googleAnalyticsDomain1,
@@ -61,6 +74,8 @@ export class Helmet {
       idamUrl,
       'https://bf24054dsx.bf.dynatrace.com',
       '*.8x8.com',
+      ...tagManager,
+      'www.google.com',
     ];
 
     const imgSrc = [
