@@ -7,7 +7,7 @@ export class GroupClaimsDetailsPage extends BasePage {
     await this.webAction.verifyTextIsVisible('text=Are you making a claim on your own or with others?');
     await this.webAction.verifyTextIsVisible('text=I’m claiming on my own');
     await this.webAction.verifyTextIsVisible('text=I’m claiming with another person or other people');
-    await this.webAction.clickElementByCss('#single-or-multiple-claim');
+    await this.webAction.checkElementById('#single-or-multiple-claim');
     await this.saveAndContinueButton();
 
     await this.webAction.verifyTextIsVisible('text=Have you completed this section?');
