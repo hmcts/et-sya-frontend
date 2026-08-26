@@ -14,6 +14,7 @@ import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
+import NumberUtils from '../utils/NumberUtils';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
 
@@ -521,7 +522,7 @@ export class CaseApi {
    * @param request receives userCase from request object's session field. Fields that we use from userCase are:
    *                id Case id, usually referred as case submission reference entered to the form by respondent.
    *                id value can be only 16 digit decimal or 16 digit divided by dash like 1234-5678-1234-5678.
-   *                If it is divided by dash, this method automatically removes dash values with empty string.
+   *                Hyphenated ids are stripped to 16 digits; they are not padded to 20.
    *                respondentName Name of the respondent entered to the form by respondent.
    *                firstName First Name of the claimant entered to the form by respondent.
    *                lastName Last name of the claimant entered to the form by respondent.
@@ -529,13 +530,7 @@ export class CaseApi {
   getCaseByApplicationRequest = async (request: AppRequest): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       const caseWithId: Partial<CaseWithId> = request.session.caseAssignmentFields;
-      let caseSubmissionReference = caseWithId.id;
-      if (caseSubmissionReference?.includes(DefaultValues.STRING_DASH)) {
-        caseSubmissionReference = caseSubmissionReference.replace(
-          DefaultValues.STRING_DASH,
-          DefaultValues.STRING_EMPTY
-        );
-      }
+      const caseSubmissionReference = NumberUtils.getSafeCaseIdDigits(caseWithId.id);
 
       return await this.axios.post(JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION, {
         caseSubmissionReference,
@@ -554,7 +549,7 @@ export class CaseApi {
       return await this.axios.post<CaseAssignmentResponse>(JavaApiUrls.ASSIGN_CREATOR_USER_ROLE, {
         case_users: [
           {
-            case_id: request.session.caseAssignmentFields?.id,
+            case_id: NumberUtils.getSafeCaseIdDigits(request.session.caseAssignmentFields?.id),
             user_id: request.session.user.id,
             case_role: Roles.CREATOR_ROLE_WITH_BRACKETS,
             case_type_id: request.session.caseAssignmentFields?.caseTypeId,

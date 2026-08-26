@@ -22,7 +22,7 @@ import {
 } from '../../../main/definitions/case';
 import { TseAdminDecisionItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { CcdDataModel, JavaApiUrls, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
+import { CcdDataModel, JavaApiUrls, Roles, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -819,12 +819,12 @@ describe('getCaseByApplicationRequest', () => {
     );
   });
 
-  it('should remove first dash from case submission reference', async () => {
+  it('should strip all hyphens from a 16-digit case submission reference', async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { id: '1234' } });
     const mockRequest = {
       session: {
         caseAssignmentFields: {
-          id: '1234567890-123456',
+          id: '1111-2222-3333-4444',
           ethosCaseReference: '60000003/2025',
           firstName: 'John',
           lastName: 'Doe',
@@ -837,7 +837,44 @@ describe('getCaseByApplicationRequest', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION,
       expect.objectContaining({
-        caseSubmissionReference: '1234567890123456',
+        caseSubmissionReference: '1111222233334444',
+      })
+    );
+  });
+});
+
+describe('assignCaseUserRole', () => {
+  beforeEach(() => {
+    mockedAxios.post.mockClear();
+  });
+
+  it('should strip hyphens from case id before assigning creator role', async () => {
+    mockedAxios.post.mockResolvedValueOnce({ data: { status: 'success' } });
+    const mockRequest = {
+      session: {
+        user: { id: 'user-1' },
+        respondentName: 'Acme Ltd',
+        caseAssignmentFields: {
+          id: '1111-2222-3333-4444',
+          caseTypeId: 'ET_EnglandWales',
+        },
+      },
+    } as unknown as AppRequest;
+
+    await api.assignCaseUserRole(mockRequest);
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      JavaApiUrls.ASSIGN_CREATOR_USER_ROLE,
+      expect.objectContaining({
+        case_users: [
+          expect.objectContaining({
+            case_id: '1111222233334444',
+            user_id: 'user-1',
+            case_role: Roles.CREATOR_ROLE_WITH_BRACKETS,
+            case_type_id: 'ET_EnglandWales',
+            respondent_name: 'Acme Ltd',
+          }),
+        ],
       })
     );
   });
