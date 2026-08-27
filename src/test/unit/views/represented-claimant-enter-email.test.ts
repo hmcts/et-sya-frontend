@@ -12,14 +12,14 @@ describe('Represented claimant enter email page', () => {
     htmlRes = await getHtmlRes(mockUserCaseComplete, PAGE_URL);
   });
 
-  it('should display the heading marked as optional', () => {
+  it('should display the page heading', () => {
     const heading = htmlRes.getElementsByClassName('govuk-heading-xl');
-    expect(heading[0].innerHTML).contains('Claimant’s email address (optional)');
+    expect(heading[0].innerHTML).contains('Claimant’s email address');
   });
 
-  it('should display the email field label', () => {
+  it('should mark the email field as optional', () => {
     const labels = Array.from(htmlRes.getElementsByTagName('label')).map(l => l.innerHTML.trim());
-    expect(labels).to.include('Enter the claimant’s email address');
+    expect(labels).to.include('Enter the claimant’s email address (optional)');
   });
 
   it('should no longer display the removed description paragraph', () => {
