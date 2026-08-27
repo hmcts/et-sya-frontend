@@ -83,7 +83,7 @@
     "nunjucks": "^3.2.4",
     "postcode": "^5.1.0",
     "prettier": "^2.8.7",
-    "puppeteer": "^24.38.0",
+    "puppeteer": "^25.0.0",
     "redis": "^3.1.2",
     "redis-mock": "^0.56.3",
     "require-directory": "^2.1.1",
@@ -94,7 +94,7 @@
     "uuid": "^11.1.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.12.1",
+    "@axe-core/playwright": "4.13.0",
     "@babel/core": "^7.21.4",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.21.4",
@@ -182,7 +182,7 @@
     "lodash": "^4.17.23",
     "multer": "2.2.0",
     "editorconfig/minimatch": "^10.0.0",
-    "puppeteer": "^24.38.0",
+    "puppeteer": "^25.0.0",
     "ws": "^8.21.0",
     "cookie": "^1.0.0",
     "path-to-regexp": "^1.9.0",
@@ -199,6 +199,8 @@
     "multer": "2.2.0",
     "undici": "7.29.0",
     "body-parser": "^1.20.6",
+    "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.1",
+    "js-yaml@npm:^4.1.0": "npm:js-yaml@4.3.1",
     "js-yaml@npm:^4.1.1": "npm:js-yaml@4.3.1",
     "immutable": "^5.1.8"
   },

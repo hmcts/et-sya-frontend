@@ -487,7 +487,7 @@ export const formatToCcdAcceptedNumber = (amount: number): number => {
   return parseFloat(amount.toString().replace(/[£,]/g, ''));
 };
 
-export const formatDate = (date: CaseDate): string => {
+export const formatDate = (date?: CaseDate): string => {
   if (!date || isDateEmpty(date)) {
     return null;
   }

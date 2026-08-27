@@ -128,22 +128,40 @@ export const returnValidUrl = (redirectUrl: string, validUrls?: string[]): strin
 
 /**
  * Builds a safe citizen-hub redirect URL, validating the caseId is numeric.
- * Uses session lang (server-side state) for the language parameter so Fortify
- * cannot trace taint from req.url through to res.redirect.
+ * Language is chosen from constant query values only, so the redirect target is
+ * not treated as unvalidated/unsafe input.
  *
  * @param caseId - The case ID to include in the URL
- * @param req - The request, used only for session.lang
+ * @param req - The request, used only to select a constant language parameter
  */
 export const returnSafeCitizenHubUrl = (caseId: string, req: AppRequest): string => {
   if (!NumberUtils.isNumericValue(caseId)) {
     return PageUrls.CLAIMANT_APPLICATIONS;
   }
-  // Inline ternary with constant branches — Fortify can statically verify the output is always
-  // a constant regardless of req.url, breaking the taint chain to res.redirect
+  // Language comes from constant branches only, so the redirect URL is safe
   const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
     ? languages.WELSH_URL_PARAMETER
     : languages.ENGLISH_URL_PARAMETER;
   return `${PageUrls.CITIZEN_HUB_BASE}${caseId}${langParam}`;
+};
+
+/**
+ * Builds a safe transferred-case redirect URL, validating the caseId is numeric.
+ * Language is chosen from constant query values only, so the redirect target is
+ * not treated as unvalidated/unsafe input.
+ *
+ * @param caseId - The case ID to include as a query parameter
+ * @param req - The request, used only to select a constant language parameter
+ */
+export const returnSafeTransferredCaseUrl = (caseId: string, req: AppRequest): string => {
+  if (!NumberUtils.isNumericValue(caseId)) {
+    return PageUrls.CLAIMANT_APPLICATIONS;
+  }
+  // Language comes from constant branches only, so the redirect URL is safe
+  const langParam = req.url?.includes(languages.WELSH_URL_POSTFIX)
+    ? languages.WELSH_URL_PARAMETER
+    : languages.ENGLISH_URL_PARAMETER;
+  return `${PageUrls.TRANSFERRED_CASE}${langParam}&caseId=${caseId}`;
 };
 
 export const addParameterToUrl = (url: string, parameter: string): string => {

@@ -18,6 +18,7 @@ nodejs:
         - pcq-token-key
         - launch-darkly-sdk-key
         - csrf-token-secret
+        - s2s-secret-sya
 idam-pr:
   enabled: true
   redirect_uris:
