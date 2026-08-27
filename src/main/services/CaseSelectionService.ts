@@ -64,11 +64,6 @@ export const getRedirectUrl = (userCase: CaseWithId, languageParam: string, isRe
   }
 };
 
-/**
- * A non-HMCTS representative's claim has its own task list with an extra section, so the sections
- * counted here follow the list the user actually sees - counting the wrong ones leaves the status
- * stuck as tasks are completed.
- */
 export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
   const sectionChecks =
     userCase?.claimantRepresentedQuestion === YesOrNo.YES
