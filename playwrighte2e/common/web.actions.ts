@@ -37,7 +37,7 @@ export class WebAction {
 
   async verifyTextIsVisible(text: string): Promise<void> {
     const cleanText = text.startsWith('text=') ? text.replace(/^text=/, '') : text;
-    await expect(this.page.getByText(cleanText)).toBeVisible();
+    await expect(this.page.getByText(cleanText).first()).toBeVisible();
   }
 
   async checkElementById(elementId: string): Promise<void> {
