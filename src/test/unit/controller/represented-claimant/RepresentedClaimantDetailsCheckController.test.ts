@@ -169,7 +169,7 @@ describe('Represented Claimant Details Check Controller', () => {
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
     });
 
-    it('should render task list check page with invalid error when Yes is selected but representedClaimantEmail is missing', async () => {
+    it('should redirect to CLAIM_STEPS_NON_HMCTS when Yes is selected without a claimant email', async () => {
       const body = { representedClaimantDetailsCheck: YesOrNo.YES };
       const userCase: Partial<CaseWithId> = {
         representedClaimantFirstName: 'Jane',
@@ -177,16 +177,16 @@ describe('Represented Claimant Details Check Controller', () => {
         representedClaimantAddress1: '10 Claimant Street',
         representedClaimantAddressTown: 'London',
         representedClaimantAddressCountry: 'England',
+        representedClaimantEmailProvided: YesOrNo.NO,
       };
-      const errors = [{ propertyName: 'representedClaimantDetailsCheck', errorType: 'invalid' }];
       const controller = new RepresentedClaimantDetailsCheckController();
       const req = mockRequest({ body, userCase });
       const res = mockResponse();
 
       await controller.post(req, res);
 
-      expect(req.session.errors).toEqual(errors);
-      expect(res.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
+      expect(req.session.errors).toEqual([]);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS);
     });
   });
 });

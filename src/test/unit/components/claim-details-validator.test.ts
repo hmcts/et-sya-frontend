@@ -159,6 +159,17 @@ describe('claimDetailsValidator', () => {
       };
       expect(validateRepresentedClaimantDetails(userCase)).toBe(true);
     });
+
+    it('should return true when no claimant email is given, as the email is optional', () => {
+      const userCase = {
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+        representedClaimantAddress1: '10 Claimant Street',
+        representedClaimantAddressTown: 'London',
+        representedClaimantAddressCountry: 'England',
+      };
+      expect(validateRepresentedClaimantDetails(userCase)).toBe(true);
+    });
   });
 
   describe('validateClaimCheckDetails', () => {
