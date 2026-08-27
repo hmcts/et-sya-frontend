@@ -2,11 +2,10 @@ import { Response } from 'express';
 
 import { CaseTransferInfoResponse, CaseTransferType } from '../../definitions/api/caseTransferInfoResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import { PageUrls } from '../../definitions/constants';
 import { getLogger } from '../../logger';
 import { getCaseApi, isCaseNotFoundError, isTransferredToEcmCaseError } from '../../services/CaseService';
 
-import { getLanguageParam } from './RouterHelpers';
+import { returnSafeTransferredCaseUrl } from './RouterHelpers';
 
 const logger = getLogger('CaseTransferHelper');
 const SESSION_SAVE_TIMEOUT_MS = 10000;
@@ -106,7 +105,7 @@ export const buildTransferredCasePageHeading = (
 };
 
 export const buildTransferredCaseRedirectUrl = (req: AppRequest, caseId: string): string => {
-  return `${PageUrls.TRANSFERRED_CASE}${getLanguageParam(req.url)}&caseId=${caseId}`;
+  return returnSafeTransferredCaseUrl(caseId, req);
 };
 
 export const saveSessionAndRedirectToTransferredCase = async (
