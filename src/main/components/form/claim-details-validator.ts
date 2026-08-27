@@ -94,14 +94,12 @@ export const validateRepresentedClaimantDetails = (userCase: Record<string, any>
     representedClaimantAddress1,
     representedClaimantAddressTown,
     representedClaimantAddressCountry,
-    representedClaimantEmail,
   } = userCase;
   return (
     StringUtils.isNotBlank(representedClaimantFirstName) &&
     StringUtils.isNotBlank(representedClaimantLastName) &&
     StringUtils.isNotBlank(representedClaimantAddress1) &&
     StringUtils.isNotBlank(representedClaimantAddressTown) &&
-    StringUtils.isNotBlank(representedClaimantAddressCountry) &&
-    StringUtils.isNotBlank(representedClaimantEmail)
+    StringUtils.isNotBlank(representedClaimantAddressCountry)
   );
 };

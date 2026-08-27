@@ -143,10 +143,6 @@
 
   "representedClaimantEnterPostcodeTitle": "What is the claimant's address",
   "representedClaimantSelectPostcodeTitle": "Select an address",
-  "representedClaimantEnterEmailTitle": "Claimant's email address",
-  "representedClaimantEnterEmailHeading": "Claimant’s email address",
-  "representedClaimantEnterEmailDescription": "It will help to process your claim quicker if you can provide the claimant’s email address",
-  "representedClaimantEnterEmailLabel": "Enter the claimant’s email address",
   "representedClaimantDetailsCheckTitle": "Represented claimant's Details check",
   "representedClaimantDetailsCheckHeading": "Represented claimant's Details check",
   "representedClaimantManualAddress": "The Claimant lives outside the UK",

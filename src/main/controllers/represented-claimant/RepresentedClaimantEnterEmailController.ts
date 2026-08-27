@@ -11,11 +11,6 @@ import { saveForLaterButton, submitButton } from '../../definitions/radios';
 import { getLogger } from '../../logger';
 import { handlePostLogic } from '../helpers/CaseHelpers';
 import { getPageContent } from '../helpers/FormHelpers';
-import {
-  getEnterEmailDescription,
-  getEnterEmailHeading,
-  getEnterEmailTitle,
-} from '../helpers/RepresentedClaimantEmailHelper';
 
 const logger = getLogger('RepresentedClaimantEnterEmailController');
 
@@ -28,7 +23,7 @@ export default class RepresentedClaimantEnterEmailController {
         name: 'representedClaimantEmail',
         type: 'text',
         classes: 'govuk-!-width-two-thirds',
-        label: l => l.representedClaimantEnterEmailLabel,
+        label: l => l.label,
         labelSize: 'm',
         isPageHeading: true,
         attributes: {
@@ -63,9 +58,6 @@ export default class RepresentedClaimantEnterEmailController {
     res.render(TranslationKeys.REPRESENTED_CLAIMANT_ENTER_EMAIL, {
       ...content,
       userCase,
-      title: getEnterEmailTitle(req),
-      heading: getEnterEmailHeading(req),
-      description: getEnterEmailDescription(req),
     });
   };
 }
