@@ -82,7 +82,7 @@ export const displayStatusColorMap = new Map<HubLinkStatus, string>([
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
-  [HubLinkNames.Et1ClaimForm, HubLinkNames.YourSupport],
+  [HubLinkNames.Et1ClaimForm],
   [HubLinkNames.RespondentResponse, HubLinkNames.ViewRespondentContactDetails],
   [HubLinkNames.HearingDetails],
   [HubLinkNames.RequestsAndApplications, HubLinkNames.RespondentApplications, HubLinkNames.ContactTribunal],

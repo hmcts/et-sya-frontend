@@ -3,6 +3,7 @@ import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseFlags, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import * as CuiService from '../../../main/services/CuiService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -52,6 +53,10 @@ const getSupportFlag = () => ({
 describe('Your Support Controller', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue({
+      getSupportPageUrl: jest.fn().mockReturnValue(PageUrls.YOUR_SUPPORT),
+      isEnabled: jest.fn().mockReturnValue(true),
+    } as unknown as CuiYourSupportFeatureModule.CuiYourSupportFeature);
   });
 
   it('should render the draft support page with the no support option', async () => {
@@ -70,6 +75,22 @@ describe('Your Support Controller', () => {
         showNoSupport: true,
       })
     );
+  });
+
+  it('should redirect draft cases to reasonable adjustments when CUI your support is disabled', async () => {
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue({
+      getSupportPageUrl: jest.fn().mockReturnValue(PageUrls.REASONABLE_ADJUSTMENTS),
+      isEnabled: jest.fn().mockReturnValue(false),
+    } as unknown as CuiYourSupportFeatureModule.CuiYourSupportFeature);
+    const controller = new YourSupportController();
+    const req = mockRequest({
+      userCase: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+    });
+    const res = mockResponse();
+
+    await controller.get(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.REASONABLE_ADJUSTMENTS);
   });
 
   it('should set the return url when your support is opened from claim steps', async () => {

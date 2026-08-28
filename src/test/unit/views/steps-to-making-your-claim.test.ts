@@ -34,7 +34,7 @@ const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
 
 const taskListStatusClass = 'govuk-task-list__status';
 const notStartedTaskTagClass = 'govuk-tag govuk-tag--grey';
-const expectedTaskCount = 9;
+const expectedTaskCount = 8;
 const checkYourAnswersTaskIndex = expectedTaskCount - 1;
 
 let htmlRes: Document;
@@ -90,7 +90,7 @@ describe('Steps to making your claim page', () => {
     expect(status[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');
     const tags = htmlRes.getElementsByClassName(notStartedTaskTagClass);
     expect(tags.length).equal(expectedTaskCount - 1, 'number of not started yet tags found is not correct');
-    for (let index = 0; index < tags.length; index++) {
+    for (let index = 0; index < tags.length - 2; index++) {
       expect(tags[index].innerHTML).contains('Not started yet');
     }
   });
@@ -121,7 +121,7 @@ describe('Steps to making your claim page', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
     const links = htmlRes.getElementsByClassName(linkClass);
-    expect(links[6].outerHTML).contains(PageUrls.TYPE_OF_CLAIM.toString());
+    expect(links[5].outerHTML).contains(PageUrls.TYPE_OF_CLAIM.toString());
   });
 
   it(
@@ -145,7 +145,7 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.getElementsByClassName(linkClass);
-      expect(links[4].outerHTML).contains(PageUrls.STILL_WORKING.toString());
+      expect(links[3].outerHTML).contains(PageUrls.STILL_WORKING.toString());
     }
   );
 
@@ -170,7 +170,7 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.getElementsByClassName(linkClass);
-      expect(links[4].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
+      expect(links[3].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
     }
   );
 });
@@ -218,7 +218,6 @@ describe('Steps to making your claim page tags', () => {
     expect(taskListStatus[0].innerHTML).contains('Completed');
     expect(taskListStatus[1].innerHTML).contains('Completed');
     expect(taskListStatus[2].innerHTML).contains('Completed');
-    expect(taskListStatus[3].innerHTML).contains('Completed');
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');
   });
 
@@ -259,10 +258,10 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTagClass);
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
-    expect(notStartedTags.length).equal(6, 'number of not started yet tags found is not correct');
+    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
+    expect(taskListStatus[3].innerHTML).contains('Completed');
     expect(taskListStatus[4].innerHTML).contains('Completed');
-    expect(taskListStatus[5].innerHTML).contains('Completed');
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');
   });
 
@@ -302,10 +301,10 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTagClass);
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
-    expect(notStartedTags.length).equal(6, 'number of not started yet tags found is not correct');
+    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
+    expect(taskListStatus[5].innerHTML).contains('Completed');
     expect(taskListStatus[6].innerHTML).contains('Completed');
-    expect(taskListStatus[7].innerHTML).contains('Completed');
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');
   });
 
@@ -348,7 +347,7 @@ describe('Steps to making your claim page tags', () => {
       });
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
-    for (let index = 0; index < taskListStatus.length - 1; index++) {
+    for (let index = 0; index < taskListStatus.length - 2; index++) {
       expect(taskListStatus[index].innerHTML).contains('Completed');
     }
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Not started yet');
@@ -393,7 +392,7 @@ describe('Steps to making your claim page tags', () => {
       });
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
-    for (let index = 0; index < taskListStatus.length - 1; index++) {
+    for (let index = 0; index < taskListStatus.length - 3; index++) {
       expect(taskListStatus[index].innerHTML).contains('Not started yet');
     }
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');

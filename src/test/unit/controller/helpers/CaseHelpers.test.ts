@@ -29,7 +29,7 @@ import {
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
-import { StillWorking, YesOrNo } from '../../../../main/definitions/case';
+import { CaseTypeId, StillWorking, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../../main/definitions/hub';
@@ -224,6 +224,16 @@ describe('setUserCaseWithRedisData', () => {
       );
     }
   );
+
+  it('should set caseTypeId from the cached claim jurisdiction', () => {
+    const req = mockRequest({ session: mockSession([], [], []) });
+    const caseData =
+      '[["claimJurisdiction","ET_Scotland"],["claimantRepresentedQuestion","No"],["caseType","Single"],["typeOfClaim","[\\"discrimination\\"]"]]';
+
+    setUserCaseWithRedisData(req, caseData);
+
+    expect(req.session.userCase.caseTypeId).toBe(CaseTypeId.SCOTLAND);
+  });
 });
 
 describe('handle update draft case', () => {
