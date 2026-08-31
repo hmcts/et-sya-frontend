@@ -10,6 +10,7 @@ import {
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { getCuiYourSupportFeature } from '../../modules/featureFlag/CuiYourSupportFeature';
 
 import { answersAddressFormatter } from './PageContentHelpers';
 
@@ -61,10 +62,16 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
   return preferences.length > 0 ? preferences : [translations.notProvided];
 };
 
-const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
+const getTranslationsReasonableAdjustments = (
+  userCase: CaseWithId,
+  translations: AnyRecord,
+  isCuiYourSupportEnabled: boolean
+): string => {
   switch (userCase?.reasonableAdjustments) {
     case YesOrNo.YES:
-      return translations.oesYesOrNo.yes;
+      return isCuiYourSupportEnabled || !userCase.reasonableAdjustmentsDetail
+        ? translations.oesYesOrNo.yes
+        : translations.oesYesOrNo.yes + ', ' + userCase.reasonableAdjustmentsDetail;
     case YesOrNo.NO:
       return translations.oesYesOrNo.no;
     default:
@@ -74,6 +81,8 @@ const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations
 
 export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
+  const cuiYourSupportFeature = getCuiYourSupportFeature();
+  const isCuiYourSupportEnabled = cuiYourSupportFeature.isEnabled(userCase?.caseTypeId);
 
   rows.push(
     addSummaryRow(
@@ -175,9 +184,9 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     ),
     addSummaryRow(
       translations.personalDetails.disability,
-      getTranslationsReasonableAdjustments(userCase, translations),
+      getTranslationsReasonableAdjustments(userCase, translations, isCuiYourSupportEnabled),
       createChangeAction(
-        PageUrls.YOUR_SUPPORT + InterceptPaths.ANSWERS_CHANGE,
+        cuiYourSupportFeature.getSupportPageUrl(userCase?.caseTypeId) + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
         translations.personalDetails.disability
       )
