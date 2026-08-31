@@ -26,7 +26,7 @@
       "key": "TO BE PICKED UP FROM ENV"
     },
     "cui": {
-      "endpoint": "https://localhost:3100",
+      "endpoint": "http://localhost:3100",
       "hmctsServiceId": "BHA1"
     }
   },
@@ -41,7 +41,7 @@
   },
   "featureFlags": {
     "cuiYourSupport": {
-      "enabledCaseTypeIds": ["ET_Scotland"]
+      "enabledCaseTypeIds": []
     }
   }
 }
