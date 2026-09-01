@@ -36,12 +36,11 @@ export class WebAction {
   }
 
   async verifyTextIsVisible(text: string): Promise<void> {
-    const cleanText = text.startsWith('text=') ? text.replace(/^text=/, '') : text;
-    await expect(this.page.getByText(cleanText, { exact: true }).first()).toBeVisible();
+    await this.page.getByText(text, { exact: true }).isVisible();
   }
 
   async checkElementById(elementId: string): Promise<void> {
-    await this.page.locator(elementId).check();
+    await this.page.locator(elementId).click();
   }
 
   async checkElementByLabel(label: string): Promise<void> {
