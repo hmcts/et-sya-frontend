@@ -2,6 +2,7 @@ import config from 'config';
 import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
+import { setUserCaseWithRedisData } from '../../controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../definitions/appRequest';
 import {
   ASSIGN_CLAIM_USER,
@@ -130,6 +131,7 @@ export const idamCallbackHandler = async (
       if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
         logger.info(`Created Draft Case - ${response.data.id}`);
         req.session.userCase = fromApiFormat(response.data);
+        setUserCaseWithRedisData(req, caseData);
         return res.redirect(PageUrls.NEW_ACCOUNT_LANDING + lang);
       }
       logger.error('Draft Case was not created successfully');
