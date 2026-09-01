@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { cloneDeep } from 'lodash';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -149,11 +150,25 @@ export default class YourSupportController {
         logger.info(
           `CUI journey completed with action "${result.action}", redirecting back to case page without updating flags`
         );
-        res.redirect(this.getExitUrl(req, true));
+        const exitUrl = this.getExitUrl(req, true);
+        res.redirect(exitUrl);
         return;
       }
 
-      await this.saveCuiFlagChanges(req, result);
+      const originalReturnUrl = req.session.returnUrl;
+      const originalClaimantExternalFlags = cloneDeep(req.session.userCase?.claimantExternalFlags);
+
+      try {
+        await this.saveCuiFlagChanges(req, result);
+      } catch (error) {
+        req.session.returnUrl = originalReturnUrl;
+        req.session.userCase.claimantExternalFlags = originalClaimantExternalFlags;
+        const redirectUrl = this.getExitUrl(req, true);
+        logger.error('Error saving CUI journey data', error);
+        res.redirect(redirectUrl);
+        return;
+      }
+
       res.redirect(this.getCuiCompletionUrl(req));
     } catch (error) {
       logger.error('Error retrieving CUI journey data', error);
@@ -181,12 +196,13 @@ export default class YourSupportController {
       return;
     }
 
+    const link = this.getExitUrl(req, true);
     this.renderConfirmation(
       req,
       res,
       TranslationKeys.YOUR_SUPPORT_SUBMITTED_CONFIRMATION,
       YOUR_SUPPORT_SUBMITTED_CONFIRMATION_TEMPLATE,
-      this.getExitUrl(req, true)
+      link
     );
   };
 

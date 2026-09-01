@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 {% from "govuk/components/task-list/macro.njk" import govukTaskList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% block beforeContent %}
@@ -9,6 +10,20 @@
 {% endblock %}
 
 {% block content %}
+
+{% if updateDraftCaseError %}
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: [
+        {
+          text: updateDraftCaseError,
+          href: '#task-list-1'
+        }
+      ]
+    })
+  }}
+{% endif %}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

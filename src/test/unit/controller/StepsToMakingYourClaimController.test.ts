@@ -375,6 +375,8 @@ describe('Steps to Making your claim Controller', () => {
     const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
     request.session.userCase.updateDraftCaseError = 'Some error';
     await stepsToMakingYourClaimController.get(request, response);
+    const renderData = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderData.updateDraftCaseError).toBe('Some error');
     expect(request.session.userCase.updateDraftCaseError).toBeUndefined();
   });
 });

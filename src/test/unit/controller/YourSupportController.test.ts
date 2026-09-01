@@ -862,9 +862,10 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
   });
 
-  it('should redirect home when replacement flags cannot be saved to a draft case', async () => {
+  it('should redirect back to claim steps when replacement flags cannot be saved to a draft case', async () => {
     handleUpdateDraftCaseMock.mockImplementationOnce(async req => {
       req.session.userCase.updateDraftCaseError = 'Unable to save draft';
+      req.session.returnUrl = '/not-found';
     });
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
@@ -883,7 +884,12 @@ describe('Your Support Controller', () => {
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        claimantExternalFlags: {
+          roleOnCase: 'Claimant',
+          details: [],
+        },
       },
+      session: { returnUrl: PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER },
     });
     req.params = { id: 'journey-id' };
     req.headers = { 'x-forwarded-host': 'localhost:3002' };
@@ -892,7 +898,10 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.userCase.updateDraftCaseError).toBe('Unable to save draft');
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([]);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should render the draft support confirmation page', async () => {

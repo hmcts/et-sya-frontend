@@ -23,6 +23,7 @@ const YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS: keyof typeof PageUrls = 'CLAIM_STEPS';
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+    const updateDraftCaseError = req.session.userCase?.updateDraftCaseError;
     if (req.session.userCase?.updateDraftCaseError !== undefined) {
       req.session.userCase.updateDraftCaseError = undefined;
     }
@@ -158,6 +159,7 @@ export default class StepsToMakingYourClaimController {
         languageParam ? '&' : '?'
       }redirect=claim-steps`,
       redirectUrl,
+      updateDraftCaseError,
     });
   }
 }
