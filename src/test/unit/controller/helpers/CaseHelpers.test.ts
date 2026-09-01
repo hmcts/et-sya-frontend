@@ -253,6 +253,26 @@ describe('handle update draft case', () => {
     expect(req.session.userCase).toBeDefined();
   });
 
+  it('should preserve the case type when the draft update response omits it', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          id: '1234',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ session: mockSession([], [], []) });
+    req.session.userCase.caseTypeId = CaseTypeId.SCOTLAND;
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.caseTypeId).toBe(CaseTypeId.SCOTLAND);
+  });
+
   it('should store a safe return url and language-specific error when saving a Welsh draft fails', async () => {
     jest.clearAllMocks();
     caseApi.updateDraftCase = jest.fn().mockRejectedValueOnce(new Error('draft update failed'));
@@ -301,6 +321,26 @@ describe('handle update submitted case flags', () => {
     expect(caseApi.updateSubmittedCaseFlags).toHaveBeenCalledWith(originalUserCase);
     expect(req.session.save).toHaveBeenCalled();
     expect(mockLogger.info).toHaveBeenCalledWith('Updated submitted case flags for case id: testUserCaseId');
+  });
+
+  it('should preserve the case type when the submitted flag update response omits it', async () => {
+    caseApi.updateSubmittedCaseFlags = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          id: '1234',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ session: mockSession([], [], []) });
+    req.session.userCase.caseTypeId = CaseTypeId.SCOTLAND;
+
+    await handleUpdateSubmittedCaseFlags(req, mockLogger);
+
+    expect(req.session.userCase.caseTypeId).toBe(CaseTypeId.SCOTLAND);
   });
 
   it('should log and rethrow submitted case flag update failures', async () => {

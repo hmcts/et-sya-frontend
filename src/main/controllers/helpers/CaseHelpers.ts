@@ -71,7 +71,11 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workAddressTypes = req.session.userCase.workAddressTypes;
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
+      const caseTypeId = req.session.userCase.caseTypeId;
       req.session.userCase = fromApiFormat(response.data);
+      if (req.session.userCase.caseTypeId === undefined) {
+        req.session.userCase.caseTypeId = caseTypeId;
+      }
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       if (req.session.userCase.addressEnterPostcode === undefined) {
         req.session.userCase.addressEnterPostcode = addressEnterPostcode;
@@ -110,9 +114,13 @@ export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logg
 
 export const handleUpdateSubmittedCaseFlags = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
+    const caseTypeId = req.session.userCase.caseTypeId;
     const response = await getCaseApi(req.session.user?.accessToken).updateSubmittedCaseFlags(req.session.userCase);
     logger.info(`Updated submitted case flags for case id: ${req.session.userCase.id}`);
     req.session.userCase = fromApiFormat(response.data);
+    if (req.session.userCase.caseTypeId === undefined) {
+      req.session.userCase.caseTypeId = caseTypeId;
+    }
     req.session.save();
   } catch (error) {
     logger.error(`Failed to update submitted case flags ${req.session.userCase.id}: ${error.message}`);
