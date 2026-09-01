@@ -61,33 +61,23 @@ export const getRedirectUrl = (userCase: CaseWithId, languageParam: string, isRe
 };
 
 export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
-  const totalSections = 4;
-  let sectionCount = 0;
+  const sectionChecks =
+    userCase?.claimantRepresentedQuestion === YesOrNo.YES
+      ? [
+          userCase?.representativeDetailsCheck,
+          userCase?.representedClaimantDetailsCheck,
+          userCase?.employmentAndRespondentCheck,
+          userCase?.claimDetailsCheck,
+        ]
+      : [userCase?.personalDetailsCheck, userCase?.employmentAndRespondentCheck, userCase?.claimDetailsCheck];
 
-  if (userCase?.personalDetailsCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  if (userCase?.employmentAndRespondentCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  if (userCase?.claimDetailsCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  const allSectionsCompleted = !!(
-    userCase?.personalDetailsCheck === YesOrNo.YES &&
-    userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
-    userCase?.claimDetailsCheck === YesOrNo.YES
-  );
-
-  if (allSectionsCompleted) {
-    sectionCount++;
-  }
+  // The final task is submitting the claim, which only opens once every section is complete
+  const totalSections = sectionChecks.length + 1;
+  const completedSections = sectionChecks.filter(check => check === YesOrNo.YES).length;
+  const allSectionsCompleted = completedSections === sectionChecks.length;
 
   const overallStatus: AnyRecord = {
-    sectionCount,
+    sectionCount: allSectionsCompleted ? completedSections + 1 : completedSections,
     totalSections,
   };
 

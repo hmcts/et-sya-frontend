@@ -5,6 +5,7 @@ import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { ErrorPages, PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import {
+  getOverallStatus,
   getRedirectUrl,
   getUserApplications,
   getUserCasesByLastModified,
@@ -632,6 +633,50 @@ describe('get User applications', () => {
     ];
     const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations, '?lng=en');
     expect(result).toStrictEqual(mockApplications);
+  });
+});
+
+describe('getOverallStatus', () => {
+  const draft = (overrides: Partial<CaseWithId>): CaseWithId =>
+    ({ id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS, ...overrides } as CaseWithId);
+
+  it('should count four tasks for a claimant making their own claim', () => {
+    expect(getOverallStatus(draft({}), mockEnglishClaimTypesTranslations)).toBe('0 of 4 tasks completed');
+  });
+
+  it('should count the claimant sections as they are completed', () => {
+    const userCase = draft({ personalDetailsCheck: YesOrNo.YES, claimDetailsCheck: YesOrNo.YES });
+    expect(getOverallStatus(userCase, mockEnglishClaimTypesTranslations)).toBe('2 of 4 tasks completed');
+  });
+
+  it('should count five tasks for a represented claim', () => {
+    const userCase = draft({ claimantRepresentedQuestion: YesOrNo.YES });
+    expect(getOverallStatus(userCase, mockEnglishClaimTypesTranslations)).toBe('0 of 5 tasks completed');
+  });
+
+  it('should count the representative sections as they are completed', () => {
+    const userCase = draft({
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeDetailsCheck: YesOrNo.YES,
+      representedClaimantDetailsCheck: YesOrNo.YES,
+    });
+    expect(getOverallStatus(userCase, mockEnglishClaimTypesTranslations)).toBe('2 of 5 tasks completed');
+  });
+
+  it('should not count the claimant-only section for a represented claim', () => {
+    const userCase = draft({ claimantRepresentedQuestion: YesOrNo.YES, personalDetailsCheck: YesOrNo.YES });
+    expect(getOverallStatus(userCase, mockEnglishClaimTypesTranslations)).toBe('0 of 5 tasks completed');
+  });
+
+  it('should award the final task once every represented section is complete', () => {
+    const userCase = draft({
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeDetailsCheck: YesOrNo.YES,
+      representedClaimantDetailsCheck: YesOrNo.YES,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
+    });
+    expect(getOverallStatus(userCase, mockEnglishClaimTypesTranslations)).toBe('5 of 5 tasks completed');
   });
 });
 
