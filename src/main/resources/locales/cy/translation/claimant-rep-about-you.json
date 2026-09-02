@@ -1,0 +1,71 @@
+{
+  "title": "Amdanoch chi",
+  "h1": "Amdanoch chi",
+  "submitBtn": "Cadw",
+  "name": "Enw",
+  "organisation": "Sefydliad",
+  "typeOfRepresentative": "Math o gynrychiolydd",
+  "selectAType": "Dewiswch fath",
+  "employmentAdvisor": "Cynghorydd cyflogaeth",
+  "citizensAdviceBureau": "Canolfan Cyngor ar Bopeth",
+  "freeRepresentationUnit": "Uned Cynrychiolaeth Am Ddim",
+  "lawCentre": "Canolfan y Gyfraith",
+  "tradeUnion": "Undeb Llafur",
+  "solicitor": "Cyfreithiwr",
+  "privateIndividual": "Unigolyn preifat",
+  "tradeAssociation": "Cymdeithas fasnach",
+  "other": "Arall",
+  "enterPostcode": "Rhowch god post yn y DU",
+  "findAddress": "Dod o hyd i gyfeiriad",
+  "selectAddress": "Dewiswch gyfeiriad",
+  "useThisAddress": "Defnyddiwch y cyfeiriad hwn",
+  "buildingAndStreet": "Adeilad a stryd",
+  "addressLine2": "Llinell cyfeiriad 2",
+  "addressLine3": "Llinell cyfeiriad 3",
+  "postcode": "Cod post",
+  "email": "E-bost",
+  "phone": "Ffôn",
+  "aboutYouDetails": {
+    "name": "Enw",
+    "organisation": "Sefydliad",
+    "typeOfOrganisation": "Math o sefydliad",
+    "address": "Cyfeiriad",
+    "email": "E-bost",
+    "phone": "Ffôn"
+  },
+  "errors": {
+    "hiddenErrorField": {
+      "invalid": "Dylech gwblhau eich enw, cyfeiriad ac e-bost cyn y gallwch gyflwyno"
+    },
+    "representativeName": {
+      "required": "Nodwch eich enw"
+    },
+    "representativeType": {
+      "required": "Dewiswch fath o gynrychiolydd"
+    },
+    "representativeEnterPostcode": {
+      "required": "Nodwch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Nodwch god post dilys. Er enghraifft, SW1 1AA"
+    },
+    "repAddress1": {
+      "required": "Nodwch adeilad a stryd",
+      "invalid": "Nodwch adeilad a stryd - hyd at 150 o nodau"
+    },
+    "repAddress2": {
+      "required": "Nodwch linell cyfeiriad 2 - hyd at 50 o nodau",
+      "invalid": "Nodwch linell cyfeiriad 2 - hyd at 50 o nodau"
+    },
+    "repAddressTown": {
+      "required": "Nodwch linell cyfeiriad 3 - hyd at 50 o nodau",
+      "invalid": "Nodwch linell cyfeiriad 3 - hyd at 50 o nodau"
+    },
+    "claimantRepEmail": {
+      "required": "Nodwch eich cyfeiriad e-bost",
+      "invalid": "Rhowch gyfeiriad e-bost yn y fformat cywir, er enghraifft enw@enghraifft.com"
+    },
+    "representativePhoneNumber": {
+      "invalid": "Nodwch rif ffôn dilys yn y DU neu gadewch y blwch yn wag",
+      "nonnumeric": "Nodwch rhif ffôn yn y DU, fel 01623 960 001, 07700 900 983 neu gadewch y blwch yn wag"
+    }
+  }
+}

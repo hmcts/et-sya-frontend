@@ -8002,9 +8002,9 @@ __metadata:
   linkType: hard
 
 "dayjs@npm:^1.11.7":
-  version: 1.11.21
-  resolution: "dayjs@npm:1.11.21"
-  checksum: 10/dd16f9f2706b61b90e3c346a3211ac3afd9e26193136ce0e87f70bf74d1c17a447bceb230a88b175467fc9f5e3243d8c1544b9897092a12d9c80ee44d338dcb6
+  version: 1.11.23
+  resolution: "dayjs@npm:1.11.23"
+  checksum: 10/61d29544ca1553369f75541b5abf9c1bb6a978991498923a2d5721c9df3eca513b2c15ff5534de6930dc553de5d6f2b8f8047149f3528df906b21f51df637463
   languageName: node
   linkType: hard
 
@@ -9241,8 +9241,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^29.0.0":
-  version: 29.16.1
-  resolution: "eslint-plugin-jest@npm:29.16.1"
+  version: 29.16.6
+  resolution: "eslint-plugin-jest@npm:29.16.6"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.0.0"
   peerDependencies:
@@ -9257,7 +9257,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/c13741296e115c757f11f912712b49ad35eac1c09323c65a88a75898244ae4c42e9b5046c0e48263321a048701d891a0a887ae7a3650752873d22e86c9d564f8
+  checksum: 10/080eb1b22e583c06ac881963f7cf8aa52448ef015d743fd7fe519853ff7a6ebac05d55001f64e4d7298af006d5d7e636186e83a6850695b3f901d7e62acfe77b
   languageName: node
   linkType: hard
 
@@ -10878,9 +10878,9 @@ __metadata:
   linkType: hard
 
 "govuk-frontend@npm:^6.0.0":
-  version: 6.2.0
-  resolution: "govuk-frontend@npm:6.2.0"
-  checksum: 10/3d92ae94d1030d839cb8db0ae114df98f151bc851728514f80c99d9e61633cface7019fb4203f284289582717ca6de29d5bf1f4ff65b4bf14ecc65d214e7f8e0
+  version: 6.4.0
+  resolution: "govuk-frontend@npm:6.4.0"
+  checksum: 10/e98a24d8e68626154775b5f84478ad12d144c1c4822d539faaf608bb3b60862d4786f6ac5f195893439b38bdb23c8177826768beb9cb793d8f8edb43e74a4e6f
   languageName: node
   linkType: hard
 
@@ -13435,7 +13435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.0.0, lodash@npm:^4.17.11, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.23, lodash@npm:^4.3.0":
+"lodash@npm:^4.17.23":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
