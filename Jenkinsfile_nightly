@@ -64,7 +64,7 @@ parameters([
     ])
 ])
 
-@Library("Infrastructure")
+@Library("Infrastructure@2.4.9")
 
 def type = "nodejs"
 def product = "et"
@@ -91,7 +91,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
-    
+
     // enableSecurityScan(
       // urlExclusions: urlExclusions,
       // alertFilters: alertFilters
