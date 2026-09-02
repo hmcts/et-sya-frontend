@@ -1,4 +1,4 @@
-import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { CaseTypeId, CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import {
@@ -9,8 +9,9 @@ import {
   languages,
 } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses, sectionIndexToLinkNames } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
+import { getCuiYourSupportFeature } from '../../modules/featureFlag/CuiYourSupportFeature';
 
 import { isHearingExist } from './HearingHelpers';
 import { shouldShowViewRespondentContactDetails } from './RespondentContactDetailsHelper';
@@ -41,9 +42,25 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
 
+  if (getCuiYourSupportFeature().isEnabled(userCase.caseTypeId)) {
+    hubLinksStatuses[HubLinkNames.YourSupport] = userCase.claimantExternalFlags?.details?.length
+      ? HubLinkStatus.SUBMITTED
+      : HubLinkStatus.OPTIONAL;
+  }
+
   hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails] = shouldShowViewRespondentContactDetails(userCase)
     ? HubLinkStatus.READY_TO_VIEW
     : HubLinkStatus.NOT_YET_AVAILABLE;
+};
+
+export const getSectionIndexToLinkNames = (caseTypeId?: CaseTypeId): HubLinkNames[][] => {
+  const sections = sectionIndexToLinkNames.map(linkNames => [...linkNames]);
+
+  if (getCuiYourSupportFeature().isEnabled(caseTypeId)) {
+    sections[0] = [...sections[0], HubLinkNames.YourSupport];
+  }
+
+  return sections;
 };
 
 export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
@@ -281,6 +298,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   };
   return new Map<string, string>([
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
+    [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + baseUrls[languageParam]],
     [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
     [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS + baseUrls[languageParam]],

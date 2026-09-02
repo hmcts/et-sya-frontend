@@ -223,6 +223,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+    ...(fromApiCaseData.case_data?.claimantExternalFlags !== undefined
+      ? { claimantExternalFlags: fromApiCaseData.case_data.claimantExternalFlags }
+      : {}),
   };
 }
 
@@ -234,7 +237,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   return updateCaseBody;
 }
 export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
-  return {
+  const updateCaseBody: UpdateCaseBody = {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
     case_data: {
@@ -331,6 +334,12 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       hubLinksStatuses: caseItem.hubLinksStatuses,
     },
   };
+
+  if (caseItem.claimantExternalFlags !== undefined) {
+    updateCaseBody.case_data.claimantExternalFlags = caseItem.claimantExternalFlags;
+  }
+
+  return updateCaseBody;
 }
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {

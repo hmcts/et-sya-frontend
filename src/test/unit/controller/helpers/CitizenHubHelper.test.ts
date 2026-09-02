@@ -4,6 +4,7 @@ import {
   checkIfRespondentIsSystemUser,
   getAcknowledgementAlert,
   getHubLinksUrlMap,
+  getSectionIndexToLinkNames,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
@@ -13,13 +14,15 @@ import {
   updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
-import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
+import { CaseTypeId, CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState, DocumentDetail } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { StoreNotification } from '../../../../main/definitions/storeNotification';
+import { CuiYourSupportFeature } from '../../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../../main/modules/featureFlag/CuiYourSupportFeature';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
 import {
   mockTseAdminClaimantRespondNotViewed,
@@ -31,6 +34,10 @@ import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
 
 const DATE = 'August 19, 2022';
+const enableCuiYourSupportForScotland = (): jest.SpyInstance =>
+  jest
+    .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+    .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
 
 describe('updateHubLinkStatuses', () => {
   it('should set RespondentResponse hubLink status to WAITING_FOR_TRIBUNAL', () => {
@@ -93,6 +100,90 @@ describe('updateHubLinkStatuses', () => {
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.Et1ClaimForm]).toEqual(HubLinkStatus.NOT_VIEWED);
+  });
+
+  it('should set YourSupport hubLink status to SUBMITTED when support flags exist and CUI your support is enabled', () => {
+    const featureMock = enableCuiYourSupportForScotland();
+    try {
+      const userCase: CaseWithId = {
+        id: '1',
+        caseTypeId: CaseTypeId.SCOTLAND,
+        state: CaseState.SUBMITTED,
+        createdDate: DATE,
+        lastModified: DATE,
+        respondents: undefined,
+        claimantExternalFlags: {
+          details: [
+            {
+              id: '1',
+              value: {
+                name: 'Support filling in forms',
+                flagCode: 'RA0018',
+              },
+            },
+          ],
+        },
+      };
+
+      const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+      updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+      expect(hubLinksStatuses[HubLinkNames.YourSupport]).toEqual(HubLinkStatus.SUBMITTED);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
+  it('should set YourSupport hubLink status to OPTIONAL when no support flags exist and CUI your support is enabled', () => {
+    const featureMock = enableCuiYourSupportForScotland();
+    try {
+      const userCase: CaseWithId = {
+        id: '1',
+        caseTypeId: CaseTypeId.SCOTLAND,
+        state: CaseState.SUBMITTED,
+        createdDate: DATE,
+        lastModified: DATE,
+        respondents: undefined,
+      };
+
+      const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+      hubLinksStatuses[HubLinkNames.YourSupport] = HubLinkStatus.SUBMITTED;
+
+      updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+      expect(hubLinksStatuses[HubLinkNames.YourSupport]).toEqual(HubLinkStatus.OPTIONAL);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
+  it('should not update YourSupport hubLink status when CUI your support is disabled for the case type', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: undefined,
+      claimantExternalFlags: {
+        details: [
+          {
+            id: '1',
+            value: {
+              name: 'Support filling in forms',
+              flagCode: 'RA0018',
+            },
+          },
+        ],
+      },
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.YourSupport]).toEqual(HubLinkStatus.OPTIONAL);
   });
 
   it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if ET3 is received', () => {
@@ -608,9 +699,29 @@ describe('shouldShowRespondentApplicationReceived', () => {
 });
 
 describe('getHubLinksUrlMap', () => {
+  it('does not place the your support link under your claim by default', () => {
+    const sectionIndexToLinkNames = getSectionIndexToLinkNames(CaseTypeId.ENGLAND_WALES);
+
+    expect(sectionIndexToLinkNames[0]).toStrictEqual([HubLinkNames.Et1ClaimForm]);
+    expect(sectionIndexToLinkNames.flat().filter(linkName => linkName === HubLinkNames.YourSupport)).toHaveLength(0);
+  });
+
+  it('places the your support link under your claim when CUI your support is enabled for the case type', () => {
+    const featureMock = enableCuiYourSupportForScotland();
+    try {
+      const sectionIndexToLinkNames = getSectionIndexToLinkNames(CaseTypeId.SCOTLAND);
+
+      expect(sectionIndexToLinkNames[0]).toStrictEqual([HubLinkNames.Et1ClaimForm, HubLinkNames.YourSupport]);
+      expect(sectionIndexToLinkNames.flat().filter(linkName => linkName === HubLinkNames.YourSupport)).toHaveLength(1);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
   it('returns correct links when respondent is system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+      [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
       [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS],
@@ -627,6 +738,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is system user in Welsh', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + languages.WELSH_URL_PARAMETER],
       [
         HubLinkNames.RespondentResponse,
@@ -646,6 +758,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is non-system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+      [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
       [HubLinkNames.ViewRespondentContactDetails, PageUrls.RESPONDENT_CONTACT_DETAILS],
@@ -662,6 +775,7 @@ describe('getHubLinksUrlMap', () => {
   it('returns correct links when respondent is non-system user in Welsh', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + languages.WELSH_URL_PARAMETER],
       [
         HubLinkNames.RespondentResponse,

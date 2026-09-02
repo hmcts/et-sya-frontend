@@ -2,7 +2,7 @@
   "port": 3002,
   "services": {
     "idam": {
-      "clientID": "et-sya",
+      "clientID": "et_sya",
       "authorizationURL": "http://localhost:5062/login",
       "hmctsAccessURL": "http://localhost:5062/o/authorize",
       "clientSecret": "test1234",
@@ -24,6 +24,10 @@
     },
     "launchDarkly": {
       "key": "TO BE PICKED UP FROM ENV"
+    },
+    "cui": {
+      "endpoint": "http://localhost:3100",
+      "hmctsServiceId": "BHA1"
     }
   },
   "session": {
@@ -34,5 +38,10 @@
   },
   "csrf": {
     "secret": "0123456789abcdef0123456789abcdef"
+  },
+  "featureFlags": {
+    "cuiYourSupport": {
+      "enabledCaseTypeIds": []
+    }
   }
 }

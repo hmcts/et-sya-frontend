@@ -8,19 +8,22 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getCuiYourSupportFeature } from '../modules/featureFlag/CuiYourSupportFeature';
 import { getPreloginCaseData } from '../services/CacheService';
 import { getCaseApi } from '../services/CaseService';
 
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { addParameterToUrl, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StepsToMakingYourClaimController');
+const YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS: keyof typeof PageUrls = 'CLAIM_STEPS';
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+    const updateDraftCaseError = req.session.userCase?.updateDraftCaseError;
     if (req.session.userCase?.updateDraftCaseError !== undefined) {
       req.session.userCase.updateDraftCaseError = undefined;
     }
@@ -28,11 +31,10 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
-    const { userCase } = req.session;
     if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
-      if (userCase.id === undefined) {
+      if (req.session.userCase?.id === undefined) {
         // todo try-catch this - if createCase errors the whole app fails.
         const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
         logger.info(`Created Draft Case - ${newCase.data.id}`);
@@ -41,32 +43,51 @@ export default class StepsToMakingYourClaimController {
       setUserCaseWithRedisData(req, caseData);
     }
 
+    const { userCase } = req.session;
+
     const allSectionsCompleted = !!(
       userCase?.personalDetailsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
       userCase?.claimDetailsCheck === YesOrNo.YES
     );
 
+    const yourDetailsLinks = [
+      {
+        url: setUrlLanguage(req, PageUrls.DOB_DETAILS.toString()),
+        linkTxt: (l: AnyRecord): string => l.section1.link1Text,
+        status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
+      },
+      {
+        url: setUrlLanguage(req, PageUrls.ADDRESS_POSTCODE_ENTER.toString()),
+        linkTxt: (l: AnyRecord): string => l.section1.link2Text,
+        status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
+      },
+      {
+        url: setUrlLanguage(req, PageUrls.UPDATE_PREFERENCES.toString()),
+        linkTxt: (l: AnyRecord): string => l.section1.link3Text,
+        status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimantContactPreference),
+      },
+    ];
+
+    if (getCuiYourSupportFeature().isEnabled(userCase?.caseTypeId)) {
+      yourDetailsLinks.push({
+        url: addParameterToUrl(
+          setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),
+          `redirect=${YOUR_SUPPORT_RETURN_TO_CLAIM_STEPS}`
+        ),
+        linkTxt: (l: AnyRecord): string => l.section1.link4Text,
+        status: (): string =>
+          getSectionStatus(
+            userCase?.personalDetailsCheck,
+            userCase?.reasonableAdjustments || userCase?.claimantExternalFlags?.details?.length
+          ),
+      });
+    }
+
     const sections = [
       {
         title: (l: AnyRecord): string => l.section1.title,
-        links: [
-          {
-            url: setUrlLanguage(req, PageUrls.DOB_DETAILS.toString()),
-            linkTxt: (l: AnyRecord): string => l.section1.link1Text,
-            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
-          },
-          {
-            url: setUrlLanguage(req, PageUrls.ADDRESS_POSTCODE_ENTER.toString()),
-            linkTxt: (l: AnyRecord): string => l.section1.link2Text,
-            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
-          },
-          {
-            url: setUrlLanguage(req, PageUrls.UPDATE_PREFERENCES.toString()),
-            linkTxt: (l: AnyRecord): string => l.section1.link3Text,
-            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimantContactPreference),
-          },
-        ],
+        links: yourDetailsLinks,
       },
       {
         title: (l: AnyRecord): string => l.section2.title,
@@ -138,6 +159,7 @@ export default class StepsToMakingYourClaimController {
         languageParam ? '&' : '?'
       }redirect=claim-steps`,
       redirectUrl,
+      updateDraftCaseError,
     });
   }
 }

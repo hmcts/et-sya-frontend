@@ -10,9 +10,11 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getCuiYourSupportFeature } from '../modules/featureFlag/CuiYourSupportFeature';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const logger = getLogger('ReasonableAdjustmentsController');
 
@@ -64,11 +66,21 @@ export default class ReasonableAdjustmentsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (this.isCuiYourSupportEnabled(req)) {
+      res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
+      return;
+    }
+
     await handlePostLogic(req, res, this.form, logger, PageUrls.PERSONAL_DETAILS_CHECK);
   };
 
   @CaseStateCheck()
   public get = (req: AppRequest, res: Response): void => {
+    if (this.isCuiYourSupportEnabled(req)) {
+      res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
+      return;
+    }
+
     const content = getPageContent(req, this.reasonableAdjustmentsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.REASONABLE_ADJUSTMENTS,
@@ -78,4 +90,8 @@ export default class ReasonableAdjustmentsController {
       ...content,
     });
   };
+
+  private isCuiYourSupportEnabled(req: AppRequest): boolean {
+    return getCuiYourSupportFeature().isEnabled(req.session.userCase?.caseTypeId);
+  }
 }

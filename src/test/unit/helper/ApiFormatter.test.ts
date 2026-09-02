@@ -7,6 +7,7 @@ import { DocumentUploadResponse } from '../../../main/definitions/api/documentAp
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   CaseDataCacheKey,
+  CaseFlags,
   CaseType,
   CaseTypeId,
   CaseWithId,
@@ -177,6 +178,77 @@ describe('Should return data in api format', () => {
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
+  });
+
+  it('should include claimant external flags in api update format', () => {
+    const claimantExternalFlags: CaseFlags = {
+      partyName: 'John Doe',
+      roleOnCase: 'Claimant',
+      details: [
+        {
+          id: 'flag-id',
+          value: {
+            name: 'Sign language interpreter',
+            flagCode: 'RA0042',
+            status: 'Active',
+            dateTimeCreated: '2026-04-30T10:00:00.000Z',
+            path: [],
+            hearingRelevant: 'Yes',
+            availableExternally: 'Yes',
+          },
+        },
+      ],
+    };
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
+      claimantExternalFlags,
+    };
+
+    const apiData = toApiFormat(caseItem);
+
+    expect(apiData.case_data.claimantExternalFlags).toEqual(claimantExternalFlags);
+  });
+
+  it('should include claimant external flags in user case format', () => {
+    const claimantExternalFlags: CaseFlags = {
+      partyName: 'John Doe',
+      roleOnCase: 'Claimant',
+      details: [],
+    };
+    const apiCaseData = {
+      ...mockedApiData,
+      case_data: {
+        ...mockedApiData.case_data,
+        claimantExternalFlags,
+      },
+    } as CaseApiDataResponse;
+
+    const userCase = fromApiFormat(apiCaseData);
+
+    expect(userCase.claimantExternalFlags).toEqual(claimantExternalFlags);
+  });
+
+  it('should not map claimant flags from api format to claimant external flags in user case format', () => {
+    const claimantFlags: CaseFlags = {
+      partyName: 'John Doe',
+      roleOnCase: 'Claimant',
+      details: [],
+    };
+    const apiCaseData = {
+      ...mockedApiData,
+      case_data: {
+        ...mockedApiData.case_data,
+        claimantFlags,
+      },
+    } as CaseApiDataResponse;
+
+    const userCase = fromApiFormat(apiCaseData);
+
+    expect(userCase.claimantExternalFlags).toBeUndefined();
   });
 });
 

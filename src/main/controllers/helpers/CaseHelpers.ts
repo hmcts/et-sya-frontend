@@ -6,7 +6,15 @@ import { LoggerInstance } from 'winston';
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseType,
+  CaseTypeId,
+  CaseWithId,
+  StillWorking,
+  YesOrNo,
+} from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, languages } from '../../definitions/constants';
@@ -38,6 +46,10 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
     req.session.userCase = {} as CaseWithId;
   }
   const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
+  const claimJurisdiction = userDataMap.get(CaseDataCacheKey.CLAIM_JURISDICTION);
+  if (claimJurisdiction) {
+    req.session.userCase.caseTypeId = claimJurisdiction as CaseTypeId;
+  }
   req.session.userCase.claimantRepresentedQuestion =
     userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED) === YesOrNo.YES.toString() ? YesOrNo.YES : YesOrNo.NO;
   req.session.userCase.caseType =
@@ -59,7 +71,11 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workAddressTypes = req.session.userCase.workAddressTypes;
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
+      const caseTypeId = req.session.userCase.caseTypeId;
       req.session.userCase = fromApiFormat(response.data);
+      if (req.session.userCase.caseTypeId === undefined) {
+        req.session.userCase.caseTypeId = caseTypeId;
+      }
       req.session.userCase.workEnterPostcode = workEnterPostcode;
       if (req.session.userCase.addressEnterPostcode === undefined) {
         req.session.userCase.addressEnterPostcode = addressEnterPostcode;
@@ -93,6 +109,22 @@ export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logg
     logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(`Failed to update hub links statuses for case ${req.session.userCase.id}: ${error.message}`);
+  }
+};
+
+export const handleUpdateSubmittedCaseFlags = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    const caseTypeId = req.session.userCase.caseTypeId;
+    const response = await getCaseApi(req.session.user?.accessToken).updateSubmittedCaseFlags(req.session.userCase);
+    logger.info(`Updated submitted case flags for case id: ${req.session.userCase.id}`);
+    req.session.userCase = fromApiFormat(response.data);
+    if (req.session.userCase.caseTypeId === undefined) {
+      req.session.userCase.caseTypeId = caseTypeId;
+    }
+    req.session.save();
+  } catch (error) {
+    logger.error(`Failed to update submitted case flags ${req.session.userCase.id}: ${error.message}`);
+    throw error;
   }
 };
 

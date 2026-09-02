@@ -5,9 +5,11 @@ import redis from 'redis-mock';
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { CaseType, YesOrNo } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
-import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
+import { CaseType, CaseTypeId, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import * as cacheService from '../../../main/services/CacheService';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -18,6 +20,10 @@ import { mockResponse } from '../mocks/mockResponse';
 const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+const enableCuiYourSupportForScotland = (): jest.SpyInstance =>
+  jest
+    .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+    .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
 
 // All page includes links there is no redirect page that is why did not check
 // response.redirect
@@ -49,6 +55,103 @@ describe('Steps to Making your claim Controller', () => {
     const request = mockRequest({ session: mockSession([TypesOfClaim.PAY_RELATED_CLAIM], [], []) });
     stepsToMakingYourClaimController.get(request, response);
     expect(request.session.userCase.typeOfClaim).toEqual([TypesOfClaim.PAY_RELATED_CLAIM]);
+  });
+
+  it('should not link to your support when the case type is not enabled', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
+
+    await stepsToMakingYourClaimController.get(request, response);
+
+    const renderData = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderData.sections[0].links).toHaveLength(3);
+  });
+
+  it('should link to your support with a return marker for enabled claim steps', async () => {
+    const featureMock = enableCuiYourSupportForScotland();
+    try {
+      const response = mockResponse();
+      const request = mockRequest({
+        session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
+      });
+      request.session.userCase.caseTypeId = CaseTypeId.SCOTLAND;
+
+      await stepsToMakingYourClaimController.get(request, response);
+
+      const renderData = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderData.sections[0].links[3].url).toBe(`${PageUrls.YOUR_SUPPORT}?redirect=CLAIM_STEPS`);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
+  it('should preserve the language when linking to your support from enabled claim steps', async () => {
+    const featureMock = enableCuiYourSupportForScotland();
+    try {
+      const response = mockResponse();
+      const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
+      request.session.userCase.caseTypeId = CaseTypeId.SCOTLAND;
+      request.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
+
+      await stepsToMakingYourClaimController.get(request, response);
+
+      const renderData = (response.render as jest.Mock).mock.calls[0][1];
+      expect(renderData.sections[0].links[3].url).toBe(
+        `${PageUrls.YOUR_SUPPORT}${languages.WELSH_URL_PARAMETER}&redirect=CLAIM_STEPS`
+      );
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
+  it('should render your support immediately after creating a Scotland case', async () => {
+    const featureMock = enableCuiYourSupportForScotland();
+    const redisClient = redis.createClient();
+    try {
+      const createdCaseResponse: AxiosResponse<CaseApiDataResponse> = {
+        data: {
+          id: '12234',
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          last_modified: '2019-02-12T14:25:39.015',
+          created_date: '2019-02-12T14:25:39.015',
+          case_data: {
+            caseType: CaseType.SINGLE,
+            typesOfClaim: ['discrimination'],
+            claimantRepresentedQuestion: YesOrNo.YES,
+            caseSource: 'ET1 Online',
+          },
+        },
+        status: 200,
+        statusText: '',
+        headers: undefined,
+        config: undefined,
+      };
+      const res = mockResponse();
+      const req = mockRequestEmpty({});
+      req.url = PageUrls.CLAIM_STEPS;
+      req.session.userCase.id = undefined;
+      req.app = {} as Application;
+      req.app.locals = {};
+      req.app.locals.redisClient = redisClient;
+      req.session.guid = '04a7a170-55aa-4882-8a62-e3c418fa804d';
+      jest
+        .spyOn(cacheService, 'getPreloginCaseData')
+        .mockResolvedValueOnce(
+          '[["claimJurisdiction","ET_Scotland"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"discrimination\\"]"]]'
+        );
+      const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+      getCaseApiClientMock.mockReturnValue(caseApi);
+      caseApi.createCase = jest.fn().mockResolvedValue(createdCaseResponse);
+
+      await stepsToMakingYourClaimController.get(req, res);
+
+      const renderData = (res.render as jest.Mock).mock.calls[0][1];
+      expect(req.session.userCase.caseTypeId).toBe(CaseTypeId.SCOTLAND);
+      expect(renderData.sections[0].links[3].url).toBe(`${PageUrls.YOUR_SUPPORT}?redirect=CLAIM_STEPS`);
+    } finally {
+      redisClient.quit();
+      featureMock.mockRestore();
+    }
   });
 
   it('should create new case, if no case id exists', async () => {
@@ -224,11 +327,56 @@ describe('Steps to Making your claim Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
   });
 
+  it.each([
+    {
+      userCase: {},
+      expectedStatus: sectionStatus.notStarted,
+    },
+    {
+      userCase: { reasonableAdjustments: YesOrNo.NO },
+      expectedStatus: sectionStatus.inProgress,
+    },
+    {
+      userCase: {
+        claimantExternalFlags: {
+          details: [{ id: 'flag-id', value: { name: 'Sign language interpreter' } }],
+        },
+      },
+      expectedStatus: sectionStatus.inProgress,
+    },
+    {
+      userCase: {
+        personalDetailsCheck: YesOrNo.YES,
+        reasonableAdjustments: YesOrNo.NO,
+      },
+      expectedStatus: sectionStatus.completed,
+    },
+  ])('should set your support status to $expectedStatus', async ({ userCase, expectedStatus }) => {
+    const featureMock = enableCuiYourSupportForScotland();
+    try {
+      const response = mockResponse();
+      const request = mockRequest({
+        session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
+      });
+      Object.assign(request.session.userCase, userCase, { caseTypeId: CaseTypeId.SCOTLAND });
+
+      await stepsToMakingYourClaimController.get(request, response);
+
+      const renderData = (response.render as jest.Mock).mock.calls[0][1];
+      const yourSupportLink = renderData.sections[0].links[3];
+      expect(yourSupportLink.status()).toStrictEqual(expectedStatus);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
   it('should clear updateDraftCaseError if it exists', async () => {
     const response = mockResponse();
     const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
     request.session.userCase.updateDraftCaseError = 'Some error';
     await stepsToMakingYourClaimController.get(request, response);
+    const renderData = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderData.updateDraftCaseError).toBe('Some error');
     expect(request.session.userCase.updateDraftCaseError).toBeUndefined();
   });
 });

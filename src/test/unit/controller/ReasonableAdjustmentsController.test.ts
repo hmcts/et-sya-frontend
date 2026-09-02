@@ -1,6 +1,9 @@
 import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -20,6 +23,24 @@ describe('Reasonable Adjustments Controller', () => {
     controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
+  });
+
+  it('should redirect to your support when CUI your support is enabled for the case type', () => {
+    const featureMock = jest
+      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+      .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
+    try {
+      const controller = new ReasonableAdjustmentsController();
+
+      const response = mockResponse();
+      const request = mockRequest({ userCase: { caseTypeId: CaseTypeId.SCOTLAND }, t });
+
+      controller.get(request, response);
+
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT);
+    } finally {
+      featureMock.mockRestore();
+    }
   });
 
   describe('post() reasonable adjustments', () => {
