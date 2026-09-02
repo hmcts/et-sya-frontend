@@ -176,6 +176,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
+    claimantHearingPanelPreference:
+      fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference,
+    claimantHearingPanelPreferenceWhy:
+      fromApiCaseData.case_data?.claimantHearingPreference?.claimant_hearing_panel_preference_why,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
     claimantHearingLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_language,
@@ -192,6 +196,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
     compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
     otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
+    dateOfLastEvent: parseDateFromString(fromApiCaseData?.case_data?.claimantOtherType?.dateOfLastEvent),
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     createdDate: convertFromTimestampString(fromApiCaseData.created_date, req),
@@ -364,6 +369,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         claimant_benefits_detail: caseItem.benefitsCharCount,
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
         claimant_employed_to: formatDate(caseItem.endDate),
+        dateOfLastEvent: formatDate(caseItem.dateOfLastEvent),
       },
       newEmploymentType: {
         new_job: caseItem.newJob,
@@ -376,6 +382,10 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
         hearing_preferences: caseItem.hearingPreferences,
         hearing_assistance: caseItem.hearingAssistance,
+        claimant_hearing_panel_preference: caseItem.claimantHearingPanelPreference,
+        claimant_hearing_panel_preference_why: Array.isArray(caseItem.claimantHearingPanelPreferenceWhy)
+          ? (caseItem.claimantHearingPanelPreferenceWhy as string[]).find(v => v && v.trim().length > 0)
+          : caseItem.claimantHearingPanelPreferenceWhy,
         contact_language: caseItem.claimantContactLanguagePreference,
         hearing_language: caseItem.claimantHearingLanguagePreference,
       },

@@ -114,6 +114,7 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
+  dateOfLastEvent?: CaseDate;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -145,6 +146,8 @@ export interface Case {
   reasonableAdjustmentsDetail?: string;
   hearingPreferences?: HearingPreference[];
   hearingAssistance?: string;
+  claimantHearingPanelPreference?: string;
+  claimantHearingPanelPreferenceWhy?: string;
   claimJurisdiction?: string;
   respondentName?: string;
   claimantSex?: Sex;
