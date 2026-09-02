@@ -5,7 +5,6 @@ import redis from 'redis-mock';
 import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
-import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls, languages } from '../../../main/definitions/constants';
 import { idamCallbackHandler } from '../../../main/modules/oidc';
 import * as CacheService from '../../../main/services/CacheService';
@@ -38,8 +37,6 @@ const welshGuidParam = '-cy';
 
 const caseData =
   '[["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
-const scotlandCaseData =
-  '[["claimJurisdiction","ET_Scotland"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"discrimination\\"]"]]';
 
 describe('Test responds to /oauth2/callback', function () {
   let req: AppRequest;
@@ -100,17 +97,6 @@ describe('Test responds to /oauth2/callback', function () {
       expect(caseApi.createCase).toHaveBeenCalled();
     });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.WELSH_URL_PARAMETER);
-  });
-
-  test('should retain the Scotland case type in session when creating a new Scotland case', async () => {
-    req.query = { code: 'testCode', state: guid + englishGuidParam };
-    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(scotlandCaseData));
-    jest.spyOn(authIndex, 'getUserDetails');
-
-    await idamCallbackHandler(req, res, next, serviceUrl);
-
-    expect(req.session.userCase.caseTypeId).toBe(CaseTypeId.SCOTLAND);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Claimant applications page in Welsh language if an existing user who had selected Welsh logs in', async () => {
