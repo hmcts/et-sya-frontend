@@ -10,10 +10,10 @@ import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
+import { CaseApiParams, DefaultValues, JavaApiUrls, Roles, ServiceErrors } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
-import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
+import { getClaimantRepAboutYouUpdateCaseBody, toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
 
@@ -31,9 +31,11 @@ export class CaseApi {
     }
   };
 
-  getUserCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
+  getUserCases = async (caseUserRole?: string): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
     try {
-      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
+      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES, {
+        params: caseUserRole ? { [CaseApiParams.CASE_USER_ROLE]: caseUserRole } : undefined,
+      });
     } catch (error) {
       throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
     }
@@ -91,6 +93,17 @@ export class CaseApi {
     }
   };
 
+  updateClaimantRepAboutYou = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.post(JavaApiUrls.UPDATE_CASE_SUBMITTED, getClaimantRepAboutYouUpdateCaseBody(caseItem));
+    } catch (error) {
+      throw new Error(
+        'Error updating claimant rep about you: ' +
+          axiosErrorDetails(error, { action: 'updateClaimantRepAboutYou', caseId: caseItem.id })
+      );
+    }
+  };
+
   deleteDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.post(JavaApiUrls.DELETE_DRAFT_CASE, toApiFormat(caseItem));
@@ -103,7 +116,7 @@ export class CaseApi {
 
   updateHubLinksStatuses = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, {
+      return await this.axios.put(JavaApiUrls.UPDATE_HUB_LINKS_STATUSES, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         hub_links_statuses: caseItem.hubLinksStatuses,

@@ -1,0 +1,27 @@
+{
+  "title": "Representative's address",
+  "pageHeader": "What is the representative's contact address?",
+  "addressLine1": "Address line 1",
+  "addressLine2": "Address line 2 (optional)",
+  "town": "Town or city",
+  "country": "Country",
+  "postcode": "Postcode (optional)",
+  "errors": {
+    "repAddress1": {
+      "required": "Enter the first line of the representative's address",
+      "invalid": "Enter the first line of the representative's address - up to 150 characters"
+    },
+    "repAddress2": {
+      "required": "Enter the second line of the representative's address - up to 50 characters",
+      "invalid": "Enter the second line of the representative's address - up to 50 characters"
+    },
+    "repAddressTown": {
+      "required": "Enter a town or city for the representative's address - up to 50 characters",
+      "invalid": "Enter a town or city for the representative's address - up to 50 characters"
+    },
+    "repAddressCountry": {
+      "required": "Enter a country for the representative's address - up to 50 characters",
+      "invalid": "Enter a country for the representative's address - up to 50 characters"
+    }
+  }
+}

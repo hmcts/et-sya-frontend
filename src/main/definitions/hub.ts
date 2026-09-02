@@ -1,4 +1,5 @@
 export enum HubLinkNames {
+  AboutYou = 'aboutYou',
   Et1ClaimForm = 'et1ClaimForm',
   RespondentResponse = 'respondentResponse',
   ViewRespondentContactDetails = 'viewRespondentContactDetails',
@@ -18,6 +19,8 @@ export class HubLinksStatuses {
     Object.values(HubLinkNames).forEach(name => {
       if (name === HubLinkNames.Et1ClaimForm) {
         this[name] = HubLinkStatus.SUBMITTED;
+      } else if (name === HubLinkNames.AboutYou) {
+        this[name] = HubLinkStatus.OPTIONAL;
       } else if (name === HubLinkNames.ContactTribunal) {
         this[name] = HubLinkStatus.OPTIONAL;
       } else if (name === HubLinkNames.Documents) {
@@ -79,6 +82,7 @@ export const displayStatusColorMap = new Map<HubLinkStatus, string>([
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
+  [HubLinkNames.AboutYou],
   [HubLinkNames.Et1ClaimForm],
   [HubLinkNames.RespondentResponse, HubLinkNames.ViewRespondentContactDetails],
   [HubLinkNames.HearingDetails],

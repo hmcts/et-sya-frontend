@@ -1,7 +1,11 @@
 {
   "title": "Tynnu fy hawliad yn ôl",
   "applicationType": "Tynnu fy hawliad yn ôl",
+  "applicationTypeRep": "Tynnu’r hawliad yn ôl",
   "applicationTitle": "Rwyf eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
+  "applicationTitleRep": "Mae'r hawlydd eisiau tynnu'r cyfan neu ran o'i hawliad yn ôl.",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -11,14 +15,22 @@
       "type": "paragraph",
       "text": "Gallwch dynnu eich hawliad cyfan yn ôl neu ddweud wrthym pa rannau rydych eisiau eu tynnu’n ôl."
     },
-    { "type": "paragraph", "text": "Daw hyn â’ch hawliad neu ran ohono i ben." },
-    { "type": "paragraph", "text": "Gallwch dynnu’ch hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad." },
+    {
+      "type": "paragraph",
+      "text": "Daw hyn â’ch hawliad neu ran ohono i ben."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gallwch dynnu’ch hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad."
+    },
     {
       "type": "paragraph",
       "text": "Os ydych chi’n tynnu’ch hawliad yn ôl oherwydd setliad, gwnewch yn siŵr bod gennych chi'r setliad yn ysgrifenedig."
     },
-
-    { "type": "bold-paragraph", "text": "Tynnu’n ôl a dileu" },
+    {
+      "type": "bold-paragraph",
+      "text": "Tynnu’n ôl a dileu"
+    },
     {
       "type": "paragraph",
       "text": "Unwaith y byddwch yn dweud wrth y tribiwnlys eich bod eisiau tynnu eich hawliad yn ôl, fel arfer bydd y tribiwnlys yn cyhoeddi dyfarniad yn dileu’r hawliad neu ran o’r hawliad."
@@ -31,8 +43,10 @@
       "type": "paragraph",
       "text": "Bydd y tribiwnlys yn defnyddio Rheol 51 o Reolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth i benderfynu a yw dyfarniad dileu yn cael ei gyhoeddi yn dilyn tynnu hawliad yn ôl."
     },
-
-    { "type": "bold-paragraph", "text": "Rheol 51 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth" },
+    {
+      "type": "bold-paragraph",
+      "text": "Rheol 51 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth"
+    },
     {
       "type": "paragraph",
       "text": "Mae Rheol 51 yn nodi, pan fo hawliad, neu ran ohono, wedi’i dynnu’n ôl o dan Reol 50, bydd y tribiwnlys yn cyhoeddi dyfarniad yn ei ddileu (sy’n golygu na all yr hawlydd ddechrau hawliad pellach yn erbyn y parti arall sy’n codi’r un cwyn, neu gŵyn tebyg) oni bai:"
@@ -43,10 +57,18 @@
         "mae’r hawlydd wedi mynegi ar adeg y tynnu’n ôl ddymuniad i gadw’r hawl i godi hawliad pellach ac mae’r tribiwnlys yn fodlon y byddai rheswm dilys dros wneud hynny"
       ]
     },
-    { "type": "paragraph", "text": "neu" },
-    { "type": "list", "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"] },
-
-    { "type": "paragraph", "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:" },
+    {
+      "type": "paragraph",
+      "text": "neu"
+    },
+    {
+      "type": "list",
+      "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"]
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:"
+    },
     {
       "type": "list",
       "items": [
@@ -54,13 +76,97 @@
         "rydych wedi rhoi rheswm derbyniol pam na ddylid dileu’r hawliad"
       ]
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
         "pa rannau o’ch hawliad yr ydych eisiau eu tynnu’n ôl a’u dileu",
         "os nad ydych eisiau i’ch hawliad (neu ran ohono) gael ei ddileu, rhaid i chi egluro pam"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon pan fydd yr hawlydd wedi cyrraedd setliad neu ddim eisiau parhau gyda’r cyfan neu ran o’u hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gall yr hawlydd dynnu eu cais cyfan yn ôl neu ddweud wrthym pa rannau maent eisiau eu tynnu'n ôl."
+    },
+    {
+      "type": "paragraph",
+      "text": "Daw hyn â’ch hawliad neu ran ohono i ben."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gal yr hawlydd dynnu eu hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os ydynt yn tynnu'n ôl oherwydd setliad, gwnewch yn siŵr bod ganddynt y setliad yn ysgrifenedig."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Tynnu’n ôl a dileu"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ar ôl i chi ddweud wrth y tribiwnlys bod yr hawlydd eisiau tynnu eu hawliad yn ôl, bydd y tribiwnlys fel arfer yn cyhoeddi dyfarniad yn dileu’r hawliad neu ran o'r hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae dyfarniad diswyddo yn atal yr hawlydd rhag gwneud yr hawliad hwnnw yn erbyn yr un atebwyr yn y dyfodol."
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd y tribiwnlys yn defnyddio Rheol 51 o Reolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth i benderfynu a yw dyfarniad dileu yn cael ei gyhoeddi yn dilyn tynnu hawliad yn ôl."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Rheol 51 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth"
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae Rheol 51 yn nodi, pan fo hawliad, neu ran ohono, wedi’i dynnu’n ôl o dan Reol 50, bydd y tribiwnlys yn cyhoeddi dyfarniad yn ei ddileu (sy’n golygu na all yr hawlydd ddechrau hawliad pellach yn erbyn y parti arall sy’n codi’r un cwyn, neu gŵyn tebyg) oni bai:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Mae’r hawlydd wedi mynegi dymuniad ar adeg y tynnu’n ôl i gadw’r hawl i godi hawliad pellach ac mae'r tribiwnlys yn fodlon y byddai rheswm dilys dros wneud hynny"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "neu"
+    },
+    {
+      "type": "list",
+      "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"]
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "bod y tribiwnlys yn cysylltu â chi yn gofyn am fwy o wybodaeth",
+        "mae'r hawlydd wedi rhoi rheswm derbyniol pam na ddylid dileu’r hawliad"
+      ]
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "pa rannau o’r hawliad mae'r hawlydd eisiau ei dynnu’n ôl a’i ddileu",
+        "os nad ydy'r hawlydd eisiau i’w hawliad (neu ran ohono) gael ei ddileu, rhaid iddynt egluro pam"
       ]
     }
   ]

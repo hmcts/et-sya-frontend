@@ -1,0 +1,10 @@
+{
+  "title": "A wnaeth yr hawlydd weithio yn y cyfeiriad hwn?",
+  "legend": "A wnaeth yr hawlydd weithio yn",
+  "hintText": "Dewiswch 'Do' os mai dyma'r cyfeiriad lle'r oedd yr hawlydd wedi'i leoli. Dewiswch 'Naddo' os oedd yr hawlydd wedi'i leoli mewn cyfeiriad gwahanol neu'n gweithio o gartref.",
+  "errors": {
+    "claimantWorkAddressQuestion": {
+      "required": "Dywedwch wrthym a wnaeth yr hawlydd weithio yn y cyfeiriad hwn"
+    }
+  }
+}

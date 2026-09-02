@@ -1,5 +1,6 @@
 import { isDateEmpty } from '../components/form/date-validator';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { populateClaimantRepDetailsFromCase } from '../controllers/helpers/ClaimantRepAnswersHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
@@ -24,6 +25,7 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { ClaimantRepresentative } from '../definitions/complexTypes/ClaimantRepresentative';
 import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
@@ -31,6 +33,8 @@ import {
   AllDocumentTypes,
   CcdDataModel,
   ET3_SUPPORTING,
+  OCCUPATION_TO_REPRESENTATIVE_TYPE,
+  REPRESENTATIVE_TYPE_TO_OCCUPATION,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
@@ -81,7 +85,8 @@ export function toApiFormatCreate(
 }
 
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
-  return {
+  const isRepresentedClaimant = fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES;
+  const userCase: CaseWithId = {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
@@ -91,12 +96,41 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
+    caseUserRole: fromApiCaseData.caseUserRole ?? fromApiCaseData.case_data?.caseUserRole,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
     caseType: fromApiCaseData.case_data?.caseType,
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
+    representedClaimantFirstName: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantIndType?.claimant_first_names
+      : undefined,
+    representedClaimantLastName: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantIndType?.claimant_last_name
+      : undefined,
+    representedClaimantDateOfBirth: isRepresentedClaimant
+      ? parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth)
+      : undefined,
+    representedClaimantEmail: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_email_address
+      : undefined,
+    representedClaimantAddress1: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1
+      : undefined,
+    representedClaimantAddress2: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2
+      : undefined,
+    representedClaimantAddressTown: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown
+      : undefined,
+    representedClaimantAddressCountry: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country
+      : undefined,
+    representedClaimantAddressPostcode: isRepresentedClaimant
+      ? fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode
+      : undefined,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
+    representativePhoneNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
     address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
     address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
     addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
@@ -134,6 +168,11 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
     reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
+    representativeDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.representativeDetailsCheck,
+    representedClaimantDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantDetailsCheck,
+    representedClaimantNameProvided: fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantNameProvided,
+    representedClaimantEmailProvided:
+      fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantEmailProvided,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
@@ -221,8 +260,38 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     leadClaimant: fromApiCaseData?.case_data?.leadClaimant,
     caseStayed: fromApiCaseData?.case_data?.batchCaseStayed,
     claimantRepresentative: fromApiCaseData.case_data?.representativeClaimantType,
+    representativeName: fromApiCaseData.case_data?.representativeClaimantType?.name_of_representative,
+    representativeOrgName: fromApiCaseData.case_data?.representativeClaimantType?.name_of_organisation,
+    claimantRepEmail: fromApiCaseData.case_data?.representativeClaimantType?.representative_email_address,
+    representativeType:
+      OCCUPATION_TO_REPRESENTATIVE_TYPE[
+        fromApiCaseData.case_data?.representativeClaimantType?.representative_occupation
+      ],
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+  };
+  populateClaimantRepDetailsFromCase(userCase);
+  return userCase;
+}
+
+/**
+ * The About you page can be used once the case has been submitted, so it sends only the details
+ * that page owns - everything else on the case is left as the tribunal holds it. The
+ * representative's phone number belongs on representativeClaimantType, not on claimantType, so the
+ * claimant's own contact details are never touched from here.
+ */
+export function getClaimantRepAboutYouUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
+  return {
+    case_id: caseItem.id,
+    case_type_id: caseItem.caseTypeId,
+    case_data: {
+      caseType: caseItem.caseType,
+      typesOfClaim: caseItem.typeOfClaim,
+      claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
+      caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+      representativeClaimantType: setClaimantRepApiFormat(caseItem),
+    },
   };
 }
 
@@ -234,6 +303,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   return updateCaseBody;
 }
 export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
+  const isRepresentedClaimant = caseItem.claimantRepresentedQuestion === YesOrNo.YES;
   return {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
@@ -245,23 +315,35 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
-        claimant_first_names: caseItem.firstName,
-        claimant_last_name: caseItem.lastName,
-        claimant_date_of_birth: formatDate(caseItem.dobDate),
+        claimant_first_names: caseItem.representedClaimantFirstName ?? caseItem.firstName,
+        claimant_last_name: caseItem.representedClaimantLastName ?? caseItem.lastName,
+        claimant_date_of_birth: formatDate(caseItem.representedClaimantDateOfBirth ?? caseItem.dobDate),
         claimant_sex: caseItem.claimantSex,
         claimant_preferred_title: isValidPreferredTitle(caseItem.preferredTitle),
         claimant_title_other: isOtherTitle(caseItem.preferredTitle),
       },
       claimantType: {
-        claimant_email_address: caseItem.email,
-        claimant_phone_number: caseItem.telNumber,
+        claimant_email_address: isRepresentedClaimant
+          ? caseItem.representedClaimantEmail ?? caseItem.email
+          : caseItem.email,
+        claimant_phone_number: caseItem.representativePhoneNumber ?? caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
         claimant_addressUK: {
-          AddressLine1: caseItem.address1,
-          AddressLine2: caseItem.address2,
-          PostTown: caseItem.addressTown,
-          PostCode: caseItem.addressPostcode,
-          Country: caseItem.addressCountry,
+          AddressLine1: isRepresentedClaimant
+            ? caseItem.representedClaimantAddress1 ?? caseItem.address1
+            : caseItem.address1,
+          AddressLine2: isRepresentedClaimant
+            ? caseItem.representedClaimantAddress2 ?? caseItem.address2
+            : caseItem.address2,
+          PostTown: isRepresentedClaimant
+            ? caseItem.representedClaimantAddressTown ?? caseItem.addressTown
+            : caseItem.addressTown,
+          PostCode: isRepresentedClaimant
+            ? caseItem.representedClaimantAddressPostcode ?? caseItem.addressPostcode
+            : caseItem.addressPostcode,
+          Country: isRepresentedClaimant
+            ? caseItem.representedClaimantAddressCountry ?? caseItem.addressCountry
+            : caseItem.addressCountry,
         },
       },
       claimantOtherType: {
@@ -316,6 +398,10 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
         personalDetailsCheck: caseItem.personalDetailsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
+        representativeDetailsCheck: caseItem.representativeDetailsCheck,
+        representedClaimantDetailsCheck: caseItem.representedClaimantDetailsCheck,
+        representedClaimantNameProvided: caseItem.representedClaimantNameProvided,
+        representedClaimantEmailProvided: caseItem.representedClaimantEmailProvided,
       },
       claimantWorkAddress: {
         claimant_work_address: {
@@ -329,9 +415,59 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
+      representativeClaimantType: setClaimantRepApiFormat(caseItem),
     },
   };
 }
+
+/**
+ * The About you page collects the building and street but no country, so an address is sent as soon
+ * as its first line is known - requiring a country would silently drop the address the
+ * representative entered.
+ */
+const hasRepAddress = (caseItem: CaseWithId): boolean => !!caseItem.repAddress1?.trim();
+
+/**
+ * Builds the claimant representative details for CCD. Everything about the claimant's own
+ * representative belongs on representativeClaimantType, which backs the "Claimant Representative"
+ * tab.
+ */
+export const setClaimantRepApiFormat = (caseItem: CaseWithId): ClaimantRepresentative => {
+  const claimantRepresentative: ClaimantRepresentative = {
+    name_of_representative: caseItem.representativeName ?? caseItem.claimantRepresentative?.name_of_representative,
+    name_of_organisation: caseItem.representativeOrgName ?? caseItem.claimantRepresentative?.name_of_organisation,
+    representative_email_address:
+      caseItem.claimantRepEmail ?? caseItem.claimantRepresentative?.representative_email_address,
+  };
+
+  const occupation = REPRESENTATIVE_TYPE_TO_OCCUPATION[caseItem.representativeType];
+  if (occupation) {
+    claimantRepresentative.representative_occupation = occupation;
+  }
+
+  if (hasRepAddress(caseItem)) {
+    claimantRepresentative.representative_address = {
+      AddressLine1: caseItem.repAddress1,
+      AddressLine2: caseItem.repAddress2,
+      PostTown: caseItem.repAddressTown,
+      Country: caseItem.repAddressCountry,
+      PostCode: caseItem.repAddressPostcode,
+    };
+  }
+
+  const hasClaimantRepDetails =
+    !!claimantRepresentative.name_of_representative ||
+    !!claimantRepresentative.name_of_organisation ||
+    !!claimantRepresentative.representative_email_address ||
+    !!claimantRepresentative.representative_occupation ||
+    !!claimantRepresentative.representative_address;
+
+  if (hasClaimantRepDetails && caseItem.representativePhoneNumber) {
+    claimantRepresentative.representative_phone_number = caseItem.representativePhoneNumber;
+  }
+
+  return claimantRepresentative;
+};
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
   const mimeType = getFileExtension(document?.originalDocumentName);
@@ -403,6 +539,9 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 };
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
+  if (!responseDate) {
+    return undefined;
+  }
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
   return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }
@@ -453,6 +592,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
 export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
   return representatives?.map(rep => {
     return {
+      ccdId: rep.id,
       respondentId: rep.value.respondentId,
       nameOfRepresentative: rep.value.name_of_representative,
       nameOfOrganisation: rep.value.name_of_organisation,

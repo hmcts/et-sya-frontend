@@ -1,0 +1,33 @@
+{
+  "title": "Math o hawliad",
+  "h1": "Pa fath o hawliad mae'r hawlydd yn ei wneud?",
+  "hint": "Gallwch ddewis bob un sy’n berthnasol i'r hawlydd. Fe ofynnir am ragor o wybodaeth yn hwyrach ymlaen yn yr hawliad. <br><br><span class=\"govuk-!-font-weight-bold\">Dewiswch bob un sy'n berthnasol</span>",
+  "discrimination": {
+    "checkbox": "Gwahaniaethu o unrhyw fath",
+    "hint": "er enghraifft, oherwydd rhyw, ethnigrwydd, anabledd neu nodwedd arall yr hawlydd"
+  },
+  "payRelated": {
+    "checkbox": "Hawliad yn ymwneud â thâl"
+  },
+  "unfairDismissal": {
+    "checkbox": "Diswyddo annheg",
+    "hint": "gan gynnwys diswyddo deongliadol"
+  },
+  "whistleBlowing": {
+    "checkbox": "Chwythu’r chwiban",
+    "hint": "gan gynnwys diswyddo neu unrhyw fath arall o driniaeth annheg yn dilyn chwythu’r chwiban"
+  },
+  "otherTypesOfClaims": {
+    "checkbox": "Math arall o hawliad",
+    "explain": "Dywedwch wrthym yn fras pa fath o hawliad y mae'r hawlydd yn ei wneud. Gallwch ddisgrifio manylion yr hawliad yn nes ymlaen."
+  },
+  "errors": {
+    "typeOfClaim": {
+      "required": "Dewiswch o leiaf un o'r opsiynau isod i ddewis eich math o hawliad."
+    },
+    "otherClaim": {
+      "required": "Dywedwch wrthym yn fras pa fath o hawliad y mae'r hawlydd yn ei wneud",
+      "tooLong": "Rhaid i’r disgrifiad fod yn 100 llythyren neu lai"
+    }
+  }
+}
