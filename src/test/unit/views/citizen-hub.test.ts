@@ -37,7 +37,6 @@ const blueTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--blue';
 const notificationBannerSelector = 'div.govuk-notification-banner__content a.govuk-link';
 const bannerLinkSelector = 'div.govuk-notification-banner__content a.govuk-link';
 const bannerHeaderSelector = 'div.govuk-notification-banner__content h3';
-const multiplePanel = 'multiple-panel';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
@@ -201,7 +200,7 @@ describe('Citizen hub page', () => {
       { selector: tealTagSelector, expectedText: 'Submitted', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Not available yet', expectedCount: 2 },
       { selector: greyTagSelector, expectedText: 'Waiting for the tribunal', expectedCount: 1 },
-      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 5 },
+      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 4 },
     ])('should have the correct statuses: %o', ({ selector, expectedText, expectedCount }) => {
       const elements = htmlRes.querySelectorAll(selector);
 
@@ -218,18 +217,6 @@ describe('Citizen hub page', () => {
         .flatMap(sibling => Array.from(sibling.getElementsByTagName('a')));
 
       expect(links.length > 0).toBe(showLink);
-    });
-
-    it('should render multiple panel', async () => {
-      const panel = htmlRes.getElementsByClassName(multiplePanel);
-      expect(panel[0].innerHTML).toContain('LEAD CLAIM');
-    });
-
-    it('should not render multiple panel when feature off', async () => {
-      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
-      mockLdClient.mockResolvedValue(false);
-      const panel = htmlRes.getElementsByClassName(multiplePanel);
-      expect(panel[0].innerHTML).toContain('LEAD CLAIM');
     });
   });
 

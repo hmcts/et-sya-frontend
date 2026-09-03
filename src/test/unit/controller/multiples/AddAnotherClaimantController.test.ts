@@ -1,5 +1,5 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import AddAnotherClaimantController from '../../../../main/controllers/multiples/AddAnotherClaimantController';
+import AddAnotherClaimantController from '../../../../main/controllers/multiples/et1-submission/AddAnotherClaimantController';
 import { AddAdditionalClaimant } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';

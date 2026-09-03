@@ -1,0 +1,25 @@
+{% if isGroupClaim %}
+
+  <div class="govuk-inset-text inset-text-blue">
+    <h3 class="govuk-notification-banner__heading">
+      {% if isLeadClaimant %}
+        {{ groupClaims.inset.leadHeader }}
+      {% else %}
+        {{ groupClaims.inset.header }}
+      {% endif %}
+    </h3>
+    <p class="govuk-body">
+      {% if isLeadClaimant %}
+        {{ groupClaims.inset.leadP1 }}
+      {% else %}
+        {{ groupClaims.inset.p1 }}
+      {% endif %}
+    </p>
+    <h4 class="govuk-heading-s">{{ groupClaims.inset.subHeading1 }}</h4>
+    <p class="govuk-body">{{ groupClaims.inset.p2 }}</p>
+    <p class="govuk-body">{{ groupClaims.inset.p3 }}</p>
+    <h4 class="govuk-heading-s">{{ groupClaims.inset.subHeading2 }}</h4>
+    <p class="govuk-body">{{ groupClaims.inset.p4 }}<a class="govuk-link" href="{{ groupClaims.inset.p4Url + languageParam }}">{{ groupClaims.inset.p4UrlText }}</a></p>
+  </div>
+
+{% endif %}

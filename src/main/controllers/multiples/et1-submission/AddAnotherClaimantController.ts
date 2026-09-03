@@ -1,16 +1,16 @@
 import { Response } from 'express';
 
-import { Form } from '../../components/form/form';
-import { isFieldFilledIn } from '../../components/form/validator';
-import { AppRequest } from '../../definitions/appRequest';
-import { AddAdditionalClaimant } from '../../definitions/case';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
-import { FormContent, FormFields } from '../../definitions/form';
-import { AnyRecord } from '../../definitions/util-types';
-import { getLogger } from '../../logger';
-import { handlePostLogic } from '../helpers/CaseHelpers';
-import { assignFormData, getPageContent } from '../helpers/FormHelpers';
-import { clearAdditionalClaimantTransientFields } from '../helpers/multiples/ReviewAdditionalClaimantsHelper';
+import { Form } from '../../../components/form/form';
+import { isFieldFilledIn } from '../../../components/form/validator';
+import { AppRequest } from '../../../definitions/appRequest';
+import { AddAdditionalClaimant } from '../../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../../definitions/constants';
+import { FormContent, FormFields } from '../../../definitions/form';
+import { AnyRecord } from '../../../definitions/util-types';
+import { getLogger } from '../../../logger';
+import { handlePostLogic } from '../../helpers/CaseHelpers';
+import { assignFormData, getPageContent } from '../../helpers/FormHelpers';
+import { clearAdditionalClaimantTransientFields } from '../../helpers/multiples/ReviewAdditionalClaimantsHelper';
 
 const logger = getLogger('AddAnotherClaimantController');
 

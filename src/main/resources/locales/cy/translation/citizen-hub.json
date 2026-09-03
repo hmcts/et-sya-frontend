@@ -44,6 +44,7 @@
   "updated": "Wedi ei ddiweddaru",
   "readyToView": "Yn barod i’w gweld",
   "stored": "Wedi’i Storio",
+  "responseOptional": "[W] Response optional",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "submittedBannerText": "Yr amser prosesu presennol yw tua 20 diwrnod gwaith. Gall hyn gynyddu yn ystod cyfnodau prysur.",
   "tribunalRespondedP1": "Mae'r tribiwnlys wedi ymateb i ",
@@ -64,6 +65,25 @@
       "header": "Mae’r tribiwnlys wedi gwrthod y cyfan neu ran o’ch hawliad",
       "link": "Gweld yr hysbysiad gwrthod",
       "p1": "Bydd y tribiwnlys yn cau eich hawliad."
+    },
+    "guidance_link_url": "/multiples/guidance",
+    "guidance_link_text": "[W] Read our guidance about group claims.",
+    "consideringClaimsTogether": {
+      "banner_title": "[W] Important",
+      "heading": "[W] Considering your claim with others",
+      "description": "[W] A legal officer in your case has proposed to join your claim with others to make a group claim. You can find the reasons why, and details about the other claims in the letter.",
+      "letter_link_text": "[W] View the Considering claims together letter.",
+      "sub_heading": "[W] What happens next",
+      "next_steps_part_1": "[W] You do not need to do anything. If you want to respond with reasons why you think these claims should not be considered together, or anything else, you must do this as soon as possible and by ",
+      "next_steps_part_2": "[W]  at the latest. Other parties can also respond.",
+      "objections_text": "[W] If there are no objections after 7 days, the tribunal will contact you again to say that the case has changed to a group claim."
+    },
+    "partOfGroupClaim": {
+      "banner_title": "[W] Important",
+      "heading": "[W] Your claim has changed to a group claim",
+      "description": "[W] The tribunal has ordered that your claim should be considered with others as it includes common or similar issues of fact and law.",
+      "sub_heading": "[W] What happens next",
+      "next_steps": "[W] The case will progress as a group claim. The tribunal will contact you when the group claim is listed for a hearing."
     },
     "respondentReceived": {
       "header": "Mae'r tribiwnlys wedi cael ymateb gan yr atebydd",
@@ -93,6 +113,7 @@
     "orderOrRequest": {
       "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
+      "multipleNotifications": "[W] The tribunal has sent you notifications",
       "link": "Gweld yr hysbysiad",
       "respond": "Ymateb i’r Tribiwnlys"
     },
@@ -144,6 +165,21 @@
     "stayed": "Mae eich hawliad unigol yn cael ei atal. Bydd yr hawliad grŵp yn symud ymlaen. Cewch eich hysbysu am gynnydd yr hawliad grŵp.",
     "nonLead": "Cewch eich hysbysu am gynnydd yr hawliad grŵp.",
     "viewClaim": "Gweld yr hawliad grŵp"
+  },
+  "groupClaims": {
+    "inset": {
+      "header": "[W] You are in a group claim",
+      "leadHeader": "[W] You are the lead case in a group claim",
+      "p1": "[W] The group claim will progress and you can see updates here in your case overview.",
+      "leadP1": "[W] Your case is designated the lead case in a group claim. You can see updates here in your case overview and you will receive notifications on behalf of your group.",
+      "subHeading1": "[W] Group updates",
+      "p2": "[W] Go to 'Group claim requests and applications' to see communication from other parties.",
+      "p3": "[W] Some features may not be available until there are updates to the case. You can still access any previous orders and documents.",
+      "subHeading2": "[W] Guidance",
+      "p4": "[W] Read our ",
+      "p4Url": "/multiples/guidance",
+      "p4UrlText": "[W] guidance about group claims."
+    }
   },
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",

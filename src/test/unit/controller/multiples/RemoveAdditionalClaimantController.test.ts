@@ -1,5 +1,5 @@
 import * as CaseHelper from '../../../../main/controllers/helpers/CaseHelpers';
-import RemoveAdditionalClaimantController from '../../../../main/controllers/multiples/RemoveAdditionalClaimantController';
+import RemoveAdditionalClaimantController from '../../../../main/controllers/multiples/et1-submission/RemoveAdditionalClaimantController';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';

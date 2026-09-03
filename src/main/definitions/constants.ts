@@ -25,6 +25,7 @@ export const LegacyUrls = {
 export const Views = {
   DOCUMENT_VIEW: 'document-view',
   RESPONSE_FROM_RESPONDENT_VIEW: 'response-from-respondent-view',
+  MULTIPLE_GUIDANCE: 'multiples/guidance',
 } as const;
 
 export const TranslationKeys = {
@@ -171,6 +172,7 @@ export const TranslationKeys = {
   REMOVE_ADDITIONAL_CLAIMANT: 'remove-additional-claimant',
   GROUP_REPRESENTATIVE: 'group-representative',
   ADDITIONAL_CLAIMANT_FILE_UPLOAD: 'additional-claimant-file-upload',
+  MULTIPLE_GUIDANCE: 'guidance',
 } as const;
 
 export const PageUrls = {
@@ -178,6 +180,7 @@ export const PageUrls = {
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
+  MULTIPLE_GUIDANCE: '/multiples/guidance',
   ADD_ANOTHER_CLAIMANT: '/add-another-claimant',
   ADDITIONAL_CLAIMANT_PERSONAL_DETAILS: '/additional-claimant-personal-details',
   ADDITIONAL_CLAIMANT_POSTCODE_ENTER: '/additional-claimant-postcode-enter',
@@ -549,6 +552,9 @@ export const NotificationSubjects = {
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
   ECC: 'Employer Contract Claim',
+  CONSIDERING_CLAIMS_TOGETHER: 'Considering claims together',
+  GROUP_CLAIMS: 'Group claims',
+  PART_OF_GROUP_CLAIM: "You're now part of a group claim",
 } as const;
 
 export const NoticeOfECC = 'Notice of Employer Contract Claim';

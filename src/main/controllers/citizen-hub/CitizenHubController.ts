@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { YesOrNo } from '../../definitions/case';
+import { CaseType, YesOrNo } from '../../definitions/case';
 import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -32,6 +32,7 @@ import {
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowConsideringClaimsTogetherAlert,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknowledgement,
@@ -237,6 +238,12 @@ export default class CitizenHubController {
       multiplePanelData: await getMultiplePanelData(userCase, translations, showMultipleData),
       showNoLongerRepresentedNotification,
       claimantRepresentedByOrganisation,
+      showConsideringClaimsTogetherAlert: shouldShowConsideringClaimsTogetherAlert(
+        userCase?.sendNotificationCollection
+      ),
+      isGroupClaim: userCase?.caseType === CaseType.MULTIPLE || userCase?.multipleFlag === YesOrNo.YES,
+      isLeadClaimant: userCase?.leadClaimant === YesOrNo.YES,
+      notificationsNotViewedCount: generalNotifications?.filter(item => item.showAlert)?.length || 0,
     });
   }
 }

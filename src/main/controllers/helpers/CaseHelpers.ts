@@ -9,7 +9,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, languages } from '../../definitions/constants';
+import { NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -168,6 +168,13 @@ export const respondToApplication = async (req: AppRequest, logger: Logger): Pro
 
 export const updateSendNotificationState = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
+    const selected = req.session.userCase?.selectedRequestOrOrder;
+    if (selected?.value) {
+      const isGroupClaims = selected.value.sendNotificationSubject?.includes(NotificationSubjects.GROUP_CLAIMS);
+      if (selected.value.notificationState === HubLinkStatus.NOT_VIEWED || isGroupClaims) {
+        selected.value.notificationState = HubLinkStatus.VIEWED;
+      }
+    }
     await getCaseApi(req.session.user?.accessToken).updateSendNotificationState(req.session.userCase);
     logger.info(`Updated state for selectedRequestOrOrder: ${req.session.userCase.selectedRequestOrOrder.id}`);
   } catch (error) {

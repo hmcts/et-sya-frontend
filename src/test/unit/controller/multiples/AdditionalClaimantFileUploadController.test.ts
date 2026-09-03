@@ -1,6 +1,6 @@
 import * as helper from '../../../../main/controllers/helpers/CaseHelpers';
 import { AdditionalClaimantSpreadsheetService } from '../../../../main/controllers/helpers/multiples/AdditionalClaimantFileUploadService';
-import AdditionalClaimantFileUploadController from '../../../../main/controllers/multiples/AdditionalClaimantFileUploadController';
+import AdditionalClaimantFileUploadController from '../../../../main/controllers/multiples/et1-submission/AdditionalClaimantFileUploadController';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { mockFile } from '../../mocks/mockFile';

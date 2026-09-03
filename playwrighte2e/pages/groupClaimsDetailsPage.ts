@@ -2,6 +2,7 @@ import { BasePage } from './basePage';
 
 export class GroupClaimsDetailsPage extends BasePage {
   async enterGroupClaimsDetails(): Promise<void> {
+    await this.webAction.clickElementByCss('[href="/single-or-multiple-claim?lng=en"]');
     await this.webAction.verifyTextIsVisible('text=Claiming on your own or with others');
     await this.webAction.verifyTextIsVisible('text=Are you making a claim on your own or with others?');
     await this.webAction.verifyTextIsVisible('text=I’m claiming on my own');

@@ -7,6 +7,7 @@ import {
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowPartOfGroupClaimAlert,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
   shouldShowSubmittedAlert,
@@ -929,5 +930,37 @@ describe('updateHubLinkStatuses for HearingDetails', () => {
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
     updateHubLinkStatuses(userCase, hubLinksStatuses);
     expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
+  });
+});
+
+describe('shouldShowPartOfGroupClaimAlert', () => {
+  it('should return true for unviewed You are now part of a group claim notification', () => {
+    const notifications = [
+      {
+        id: '1',
+        value: {
+          sendNotificationGroupClaims: "You're now part of a group claim",
+          notificationState: HubLinkStatus.NOT_VIEWED,
+        },
+      },
+    ] as SendNotificationTypeItem[];
+    expect(shouldShowPartOfGroupClaimAlert(notifications)).toBe(true);
+  });
+
+  it('should return false for viewed You are now part of a group claim notification', () => {
+    const notifications = [
+      {
+        id: '1',
+        value: {
+          sendNotificationGroupClaims: "You're now part of a group claim",
+          notificationState: HubLinkStatus.VIEWED,
+        },
+      },
+    ] as SendNotificationTypeItem[];
+    expect(shouldShowPartOfGroupClaimAlert(notifications)).toBe(false);
+  });
+
+  it('should return false when no group claim notifications exist', () => {
+    expect(shouldShowPartOfGroupClaimAlert([])).toBe(false);
   });
 });
