@@ -69,7 +69,7 @@ export default class StepsToMakingYourClaimController {
       },
     ];
 
-    if (getCuiYourSupportFeature().isEnabled(userCase?.caseTypeId)) {
+    if (await getCuiYourSupportFeature().isEnabled(userCase?.caseTypeId)) {
       yourDetailsLinks.push({
         url: addParameterToUrl(
           setUrlLanguage(req, PageUrls.YOUR_SUPPORT.toString()),

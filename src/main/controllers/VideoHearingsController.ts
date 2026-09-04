@@ -77,7 +77,7 @@ export default class VideoHearingsController {
       res,
       this.form,
       logger,
-      getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId)
+      await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId)
     );
   };
 

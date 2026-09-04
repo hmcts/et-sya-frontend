@@ -72,7 +72,7 @@ export default class YourSupportController {
   }
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.redirectIfUnavailable(req, res)) {
+    if (await this.redirectIfUnavailable(req, res)) {
       return;
     }
 
@@ -97,7 +97,7 @@ export default class YourSupportController {
   };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.redirectIfUnavailable(req, res)) {
+    if (await this.redirectIfUnavailable(req, res)) {
       return;
     }
 
@@ -114,7 +114,7 @@ export default class YourSupportController {
   };
 
   public redirectToCuiJourney = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.redirectIfUnavailable(req, res)) {
+    if (await this.redirectIfUnavailable(req, res)) {
       return;
     }
 
@@ -138,7 +138,7 @@ export default class YourSupportController {
   };
 
   public callback = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.redirectIfUnavailable(req, res)) {
+    if (await this.redirectIfUnavailable(req, res)) {
       return;
     }
 
@@ -177,7 +177,7 @@ export default class YourSupportController {
   };
 
   public confirmation = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.redirectIfUnavailable(req, res)) {
+    if (await this.redirectIfUnavailable(req, res)) {
       return;
     }
 
@@ -192,7 +192,7 @@ export default class YourSupportController {
   };
 
   public submittedConfirmation = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.redirectIfUnavailable(req, res)) {
+    if (await this.redirectIfUnavailable(req, res)) {
       return;
     }
 
@@ -350,16 +350,13 @@ export default class YourSupportController {
     return String(req.session?.userCase?.id ?? '');
   }
 
-  private canAccessYourSupport(req: AppRequest): boolean {
-    return this.isCuiYourSupportEnabled(req) && (this.isDraftCase(req) || !!req.session?.userCase?.id);
-  }
-
-  private redirectIfUnavailable(req: AppRequest, res: Response): boolean {
-    if (this.canAccessYourSupport(req)) {
+  private async redirectIfUnavailable(req: AppRequest, res: Response): Promise<boolean> {
+    const enabled = await this.isCuiYourSupportEnabled(req);
+    if (enabled && (this.isDraftCase(req) || !!req.session?.userCase?.id)) {
       return false;
     }
 
-    res.redirect(this.getUnavailableRedirectUrl(req));
+    res.redirect(this.getUnavailableRedirectUrl(req, enabled));
     return true;
   }
 
@@ -367,12 +364,12 @@ export default class YourSupportController {
     return req.session?.userCase?.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS;
   }
 
-  private isCuiYourSupportEnabled(req: AppRequest): boolean {
+  private async isCuiYourSupportEnabled(req: AppRequest): Promise<boolean> {
     return getCuiYourSupportFeature().isEnabled(req.session?.userCase?.caseTypeId);
   }
 
-  private getUnavailableRedirectUrl(req: AppRequest): string {
-    if (!this.isCuiYourSupportEnabled(req) && this.isDraftCase(req)) {
+  private getUnavailableRedirectUrl(req: AppRequest, enabled: boolean): string {
+    if (!enabled && this.isDraftCase(req)) {
       return setUrlLanguage(req, PageUrls.REASONABLE_ADJUSTMENTS);
     }
 

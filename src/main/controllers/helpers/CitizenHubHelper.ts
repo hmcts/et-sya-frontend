@@ -16,7 +16,10 @@ import { getCuiYourSupportFeature } from '../../modules/featureFlag/CuiYourSuppo
 import { isHearingExist } from './HearingHelpers';
 import { shouldShowViewRespondentContactDetails } from './RespondentContactDetailsHelper';
 
-export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
+export const updateHubLinkStatuses = async (
+  userCase: CaseWithId,
+  hubLinksStatuses: HubLinksStatuses
+): Promise<void> => {
   if (isHearingExist(userCase.hearingCollection)) {
     hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.READY_TO_VIEW;
   }
@@ -42,7 +45,7 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
     hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
 
-  if (getCuiYourSupportFeature().isEnabled(userCase.caseTypeId)) {
+  if (await getCuiYourSupportFeature().isEnabled(userCase.caseTypeId)) {
     hubLinksStatuses[HubLinkNames.YourSupport] = userCase.claimantExternalFlags?.details?.length
       ? HubLinkStatus.SUBMITTED
       : HubLinkStatus.OPTIONAL;
@@ -53,10 +56,10 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
     : HubLinkStatus.NOT_YET_AVAILABLE;
 };
 
-export const getSectionIndexToLinkNames = (caseTypeId?: CaseTypeId): HubLinkNames[][] => {
+export const getSectionIndexToLinkNames = async (caseTypeId?: CaseTypeId): Promise<HubLinkNames[][]> => {
   const sections = sectionIndexToLinkNames.map(linkNames => [...linkNames]);
 
-  if (getCuiYourSupportFeature().isEnabled(caseTypeId)) {
+  if (await getCuiYourSupportFeature().isEnabled(caseTypeId)) {
     sections[0] = [...sections[0], HubLinkNames.YourSupport];
   }
 

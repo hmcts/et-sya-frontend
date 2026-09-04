@@ -79,10 +79,10 @@ const getTranslationsReasonableAdjustments = (
   }
 };
 
-export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+export const getYourDetails = async (userCase: CaseWithId, translations: AnyRecord): Promise<SummaryListRow[]> => {
   const rows: SummaryListRow[] = [];
   const cuiYourSupportFeature = getCuiYourSupportFeature();
-  const isCuiYourSupportEnabled = cuiYourSupportFeature.isEnabled(userCase?.caseTypeId);
+  const isCuiYourSupportEnabled = await cuiYourSupportFeature.isEnabled(userCase?.caseTypeId);
 
   rows.push(
     addSummaryRow(
@@ -186,7 +186,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
       translations.personalDetails.disability,
       getTranslationsReasonableAdjustments(userCase, translations, isCuiYourSupportEnabled),
       createChangeAction(
-        cuiYourSupportFeature.getSupportPageUrl(userCase?.caseTypeId) + InterceptPaths.ANSWERS_CHANGE,
+        (await cuiYourSupportFeature.getSupportPageUrl(userCase?.caseTypeId)) + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
         translations.personalDetails.disability
       )

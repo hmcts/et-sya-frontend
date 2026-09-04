@@ -144,11 +144,11 @@ export default class CitizenHubController {
 
     await activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
 
-    const sectionIndexToLinkNames = getSectionIndexToLinkNames(userCase.caseTypeId);
+    const sectionIndexToLinkNames = await getSectionIndexToLinkNames(userCase.caseTypeId);
 
     const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
       return {
