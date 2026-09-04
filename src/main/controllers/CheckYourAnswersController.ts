@@ -14,7 +14,7 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
     if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
@@ -47,7 +47,7 @@ export default class CheckYourAnswersController {
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
       translations,
-      yourDetails: getYourDetails(userCase, translations),
+      yourDetails: await getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

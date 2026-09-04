@@ -2,6 +2,8 @@ import CheckYourAnswersController from '../../../main/controllers/CheckYourAnswe
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import checkAnswersJsonRaw from '../../../main/resources/locales/en/translation/check-your-answers.json';
 import et1DetailsJsonRaw from '../../../main/resources/locales/en/translation/et1-details.json';
 import { mockRequestEmpty, mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -9,24 +11,27 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Check Your answers Controller', () => {
   const translationJsons = { ...checkAnswersJsonRaw, ...et1DetailsJsonRaw };
+  beforeEach(() =>
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue(new CuiYourSupportFeature([]))
+  );
 
-  it('should render the Check your answers page', () => {
+  it('should render the Check your answers page', async () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
   });
 
-  it('should render the Check your answers page when no past employer', () => {
+  it('should render the Check your answers page when no past employer', async () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
     request.session.userCase.pastEmployer = YesOrNo.NO;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
   });
@@ -53,7 +58,7 @@ describe('Check Your answers Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
   });
 
-  it('should render the Check your answers page when there is a type of claim but no discrimination or pay type', () => {
+  it('should render the Check your answers page when there is a type of claim but no discrimination or pay type', async () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
@@ -61,7 +66,7 @@ describe('Check Your answers Controller', () => {
     request.session.userCase.claimTypeDiscrimination = null;
     request.session.userCase.claimTypePay = null;
 
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
   });
 });

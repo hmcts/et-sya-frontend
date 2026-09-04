@@ -14,18 +14,18 @@ describe('Reasonable Adjustments Controller', () => {
     'reasonable-adjustments': {},
     common: {},
   };
-  it('should render the Reasonable Adjustments page', () => {
+  it('should render the Reasonable Adjustments page', async () => {
     const controller = new ReasonableAdjustmentsController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
   });
 
-  it('should redirect to your support when CUI your support is enabled for the case type', () => {
+  it('should redirect to your support when CUI your support is enabled for the case type', async () => {
     const featureMock = jest
       .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
       .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
@@ -35,7 +35,7 @@ describe('Reasonable Adjustments Controller', () => {
       const response = mockResponse();
       const request = mockRequest({ userCase: { caseTypeId: CaseTypeId.SCOTLAND }, t });
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT);
     } finally {

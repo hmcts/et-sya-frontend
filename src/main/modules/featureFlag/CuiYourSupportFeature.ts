@@ -1,53 +1,27 @@
-import config from 'config';
-
 import { CaseTypeId } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 
-const ENABLED_CASE_TYPE_IDS_CONFIG = 'featureFlags.cuiYourSupport.enabledCaseTypeIds';
+import { getFlagValue } from './launchDarkly';
 
-const parseEnabledCaseTypeIds = (value: unknown): string[] => {
-  if (Array.isArray(value)) {
-    return value
-      .filter((caseTypeId): caseTypeId is string => typeof caseTypeId === 'string' && !!caseTypeId.trim())
-      .map(caseTypeId => caseTypeId.trim());
-  }
-
-  if (typeof value !== 'string' || !value.trim()) {
-    return [];
-  }
-
-  try {
-    const parsedValue = JSON.parse(value);
-    if (Array.isArray(parsedValue)) {
-      return parseEnabledCaseTypeIds(parsedValue);
-    }
-  } catch {
-    // Comma-separated environment overrides are also supported.
-  }
-
-  return value
-    .split(',')
-    .map(caseTypeId => caseTypeId.trim())
-    .filter(Boolean);
-};
-
-const getConfiguredEnabledCaseTypeIds = (): string[] => {
-  if (!config.has(ENABLED_CASE_TYPE_IDS_CONFIG)) {
-    return [];
-  }
-
-  return parseEnabledCaseTypeIds(config.get(ENABLED_CASE_TYPE_IDS_CONFIG));
+export const CUI_YOUR_SUPPORT_FLAGS: Partial<Record<CaseTypeId, string>> = {
+  [CaseTypeId.SCOTLAND]: 'case-flags-v2-enabled-scotland',
+  [CaseTypeId.ENGLAND_WALES]: 'case-flags-v2-enabled-england-wales',
 };
 
 export class CuiYourSupportFeature {
-  constructor(private readonly enabledCaseTypeIds: string[] = getConfiguredEnabledCaseTypeIds()) {}
+  // Optional override keeps the feature independently testable; environment instances use LaunchDarkly.
+  constructor(private readonly enabledCaseTypeIds?: string[]) {}
 
-  public isEnabled(caseTypeId?: CaseTypeId | string): boolean {
-    return !!caseTypeId && this.enabledCaseTypeIds.includes(caseTypeId);
+  public async isEnabled(caseTypeId?: CaseTypeId | string): Promise<boolean> {
+    if (this.enabledCaseTypeIds) {
+      return !!caseTypeId && this.enabledCaseTypeIds.includes(caseTypeId);
+    }
+    const flagKey = CUI_YOUR_SUPPORT_FLAGS[caseTypeId as CaseTypeId];
+    return !!flagKey && (await getFlagValue(flagKey, null)) === true;
   }
 
-  public getSupportPageUrl(caseTypeId?: CaseTypeId | string): string {
-    return this.isEnabled(caseTypeId) ? PageUrls.YOUR_SUPPORT : PageUrls.REASONABLE_ADJUSTMENTS;
+  public async getSupportPageUrl(caseTypeId?: CaseTypeId | string): Promise<string> {
+    return (await this.isEnabled(caseTypeId)) ? PageUrls.YOUR_SUPPORT : PageUrls.REASONABLE_ADJUSTMENTS;
   }
 }
 
