@@ -40,7 +40,11 @@ const enableCuiYourSupportForScotland = (): jest.SpyInstance =>
     .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
 
 describe('updateHubLinkStatuses', () => {
-  it('should set RespondentResponse hubLink status to WAITING_FOR_TRIBUNAL', () => {
+  beforeEach(() =>
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue(new CuiYourSupportFeature([]))
+  );
+
+  it('should set RespondentResponse hubLink status to WAITING_FOR_TRIBUNAL', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -53,12 +57,12 @@ describe('updateHubLinkStatuses', () => {
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
     hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_YET_AVAILABLE;
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.RespondentResponse]).toEqual(HubLinkStatus.WAITING_FOR_TRIBUNAL);
   });
 
-  it('should set RespondentResponse hubLink status to READY_TO_VIEW', () => {
+  it('should set RespondentResponse hubLink status to READY_TO_VIEW', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -75,12 +79,12 @@ describe('updateHubLinkStatuses', () => {
 
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.RespondentResponse]).toEqual(HubLinkStatus.READY_TO_VIEW);
   });
 
-  it('should set Et1ClaimForm hubLink status to NOT_VIEWED', () => {
+  it('should set Et1ClaimForm hubLink status to NOT_VIEWED', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -97,12 +101,12 @@ describe('updateHubLinkStatuses', () => {
 
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.Et1ClaimForm]).toEqual(HubLinkStatus.NOT_VIEWED);
   });
 
-  it('should set YourSupport hubLink status to SUBMITTED when support flags exist and CUI your support is enabled', () => {
+  it('should set YourSupport hubLink status to SUBMITTED when support flags exist and CUI your support is enabled', async () => {
     const featureMock = enableCuiYourSupportForScotland();
     try {
       const userCase: CaseWithId = {
@@ -127,7 +131,7 @@ describe('updateHubLinkStatuses', () => {
 
       const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-      updateHubLinkStatuses(userCase, hubLinksStatuses);
+      await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
       expect(hubLinksStatuses[HubLinkNames.YourSupport]).toEqual(HubLinkStatus.SUBMITTED);
     } finally {
@@ -135,7 +139,7 @@ describe('updateHubLinkStatuses', () => {
     }
   });
 
-  it('should set YourSupport hubLink status to OPTIONAL when no support flags exist and CUI your support is enabled', () => {
+  it('should set YourSupport hubLink status to OPTIONAL when no support flags exist and CUI your support is enabled', async () => {
     const featureMock = enableCuiYourSupportForScotland();
     try {
       const userCase: CaseWithId = {
@@ -150,7 +154,7 @@ describe('updateHubLinkStatuses', () => {
       const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
       hubLinksStatuses[HubLinkNames.YourSupport] = HubLinkStatus.SUBMITTED;
 
-      updateHubLinkStatuses(userCase, hubLinksStatuses);
+      await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
       expect(hubLinksStatuses[HubLinkNames.YourSupport]).toEqual(HubLinkStatus.OPTIONAL);
     } finally {
@@ -158,7 +162,7 @@ describe('updateHubLinkStatuses', () => {
     }
   });
 
-  it('should not update YourSupport hubLink status when CUI your support is disabled for the case type', () => {
+  it('should not update YourSupport hubLink status when CUI your support is disabled for the case type', async () => {
     const userCase: CaseWithId = {
       id: '1',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
@@ -181,12 +185,12 @@ describe('updateHubLinkStatuses', () => {
 
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.YourSupport]).toEqual(HubLinkStatus.OPTIONAL);
   });
 
-  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if ET3 is received', () => {
+  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if ET3 is received', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -201,12 +205,12 @@ describe('updateHubLinkStatuses', () => {
 
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
   });
 
-  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if respondent is legally represented', () => {
+  it('should set ViewRespondentContactDetails hubLink status to READY_TO_VIEW if respondent is legally represented', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -226,12 +230,12 @@ describe('updateHubLinkStatuses', () => {
 
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
   });
 
-  it('should set ViewRespondentContactDetails hubLink status to NOT_YET_AVAILABLE if ET3 is not received', () => {
+  it('should set ViewRespondentContactDetails hubLink status to NOT_YET_AVAILABLE if ET3 is not received', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -246,7 +250,7 @@ describe('updateHubLinkStatuses', () => {
 
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     expect(hubLinksStatuses[HubLinkNames.ViewRespondentContactDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
@@ -699,17 +703,17 @@ describe('shouldShowRespondentApplicationReceived', () => {
 });
 
 describe('getHubLinksUrlMap', () => {
-  it('does not place the your support link under your claim by default', () => {
-    const sectionIndexToLinkNames = getSectionIndexToLinkNames(CaseTypeId.ENGLAND_WALES);
+  it('does not place the your support link under your claim by default', async () => {
+    const sectionIndexToLinkNames = await getSectionIndexToLinkNames(CaseTypeId.ENGLAND_WALES);
 
     expect(sectionIndexToLinkNames[0]).toStrictEqual([HubLinkNames.Et1ClaimForm]);
     expect(sectionIndexToLinkNames.flat().filter(linkName => linkName === HubLinkNames.YourSupport)).toHaveLength(0);
   });
 
-  it('places the your support link under your claim when CUI your support is enabled for the case type', () => {
+  it('places the your support link under your claim when CUI your support is enabled for the case type', async () => {
     const featureMock = enableCuiYourSupportForScotland();
     try {
-      const sectionIndexToLinkNames = getSectionIndexToLinkNames(CaseTypeId.SCOTLAND);
+      const sectionIndexToLinkNames = await getSectionIndexToLinkNames(CaseTypeId.SCOTLAND);
 
       expect(sectionIndexToLinkNames[0]).toStrictEqual([HubLinkNames.Et1ClaimForm, HubLinkNames.YourSupport]);
       expect(sectionIndexToLinkNames.flat().filter(linkName => linkName === HubLinkNames.YourSupport)).toHaveLength(1);
@@ -1007,7 +1011,11 @@ describe('getAcknowledgementAlert', () => {
 });
 
 describe('updateHubLinkStatuses for HearingDetails', () => {
-  it('should update HearingDetails to READY_TO_VIEW', () => {
+  beforeEach(() =>
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue(new CuiYourSupportFeature([]))
+  );
+
+  it('should update HearingDetails to READY_TO_VIEW', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -1029,11 +1037,11 @@ describe('updateHubLinkStatuses for HearingDetails', () => {
       ],
     };
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
     expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.READY_TO_VIEW);
   });
 
-  it('should not update HearingDetails', () => {
+  it('should not update HearingDetails', async () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -1041,7 +1049,7 @@ describe('updateHubLinkStatuses for HearingDetails', () => {
       lastModified: DATE,
     };
     const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
     expect(hubLinksStatuses[HubLinkNames.HearingDetails]).toEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
 });

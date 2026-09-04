@@ -10,7 +10,11 @@ import request from 'supertest';
 import { CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import { mockAppWithRedisClient, mockRedisClient, mockSession, mockSessionWithUserCase } from '../mocks/mockApp';
+
+jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue(new CuiYourSupportFeature([]));
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),

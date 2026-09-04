@@ -66,7 +66,7 @@ export default class ReasonableAdjustmentsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (this.isCuiYourSupportEnabled(req)) {
+    if (await this.isCuiYourSupportEnabled(req)) {
       res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
       return;
     }
@@ -75,8 +75,8 @@ export default class ReasonableAdjustmentsController {
   };
 
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
-    if (this.isCuiYourSupportEnabled(req)) {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (await this.isCuiYourSupportEnabled(req)) {
       res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
       return;
     }
@@ -91,7 +91,7 @@ export default class ReasonableAdjustmentsController {
     });
   };
 
-  private isCuiYourSupportEnabled(req: AppRequest): boolean {
+  private async isCuiYourSupportEnabled(req: AppRequest): Promise<boolean> {
     return getCuiYourSupportFeature().isEnabled(req.session.userCase?.caseTypeId);
   }
 }
