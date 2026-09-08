@@ -2526,10 +2526,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^9.0.0":
-  version: 9.9.0
-  resolution: "@faker-js/faker@npm:9.9.0"
-  checksum: 10/b24b1be0fb3090d54abaaa3a814f37d1a7551f1207dcd330a1af2c70f6312a8b95ebb82653577757dd62f4cbbb56caa3c83513053253654dc3e286a05040ecbe
+"@faker-js/faker@npm:^10.0.0":
+  version: 10.6.0
+  resolution: "@faker-js/faker@npm:10.6.0"
+  checksum: 10/f45220ceae76133d831dee8c8f5c8566767bfd857b7f872b5ec58866b68da889dabe96e805a598e095a6c58eae250363a7f335aa0afc513cb2ad5fe69e2a967f
   languageName: node
   linkType: hard
 
@@ -9509,7 +9509,7 @@ __metadata:
     "@babel/eslint-parser": "npm:^7.21.3"
     "@babel/preset-env": "npm:^7.21.4"
     "@codeceptjs/allure-legacy": "npm:^1.0.2"
-    "@faker-js/faker": "npm:^9.0.0"
+    "@faker-js/faker": "npm:^10.0.0"
     "@hmcts/cookie-manager": "npm:^1.0.0"
     "@hmcts/info-provider": "npm:^1.0.0"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.0"
@@ -9619,7 +9619,7 @@ __metadata:
     webpack-dev-middleware: "npm:^7.0.0"
     webpack-node-externals: "npm:^3.0.0"
   peerDependencies:
-    "@faker-js/faker": ^5.5.3 || ^8.0.0 || ^9.0.0
+    "@faker-js/faker": ^10.5.0 ^10.5.0 ^10.5.0
   languageName: unknown
   linkType: soft
 
