@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { setUrlLanguage } from '../controllers/helpers/LanguageHelper';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { Applicant, PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
@@ -39,11 +40,13 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 
     const pcqUrl: string = process.env.PCQ_URL ?? config.get('services.pcq.url');
     const pcqId = req.session.userCase?.ClaimantPcqId;
+    const isRepFlow = req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES;
+    const postPcqPage = isRepFlow ? PageUrls.CLAIMANT_REP_CHECK_ANSWERS : PageUrls.CHECK_ANSWERS;
 
     if (!pcqId && healthResp === 'UP') {
       //call pcq
       logger.info('Calling the PCQ Service');
-      const returnurl = getHost(res) + PageUrls.CHECK_ANSWERS;
+      const returnurl = getHost(res) + postPcqPage;
 
       //Generate pcq id
       const claimantPcqId: string = uuidv4();
@@ -73,12 +76,14 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     } else {
       //skip pcq
       logger.info(`PCQ status is ${healthResp} and PCQ ID is ${pcqId}`);
-      res.redirect(setUrlLanguage(req, PageUrls.CHECK_ANSWERS));
+      res.redirect(setUrlLanguage(req, postPcqPage));
     }
   } else {
     //skip pcq
     logger.info(`PCQ enabled: ${isEnabled().toString()}`);
-    res.redirect(setUrlLanguage(req, PageUrls.CHECK_ANSWERS));
+    const isRepFlow = req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES;
+    const postPcqPage = isRepFlow ? PageUrls.CLAIMANT_REP_CHECK_ANSWERS : PageUrls.CHECK_ANSWERS;
+    res.redirect(setUrlLanguage(req, postPcqPage));
   }
 };
 

@@ -1,0 +1,49 @@
+{
+  "title": "Check your answers",
+  "h1": "Check your answers",
+  "description": "Check your answers before submitting your claim.",
+  "applicationDetails": {
+    "header": "Application details",
+    "typeOfClaim": "Claim type"
+  },
+  "repDetails": {
+    "header": "Your details as the representative",
+    "typeOfRepresentative": "Type of representative",
+    "organisationName": "Name of the representative's organisation",
+    "representativeName": "Representative's name",
+    "representativeAddress": "Representative's address",
+    "representativeTelephone": "Representative's telephone number",
+    "howToBeContacted": "How would you like us to contact you?",
+    "contactLanguage": "What language do you want us to use when we contact you?",
+    "hearingLanguage": "If a hearing is required, what language do you want to speak at a hearing?",
+    "hearingPreferences": "Can you and the claimant attend hearings by video and phone?",
+    "disability": "Does anyone in the claimant party have a physical, mental or learning disability or health condition that means they need support during the case?"
+  },
+  "claimantDetails": {
+    "header": "Claimant details",
+    "firstName": "Claimant's first name",
+    "lastName": "Claimant's last name",
+    "dob": "Date of birth",
+    "sex": "Sex",
+    "preferredTitle": "Preferred title",
+    "address": "Address",
+    "email": "Email address"
+  },
+  "respondentDetails": {
+    "header": "Respondent details",
+    "respondentName": "Name of respondent",
+    "respondentAddress": "Respondent address",
+    "acasNumber": "Do you have an Acas certificate number?"
+  },
+  "claimDetails": {
+    "header": "Claim details",
+    "claimTypeDiscrimination": "What type of discrimination claim are you making?",
+    "claimTypePay": "What type of pay claim are you making?",
+    "describeWhatHappened": "Describe what happened to you",
+    "ifClaimSuccessful": "What do you want if your claim is successful",
+    "linkedCases": "Linked cases"
+  },
+  "submitBtn": "Submit",
+  "addAnotherRespondent": "Add another respondent",
+  "submitError": "Sorry, we're having technical problems processing your application. Please try again in a few minutes."
+}

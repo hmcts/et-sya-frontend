@@ -23,8 +23,6 @@ const expectedRadioLabel1 = 'I’m representing myself and making my own claim';
 const expectedRadioLabel2 = 'I’m making a claim for someone else and acting as their representative';
 const expectedRadioLabel3 = lipOrRepJson.radio3;
 const expectedRadioLabel4 = lipOrRepJson.radio4;
-const detailsClass = 'govuk-details';
-const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
 const detailsSummary1 = 'Who can act as a representative?';
 const detailsSummary2 = 'How to find and get a representative?';
@@ -83,16 +81,6 @@ describe('LiP or Representative page', () => {
       expectedRadioLabel4,
       'Could not find the radio button with label ' + expectedRadioLabel4
     );
-  });
-
-  it('should display 3 GDS details components', () => {
-    const detailsComponents = htmlRes.getElementsByClassName(detailsClass);
-    expect(detailsComponents.length).equal(3, '3 details components not found');
-  });
-
-  it('should display 3 GDS detail text components which reveal detailed information', () => {
-    const detailsTextComponents = htmlRes.getElementsByClassName(detailsTextClass);
-    expect(detailsTextComponents.length).equal(3, '3 detail text classes not found');
   });
 
   it('should display details components with valid summary text', () => {

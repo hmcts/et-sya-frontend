@@ -10,7 +10,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { assignFormData, getPageContent, getTellUsWhatYouWantFormField } from './helpers/FormHelpers';
 
 const logger = getLogger('TellUsWhatYouWantController');
 
@@ -18,39 +18,7 @@ export default class TellUsWhatYouWantController {
   private readonly form: Form;
   private readonly tellUsWhatYouWantFormContent: FormContent = {
     fields: {
-      tellUsWhatYouWant: {
-        id: 'tellUsWhatYouWant',
-        label: l => l.legend,
-        labelHidden: false,
-        labelSize: 'l',
-        type: 'checkboxes',
-        hint: l => l.selectAllHint,
-        validator: null,
-        values: [
-          {
-            id: 'compensationOnly',
-            label: l => l.compensationOnly.checkbox,
-            hint: l => l.compensationOnlyHint,
-            value: TellUsWhatYouWant.COMPENSATION_ONLY,
-          },
-          {
-            id: 'tribunalRecommendation',
-            label: l => l.tribunalRecommendation.checkbox,
-            hint: l => l.tribunalRecommendationHint,
-            value: TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION,
-          },
-          {
-            id: 'oldJob',
-            label: l => l.oldJob.checkbox,
-            value: TellUsWhatYouWant.OLD_JOB,
-          },
-          {
-            id: 'anotherJob',
-            label: l => l.anotherJob.checkbox,
-            value: TellUsWhatYouWant.ANOTHER_JOB,
-          },
-        ],
-      },
+      tellUsWhatYouWant: getTellUsWhatYouWantFormField(),
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

@@ -7,7 +7,7 @@
   "errors": {
     "claimDetailsCheck": {
       "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon",
-      "invalid": "<placeholder>"
+      "invalid": "Rhaid i chi gwblhau adran Manylion hawliad cyn i chi allu ei nodi fel wedi'i chwblhau"
     }
   }
 }

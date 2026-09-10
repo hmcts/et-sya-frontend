@@ -2,8 +2,13 @@
   "title": "Dileu’r ymateb",
   "applicationType": "Dileu’r ymateb",
   "applicationTitle": "Dileu’r cyfan neu ran o’r ymateb",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
-    { "type": "paragraph", "text": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o’r ymateb." },
+    {
+      "type": "paragraph",
+      "text": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o’r ymateb."
+    },
     {
       "type": "paragraph",
       "text": "Os yw rhywbeth yn cael ei ‘ddileu’ mae'n cael ei dynnu oddi ar yr hawliad neu'r ymateb ac ni ellir dibynnu arno."
@@ -16,7 +21,6 @@
       "type": "paragraph",
       "text": "Rhaid i gais am ddiddymiad fod yn seiliedig ar o leiaf un o agweddau Rheol 38 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth, sef pan:"
     },
-
     {
       "type": "list",
       "items": [
@@ -27,14 +31,55 @@
         "nid yw’n bosib cael gwrandawiad teg bellach"
       ]
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
         "pam ydych chi’n credu y dylid dileu’r ymateb",
         "pa sail neu seiliau yn Rheol 38 ydych chi’n credu sy’n berthnasol yn eich achos chi",
+        "os ydych yn cyfeirio at bwyntiau neu baragraffau wedi’u rhifo mewn ymateb y parti arall, dylech gynnwys y rhifau hyn neu gyfeiriadau eraill"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Gall yr hawlydd ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o’r ymateb."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os yw rhywbeth yn cael ei ‘ddileu’ mae'n cael ei dynnu oddi ar yr hawliad neu'r ymateb ac ni ellir dibynnu arno."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gall y tribiwnlys ddileu’r cyfan neu rannau o ymateb y parti arall o’i wirfodd ei hun neu yn dilyn cais gan yr hawlydd."
+    },
+    {
+      "type": "paragraph",
+      "text": "Rhaid i gais am ddiddymiad fod yn seiliedig ar o leiaf un o agweddau Rheol 38 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth, sef pan:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "mae’r ymateb yn dramgwyddus, yn flinderus neu nid oes siawns rhesymol y bydd yn llwyddiannus",
+        "cynhaliwyd yr achos mewn ffordd sy’n",
+        "dramgwyddus, yn afresymol neu’n flinderus nid yw’r atebydd wedi cydymffurfio â gorchmynion y tribiwnlys na’r Rheolau Trefniadaeth",
+        "nid yw’r ymateb wedi’i ddilyn mewn modd gweithredol",
+        "nid yw’n bosib cael gwrandawiad teg bellach"
+      ]
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "pam bod yr hawlydd yn credu y dylid dileu’r ymateb",
+        "pa sail neu seiliau yn Rheol 38 rydych chi’n dweud sy’n berthnasol yn yr achos",
         "os ydych yn cyfeirio at bwyntiau neu baragraffau wedi’u rhifo mewn ymateb y parti arall, dylech gynnwys y rhifau hyn neu gyfeiriadau eraill"
       ]
     }

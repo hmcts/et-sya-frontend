@@ -50,6 +50,20 @@ describe('CaseStateCheck Decorator', () => {
       expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=cy');
     });
 
+    it('should not redirect when editing from claimant rep about you flow', () => {
+      const req = mockRequest({
+        userCase: { id: '12345', state: CaseState.SUBMITTED },
+      });
+      req.session.repAboutYouCaseId = '12345';
+      req.url = PageUrls.CLAIMANT_REP_EDIT_NAME.replace(':caseId', '12345');
+      const res = mockResponse();
+
+      const result = checkCaseStateAndRedirect(req, res);
+
+      expect(result).toBe(false);
+      expect(res.redirect).not.toHaveBeenCalled();
+    });
+
     it('should not redirect when case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
       const req = mockRequest({
         userCase: { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },

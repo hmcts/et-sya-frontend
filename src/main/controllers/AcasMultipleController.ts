@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { handleClaimStepsRedirect } from './helpers/RedirectHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getClaimStepsUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('AcasMultipleController');
 
@@ -55,11 +55,12 @@ export default class AcasMultipleController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const claimStepsUrl = getClaimStepsUrl(req);
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? PageUrls.CLAIM_STEPS
+      ? claimStepsUrl
       : PageUrls.VALID_ACAS_REASON;
 
-    if (PageUrls.CLAIM_STEPS === redirectUrl) {
+    if (claimStepsUrl === redirectUrl) {
       await handleClaimStepsRedirect(req, res, this.form, redirectUrl, logger);
     } else {
       handlePostLogicPreLogin(req, res, this.form, redirectUrl);

@@ -7,9 +7,10 @@
 {% set errors = errors.concat(formErrors) %}
 {% endif %}
 {% if (userCase.updateDraftCaseError|length) %}
+{% set claimStepsUrl = PageUrls.CLAIM_STEPS_NON_HMCTS if userCase.claimantRepresentedQuestion === 'Yes' else PageUrls.CLAIM_STEPS %}
 {% set _ = errors.push({
              text: userCase.updateDraftCaseError,
-             href: '/steps-to-making-your-claim'
+             href: claimStepsUrl
             }) %}
  {% endif %}
 {{

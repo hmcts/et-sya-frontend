@@ -1,0 +1,110 @@
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{#
+  Renders the "Draft" and "Submitted" claim tables for a given list of applications.
+  Imported "with context" so it can access the page translations (col1..col7, h1, h2, p3,
+  claimantNameCol, etc.) and globals (dateStringToLocale).
+
+  When showClaimantName is true (the "ET1 claims for others" table), a leading
+  "Claimant name" column is added showing the represented claimant's name.
+#}
+{% macro applicationsSection(apps, showClaimantName) %}
+  {% set draftApplications = [] %}
+  {% set submittedApplications = [] %}
+
+  {% for app in apps %}
+    {% set claimantName = ((app.userCase.firstName | default('')) + ' ' + (app.userCase.lastName | default(''))) | trim %}
+    {% if app.respondents === 'undefined' and app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
+      {% set draftRow = [
+        { text: app.userCase.createdDate },
+        { text: app.userCase.id },
+        { text: app.userCase.typeOfClaimString },
+        { text: noRespondents },
+        { text: app.completionStatus },
+        { text: app.userCase.lastModified },
+        {
+          html:
+            '<a class="govuk-link govuk-!-margin-right-3" href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' +
+            '<a class="govuk-link" href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '">' + delete + '</a>'
+        }
+      ] %}
+      {% if showClaimantName %}{% set draftRow = (draftRow.slice(0, 3)).concat([{ text: claimantName }]).concat(draftRow.slice(4)) %}{% endif %}
+      {% set draftApplications = (draftApplications.push(draftRow), draftApplications) %}
+    {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
+      {% set draftRow = [
+        { text: app.userCase.createdDate },
+        { text: app.userCase.id },
+        { text: app.userCase.typeOfClaimString },
+        { text: app.respondents | safe },
+        { text: app.completionStatus },
+        { text: app.userCase.lastModified },
+        {
+          html:
+            '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + continue + ' ' + col2 + ': ' + app.userCase.id + '">' + continue + '</a>' + '&nbsp' + '&nbsp' +
+            ' <a class="govuk-link" href="' + app.deleteDraftUrl + '" data-navigation-link aria-label="' + delete + ' ' + col2 + ': ' + app.userCase.id + '" style="margin-left: 1em;">' + delete + '</a>'
+        }
+      ] %}
+      {% if showClaimantName %}{% set draftRow = (draftRow.slice(0, 3)).concat([{ text: claimantName }]).concat(draftRow.slice(4)) %}{% endif %}
+      {% set draftApplications = (draftApplications.push(draftRow), draftApplications) %}
+    {% else %}
+      {% set submittedRow = [
+        { text: dateStringToLocale(app.claimSubmittedDate) },
+        { html: '<a class="govuk-link" href="' + app.url + '" data-navigation-link aria-label="' + view + ' ' + col2 + ': ' + app.userCase.id + '">' + app.userCase.ethosCaseReference + '</a>' },
+        { text: app.userCase.typeOfClaimString },
+        { text: app.respondents | safe },
+        { text: app.userCase.lastModified }
+      ] %}
+      {% if showClaimantName %}{% set submittedRow = (submittedRow.slice(0, 3)).concat([{ text: claimantName }]).concat(submittedRow.slice(4)) %}{% endif %}
+      {% set submittedApplications = (submittedApplications.push(submittedRow), submittedApplications) %}
+    {% endif %}
+  {% endfor %}
+
+  {% if draftApplications.length != 0 %}
+    <h2 class="govuk-heading-l">{{ h1 }}</h2>
+    <p class="govuk-body">{{ p3 }}</p>
+
+    {% set draftHead = [
+      { text: col1 },
+      { text: col2 },
+      { text: col3 },
+      { text: col4 },
+      { text: col5 },
+      { text: col6 },
+      { text: col7 }
+    ] %}
+    {% if showClaimantName %}{% set draftHead = (draftHead.slice(0, 3)).concat([{ text: claimantNameCol }]).concat(draftHead.slice(4)) %}{% endif %}
+
+    <div class="scrollableTable">
+      {{ govukTable({
+        caption: h1,
+        captionClasses: "govuk-visually-hidden",
+        firstCellIsHeader: false,
+        head: draftHead,
+        rows: draftApplications
+      }) }}
+    </div>
+  {% endif %}
+
+  {% if submittedApplications.length != 0 %}
+    <h2 class="govuk-heading-l">{{ h2 }}</h2>
+
+    {% set submittedHead = [
+      { text: dateSubmitted },
+      { text: caseNumber },
+      { text: col3 },
+      { text: col4 },
+      { text: col6 }
+    ] %}
+    {% if showClaimantName %}{% set submittedHead = (submittedHead.slice(0, 3)).concat([{ text: claimantNameCol }]).concat(submittedHead.slice(4)) %}{% endif %}
+
+    <div class="scrollableTable">
+      {{ govukTable({
+        caption: h2,
+        captionClasses: "govuk-visually-hidden",
+        firstCellIsHeader: false,
+        head: submittedHead,
+        rows: submittedApplications
+      }) }}
+    </div>
+  {% endif %}
+{% endmacro %}
