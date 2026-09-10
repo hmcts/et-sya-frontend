@@ -30,7 +30,7 @@ describe('Litigation in Person or Representative Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/single-or-multiple-claim');
   });
 
-  it("should render the legacy ET1 service when - yes - they are 'making a claim for someone else' option is selected", () => {
+  it("should render the Single or Multiple claims page when (yes) the 'making a claim for someone else' option is selected", () => {
     const body = { claimantRepresentedQuestion: YesOrNo.YES };
     const controller = new LipOrRepController();
 
@@ -38,7 +38,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number');
+    expect(res.redirect).toHaveBeenCalledWith('/single-or-multiple-claim');
   });
 
   it("should render the 'Making a claim as a legal representative' page - they are 'a legal representative making a single claim' option is selected", () => {

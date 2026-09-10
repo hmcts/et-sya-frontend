@@ -1,0 +1,55 @@
+{
+  "title": "Describe the claim",
+  "h1": "Describe the claim",
+  "label": "Describe the claim",
+  "p1": "This is an opportunity to explain why the claimant is making a claim to an employment tribunal.",
+  "p2": "It's important that you focus on setting out what happened to the claimant and explain, as far as you can, why the claimant thinks what happened was unlawful.",
+  "p3": "The claim will be sent to the respondents who will have a chance to reply through the tribunal.",
+  "p4": "The tribunal will then decide (usually via a hearing) whether the respondents have acted unlawfully.",
+  "insetText": "We do not need detailed evidence, such as copies of emails, letters or other documents at this stage. Keep hold of these documents in case they are needed. You may need to bring them to a hearing.",
+  "collapsibleSection1": {
+    "linkText": "What to write for discrimination claims",
+    "p1": "Describe the events the claimant is complaining about.",
+    "p2": "Try to give the dates of the events (and set them out in date order) and the names of other people involved. The claimant should explain as best as they can why they consider that these events mean they have been unlawfully discriminated against by reference to the protected characteristics they rely on."
+  },
+  "collapsibleSection2": {
+    "linkText": "What to write for dismissal claims",
+    "p1": "Describe the circumstances of the claimant's dismissal.",
+    "p2": "Try to give dates of the events (like dismissal meetings) and the names of others involved (such as the person who dismissed the claimant). The claimant should explain as best they can, why they consider their dismissal was unfair."
+  },
+  "collapsibleSection3": {
+    "linkText": "What to write for whistleblower claims",
+    "li1": "Give the dates of each time the claimant says they \"blew the whistle\" by making a protected disclosure. For each disclosure summarise the information they disclosed, whether it was done verbally or in writing, the person to whom you made the disclosure, what kind of wrongdoing they were disclosing, and why the disclosing was in the public interest.",
+    "li2": "Explain how the claimant was treated detrimentally (which can include being dismissed) because of the disclosure(s) giving dates and summarising incidents.",
+    "li3": "Give the names of the people involved in and witness to these events and incidents.",
+    "li4": "Describe how the claimant has been affected by the detrimental treatment."
+  },
+  "collapsibleSection4": {
+    "linkText": "What to write for 'other' claims",
+    "li1": "The tribunal can only hear cases where legislation gives it power to do so. Explain briefly, what legislation the claimant says covers this claim.",
+    "li2": "Even if the claimant cannot, the most important thing is to explain what was done and so far as they can, why the claimant says it was unlawful. Give dates and brief details of each incident, including the name of the person responsible."
+  },
+  "hint": "Use this to describe the events around the dispute, or add to your claim by uploading a document",
+  "fileUpload": {
+    "label": "Upload a document that describes the claim (optional)",
+    "linkText": "Or upload your summary as a separate document (optional)",
+    "hint": "Upload a file that describes the claim. Maximum 50MB.",
+    "hintExisting": "Currently uploaded: {{filename}}. Upload a different file to replace it."
+  },
+  "acceptedFormats": {
+    "label": "Accepted formats",
+    "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+  },
+  "errors": {
+    "claimSummaryText": {
+      "required": "Tell us what happened, or upload a document describing the claim.",
+      "tooLong": "Description must be 2,500 characters or less"
+    },
+    "claimSummaryFileName": {
+      "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
+      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",
+      "invalidFileSize": "The file you are trying to upload has exceeded the maximum file size limit, please reduce the size of the file.",
+      "backEndError": "There was an error uploading your file. Please try again. If this error persists please contact support."
+    }
+  }
+}

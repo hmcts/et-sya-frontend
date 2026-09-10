@@ -1,0 +1,17 @@
+{% extends "template.njk" %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
+
+  {% block form %}
+    {% include "form/form.njk"%}
+  {% endblock %}
+{% endblock %}

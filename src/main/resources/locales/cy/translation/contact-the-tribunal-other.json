@@ -2,9 +2,34 @@
   "title": "Cysylltu â’r tribiwnlys",
   "applicationType": "Cysylltu â’r tribiwnlys",
   "applicationTitle": "Cysylltu â’r tribiwnlys",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
-    { "type": "paragraph", "text": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i’ch achos." },
-    { "type": "bold-paragraph", "text": "Peidiwch â defnyddio'r ffurflen hon i:" },
+    {
+      "type": "paragraph",
+      "text": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i’ch achos."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Peidiwch â defnyddio'r ffurflen hon i:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "geisio cyngor cyfreithiol gan y tribiwnlys. Mae’r tribiwnlys yn gorff barnwrol annibynnol ac ni all roi cyngor cyfreithiol i chi",
+        "dweud wrthym am gynigion neu drafodaethau setlo, sy’n breifat ac yn gyfrinachol i’r partïon"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i achos yr hawlydd."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Peidiwch â defnyddio'r ffurflen hon i:"
+    },
     {
       "type": "list",
       "items": [

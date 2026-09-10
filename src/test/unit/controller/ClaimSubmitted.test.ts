@@ -1,4 +1,5 @@
 import ClaimSubmittedController from '../../../main/controllers/ClaimSubmittedController';
+import { UNASSIGNED_OFFICE_EMAIL } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -7,6 +8,32 @@ describe('Claim Submitted Controller', () => {
     'claim-submitted': {},
     common: {},
   };
+
+  it('should use UNASSIGNED_OFFICE_EMAIL for Unassigned managing office', () => {
+    const controller = new ClaimSubmittedController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.managingOffice = 'Unassigned';
+    request.session.userCase.tribunalCorrespondenceEmail = 'other@justice.gov.uk';
+
+    controller.get(request, response);
+
+    const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderArgs.emailText).toBe(UNASSIGNED_OFFICE_EMAIL);
+  });
+
+  it('should pass tribunal email for a named managing office', () => {
+    const controller = new ClaimSubmittedController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.managingOffice = 'London Central';
+    request.session.userCase.tribunalCorrespondenceEmail = 'londoncentralet@justice.gov.uk';
+
+    controller.get(request, response);
+
+    const renderArgs = (response.render as jest.Mock).mock.calls[0][1];
+    expect(renderArgs.emailText).toBe('londoncentralet@justice.gov.uk');
+  });
 
   it('should render the Claim Submitted page with file name', () => {
     const controller = new ClaimSubmittedController();

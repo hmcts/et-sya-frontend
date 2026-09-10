@@ -2,6 +2,8 @@
   "title": "Vary or revoke an order",
   "applicationType": "Vary or revoke an order",
   "applicationTitle": "Apply to vary or revoke an order",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     { "type": "paragraph", "text": "Use this form to apply to vary or revoke an order the tribunal has issued." },
     {
@@ -21,6 +23,47 @@
         "the date the tribunal issued the order",
         "explain which part of the order you want to vary or revoke",
         "how to vary the order. For example, you might say that a case management order asked for an impact statement but you need more time to submit it",
+        "why it is in the interests of justice to vary or revoke this order. Tell us any relevant changes of circumstance since the order was made and consider the requirements of the ‘overriding objective’ in Rule 3 of the Employment Tribunal Rules of Procedure"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Rule 3 of the Employment Tribunal Rules of Procedure" },
+    {
+      "type": "paragraph",
+      "text": "The overriding objective of the Rules is to enable employment tribunals to deal with cases fairly and justly."
+    },
+    { "type": "paragraph", "text": "Dealing with a case fairly and justly includes:" },
+
+    {
+      "type": "list",
+      "items": [
+        "ensuring that the parties are on an equal footing",
+        "dealing with cases in ways which are proportionate to the complexity and importance of the issues",
+        "avoiding unnecessary formality and seeking flexibility in the proceedings",
+        "avoiding delay, so far as compatible with proper consideration of the issues",
+        "saving expense"
+      ]
+    }
+  ],
+  "contentRep": [
+    { "type": "paragraph", "text": "Use this form to apply to vary or revoke an order the tribunal has issued." },
+    {
+      "type": "paragraph",
+      "text": "Tribunal orders will not usually be varied or revoked unless there has been a material change in circumstances since the order was made, which make the variation in the interests of justice."
+    },
+    {
+      "type": "paragraph",
+      "text": "The tribunal will consider the claimant’s reasons for varying or revoking the order and any supporting materials you provide then make a decision."
+    },
+
+    { "type": "bold-paragraph", "text": "Details to include in your application:" },
+    {
+      "type": "list",
+      "items": [
+        "the order the claimant wants to vary or revoke",
+        "the date the tribunal issued the order",
+        "explain which part of the order they want to vary or revoke",
+        "how to vary the order. For example, the claimant might say that a case management order asked for an impact statement but you or the claimant need more time to submit it",
         "why it is in the interests of justice to vary or revoke this order. Tell us any relevant changes of circumstance since the order was made and consider the requirements of the ‘overriding objective’ in Rule 3 of the Employment Tribunal Rules of Procedure"
       ]
     },

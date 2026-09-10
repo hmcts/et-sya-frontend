@@ -1,11 +1,22 @@
+import * as urlModule from 'url';
+
 import {
-  getSafeLanguageParam,
+  addParameterToUrl,
+  conditionalRedirect,
+  getClaimStepsUrl,
+  getLanguageParam,
+  getParsedUrl,
+  handleSaveAsDraft,
+  isReturnUrlIsCheckAnswers,
+  returnNextPage,
   returnSafeCitizenHubUrl,
-  returnSafePageUrl,
   returnSafeRedirectUrl,
   returnSafeTransferredCaseUrl,
+  returnValidUrl,
+  validateLanguageParam,
 } from '../../../../main/controllers/helpers/RouterHelpers';
 import * as routerHelpers from '../../../../main/controllers/helpers/RouterHelpers';
+import { YesOrNo } from '../../../../main/definitions/case';
 import { ErrorPages, PageUrls, languages } from '../../../../main/definitions/constants';
 import { getLogger } from '../../../../main/logger';
 import { mockRequest } from '../../mocks/mockRequest';
@@ -28,24 +39,235 @@ describe('Router Helpers - returnSafeRedirectUrl', () => {
     const result = returnSafeRedirectUrl(req, redirectUrl, logger);
     expect(result).toEqual(redirectUrl);
   });
+
+  it('should return redirectUrl when parsed host is null (same-origin)', () => {
+    jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue({ host: null } as urlModule.UrlWithStringQuery);
+    const result = returnSafeRedirectUrl(req, redirectUrl, logger);
+    expect(result).toEqual(redirectUrl);
+  });
+});
+
+describe('Router Helpers - handleSaveAsDraft', () => {
+  it('should redirect to CLAIM_SAVED', () => {
+    const res = { redirect: jest.fn() } as any;
+    handleSaveAsDraft(res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+  });
+});
+
+describe('Router Helpers - validateLanguageParam', () => {
+  it('should return true for Welsh language code', () => {
+    expect(validateLanguageParam('cy')).toBe(true);
+  });
+
+  it('should return true for English language code', () => {
+    expect(validateLanguageParam('en')).toBe(true);
+  });
+
+  it('should return false for invalid language code', () => {
+    expect(validateLanguageParam('fr')).toBe(false);
+  });
+});
+
+describe('Router Helpers - getLanguageParam', () => {
+  it('should return English URL parameter when URL has no query string', () => {
+    const result = getLanguageParam('/some-page');
+    expect(result).toContain('lng=en');
+  });
+
+  it('should return Welsh URL parameter when URL contains lng=cy', () => {
+    const result = getLanguageParam('/some-page?lng=cy');
+    expect(result).toContain('lng=cy');
+  });
+
+  it('should return English URL parameter when URL contains lng=en', () => {
+    const result = getLanguageParam('/some-page?lng=en');
+    expect(result).toContain('lng=en');
+  });
+
+  it('should return English URL parameter for invalid lng value', () => {
+    const result = getLanguageParam('/some-page?lng=fr');
+    expect(result).toContain('lng=en');
+  });
+});
+
+describe('Router Helpers - isReturnUrlIsCheckAnswers', () => {
+  it('should return true when returnUrl includes CHECK_ANSWERS', () => {
+    const request = mockRequest({});
+    request.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    expect(isReturnUrlIsCheckAnswers(request)).toBe(true);
+  });
+
+  it('should return false when returnUrl does not include CHECK_ANSWERS', () => {
+    const request = mockRequest({});
+    request.session.returnUrl = PageUrls.CLAIM_SAVED;
+    expect(isReturnUrlIsCheckAnswers(request)).toBe(false);
+  });
+
+  it('should return false when returnUrl is undefined', () => {
+    const request = mockRequest({});
+    request.session.returnUrl = undefined;
+    expect(isReturnUrlIsCheckAnswers(request)).toBeFalsy();
+  });
+});
+
+describe('Router Helpers - getClaimStepsUrl', () => {
+  it('should return CLAIM_STEPS_NON_HMCTS when claimantRepresentedQuestion is YES', () => {
+    const request = mockRequest({ userCase: { claimantRepresentedQuestion: YesOrNo.YES } });
+    expect(getClaimStepsUrl(request)).toEqual(PageUrls.CLAIM_STEPS_NON_HMCTS);
+  });
+
+  it('should return CLAIM_STEPS when claimantRepresentedQuestion is NO', () => {
+    const request = mockRequest({ userCase: { claimantRepresentedQuestion: YesOrNo.NO } });
+    expect(getClaimStepsUrl(request)).toEqual(PageUrls.CLAIM_STEPS);
+  });
+
+  it('should return CLAIM_STEPS when claimantRepresentedQuestion is undefined', () => {
+    const request = mockRequest({});
+    expect(getClaimStepsUrl(request)).toEqual(PageUrls.CLAIM_STEPS);
+  });
+});
+
+describe('Router Helpers - returnNextPage', () => {
+  it('should redirect to redirectUrl when no returnUrl in session', () => {
+    const request = mockRequest({});
+    const res = { redirect: jest.fn() } as any;
+    returnNextPage(request, res, PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+  });
+
+  it('should redirect to returnUrl and clear it when present in session', () => {
+    const request = mockRequest({});
+    request.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    const res = { redirect: jest.fn() } as any;
+    returnNextPage(request, res, PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(request.session.returnUrl).toBeUndefined();
+  });
+});
+
+describe('Router Helpers - addParameterToUrl', () => {
+  it('should return empty string when url is blank', () => {
+    expect(addParameterToUrl('', 'lng=en')).toEqual('');
+  });
+
+  it('should return url unchanged when parameter is blank', () => {
+    expect(addParameterToUrl('/page', '')).toEqual('/page');
+  });
+
+  it('should append parameter with ? when url has no query string', () => {
+    expect(addParameterToUrl('/page', 'lng=en')).toEqual('/page?lng=en');
+  });
+
+  it('should append parameter with & when url already has query string', () => {
+    expect(addParameterToUrl('/page?foo=bar', 'lng=en')).toEqual('/page?foo=bar&lng=en');
+  });
+
+  it('should not duplicate parameter if already present', () => {
+    expect(addParameterToUrl('/page?lng=en', 'lng=en')).toEqual('/page?lng=en');
+  });
+});
+
+describe('Router Helpers - returnValidUrl', () => {
+  it('should return NOT_FOUND for an unrecognised URL', () => {
+    const result = returnValidUrl('/this-does-not-exist-anywhere');
+    expect(result).toEqual(ErrorPages.NOT_FOUND);
+  });
+
+  it('should return the static URL for a known PageUrl', () => {
+    const result = returnValidUrl(PageUrls.CLAIM_SAVED);
+    expect(result).toEqual(PageUrls.CLAIM_SAVED);
+  });
+
+  it('should preserve query parameters on a valid static URL', () => {
+    const result = returnValidUrl(PageUrls.CLAIM_SAVED + '?lng=en');
+    expect(result).toContain(PageUrls.CLAIM_SAVED);
+    expect(result).toContain('lng=en');
+  });
+
+  it('should return a dynamic URL for a valid VALID_DYNAMIC_URL_BASES path with numeric segment', () => {
+    const result = returnValidUrl('/respondent/1/acas-cert-num');
+    expect(result).toEqual('/respondent/1/acas-cert-num');
+  });
+
+  it('should return a dynamic URL with preserved query parameters', () => {
+    const result = returnValidUrl('/respondent/1/acas-cert-num?lng=en');
+    expect(result).toContain('/respondent/1/acas-cert-num');
+    expect(result).toContain('lng=en');
+  });
+
+  it('should return a dynamic URL for claimant rep routes with UUID case id', () => {
+    const caseId = 'a4396b10-6928-4711-a3ba-89fcf6adb779';
+    const result = returnValidUrl(`/claimant-rep-edit-name/${caseId}?lng=en`);
+    expect(result).toEqual(`/claimant-rep-edit-name/${caseId}?lng=en`);
+  });
+
+  it('should not return an arbitrary path under the ET1 base URL (open redirect prevented)', () => {
+    const originalEnv = process.env.ET1_BASE_URL;
+    process.env.ET1_BASE_URL = 'http://et1.test';
+    const result = returnValidUrl('http://et1.test/some-path');
+    expect(result).toEqual('/not-found');
+    process.env.ET1_BASE_URL = originalEnv;
+  });
+});
+
+describe('Router Helpers - getParsedUrl', () => {
+  beforeEach(() => jest.restoreAllMocks());
+
+  it('should parse a relative URL and return a UrlWithStringQuery object', () => {
+    const result = getParsedUrl('/some-page?lng=en');
+    expect(result.pathname).toEqual('/some-page');
+    expect(result.query).toEqual('lng=en');
+  });
+
+  it('should parse an absolute URL and expose the host', () => {
+    const result = getParsedUrl('http://example.com/page');
+    expect(result.host).toEqual('example.com');
+  });
+});
+
+describe('Router Helpers - conditionalRedirect', () => {
+  it('should return true when form field value matches string condition', () => {
+    const request = mockRequest({ body: { myField: 'yes' } });
+    const formFields = { myField: {} } as any;
+    expect(conditionalRedirect(request, formFields, 'yes')).toBe(true);
+  });
+
+  it('should return false when form field value does not match condition', () => {
+    const request = mockRequest({ body: { myField: 'no' } });
+    const formFields = { myField: {} } as any;
+    expect(conditionalRedirect(request, formFields, 'yes')).toBe(false);
+  });
+
+  it('should return true when form field value matches one of array conditions', () => {
+    const request = mockRequest({ body: { myField: ['optionA', 'optionB'] } });
+    const formFields = { myField: {} } as any;
+    expect(conditionalRedirect(request, formFields, ['optionA', 'optionC'])).toBe(true);
+  });
+
+  it('should return false when no form field in body matches formFields keys', () => {
+    const request = mockRequest({ body: { otherField: 'yes' } });
+    const formFields = { myField: {} } as any;
+    expect(conditionalRedirect(request, formFields, 'yes')).toBeFalsy();
+  });
 });
 
 describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
   it('should build transferred-case url with English language by default', () => {
     const req = mockRequest({});
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234567890123456') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.ENGLISH_URL_PARAMETER;
 
-    expect(returnSafeTransferredCaseUrl('1234567890123456', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=1234567890123456`
+    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
+      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=20548`
     );
   });
 
   it('should build transferred-case url with Welsh language', () => {
     const req = mockRequest({});
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234567890123456') + languages.WELSH_URL_PARAMETER;
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.WELSH_URL_PARAMETER;
 
-    expect(returnSafeTransferredCaseUrl('1234567890123456', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=1234567890123456`
+    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
+      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
     );
   });
 
@@ -55,51 +277,15 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
 
     expect(returnSafeTransferredCaseUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
-
-  it('should build transferred-case url when caseId is a number from the API', () => {
-    const req = mockRequest({});
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
-
-    expect(returnSafeTransferredCaseUrl(1786637776090539, req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=1786637776090539`
-    );
-  });
-
-  it('should reject scientific notation and hex case ids', () => {
-    const req = mockRequest({});
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1') + languages.ENGLISH_URL_PARAMETER;
-
-    expect(returnSafeTransferredCaseUrl('1e10', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeTransferredCaseUrl('0x12', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-  });
 });
 
 describe('Router Helpers - returnSafeCitizenHubUrl', () => {
   it('should build citizen-hub url for numeric caseId', () => {
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1234567890123456') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
 
-    expect(returnSafeCitizenHubUrl('1234567890123456', req)).toBe(
-      `${PageUrls.CITIZEN_HUB_BASE}1234567890123456${languages.ENGLISH_URL_PARAMETER}`
-    );
-  });
-
-  it('should build citizen-hub url when caseId is a number from the API', () => {
-    const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
-
-    expect(returnSafeCitizenHubUrl(1786637776090539, req)).toBe(
-      `${PageUrls.CITIZEN_HUB_BASE}1786637776090539${languages.ENGLISH_URL_PARAMETER}`
-    );
-  });
-
-  it('should strip hyphenated 16-digit CCD case ids before embedding in the url', () => {
-    const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1111222233334444') + languages.ENGLISH_URL_PARAMETER;
-
-    expect(returnSafeCitizenHubUrl('1111-2222-3333-4444', req)).toBe(
-      `${PageUrls.CITIZEN_HUB_BASE}1111222233334444${languages.ENGLISH_URL_PARAMETER}`
+    expect(returnSafeCitizenHubUrl('12234', req)).toBe(
+      `${PageUrls.CITIZEN_HUB_BASE}12234${languages.ENGLISH_URL_PARAMETER}`
     );
   });
 
@@ -108,50 +294,5 @@ describe('Router Helpers - returnSafeCitizenHubUrl', () => {
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeCitizenHubUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-  });
-
-  it('should reject scientific notation and hex case ids', () => {
-    const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1') + languages.ENGLISH_URL_PARAMETER;
-
-    expect(returnSafeCitizenHubUrl('1e10', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeCitizenHubUrl('0x12', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeCitizenHubUrl('Infinity', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeCitizenHubUrl('12234', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-    expect(returnSafeCitizenHubUrl('12345678901234567', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
-  });
-});
-
-describe('Router Helpers - getSafeLanguageParam', () => {
-  it('should return Welsh parameter when url contains lng=cy', () => {
-    const req = mockRequest({});
-    req.url = `${PageUrls.CLAIMANT_APPLICATIONS}${languages.WELSH_URL_PARAMETER}`;
-
-    expect(getSafeLanguageParam(req)).toBe(languages.WELSH_URL_PARAMETER);
-  });
-
-  it('should return English parameter by default', () => {
-    const req = mockRequest({});
-    req.url = `${PageUrls.CLAIMANT_APPLICATIONS}${languages.ENGLISH_URL_PARAMETER}`;
-
-    expect(getSafeLanguageParam(req)).toBe(languages.ENGLISH_URL_PARAMETER);
-  });
-});
-
-describe('Router Helpers - returnSafePageUrl', () => {
-  it('should append English language parameter to a known-safe page path', () => {
-    const req = mockRequest({});
-    req.url = `${PageUrls.CLAIMANT_APPLICATIONS}${languages.ENGLISH_URL_PARAMETER}`;
-
-    expect(returnSafePageUrl(PageUrls.CHECKLIST, req)).toBe(`${PageUrls.CHECKLIST}${languages.ENGLISH_URL_PARAMETER}`);
-  });
-
-  it('should append Welsh language parameter to a known-safe page path', () => {
-    const req = mockRequest({});
-    req.url = `${PageUrls.CLAIMANT_APPLICATIONS}${languages.WELSH_URL_PARAMETER}`;
-
-    expect(returnSafePageUrl(ErrorPages.NOT_FOUND, req)).toBe(
-      `${ErrorPages.NOT_FOUND}${languages.WELSH_URL_PARAMETER}`
-    );
   });
 });

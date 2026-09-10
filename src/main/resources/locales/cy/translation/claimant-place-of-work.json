@@ -1,0 +1,26 @@
+{
+  "title": "Lleoliad gwaith",
+  "h1": "Ym mha gyfeiriad wnaeth yr hawlydd weithio?",
+  "errors": {
+    "workAddress1": {
+      "required": "Nodwch linell gyntaf y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 100 o nodau",
+      "invalid": "Nodwch linell gyntaf ddilys y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 100 o nodau"
+    },
+    "workAddress2": {
+      "required": "Nodwch ail linell cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau",
+      "invalid": "Nodwch ail linell ddilys y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
+    },
+    "workAddressTown": {
+      "required": "Nodwch dref neu ddinas ar gyfer y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau",
+      "invalid": "Nodwch dref neu ddinas ddilys ar gyfer y cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
+    },
+    "workAddressCountry": {
+      "required": "Nodwch wlad i’r cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau",
+      "invalid": "Nodwch wlad ddilys ar gyfer cyfeiriad yr oedd yr hawlydd yn gweithio ynddo - hyd at 50 o nodau"
+    },
+    "workAddressPostcode": {
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Rhowch cod post dilys. Er enghraifft, SW1 1AA"
+    }
+  }
+}

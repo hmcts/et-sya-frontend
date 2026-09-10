@@ -6,11 +6,11 @@ import {
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../controllers/helpers/CaseTransferHelper';
-import { returnSafeCitizenHubUrl, returnSafePageUrl } from '../controllers/helpers/RouterHelpers';
+import { getClaimStepsUrl, returnSafeCitizenHubUrl } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { ErrorPages, PageUrls } from '../definitions/constants';
+import { ErrorPages, PageUrls, languages } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
@@ -23,7 +23,8 @@ const logger = getLogger('CaseSelectionService');
 export const getUserApplications = (
   userCases: CaseWithId[],
   translations: AnyRecord,
-  languageParam: string
+  languageParam: string,
+  isRepresenting = false
 ): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
 
@@ -32,7 +33,7 @@ export const getUserApplications = (
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
-      url: getRedirectUrl(uCase, languageParam),
+      url: getRedirectUrl(uCase, languageParam, isRepresenting),
       claimSubmittedDate: formatDate(uCase.submittedDate),
       deleteDraftUrl: `/claimant-application/${uCase.id}/delete${languageParam}&redirect=claimant-applications`,
     };
@@ -49,47 +50,43 @@ export const formatRespondents = (respondents?: Respondent[]): string => {
   return respondents.map(respondent => respondent.respondentName).join('<br />');
 };
 
-export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): string => {
-  return `/claimant-application/${userCase.id}${languageParam}`;
+export const getRedirectUrl = (userCase: CaseWithId, languageParam: string, isRepresenting = false): string => {
+  if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    return `/claimant-application/${userCase.id}${languageParam}`;
+  } else if (isRepresenting) {
+    return `/claimant-rep-hub/${userCase.id}${languageParam}`;
+  } else {
+    return `/citizen-hub/${userCase.id}${languageParam}`;
+  }
 };
 
 export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
-  const totalSections = 4;
-  let sectionCount = 0;
+  const sectionChecks =
+    userCase?.claimantRepresentedQuestion === YesOrNo.YES
+      ? [
+          userCase?.representativeDetailsCheck,
+          userCase?.representedClaimantDetailsCheck,
+          userCase?.employmentAndRespondentCheck,
+          userCase?.claimDetailsCheck,
+        ]
+      : [userCase?.personalDetailsCheck, userCase?.employmentAndRespondentCheck, userCase?.claimDetailsCheck];
 
-  if (userCase?.personalDetailsCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  if (userCase?.employmentAndRespondentCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  if (userCase?.claimDetailsCheck === YesOrNo.YES) {
-    sectionCount++;
-  }
-
-  const allSectionsCompleted = !!(
-    userCase?.personalDetailsCheck === YesOrNo.YES &&
-    userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
-    userCase?.claimDetailsCheck === YesOrNo.YES
-  );
-
-  if (allSectionsCompleted) {
-    sectionCount++;
-  }
+  // The final task is submitting the claim, which only opens once every section is complete
+  const totalSections = sectionChecks.length + 1;
+  const completedSections = sectionChecks.filter(check => check === YesOrNo.YES).length;
+  const allSectionsCompleted = completedSections === sectionChecks.length;
 
   const overallStatus: AnyRecord = {
-    sectionCount,
+    sectionCount: allSectionsCompleted ? completedSections + 1 : completedSections,
     totalSections,
   };
 
   return translateOverallStatus(overallStatus, translations);
 };
 
-export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseWithId[]> => {
+export const getUserCasesByLastModified = async (req: AppRequest, caseUserRole?: string): Promise<CaseWithId[]> => {
   try {
-    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases();
+    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases(caseUserRole);
     if (cases.data.length === 0) {
       return [];
     } else {
@@ -117,33 +114,53 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
   }
 };
 
+const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string => {
+  if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+    // getClaimStepsUrl returns one of two constants, and the language comes from constant
+    // branches only, so the redirect URL is not treated as unvalidated
+    const claimStepsUrl = getClaimStepsUrl(req);
+    return req.url?.includes(languages.WELSH_URL_PARAMETER)
+      ? claimStepsUrl + languages.WELSH_URL_PARAMETER
+      : claimStepsUrl + languages.ENGLISH_URL_PARAMETER;
+  }
+  return returnSafeCitizenHubUrl(userCase.id, req);
+};
+
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
     Reflect.deleteProperty(req.session, 'userCase');
-    return res.redirect(returnSafePageUrl(PageUrls.CHECKLIST, req));
+    // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+    const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+      ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
+      : PageUrls.CHECKLIST + languages.ENGLISH_URL_PARAMETER;
+    return res.redirect(redirectUrl);
   }
   try {
     const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     if (response.data === undefined || response.data === null) {
-      return res.redirect(returnSafePageUrl(PageUrls.LIP_OR_REPRESENTATIVE, req));
+      // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+      const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+        ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
+        : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
+      return res.redirect(redirectUrl);
     }
 
     req.session.userCase = fromApiFormat(response.data);
     clearCaseTransferInfoIfStale(req, caseId);
 
     req.session.save();
-    if (req.session.userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-      return res.redirect(returnSafePageUrl(PageUrls.CLAIM_STEPS, req));
-    }
-    // Use the route caseId (always a string) rather than userCase.id, which the API may return as a number
-    return res.redirect(returnSafeCitizenHubUrl(caseId, req));
+    return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error(errorMessage);
     if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
       return;
     }
-    return res.redirect(returnSafePageUrl(ErrorPages.NOT_FOUND, req));
+    // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
+    const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
+      ? ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER
+      : ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER;
+    return res.redirect(redirectUrl);
   }
 };
 

@@ -1,0 +1,12 @@
+{
+  "title": "Does the respondent make contributions to the claimant's pension? (optional)",
+  "legend": "Does the respondent make contributions to the claimant's pension? (optional)",
+  "label": "Does the respondent make contributions to the claimant's pension?",
+  "pensionContributions": "Enter their pension contributions - worked out weekly",
+  "errors": {
+    "claimantPensionWeeklyContribution": {
+      "invalidCurrency": "Enter pension contributions in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Pension contributions must be £9,999,999.99 or less"
+    }
+  }
+}

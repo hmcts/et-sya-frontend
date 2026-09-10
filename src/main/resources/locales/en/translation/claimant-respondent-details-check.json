@@ -1,0 +1,29 @@
+{
+  "title": "Check the respondent details",
+  "subTitle": "Respondent ",
+  "legend": "Have you completed this section?",
+  "hint": "You can change your answers later.",
+  "yes": "Yes, I've completed this section",
+  "no": "No, I'll come back to it later",
+  "name": "Name",
+  "address": "Address",
+  "acasNum": "Acas certificate number",
+  "noAcasReason": "Why do you not have an Acas number?",
+  "acasReason": {
+    "another": "Another person I'm making a claim with has an Acas early conciliation certificate number",
+    "no_power": "Acas doesn't have the power to conciliate on some or all of my claim",
+    "employer": "My employer has already been in touch with Acas",
+    "unfair_dismissal": "The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
+  },
+  "unProvided": "Not provided",
+  "change": "Change",
+  "addAnotherRespondent": "Add another respondent",
+  "saveAndContinue": "Save and continue",
+  "saveForLater": "Save as draft",
+  "errors": {
+    "employmentAndRespondentCheck": {
+      "required": "Tell us if you have completed this section",
+      "invalid": "You must complete the Employment and respondent details section before you can mark it as completed"
+    }
+  }
+}

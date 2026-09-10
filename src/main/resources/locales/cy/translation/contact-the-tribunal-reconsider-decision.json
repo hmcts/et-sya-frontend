@@ -2,6 +2,8 @@
   "title": "Ystyried penderfyniad o'r newydd",
   "applicationType": "Ystyried penderfyniad o'r newydd",
   "applicationTitle": "Gwneud cais i benderfyniad gael ei ystyried o’r newydd",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -15,14 +17,43 @@
       "type": "paragraph",
       "text": "Bydd y barnwr yn ystyried y penderfyniad o’r newydd ar sail yr un wybodaeth ag oedd gerbron y swyddog cyfreithiol, oni bai bod y naill ochr neu’r llall yn dewis darparu gwybodaeth ychwanegol."
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
         "y penderfyniad yr ydych eisiau iddo gael ei ystyried o’r newydd",
         "y dyddiad y cyhoeddodd y tribiwnlys y penderfyniad",
         "pam eich bod eisiau i’r penderfyniad gael ei ystyried o’r newydd",
+        "unrhyw wybodaeth ychwanegol berthnasol"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i Farnwr Cyflogaeth ystyried dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol o’r newydd."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae ystyried o’r newydd yn golygu os ydy'r hawlydd yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eu hachos, gallant ofyn i Farnwr Cyflogaeth edrych ar y penderfyniad hwnnw eto."
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd y barnwr yn ystyried y penderfyniad o’r newydd ar sail yr un wybodaeth ag oedd gerbron y swyddog cyfreithiol, oni bai bod y naill ochr neu’r llall yn dewis darparu gwybodaeth ychwanegol."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "y penderfyniad mae'r hawlydd eisiau ei ystyried o'r newydd",
+        "y dyddiad y cyhoeddodd y tribiwnlys y penderfyniad",
+        "pam bod yr hawlydd eisiau i'r penderfyniad gael ei ystyried o'r newydd",
         "unrhyw wybodaeth ychwanegol berthnasol"
       ]
     }

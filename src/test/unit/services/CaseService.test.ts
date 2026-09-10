@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { clone } from 'lodash';
 
+import { UpdateCaseBody } from '../../../main/definitions/api/caseApiBody';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import {
   AgreedDocuments,
@@ -22,7 +23,7 @@ import {
 } from '../../../main/definitions/case';
 import { TseAdminDecisionItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { CcdDataModel, JavaApiUrls, Roles, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
+import { CaseApiParams, CcdDataModel, JavaApiUrls, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -129,7 +130,15 @@ describe('Axios get to retrieve draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
     await api.getUserCases();
 
-    expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases');
+    expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases', { params: undefined });
+  });
+
+  it('should pass the caseUserRole as a query param when provided', async () => {
+    await api.getUserCases('CLAIMANTNONLEGALREPRESENTATIVE');
+
+    expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases', {
+      params: { [CaseApiParams.CASE_USER_ROLE]: 'CLAIMANTNONLEGALREPRESENTATIVE' },
+    });
   });
 });
 
@@ -287,6 +296,51 @@ describe('update case', () => {
       JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
     );
+  });
+
+  it('should update only the about you details for a submitted case', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      claimantRepresentedQuestion: YesOrNo.YES,
+      representativeName: 'Wolfie Smith',
+      representativeOrgName: 'Tooting Popular Front',
+      representativeType: 'Trade Union',
+      repAddress1: '1 Tooting Broadway',
+      repAddressTown: 'London',
+      repAddressPostcode: 'SE17 1NE',
+      claimantRepEmail: 'WSmith@tpf.com',
+      representativePhoneNumber: '0208 123 1234',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      hubLinksStatuses: new HubLinksStatuses(),
+    };
+
+    await api.updateClaimantRepAboutYou(caseItem);
+
+    const call = mockedAxios.post.mock.calls.find(([url]) => url === JavaApiUrls.UPDATE_CASE_SUBMITTED) as [
+      string,
+      UpdateCaseBody
+    ];
+    expect(call).toBeDefined();
+    const body = call[1];
+    expect(body.case_data.representativeClaimantType).toEqual(
+      expect.objectContaining({
+        name_of_representative: 'Wolfie Smith',
+        name_of_organisation: 'Tooting Popular Front',
+        representative_email_address: 'WSmith@tpf.com',
+        representative_occupation: 'Union',
+        representative_phone_number: '0208 123 1234',
+      })
+    );
+    // nothing outside the About you page is sent, so the rest of the case is left untouched
+    expect(body.case_data.claimantType).toBeUndefined();
+    expect(body.case_data.claimantIndType).toBeUndefined();
+    expect(body.case_data.respondentCollection).toBeUndefined();
+    expect(body.case_data.hubLinksStatuses).toBeUndefined();
   });
 
   it('should submit Claimant TSE application', async () => {
@@ -602,7 +656,7 @@ describe('update case from claimant actions', () => {
     };
     await api.updateHubLinksStatuses(caseItem);
 
-    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_HUB_LINKS_STATUSES);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockHubLinkStatusesRequest);
   });
 
@@ -819,12 +873,12 @@ describe('getCaseByApplicationRequest', () => {
     );
   });
 
-  it('should strip all hyphens from a 16-digit case submission reference', async () => {
+  it('should remove first dash from case submission reference', async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { id: '1234' } });
     const mockRequest = {
       session: {
         caseAssignmentFields: {
-          id: '1111-2222-3333-4444',
+          id: '1234567890-123456',
           ethosCaseReference: '60000003/2025',
           firstName: 'John',
           lastName: 'Doe',
@@ -837,44 +891,7 @@ describe('getCaseByApplicationRequest', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.FIND_CASE_FOR_ROLE_MODIFICATION,
       expect.objectContaining({
-        caseSubmissionReference: '1111222233334444',
-      })
-    );
-  });
-});
-
-describe('assignCaseUserRole', () => {
-  beforeEach(() => {
-    mockedAxios.post.mockClear();
-  });
-
-  it('should strip hyphens from case id before assigning creator role', async () => {
-    mockedAxios.post.mockResolvedValueOnce({ data: { status: 'success' } });
-    const mockRequest = {
-      session: {
-        user: { id: 'user-1' },
-        respondentName: 'Acme Ltd',
-        caseAssignmentFields: {
-          id: '1111-2222-3333-4444',
-          caseTypeId: 'ET_EnglandWales',
-        },
-      },
-    } as unknown as AppRequest;
-
-    await api.assignCaseUserRole(mockRequest);
-
-    expect(mockedAxios.post).toHaveBeenCalledWith(
-      JavaApiUrls.ASSIGN_CREATOR_USER_ROLE,
-      expect.objectContaining({
-        case_users: [
-          expect.objectContaining({
-            case_id: '1111222233334444',
-            user_id: 'user-1',
-            case_role: Roles.CREATOR_ROLE_WITH_BRACKETS,
-            case_type_id: 'ET_EnglandWales',
-            respondent_name: 'Acme Ltd',
-          }),
-        ],
+        caseSubmissionReference: '1234567890123456',
       })
     );
   });
