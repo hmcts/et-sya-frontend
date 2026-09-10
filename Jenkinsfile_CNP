@@ -24,12 +24,6 @@ def inTestTrue = [
     ]
 ]
 
-def inTestFalse = [
-    'et-${env}': [
-        secret('', 'IN_TEST')
-    ]
-]
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -83,7 +77,7 @@ withPipeline(type, product, component) {
           ])
           steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
       }
-    loadVaultSecrets(inTestFalse)
+    env.IN_TEST = ''
     sh """
        yarn playwright install
     """
@@ -124,7 +118,7 @@ withPipeline(type, product, component) {
           ])
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
     }
-    loadVaultSecrets(inTestFalse)
+    env.IN_TEST = ''
     sh """
        yarn playwright install
     """
