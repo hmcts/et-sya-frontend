@@ -255,44 +255,64 @@ describe('Router Helpers - conditionalRedirect', () => {
 describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
   it('should build transferred-case url with English language by default', () => {
     const req = mockRequest({});
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234567890123456') + languages.ENGLISH_URL_PARAMETER;
 
-    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=20548`
+    expect(returnSafeTransferredCaseUrl('1234567890123456', req)).toBe(
+      `${PageUrls.TRANSFERRED_CASE}${languages.ENGLISH_URL_PARAMETER}&caseId=1234567890123456`
     );
   });
 
   it('should build transferred-case url with Welsh language', () => {
     const req = mockRequest({});
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '20548') + languages.WELSH_URL_PARAMETER;
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234567890123456') + languages.WELSH_URL_PARAMETER;
 
-    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(
-      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=20548`
+    expect(returnSafeTransferredCaseUrl('1234567890123456', req)).toBe(
+      `${PageUrls.TRANSFERRED_CASE}${languages.WELSH_URL_PARAMETER}&caseId=1234567890123456`
     );
   });
 
-  it('should fall back to claimant applications when caseId is not numeric', () => {
+  it('should fall back to claimant applications when caseId is not a 16-digit CCD id', () => {
     const req = mockRequest({});
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeTransferredCaseUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
 });
 
 describe('Router Helpers - returnSafeCitizenHubUrl', () => {
-  it('should build citizen-hub url for numeric caseId', () => {
+  it('should build citizen-hub url for a 16-digit caseId', () => {
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1234567890123456') + languages.ENGLISH_URL_PARAMETER;
 
-    expect(returnSafeCitizenHubUrl('12234', req)).toBe(
-      `${PageUrls.CITIZEN_HUB_BASE}12234${languages.ENGLISH_URL_PARAMETER}`
+    expect(returnSafeCitizenHubUrl('1234567890123456', req)).toBe(
+      `${PageUrls.CITIZEN_HUB_BASE}1234567890123456${languages.ENGLISH_URL_PARAMETER}`
     );
   });
 
-  it('should fall back to claimant applications when caseId is not numeric', () => {
+  it('should build citizen-hub url when caseId is a number from the API', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeCitizenHubUrl(1786637776090539, req)).toBe(
+      `${PageUrls.CITIZEN_HUB_BASE}1786637776090539${languages.ENGLISH_URL_PARAMETER}`
+    );
+  });
+
+  it('should strip hyphenated 16-digit CCD case ids before embedding in the url', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1111222233334444') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeCitizenHubUrl('1111-2222-3333-4444', req)).toBe(
+      `${PageUrls.CITIZEN_HUB_BASE}1111222233334444${languages.ENGLISH_URL_PARAMETER}`
+    );
+  });
+
+  it('should fall back to claimant applications when caseId is not a 16-digit CCD id', () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeCitizenHubUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeCitizenHubUrl('12234', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
 });

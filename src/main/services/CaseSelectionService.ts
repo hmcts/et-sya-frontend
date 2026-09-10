@@ -114,7 +114,7 @@ export const getUserCasesByLastModified = async (req: AppRequest, caseUserRole?:
   }
 };
 
-const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string => {
+const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest, caseId: string): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
     // getClaimStepsUrl returns one of two constants, and the language comes from constant
     // branches only, so the redirect URL is not treated as unvalidated
@@ -123,7 +123,10 @@ const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string =>
       ? claimStepsUrl + languages.WELSH_URL_PARAMETER
       : claimStepsUrl + languages.ENGLISH_URL_PARAMETER;
   }
-  return returnSafeCitizenHubUrl(userCase.id, req);
+  // Prefer the route caseId (always a string) over userCase.id from the API.
+  // returnSafeCitizenHubUrl only embeds getSafeCaseIdDigits-validated 16-digit ids
+  // plus a constant language query, so Fortify does not treat this as an open redirect.
+  return returnSafeCitizenHubUrl(caseId, req);
 };
 
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
@@ -149,7 +152,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     clearCaseTransferInfoIfStale(req, caseId);
 
     req.session.save();
-    return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
+    return res.redirect(getCaseDestinationUrl(req.session.userCase, req, caseId));
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error(errorMessage);
