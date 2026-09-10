@@ -10,6 +10,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getCaseApi } from '../../services/CaseService';
+import NumberUtils from '../../utils/NumberUtils';
 
 import { handleUpdateClaimantRepAboutYou, setUserCase } from './CaseHelpers';
 import {
@@ -20,9 +21,8 @@ import {
 } from './ClaimantRepAnswersHelper';
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { getPageContent } from './FormHelpers';
-import { setUrlLanguage } from './LanguageHelper';
 import { fillRepresentativeAddressFields } from './RespondentHelpers';
-import { getLanguageParam } from './RouterHelpers';
+import { returnSafeClaimantRepAboutYouUrl, returnSafePageUrl } from './RouterHelpers';
 
 const logger = getLogger('ClaimantRepAboutYouHelper');
 
@@ -48,12 +48,12 @@ export const getRepAboutYouPageContent = (
 };
 
 export const getClaimantRepAboutYouPageUrl = (caseId: string, req: AppRequest): string =>
-  PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId) + getLanguageParam(req.url);
+  returnSafeClaimantRepAboutYouUrl(caseId, req);
 
 export const getRepAboutYouReturnUrl = (req: AppRequest): string =>
-  PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(
-    ':caseId',
-    req.session.repAboutYouCaseId ?? req.params?.caseId ?? req.session.userCase?.id
+  returnSafeClaimantRepAboutYouUrl(
+    req.session.repAboutYouCaseId ?? req.params?.caseId ?? req.session.userCase?.id,
+    req
   );
 
 /**
@@ -194,14 +194,22 @@ export const handleRepAboutYouPostLogic = async (
   if (persistToApi) {
     await handleUpdateClaimantRepAboutYou(req, fieldLogger);
     const caseId = req.session.repAboutYouCaseId ?? req.params.caseId ?? req.session.userCase?.id;
-    req.session.repAboutYouCaseId = caseId;
-    if (req.session.userCase?.updateDraftCaseError) {
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
+    if (!safeCaseId) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
-    redirectUrl = PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId);
+    // Store only validated digits so later redirects cannot reintroduce tainted caseId
+    req.session.repAboutYouCaseId = safeCaseId;
+    // Constant base + validated digits + constant language (Fortify-safe Location)
+    return res.redirect(returnSafeClaimantRepAboutYouUrl(safeCaseId, req));
   }
 
-  return res.redirect(setUrlLanguage(req, redirectUrl));
+  // Non-persist callers pass either a constant PageUrls path or an already-safe URL
+  // from getRepAboutYouReturnUrl / returnSafeClaimantRepAboutYouUrl.
+  if (redirectUrl.startsWith(PageUrls.CLAIMANT_REP_ABOUT_YOU_BASE)) {
+    return res.redirect(redirectUrl);
+  }
+  return res.redirect(returnSafePageUrl(redirectUrl, req));
 };
 
 export const handleRepAboutYouFieldPost = async (
@@ -210,7 +218,6 @@ export const handleRepAboutYouFieldPost = async (
   form: Form,
   fieldLogger: LoggerInstance
 ): Promise<void> => {
-  const caseId = req.session.repAboutYouCaseId ?? req.params.caseId ?? req.session.userCase?.id;
-  const redirectUrl = PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId);
-  return handleRepAboutYouPostLogic(req, res, form, fieldLogger, redirectUrl, true);
+  // redirectUrl is unused when persistToApi is true; safe about-you URL is built above
+  return handleRepAboutYouPostLogic(req, res, form, fieldLogger, PageUrls.CLAIMANT_APPLICATIONS, true);
 };

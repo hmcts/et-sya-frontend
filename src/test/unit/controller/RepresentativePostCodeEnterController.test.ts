@@ -71,14 +71,14 @@ describe('Representative PostCode Enter Controller', () => {
       const updateSpy = jest.spyOn(CaseHelper, 'handleUpdateDraftCase');
       updateSpy.mockClear();
       const body = { representativeEnterPostcode: 'SW1A 1AA' };
-      const req = mockRequest({ body });
-      req.session.repAboutYouCaseId = '1234';
+      const req = mockRequest({ body, session: { userCase: { id: '1786637776090539' } } });
+      req.session.repAboutYouCaseId = '1786637776090539';
       const res = mockResponse();
 
       await new RepresentativePostCodeEnterController().post(req, res);
 
       expect(updateSpy).not.toHaveBeenCalled();
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_SELECT);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.REPRESENTATIVE_POSTCODE_SELECT + '?lng=en');
     });
   });
 });

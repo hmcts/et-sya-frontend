@@ -176,6 +176,26 @@ export const returnSafeTransferredCaseUrl = (caseId: string | number, req: AppRe
   return `${PageUrls.TRANSFERRED_CASE}${getSafeLanguageParam(req)}&caseId=${safeCaseId}`;
 };
 
+/**
+ * Builds a safe case-scoped redirect from a constant path base and a 16-digit case id.
+ * Language uses constant query values only so Fortify does not treat this as an open redirect.
+ */
+export const returnSafeCasePageUrl = (pageBase: string, caseId: string | number, req: AppRequest): string => {
+  const safeCaseId = NumberUtils.getSafeCaseIdDigits(caseId);
+  if (!safeCaseId) {
+    return PageUrls.CLAIMANT_APPLICATIONS;
+  }
+  return `${pageBase}${safeCaseId}${getSafeLanguageParam(req)}`;
+};
+
+export const returnSafeClaimantRepAboutYouUrl = (caseId: string | number, req: AppRequest): string => {
+  return returnSafeCasePageUrl(PageUrls.CLAIMANT_REP_ABOUT_YOU_BASE, caseId, req);
+};
+
+export const returnSafeClaimantRepHubUrl = (caseId: string | number, req: AppRequest): string => {
+  return returnSafeCasePageUrl(PageUrls.CLAIMANT_REP_HUB_BASE, caseId, req);
+};
+
 export const addParameterToUrl = (url: string, parameter: string): string => {
   if (StringUtils.isBlank(url)) {
     return DefaultValues.STRING_EMPTY;

@@ -14,7 +14,7 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 jest.mock('axios');
-jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({ id: 'case-123' } as unknown as CaseWithId);
+jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({ id: '1786637776090539' } as unknown as CaseWithId);
 
 const mockCaseApi = {
   axios: AxiosInstance,
@@ -62,7 +62,7 @@ describe('ClaimantRepAboutYouController', () => {
     jest.spyOn(CaseHelpers, 'handleUpdateClaimantRepAboutYou').mockResolvedValue(undefined);
     jest.spyOn(CaseHelpers, 'handleUpdateHubLinksStatuses').mockResolvedValue(undefined);
     jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({
-      id: 'case-123',
+      id: '1786637776090539',
       ...completedFormBody,
       hubLinksStatuses: { [HubLinkNames.AboutYou]: HubLinkStatus.OPTIONAL },
     } as unknown as CaseWithId);
@@ -71,7 +71,7 @@ describe('ClaimantRepAboutYouController', () => {
   it('should render the about you form on successful case load', async () => {
     const req = mockRequest({ session: { user: { email: 'WSmith@TPF.com' } } });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.get(req, res);
@@ -79,8 +79,8 @@ describe('ClaimantRepAboutYouController', () => {
     expect(ClaimantRepAnswersHelper.populateClaimantRepDetailsFromCase).toHaveBeenCalled();
     const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
     expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIMANT_REP_ABOUT_YOU, renderArgs);
-    expect(renderArgs.backLinkUrl).toBe('/claimant-rep-hub/case-123' + languages.ENGLISH_URL_PARAMETER);
-    expect(renderArgs.cancelLink).toBe('/claimant-rep-hub/case-123' + languages.ENGLISH_URL_PARAMETER);
+    expect(renderArgs.backLinkUrl).toBe('/claimant-rep-hub/1786637776090539' + languages.ENGLISH_URL_PARAMETER);
+    expect(renderArgs.cancelLink).toBe('/claimant-rep-hub/1786637776090539' + languages.ENGLISH_URL_PARAMETER);
     expect(Object.keys(renderArgs.form.fields)).toEqual(
       expect.arrayContaining([
         'representativeName',
@@ -101,14 +101,14 @@ describe('ClaimantRepAboutYouController', () => {
     const req = mockRequest({
       session: {
         userCase: {
-          id: 'case-123',
+          id: '1786637776090539',
           representativeAddressTypes: '0',
           representativeAddresses: mockAddresses,
         },
       },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.get(req, res);
 
@@ -122,7 +122,7 @@ describe('ClaimantRepAboutYouController', () => {
     const req = mockRequest({
       session: {
         userCase: {
-          id: 'case-123',
+          id: '1786637776090539',
           repAddress1: '1 Tooting Broadway',
           representativeAddressTypes: 'Several addresses found',
           representativeAddresses: mockAddresses,
@@ -130,7 +130,7 @@ describe('ClaimantRepAboutYouController', () => {
       },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.get(req, res);
 
@@ -140,10 +140,10 @@ describe('ClaimantRepAboutYouController', () => {
 
   it('should list the addresses found by the last lookup', async () => {
     const req = mockRequest({
-      session: { userCase: { id: 'case-123', representativeAddresses: mockAddresses } },
+      session: { userCase: { id: '1786637776090539', representativeAddresses: mockAddresses } },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.get(req, res);
 
@@ -154,9 +154,9 @@ describe('ClaimantRepAboutYouController', () => {
   });
 
   it('should not list any addresses before a lookup is made', async () => {
-    const req = mockRequest({ session: { userCase: { id: 'case-123' } } });
+    const req = mockRequest({ session: { userCase: { id: '1786637776090539' } } });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.get(req, res);
 
@@ -164,10 +164,32 @@ describe('ClaimantRepAboutYouController', () => {
     expect(renderArgs.form.fields.representativeAddressTypes.values).toHaveLength(0);
   });
 
+  it('should redirect to CLAIMANT_APPLICATIONS when caseId is not a 16-digit CCD id', async () => {
+    const req = mockRequest({ body: completedFormBody });
+    const res = mockResponse();
+    req.params = { caseId: 'case-123' };
+
+    await controller.post(req, res);
+
+    expect(caseApi.getUserCase).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+  });
+
+  it('should redirect to CLAIMANT_APPLICATIONS on get when caseId is not a 16-digit CCD id', async () => {
+    const req = mockRequest({});
+    const res = mockResponse();
+    req.params = { caseId: '1234' };
+
+    await controller.get(req, res);
+
+    expect(caseApi.getUserCase).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+  });
+
   it('should redirect to CLAIMANT_APPLICATIONS when case load fails', async () => {
     const req = mockRequest({});
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
     (caseApi.getUserCase as jest.Mock).mockRejectedValue(new Error('Not found'));
 
     await controller.get(req, res);
@@ -178,7 +200,7 @@ describe('ClaimantRepAboutYouController', () => {
   it('should save the entered details and redirect to rep hub', async () => {
     const req = mockRequest({ body: completedFormBody, session: { user: { email: 'WSmith@TPF.com' } } });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.post(req, res);
@@ -188,7 +210,7 @@ describe('ClaimantRepAboutYouController', () => {
     expect(CaseHelpers.handleUpdateClaimantRepAboutYou).toHaveBeenCalled();
     expect(CaseHelpers.handleUpdateHubLinksStatuses).toHaveBeenCalled();
     expect(req.session.userCase.hubLinksStatuses[HubLinkNames.AboutYou]).toBe(HubLinkStatus.VIEWED);
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-hub/case-123');
+    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-hub/1786637776090539' + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should return field errors when the form is invalid', async () => {
@@ -196,8 +218,8 @@ describe('ClaimantRepAboutYouController', () => {
       body: { ...completedFormBody, representativeName: '', claimantRepEmail: 'not-an-email' },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
-    req.url = '/claimant-rep-about-you/case-123';
+    req.params = { caseId: '1786637776090539' };
+    req.url = '/claimant-rep-about-you/1786637776090539';
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.post(req, res);
@@ -207,26 +229,26 @@ describe('ClaimantRepAboutYouController', () => {
       { propertyName: 'claimantRepEmail', errorType: 'invalid' },
     ]);
     expect(CaseHelpers.handleUpdateClaimantRepAboutYou).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/case-123');
+    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/1786637776090539');
   });
 
   it('should redirect back to about you when required details are missing', async () => {
     jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({
-      id: 'case-123',
+      id: '1786637776090539',
       hubLinksStatuses: { [HubLinkNames.AboutYou]: HubLinkStatus.OPTIONAL },
     } as unknown as CaseWithId);
 
     const req = mockRequest({ body: { ...completedFormBody, claimantRepEmail: '' } });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
-    req.url = '/claimant-rep-about-you/case-123';
+    req.params = { caseId: '1786637776090539' };
+    req.url = '/claimant-rep-about-you/1786637776090539';
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.post(req, res);
 
     expect(req.session.errors).toEqual([{ propertyName: 'claimantRepEmail', errorType: 'required' }]);
     expect(CaseHelpers.handleUpdateClaimantRepAboutYou).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/case-123');
+    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/1786637776090539');
   });
 
   it('should look up the addresses and stay on the page when finding an address', async () => {
@@ -235,7 +257,7 @@ describe('ClaimantRepAboutYouController', () => {
       body: { ...completedFormBody, representativeEnterPostcode: 'SE17 1NE', findAddress: 'true' },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.post(req, res);
@@ -243,7 +265,9 @@ describe('ClaimantRepAboutYouController', () => {
     expect(getAddresses).toHaveBeenCalledWith('SE17 1NE');
     expect(req.session.userCase.representativeAddresses).toHaveLength(2);
     expect(CaseHelpers.handleUpdateClaimantRepAboutYou).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/case-123');
+    expect(res.redirect).toHaveBeenCalledWith(
+      '/claimant-rep-about-you/1786637776090539' + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should keep unsaved edits when finding an address', async () => {
@@ -256,11 +280,11 @@ describe('ClaimantRepAboutYouController', () => {
         findAddress: 'true',
       },
       session: {
-        userCase: { id: 'case-123' },
+        userCase: { id: '1786637776090539' },
         claimantRepAboutYouPendingDisplay: { representativeName: 'Wolfie Smith' },
       },
     });
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.post(req, mockResponse());
     await controller.get(req, mockResponse());
@@ -301,35 +325,39 @@ describe('ClaimantRepAboutYouController', () => {
       body: { ...completedFormBody, representativeEnterPostcode: 'SE17 1NE', findAddress: 'true' },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.post(req, res);
 
     expect(req.session.userCase.representativeAddresses).toEqual([]);
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/case-123');
+    expect(res.redirect).toHaveBeenCalledWith(
+      '/claimant-rep-about-you/1786637776090539' + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should fill the address fields when an address is picked from the list', async () => {
     const req = mockRequest({
       body: { ...completedFormBody, representativeAddressTypes: '1', selectAddress: 'true' },
-      session: { userCase: { id: 'case-123', representativeAddresses: mockAddresses } },
+      session: { userCase: { id: '1786637776090539', representativeAddresses: mockAddresses } },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.post(req, res);
 
     expect(req.session.userCase.repAddress1).toBe('2 Tooting Broadway');
     expect(CaseHelpers.handleUpdateClaimantRepAboutYou).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/case-123');
+    expect(res.redirect).toHaveBeenCalledWith(
+      '/claimant-rep-about-you/1786637776090539' + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should keep the picked address when earlier details are held for display', async () => {
     const req = mockRequest({
       body: { ...completedFormBody, representativeAddressTypes: '1', selectAddress: 'true' },
       session: {
-        userCase: { id: 'case-123', representativeAddresses: mockAddresses },
+        userCase: { id: '1786637776090539', representativeAddresses: mockAddresses },
         claimantRepAboutYouPendingDisplay: {
           repAddress1: '1 Old Street',
           repAddressTown: 'Oldtown',
@@ -337,7 +365,7 @@ describe('ClaimantRepAboutYouController', () => {
         },
       },
     });
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.post(req, mockResponse());
     const res = mockResponse();
@@ -350,29 +378,29 @@ describe('ClaimantRepAboutYouController', () => {
   it('should save the address left selected in the list', async () => {
     const req = mockRequest({
       body: { ...completedFormBody, repAddress1: '', repAddressTown: '', representativeAddressTypes: '1' },
-      session: { userCase: { id: 'case-123', representativeAddresses: mockAddresses } },
+      session: { userCase: { id: '1786637776090539', representativeAddresses: mockAddresses } },
     });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
+    req.params = { caseId: '1786637776090539' };
 
     await controller.post(req, res);
 
     expect(req.session.userCase.repAddress1).toBe('2 Tooting Broadway');
     expect(req.session.errors).toEqual([]);
     expect(CaseHelpers.handleUpdateClaimantRepAboutYou).toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-hub/case-123');
+    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-hub/1786637776090539' + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should return a postcode error when finding an address without a valid postcode', async () => {
     const req = mockRequest({ body: { ...completedFormBody, representativeEnterPostcode: '', findAddress: 'true' } });
     const res = mockResponse();
-    req.params = { caseId: 'case-123' };
-    req.url = '/claimant-rep-about-you/case-123';
+    req.params = { caseId: '1786637776090539' };
+    req.url = '/claimant-rep-about-you/1786637776090539';
     (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
 
     await controller.post(req, res);
 
     expect(req.session.errors).toEqual([{ propertyName: 'representativeEnterPostcode', errorType: 'required' }]);
-    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/case-123');
+    expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/1786637776090539');
   });
 });
