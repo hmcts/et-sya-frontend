@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
-import { AssignClaimCheck } from '../decorators/AssignClaimCheck';
+import { AssignClaimCheck, checkAssignClaimAndRedirect } from '../decorators/AssignClaimCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../definitions/case';
 import { CaseAssignmentResponse, PageUrls, ServiceErrors, TranslationKeys, languages } from '../definitions/constants';
@@ -48,6 +48,10 @@ export default class YourDetailsCYAController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (checkAssignClaimAndRedirect(req, res)) {
+      return;
+    }
+
     const formData = this.form.getParsedBody<CaseWithId>(req.body, this.form.getFormFields());
     const errors = this.form.getValidatorErrors(formData);
     if (errors.length !== 0) {

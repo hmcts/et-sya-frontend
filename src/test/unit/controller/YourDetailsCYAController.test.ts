@@ -13,6 +13,7 @@ const mockGetCaseApi = getCaseApi as jest.Mock;
 describe('YourDetailsCYAController', () => {
   const translationJsons = { ...yourDetailsCyaRaw };
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  const verifiedSession = () => ({ visitedAssignClaimFlow: true, yourDetailsVerified: true });
   mockLdClient.mockResolvedValue(true);
 
   beforeAll(() => {
@@ -25,7 +26,7 @@ describe('YourDetailsCYAController', () => {
     it('should render the Check and submit page', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
+      const request = mockRequestWithTranslation({ session: verifiedSession() }, translationJsons);
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(TranslationKeys.YOUR_DETAILS_CYA, expect.anything());
     });
@@ -33,7 +34,7 @@ describe('YourDetailsCYAController', () => {
     it('should include cancelLink in render context', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
+      const request = mockRequestWithTranslation({ session: verifiedSession() }, translationJsons);
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(
         TranslationKeys.YOUR_DETAILS_CYA,
@@ -46,7 +47,7 @@ describe('YourDetailsCYAController', () => {
     it('should include welshEnabled flag in render context', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
+      const request = mockRequestWithTranslation({ session: verifiedSession() }, translationJsons);
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(
         TranslationKeys.YOUR_DETAILS_CYA,
@@ -59,7 +60,7 @@ describe('YourDetailsCYAController', () => {
     it('should include respondentNames from session in render context', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
+      const request = mockRequestWithTranslation({ session: verifiedSession() }, translationJsons);
       request.session.respondentNames = ['Respondent One', 'Respondent Two'];
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(
@@ -73,7 +74,7 @@ describe('YourDetailsCYAController', () => {
     it('should default respondentNames to empty array when not set', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
+      const request = mockRequestWithTranslation({ session: verifiedSession() }, translationJsons);
       delete (request.session as any).respondentNames;
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(
@@ -87,7 +88,7 @@ describe('YourDetailsCYAController', () => {
     it('should include sessionErrors in render context defaulting to empty array', async () => {
       const controller = new YourDetailsCYAController();
       const response = mockResponse();
-      const request = mockRequestWithTranslation({}, translationJsons);
+      const request = mockRequestWithTranslation({ session: verifiedSession() }, translationJsons);
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(
         TranslationKeys.YOUR_DETAILS_CYA,
@@ -102,7 +103,7 @@ describe('YourDetailsCYAController', () => {
     it("should return a 'required' error when the yourDetailsCya field is empty", async () => {
       const body = { yourDetailsCya: '' };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
 
@@ -116,7 +117,7 @@ describe('YourDetailsCYAController', () => {
       const body = { yourDetailsCya: YesOrNo.YES };
       const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.caseAssignmentFields = userCase;
       request.session.visitedAssignClaimFlow = true;
       request.session.yourDetailsVerified = true;
@@ -140,7 +141,7 @@ describe('YourDetailsCYAController', () => {
       });
       const body = { yourDetailsCya: YesOrNo.YES };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.visitedAssignClaimFlow = true;
       request.session.yourDetailsVerified = true;
       request.session.errors = [];
@@ -165,7 +166,7 @@ describe('YourDetailsCYAController', () => {
       });
       const body = { yourDetailsCya: YesOrNo.YES };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.errors = [];
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
@@ -191,7 +192,7 @@ describe('YourDetailsCYAController', () => {
       const body = { yourDetailsCya: YesOrNo.YES };
       const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.caseAssignmentFields = userCase;
       request.session.visitedAssignClaimFlow = true;
       request.session.yourDetailsVerified = true;
@@ -207,7 +208,7 @@ describe('YourDetailsCYAController', () => {
       });
       const body = { yourDetailsCya: YesOrNo.YES };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.errors = [];
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
@@ -226,7 +227,7 @@ describe('YourDetailsCYAController', () => {
       });
       const body = { yourDetailsCya: YesOrNo.YES };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.errors = [];
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
@@ -245,7 +246,7 @@ describe('YourDetailsCYAController', () => {
       });
       const body = { yourDetailsCya: YesOrNo.YES };
       const controller = new YourDetailsCYAController();
-      const request = mockRequest({ body });
+      const request = mockRequest({ body, session: verifiedSession() });
       request.session.errors = [];
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
@@ -256,6 +257,27 @@ describe('YourDetailsCYAController', () => {
         expect.arrayContaining([{ propertyName: 'hiddenErrorField', errorType: 'api' }])
       );
       expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_CYA);
+    });
+
+    it('should reject a direct POST when claimant details have not been verified', async () => {
+      const assignCaseUserRole = jest.fn();
+      mockGetCaseApi.mockReturnValueOnce({ assignCaseUserRole });
+      const controller = new YourDetailsCYAController();
+      const request = mockRequest({
+        body: { yourDetailsCya: YesOrNo.YES },
+        session: {
+          user: { accessToken: 'token' },
+          visitedAssignClaimFlow: true,
+          caseAssignmentFields: { id: '9999999999999999' },
+        },
+      });
+      request.url = PageUrls.YOUR_DETAILS_CYA;
+      const response = mockResponse();
+
+      await controller.post(request, response);
+
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_DETAILS_FORM + '?lng=en');
+      expect(assignCaseUserRole).not.toHaveBeenCalled();
     });
   });
 });
