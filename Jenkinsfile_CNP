@@ -18,12 +18,6 @@ def secrets = [
     ]
 ]
 
-def inTestTrue = [
-    'et-${env}': [
-        secret('true', 'IN_TEST')
-    ]
-]
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -55,7 +49,7 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('smoketest:aat') {
-     loadVaultSecrets(inTestTrue)
+     env.IN_TEST = 'true'
      publishHTML([
                     allowMissing         : true,
                     alwaysLinkToLastBuild: true,
@@ -96,7 +90,7 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('smoketest:preview') {
-    loadVaultSecrets(inTestTrue)
+    env.IN_TEST = 'true'
     publishHTML([
                     allowMissing         : true,
                     alwaysLinkToLastBuild: true,
