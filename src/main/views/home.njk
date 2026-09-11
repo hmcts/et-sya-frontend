@@ -17,7 +17,7 @@
       }) }}
       <p class="govuk-body">{{ saveInfo }}</p>
       {{ govukWarningText({
-        html: warningTxt2,
+        html: warningTxt2Era if eraOctober2026Enabled else warningTxt2,
         iconFallbackText: warningTxt
       }) }}
 

@@ -8,6 +8,7 @@ import {
   isDateInNextTenYears,
   isDateInPast,
   isDateInputInvalid,
+  isDateNotInFuture,
   isDateNotInPast,
   isDateNotPartial,
 } from '../components/form/date-validator';
@@ -111,4 +112,16 @@ export const StartDateFormFields = {
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateInPast(value),
+};
+
+export const DateOfLastEventFormFields = {
+  classes: 'govuk-date-input',
+  type: 'date',
+  label: (l: AnyRecord): string => l.h1,
+  labelHidden: true,
+  labelSize: 'l',
+  hint: (l: AnyRecord): string => l.hint,
+  values: DateValues,
+  validator: (value: CaseDate): DateTypes =>
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateNotInFuture(value),
 };

@@ -3,6 +3,9 @@ import path from 'path';
 
 import { expect } from 'chai';
 import request from 'supertest';
+jest.mock('../../../main/modules/featureFlag/launchDarkly', () => ({
+  getFlagValue: jest.fn().mockResolvedValue(false),
+}));
 
 import { app } from '../../../main/app';
 

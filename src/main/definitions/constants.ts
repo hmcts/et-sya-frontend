@@ -44,6 +44,7 @@ export const TranslationKeys = {
   VALID_ACAS_REASON: 'valid-no-acas-reason',
   STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
+  HEARING_PANEL_PREFERENCE: 'hearing-panel-preference',
   CONTACT_ACAS: 'contact-acas',
   PENSION: 'pension',
   JOB_TITLE: 'job-title',
@@ -79,6 +80,7 @@ export const TranslationKeys = {
   PAST_EMPLOYER: 'past-employer',
   CLAIM_TYPE_DISCRIMINATION: 'claim-type-discrimination',
   CLAIM_TYPE_PAY: 'claim-type-pay',
+  DATE_OF_LAST_EVENT: 'date-of-last-event',
   DESCRIBE_WHAT_HAPPENED: 'describe-what-happened',
   TELL_US_WHAT_YOU_WANT: 'tell-us-what-you-want',
   COMPENSATION: 'compensation',
@@ -252,6 +254,7 @@ export const PageUrls = {
   ADDRESS_DETAILS: '/address-details',
   CONTACT_ACAS: '/contact-acas',
   VIDEO_HEARINGS: '/would-you-want-to-take-part-in-video-hearings',
+  HEARING_PANEL_PREFERENCE: '/hearing-panel-preference',
   TELEPHONE_NUMBER: '/telephone-number',
   SEX_AND_TITLE: '/sex-and-title',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
@@ -281,6 +284,7 @@ export const PageUrls = {
   END_DATE: '/end-date',
   CLAIM_TYPE_DISCRIMINATION: '/claim-type-discrimination',
   CLAIM_TYPE_PAY: '/claim-type-pay',
+  DATE_OF_LAST_EVENT: '/date-of-last-event',
   DESCRIBE_WHAT_HAPPENED: '/describe-what-happened',
   TELL_US_WHAT_YOU_WANT: '/tell-us-what-you-want',
   COMPENSATION: '/compensation',
@@ -734,6 +738,7 @@ export const FEATURE_FLAGS = {
   ECC: 'ecc',
   MUL2: 'MUL2',
   DOCUMENT_STREAMING: 'document-streaming',
+  ERA_OCTOBER_2026: 'eraOctober2026',
 } as const;
 
 export const DefaultValues = {

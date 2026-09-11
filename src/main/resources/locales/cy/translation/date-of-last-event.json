@@ -1,0 +1,22 @@
+{
+  "title": "[W]Date of last event - Claim details",
+  "h1": "[W]What is the date of the most recent event you are complaining about?",
+  "hint": "[W]Tell us the date of the latest event related to your claim.<br><br>For example, the date you were dismissed, the last act of discrimination, or the most recent incident related to your claim.",
+  "errors": {
+    "dateOfLastEvent": {
+      "required": "[W]Enter the date of the most recent event complained about",
+      "invalidDateInFuture": "[W]Date of the most recent event must be in the past",
+      "dayRequired": "[W]Date of the most recent event must include a day",
+      "monthRequired": "[W]Date of the most recent event must include a month",
+      "yearRequired": "[W]Date of the most recent event must include a year",
+      "dayNotANumber": "[W]Day must only contain numbers",
+      "monthNotANumber": "[W]Month must only contain numbers",
+      "yearNotANumber": "[W]Year must only contain numbers",
+      "dayInvalid": "[W]Day must be between 1 and 31",
+      "monthInvalid": "[W]Month must be between 1 and 12",
+      "yearInvalid": "[W]Enter a valid year",
+      "invalidDate": "[W]Date of the most recent event must be a real date",
+      "invalidDateTooFarInPast": "[W]Date must not be more than 100 years in the past"
+    }
+  }
+}
