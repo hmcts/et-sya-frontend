@@ -42,7 +42,7 @@ jobs:
       # Install npm dependencies
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       # Install Playwright browsers
 
