@@ -60,7 +60,8 @@ export const getSectionIndexToLinkNames = async (caseTypeId?: CaseTypeId): Promi
   const sections = sectionIndexToLinkNames.map(linkNames => [...linkNames]);
 
   if (await getCuiYourSupportFeature().isEnabled(caseTypeId)) {
-    sections[0] = [...sections[0], HubLinkNames.YourSupport];
+    const yourClaimSectionIndex = sections.findIndex(linkNames => linkNames.includes(HubLinkNames.Et1ClaimForm));
+    sections[yourClaimSectionIndex] = [...sections[yourClaimSectionIndex], HubLinkNames.YourSupport];
   }
 
   return sections;
