@@ -1,0 +1,12 @@
+{
+  "title": "Does the claimant have a written contract with a notice period?",
+  "heading": "Does the claimant have a written contract with a notice period? (optional)",
+  "h1": "Does the claimant have a written contract with a notice period? (optional)",
+  "label": "Does the claimant have a written contract with a notice period?",
+  "legend": "Does the claimant have a written contract with a notice period? (optional)",
+  "errors": {
+    "claimantWrittenContract": {
+      "required": "Tell us if the claimant has a written contract with a notice period"
+    }
+  }
+}

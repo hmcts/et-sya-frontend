@@ -127,6 +127,14 @@ export const mockEt1DataModelUpdate = {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      representativeDetailsCheck: undefined as unknown,
+      representedClaimantDetailsCheck: undefined as unknown,
+    },
+    hubLinksStatuses: undefined as unknown,
+    representativeClaimantType: {
+      name_of_representative: undefined as unknown,
+      name_of_organisation: undefined as unknown,
+      representative_email_address: undefined as unknown,
     },
     claimantWorkAddress: {
       claimant_work_address: {

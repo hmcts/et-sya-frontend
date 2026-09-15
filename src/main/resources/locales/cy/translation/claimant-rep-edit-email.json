@@ -1,0 +1,13 @@
+{
+  "title": "Eich cyfeiriad e-bost",
+  "h1": "Eich cyfeiriad e-bost",
+  "emailLabel": "Nodwch eich cyfeiriad e-bost ar gyfer yr achos hwn",
+  "hint": "Mae hwn ar wahân i'r cyfeiriad e-bost a ddefnyddir gennych i fewngofnodi. Gallwch ddefnyddio e-bost gwahanol ar gyfer pob achos a gynrychiolir gennych.",
+  "submitBtn": "Cyflwyno",
+  "errors": {
+    "claimantRepEmail": {
+      "required": "Nodwch eich cyfeiriad e-bost",
+      "invalid": "Rhowch gyfeiriad e-bost yn y fformat cywir, er enghraifft enw@enghraifft.com"
+    }
+  }
+}

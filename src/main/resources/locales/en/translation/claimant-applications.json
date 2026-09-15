@@ -1,14 +1,11 @@
 {
-  "title": "ET1 Applications",
-  "h1": "Draft applications",
-  "h2": "Submitted applications",
+  "title": "ET1 Claims",
+  "h1": "Draft claims",
+  "h2": "Submitted claims",
   "p1": "Start a new claim",
   "p1Link": "/claimant-application/newClaim?lng=en",
   "p2": "Add an existing claim",
   "p2Link": "/case-number-check?lng=en",
-  "title": "ET1 claims",
-  "h1": "Draft claims",
-  "h2": "Submitted claims",
   "noRespondents": "Not yet provided",
   "col1": "Date created",
   "col2": "Reference",
@@ -19,5 +16,8 @@
   "col7": "Options",
   "p3": "For privacy purposes, a draft claim will be deleted 12 months after the date it's created.",
   "caseNumber": "Case number",
-  "dateSubmitted": "Date submitted"
+  "dateSubmitted": "Date submitted",
+  "claimantNameCol": "Claimant",
+  "myClaimsTab": "My ET1 claims",
+  "representingTab": "ET1 claims for others"
 }

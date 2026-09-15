@@ -14,6 +14,7 @@ import {
   getSectionStatusForEmployment,
   handlePostLogic,
   handlePostLogicPreLogin,
+  handleUpdateClaimantRepAboutYou,
   handleUpdateDraftCase,
   handleUpdateHubLinksStatuses,
   handleUpdateSubmittedCaseFlags,
@@ -237,6 +238,15 @@ describe('setUserCaseWithRedisData', () => {
 });
 
 describe('handle update draft case', () => {
+  const draftCaseResponse = {
+    data: {
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+      state: CaseState.DRAFT,
+      case_data: {},
+    },
+  } as AxiosResponse<CaseApiDataResponse>;
+
   it('should successfully save case draft', async () => {
     caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(
       Promise.resolve({
@@ -297,6 +307,110 @@ describe('handle update draft case', () => {
     await handleUpdateDraftCase(req, mockLogger);
 
     expect(caseApi.updateDraftCase).not.toHaveBeenCalled();
+  });
+
+  it('should preserve representativeEnterPostcode after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representativeEnterPostcode = 'SW1A 1AA';
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representativeEnterPostcode).toEqual('SW1A 1AA');
+  });
+
+  it('should preserve representativeAddresses after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const addresses = [
+      { fullAddress: '1 Rep St', street1: '1 Rep St', town: 'London', postcode: 'SW1A 1AA', country: 'ENGLAND' },
+    ];
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representativeAddresses = addresses;
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representativeAddresses).toEqual(addresses);
+  });
+
+  it('should preserve representativeAddressTypes after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const addressTypes = [
+      { selected: true, label: '1 address found' },
+      { value: 0, label: '1 Rep St' },
+    ];
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representativeAddressTypes = addressTypes;
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representativeAddressTypes).toEqual(addressTypes);
+  });
+
+  it('should preserve represented claimant name and date of birth after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantFirstName = 'Jane';
+    req.session.userCase.representedClaimantLastName = 'Doe';
+    req.session.userCase.representedClaimantDateOfBirth = { day: '05', month: '11', year: '2000' };
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representedClaimantFirstName).toEqual('Jane');
+    expect(req.session.userCase.representedClaimantLastName).toEqual('Doe');
+    expect(req.session.userCase.representedClaimantDateOfBirth).toEqual({ day: '05', month: '11', year: '2000' });
+  });
+
+  it('should preserve representedClaimantEnterPostcode after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantEnterPostcode = 'LE5 5HD';
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representedClaimantEnterPostcode).toEqual('LE5 5HD');
+  });
+
+  it('should preserve representedClaimantAddresses after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const addresses = [
+      {
+        fullAddress: '1 Claimant St',
+        street1: '1 Claimant St',
+        town: 'Leicester',
+        postcode: 'LE5 5HD',
+        country: 'ENGLAND',
+      },
+    ];
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantAddresses = addresses;
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representedClaimantAddresses).toEqual(addresses);
+  });
+
+  it('should preserve representedClaimantAddressTypes after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const addressTypes = [
+      { selected: true, label: '1 address found' },
+      { value: 0, label: '1 Claimant St' },
+    ];
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantAddressTypes = addressTypes;
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representedClaimantAddressTypes).toEqual(addressTypes);
+  });
+
+  it('should preserve representedClaimantAddress1 after API update', async () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(Promise.resolve(draftCaseResponse));
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    req.session.userCase.representedClaimantAddress1 = '10 Claimant Street';
+
+    await handleUpdateDraftCase(req, mockLogger);
+
+    expect(req.session.userCase.representedClaimantAddress1).toEqual('10 Claimant Street');
   });
 });
 
@@ -831,5 +945,51 @@ describe('deleteDraftCase', () => {
     } as unknown as import('../../../../main/definitions/case').CaseWithId;
     await expect(deleteDraftCase(req, mockLogger)).rejects.toThrow(error);
     expect(mockLogger.error).toHaveBeenCalledWith('delete failed');
+  });
+});
+
+describe('handleUpdateClaimantRepAboutYou', () => {
+  it('should update the rep details on a submitted case', async () => {
+    caseApi.updateClaimantRepAboutYou = jest
+      .fn()
+      .mockResolvedValue({ data: { id: '1780654507465167', case_data: {} } });
+    mockClient.mockReturnValue(caseApi);
+
+    const req = mockRequest({
+      session: {
+        user: { email: 'rep@example.com' },
+        userCase: {
+          id: '1780654507465167',
+          state: CaseState.SUBMITTED,
+          representativeName: 'Updated Name',
+          claimantRepEmail: 'new@example.com',
+        },
+      },
+    });
+
+    await handleUpdateClaimantRepAboutYou(req, mockLogger);
+
+    expect(caseApi.updateClaimantRepAboutYou).toHaveBeenCalledWith(
+      expect.objectContaining({ representativeName: 'Updated Name', claimantRepEmail: 'new@example.com' })
+    );
+    expect(req.session.claimantRepAboutYouPendingDisplay?.claimantRepEmail).toBe('new@example.com');
+    expect(req.session.userCase.updateDraftCaseError).toBeUndefined();
+  });
+
+  it('should report a failed update so the representative is told', async () => {
+    caseApi.updateClaimantRepAboutYou = jest.fn().mockRejectedValue(new Error('update failed'));
+    mockClient.mockReturnValue(caseApi);
+
+    const req = mockRequest({
+      session: {
+        user: { email: 'rep@example.com' },
+        userCase: { id: '1780654507465167', state: CaseState.SUBMITTED, representativeName: 'Updated Name' },
+      },
+    });
+
+    await handleUpdateClaimantRepAboutYou(req, mockLogger);
+
+    expect(req.session.userCase.updateDraftCaseError).toBeDefined();
+    expect(mockLogger.error).toHaveBeenCalledWith('update failed');
   });
 });

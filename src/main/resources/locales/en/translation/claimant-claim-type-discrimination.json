@@ -1,0 +1,48 @@
+{
+  "title": "Discrimination claim",
+  "h1": "Discrimination claim",
+  "legend": "What type of discrimination is the claimant claiming?",
+  "hint": "Select all that apply.",
+  "detailsSummary": "What is discrimination?",
+  "detailsText": {
+    "p1": "Discrimination is when someone is treated unfairly and the treatment is related to any of the protected characteristics from the 2010 Equality Act. The claimant has rights at work if they have experienced discrimination.",
+    "p2": "See the",
+    "govukLinkText": "GOV.UK guidance (opens in new tab)",
+    "govukLinkUrl": "https://www.gov.uk/guidance/equality-act-2010-guidance",
+    "p2Suffix": "for further information on protected characteristics and workplace rights."
+  },
+  "age": {
+    "checkbox": "Age"
+  },
+  "disability": {
+    "checkbox": "Disability"
+  },
+  "genderReassignment": {
+    "checkbox": "Gender reassignment"
+  },
+  "marriageOrCivilPartnership": {
+    "checkbox": "Marriage or civil partnership"
+  },
+  "pregnancyOrMaternity": {
+    "checkbox": "Pregnancy or maternity"
+  },
+  "race": {
+    "checkbox": "Race",
+    "hint": "including colour, nationality, and ethnic or national origins"
+  },
+  "religionOrBelief": {
+    "checkbox": "Religion or belief"
+  },
+  "sex": {
+    "checkbox": "Sex",
+    "hint": "including equal pay"
+  },
+  "sexualOrientation": {
+    "checkbox": "Sexual orientation"
+  },
+  "errors": {
+    "claimTypeDiscrimination": {
+      "required": "Please select at least one type of discrimination."
+    }
+  }
+}

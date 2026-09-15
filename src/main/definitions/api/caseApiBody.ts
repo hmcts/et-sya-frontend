@@ -1,4 +1,5 @@
 import { CaseFlags } from '../case';
+import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
@@ -6,6 +7,7 @@ import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPrefer
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
+import { RepresentativeType } from '../complexTypes/representative';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { TriageQuestions } from '../complexTypes/triageQuestions';
@@ -33,6 +35,13 @@ interface CaseDataApiBody {
   hubLinksStatuses?: HubLinksStatuses;
   claimantTse?: ClaimantTse;
   claimantExternalFlags?: CaseFlags;
+  representativeClaimantType?: ClaimantRepresentative;
+  repCollection?: RepresentativeRequestBody[];
+}
+
+export interface RepresentativeRequestBody {
+  value: RepresentativeType;
+  id?: string;
 }
 
 export interface CreateCaseBody {

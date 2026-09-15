@@ -1,4 +1,4 @@
-{% if userCase.claimantRepresentedQuestion and userCase.claimantRepresentedQuestion === 'Yes' %}
+{% if not isClaimantRepHub and userCase.claimantRepresentedQuestion and userCase.claimantRepresentedQuestion === 'Yes' %}
   {% set htmlForClaimantRepresentedBanner %}
     {% if claimantRepresented.name_of_organisation %}
       <h3 class="govuk-notification-banner__heading">{{ notificationBanner.claimantRepresented.titleWithName }} {{claimantRepresented.name_of_organisation}}. </h3>

@@ -1,7 +1,11 @@
 {
   "title": "Newid fy manylion personol",
   "applicationType": "Newid fy manylion personol",
+  "applicationTypeRep": "Newid manylion personol yr hawlydd",
   "applicationTitle": "Rwyf eisiau newid fy manylion personol",
+  "applicationTitleRep": "Mae'r hawlydd eisiau newid eu manylion personol",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -15,7 +19,38 @@
       "type": "paragraph",
       "text": "Os byddwch yn newid eich rhif ffôn, byddwn yn cysylltu â chi ar y rhif newydd os bydd gennym unrhyw gwestiynau am eich hawliad."
     },
-    { "type": "bold-paragraph", "text": "Manylion y gellid gwneud cais i’w newid:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion y gellid gwneud cais i’w newid:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "enw",
+        "rhyw a’r teitl sydd orau gennych",
+        "cyfeiriad cyswllt neu gyfeiriad cartref",
+        "rhif ffôn",
+        "cyfeiriad e-bost"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i newid y manylion personol a bu i'r hawlydd eu rhoi wrth wneud eu hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os bydd yr hawlydd yn newid eu cyfeiriad post neu eu cyfeiriad e-bost, byddwn yn anfon unrhyw lythyrau i'w cyfeiriad newydd os byddant heb gynrychiolaeth"
+    },
+    {
+      "type": "paragraph",
+      "text": "Os byddant yn newid eu rhif ffôn, byddwn yn cysylltu â nhw ar y rhif newydd os byddant heb gynrychiolaeth."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion y gall yr hawlydd wneud cais i’w newid:"
+    },
     {
       "type": "list",
       "items": [

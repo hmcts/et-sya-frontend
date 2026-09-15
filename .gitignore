@@ -48,3 +48,4 @@ src/test/end-to-end/functional-output/*
 .stryker-tmp
 /reports/*
 config/local-development.json
+config/development.json

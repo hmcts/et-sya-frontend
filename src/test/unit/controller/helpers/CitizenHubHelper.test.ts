@@ -724,6 +724,7 @@ describe('getHubLinksUrlMap', () => {
 
   it('returns correct links when respondent is system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.AboutYou, PageUrls.REPRESENTATIVE_DETAILS_CHECK],
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS],
@@ -741,6 +742,7 @@ describe('getHubLinksUrlMap', () => {
 
   it('returns correct links when respondent is system user in Welsh', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.AboutYou, PageUrls.REPRESENTATIVE_DETAILS_CHECK + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + languages.WELSH_URL_PARAMETER],
@@ -761,6 +763,7 @@ describe('getHubLinksUrlMap', () => {
 
   it('returns correct links when respondent is non-system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.AboutYou, PageUrls.REPRESENTATIVE_DETAILS_CHECK],
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS],
@@ -778,6 +781,7 @@ describe('getHubLinksUrlMap', () => {
 
   it('returns correct links when respondent is non-system user in Welsh', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.AboutYou, PageUrls.REPRESENTATIVE_DETAILS_CHECK + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.YourSupport, PageUrls.YOUR_SUPPORT + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + languages.WELSH_URL_PARAMETER],

@@ -23,6 +23,8 @@ export interface CreateCaseResponse {
 
 export interface CaseApiDataResponse {
   id: string;
+  // Role the user holds on this case, injected by /user-cases (may be top-level or in case_data).
+  caseUserRole?: string;
   created_date: string;
   last_modified: string;
   jurisdiction?: string;
@@ -38,6 +40,7 @@ export interface CaseApiDataResponse {
 }
 
 export interface CaseData {
+  caseUserRole?: string;
   ethosCaseReference?: string;
   feeGroupReference?: string;
   caseType?: CaseType;
