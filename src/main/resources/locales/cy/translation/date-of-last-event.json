@@ -1,0 +1,22 @@
+{
+  "title": "Dyddiad y digwyddiad diwethaf - Manylion yr hawliad",
+  "h1": "Beth yw dyddiad y digwyddiad diweddaraf yr hoffech wneud cwyn amdano?",
+  "hint": "Beth oedd dyddiad y digwyddiad diweddaraf sy'n berthnasol i'ch hawliad.<br><br>Er enghraifft, y dyddiad y cawsoch eich diswyddo, y weithred ddiweddaraf o wahaniaethu, neu'r digwyddiad diweddaraf sy'n berthnasol i'ch hawliad.",
+  "errors": {
+    "dateOfLastEvent": {
+      "required": "Rhowch ddyddiad y digwyddiad diweddaraf yr ydych wedi gwneud cwyno amdano",
+      "invalidDateInFuture": "Rhaid i ddyddiad y digwyddiad diweddaraf fod yn y gorffennol.",
+      "dayRequired": "Rhaid i ddyddiad y digwyddiad diweddaraf gynnwys diwrnod",
+      "monthRequired": "Rhaid i ddyddiad y digwyddiad diweddaraf gynnwys mis",
+      "yearRequired": "Rhaid i ddyddiad y digwyddiad diweddaraf gynnwys blwyddyn",
+      "dayNotANumber": "Rhaid i'r diwrnod fod ar ffurf rhifau yn unig",
+      "monthNotANumber": "Rhaid i'r mis fod ar ffurf rhifau yn unig",
+      "yearNotANumber": "Rhaid i'r flwyddyn fod ar ffurf rhifau yn unig",
+      "dayInvalid": "Rhaid i'r diwrnod fod rhwng 1 a 31",
+      "monthInvalid": "Rhaid i'r mis fod rhwng 1 a 12",
+      "yearInvalid": "Rhowch flwyddyn ddilys",
+      "invalidDate": "Rhaid i ddyddiad y digwyddiad diweddaraf fod yn ddyddiad go iawn",
+      "invalidDateTooFarInPast": "Ni all y dyddiad fod yn fwy na 100 mlynedd yn y gorffennol"
+    }
+  }
+}
