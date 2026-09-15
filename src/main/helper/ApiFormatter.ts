@@ -269,6 +269,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
       ],
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+    ...(fromApiCaseData.case_data?.claimantExternalFlags !== undefined
+      ? { claimantExternalFlags: fromApiCaseData.case_data.claimantExternalFlags }
+      : {}),
   };
   populateClaimantRepDetailsFromCase(userCase);
   return userCase;
@@ -304,7 +307,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 }
 export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
   const isRepresentedClaimant = caseItem.claimantRepresentedQuestion === YesOrNo.YES;
-  return {
+  const updateCaseBody: UpdateCaseBody = {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
     case_data: {
@@ -418,6 +421,12 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       representativeClaimantType: setClaimantRepApiFormat(caseItem),
     },
   };
+
+  if (caseItem.claimantExternalFlags !== undefined) {
+    updateCaseBody.case_data.claimantExternalFlags = caseItem.claimantExternalFlags;
+  }
+
+  return updateCaseBody;
 }
 
 /**
