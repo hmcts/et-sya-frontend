@@ -40,16 +40,18 @@ export const checkFormSubmissionAndRedirect = (req: AppRequest, res: Response): 
   const userCase = req.session?.userCase;
   const referer = req.get('Referer') || req.get('Referrer');
 
+  const safeCaseId = NumberUtils.getSafeCaseIdDigits(userCase?.id);
+
   // Users must visit /contact-the-tribunal first, which sets visitedContactTribunalSelection flag
-  if (userCase?.id && NumberUtils.isNumericValue(userCase.id) && !req.session?.visitedContactTribunalSelection) {
-    res.redirect(returnSafeCitizenHubUrl(userCase.id, req));
+  if (safeCaseId && !req.session?.visitedContactTribunalSelection) {
+    res.redirect(returnSafeCitizenHubUrl(safeCaseId, req));
     return true;
   }
 
   // After submission, users should not return to form pages from the completion page
   // users should not be able to use the back button to return to the form pages
-  if (userCase?.id && NumberUtils.isNumericValue(userCase.id) && referer?.includes('/application-complete')) {
-    res.redirect(returnSafeCitizenHubUrl(userCase.id, req));
+  if (safeCaseId && referer?.includes('/application-complete')) {
+    res.redirect(returnSafeCitizenHubUrl(safeCaseId, req));
     return true;
   }
 

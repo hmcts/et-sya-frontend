@@ -17,6 +17,7 @@ import { FormContent, FormFields, FormOptions } from '../definitions/form';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import NumberUtils from '../utils/NumberUtils';
 
 import {
   convertJsonArrayToTitleCase,
@@ -32,9 +33,12 @@ import {
 } from './helpers/ClaimantRepAboutYouHelper';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRepresentativeAddressTypes } from './helpers/RepresentativePostCodeHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import {
+  getLanguageParam,
+  returnSafeClaimantRepAboutYouUrl,
+  returnSafeClaimantRepHubUrl,
+} from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimantRepAboutYouController');
 
@@ -199,23 +203,27 @@ export default class ClaimantRepAboutYouController {
   };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const caseId = req.params.caseId;
+    // Validate before any redirect embeds caseId (Fortify open-redirect)
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(req.params.caseId);
+    if (!safeCaseId) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
 
-    if (!(await loadClaimantRepCase(req, caseId))) {
+    if (!(await loadClaimantRepCase(req, safeCaseId))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
     setUserCase(req, this.form);
 
     if (req.body?.findAddress) {
-      return this.findAddress(req, res, caseId);
+      return this.findAddress(req, res, safeCaseId);
     }
 
     if (req.body?.selectAddress) {
       applySelectedAddress(req.session.userCase);
       rememberRepAboutYouEdits(req);
       req.session.errors = [];
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
+      return res.redirect(returnSafeClaimantRepAboutYouUrl(safeCaseId, req));
     }
 
     // A selection the representative left in the list is still theirs to keep, so it is validated
@@ -233,12 +241,12 @@ export default class ClaimantRepAboutYouController {
 
     if (!validateClaimantRepAboutYou(req.session.userCase)) {
       req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'invalid' });
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
+      return res.redirect(returnSafeClaimantRepAboutYouUrl(safeCaseId, req));
     }
 
     await handleUpdateClaimantRepAboutYou(req, logger);
     if (req.session.userCase.updateDraftCaseError) {
-      return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
+      return res.redirect(returnSafeClaimantRepAboutYouUrl(safeCaseId, req));
     }
 
     if (!req.session.userCase.hubLinksStatuses) {
@@ -248,7 +256,7 @@ export default class ClaimantRepAboutYouController {
     await handleUpdateHubLinksStatuses(req, logger);
     clearRepAboutYouFlow(req);
 
-    return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId)));
+    return res.redirect(returnSafeClaimantRepHubUrl(safeCaseId, req));
   };
 
   /**
@@ -274,18 +282,22 @@ export default class ClaimantRepAboutYouController {
     rememberRepAboutYouEdits(req);
 
     req.session.errors = [];
-    return res.redirect(setUrlLanguage(req, PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', caseId)));
+    return res.redirect(returnSafeClaimantRepAboutYouUrl(caseId, req));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const caseId = req.params.caseId;
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(req.params.caseId);
+    if (!safeCaseId) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
 
-    if (!(await loadClaimantRepCase(req, caseId))) {
+    if (!(await loadClaimantRepCase(req, safeCaseId))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
     const userCase = req.session.userCase;
     const languageParam = getLanguageParam(req.url);
+    const hubUrl = returnSafeClaimantRepHubUrl(safeCaseId, req);
 
     // An address picked on the postcode select page arrives back here as the selected index
     applySelectedAddress(userCase);
@@ -300,8 +312,8 @@ export default class ClaimantRepAboutYouController {
     res.render(TranslationKeys.CLAIMANT_REP_ABOUT_YOU, {
       ...content,
       languageParam,
-      backLinkUrl: PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId) + languageParam,
-      cancelLink: PageUrls.CLAIMANT_REP_HUB.replace(':caseId', caseId) + languageParam,
+      backLinkUrl: hubUrl,
+      cancelLink: hubUrl,
     });
   };
 }

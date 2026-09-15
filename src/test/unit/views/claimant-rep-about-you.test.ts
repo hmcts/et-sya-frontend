@@ -3,7 +3,8 @@ import { expect } from 'chai';
 import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 import { getHtmlRes } from '../test-helpers/requester';
 
-const PAGE_URL = '/claimant-rep-about-you/' + mockUserCaseComplete.id;
+const SAFE_CASE_ID = '1786637776090539';
+const PAGE_URL = '/claimant-rep-about-you/' + SAFE_CASE_ID;
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = 'About you';
 const expectedLabels = [
@@ -29,11 +30,13 @@ const mockAddresses = [
   },
 ];
 
+const userCase = { ...mockUserCaseComplete, id: SAFE_CASE_ID };
+
 let htmlRes: Document;
 
 describe('Claimant rep about you page', () => {
   beforeAll(async () => {
-    htmlRes = await getHtmlRes(mockUserCaseComplete, PAGE_URL);
+    htmlRes = await getHtmlRes(userCase, PAGE_URL);
   });
 
   it('should display the page title', () => {
@@ -69,10 +72,7 @@ describe('Claimant rep about you page', () => {
     let lookupRes: Document;
 
     beforeAll(async () => {
-      lookupRes = await getHtmlRes(
-        { ...mockUserCaseComplete, representativeAddresses: mockAddresses } as never,
-        PAGE_URL
-      );
+      lookupRes = await getHtmlRes({ ...userCase, representativeAddresses: mockAddresses } as never, PAGE_URL);
     });
 
     it('should list the addresses found next to the postcode field', () => {
