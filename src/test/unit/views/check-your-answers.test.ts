@@ -3,7 +3,12 @@ import request from 'supertest';
 
 import { CaseType, CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
-import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import {
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  TellUsWhatYouWant,
+  TypesOfClaim,
+} from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/check-your-answers';
@@ -283,6 +288,7 @@ describe('CYA for Scottish cases', () => {
         userCase: {
           caseTypeId: CaseTypeId.SCOTLAND,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION],
+          claimTypeDiscrimination: ['sex'],
           caseType: CaseType.SINGLE,
           address1: '10 Test Street',
           addressTown: 'Test Town',
@@ -445,8 +451,8 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
               noAcasReason: NoAcasNumberReason.ANOTHER,
             },
           ],
-          claimTypeDiscrimination: undefined,
-          claimTypePay: undefined,
+          claimTypeDiscrimination: [ClaimTypeDiscrimination.SEX],
+          claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
           tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
         },
       })
@@ -457,9 +463,9 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
       });
   });
 
-  it('should show not provided for Discrimination and Pay types of claim', () => {
+  it('should show Discrimination and Pay types of claim', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[35].innerHTML).contains('What type of discrimination claim are you making?', 'Not provided');
-    expect(allKeys[36].innerHTML).contains('What type of pay claim are you making?', 'Not provided');
+    expect(allKeys[35].innerHTML).contains('What type of discrimination claim are you making?');
+    expect(allKeys[36].innerHTML).contains('What type of pay claim are you making?');
   });
 });
