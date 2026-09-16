@@ -4,12 +4,15 @@
   "applicationType": "Math o gais",
   "legend": "Beth ydych chi eisiau ei ddweud neu ofyn i’r tribiwnlys?",
   "supportingMaterial": "Deunydd ategol",
-  "copyToOtherPartyYesOrNo": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni’r Rheolau Trefniadaeth?",
+  "notProvided": "Dim byd wedi ei ddarparu",
+  "copyToOtherPartyYesOrNo": "[W]Do you agree to the tribunal sharing this application to satisfy the rules of procedure?",
   "copyToOtherPartyText": "Rheswm dros beidio â hysbysu’r parti arall",
   "submitBtn": "Cadw a pharhau",
   "cancelLink": "Allgofnodi",
+  "chosenNotToShareHeading": "[W]You have chosen not to share your application",
+  "chosenNotToShareBody": "[W]The tribunal will consider your reasons and decide if your threshold is met to not share your application.",
   "youCannotMakeFurtherChanges": "Ni allwch wneud newidiadau pellach i'r ohebiaeth hon ar ôl i chi ei storio",
   "storeApplication": "Gwneud cais i storio’r wybodaeth",
-  "yes": "Ydw/Oeddwn",
-  "no": "Nac ydw/Nac oeddwn"
+  "yes": "[W]Yes, I agree to the tribunal sharing this application to satisfy the Employment Tribunal Rules of Procedure.",
+  "no": "[W]No, I do not agree to the tribunal sharing this application."
 }

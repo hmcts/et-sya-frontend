@@ -15,44 +15,46 @@
         rows: cyaContent
       }) }}
 
-       {% if showParagraphAboutSubmittingDocsInAdvance %}
-       <h3 class="govuk-heading-s">{{ important }}</h3>
-        <p class="govuk-body govuk-!-margin-bottom-6">{{ paragraphAboutSubmittingDocsInAdvance }}</p>
-
+       {% if userCase and userCase.copyToOtherPartyYesOrNo == 'no' %}
+         <h2 class="govuk-heading-m">{{ chosenNotToShareHeading if chosenNotToShareHeading else "You have chosen not to share your application" }}</h2>
+         <p class="govuk-body govuk-!-margin-bottom-6">{{ chosenNotToShareBody if chosenNotToShareBody else "The tribunal will consider your reasons and decide if your threshold is met to not share your application." }}</p>
        {% endif %}
 
-        {% if showParagraphAboutSubmittingDocsInAdvance and not bundlesEnabled %}
-          <div class="govuk-button-group">
-            {{ govukButton({
-              text: submitBtn,
-              type: submit,
-              classes: 'govuk-!-margin-right-6',
-              href: cancelLink,
-              preventDoubleClick: true,
-              disabled: true,
-              attributes: {
-                id: 'main-form-submit'
-              }
-            }) }}
-            <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
-          </div>
+       {% if showParagraphAboutSubmittingDocsInAdvance %}
+         <h3 class="govuk-heading-s">{{ important }}</h3>
+         <p class="govuk-body govuk-!-margin-bottom-6">{{ paragraphAboutSubmittingDocsInAdvance }}</p>
+       {% endif %}
 
-          {% else %}
-            <div class="govuk-button-group">
-              {{ govukButton({
-                text: submitBtn,
-                type: submit,
-                classes: 'govuk-!-margin-right-6',
-                href: submitRef,
-                preventDoubleClick: true,
-                attributes: {
-                  id: 'main-form-submit'
-                }
-              }) }}
-              <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
-            </div>
-
-        {% endif %}
+       {% if showParagraphAboutSubmittingDocsInAdvance and not bundlesEnabled %}
+         <div class="govuk-button-group">
+           {{ govukButton({
+             text: submitBtn,
+             type: submit,
+             classes: 'govuk-!-margin-right-6',
+             href: cancelLink,
+             preventDoubleClick: true,
+             disabled: true,
+             attributes: {
+               id: 'main-form-submit'
+             }
+           }) }}
+           <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
+         </div>
+       {% else %}
+         <div class="govuk-button-group">
+           {{ govukButton({
+             text: submitBtn,
+             type: submit,
+             classes: 'govuk-!-margin-right-6',
+             href: submitRef,
+             preventDoubleClick: true,
+             attributes: {
+               id: 'main-form-submit'
+             }
+           }) }}
+           <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
+         </div>
+       {% endif %}
 
   
     </div>

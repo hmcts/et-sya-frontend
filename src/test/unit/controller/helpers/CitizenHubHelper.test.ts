@@ -306,6 +306,12 @@ describe('shouldHubLinkBeClickable', () => {
     );
   });
 
+  it('should be clickable if awaiting tribunal and group claim requests and applications', () => {
+    expect(
+      shouldHubLinkBeClickable(HubLinkStatus.WAITING_FOR_TRIBUNAL, HubLinkNames.GroupClaimRequestsAndApplications)
+    ).toBe(true);
+  });
+
   it('should not be clickable otherwise', () => {
     expect(shouldHubLinkBeClickable(HubLinkStatus.IN_PROGRESS, undefined)).toBe(true);
   });
@@ -326,12 +332,20 @@ describe('updateYourApplicationsStatusTag', () => {
   ])('set hub status for claimant applications based on the following application statuses ([%s, %s])', (a, b) => {
     updateYourApplicationsStatusTag([{ value: { applicationState: a } }, { value: { applicationState: b } }], userCase);
     expect(userCase?.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(a);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(a);
   });
 
   it('Hublink status should be not avaliable yet if no claimant applications exist', () => {
     const userCaseWithoutClaimantApp = { ...mockUserCaseWithoutTseApp };
     expect(userCaseWithoutClaimantApp?.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(
       HubLinkStatus.NOT_YET_AVAILABLE
+    );
+  });
+
+  it('should mirror the requests and applications status onto the group claim requests and applications link', () => {
+    updateYourApplicationsStatusTag([{ value: { applicationState: StatusesInOrderOfUrgency[0] } }], userCase);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(
+      userCase?.hubLinksStatuses[HubLinkNames.RequestsAndApplications]
     );
   });
 });
@@ -618,6 +632,7 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+      [HubLinkNames.GroupClaimRequestsAndApplications, PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS],
       [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
@@ -637,6 +652,10 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
+      [
+        HubLinkNames.GroupClaimRequestsAndApplications,
+        PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS + languages.WELSH_URL_PARAMETER,
+      ],
       [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],
@@ -653,6 +672,7 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+      [HubLinkNames.GroupClaimRequestsAndApplications, PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS],
       [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
@@ -672,6 +692,10 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
+      [
+        HubLinkNames.GroupClaimRequestsAndApplications,
+        PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS + languages.WELSH_URL_PARAMETER,
+      ],
       [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],

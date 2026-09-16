@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseType, YesOrNo } from '../../definitions/case';
+import { YesOrNo } from '../../definitions/case';
 import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -21,6 +21,7 @@ import {
   clearPrepareDocumentsForHearingFields,
   clearTseFields,
   handleUpdateHubLinksStatuses,
+  isGroupClaim,
 } from '../helpers/CaseHelpers';
 import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../helpers/CaseTransferHelper';
 import {
@@ -99,6 +100,7 @@ export default class CitizenHubController {
       userCase.hubLinksStatuses = new HubLinksStatuses();
     }
     const languageParam = getLanguageParam(req.url);
+    const isPartOfGroupClaim = isGroupClaim(userCase);
 
     clearTseFields(userCase);
     clearPrepareDocumentsForHearingFields(userCase);
@@ -157,16 +159,18 @@ export default class CitizenHubController {
     const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
-        links: sectionIndexToLinkNames[index].map(linkName => {
-          const status = hubLinksStatuses[linkName];
-          return {
-            linkTxt: (l: AnyRecord): string => l[linkName],
-            status: (l: AnyRecord): string => l[status],
-            shouldShow: shouldHubLinkBeClickable(status, linkName),
-            url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
-            statusColor: () => statusColorMap.get(status),
-          };
-        }),
+        links: sectionIndexToLinkNames[index]
+          .filter(linkName => linkName !== HubLinkNames.GroupClaimRequestsAndApplications || isPartOfGroupClaim)
+          .map(linkName => {
+            const status = hubLinksStatuses[linkName];
+            return {
+              linkTxt: (l: AnyRecord): string => l[linkName],
+              status: (l: AnyRecord): string => l[status],
+              shouldShow: shouldHubLinkBeClickable(status, linkName),
+              url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
+              statusColor: () => statusColorMap.get(status),
+            };
+          }),
       };
     });
 
@@ -241,7 +245,6 @@ export default class CitizenHubController {
       showConsideringClaimsTogetherAlert: shouldShowConsideringClaimsTogetherAlert(
         userCase?.sendNotificationCollection
       ),
-      isGroupClaim: userCase?.caseType === CaseType.MULTIPLE || userCase?.multipleFlag === YesOrNo.YES,
       isLeadClaimant: userCase?.leadClaimant === YesOrNo.YES,
       notificationsNotViewedCount: generalNotifications?.filter(item => item.showAlert)?.length || 0,
     });

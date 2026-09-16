@@ -87,6 +87,11 @@
       "link": "Submit documents for a hearing"
     }
   },
+  "respondToOtherParty": {
+    "heading": "Respond to communication from another party",
+    "body": "Respond to communication from a respondent or another claimant in your group claim. This could be applications, requests, or general communication.",
+    "link": "Respond to communication from another party in your group"
+  },
   "call": {
     "h1": "Call the Employment Tribunal customer contact centre",
     "p1": "Call if you have any questions about your claim. They cannot give you legal advice or process any updates to your case.",

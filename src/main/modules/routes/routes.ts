@@ -58,6 +58,7 @@ import EmploymentAndRespondentCheckController from '../../controllers/Employment
 import EndDateController from '../../controllers/EndDateController';
 import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
 import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
+import GroupClaimRequestsAndApplicationsController from '../../controllers/GroupClaimRequestsAndApplicationsController';
 import HearingDetailsController from '../../controllers/HearingDetailsController';
 import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
@@ -107,6 +108,7 @@ import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageCont
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
+import SharingCommunicationController from '../../controllers/SharingCommunicationController';
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
@@ -349,6 +351,8 @@ export class Routes {
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
+    app.get(PageUrls.SHARING_COMMUNICATION, new SharingCommunicationController().get);
+    app.post(PageUrls.SHARING_COMMUNICATION, new SharingCommunicationController().post);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
     app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
@@ -445,6 +449,7 @@ export class Routes {
     );
     app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
     app.get(PageUrls.YOUR_APPLICATIONS, new YourAppsToTheTribunalController().get);
+    app.get(PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS, new GroupClaimRequestsAndApplicationsController().get);
     app.get(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().get);
     app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);

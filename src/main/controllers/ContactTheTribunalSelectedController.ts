@@ -60,7 +60,7 @@ export default class ContactTheTribunalSelectedController {
       },
     },
     submit: {
-      text: l => l.continue,
+      text: (l: AnyRecord) => l.continue,
     },
   };
 
@@ -161,6 +161,11 @@ export default class ContactTheTribunalSelectedController {
     if (selectedApplication !== userCase.contactApplicationType) {
       clearTseFields(userCase);
       userCase.contactApplicationType = selectedApplication;
+      req.session.contactTribunalSharingCommunicationConfirmed = false;
+    }
+
+    if (!req.session?.contactTribunalSharingCommunicationConfirmed) {
+      return res.redirect(PageUrls.SHARING_COMMUNICATION + languageParam);
     }
 
     this.uploadedFileName = userCase?.contactApplicationFile?.document_filename;

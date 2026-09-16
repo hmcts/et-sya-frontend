@@ -31,7 +31,7 @@ const dateString = applicationDate.toLocaleDateString('en-GB', {
   month: 'long',
   day: 'numeric',
 });
-const expectedDateString = ' <b>' + dateString + '</b> ';
+const expectedDateString = '<b>' + dateString + '</b>';
 let htmlRes: Document;
 
 describe('Application complete page - Rule 92 answer Yes', () => {
@@ -67,14 +67,13 @@ describe('Application complete page - Rule 92 answer Yes', () => {
   });
 
   it('should display three paragraphs', () => {
-    const divContainingParagraphs = htmlRes.getElementsByClassName(paragraphClass)[6];
-    const paragraphs = divContainingParagraphs.getElementsByTagName('p');
-    expect(paragraphs[0].innerHTML).contains(
+    const paragraphs = htmlRes.getElementsByClassName(paragraphClass);
+    expect(paragraphs[6].innerHTML).contains(
       expectedParagraphYes1 + expectedDateString + expectedParagraphYes1a,
       'Paragraph 1 does not exist'
     );
-    expect(paragraphs[1].innerHTML).contains(expectedParagraphYes2, 'Paragraph 2 does not exist');
-    expect(paragraphs[2].innerHTML).contains(expectedParagraphYes3, 'Paragraph 3 does not exist');
+    expect(paragraphs[7].innerHTML).contains(expectedParagraphYes2, 'Paragraph 2 does not exist');
+    expect(paragraphs[8].innerHTML).contains(expectedParagraphYes3, 'Paragraph 3 does not exist');
   });
 
   it('should display save and continue and save as draft buttons', () => {

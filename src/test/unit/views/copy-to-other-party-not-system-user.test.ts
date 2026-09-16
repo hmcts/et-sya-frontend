@@ -15,9 +15,8 @@ const copyToOtherPartyNotSystemUserJsonRaw = fs.readFileSync(
 const copyToOtherPartyNotSystemUserJson = JSON.parse(copyToOtherPartyNotSystemUserJsonRaw);
 
 const insetText = 'govuk-inset-text';
-const titleClass = 'govuk-heading-l';
+const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
-const detailsClass = 'govuk-body';
 const radios = 'govuk-radios';
 const cancelLink = 'govuk-link';
 
@@ -40,19 +39,10 @@ describe('Copy to the other party page', () => {
   });
 
   it('should display inset text', () => {
-    const title = htmlRes.getElementsByClassName(insetText);
-    expect(title[0].innerHTML).contains(
-      copyToOtherPartyNotSystemUserJson.theTribunalMustOperate,
-      'Inset text does not exist'
-    );
-  });
-
-  it('should display first paragraph', () => {
-    const p1 = htmlRes.getElementsByClassName(detailsClass);
-    expect(p1[6].innerHTML).contains(
-      copyToOtherPartyNotSystemUserJson.toCopyThisCorrespondence,
-      'First paragraph does not exist'
-    );
+    const inset = htmlRes.getElementsByClassName(insetText);
+    expect(inset[0].innerHTML).contains(copyToOtherPartyNotSystemUserJson.p1, 'Inset text does not exist');
+    expect(inset[0].innerHTML).contains(copyToOtherPartyNotSystemUserJson.p2, 'Inset text does not exist');
+    expect(inset[0].innerHTML).contains(copyToOtherPartyNotSystemUserJson.p3, 'Inset text does not exist');
   });
 
   it('should display radio buttons', () => {

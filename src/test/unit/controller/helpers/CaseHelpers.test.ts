@@ -9,6 +9,7 @@ import {
   handleUpdateDraftCase,
   handleUpdateHubLinksStatuses,
   handleUploadDocument,
+  isGroupClaim,
   respondToApplication,
   setUserCaseWithRedisData,
   submitClaimantTse,
@@ -16,7 +17,7 @@ import {
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
-import { StillWorking, YesOrNo } from '../../../../main/definitions/case';
+import { CaseType, CaseWithId, StillWorking, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
 import * as CaseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -39,6 +40,27 @@ caseApi.getUserCase = jest.fn().mockResolvedValue(
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 
 mockClient.mockReturnValue(caseApi);
+
+describe('isGroupClaim()', () => {
+  it('should return false when userCase is undefined', () => {
+    expect(isGroupClaim(undefined)).toBe(false);
+  });
+
+  it('should return false when neither caseType nor multipleFlag indicate a group claim', () => {
+    const userCase = { id: '1', state: CaseState.SUBMITTED } as CaseWithId;
+    expect(isGroupClaim(userCase)).toBe(false);
+  });
+
+  it('should return true when caseType is Multiple', () => {
+    const userCase = { id: '1', state: CaseState.SUBMITTED, caseType: CaseType.MULTIPLE } as CaseWithId;
+    expect(isGroupClaim(userCase)).toBe(true);
+  });
+
+  it('should return true when multipleFlag is Yes', () => {
+    const userCase = { id: '1', state: CaseState.SUBMITTED, multipleFlag: YesOrNo.YES } as CaseWithId;
+    expect(isGroupClaim(userCase)).toBe(true);
+  });
+});
 
 describe('getSectionStatus()', () => {
   it.each([

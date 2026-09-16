@@ -191,9 +191,34 @@ describe('Contact the tribunal CYA controller', () => {
           href: '/copy-to-other-party-not-system-user?lng=en',
           text: translations.change,
           visuallyHiddenText:
-            'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+            'Do you agree to the tribunal sharing this application to satisfy the rules of procedure?',
         },
       ],
     });
+  });
+
+  it('should display "Not provided" for supporting material when no download link is available', () => {
+    const translationJsons = { ...contactTheTribunalRaw, ...contactTheTribunalCYARaw };
+    const req = mockRequestWithTranslation({}, translationJsons);
+    const userCase = req.session.userCase;
+    userCase.contactApplicationText = 'contactApplicationText';
+    userCase.contactApplicationType = 'withdraw';
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+    };
+
+    const appContent = getCyaContent(
+      userCase,
+      translations,
+      '?lng=en',
+      '/contact-the-tribunal/withdraw',
+      '',
+      translations.sections['change-details'].label
+    );
+
+    expect(appContent[2].value).toEqual({ html: translations.notProvided });
   });
 });

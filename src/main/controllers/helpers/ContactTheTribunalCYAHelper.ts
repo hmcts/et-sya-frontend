@@ -24,6 +24,7 @@ export const getCyaContent = (
     applicationType,
     legend,
     supportingMaterial,
+    notProvided,
     copyToOtherPartyYesOrNo,
     copyToOtherPartyText,
     change,
@@ -44,7 +45,7 @@ export const getCyaContent = (
     ),
     addSummaryHtmlRow(
       supportingMaterial,
-      downloadLink,
+      downloadLink || notProvided,
       createChangeAction(contactTheTribunalSelectedUrl + languageParam, change, supportingMaterial)
     )
   );
