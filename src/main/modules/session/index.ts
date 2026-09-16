@@ -3,15 +3,19 @@ import ConnectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
-import { ClientOpts, createClient } from 'redis';
+import { ClientOpts, RedisClient, createClient } from 'redis';
 import FileStoreFactory from 'session-file-store';
 
 import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
+import { createDualWriteRedisClient } from '../../utils/DualWriteRedisClient';
 
 const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
 
 const cookieMaxAge = 60 * (60 * 1000); // 60 minutes
+const sessionPrefix = 'et-sya-session:';
+const defaultRedisPort = 6380;
+const defaultSecondaryRedisPort = 10000; // Azure Managed Redis
 
 export class Session {
   public enableFor(app: Application): void {
@@ -23,7 +27,7 @@ export class Session {
         name: 'et-sya-session',
         resave: false,
         saveUninitialized: false,
-        secret: config.get('session.secret'),
+        secret: this.getSecret(),
         cookie: {
           httpOnly: true,
           maxAge: cookieMaxAge,
@@ -36,31 +40,72 @@ export class Session {
     );
   }
 
+  /**
+   * Cookies are signed with the first secret and verified against all of them, so
+   * mounting the secret that was previously in use keeps people signed in across
+   * a rotation.
+   */
+  private getSecret(): string | string[] {
+    const secret = config.get('session.secret') as string;
+    const previousSecret = config.has('session.previousSecret') ? (config.get('session.previousSecret') as string) : '';
+
+    return previousSecret && previousSecret !== secret ? [secret, previousSecret] : secret;
+  }
+
   private getStore(app: Application) {
     const redisHost: string = process.env.REDIS_HOST ?? config.get('session.redis.host');
-    if (redisHost) {
-      const clientOptions: ClientOpts =
-        redisHost === LOCAL_REDIS_SERVER
-          ? {
-              host: redisHost,
-              port: 6379,
-              tls: false,
-              connect_timeout: 15000,
-              prefix: 'et-sya-session:',
-            }
-          : {
-              host: redisHost,
-              port: 6380,
-              tls: true,
-              connect_timeout: 15000,
-              password: config.get('session.redis.key') as string,
-              prefix: 'et-sya-session:',
-            };
-
-      const client = createClient(clientOptions);
-      app.locals.redisClient = client;
-      return new RedisStore({ client });
+    if (!redisHost) {
+      return new FileStore({ path: '/tmp', reapInterval: -1 });
     }
-    return new FileStore({ path: '/tmp', reapInterval: -1 });
+
+    const primary = this.createRedisClient(
+      redisHost,
+      Number(process.env.REDIS_PORT ?? defaultRedisPort),
+      config.get('session.redis.key') as string
+    );
+
+    // While the move to Azure Managed Redis is in flight both instances are live:
+    // writes reach both, and REDIS_READ_FROM decides which one answers reads.
+    const secondaryHost = process.env.REDIS_SECONDARY_HOST;
+    if (!secondaryHost) {
+      app.locals.redisClient = primary;
+      return new RedisStore({ client: primary });
+    }
+
+    const secondary = this.createRedisClient(
+      secondaryHost,
+      Number(process.env.REDIS_SECONDARY_PORT ?? defaultSecondaryRedisPort),
+      config.has('session.redis.secondaryKey') ? (config.get('session.redis.secondaryKey') as string) : ''
+    );
+
+    const client =
+      process.env.REDIS_READ_FROM === 'secondary'
+        ? createDualWriteRedisClient(secondary, primary)
+        : createDualWriteRedisClient(primary, secondary);
+
+    app.locals.redisClient = client;
+    return new RedisStore({ client });
+  }
+
+  private createRedisClient(host: string, port: number, password: string): RedisClient {
+    const clientOptions: ClientOpts =
+      host === LOCAL_REDIS_SERVER
+        ? {
+            host,
+            port: 6379,
+            tls: false,
+            connect_timeout: 15000,
+            prefix: sessionPrefix,
+          }
+        : {
+            host,
+            port,
+            tls: true,
+            connect_timeout: 15000,
+            password,
+            prefix: sessionPrefix,
+          };
+
+    return createClient(clientOptions);
   }
 }
