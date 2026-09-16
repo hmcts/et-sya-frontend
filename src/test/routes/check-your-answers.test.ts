@@ -11,6 +11,7 @@ describe(`GET ${PAGE_URL}`, () => {
       mockApp({
         userCase: {
           typeOfClaim: ['discrimination'],
+          claimTypeDiscrimination: ['sex'],
           address1: '10 Test Street',
           addressTown: 'Test Town',
           addressCountry: 'United Kingdom',

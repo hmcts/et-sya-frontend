@@ -71,7 +71,7 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
         ]
       : [
           userCase?.personalDetailsCheck,
-          ...(userCase?.groupClaimsCheck ? [userCase.groupClaimsCheck] : []),
+          ...(userCase?.groupClaimsCheck !== undefined ? [userCase.groupClaimsCheck] : []),
           userCase?.employmentAndRespondentCheck,
           userCase?.claimDetailsCheck,
         ];

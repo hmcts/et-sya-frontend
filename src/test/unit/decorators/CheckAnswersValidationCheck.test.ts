@@ -12,6 +12,7 @@ import { mockResponse } from '../mocks/mockResponse';
 
 const validUserCase = {
   typeOfClaim: ['discrimination'],
+  claimTypeDiscrimination: ['race'],
   address1: '10 Test Street',
   addressTown: 'Test Town',
   addressCountry: 'United Kingdom',
@@ -19,6 +20,7 @@ const validUserCase = {
   caseType: CaseType.SINGLE,
   respondents: [
     {
+      respondentName: 'Globo Corp',
       respondentAddress1: '20 Respondent Road',
       respondentAddressTown: 'Respondent Town',
       respondentAddressCountry: 'United Kingdom',

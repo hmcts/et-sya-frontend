@@ -13,6 +13,7 @@ describe('Check Your answers Controller', () => {
   const validUserCase = {
     state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
     typeOfClaim: [TypesOfClaim.DISCRIMINATION],
+    claimTypeDiscrimination: ['race'],
     address1: '10 Test Street',
     addressTown: 'Test Town',
     addressCountry: 'United Kingdom',
@@ -20,6 +21,7 @@ describe('Check Your answers Controller', () => {
     caseType: CaseType.SINGLE,
     respondents: [
       {
+        respondentName: 'Globo Corp',
         respondentAddress1: '20 Respondent Road',
         respondentAddressTown: 'Respondent Town',
         respondentAddressCountry: 'United Kingdom',
@@ -78,7 +80,7 @@ describe('Check Your answers Controller', () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({ userCase: validUserCase }, translationJsons);
-    request.session.userCase.typeOfClaim = [TypesOfClaim.DISCRIMINATION, TypesOfClaim.PAY_RELATED_CLAIM];
+    request.session.userCase.typeOfClaim = [TypesOfClaim.BREACH_OF_CONTRACT];
     request.session.userCase.claimTypeDiscrimination = null;
     request.session.userCase.claimTypePay = null;
 
