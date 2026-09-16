@@ -118,6 +118,20 @@
     },
     "additionalClaimantAddressTypes": {
       "notSelected": "Dewiswch gyfeiriad"
+    },
+    "representativeEnterPostcode": {
+      "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA",
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA"
+    },
+    "representativeAddressTypes": {
+      "notSelected": "Dewiswch gyfeiriad"
+    },
+    "representedClaimantEnterPostcode": {
+      "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA",
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA"
+    },
+    "representedClaimantAddressTypes": {
+      "notSelected": "Dewiswch gyfeiriad"
     }
   },
   "selectAddress": "Dewiswch gyfeiriad",
@@ -134,6 +148,15 @@
   "respondentPostcodeSelectTitle": "Dewis cod post yr ymatebydd",
   "additionalClaimantPostcodeEnterTitle": "[W] Enter additional claimant postcode",
   "additionalClaimantPostcodeSelectTitle": "[W] Select additional claimant address",
+  "representativePostcodeEnterTitle": "Cyfeiriad cyswllt y cynrychiolydd",
+  "representativePostcodeSelectTitle": "Dewiswch gyfeiriad",
+  "representativeManualAddress": "Mae cyfeiriad y cynrychiolydd y tu allan i'r DU",
+
+  "representedClaimantEnterPostcodeTitle": "Beth yw cyfeiriad yr hawlydd",
+  "representedClaimantSelectPostcodeTitle": "Dewiswch gyfeiriad",
+  "representedClaimantDetailsCheckTitle": "Gwiriad manylion y hawlydd a gynrychiolwyd",
+  "representedClaimantDetailsCheckHeading": "Gwiriad manylion y hawlydd a gynrychiolwyd",
+  "representedClaimantManualAddress": "Mae'r hawlydd yn byw y tu allan i'r DU",
   "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
   "beta": "beta",
   "Legal officer": "Swyddog Cyfreithiol",

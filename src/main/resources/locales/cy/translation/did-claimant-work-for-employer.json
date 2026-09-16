@@ -1,0 +1,9 @@
+{
+  "title": "A wnaeth yr hawlydd weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn? (dewisol)",
+  "heading": "A wnaeth yr hawlydd weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn? (dewisol)",
+  "errors": {
+    "pastEmployer": {
+      "required": "Dywedwch wrthym a oedd yr hawlydd yn gweithio i’r sefydliad neu’r unigolyn"
+    }
+  }
+}

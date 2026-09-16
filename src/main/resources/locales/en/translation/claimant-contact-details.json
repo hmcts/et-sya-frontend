@@ -1,0 +1,8 @@
+{
+  "title": "Claimant contact details",
+  "name": "Name",
+  "dateOfBirth": "Date of birth",
+  "address": "Address",
+  "email": "Email address",
+  "notProvided": "Not provided"
+}

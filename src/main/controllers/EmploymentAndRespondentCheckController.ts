@@ -4,7 +4,7 @@ import { validateEmploymentAndRespondentDetails } from '../components/form/claim
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getClaimStepsUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('EmploymentAndRespondentCheckController');
 
@@ -56,7 +57,7 @@ export default class EmploymentAndRespondentCheckController {
       }
     }
 
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
+    await handlePostLogic(req, res, this.form, logger, getClaimStepsUrl(req));
   };
 
   @CaseStateCheck()

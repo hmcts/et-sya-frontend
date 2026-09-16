@@ -18,7 +18,6 @@ const expectedTitle = lipOrRepJson.h1;
 const expectedIntro = lipOrRepJson.intro;
 const buttonClass = 'govuk-button';
 const radioClass = 'govuk-radios__item';
-
 // Updated radio labels
 const expectedRadioLabel1 = lipOrRepJson.question.radio1;
 const expectedRadioLabel2 = lipOrRepJson.question.radio2;
@@ -86,7 +85,6 @@ describe('LiP or Representative page', () => {
     const detailsTextComponents = htmlRes.getElementsByClassName(detailsTextClass);
     expect(detailsTextComponents.length).equal(4, '4 detail text classes not found');
   });
-
   it('should display details components with valid summary text', () => {
     const detailSummaries = htmlRes.getElementsByClassName(detailsSummaryTextClass);
     expect(detailSummaries[0].innerHTML).contains(detailsSummary1);

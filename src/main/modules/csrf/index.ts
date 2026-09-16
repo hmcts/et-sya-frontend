@@ -59,6 +59,7 @@ export default class CSRFToken {
       // These routes will apply CSRF protection after Multer middleware
       const skipCsrfPaths = [
         '/describe-what-happened',
+        '/claimant-describe-what-happened',
         '/additional-claimant-file-upload',
         '/additional-claimant-file-upload/postvalidate',
       ];
