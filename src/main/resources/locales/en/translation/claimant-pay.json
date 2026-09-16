@@ -1,0 +1,27 @@
+{
+  "title": "Claimant's pay",
+  "h1": "Claimant's pay (optional)",
+  "label": "Claimant's pay",
+  "p1": "For some types of claims, the tribunal will need the average of the claimant's last 12 weeks' pay. Provide your best estimate for the average weekly pay. You can correct it later if needed. Providing the pay information will help the tribunal process the claim.",
+  "p2": "You can get information from payslips. Include any overtime payments, commission and bonuses.",
+  "payBeforeTax": "Enter pay BEFORE tax and National Insurance",
+  "payAfterTax": "Enter pay AFTER tax and National Insurance",
+  "weeklyMonthlyAnnual": "Is this the weekly, monthly or annual pay?",
+  "errors": {
+    "payBeforeTax": {
+      "required": "Tell us at least one amount for the claimant's pay",
+      "invalidCurrency": "Enter pay before tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Pay before tax and NI must be £9,999,999.99 or less"
+    },
+    "payAfterTax": {
+      "required": "Tell us at least one amount for the claimant's pay",
+      "invalidCurrency": "Enter pay after tax and NI in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Pay after tax and NI must be £9,999,999.99 or less"
+    },
+    "payInterval": {
+      "payBeforeTax": "Tell us a frequency for the claimant's pay before tax and NI",
+      "payAfterTax": "Tell us a frequency for the claimant's pay after tax and NI",
+      "required": "Tell us the claimant's pay frequency"
+    }
+  }
+}

@@ -57,6 +57,26 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   }
 };
 
+const isEmailFormatValid = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+export const isValidEmailAddress: Validator = value => {
+  if (StringUtils.isBlank(value as string)) {
+    return 'required';
+  }
+  if (!isEmailFormatValid(value as string)) {
+    return 'invalid';
+  }
+};
+
+export const isValidEmailAddressWhenProvided: Validator = value => {
+  if (StringUtils.isBlank(value as string)) {
+    return;
+  }
+  if (!isEmailFormatValid(value as string)) {
+    return 'invalid';
+  }
+};
+
 export const isValidUKTelNumber: Validator = value => {
   if (value === null || value === '') {
     return;
@@ -248,19 +268,6 @@ export const isValidCaseReferenceId: Validator = value => {
     return ValidationErrors.REQUIRED;
   }
   if (!(value as string).match(/^[0-9]{16}$/) && !(value as string).match(/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/)) {
-    return ValidationErrors.INVALID_VALUE;
-  }
-};
-
-export const isValidEmailAddress: Validator = value => {
-  // If there is no value (empty string, null, or undefined), consider it valid and exit early
-  if (!value || (value as string).trim() === '') {
-    return;
-  }
-
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  if (!(value as string).match(emailRegex)) {
     return ValidationErrors.INVALID_VALUE;
   }
 };

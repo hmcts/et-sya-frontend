@@ -1,6 +1,7 @@
 {
   "title": "Contact the Tribunal",
   "h1": "Contact the tribunal about your case",
+  "h1Rep": "Contact the tribunal about the claimant's case",
   "showAllSections": "Show all sections",
   "hideAllSections": "Hide all sections",
   "showSection": "Show",
@@ -18,32 +19,42 @@
     "withdraw": {
       "caption": "Withdraw my claim",
       "label": "Give notice that I want to withdraw all or part of my claim",
-      "body": "When you've reached a settlement or do not want to continue with your claim."
+      "labelRep": "Give notice that the claimant wants to withdraw all or part of their claim",
+      "body": "When you've reached a settlement or do not want to continue with your claim.",
+      "bodyRep": "When the claimant has reached a settlement and does not want to continue with their claim."
     },
     "change-details": {
       "caption": "Change my personal details",
       "label": "I want to change my personal details",
-      "body": "Change the personal details you gave when making your claim."
+      "labelRep": "The claimant wants to change their personal details",
+      "body": "Change the personal details you gave when making your claim.",
+      "bodyRep": "Change the personal details the claimant gave when making their claim."
     },
     "postpone": {
       "caption": "Postpone a hearing",
       "label": "Apply to postpone my hearing",
-      "body": "Ask the tribunal to postpone your hearing to a later date."
+      "labelRep": "Apply to postpone a hearing",
+      "body": "Ask the tribunal to postpone your hearing to a later date.",
+      "bodyRep": "Ask the tribunal to postpone the claimant’s hearing to a later date."
     },
     "vary": {
       "caption": "Vary or revoke an order",
       "label": "Apply to vary or revoke an order",
-      "body": "Apply to vary or revoke an order the tribunal has issued. For example, you may need more time to submit something or want to change the number of pages in your hearing documents,"
+      "body": "Apply to vary or revoke an order the tribunal has issued. For example, you may need more time to submit something or want to change the number of pages in your hearing documents,",
+      "bodyRep": "Apply to vary or revoke an order the tribunal has issued. For example, you or the claimant may need more time to submit something or want to change the number of pages in your hearing documents."
     },
     "reconsider-decision": {
       "caption": "Consider a decision afresh",
       "label": "Apply to have a decision considered afresh",
-      "body": "If you disagree with a judgement or order made by a legal officer in your case you can ask an employment judge to look at that decision again."
+      "body": "If you disagree with a judgement or order made by a legal officer in your case you can ask an employment judge to look at that decision again.",
+      "bodyRep": "If the claimant disagrees with a judgment or order made by a legal officer in their case they can ask for an employment judge to look at that decision again."
     },
     "amend": {
       "caption": "Amend my claim",
       "label": "Apply to amend my claim",
-      "body": "Request to amend your ET1 claim - including adding or removing claims or details of your claim."
+      "labelRep": "Apply to amend the claim",
+      "body": "Request to amend your ET1 claim - including adding or removing claims or details of your claim.",
+      "bodyRep": "Request to amend the claimant’s ET1 claim - including adding or removing claims or details of the claim"
     },
     "respondent": {
       "caption": "Order the other party",
@@ -53,7 +64,9 @@
     "witness": {
       "caption": "Order a witness to attend",
       "label": "Order a witness to attend to give evidence",
-      "body": "Apply to order a witness to attend to give evidence in your case."
+      "labelRep": "Order a witness to give evidence",
+      "body": "Apply to order a witness to attend to give evidence in your case.",
+      "bodyRep": "Apply to order a witness to attend to give evidence in the claimant’s case."
     },
     "non-compliance": {
       "caption": "Tell the tribunal the other party has not complied",
@@ -68,7 +81,8 @@
     "strike": {
       "caption": "Strike out the response",
       "label": "Strike out all or part of the response",
-      "body": "You can request that the tribunal strike out all or parts of the other party's response."
+      "body": "You can request that the tribunal strike out all or parts of the other party's response.",
+      "bodyRep": "The claimant can request that the tribunal strike out all or parts of the other party's response."
     },
     "reconsider-judgement": {
       "caption": "Reconsider a judgment",
@@ -79,6 +93,7 @@
       "caption": "Contact the tribunal",
       "label": "Contact the tribunal about something else",
       "body": "Tell or ask the tribunal about something relevant to your case, and which is not covered by the other options on this page.",
+      "bodyRep": "Tell or ask the tribunal about something relevant to the claimant's case, which is not covered by the other options on this page.",
       "link": "Contact the tribunal"
     },
     "documents": {

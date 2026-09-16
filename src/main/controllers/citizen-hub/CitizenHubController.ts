@@ -45,7 +45,10 @@ import {
   userCaseContainsGeneralCorrespondence,
 } from '../helpers/CitizenHubHelper';
 import { getProgressBarItems } from '../helpers/CitizenHubProgressBarHelper';
-import { isClaimantRepresentedByOrganisation } from '../helpers/ContactTheTribunalHelper';
+import {
+  isClaimantRepresentedByNonHmctsRepresentative,
+  isClaimantRepresentedByOrganisation,
+} from '../helpers/ContactTheTribunalHelper';
 import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
@@ -71,7 +74,6 @@ export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
     const welshEnabled = await getFlagValue('welsh-language', null);
-    const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(req.session.userCase);
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {
@@ -96,6 +98,8 @@ export default class CitizenHubController {
     clearCaseTransferInfoIfStale(req, req.params.caseId);
 
     const userCase = req.session.userCase;
+    const claimantRepresentedByOrganisation = isClaimantRepresentedByOrganisation(userCase);
+    const showAboutYouForNonHmctsRep = isClaimantRepresentedByNonHmctsRepresentative(userCase);
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
     }
@@ -167,12 +171,15 @@ export default class CitizenHubController {
               linkTxt: (l: AnyRecord): string => l[linkName],
               status: (l: AnyRecord): string => l[status],
               shouldShow: shouldHubLinkBeClickable(status, linkName),
+              isVisible: () => true,
               url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
               statusColor: () => statusColorMap.get(status),
             };
           }),
-      };
-    });
+        };
+      })
+      // The "About you" section is not shown on the citizen hub for anyone.
+      .filter((__section, index) => !sectionIndexToLinkNames[index].includes(HubLinkNames.AboutYou));
 
     const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const generalNotifications = filterOutSpecialNotifications(notifications);
@@ -247,6 +254,7 @@ export default class CitizenHubController {
       ),
       isLeadClaimant: userCase?.leadClaimant === YesOrNo.YES,
       notificationsNotViewedCount: generalNotifications?.filter(item => item.showAlert)?.length || 0,
+      isClaimantRepresentedByNonHmctsRepresentative: showAboutYouForNonHmctsRep,
     });
   }
 }

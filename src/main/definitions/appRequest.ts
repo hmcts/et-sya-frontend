@@ -16,6 +16,19 @@ export interface AppSession extends Session {
   visitedContactTribunalSelection?: boolean;
   contactTribunalSharingCommunicationConfirmed?: boolean;
   returnUrl: string;
+  repAboutYouCaseId?: string;
+  claimantRepAboutYouPendingDisplay?: Pick<
+    CaseWithId,
+    | 'representativeName'
+    | 'representativeOrgName'
+    | 'claimantRepEmail'
+    | 'repAddress1'
+    | 'repAddress2'
+    | 'repAddressTown'
+    | 'repAddressCountry'
+    | 'repAddressPostcode'
+    | 'representativePhoneNumber'
+  >;
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;
@@ -27,6 +40,7 @@ export interface AppSession extends Session {
   fileTooLarge?: boolean;
   cookies?: string;
   respondentRedirectCheckAnswer?: boolean;
+  claimantRespondentNumber?: string;
   contactType?: string;
   contactTribunalSelection?: string;
   documentDownloadPage?: string;

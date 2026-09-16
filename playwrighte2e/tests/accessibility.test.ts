@@ -6,6 +6,17 @@ import { test } from '../fixtures/common.fixture';
 
 const envUrl = process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net';
 const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation', PageUrls.CITIZEN_HUB, PageUrls.MANIFEST_URL];
+const statefulRepresentativePagePrefixes = [
+  '/claimant-',
+  '/did-claimant-',
+  '/is-claimant-',
+  '/representative-',
+  '/represented-claimant-',
+  PageUrls.CLAIM_STEPS_NON_HMCTS,
+];
+
+const shouldScanPage = (url: string): boolean =>
+  !ignoredPages.includes(url) && !statefulRepresentativePagePrefixes.some(prefix => url.startsWith(prefix));
 
 async function expectNoErrors(page: Page): Promise<void> {
   const accessibilityScanResults = await new AxeBuilder({ page })
@@ -24,7 +35,7 @@ async function expectNoErrors(page: Page): Promise<void> {
 test.describe('SYA Accessibility', () => {
   Object.values({ ...PageUrls, CITIZEN_HUB: '/citizen-hub/a11y' }).forEach(url => {
     test(`Page ${url} should have no accessibility errors`, { tag: '@Accessibility' }, async ({ page }) => {
-      if (!ignoredPages.includes(url)) {
+      if (shouldScanPage(url)) {
         const pageUrl = envUrl + url;
         await page.goto(pageUrl);
         await expectNoErrors(page);

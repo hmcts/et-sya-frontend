@@ -1,4 +1,5 @@
 import { Document } from '../case';
+import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
@@ -7,6 +8,7 @@ import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPrefer
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
+import { RepresentativeType } from '../complexTypes/representative';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { TriageQuestions } from '../complexTypes/triageQuestions';
@@ -37,6 +39,13 @@ interface CaseDataApiBody {
   additionalClaimants?: AdditionalClaimantRequestBody[];
   addClaimantMethod?: string;
   additionalClaimantSpreadsheet?: Document;
+  representativeClaimantType?: ClaimantRepresentative;
+  repCollection?: RepresentativeRequestBody[];
+}
+
+export interface RepresentativeRequestBody {
+  value: RepresentativeType;
+  id?: string;
 }
 
 export interface CreateCaseBody {
