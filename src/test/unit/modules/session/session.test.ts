@@ -110,6 +110,14 @@ describe('Session', () => {
 
       expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ port: 10000 }));
     });
+
+    it.each(['', '   ', 'not-a-port', '0', '70000'])('falls back to 6380 when REDIS_PORT is %p', value => {
+      process.env.REDIS_PORT = value;
+
+      new Session().enableFor(buildApp());
+
+      expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ port: 6380 }));
+    });
   });
 
   describe('with a secondary instance', () => {
@@ -128,6 +136,14 @@ describe('Session', () => {
           password: 'secondary-key',
         })
       );
+    });
+
+    it.each(['', '   ', 'not-a-port', '0'])('falls back to 10000 when REDIS_SECONDARY_PORT is %p', value => {
+      process.env.REDIS_SECONDARY_PORT = value;
+
+      new Session().enableFor(buildApp());
+
+      expect(mockCreateClient).toHaveBeenLastCalledWith(expect.objectContaining({ port: 10000 }));
     });
 
     it('reads from the primary and mirrors writes to the secondary', () => {

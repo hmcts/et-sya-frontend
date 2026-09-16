@@ -17,6 +17,16 @@ const sessionPrefix = 'et-sya-session:';
 const defaultRedisPort = 6380;
 const defaultSecondaryRedisPort = 10000; // Azure Managed Redis
 
+/**
+ * Falls back when the variable is unset, empty or not a usable port, so that a
+ * blank value in a Helm override cannot quietly become port 0.
+ */
+const parsePort = (value: string | undefined, fallback: number): number => {
+  const port = Number(value);
+
+  return Number.isInteger(port) && port > 0 && port <= 65535 ? port : fallback;
+};
+
 export class Session {
   public enableFor(app: Application): void {
     app.use(cookieParser());
@@ -60,7 +70,7 @@ export class Session {
 
     const primary = this.createRedisClient(
       redisHost,
-      Number(process.env.REDIS_PORT ?? defaultRedisPort),
+      parsePort(process.env.REDIS_PORT, defaultRedisPort),
       config.get('session.redis.key') as string
     );
 
@@ -74,7 +84,7 @@ export class Session {
 
     const secondary = this.createRedisClient(
       secondaryHost,
-      Number(process.env.REDIS_SECONDARY_PORT ?? defaultSecondaryRedisPort),
+      parsePort(process.env.REDIS_SECONDARY_PORT, defaultSecondaryRedisPort),
       config.has('session.redis.secondaryKey') ? (config.get('session.redis.secondaryKey') as string) : ''
     );
 
