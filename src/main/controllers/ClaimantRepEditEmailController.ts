@@ -7,6 +7,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import NumberUtils from '../utils/NumberUtils';
 
 import {
   ensureClaimantRepCaseLoaded,
@@ -57,8 +58,11 @@ export default class ClaimantRepEditEmailController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const caseId = req.params.caseId;
-    if (!(await loadClaimantRepCase(req, caseId))) {
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(req.params.caseId);
+    if (!safeCaseId) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
+    if (!(await loadClaimantRepCase(req, safeCaseId))) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
@@ -71,7 +75,7 @@ export default class ClaimantRepEditEmailController {
 
     res.render(TranslationKeys.CLAIMANT_REP_EDIT_EMAIL, {
       ...content,
-      backLinkUrl: getClaimantRepAboutYouPageUrl(caseId, req),
+      backLinkUrl: getClaimantRepAboutYouPageUrl(safeCaseId, req),
     });
   };
 }

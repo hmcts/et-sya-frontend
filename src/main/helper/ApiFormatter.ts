@@ -87,7 +87,9 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
   const isRepresentedClaimant = fromApiCaseData.case_data?.claimantRepresentedQuestion === YesOrNo.YES;
   const userCase: CaseWithId = {
-    id: fromApiCaseData.id,
+    // API/JSON may deserialize CCD case ids as numbers; keep session/redirect helpers string-safe.
+    // Redirect Location headers must still go through returnSafeCitizenHubUrl / getSafeCaseIdDigits.
+    id: String(fromApiCaseData.id),
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     feeGroupReference: fromApiCaseData.case_data?.feeGroupReference,

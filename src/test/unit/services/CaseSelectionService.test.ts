@@ -48,7 +48,7 @@ describe('Case Selection Service using Case Api', () => {
     const response: AxiosResponse<CaseApiDataResponse[]> = {
       data: [
         {
-          id: '12234',
+          id: '1786637776090539',
           state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
           last_modified: '2019-02-12T14:25:39.015',
           created_date: '2019-02-12T14:25:39.015',
@@ -60,7 +60,7 @@ describe('Case Selection Service using Case Api', () => {
           },
         },
         {
-          id: '122345',
+          id: '17866377760905395',
           state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
           last_modified: '2019-02-13T14:25:39.015',
           created_date: '2019-02-12T14:25:39.015',
@@ -94,7 +94,7 @@ describe('Case Selection Service using Case Api', () => {
     const response: AxiosResponse<CaseApiDataResponse[]> = {
       data: [
         {
-          id: '12234',
+          id: '1786637776090539',
           state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
           last_modified: '2019-02-12T14:25:39.015',
           created_date: '2019-02-12T14:25:39.015',
@@ -106,7 +106,7 @@ describe('Case Selection Service using Case Api', () => {
           },
         },
         {
-          id: '122345',
+          id: '17866377760905395',
           state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
           last_modified: '2019-02-13T14:25:39.015',
           created_date: '2019-02-12T14:25:39.015',
@@ -123,7 +123,7 @@ describe('Case Selection Service using Case Api', () => {
       headers: undefined,
       config: undefined,
     };
-    const req = mockRequest({ session: { deletedCaseIds: ['12234'] } });
+    const req = mockRequest({ session: { deletedCaseIds: ['1786637776090539'] } });
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCases = jest.fn().mockResolvedValue(response);
@@ -132,7 +132,7 @@ describe('Case Selection Service using Case Api', () => {
     const userCases = await getUserCasesByLastModified(req);
 
     expect(userCases).toHaveLength(1);
-    expect(userCases[0].id).toStrictEqual('122345');
+    expect(userCases[0].id).toStrictEqual('17866377760905395');
     expect(userCases[0].lastModified).toStrictEqual('13 February 2019');
   });
 
@@ -180,7 +180,7 @@ describe('Case Selection Service using Case Api', () => {
   test('Should select represented User Case and redirect to non-HMCTS Claim Steps in English language', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
-        id: '12234',
+        id: '1786637776090539',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
         last_modified: '2019-02-12T14:25:39.015',
         created_date: '2019-02-12T14:25:39.015',
@@ -205,7 +205,7 @@ describe('Case Selection Service using Case Api', () => {
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS + languages.ENGLISH_URL_PARAMETER);
   });
@@ -213,7 +213,7 @@ describe('Case Selection Service using Case Api', () => {
   test('Should select submitted User Case and redirect to Citizen Hub in English language', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
-        id: '12234',
+        id: '1786637776090539',
         state: CaseState.SUBMITTED,
         last_modified: '2019-02-12T14:25:39.015',
         created_date: '2019-02-12T14:25:39.015',
@@ -231,16 +231,50 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
-    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+  });
+
+  test('Should stringify numeric API case ids and redirect using the route caseId', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: {
+        id: 1786637776090539,
+        state: CaseState.SUBMITTED,
+        last_modified: '2019-02-12T14:25:39.015',
+        created_date: '2019-02-12T14:25:39.015',
+        case_data: {
+          caseType: CaseType.SINGLE,
+          typesOfClaim: ['discrimination', 'payRelated'],
+          claimantRepresentedQuestion: YesOrNo.YES,
+          caseSource: 'ET1 Online',
+        },
+      },
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
+
+    await selectUserCase(req, res, '1786637776090539');
+
+    expect(req.session.userCase.id).toBe('1786637776090539');
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
   });
 
   test('Should redirect to claimant applications when submitted case has a non-numeric id', async () => {
@@ -279,7 +313,7 @@ describe('Case Selection Service using Case Api', () => {
   test('Should select submitted User Case and redirect to Citizen Hub in Welsh language', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
-        id: '12234',
+        id: '1786637776090539',
         state: CaseState.SUBMITTED,
         last_modified: '2019-02-12T14:25:39.015',
         created_date: '2019-02-12T14:25:39.015',
@@ -297,22 +331,22 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.WELSH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.WELSH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
-    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=cy');
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=cy');
   });
 
   test('Should redirect to citizen hub when submitted case loads successfully', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
-        id: '12234',
+        id: '1786637776090539',
         state: CaseState.SUBMITTED,
         last_modified: '2019-02-12T14:25:39.015',
         created_date: '2019-02-12T14:25:39.015',
@@ -330,7 +364,7 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -339,20 +373,20 @@ describe('Case Selection Service using Case Api', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '12234',
+        originalCaseId: '1786637776090539',
         transferComplete: false,
       },
     });
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12234?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
   });
 
   test('Should redirect to transferred page when getUserCase fails and transfer-info confirms transfer', async () => {
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -365,19 +399,19 @@ describe('Case Selection Service using Case Api', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '12234',
+        originalCaseId: '1786637776090539',
         transferComplete: false,
       },
     });
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=12234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
   });
 
   test('Should redirect to not found when getUserCase fails and transfer-info says not transferred', async () => {
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -394,14 +428,14 @@ describe('Case Selection Service using Case Api', () => {
       },
     });
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to not found when getUserCase fails and transfer-info is unavailable', async () => {
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -412,14 +446,14 @@ describe('Case Selection Service using Case Api', () => {
       );
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to not found without checking transfer info when getUserCase fails with a server error', async () => {
     const req = mockRequest({});
-    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '12234') + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1786637776090539') + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -430,12 +464,12 @@ describe('Case Selection Service using Case Api', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '12234',
+        originalCaseId: '1786637776090539',
         transferComplete: false,
       },
     });
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
@@ -444,7 +478,7 @@ describe('Case Selection Service using Case Api', () => {
   test('Should select represented User Case and redirect to non-HMCTS Claim Steps in Welsh language', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
-        id: '12234',
+        id: '1786637776090539',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
         last_modified: '2019-02-12T14:25:39.015',
         created_date: '2019-02-12T14:25:39.015',
@@ -469,7 +503,7 @@ describe('Case Selection Service using Case Api', () => {
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
 
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS + languages.WELSH_URL_PARAMETER);
   });
@@ -489,7 +523,7 @@ describe('Case Selection Service using Case Api', () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER);
   });
@@ -509,7 +543,7 @@ describe('Case Selection Service using Case Api', () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER);
   });
@@ -529,7 +563,7 @@ describe('Case Selection Service using Case Api', () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER);
   });
@@ -549,7 +583,7 @@ describe('Case Selection Service using Case Api', () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER);
   });
@@ -562,7 +596,7 @@ describe('Case Selection Service using Case Api', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('Failed to retrieve case'));
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
@@ -575,7 +609,7 @@ describe('Case Selection Service using Case Api', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('Failed to retrieve case'));
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER);
   });
