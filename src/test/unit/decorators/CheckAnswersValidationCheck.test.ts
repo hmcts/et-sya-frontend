@@ -7,12 +7,13 @@ import {
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
+import { ClaimTypeDiscrimination } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 const validUserCase = {
   typeOfClaim: ['discrimination'],
-  claimTypeDiscrimination: ['race'],
+  claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
   address1: '10 Test Street',
   addressTown: 'Test Town',
   addressCountry: 'United Kingdom',
