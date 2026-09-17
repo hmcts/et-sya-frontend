@@ -155,6 +155,20 @@ export const isDateEmpty = (date: CaseDate): boolean => {
   return Object.values(date).every(e => e === '');
 };
 
+export const isAtLeast16YearsOld: DateValidator = (date: CaseDate) => {
+  if (isDateEmpty(date)) {
+    return;
+  }
+
+  const dateMinus16 = new Date();
+  dateMinus16.setFullYear(dateMinus16.getFullYear() - 16);
+  dateMinus16.setHours(0, 0, 0, 0);
+
+  if (convertCaseDateToDate(date) > dateMinus16) {
+    return { error: 'invalidDateLessThanSixteenYearsInPast', fieldName: 'day' };
+  }
+};
+
 export const convertDateToCaseDate = (date: Date): CaseDate => {
   return { day: `${date.getDate()}`, month: `${date.getMonth() + 1}`, year: `${date.getFullYear()}` };
 };

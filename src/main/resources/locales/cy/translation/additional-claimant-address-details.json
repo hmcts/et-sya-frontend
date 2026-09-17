@@ -1,0 +1,28 @@
+{
+  "title": "[W] Contact or home address of another claimant",
+  "pageHeader": "[W] Contact or home address of [Full name of another claimant]",
+  "pageText": "[W] We'll send any correspondence to this address.",
+  "errors": {
+    "additionalClaimantAddress1": {
+      "required": "[W] Enter the first line of the claimant’s contact or home address - up to 100 characters",
+      "invalid": "[W] Enter the first line of the claimant’s contact or home address - up to 100 characters"
+    },
+    "additionalClaimantAddress2": {
+      "required": "[W] Enter the second line of the claimant’s contact or home address - up to 50 characters",
+      "invalid": "[W] Enter the second line of the claimant’s contact or home address - up to 50 characters"
+    },
+    "additionalClaimantAddressTown": {
+      "required": "[W] Enter a town or city for the claimant’s contact or home address - up to 50 characters",
+      "invalid": "[W] Enter a town or city for the claimant’s contact or home address - up to 50 characters"
+    },
+    "additionalClaimantAddressCountry": {
+      "required": "[W] Enter a country for the claimant’s contact or home address - up to 50 characters",
+      "invalid": "[W] Enter a country for the claimant’s contact or home address - up to 50 characters"
+    },
+    "additionalClaimantAddressPostcode": {
+      "required": "[W] Enter a postcode. For example, SW1 1AA",
+      "invalid": "[W] Enter a valid postcode. For example, SW1 1AA",
+      "notSelected": "[W] Select an address"
+    }
+  }
+}

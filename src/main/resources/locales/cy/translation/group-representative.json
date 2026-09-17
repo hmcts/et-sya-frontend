@@ -1,0 +1,23 @@
+{
+  "title": "[W] Representative for the group claim",
+  "h1": "[W] Representative for the group claim",
+  "p1": "[W] The tribunal will usually communicate with one person in the claimant party. If you do not have a legal representative, this can be an individual in the group claim. That individual will act as the representative for the group.",
+  "p2": "[W] The group claim representative is responsible for:",
+  "bullet1": "[W] receiving all communication as the claim progresses",
+  "bullet2": "[W] making requests and applications to the tribunal",
+  "bullet3": "[W] telling the other individuals in the group claim when there are updates to the claim",
+  "p3": "[W] You can change the representative, or add a legal representative as the claim progresses.",
+  "p4": {
+    "start": "[W] If you have a legal representative, they must complete the",
+    "link": "[W] ET1 form on MyHMCTS."
+  },
+  "legend": "[W] Do you agree to be the group claim representative?",
+  "yes": "[W] Yes, I agree to being the group claim representative",
+  "no": "[W] No, I do not agree to being the group claim representative",
+  "noHint": "[W] If the claim is accepted, the tribunal will contact all parties to discuss who should be the group representative.",
+  "errors": {
+    "leadClaimant": {
+      "required": "[W] Tell us if you agree to be the group claim representative"
+    }
+  }
+}

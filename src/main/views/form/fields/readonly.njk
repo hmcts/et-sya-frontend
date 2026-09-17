@@ -1,1 +1,1 @@
-{{getContent(field.hint)}}
+<p class="{{ field.classes if field.classes else 'govuk-body' }}">{{ getContent(field.hint) | safe }}</p>

@@ -25,6 +25,7 @@ export const LegacyUrls = {
 export const Views = {
   DOCUMENT_VIEW: 'document-view',
   RESPONSE_FROM_RESPONDENT_VIEW: 'response-from-respondent-view',
+  MULTIPLE_GUIDANCE: 'multiples/guidance',
 } as const;
 
 export const TranslationKeys = {
@@ -85,6 +86,7 @@ export const TranslationKeys = {
   TRIBUNAL_RECOMMENDATION: 'tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: 'whistleblowing-claims',
   LINKED_CASES: 'linked-cases',
+  GROUP_CLAIMS_CHECK: 'group-claims-check',
   CLAIM_DETAILS_CHECK: 'claim-details-check',
   TASK_LIST_CHECK: 'tasklist-check',
   FORM: 'form',
@@ -163,6 +165,16 @@ export const TranslationKeys = {
   YOUR_DETAILS_FORM: 'your-details-form',
   YOUR_DETAILS_CYA: 'your-details-cya',
   DELETE_DRAFT_CLAIM: 'delete-draft-claim',
+  ADD_ANOTHER_CLAIMANT: 'add-another-claimant',
+  ADDITIONAL_CLAIMANT_PERSONAL_DETAILS: 'additional-claimant-personal-details',
+  ADDITIONAL_CLAIMANT_POSTCODE_ENTER: 'additional-claimant-postcode-enter',
+  ADDITIONAL_CLAIMANT_POSTCODE_SELECT: 'additional-claimant-postcode-select',
+  ADDITIONAL_CLAIMANT_ADDRESS_DETAILS: 'additional-claimant-address-details',
+  REVIEW_ADDITIONAL_CLAIMANTS: 'review-additional-claimants',
+  REMOVE_ADDITIONAL_CLAIMANT: 'remove-additional-claimant',
+  GROUP_REPRESENTATIVE: 'group-representative',
+  ADDITIONAL_CLAIMANT_FILE_UPLOAD: 'additional-claimant-file-upload',
+  MULTIPLE_GUIDANCE: 'guidance',
 
   // non-hmcts claimant rep
   CLAIMANT_REP_HUB: 'claimant-rep-hub',
@@ -236,6 +248,18 @@ export const PageUrls = {
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
+  MULTIPLE_GUIDANCE: '/multiples/guidance',
+  ADD_ANOTHER_CLAIMANT: '/add-another-claimant',
+  ADDITIONAL_CLAIMANT_PERSONAL_DETAILS: '/additional-claimant-personal-details',
+  ADDITIONAL_CLAIMANT_POSTCODE_ENTER: '/additional-claimant-postcode-enter',
+  ADDITIONAL_CLAIMANT_POSTCODE_SELECT: '/additional-claimant-postcode-select',
+  ADDITIONAL_CLAIMANT_ADDRESS_DETAILS: '/additional-claimant-address-details',
+  REVIEW_ADDITIONAL_CLAIMANTS: '/review-additional-claimants',
+  REMOVE_ADDITIONAL_CLAIMANT: '/remove-additional-claimant',
+  GROUP_REPRESENTATIVE: '/group-representative',
+  ADDITIONAL_CLAIMANT_FILE_UPLOAD: '/additional-claimant-file-upload',
+  ADDITIONAL_CLAIMANT_FILE_UPLOAD_POSTVALIDATE: '/additional-claimant-file-upload/postvalidate',
+  ADDITIONAL_CLAIMANT_FILE_UPLOAD_REMOVE: '/additional-claimant-file-upload/remove',
   CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
   CASE_NUMBER_CHECK: '/case-number-check',
@@ -288,6 +312,7 @@ export const PageUrls = {
   WHISTLEBLOWING_CLAIMS: '/whistleblowing-claims',
   LINKED_CASES: '/linked-cases',
   PERSONAL_DETAILS_CHECK: '/personal-details-check',
+  GROUP_CLAIMS_CHECK: '/group-claims-check',
   CLAIM_DETAILS_CHECK: '/claim-details-check',
   RESPONDENT_NAME: '/respondent-name',
   RESPONDENT_ADDRESS: '/respondent-address',
@@ -560,8 +585,10 @@ export const ALLOWED_FILE_FORMATS = [
   'potx',
   'ppsx',
   'rtf',
-  'csv',
+  'xlsx',
 ];
+
+export const ALLOWED_FILE_FORMATS_ADDITIONAL_CLAIMANTS = ['xls', 'xlt', 'xla', 'xlsx', 'xltx'];
 
 export const RedisErrors = {
   REDIS_ERROR: 'redisError',
@@ -585,7 +612,11 @@ export const ASSIGN_CLAIM_USER = 'assignClaimUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
-export const FILE_SIZE_LIMIT = 83886500;
+
+export const FILE_SIZE_LIMIT = {
+  FIVE_MB: 5 * 1024 * 1024,
+  EIGHTY_MB: 80 * 1024 * 1024,
+};
 
 export const inScopeLocations = [].concat(
   postcode_Glasgow,
@@ -667,6 +698,9 @@ export const NotificationSubjects = {
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
   ECC: 'Employer Contract Claim',
+  CONSIDERING_CLAIMS_TOGETHER: 'Considering claims together',
+  GROUP_CLAIMS: 'Group claims',
+  PART_OF_GROUP_CLAIM: "You're now part of a group claim",
 } as const;
 
 export const NoticeOfECC = 'Notice of Employer Contract Claim';
