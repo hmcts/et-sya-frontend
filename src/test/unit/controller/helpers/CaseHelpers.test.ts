@@ -57,9 +57,9 @@ describe('isGroupClaim()', () => {
     expect(isGroupClaim(userCase)).toBe(true);
   });
 
-  it('should return true when multipleFlag is Yes', () => {
+  it('should return false when caseType is not Multiple even if multipleFlag is Yes', () => {
     const userCase = { id: '1', state: CaseState.SUBMITTED, multipleFlag: YesOrNo.YES } as CaseWithId;
-    expect(isGroupClaim(userCase)).toBe(true);
+    expect(isGroupClaim(userCase)).toBe(false);
   });
 });
 
