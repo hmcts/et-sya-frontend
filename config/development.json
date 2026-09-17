@@ -25,6 +25,10 @@
     "launchDarkly": {
       "key": "TO BE PICKED UP FROM ENV"
     },
+    "s2s": {
+      "url": "http://localhost:8489",
+      "serviceName": "et_sya"
+    },
     "cui": {
       "endpoint": "http://localhost:3100",
       "hmctsServiceId": "BHA1"

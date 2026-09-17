@@ -32,6 +32,7 @@ const confirmationTranslations = {
   h1: 'You have added your support request to your claim',
   h2: 'What happens next',
   p: 'Once you submit your claim, the tribunal will review your support request.',
+  saveForLater: 'Save as draft',
 };
 
 const submittedConfirmationTranslations = {
@@ -924,6 +925,8 @@ describe('Your Support Controller', () => {
       expect.objectContaining({
         buttonText: confirmationTranslations.buttonText,
         link: PageUrls.PERSONAL_DETAILS_CHECK,
+        saveForLater: confirmationTranslations.saveForLater,
+        saveForLaterLink: PageUrls.CLAIM_STEPS,
       })
     );
   });

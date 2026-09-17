@@ -194,7 +194,8 @@ export default class YourSupportController {
       res,
       TranslationKeys.YOUR_SUPPORT_CONFIRMATION,
       YOUR_SUPPORT_CONFIRMATION_TEMPLATE,
-      link
+      link,
+      setUrlLanguage(req, PageUrls.CLAIM_STEPS)
     );
   };
 
@@ -423,7 +424,8 @@ export default class YourSupportController {
     res: Response,
     translationKey: string,
     template: string,
-    link: string
+    link: string,
+    saveForLaterLink?: string
   ): void {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -436,6 +438,7 @@ export default class YourSupportController {
       ...translations,
       sessionErrors,
       link,
+      saveForLaterLink,
     });
   }
 
