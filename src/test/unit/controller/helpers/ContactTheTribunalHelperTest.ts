@@ -3,7 +3,7 @@ import {
   isClaimantRepresentedByNonHmctsRepresentative,
   isClaimantRepresentedByOrganisation,
 } from '../../../../main/controllers/helpers/ContactTheTribunalHelper';
-import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
+import { CaseType, CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
 import contactTribunalRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal.json';
 import { mockHearingCollection } from '../../mocks/mockHearing';
@@ -207,6 +207,30 @@ describe('ContactTheTribunalHelper tests', () => {
       const actual = getApplicationsAccordionItems(request, false, true);
 
       expect(actual).toHaveLength(0);
+    });
+
+    it('should append the respond to other party accordion item when the case is a group claim', () => {
+      const translationJsons = { ...contactTribunalRaw };
+      const request = mockRequestWithTranslation(
+        { userCase: { ...mockUserCase, caseType: CaseType.MULTIPLE } },
+        translationJsons
+      );
+
+      const actual = getApplicationsAccordionItems(request, false, false);
+
+      expect(actual).toHaveLength(14);
+      expect(actual[13]).toStrictEqual({
+        heading: {
+          text: 'Respond to communication from another party',
+        },
+        content: {
+          html:
+            '<p class="govuk-body">Respond to communication from a respondent or another claimant in your group claim. ' +
+            'This could be applications, requests, or general communication.</p>' +
+            '<p class="govuk-body"><a class="govuk-link" href="/group-claim-requests-and-applications?lng=en">' +
+            'Respond to communication from another party in your group</a></p>',
+        },
+      });
     });
   });
 });

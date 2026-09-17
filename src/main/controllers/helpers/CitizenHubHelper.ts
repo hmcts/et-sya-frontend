@@ -217,7 +217,8 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
   return !(
     status === HubLinkStatus.WAITING_FOR_TRIBUNAL &&
     linkName !== HubLinkNames.RespondentApplications &&
-    linkName !== HubLinkNames.RequestsAndApplications
+    linkName !== HubLinkNames.RequestsAndApplications &&
+    linkName !== HubLinkNames.GroupClaimRequestsAndApplications
   );
 };
 
@@ -295,6 +296,10 @@ export const updateYourApplicationsStatusTag = (
   userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = StatusesInOrderOfUrgency[
     mostUrgentStatus
   ] as HubLinkStatus;
+  // The group claim requests and applications link currently mirrors the same status as
+  // 'Your requests and applications' as it shows the same content for now.
+  userCase.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications] =
+    userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications];
 };
 
 export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam: string): Map<string, string> => {
@@ -311,6 +316,10 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
     [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
     [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
     [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + baseUrls[languageParam]],
+    [
+      HubLinkNames.GroupClaimRequestsAndApplications,
+      PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS + baseUrls[languageParam],
+    ],
     [HubLinkNames.TribunalOrders, PageUrls.NOTIFICATIONS + baseUrls[languageParam]],
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],

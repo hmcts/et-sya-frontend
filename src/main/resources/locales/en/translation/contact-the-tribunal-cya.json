@@ -4,12 +4,15 @@
   "applicationType": "Application type",
   "legend": "What do you want to tell or ask the tribunal?",
   "supportingMaterial": "Supporting material",
-  "copyToOtherPartyYesOrNo": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "notProvided": "Not provided",
+  "copyToOtherPartyYesOrNo": "Do you agree to the tribunal sharing this application to satisfy the rules of procedure?",
   "copyToOtherPartyText": "Reason for not informing other party",
   "submitBtn": "Submit",
   "cancelLink": "Cancel",
+  "chosenNotToShareHeading": "You have chosen not to share your application",
+  "chosenNotToShareBody": "The tribunal will consider your reasons and decide if your threshold is met to not share your application.",
   "youCannotMakeFurtherChanges": "You cannot make further changes to this correspondence after you store it",
   "storeApplication": "Store application",
-  "yes": "Yes",
-  "no": "No"
+  "yes": "Yes, I agree to the tribunal sharing this application to satisfy the Employment Tribunal Rules of Procedure.",
+  "no": "No, I do not agree to the tribunal sharing this application."
 }

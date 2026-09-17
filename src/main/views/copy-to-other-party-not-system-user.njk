@@ -16,12 +16,18 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">{{ applicationType }}</span>
-      <h1 class="govuk-heading-l">{{title}}</h1>
+      <span class="govuk-hint">{{ applicationType }}</span>
+      <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+      {% set insetTextHtml %}
+        <p class="govuk-body">{{ p1 }}</p>
+        <p class="govuk-body">{{ p2 }}</p>
+        <p class="govuk-body">{{ p3 }}</p>
+      {% endset %}
+
       {{ govukInsetText({
-        text: theTribunalMustOperate
+        html: insetTextHtml
       }) }}
-      <p class="govuk-body">{{toCopyThisCorrespondence}}</p>
 
       {% block form %}
         {% include "form/form.njk"%}
@@ -29,18 +35,12 @@
     </div>
 
     <div class="govuk-grid-column-one-third">
-      <p class="govuk-body">
-        <a href="https://www.gov.uk/find-legal-advice" target="_blank">
-          {{findLegalAdvice}}
-        </a>
-      </p>
-
       {% set sideBarContent %}
         {% include "./citizen-hub-sidebar.njk" %}
       {% endset %}
 
       {{ govukDetails({
-        summaryText: "Contact",
+        summaryText: "Contact us",
         html: sideBarContent
       }) }}
     </div>

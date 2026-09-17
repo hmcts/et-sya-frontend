@@ -27,12 +27,12 @@ export default class ContactTheTribunalController {
     // Set flag to indicate user has visited the selection page
     // This allows FormSubmissionCheck to verify proper flow
     req.session.visitedContactTribunalSelection = true;
+    req.session.contactTribunalSharingCommunicationConfirmed = false;
 
     const applicationsAccordionItems = getApplicationsAccordionItems(
       req,
       bundlesEnabled,
-      claimantRepresentedByOrganisation,
-      claimantRepresentedByNonHmctsRepresentative
+      claimantRepresentedByOrganisation
     );
 
     const content = getPageContent(req, <FormContent>{}, [

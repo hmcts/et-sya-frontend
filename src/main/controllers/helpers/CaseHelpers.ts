@@ -6,7 +6,7 @@ import { LoggerInstance } from 'winston';
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
@@ -30,6 +30,15 @@ import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUserCaseForRespondent } from './RespondentHelpers';
 import { returnNextPage, returnValidUrl } from './RouterHelpers';
+
+/**
+ * Determines whether the case is part of a group (multiple) claim.
+ * @param {CaseWithId} userCase - The case data object.
+ * @returns {boolean} `true` if the case is a group claim, otherwise `false`.
+ */
+export const isGroupClaim = (userCase: CaseWithId): boolean => {
+  return userCase?.caseType === CaseType.MULTIPLE;
+};
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());

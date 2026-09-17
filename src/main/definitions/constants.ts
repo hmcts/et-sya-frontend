@@ -113,6 +113,7 @@ export const TranslationKeys = {
   APPOINT_LEGAL_REPRESENTATIVE: 'appoint-legal-representative',
   RESPONDENT_CONTACT_DETAILS: 'respondent-contact-details',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
+  SHARING_COMMUNICATION: 'sharing-communication',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
   APPLICATION_COMPLETE: 'application-complete',
   RESPOND_TO_APPLICATION_COMPLETE: 'respond-to-application-complete',
@@ -175,6 +176,7 @@ export const TranslationKeys = {
   GROUP_REPRESENTATIVE: 'group-representative',
   ADDITIONAL_CLAIMANT_FILE_UPLOAD: 'additional-claimant-file-upload',
   MULTIPLE_GUIDANCE: 'guidance',
+  GROUP_CLAIM_REQUESTS_AND_APPLICATIONS: 'group-claim-requests-and-applications',
 
   // non-hmcts claimant rep
   CLAIMANT_REP_HUB: 'claimant-rep-hub',
@@ -339,6 +341,7 @@ export const PageUrls = {
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   GET_SUPPORTING_MATERIAL: '/getSupportingMaterial/:docId',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
+  SHARING_COMMUNICATION: '/contact-the-tribunal/sharing-communication',
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
@@ -466,6 +469,7 @@ export const PageUrls = {
   CLAIMANT_REP_CHECK_ANSWERS: '/claimant-rep-check-your-answers',
   CLAIMANT_REP_CLAIM_SUBMITTED: '/claimant-rep-claim-submitted',
   MANIFEST_URL: '/assets/manifest.json',
+  GROUP_CLAIM_REQUESTS_AND_APPLICATIONS: '/group-claim-requests-and-applications',
 } as const;
 
 export const InterceptPaths = {
