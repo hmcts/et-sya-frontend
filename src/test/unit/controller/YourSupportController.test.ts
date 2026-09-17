@@ -771,7 +771,7 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
   });
 
-  it('should return to the case page without saving flags when the CUI journey is not submitted', async () => {
+  it('should return to the ET home page without saving flags when the CUI journey is cancelled', async () => {
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
     const getJourneyData = jest.fn().mockResolvedValue({
@@ -786,6 +786,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
+      session: { returnUrl: PageUrls.CLAIM_STEPS },
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -800,7 +801,8 @@ describe('Your Support Controller', () => {
 
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
   });
 
   it('should redirect home when CUI journey correlation does not match the case', async () => {
