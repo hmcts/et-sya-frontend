@@ -52,8 +52,7 @@ export const isClaimantRepresentedByNonHmctsRepresentative = (userCase: CaseWith
 export const getApplicationsAccordionItems = (
   req: AppRequest,
   bundlesEnabled: LaunchDarkly.LDFlagValue,
-  claimantRepresentedByOrganisation: boolean,
-  claimantRepresentedByNonHmctsRepresentative = false
+  claimantRepresentedByOrganisation: boolean
 ): AccordionItem[] => {
   const { userCase } = req.session;
   if (!claimantRepresentedByOrganisation) {
