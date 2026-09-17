@@ -4,6 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { CaseType } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
@@ -42,6 +43,7 @@ describe('Application complete page - Rule 92 answer Yes', () => {
       mockApp({
         userCase: {
           rule92state: true,
+          caseType: CaseType.MULTIPLE,
         },
       })
     )
