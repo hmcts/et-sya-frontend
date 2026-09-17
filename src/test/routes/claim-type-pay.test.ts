@@ -20,7 +20,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_PAY}`, () => {
       .send({ claimTypePay: ['holidayPay'] })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED);
+        expect(res.header['location']).toStrictEqual(PageUrls.DATE_OF_LAST_EVENT);
       });
   });
 });
