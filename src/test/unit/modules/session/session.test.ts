@@ -71,6 +71,7 @@ describe('Session', () => {
     delete process.env.REDIS_SECONDARY_HOST;
     delete process.env.REDIS_SECONDARY_PORT;
     delete process.env.REDIS_READ_FROM;
+    delete process.env.REDIS_DUAL_WRITE_ENABLED;
     process.env.REDIS_HOST = primaryHost;
 
     primaryClient = createFakeClient('primary');
@@ -120,8 +121,39 @@ describe('Session', () => {
     });
   });
 
-  describe('with a secondary instance', () => {
+  describe('when dual-write is not enabled', () => {
+    it.each([undefined, '', 'false', 'TRUE'])(
+      'ignores the secondary host when REDIS_DUAL_WRITE_ENABLED is %p',
+      value => {
+        process.env.REDIS_SECONDARY_HOST = secondaryHost;
+        process.env.REDIS_READ_FROM = 'secondary';
+        if (value !== undefined) {
+          process.env.REDIS_DUAL_WRITE_ENABLED = value;
+        }
+        const app = buildApp();
+
+        new Session().enableFor(app);
+
+        expect(mockCreateClient).toHaveBeenCalledTimes(1);
+        expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ host: primaryHost }));
+        expect(app.locals.redisClient).toBe(primaryClient);
+      }
+    );
+
+    it('stays on the primary when enabled without a secondary host', () => {
+      process.env.REDIS_DUAL_WRITE_ENABLED = 'true';
+      const app = buildApp();
+
+      new Session().enableFor(app);
+
+      expect(mockCreateClient).toHaveBeenCalledTimes(1);
+      expect(app.locals.redisClient).toBe(primaryClient);
+    });
+  });
+
+  describe('with dual-write enabled', () => {
     beforeEach(() => {
+      process.env.REDIS_DUAL_WRITE_ENABLED = 'true';
       process.env.REDIS_SECONDARY_HOST = secondaryHost;
     });
 
