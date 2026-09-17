@@ -1,6 +1,7 @@
 import request from 'supertest';
 
 import { CaseType, NoAcasNumberReason, YesOrNo } from '../../main/definitions/case';
+import { ClaimTypeDiscrimination } from '../../main/definitions/definition';
 import { mockApp } from '../unit/mocks/mockApp';
 
 const PAGE_URL = '/check-your-answers';
@@ -11,7 +12,7 @@ describe(`GET ${PAGE_URL}`, () => {
       mockApp({
         userCase: {
           typeOfClaim: ['discrimination'],
-          claimTypeDiscrimination: ['sex'],
+          claimTypeDiscrimination: [ClaimTypeDiscrimination.SEX],
           address1: '10 Test Street',
           addressTown: 'Test Town',
           addressCountry: 'United Kingdom',

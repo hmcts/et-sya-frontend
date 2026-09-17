@@ -288,7 +288,7 @@ describe('CYA for Scottish cases', () => {
         userCase: {
           caseTypeId: CaseTypeId.SCOTLAND,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION],
-          claimTypeDiscrimination: ['sex'],
+          claimTypeDiscrimination: [ClaimTypeDiscrimination.SEX],
           caseType: CaseType.SINGLE,
           address1: '10 Test Street',
           addressTown: 'Test Town',

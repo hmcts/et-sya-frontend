@@ -1,7 +1,7 @@
 import CheckYourAnswersController from '../../../main/controllers/CheckYourAnswersController';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
+import { CaseState, ClaimTypeDiscrimination, TypesOfClaim } from '../../../main/definitions/definition';
 import checkAnswersJsonRaw from '../../../main/resources/locales/en/translation/check-your-answers.json';
 import et1DetailsJsonRaw from '../../../main/resources/locales/en/translation/et1-details.json';
 import { mockRequestEmpty, mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -13,7 +13,7 @@ describe('Check Your answers Controller', () => {
   const validUserCase = {
     state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
     typeOfClaim: [TypesOfClaim.DISCRIMINATION],
-    claimTypeDiscrimination: ['race'],
+    claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
     address1: '10 Test Street',
     addressTown: 'Test Town',
     addressCountry: 'United Kingdom',
