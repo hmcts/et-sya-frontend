@@ -10,6 +10,7 @@ import {
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { getCuiYourSupportFeature } from '../../modules/featureFlag/CuiYourSupportFeature';
 
 import { answersAddressFormatter } from './PageContentHelpers';
 
@@ -64,7 +65,9 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
 const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.reasonableAdjustments) {
     case YesOrNo.YES:
-      return translations.oesYesOrNo.yes + ', ' + userCase.reasonableAdjustmentsDetail;
+      return !userCase.reasonableAdjustmentsDetail
+        ? translations.oesYesOrNo.yes
+        : translations.oesYesOrNo.yes + ', ' + userCase.reasonableAdjustmentsDetail;
     case YesOrNo.NO:
       return translations.oesYesOrNo.no;
     default:
@@ -72,8 +75,10 @@ const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations
   }
 };
 
-export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+export const getYourDetails = async (userCase: CaseWithId, translations: AnyRecord): Promise<SummaryListRow[]> => {
   const rows: SummaryListRow[] = [];
+  const cuiYourSupportFeature = getCuiYourSupportFeature();
+  const isCuiYourSupportEnabled = await cuiYourSupportFeature.isEnabled(userCase?.caseTypeId);
 
   rows.push(
     addSummaryRow(
@@ -172,17 +177,22 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         translations.change,
         translations.personalDetails.takePartInHearing
       )
-    ),
-    addSummaryRow(
-      translations.personalDetails.disability,
-      getTranslationsReasonableAdjustments(userCase, translations),
-      createChangeAction(
-        PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
-        translations.change,
-        translations.personalDetails.disability
-      )
     )
   );
+
+  if (!isCuiYourSupportEnabled) {
+    rows.push(
+      addSummaryRow(
+        translations.personalDetails.disability,
+        getTranslationsReasonableAdjustments(userCase, translations),
+        createChangeAction(
+          PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.disability
+        )
+      )
+    );
+  }
 
   return rows;
 };
