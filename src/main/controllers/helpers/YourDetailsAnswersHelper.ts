@@ -62,14 +62,10 @@ const getTranslationsHearingPreferences = function (userCase: CaseWithId, transl
   return preferences.length > 0 ? preferences : [translations.notProvided];
 };
 
-const getTranslationsReasonableAdjustments = (
-  userCase: CaseWithId,
-  translations: AnyRecord,
-  isCuiYourSupportEnabled: boolean
-): string => {
+const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations: AnyRecord): string => {
   switch (userCase?.reasonableAdjustments) {
     case YesOrNo.YES:
-      return isCuiYourSupportEnabled || !userCase.reasonableAdjustmentsDetail
+      return !userCase.reasonableAdjustmentsDetail
         ? translations.oesYesOrNo.yes
         : translations.oesYesOrNo.yes + ', ' + userCase.reasonableAdjustmentsDetail;
     case YesOrNo.NO:
@@ -181,17 +177,22 @@ export const getYourDetails = async (userCase: CaseWithId, translations: AnyReco
         translations.change,
         translations.personalDetails.takePartInHearing
       )
-    ),
-    addSummaryRow(
-      translations.personalDetails.disability,
-      getTranslationsReasonableAdjustments(userCase, translations, isCuiYourSupportEnabled),
-      createChangeAction(
-        (await cuiYourSupportFeature.getSupportPageUrl(userCase?.caseTypeId)) + InterceptPaths.ANSWERS_CHANGE,
-        translations.change,
-        translations.personalDetails.disability
-      )
     )
   );
+
+  if (!isCuiYourSupportEnabled) {
+    rows.push(
+      addSummaryRow(
+        translations.personalDetails.disability,
+        getTranslationsReasonableAdjustments(userCase, translations),
+        createChangeAction(
+          PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.disability
+        )
+      )
+    );
+  }
 
   return rows;
 };

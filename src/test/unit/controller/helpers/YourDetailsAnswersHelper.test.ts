@@ -49,15 +49,22 @@ describe('YourDetailsAnswersHelper', () => {
     expect(supportRow?.actions?.items[0].href).toBe(PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE);
   });
 
-  it('should link the support change action to your support when enabled for the case type', async () => {
+  it('should not display the support question when CUI your support is enabled', async () => {
     const featureMock = jest
       .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
       .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
     try {
-      const rows = await getYourDetails({ caseTypeId: CaseTypeId.SCOTLAND } as CaseWithId, translations);
+      const rows = await getYourDetails(
+        {
+          caseTypeId: CaseTypeId.SCOTLAND,
+          reasonableAdjustments: YesOrNo.YES,
+          reasonableAdjustmentsDetail: 'Old free text answer',
+        } as CaseWithId,
+        translations
+      );
       const supportRow = rows.find(row => row.key.text === translations.personalDetails.disability);
 
-      expect(supportRow?.actions?.items[0].href).toBe(PageUrls.YOUR_SUPPORT + InterceptPaths.ANSWERS_CHANGE);
+      expect(supportRow).toBeUndefined();
     } finally {
       featureMock.mockRestore();
     }
@@ -75,27 +82,6 @@ describe('YourDetailsAnswersHelper', () => {
     const supportRow = rows.find(row => row.key.text === translations.personalDetails.disability);
 
     expect(supportRow?.value.text).toBe(`${translations.oesYesOrNo.yes}, Old free text answer`);
-  });
-
-  it('should not display the legacy reasonable adjustments detail text when CUI your support is enabled', async () => {
-    const featureMock = jest
-      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
-      .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
-    try {
-      const rows = await getYourDetails(
-        {
-          caseTypeId: CaseTypeId.SCOTLAND,
-          reasonableAdjustments: YesOrNo.YES,
-          reasonableAdjustmentsDetail: 'Old free text answer',
-        } as CaseWithId,
-        translations
-      );
-      const supportRow = rows.find(row => row.key.text === translations.personalDetails.disability);
-
-      expect(supportRow?.value.text).toBe(translations.oesYesOrNo.yes);
-    } finally {
-      featureMock.mockRestore();
-    }
   });
 
   it('should not display legacy detail text when none was entered', async () => {
