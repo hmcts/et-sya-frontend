@@ -139,16 +139,6 @@ describe('Session', () => {
         expect(app.locals.redisClient).toBe(primaryClient);
       }
     );
-
-    it('stays on the primary when enabled without a secondary host', () => {
-      process.env.REDIS_DUAL_WRITE_ENABLED = 'true';
-      const app = buildApp();
-
-      new Session().enableFor(app);
-
-      expect(mockCreateClient).toHaveBeenCalledTimes(1);
-      expect(app.locals.redisClient).toBe(primaryClient);
-    });
   });
 
   describe('with dual-write enabled', () => {
@@ -168,6 +158,17 @@ describe('Session', () => {
           password: 'secondary-key',
         })
       );
+    });
+
+    it('relies on the flag alone, so still creates a secondary client when no secondary host is set', () => {
+      delete process.env.REDIS_SECONDARY_HOST;
+      const app = buildApp();
+
+      new Session().enableFor(app);
+
+      expect(mockCreateClient).toHaveBeenCalledTimes(2);
+      expect(mockCreateClient).toHaveBeenLastCalledWith(expect.objectContaining({ host: undefined, port: 10000 }));
+      expect(app.locals.redisClient).not.toBe(primaryClient);
     });
 
     it.each(['', '   ', 'not-a-port', '0'])('falls back to 10000 when REDIS_SECONDARY_PORT is %p', value => {
