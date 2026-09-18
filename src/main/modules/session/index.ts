@@ -78,12 +78,12 @@ export class Session {
     // writes reach both, and REDIS_READ_FROM decides which one answers reads. The
     // chart always sets the secondary host, so REDIS_DUAL_WRITE_ENABLED is what
     // turns this on for an environment.
-    const secondaryHost = process.env.REDIS_SECONDARY_HOST;
     if (process.env.REDIS_DUAL_WRITE_ENABLED !== 'true') {
       app.locals.redisClient = primary;
       return new RedisStore({ client: primary });
     }
 
+    const secondaryHost = process.env.REDIS_SECONDARY_HOST;
     const secondary = this.createRedisClient(
       secondaryHost,
       parsePort(process.env.REDIS_SECONDARY_PORT, defaultSecondaryRedisPort),
