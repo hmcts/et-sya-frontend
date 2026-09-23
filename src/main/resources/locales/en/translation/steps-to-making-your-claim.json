@@ -3,6 +3,9 @@
   "h1": "Steps to making your claim",
   "applicationDetails": "Application Details",
   "claimType": "Claim type",
+  "claimingParagraph": "If you are claiming on your own, or for one person, you do not need to complete Section 2 ('Other people in your claim').",
+  "claimingWithOthersSummary": "Claiming with others",
+  "claimingWithOthersText": "If you are claiming with others, complete the claim sections with your details. The tribunal only needs basic personal details about other people in your claim (Section 2). We do not need their claim details.",
   "section1": {
     "title": "Your details",
     "link1Text": "Personal details",
@@ -10,16 +13,22 @@
     "link3Text": "Your preferences"
   },
   "section2": {
+    "title": "Other people in your claim",
+    "link1Text": "Add another claimant to your group claim",
+    "link2Text": "Group representative",
+    "link3Text": "Claiming on your own or with others"
+  },
+  "section3": {
     "title": "Employment and respondent details",
     "link1Text": "Employment status",
     "link2Text": "Respondent details"
   },
-  "section3": {
+  "section4": {
     "title": "Claim details",
     "link1Text": "Tell us about your claim",
     "link2Text": "Tell us what you want from your claim"
   },
-  "section4": {
+  "section5": {
     "title": "Check and submit",
     "link1Text": "Check your answers"
   },

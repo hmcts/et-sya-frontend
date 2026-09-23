@@ -141,7 +141,7 @@ describe('setUserCaseWithRedisData', () => {
       setUserCaseWithRedisData(req, caseData);
 
       expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"id":"testUserCaseId","state":"AWAITING_SUBMISSION_TO_HMCTS","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"createdDate":"August 19, 2022","lastModified":"August 19, 2022","claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+        '{"id":"testUserCaseId","state":"AWAITING_SUBMISSION_TO_HMCTS","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"createdDate":"August 19, 2022","lastModified":"August 19, 2022","claimantRepresentedQuestion":"No"}'
       );
     }
   );
@@ -156,7 +156,7 @@ describe('setUserCaseWithRedisData', () => {
       setUserCaseWithRedisData(req, caseData);
 
       expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"id":"testUserCaseId","state":"AWAITING_SUBMISSION_TO_HMCTS","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"createdDate":"August 19, 2022","lastModified":"August 19, 2022","claimantRepresentedQuestion":"No","caseType":"Single"}'
+        '{"id":"testUserCaseId","state":"AWAITING_SUBMISSION_TO_HMCTS","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"createdDate":"August 19, 2022","lastModified":"August 19, 2022","claimantRepresentedQuestion":"No"}'
       );
     }
   );
@@ -172,7 +172,7 @@ describe('setUserCaseWithRedisData', () => {
       setUserCaseWithRedisData(req, caseData);
 
       expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"claimantRepresentedQuestion":"No","caseType":"Single","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"]}'
+        '{"claimantRepresentedQuestion":"No","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"]}'
       );
     }
   );

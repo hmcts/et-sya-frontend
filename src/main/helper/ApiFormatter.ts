@@ -3,8 +3,14 @@ import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRe
 import { populateClaimantRepDetailsFromCase } from '../controllers/helpers/ClaimantRepAnswersHelper';
 import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
-import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import {
+  AdditionalClaimantRequestBody,
+  CreateCaseBody,
+  RespondentRequestBody,
+  UpdateCaseBody,
+} from '../definitions/api/caseApiBody';
+import {
+  AdditionalClaimantApiModel,
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
@@ -15,6 +21,7 @@ import {
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
 import {
+  AdditionalClaimant,
   CaseDataCacheKey,
   CaseDate,
   CaseWithId,
@@ -168,6 +175,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
     reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
+    groupClaimsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.groupClaimsCheck,
     representativeDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.representativeDetailsCheck,
     representedClaimantDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantDetailsCheck,
     representedClaimantNameProvided: fromApiCaseData.case_data?.claimantTaskListChecks?.representedClaimantNameProvided,
@@ -269,6 +277,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
       ],
     claimantRepresentativeRemoved: fromApiCaseData.case_data?.claimantRepresentativeRemoved,
     claimantRepresentativeOrganisationPolicy: fromApiCaseData.case_data?.claimantRepresentativeOrganisationPolicy,
+    additionalClaimants: mapAdditionalClaimants(fromApiCaseData.case_data?.additionalClaimants),
+    addClaimantMethod: fromApiCaseData.case_data?.addClaimantMethod,
+    additionalClaimantSpreadsheet: fromApiCaseData.case_data?.additionalClaimantSpreadsheet,
   };
   populateClaimantRepDetailsFromCase(userCase);
   return userCase;
@@ -396,6 +407,7 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
+        groupClaimsCheck: caseItem.groupClaimsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
         representativeDetailsCheck: caseItem.representativeDetailsCheck,
@@ -415,6 +427,10 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
+      leadClaimant: caseItem.leadClaimant,
+      additionalClaimants: setAdditionalClaimantsApiFormat(caseItem.additionalClaimants),
+      addClaimantMethod: caseItem.addClaimantMethod,
+      additionalClaimantSpreadsheet: caseItem.additionalClaimantSpreadsheet,
       representativeClaimantType: setClaimantRepApiFormat(caseItem),
     },
   };
@@ -624,6 +640,52 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
         respondent_ACAS_no: respondent.noAcasReason,
       },
       id: respondent.ccdId,
+    };
+  });
+};
+
+export const mapAdditionalClaimants = (additionalClaimant: AdditionalClaimantApiModel[]): AdditionalClaimant[] => {
+  return additionalClaimant?.map(claimant => {
+    return {
+      title: claimant.value?.title,
+      firstName: claimant.value?.firstName,
+      lastName: claimant.value?.lastName,
+      email: claimant.value?.email,
+      dob: parseDateFromString(claimant.value?.dob),
+      address: {
+        AddressLine1: claimant.value.address?.AddressLine1,
+        AddressLine2: claimant.value.address?.AddressLine2,
+        PostTown: claimant.value.address?.PostTown,
+        Country: claimant.value.address?.Country,
+        PostCode: claimant.value.address?.PostCode,
+      },
+    };
+  });
+};
+
+export const setAdditionalClaimantsApiFormat = (
+  additionalClaimant: AdditionalClaimant[]
+): AdditionalClaimantRequestBody[] => {
+  if (additionalClaimant === undefined) {
+    return;
+  }
+  return additionalClaimant.map(claimant => {
+    const address = claimant.address;
+    return {
+      value: {
+        title: claimant.title,
+        firstName: claimant.firstName,
+        lastName: claimant.lastName,
+        email: claimant.email,
+        dob: formatDate(claimant.dob),
+        address: {
+          AddressLine1: address?.AddressLine1,
+          AddressLine2: address?.AddressLine2,
+          PostTown: address?.PostTown,
+          Country: address?.Country,
+          PostCode: address?.PostCode,
+        },
+      },
     };
   });
 };

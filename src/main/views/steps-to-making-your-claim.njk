@@ -2,6 +2,7 @@
 {% from "govuk/components/task-list/macro.njk" import govukTaskList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -10,82 +11,89 @@
 
 {% block content %}
 
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">{{h1}}</h1>
+      <h1 class="govuk-heading-xl"> {{h1}} </h1>
+
+      <p class="govuk-body">{{claimingParagraph}}</p>
+
+      {{ govukDetails({
+        summaryText: claimingWithOthersSummary,
+        text: claimingWithOthersText
+      }) }}
 
       <h2 class="govuk-heading-l">{{applicationDetails}}</h2>
 
       {% for section in sections %}
 
-      <h3 class="govuk-heading-m">{{loop.index}}. {{ getContent(section.title) }}</h3>
+        <h3 class="govuk-heading-m">{{loop.index}}. {{ getContent(section.title) }}</h3>
 
-      {% set items = [] %}
-      {% for link in section.links %}
+        {% set items = [] %}
+        {% for link in section.links %}
 
-        {% set status = {} %}
-        {% if getContent(link.status) == "NOT STARTED" %}
-          {% set status = {
-            tag: {
-              text: notStarted,
-              classes: "govuk-tag--grey"
-            }
-          } %}
-        {% elseif getContent(link.status) == "COMPLETED" %}
-          {% set status = {
-            text: completed
-          } %}
-        {% elseif getContent(link.status) == "IN PROGRESS" %}
-          {% set status = {
-            tag: {
-              text: inProgress,
-              classes: "govuk-tag--blue"
-            }
-          } %}
-        {% elseif getContent(link.status) == "CANNOT START YET" %}
-          {% set status = {
-            text: cannotStartYet,
-            classes: "govuk-task-list__status--cannot-start-yet"
-          } %}
-        {% endif %}
+          {% set status = {} %}
+          {% if getContent(link.status) == "NOT STARTED" %}
+            {% set status = {
+              tag: {
+                text: notStarted,
+                classes: "govuk-tag--grey"
+              }
+            } %}
+          {% elseif getContent(link.status) == "COMPLETED" %}
+            {% set status = {
+              text: completed
+            } %}
+          {% elseif getContent(link.status) == "IN PROGRESS" %}
+            {% set status = {
+              tag: {
+                text: inProgress,
+                classes: "govuk-tag--blue"
+              }
+            } %}
+          {% elseif getContent(link.status) == "CANNOT START YET" %}
+            {% set status = {
+              text: cannotStartYet,
+              classes: "govuk-task-list__status--cannot-start-yet"
+            } %}
+          {% endif %}
 
-        {% if getContent(link.url) !="" %}
-          {% set _ = items.push({
-            title: {
-              text: getContent(link.linkTxt)
-            },
-            href: getContent(link.url),
-            status: status
-          }) %}
-        {% else %}
-          {% set _ = items.push({
-            title: {
-              text: getContent(link.linkTxt)
-            },
-            status: status
-          }) %}
-        {% endif %}
+          {% if getContent(link.url) !="" %}
+            {% set _ = items.push({
+              title: {
+                text: getContent(link.linkTxt)
+              },
+              href: getContent(link.url),
+              status: status
+            }) %}
+          {% else %}
+            {% set _ = items.push({
+              title: {
+                text: getContent(link.linkTxt)
+              },
+              status: status
+            }) %}
+          {% endif %}
+
+        {% endfor %}
+
+        {{ govukTaskList({
+          idPrefix: "task-list-" + loop.index,
+          items: items
+        }) }}
 
       {% endfor %}
 
-      {{ govukTaskList({
-        idPrefix: "task-list-" + loop.index,
-        items: items
-      }) }}
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        {{ govukButton({
+          text: saveForLater,
+          classes: "govuk-button--secondary",
+          href: PageUrls.CLAIM_SAVED
+        }) }}
 
-      {% endfor %}
+        <a href="{{ deleteDraftUrl }}" class="govuk-button govuk-button--warning">{{ delete }}</a>
+      </div>
 
     </div>
-  </div>
-
-  <div class="govuk-button-group">
-    {{ govukButton({
-      text: saveForLater,
-      classes: "govuk-button--secondary",
-      href: PageUrls.CLAIM_SAVED
-    }) }}
-
-    <a href="{{ deleteDraftUrl }}" class="govuk-button govuk-button--warning">{{ delete }}</a>
   </div>
 
 {% endblock %}

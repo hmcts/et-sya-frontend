@@ -7,6 +7,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   modulePathIgnorePatterns: ['<rootDir>/src/test/unit/mocks', '<rootDir>/src/test/unit/test-helpers'],
   testEnvironment: '<rootDir>/jest.environment.jsdom.js',
+  moduleNameMapper: {
+    '^uuid$': '<rootDir>/node_modules/uuid/dist/cjs/index.js',
+  },
   transform: {
     '^.+\\.(ts|tsx)$': '@swc/jest',
   },

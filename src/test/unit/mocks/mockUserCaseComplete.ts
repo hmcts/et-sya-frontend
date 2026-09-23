@@ -1,4 +1,5 @@
 import {
+  AddAdditionalClaimant,
   CaseType,
   CaseTypeId,
   EmailOrPost,
@@ -153,6 +154,7 @@ export default {
   isStillWorking: StillWorking.WORKING,
   pastEmployer: YesOrNo.YES,
   personalDetailsCheck: YesOrNo.YES,
+  groupClaimsCheck: YesOrNo.YES,
   reasonableAdjustments: YesOrNo.YES,
   reasonableAdjustmentsDetail: 'Adjustments detail test',
   noticeEnds: { year: '2022', month: '08', day: '11' },
@@ -333,4 +335,26 @@ export default {
   leadClaimant: YesOrNo.YES,
   caseStayed: YesOrNo.YES,
   claimantRepresentativeOrganisationPolicy: undefined,
+  addClaimantMethod: AddAdditionalClaimant.MANUAL,
+  additionalClaimantSpreadsheet: undefined,
+  additionalClaimants: [
+    {
+      title: 'Mr',
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+      email: 'test@test.com',
+      dob: {
+        day: '13',
+        month: '02',
+        year: '1996',
+      },
+      address: {
+        AddressLine1: 'Muffin Mans House',
+        AddressLine2: 'Drewry Lane',
+        County: 'West Minister',
+        Country: 'United Kingdom',
+        PostTown: 'London',
+      },
+    },
+  ],
 };
