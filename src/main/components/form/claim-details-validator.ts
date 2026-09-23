@@ -4,9 +4,9 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
   if (!userCase) {
     return false;
   }
-  const { address1, addressTown, addressPostcode, addressCountry } = userCase;
+  const { address1, addressTown, addressCountry } = userCase;
 
-  return !(!address1 || !addressTown || !addressPostcode || !addressCountry);
+  return !(!address1 || !addressTown || !addressCountry);
 };
 
 export const validateEmploymentAndRespondentDetails = (userCase: Record<string, any>): boolean => {
