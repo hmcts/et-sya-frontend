@@ -1,5 +1,6 @@
 import ClaimTypeDiscriminationController from '../../../main/controllers/ClaimTypeDiscriminationController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -8,6 +9,14 @@ describe('Claim Type Discrimination Controller', () => {
     'claim-type-discrimination': {},
     common: {},
   };
+
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it('should render the claim type discrimination page', () => {
     const controller = new ClaimTypeDiscriminationController();
@@ -18,10 +27,10 @@ describe('Claim Type Discrimination Controller', () => {
   });
 
   describe('Correct validation', () => {
-    it('should require input', () => {
+    it('should require input', async () => {
       const req = mockRequest({ body: {} });
       const res = mockResponse();
-      new ClaimTypeDiscriminationController().post(req, res);
+      await new ClaimTypeDiscriminationController().post(req, res);
 
       const expectedErrors = [{ propertyName: 'claimTypeDiscrimination', errorType: 'required' }];
 
@@ -29,7 +38,7 @@ describe('Claim Type Discrimination Controller', () => {
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
-    it('should assign userCase from the page form data', () => {
+    it('should assign userCase from the page form data', async () => {
       const req = mockRequest({
         body: {
           claimTypeDiscrimination: ['age', 'sex'],
@@ -37,9 +46,21 @@ describe('Claim Type Discrimination Controller', () => {
       });
       const res = mockResponse();
 
-      new ClaimTypeDiscriminationController().post(req, res);
+      await new ClaimTypeDiscriminationController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({ claimTypeDiscrimination: ['age', 'sex'] });
+    });
+
+    it('should skip date of last event when the ERA feature is disabled', async () => {
+      jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+      const res = mockResponse();
+
+      await new ClaimTypeDiscriminationController().post(
+        mockRequest({ body: { claimTypeDiscrimination: ['age'] } }),
+        res
+      );
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
     });
   });
 });

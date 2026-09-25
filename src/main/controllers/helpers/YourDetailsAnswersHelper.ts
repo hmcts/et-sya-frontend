@@ -174,6 +174,32 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
       )
     ),
     addSummaryRow(
+      translations.personalDetails.hearingPanelPreference,
+      userCase?.claimantHearingPanelPreference || translations.notProvided,
+      createChangeAction(
+        PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.hearingPanelPreference
+      )
+    )
+  );
+
+  if (userCase?.claimantHearingPanelPreferenceWhy) {
+    rows.push(
+      addSummaryRow(
+        translations.personalDetails.hearingPanelPreferenceWhy,
+        userCase.claimantHearingPanelPreferenceWhy,
+        createChangeAction(
+          PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.hearingPanelPreferenceWhy
+        )
+      )
+    );
+  }
+
+  rows.push(
+    addSummaryRow(
       translations.personalDetails.disability,
       getTranslationsReasonableAdjustments(userCase, translations),
       createChangeAction(
