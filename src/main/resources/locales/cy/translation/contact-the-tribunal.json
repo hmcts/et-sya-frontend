@@ -76,7 +76,8 @@
     "publicity": {
       "caption": "Cyfyngu ar gyhoeddusrwydd",
       "label": "Gwneud cais i gyfyngu ar gyhoeddusrwydd",
-      "body": "Gwneud cais i atal neu gyfyngu ar gyhoeddusrwydd yn eich achos chi. Gall y tribiwnlys gynnal gwrandawiadau yn breifat neu gadw manylion partïon a thystion penodol yn gyfrinachol os oes angen."
+      "body": "Gwneud cais i atal neu gyfyngu ar gyhoeddusrwydd yn eich achos chi. Gall y tribiwnlys gynnal gwrandawiadau yn breifat neu gadw manylion partïon a thystion penodol yn gyfrinachol os oes angen.",
+      "bodyRep": "Gwneud cais i atal neu gyfyngu ar gyhoeddusrwydd yn achos yr hawlydd. Gall y tribiwnlys gynnal gwrandawiadau yn breifat neu gadw manylion partïon a thystion penodol yn gyfrinachol os oes angen."
     },
     "strike": {
       "caption": "Dileu’r ymateb",

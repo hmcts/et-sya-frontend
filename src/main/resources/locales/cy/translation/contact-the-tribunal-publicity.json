@@ -2,6 +2,8 @@
   "title": "Cyfyngu ar gyhoeddusrwydd",
   "applicationType": "Cyfyngu ar gyhoeddusrwydd",
   "applicationTitle": "Gwneud cais i gyfyngu ar gyhoeddusrwydd",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -36,6 +38,42 @@
         "sut y dylai’r tribiwnlys atal neu gyfyngu ar gyhoeddusrwydd yn eich achos chi. Er enghraifft, dywedwch wrthym pa rannau neu agweddau o’r achos na ddylem eu cyhoeddi",
         "pam fod arnoch angen y cyfyngiadau hyn. Rhaid i’r tribiwnlys wneud y gorchymyn lleiaf cyfyngol posibl. Dywedwch wrthym pam na fyddai llai o gyfyngiadau’n ddigon",
         "a oes gan y cyfryngau unrhyw ddiddordeb yn eich achos. Dylech gynnwys enwau sefydliadau cyfryngau neu newyddiadurwyr sydd â diddordeb. Fe allai'r tribiwnlys ofyn am eu sylwadau cyn gwneud penderfyniad"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i atal neu gyfyngu ar gyhoeddusrwydd yn yr achos hwn."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae’n egwyddor bwysig bod cyfiawnder fel arfer yn cael ei ddarparu’n gyhoeddus. Fodd bynnag, mae gan y tribiwnlys y pŵer i atal neu gyfyngu ar ddatgelu i’r cyhoedd unrhyw agwedd ar yr achos hwn, os oes angen, er budd cyfiawnder neu i ddiogelu hawliau Confensiwn unrhyw unigolyn. Hawliau confensiwn yw’r hawliau a’r rhyddid sylfaenol fel y nodir yn Neddf Hawliau Dynol 1998."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae gan y tribiwnlys hefyd rai pwerau eraill i eistedd yn breifat neu i gyfyngu ar gyhoeddusrwydd yn unol ag adrannau 10A, 10B, 11 a 12 Deddf Tribiwnlysoedd Cyflogaeth 1996."
+    },
+    { "type": "paragraph", "text": "Caiff y tribiwnlys orchymyn:" },
+
+    {
+      "type": "list",
+      "items": [
+        "bod gwrandawiad a fyddai fel arall yn gyhoeddus yn cael ei gynnal, yn gyfan gwbl neu’n rhannol breifat",
+        "na ddylid datgelu hunaniaethau partïon penodedig, tystion neu unigolion eraill y cyfeirir atynt yn yr achos i’r cyhoedd, a'u bod yn ddienw neu fel arall",
+        "am fesurau sy’n atal tystion mewn gwrandawiad cyhoeddus rhag cael eu hadnabod gan aelodau'r cyhoedd",
+        "cyfyngu ar riportio'r achos yn y cyfryngau"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn y cais hwn:" },
+
+    {
+      "type": "list",
+      "items": [
+        "sut y dylai’r tribiwnlys atal neu gyfyngu ar gyhoeddusrwydd yn yr achos hwn. Er enghraifft, dywedwch wrthym pa rannau neu agweddau o’r achos na ddylem eu cyhoeddi",
+        "pam fod ar yr hawlydd angen y cyfyngiadau hyn. Rhaid i’r tribiwnlys wneud y gorchymyn lleiaf cyfyngol posibl. Dywedwch wrthym pam na fyddai llai o gyfyngiadau’n ddigon",
+        "a oes gan y cyfryngau unrhyw ddiddordeb yn yr achos. Dylech gynnwys enwau sefydliadau cyfryngau neu newyddiadurwyr sydd â diddordeb. Fe allai'r tribiwnlys ofyn am eu sylwadau cyn gwneud penderfyniad"
       ]
     }
   ]
