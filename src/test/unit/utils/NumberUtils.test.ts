@@ -90,6 +90,35 @@ describe('NumberUtils tests', () => {
       expect(NumberUtils.isEmpty(value)).toStrictEqual(result);
     });
   });
+  describe('getSafeCaseIdDigits tests', () => {
+    it.each([
+      { value: undefined, result: undefined },
+      { value: null, result: undefined },
+      { value: '', result: undefined },
+      { value: 'abc', result: undefined },
+      { value: '1e10', result: undefined },
+      { value: '0x12', result: undefined },
+      { value: 'Infinity', result: undefined },
+      { value: '12234', result: undefined },
+      { value: ' 12234 ', result: undefined },
+      { value: '0', result: undefined },
+      { value: 12234, result: undefined },
+      { value: 1786637776090539, result: '1786637776090539' },
+      { value: '1786637776090539', result: '1786637776090539' },
+      { value: ' 1786637776090539 ', result: '1786637776090539' },
+      { value: '1111222233334444', result: '1111222233334444' },
+      { value: '1111-2222-3333-4444', result: '1111222233334444' },
+      { value: ' 1234-5678-1234-5678 ', result: '1234567812345678' },
+      { value: '1111-2222-3333', result: undefined },
+      { value: '1111-2222-3333-4444-5555', result: undefined },
+      { value: '1111-2222-3333-444a', result: undefined },
+      { value: '123456789012345', result: undefined },
+      { value: '12345678901234567', result: undefined },
+      { value: '12345678901234567890', result: undefined },
+    ])('returns digit-only case id for %o', ({ value, result }) => {
+      expect(NumberUtils.getSafeCaseIdDigits(value as string | number)).toStrictEqual(result);
+    });
+  });
   describe('convertStringToNumber tests', () => {
     it.each([
       { value: undefined, result: undefined },
