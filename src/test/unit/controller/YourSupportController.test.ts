@@ -926,7 +926,7 @@ describe('Your Support Controller', () => {
         buttonText: confirmationTranslations.buttonText,
         link: PageUrls.PERSONAL_DETAILS_CHECK,
         saveForLater: confirmationTranslations.saveForLater,
-        saveForLaterLink: PageUrls.CLAIM_STEPS,
+        saveForLaterLink: PageUrls.CLAIM_SAVED,
       })
     );
   });

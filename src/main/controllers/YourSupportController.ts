@@ -195,7 +195,7 @@ export default class YourSupportController {
       TranslationKeys.YOUR_SUPPORT_CONFIRMATION,
       YOUR_SUPPORT_CONFIRMATION_TEMPLATE,
       link,
-      setUrlLanguage(req, PageUrls.CLAIM_STEPS)
+      setUrlLanguage(req, PageUrls.CLAIM_SAVED)
     );
   };
 
