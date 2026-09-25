@@ -11,7 +11,13 @@ export class PropertiesVolume {
       this.setSecret('secrets.et.app-insights-connection-string', 'appInsights.connectionString');
       this.setSecret('secrets.et.idam-secret', 'services.idam.clientSecret');
       this.setSecret('secrets.et.et-redis-access-key', 'session.redis.key');
+      this.setSecret('secrets.et.et-managed-redis-access-key', 'session.redis.secondaryKey');
+      // Cookie signing secret: the dedicated secret once it is mounted, otherwise the
+      // Redis access key it replaced. The old key stays on as previousSecret so
+      // cookies signed before the rotation still verify.
       this.setSecret('secrets.et.et-redis-access-key', 'session.secret');
+      this.setSecret('secrets.et.et-session-secret', 'session.secret');
+      this.setSecret('secrets.et.et-redis-access-key', 'session.previousSecret');
       this.setSecret('secrets.et.os-places-token', 'services.addressLookup.token');
       this.setSecret('secrets.et.pcq-token-key', 'services.pcq.token');
       this.setSecret('secrets.et.launch-darkly-sdk-key', 'services.launchDarkly.key');

@@ -17,9 +17,11 @@
   "session": {
     "maxAgeInMs": "3600000",
     "secret": "local",
+    "previousSecret": "",
     "redis": {
       "host": "",
-      "key": ""
+      "key": "",
+      "secondaryKey": ""
     }
   },
   "services": {
