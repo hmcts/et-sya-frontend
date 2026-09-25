@@ -9576,7 +9576,7 @@ __metadata:
     i18next-http-middleware: "npm:^3.3.0"
     jest: "npm:^29.6.2"
     jest-environment-jsdom: "npm:^29.5.0"
-    jest-pact: "npm:0.11.4"
+    jest-pact: "npm:0.14.0"
     jest_workaround: "npm:^0.79.19"
     jwt-decode: "npm:^3.1.2"
     lint-staged: "npm:^15.0.0"
@@ -12461,13 +12461,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-pact@npm:0.11.4":
-  version: 0.11.4
-  resolution: "jest-pact@npm:0.11.4"
+"jest-pact@npm:0.14.0":
+  version: 0.14.0
+  resolution: "jest-pact@npm:0.14.0"
   peerDependencies:
-    "@pact-foundation/pact": ^v10.0.0-beta.61 || ^10.0.2 || ^11.0.2 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
+    "@pact-foundation/pact": ^16.0.0 || ^17.0.0
     jest: ^24.0.0 || ^25.0.0 || ^26.0.0 || ^27.0.0 || ^28.0.0 || ^29.0.0 || ^30.0.0
-  checksum: 10/756a481b90d6e9f8754fcf5fca232edf3cfa2ae2e9217f411f5594a5ceffe99fd30178b9f97f0ee9f601f28c9bf8c980d4c908624e79989149a3b5e8998ef0d9
+  checksum: 10/61166c37f9cdd7951df85fd2c3c79b8512804db20e3f0a79ea7e1811bf6b38353c1168c6d2d8802f30b759b7fe3649a25da79056f4f133078d1d2c4b5ebb2c3b
   languageName: node
   linkType: hard
 
