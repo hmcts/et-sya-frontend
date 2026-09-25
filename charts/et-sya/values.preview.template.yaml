@@ -7,6 +7,7 @@ nodejs:
   environment:
     ET_SYA_API_HOST: http://et-cos-aat.service.core-compute-aat.internal
     HMCTS_ACCESS: 'true'
+    CUI_URL: 'https://cui-ra.{{ .Values.global.environment }}.platform.hmcts.net'
     REDIS_SECONDARY_HOST: 'et-managed-redis-aat.uksouth.redis.azure.net'
     REDIS_SECONDARY_PORT: '10000'
   keyVaults:

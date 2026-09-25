@@ -74,7 +74,7 @@ export default class ClaimDetailsController {
       userCase,
       hideContactUs: true,
       translations,
-      yourDetails: getYourDetails(userCase, translations),
+      yourDetails: await getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

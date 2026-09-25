@@ -1,8 +1,10 @@
 import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
-import { HearingPreference } from '../../main/definitions/case';
+import { CaseTypeId, HearingPreference } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
+import { CuiYourSupportFeature } from '../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../main/modules/featureFlag/CuiYourSupportFeature';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
@@ -63,5 +65,22 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
       });
+  });
+
+  test('should return the your support page when CUI your support is enabled for the case type', async () => {
+    const featureMock = jest
+      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+      .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
+    try {
+      await request(mockApp({ userCase: { caseTypeId: CaseTypeId.SCOTLAND } }))
+        .post(PageUrls.VIDEO_HEARINGS)
+        .send({ hearingPreferences: HearingPreference.VIDEO })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.YOUR_SUPPORT);
+        });
+    } finally {
+      featureMock.mockRestore();
+    }
   });
 });

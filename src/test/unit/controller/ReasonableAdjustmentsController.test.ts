@@ -1,8 +1,10 @@
 import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import * as FormHelpers from '../../../main/controllers/helpers/FormHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
+import { CaseTypeId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -21,24 +23,54 @@ describe('Reasonable Adjustments Controller', () => {
     jest.clearAllMocks();
   });
 
+  const t = {
+    'reasonable-adjustments': {},
+    common: {},
+  };
+
+  it('should render the Reasonable Adjustments page', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ t });
+
+    await controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
+  });
+
+  it('should redirect to your support when CUI your support is enabled for the case type', async () => {
+    const featureMock = jest
+      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+      .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
+    try {
+      const response = mockResponse();
+      const request = mockRequest({ userCase: { caseTypeId: CaseTypeId.SCOTLAND }, t });
+
+      await controller.get(request, response);
+
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
   describe('get()', () => {
-    it('should render the reasonable-adjustments template', () => {
+    it('should render the reasonable-adjustments template', async () => {
       const request = mockRequest({ t: { 'reasonable-adjustments': {}, common: {} } });
       const response = mockResponse();
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
     });
 
-    it('should use the standard translation key when claimant is not represented', () => {
+    it('should use the standard translation key when claimant is not represented', async () => {
       const request = mockRequest({
         t: { 'reasonable-adjustments': {}, common: {} },
         userCase: { claimantRepresentedQuestion: YesOrNo.NO },
       });
       const response = mockResponse();
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       expect(getPageContentSpy).toHaveBeenCalledWith(
         expect.anything(),
@@ -52,14 +84,14 @@ describe('Reasonable Adjustments Controller', () => {
       );
     });
 
-    it('should use the non-HMCTS translation key when claimant is represented', () => {
+    it('should use the non-HMCTS translation key when claimant is represented', async () => {
       const request = mockRequest({
         t: { 'reasonable-adjustments-non-hmcts': {}, common: {} },
         userCase: { claimantRepresentedQuestion: YesOrNo.YES },
       });
       const response = mockResponse();
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       expect(getPageContentSpy).toHaveBeenCalledWith(
         expect.anything(),
@@ -73,11 +105,11 @@ describe('Reasonable Adjustments Controller', () => {
       );
     });
 
-    it('should use the standard translation key when claimantRepresentedQuestion is not set', () => {
+    it('should use the standard translation key when claimantRepresentedQuestion is not set', async () => {
       const request = mockRequest({ t: { 'reasonable-adjustments': {}, common: {} } });
       const response = mockResponse();
 
-      controller.get(request, response);
+      await controller.get(request, response);
 
       expect(getPageContentSpy).toHaveBeenCalledWith(
         expect.anything(),

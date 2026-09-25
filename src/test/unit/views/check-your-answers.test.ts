@@ -4,7 +4,13 @@ import request from 'supertest';
 import { CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import { mockApp } from '../mocks/mockApp';
+
+const cuiYourSupportFeatureMock = jest
+  .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+  .mockReturnValue(new CuiYourSupportFeature([]));
 
 const PAGE_URL = '/check-your-answers';
 const expectedTitle = 'Check your answers';
@@ -88,6 +94,28 @@ describe('Check your answers confirmation page', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
+  });
+
+  it('should not display the legacy support question when CUI your support is enabled', async () => {
+    cuiYourSupportFeatureMock.mockReturnValue(new CuiYourSupportFeature([CaseTypeId.ENGLAND_WALES]));
+
+    try {
+      const response = await request(
+        mockApp({
+          userCase: {
+            caseTypeId: CaseTypeId.ENGLAND_WALES,
+            reasonableAdjustments: YesOrNo.YES,
+            reasonableAdjustmentsDetail: 'Old free text answer',
+          },
+        })
+      ).get(PAGE_URL);
+
+      expect(response.text).not.contain(
+        'Do you have a physical, mental or learning disability or health condition that means you need support during your case?'
+      );
+    } finally {
+      cuiYourSupportFeatureMock.mockReturnValue(new CuiYourSupportFeature([]));
+    }
   });
 
   it('should display 13 rows in Employment Details summary list', () => {

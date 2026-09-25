@@ -33,24 +33,22 @@
                   </h2>
                   <ul class="app-task-list__items">
                     {% for link in section.links %}
-                      {% if getContent(link.isVisible) %}
-                        <li class="app-task-list__item">
-                          <span class="app-task-list__task-name">
-                            {% if link.shouldShow %}
-                              <a href="{{ getContent(link.url) }}" class="govuk-link">
-                                {{ getContent(link.linkTxt) }}
-                              </a>
-                            {% else %}
+                      <li class="app-task-list__item">
+                        <span class="app-task-list__task-name">
+                          {% if link.shouldShow %}
+                            <a href="{{ getContent(link.url) }}" class="govuk-link">
                               {{ getContent(link.linkTxt) }}
-                            {% endif %}
-                          </span>
+                            </a>
+                          {% else %}
+                            {{ getContent(link.linkTxt) }}
+                          {% endif %}
+                        </span>
 
-                          {{ govukTag({
-                        text: getContent(link.status),
-                        classes: "no-text-transform app-task-list__tag govuk-tag" + getContent(link.statusColor)
-                      }) }}
-                        </li>
-                      {% endif %}
+                        {{ govukTag({
+                          text: getContent(link.status),
+                          classes: "no-text-transform app-task-list__tag govuk-tag" + getContent(link.statusColor)
+                        }) }}
+                      </li>
                     {% endfor %}
                   </ul>
                 </li>
