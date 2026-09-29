@@ -16,7 +16,6 @@ describe('claimDetailsValidator', () => {
         typeOfClaim: ['Type1'],
         address1: '123 Street',
         addressTown: 'Town',
-        addressPostcode: 'AB12 3CD',
       };
       expect(validatePersonalDetails(userCase)).toBe(false);
     });
@@ -26,7 +25,6 @@ describe('claimDetailsValidator', () => {
         typeOfClaim: ['Type1'],
         address1: '123 Street',
         addressTown: 'Town',
-        addressPostcode: 'AB12 3CD',
         addressCountry: 'Country',
       };
       expect(validatePersonalDetails(userCase)).toBe(true);
