@@ -4,11 +4,12 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent, getTypeOfClaimFormValues } from './helpers/FormHelpers';
@@ -59,7 +60,8 @@ export default class TypeOfClaimController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl = PageUrls.DATE_OF_LAST_EVENT.toString();
+    const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+    let redirectUrl = eraOctober2026Enabled ? PageUrls.DATE_OF_LAST_EVENT.toString() : PageUrls.DESCRIBE_WHAT_HAPPENED;
     const formData = this.form.getParsedBody(req.body);
     const typeOfClaim = formData.typeOfClaim;
     if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
