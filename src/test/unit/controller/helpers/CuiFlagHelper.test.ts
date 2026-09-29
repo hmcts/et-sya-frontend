@@ -95,7 +95,21 @@ describe('CuiFlagHelper', () => {
   });
 
   it('should merge replacement flags while preserving existing metadata and applying fallbacks', () => {
-    const mergedDetails = [{ id: 'merged-flag' }];
+    const mergedDetails = [
+      {
+        id: 'merged-flag',
+        value: {
+          flagCode: 'OT0001',
+          path: [
+            { id: 'party-path', name: 'Party' },
+            { name: 'Reasonable adjustment' },
+            { name: 'I need help communicating and understanding' },
+            { name: 'Hearing Enhancement System (Hearing' },
+            { name: 'Induction Loop, Infrared Receiver)' },
+          ],
+        },
+      },
+    ];
     mockMergeCUIFlagItems.mockReturnValue(mergedDetails);
     const existingFlags = {
       groupId: 'group-id',
@@ -129,7 +143,21 @@ describe('CuiFlagHelper', () => {
       groupId: 'group-id',
       partyName: 'Jane Doe',
       roleOnCase: 'Existing role',
-      details: mergedDetails,
+      details: [
+        {
+          id: 'merged-flag',
+          value: {
+            flagCode: 'OT0001',
+            path: [
+              { id: 'party-path', value: 'Party' },
+              { value: 'Reasonable adjustment' },
+              { value: 'I need help communicating and understanding' },
+              { value: 'Hearing Enhancement System (Hearing' },
+              { value: 'Induction Loop, Infrared Receiver)' },
+            ],
+          },
+        },
+      ],
     });
   });
 });

@@ -49,8 +49,46 @@ export const mergeClaimantExternalFlags = (
     ...replacementFlags,
     partyName: replacementFlags.partyName || partyName,
     roleOnCase: replacementFlags.roleOnCase || existingFlags?.roleOnCase || roleOnCase,
-    details,
+    details: getCcdFlagDetails(details),
   } as unknown as CaseFlags;
+};
+
+const getCcdFlagDetails = (details: CUIFlagItem[]): CaseFlags['details'] => {
+  return details.map(flagItem => {
+    const flagValue = flagItem.value as unknown as AnyRecord;
+
+    return {
+      ...flagItem,
+      value: {
+        ...flagValue,
+        path: getCcdFlagPath(flagValue.path),
+      },
+    };
+  }) as unknown as CaseFlags['details'];
+};
+
+const getCcdFlagPath = (path: unknown): { id?: string; value: string }[] => {
+  if (!Array.isArray(path)) {
+    return [];
+  }
+
+  return path
+    .map(pathItem => {
+      const pathItemRecord = pathItem as AnyRecord;
+      const value =
+        pathItemRecord?.name ??
+        (typeof pathItemRecord?.value === 'string' ? pathItemRecord.value : pathItemRecord?.value?.name);
+
+      if (typeof value !== 'string') {
+        return undefined;
+      }
+
+      return {
+        ...(pathItemRecord.id ? { id: pathItemRecord.id } : {}),
+        value,
+      };
+    })
+    .filter((pathItem): pathItem is { id?: string; value: string } => !!pathItem);
 };
 
 const getExistingFlagDetails = (details: CaseFlags['details'] = []): CUIFlagItem[] => {

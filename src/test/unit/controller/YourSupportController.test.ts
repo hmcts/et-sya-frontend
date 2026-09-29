@@ -42,11 +42,25 @@ const submittedConfirmationTranslations = {
   p: 'The tribunal will review your support request.',
 };
 
+const getCuiFlagPath = () => [{ id: 'party-path-id', name: 'Party' }];
+const getCcdFlagPath = () => [{ id: 'party-path-id', value: 'Party' }];
+
 const getSupportFlag = () => ({
   id: 'support-flag-id',
   value: {
     name: 'Support',
     flagCode: 'RA0001',
+    path: getCuiFlagPath(),
+    status: 'Active',
+  },
+});
+
+const getCcdSupportFlag = () => ({
+  id: 'support-flag-id',
+  value: {
+    name: 'Support',
+    flagCode: 'RA0001',
+    path: getCcdFlagPath(),
     status: 'Active',
   },
 });
@@ -417,7 +431,7 @@ describe('Your Support Controller', () => {
   });
 
   it('should redirect to the confirmation page after a draft CUI journey is submitted', async () => {
-    const claimantExternalFlags: CaseFlags = {
+    const claimantExternalFlags = {
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
       details: [getSupportFlag()],
@@ -447,12 +461,15 @@ describe('Your Support Controller', () => {
 
     expect(getJourneyData).toHaveBeenCalledWith('journey-id', { serviceToken: 's2s-token' });
     expect(handleUpdateDraftCaseMock).toHaveBeenCalledWith(req, expect.anything());
-    expect(req.session.userCase.claimantExternalFlags).toEqual(claimantExternalFlags);
+    expect(req.session.userCase.claimantExternalFlags).toEqual({
+      ...claimantExternalFlags,
+      details: [getCcdSupportFlag()],
+    });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
   });
 
   it('should update submitted case flags after a submitted CUI journey is submitted', async () => {
-    const claimantExternalFlags: CaseFlags = {
+    const claimantExternalFlags = {
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
       details: [getSupportFlag()],
@@ -482,7 +499,10 @@ describe('Your Support Controller', () => {
 
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).toHaveBeenCalledWith(req, expect.anything());
-    expect(req.session.userCase.claimantExternalFlags).toEqual(claimantExternalFlags);
+    expect(req.session.userCase.claimantExternalFlags).toEqual({
+      ...claimantExternalFlags,
+      details: [getCcdSupportFlag()],
+    });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
   });
 
@@ -548,6 +568,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Support filling in forms',
         flagCode: 'RA0018',
+        path: getCcdFlagPath(),
         status: 'Active',
       },
     };
@@ -555,6 +576,7 @@ describe('Your Support Controller', () => {
       ...existingFlag,
       value: {
         ...existingFlag.value,
+        path: getCuiFlagPath(),
         status: 'Inactive',
         flagUpdateComment: 'Updated by CUI',
       },
@@ -597,7 +619,15 @@ describe('Your Support Controller', () => {
     await controller.callback(req, res);
 
     expect(handleUpdateSubmittedCaseFlagsMock).toHaveBeenCalledWith(req, expect.anything());
-    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([modifiedExistingFlag]);
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([
+      {
+        ...modifiedExistingFlag,
+        value: {
+          ...modifiedExistingFlag.value,
+          path: getCcdFlagPath(),
+        },
+      },
+    ]);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
   });
 
@@ -607,6 +637,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Support filling in forms',
         flagCode: 'RA0018',
+        path: getCcdFlagPath(),
         status: 'Active',
       },
     };
@@ -614,6 +645,7 @@ describe('Your Support Controller', () => {
       ...existingFlag,
       value: {
         ...existingFlag.value,
+        path: getCuiFlagPath(),
         status: 'Inactive',
         flagUpdateComment: 'Updated by CUI',
       },
@@ -622,6 +654,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Screen reader support',
         flagCode: 'RA0042',
+        path: getCuiFlagPath(),
         status: 'Active',
       },
     };
@@ -664,7 +697,22 @@ describe('Your Support Controller', () => {
     await controller.callback(req, res);
 
     expect(handleUpdateSubmittedCaseFlagsMock).toHaveBeenCalledWith(req, expect.anything());
-    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([modifiedExistingFlag, newFlag]);
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([
+      {
+        ...modifiedExistingFlag,
+        value: {
+          ...modifiedExistingFlag.value,
+          path: getCcdFlagPath(),
+        },
+      },
+      {
+        ...newFlag,
+        value: {
+          ...newFlag.value,
+          path: getCcdFlagPath(),
+        },
+      },
+    ]);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
   });
 
@@ -674,6 +722,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Support filling in forms',
         flagCode: 'RA0018',
+        path: getCcdFlagPath(),
         status: 'Active',
       },
     };
@@ -681,6 +730,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Support filling in forms',
         flagCode: 'RA0018',
+        path: getCuiFlagPath(),
         status: 'Active',
       },
     };
@@ -715,7 +765,16 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
-    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([existingFlag, replacementFlag]);
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([
+      existingFlag,
+      {
+        ...replacementFlag,
+        value: {
+          ...replacementFlag.value,
+          path: getCcdFlagPath(),
+        },
+      },
+    ]);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
   });
 
@@ -725,6 +784,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Support filling in forms',
         flagCode: 'RA0018',
+        path: getCcdFlagPath(),
         status: 'Active',
       },
     };
@@ -733,6 +793,7 @@ describe('Your Support Controller', () => {
       value: {
         name: 'Support filling in forms',
         flagCode: 'RA0018',
+        path: getCuiFlagPath(),
         status: 'Inactive',
         flagUpdateComment: 'Updated in CUI',
       },
@@ -768,7 +829,15 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
-    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([replacementFlag]);
+    expect(req.session.userCase.claimantExternalFlags?.details).toEqual([
+      {
+        ...replacementFlag,
+        value: {
+          ...replacementFlag.value,
+          path: getCcdFlagPath(),
+        },
+      },
+    ]);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
   });
 
@@ -1010,7 +1079,7 @@ describe('Your Support Controller', () => {
     expect(req.session.userCase.claimantExternalFlags).toEqual({
       partyName: 'Jane Doe',
       roleOnCase: 'Claimant',
-      details: [getSupportFlag()],
+      details: [getCcdSupportFlag()],
     });
   });
 
