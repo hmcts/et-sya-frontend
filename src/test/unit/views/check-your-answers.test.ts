@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 import request from 'supertest';
+jest.mock('../../../main/modules/featureFlag/launchDarkly', () => ({
+  getFlagValue: jest.fn().mockResolvedValue(false),
+}));
 
 import { CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/check-your-answers';
@@ -19,30 +23,31 @@ let htmlRes: Document;
 
 describe('Check your answers confirmation page', () => {
   beforeAll(async () => {
-    await request(
-      mockApp({
-        userCase: {
-          caseTypeId: CaseTypeId.ENGLAND_WALES,
-          typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
-          claimantWorkAddressQuestion: YesOrNo.NO,
-          pastEmployer: YesOrNo.YES,
-          noticePeriod: YesOrNo.YES,
-          isStillWorking: StillWorking.WORKING,
-          respondents: [
-            {
-              respondentNumber: 1,
-              respondentName: 'John Does',
-              respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
-              acasCert: YesOrNo.NO,
-              acasCertNum: '12345',
-              noAcasReason: NoAcasNumberReason.ANOTHER,
-            },
-          ],
-          claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
-          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
-        },
-      })
-    )
+    const app = mockApp({
+      userCase: {
+        caseTypeId: CaseTypeId.ENGLAND_WALES,
+        typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
+        claimantWorkAddressQuestion: YesOrNo.NO,
+        pastEmployer: YesOrNo.YES,
+        noticePeriod: YesOrNo.YES,
+        isStillWorking: StillWorking.WORKING,
+        respondents: [
+          {
+            respondentNumber: 1,
+            respondentName: 'John Does',
+            respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+            acasCert: YesOrNo.NO,
+            acasCertNum: '12345',
+            noAcasReason: NoAcasNumberReason.ANOTHER,
+          },
+        ],
+        claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+        tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
+      },
+    });
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+
+    await request(app)
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -84,10 +89,10 @@ describe('Check your answers confirmation page', () => {
     expect(typeOfClaimList.length).equals(1, 'Incorrect number of rows found');
   });
 
-  it('should display 11 rows in Your Details summary list', () => {
+  it('should display 10 rows in Your Details summary list when the ERA feature is disabled', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(11, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
   });
 
   it('should display 13 rows in Employment Details summary list', () => {
@@ -127,8 +132,7 @@ describe('Check your answers confirmation page', () => {
     const contactLanguageLink = yourDetailsList[6].getAttribute('href');
     const contactHearingLink = yourDetailsList[7].getAttribute('href');
     const hearingsLink = yourDetailsList[8].getAttribute('href');
-    const panelPreferenceLink = yourDetailsList[9].getAttribute('href');
-    const disabilityLink = yourDetailsList[10].getAttribute('href');
+    const disabilityLink = yourDetailsList[9].getAttribute('href');
 
     expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
@@ -148,10 +152,6 @@ describe('Check your answers confirmation page', () => {
       'Incorrect href found'
     );
     expect(hearingsLink).equals(PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
-    expect(panelPreferenceLink).equals(
-      PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
-      'Incorrect href found'
-    );
     expect(disabilityLink).equals(
       PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
       'Incorrect href found'

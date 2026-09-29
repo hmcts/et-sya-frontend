@@ -72,7 +72,11 @@ const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations
   }
 };
 
-export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+export const getYourDetails = (
+  userCase: CaseWithId,
+  translations: AnyRecord,
+  eraOctober2026Enabled = false
+): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
 
   rows.push(
@@ -172,30 +176,35 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         translations.change,
         translations.personalDetails.takePartInHearing
       )
-    ),
-    addSummaryRow(
-      translations.personalDetails.hearingPanelPreference,
-      userCase?.claimantHearingPanelPreference || translations.notProvided,
-      createChangeAction(
-        PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
-        translations.change,
-        translations.personalDetails.hearingPanelPreference
-      )
     )
   );
 
-  if (userCase?.claimantHearingPanelPreferenceWhy) {
+  if (eraOctober2026Enabled) {
     rows.push(
       addSummaryRow(
-        translations.personalDetails.hearingPanelPreferenceWhy,
-        userCase.claimantHearingPanelPreferenceWhy,
+        translations.personalDetails.hearingPanelPreference,
+        userCase?.claimantHearingPanelPreference || translations.notProvided,
         createChangeAction(
           PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
           translations.change,
-          translations.personalDetails.hearingPanelPreferenceWhy
+          translations.personalDetails.hearingPanelPreference
         )
       )
     );
+
+    if (userCase?.claimantHearingPanelPreferenceWhy) {
+      rows.push(
+        addSummaryRow(
+          translations.personalDetails.hearingPanelPreferenceWhy,
+          userCase.claimantHearingPanelPreferenceWhy,
+          createChangeAction(
+            PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.personalDetails.hearingPanelPreferenceWhy
+          )
+        )
+      );
+    }
   }
 
   rows.push(
