@@ -195,7 +195,7 @@
     "underscore": "^1.13.8",
     "yauzl": "3.2.1",
     "picomatch": "^4.0.4",
-    "ip-address": "10.3.1",
+    "ip-address": "10.5.1",
     "undici": "7.29.1",
     "body-parser": "^1.20.6",
     "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.2",
