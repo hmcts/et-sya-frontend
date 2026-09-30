@@ -23,7 +23,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ hearingPreferences: HearingPreference.VIDEO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.HEARING_PANEL_PREFERENCE);
       });
   });
 
@@ -33,7 +33,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ hearingPreferences: HearingPreference.PHONE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.HEARING_PANEL_PREFERENCE);
       });
   });
 
@@ -43,7 +43,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ hearingPreferences: HearingPreference.NEITHER, hearingAssistance: 'test' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.HEARING_PANEL_PREFERENCE);
       });
   });
 
@@ -63,7 +63,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ hearingPreferences: undefined })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.HEARING_PANEL_PREFERENCE);
       });
   });
 

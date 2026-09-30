@@ -5,10 +5,11 @@ import { isContent2500CharsOrLess } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { HearingPreference } from '../definitions/case';
-import { TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCuiYourSupportFeature } from '../modules/featureFlag/CuiYourSupportFeature';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
@@ -72,13 +73,10 @@ export default class VideoHearingsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(
-      req,
-      res,
-      this.form,
-      logger,
-      await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId)
-    );
+    const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+    const redirectUrl = eraOctober2026Enabled ? PageUrls.HEARING_PANEL_PREFERENCE : await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId);
+
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

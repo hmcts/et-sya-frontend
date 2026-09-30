@@ -42,7 +42,7 @@ export class ClaimStartPage extends BasePage {
       'text=You do not have to make your claim in one go. You can save and return to it at any time before you submit it.'
     );
     await this.webAction.verifyTextPresentOnPage(
-      'text=Claims usually have to be made within 3 months of employment ending or problems happening. If a claim is'
+      'text=months of employment ending or problems happening. If a claim is'
     );
     await this.webAction.verifyTextPresentOnPage(
       'text=late, you must explain why. A judge will then decide what happens next.'

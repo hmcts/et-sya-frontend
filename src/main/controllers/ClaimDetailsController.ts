@@ -2,11 +2,12 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
@@ -27,6 +28,7 @@ export default class ClaimDetailsController {
       logger.error('A userCase was not found');
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
+    const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
     userCase.selectedGenericTseApplication = undefined;
     userCase.allEt1DocumentDetails = await getET1Documents(userCase, req.session.user?.accessToken);
 
@@ -74,7 +76,7 @@ export default class ClaimDetailsController {
       userCase,
       hideContactUs: true,
       translations,
-      yourDetails: await getYourDetails(userCase, translations),
+      yourDetails: await getYourDetails(userCase, translations, eraOctober2026Enabled),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

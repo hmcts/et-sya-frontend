@@ -4,11 +4,12 @@ import { validateClaimCheckDetails } from '../components/form/claim-details-vali
 import { Form } from '../components/form/form';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -42,7 +43,8 @@ export default class ClaimDetailsCheckController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.body?.claimDetailsCheck === 'Yes') {
       const userCase = req.session?.userCase;
-      const isValid = validateClaimCheckDetails(userCase);
+      const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+      const isValid = validateClaimCheckDetails(userCase, eraOctober2026Enabled);
 
       req.session.errors = [];
       if (!isValid) {

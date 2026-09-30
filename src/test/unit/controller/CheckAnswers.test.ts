@@ -1,3 +1,7 @@
+jest.mock('../../../main/modules/featureFlag/launchDarkly', () => ({
+  getFlagValue: jest.fn().mockResolvedValue(false),
+}));
+
 import CheckYourAnswersController from '../../../main/controllers/CheckYourAnswersController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
@@ -36,24 +40,24 @@ describe('Check Your answers Controller', () => {
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
   });
 
-  it('should redirect claimant applications page when there is no session', () => {
+  it('should redirect claimant applications page when there is no session', async () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequestEmpty({});
     request.session = null;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
   });
 
-  it('should redirect claimant applications page when there is no user case', () => {
+  it('should redirect claimant applications page when there is no user case', async () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequestEmpty({});
     request.session.userCase = null;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
   });

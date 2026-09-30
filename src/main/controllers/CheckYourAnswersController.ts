@@ -2,8 +2,9 @@ import { Response } from 'express';
 
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
@@ -19,6 +20,7 @@ export default class CheckYourAnswersController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
+    const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
     if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim?.length === 0) {
       if (req.session.errors === undefined) {
         req.session.errors = [];
@@ -47,7 +49,7 @@ export default class CheckYourAnswersController {
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
       translations,
-      yourDetails: await getYourDetails(userCase, translations),
+      yourDetails: await getYourDetails(userCase, translations, eraOctober2026Enabled),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

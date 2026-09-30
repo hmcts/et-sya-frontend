@@ -75,7 +75,7 @@ const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations
   }
 };
 
-export const getYourDetails = async (userCase: CaseWithId, translations: AnyRecord): Promise<SummaryListRow[]> => {
+export const getYourDetails = async (userCase: CaseWithId, translations: AnyRecord, eraOctober2026Enabled = false): Promise<SummaryListRow[]> => {
   const rows: SummaryListRow[] = [];
   const cuiYourSupportFeature = getCuiYourSupportFeature();
   const isCuiYourSupportEnabled = await cuiYourSupportFeature.isEnabled(userCase?.caseTypeId);
@@ -176,6 +176,46 @@ export const getYourDetails = async (userCase: CaseWithId, translations: AnyReco
         PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE,
         translations.change,
         translations.personalDetails.takePartInHearing
+      )
+    )
+  );
+
+  if (eraOctober2026Enabled) {
+    rows.push(
+      addSummaryRow(
+        translations.personalDetails.hearingPanelPreference,
+        userCase?.claimantHearingPanelPreference || translations.notProvided,
+        createChangeAction(
+          PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.hearingPanelPreference
+        )
+      )
+    );
+
+    if (userCase?.claimantHearingPanelPreferenceWhy) {
+      rows.push(
+        addSummaryRow(
+          translations.personalDetails.hearingPanelPreferenceWhy,
+          userCase.claimantHearingPanelPreferenceWhy,
+          createChangeAction(
+            PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.personalDetails.hearingPanelPreferenceWhy
+          )
+        )
+      );
+    }
+  }
+
+  rows.push(
+    addSummaryRow(
+      translations.personalDetails.disability,
+      getTranslationsReasonableAdjustments(userCase, translations),
+      createChangeAction(
+        PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.disability
       )
     )
   );
