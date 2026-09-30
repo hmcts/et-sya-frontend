@@ -198,7 +198,6 @@
     "ip-address": "10.5.1",
     "undici": "7.29.1",
     "body-parser": "^1.20.6",
-    "js-yaml": "5.4.1",
     "moment": "2.31.0",
     "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.0": "npm:js-yaml@4.3.2",
