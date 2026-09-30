@@ -75,7 +75,11 @@ const getTranslationsReasonableAdjustments = (userCase: CaseWithId, translations
   }
 };
 
-export const getYourDetails = async (userCase: CaseWithId, translations: AnyRecord, eraOctober2026Enabled = false): Promise<SummaryListRow[]> => {
+export const getYourDetails = async (
+  userCase: CaseWithId,
+  translations: AnyRecord,
+  eraOctober2026Enabled = false
+): Promise<SummaryListRow[]> => {
   const rows: SummaryListRow[] = [];
   const cuiYourSupportFeature = getCuiYourSupportFeature();
   const isCuiYourSupportEnabled = await cuiYourSupportFeature.isEnabled(userCase?.caseTypeId);

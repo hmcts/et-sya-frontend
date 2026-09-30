@@ -9,8 +9,8 @@ import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constan
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
-import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCuiYourSupportFeature } from '../modules/featureFlag/CuiYourSupportFeature';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -74,7 +74,9 @@ export default class VideoHearingsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
-    const redirectUrl = eraOctober2026Enabled ? PageUrls.HEARING_PANEL_PREFERENCE : await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId);
+    const redirectUrl = eraOctober2026Enabled
+      ? PageUrls.HEARING_PANEL_PREFERENCE
+      : await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId);
 
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
