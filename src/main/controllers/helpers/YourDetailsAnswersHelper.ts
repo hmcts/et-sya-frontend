@@ -212,18 +212,6 @@ export const getYourDetails = async (
     }
   }
 
-  rows.push(
-    addSummaryRow(
-      translations.personalDetails.disability,
-      getTranslationsReasonableAdjustments(userCase, translations),
-      createChangeAction(
-        PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
-        translations.change,
-        translations.personalDetails.disability
-      )
-    )
-  );
-
   if (!isCuiYourSupportEnabled) {
     rows.push(
       addSummaryRow(
