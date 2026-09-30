@@ -1,0 +1,31 @@
+{
+  "title": "Dewis o ran barnwr neu banel",
+  "h1": "Dewis o ran barnwr neu banel",
+  "legend": "Sut y byddai'n well gennych i'ch achos gael ei wrando? (Dewisol)",
+  "p1": "Gall eich achos gael ei wrando gan:",
+  "hearingPanelBullet1": "Barnwr; neu",
+  "hearingPanelBullet2": "Barnwr gyda dau aelod nad ydynt yn aelodau cyfreithiol, a elwir yn 'banel'.",
+  "panelGuidanceTitle": "Beth yw panel?",
+  "panelGuidanceP1": "Aelodau nad ydynt yn gyfreithiol yw pobl leyg a benodir oherwydd eu profiad penodol yn y gweithle fel gweithwyr neu reolwyr. Bydd panel yn cynnwys barnwr, aelod â phrofiad o fod yn weithiwr neu'n aelod o undeb, ac aelod â phrofiad o reoli. Mae gan bob un lais cyfartal wrth wneud y penderfyniad.",
+  "panelGuidanceP2": "Barnwr fydd yn penderfynu a yw eich achos yn cael ei wrando gan farnwr neu gan banel. Wrth wneud y penderfyniad hwn, bydd y barnwr yn ystyried a yw'r achos yn cynnwys y math o broblem gyfreithiol neu ffeithiol lle gall profiad yr aelodau nad ydynt yn gyfreithiol helpu'r tribiwnlys i ddod i'w benderfyniad.",
+  "presidentialGuidanceTitle": "Mae Canllawiau'r Llywydd yn egluro'r mathau o achosion lle gall y profiad hwn helpu",
+  "presidentialGuidanceEnglandWalesText": "Cyfarwyddyd Ymarfer a Chanllawiau ar gyfer Tribiwnlysoedd Cyflogaeth (Cymru a Lloegr) (yn agor mewn tab newydd)",
+  "presidentialGuidanceEnglandWalesUrl": "https://www.judiciary.uk/guidance-and-resources/employment-rules-and-legislation-practice-directions/",
+  "presidentialGuidanceScotlandText": "Cyfarwyddyd Ymarfer a Chanllawiau ar gyfer Tribiwnlys Cyflogaeth (Yr Alban) (yn agor mewn tab newydd)",
+  "presidentialGuidanceScotlandUrl": "https://www.judiciary.uk/guidance-and-resources/directions-for-employment-tribunals-scotland/",
+  "p2": "Mae gennych gyfle i ddweud a hoffech i'ch achos gael ei wrando gan farnwr neu banel. Yna, bydd y barnwr yn ystyried pa un ydych chi'n ffafrio.",
+  "p3": "Os byddwch yn nodi eich dewis, gofynnir i chi roi rhesymau.",
+  "radioNoPreference": "Nid wyf yn ffafrio un dros y llall",
+  "radioJudge": "Byddai'n well gennyf petai fy achos yn cael ei wrando gan farnwr",
+  "radioPanel": "Byddai'n well gennyf petai fy achos yn cael ei wrando gan banel sy'n cynnwys aelodau nad ydynt yn aelodau cyfreithiol",
+  "reasonLabel": "Rhowch reswm ",
+  "errors": {
+    "claimantHearingPanelPreference": {
+      "required": "Dewiswch sut y byddai'n well gennych i'ch achos gael ei wrando"
+    },
+    "claimantHearingPanelPreferenceWhy": {
+      "required": "Eglurwch pam y byddai'n well gennych i'ch achos gael ei wrando gan farnwr neu banel",
+      "tooLong": "Rhaid i'r esboniad fod yn 500 nod neu lai"
+    }
+  }
+}

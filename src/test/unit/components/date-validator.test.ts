@@ -8,6 +8,7 @@ import {
   isDateInNextTenYears,
   isDateInPast,
   isDateInputInvalid,
+  isDateNotInFuture,
   isDateNotInPast,
   isDateNotPartial,
   isFirstDateBeforeSecond,
@@ -268,6 +269,31 @@ describe('isDateInPast()', () => {
     },
   ])('Should check if date entered is past date when %o', ({ date, expected }) => {
     expect(isDateInPast(date)).toStrictEqual(expected);
+  });
+});
+
+describe('isDateNotInFuture()', () => {
+  const currDate = convertDateToCaseDate(new Date());
+  it.each([
+    { date: { day: '', month: '', year: '' }, undefined },
+    { date: { ...currDate, day: `${+currDate.day - 1}` }, undefined },
+    { date: { ...currDate, month: `${+currDate.month - 1}` }, undefined },
+    { date: { ...currDate, year: `${+currDate.year - 1}` }, undefined },
+    { date: currDate, undefined },
+    {
+      date: { ...currDate, day: `${+currDate.day + 1}` },
+      expected: { error: 'invalidDateInFuture', fieldName: 'day' },
+    },
+    {
+      date: { ...currDate, month: `${+currDate.month + 1}` },
+      expected: { error: 'invalidDateInFuture', fieldName: 'day' },
+    },
+    {
+      date: { ...currDate, year: `${+currDate.year + 1}` },
+      expected: { error: 'invalidDateInFuture', fieldName: 'day' },
+    },
+  ])('Should allow today and past dates but exclude future dates when %o', ({ date, expected }) => {
+    expect(isDateNotInFuture(date)).toStrictEqual(expected);
   });
 });
 
