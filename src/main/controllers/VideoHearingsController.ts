@@ -74,9 +74,12 @@ export default class VideoHearingsController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
-    const redirectUrl = eraOctober2026Enabled
-      ? PageUrls.HEARING_PANEL_PREFERENCE
-      : await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId);
+    const supportPageUrl = await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId);
+    let redirectUrl = eraOctober2026Enabled ? PageUrls.HEARING_PANEL_PREFERENCE : PageUrls.REASONABLE_ADJUSTMENTS;
+
+    if (supportPageUrl === PageUrls.YOUR_SUPPORT) {
+      redirectUrl = PageUrls.YOUR_SUPPORT;
+    }
 
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
