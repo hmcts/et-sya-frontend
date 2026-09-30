@@ -244,5 +244,21 @@ describe('claimDetailsValidator', () => {
       };
       expect(validateClaimCheckDetails(userCase)).toBe(true);
     });
+
+    it('should return false when ERA is enabled and date of last event is missing', () => {
+      const userCase = { typeOfClaim: ['Type1'], claimSummaryText: 'Summary' };
+
+      expect(validateClaimCheckDetails(userCase, true)).toBe(false);
+    });
+
+    it('should return true when ERA is enabled and date of last event is complete', () => {
+      const userCase = {
+        typeOfClaim: ['Type1'],
+        claimSummaryText: 'Summary',
+        dateOfLastEvent: { day: '1', month: '10', year: '2026' },
+      };
+
+      expect(validateClaimCheckDetails(userCase, true)).toBe(true);
+    });
   });
 });
