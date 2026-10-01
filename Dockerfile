@@ -13,5 +13,5 @@ RUN PUPPETEER_SKIP_DOWNLOAD=true yarn install && yarn build:prod
 # ---- Runtime image ----
 FROM build as runtime
 RUN rm -rf webpack/ webpack.config.js
-RUN yarn build:ts
+RUN yarn tsc -P . --outDir ./src
 EXPOSE 3002
