@@ -8,10 +8,17 @@
 !yarn.lock
 
 !tsconfig.json
+!webpack
 !webpack/**
+!src
+src/*
+!src/main
 !src/main/**
+!config
 !config/**
 !webpack.config.js
+!.yarn
+.yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
