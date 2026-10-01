@@ -11,8 +11,7 @@ FROM base as build
 RUN PUPPETEER_SKIP_DOWNLOAD=true yarn install && yarn build:prod
 
 # ---- Runtime image ----
-FROM base as runtime
+FROM build as runtime
 RUN rm -rf webpack/ webpack.config.js
-COPY --from=build $WORKDIR/src/main ./src/main
 RUN yarn build:ts
 EXPOSE 3002
