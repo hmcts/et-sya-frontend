@@ -64,6 +64,19 @@ describe('Check your answers confirmation page', () => {
     expect(button[5].innerHTML).contains('Submit', 'Could not find the submit claim button');
   });
 
+  it('should guard the submit claim button against repeat clicks', () => {
+    const submitButton = htmlRes.getElementById('main-form-submit');
+    expect(submitButton.tagName).equals('A', 'Submit claim button should be a link');
+    expect(submitButton.getAttribute('href')).contains(
+      InterceptPaths.SUBMIT_CASE,
+      'Submit claim button has wrong href'
+    );
+    expect(submitButton.hasAttribute('data-navigation-link')).equals(
+      true,
+      'Submit claim button should have the navigation link data attribute'
+    );
+  });
+
   it('should display Save as draft button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[6].innerHTML).contains('Save as draft', 'Could not find the button');
