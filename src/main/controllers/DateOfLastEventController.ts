@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDate } from '../definitions/case';
+import { CaseDate, YesOrNo } from '../definitions/case';
 import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, DateOfLastEventFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
@@ -37,17 +37,18 @@ export default class DateOfLastEventController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const nextPage = this.getNextPage(req);
     if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
-      res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      res.redirect(nextPage);
       return;
     }
-    await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
+    await handlePostLogic(req, res, this.form, logger, nextPage);
   };
 
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
-      res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      res.redirect(this.getNextPage(req));
       return;
     }
     const content = getPageContent(req, this.dateOfLastEventFormContent, [
@@ -59,4 +60,9 @@ export default class DateOfLastEventController {
       ...content,
     });
   };
+
+  private getNextPage = (req: AppRequest): string =>
+    req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+      ? PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED
+      : PageUrls.DESCRIBE_WHAT_HAPPENED;
 }

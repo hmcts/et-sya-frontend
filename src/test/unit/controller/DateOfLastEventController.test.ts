@@ -1,4 +1,5 @@
 import DateOfLastEventController from '../../../main/controllers/DateOfLastEventController';
+import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
@@ -47,6 +48,23 @@ describe('Date of last event Controller', () => {
     await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+  });
+
+  it('should redirect to the represented claimant describe page on valid date post', async () => {
+    const controller = new DateOfLastEventController();
+    const req = mockRequest({
+      body: {
+        'dateOfLastEvent-day': '15',
+        'dateOfLastEvent-month': '05',
+        'dateOfLastEvent-year': '2023',
+      },
+      userCase: { claimantRepresentedQuestion: YesOrNo.YES },
+    });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
   });
 
   it("should redirect to describe-what-happened on today's date post", async () => {
