@@ -17,7 +17,7 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
-  test("should return the reasonable adjustments page when 'video' and 'save and continue' are selected", async () => {
+  test("should return the hearing panel preference page when 'video' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: HearingPreference.VIDEO })
@@ -27,7 +27,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       });
   });
 
-  test("should return the reasonable adjustments page when 'phone' and 'save and continue' are selected", async () => {
+  test("should return the hearing panel preference page when 'phone' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: HearingPreference.PHONE })
@@ -37,7 +37,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       });
   });
 
-  test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected, and text is entered in the 'no' subfield", async () => {
+  test("should return the hearing panel preference page when 'no' and 'save and continue' are selected, and text is entered in the 'no' subfield", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ hearingPreferences: HearingPreference.NEITHER, hearingAssistance: 'test' })
@@ -67,7 +67,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       });
   });
 
-  test('should return the your support page when CUI your support is enabled for the case type', async () => {
+  test('should return the hearing panel preference page when ERA and CUI your support are enabled', async () => {
     const featureMock = jest
       .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
       .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
@@ -77,7 +77,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
         .send({ hearingPreferences: HearingPreference.VIDEO })
         .expect(res => {
           expect(res.status).toStrictEqual(302);
-          expect(res.header['location']).toStrictEqual(PageUrls.YOUR_SUPPORT);
+          expect(res.header['location']).toStrictEqual(PageUrls.HEARING_PANEL_PREFERENCE);
         });
     } finally {
       featureMock.mockRestore();
