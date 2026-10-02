@@ -36,7 +36,9 @@ withPipeline(type, product, component) {
   /*=====================================================
   Dynatrace and Performance Configuration
   =======================================================*/
-  enablePerformanceTestStages(timeout: 10, perfTestEnvironments: ['preview','aat','perftest'])
+  // Dynatrace and Gatling stages run against AAT and perftest only, not PR previews,
+  // where they added ~4 minutes to every PR build.
+  enablePerformanceTestStages(timeout: 10, perfTestEnvironments: ['aat','perftest'])
   enableGatlingLoadTests([
     repo: 'https://github.com/hmcts/performance-testing.git',
     branch: 'add-et-tests',
