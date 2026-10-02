@@ -65,6 +65,11 @@ export class Session {
   private getStore(app: Application) {
     const redisHost: string = process.env.REDIS_HOST ?? config.get('session.redis.host');
     if (!redisHost) {
+      // Jest workers share the process filesystem; a shared FileStore under /tmp races
+      // across maxWorkers and produces flaky route status codes (403/404/503).
+      if (process.env.NODE_ENV === 'test') {
+        return new session.MemoryStore();
+      }
       return new FileStore({ path: '/tmp', reapInterval: -1 });
     }
 

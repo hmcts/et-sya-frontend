@@ -47,7 +47,7 @@ describe('Citizen Hub Controller', () => {
     caseApi.getUserCase = jest.fn().mockRejectedValueOnce('error');
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
+    req.params.caseId = '1786637776090539';
     controller.get(req, res);
     await new Promise(nextTick);
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
@@ -61,8 +61,8 @@ describe('Citizen Hub Controller', () => {
       .mockRejectedValueOnce(new Error('Error getting user case: Request failed with status code 500'));
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    req.params.caseId = '1786637776090539';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
     controller.get(req, res);
     await new Promise(nextTick);
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
@@ -80,7 +80,7 @@ describe('Citizen Hub Controller', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         originalEthosCaseReference: '60000001/2022',
         newEthosCaseReference: '18850001/2020',
         transferComplete: true,
@@ -88,19 +88,19 @@ describe('Citizen Hub Controller', () => {
     });
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    req.params.caseId = '1786637776090539';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
     controller.get(req, res);
     await new Promise(nextTick);
     expect(req.session.caseTransferInfo?.originalEthosCaseReference).toBe('60000001/2022');
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
   });
 
   it('should render citizen hub when case loads successfully even if transfer info says transferred', async () => {
     const controller = new CitizenHubController();
     caseApi.getUserCase = jest.fn().mockResolvedValueOnce({
       data: {
-        id: '1234',
+        id: '1786637776090539',
         created_date: '2022-08-19T09:19:25.79202',
         last_modified: '2022-08-19T09:19:25.817549',
       },
@@ -109,19 +109,19 @@ describe('Citizen Hub Controller', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         originalEthosCaseReference: '60000001/2022',
         transferComplete: false,
       } as CaseTransferInfoResponse,
     });
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    req.params.caseId = '1786637776090539';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
     controller.get(req, res);
     await new Promise(nextTick);
     expect(caseApi.getCaseTransferInfo).not.toHaveBeenCalled();
-    expect(res.redirect).not.toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).not.toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
     expect(res.render).toHaveBeenCalled();
   });
 
@@ -136,17 +136,17 @@ describe('Citizen Hub Controller', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         transferComplete: false,
       } as CaseTransferInfoResponse,
     });
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    req.params.caseId = '1786637776090539';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
   });
 
   it('should redirect to transferred page when case is not found in CCD', async () => {
@@ -162,17 +162,17 @@ describe('Citizen Hub Controller', () => {
       data: {
         transferred: true,
         transferType: 'ECM',
-        originalCaseId: '1234',
+        originalCaseId: '1786637776090539',
         transferComplete: false,
       } as CaseTransferInfoResponse,
     });
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    req.params.caseId = '1786637776090539';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
     controller.get(req, res);
     await new Promise(nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1234`);
+    expect(res.redirect).toHaveBeenCalledWith(`${PageUrls.TRANSFERRED_CASE}?lng=en&caseId=1786637776090539`);
   });
 
   it('should redirect to not found when transfer-info says case is not transferred', async () => {
@@ -191,8 +191,8 @@ describe('Citizen Hub Controller', () => {
     });
     const res = mockResponse();
     const req = mockRequest({});
-    req.params.caseId = '1234';
-    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    req.params.caseId = '1786637776090539';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1786637776090539');
     controller.get(req, res);
     await new Promise(nextTick);
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');

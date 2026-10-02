@@ -164,14 +164,16 @@ describe('Representative Address Details Controller', () => {
         repAddressCountry: 'England',
         repAddressPostcode: 'SW1A 1AA',
       };
+      const caseId = '1786637776090539';
+      jest.spyOn(CaseHelper, 'handleUpdateClaimantRepAboutYou').mockResolvedValue(undefined);
       const controller = new RepresentativeAddressDetailsController();
-      const req = mockRequestEmpty({ body, userCase: { id: '1234' } });
-      req.session.repAboutYouCaseId = '1234';
+      const req = mockRequestEmpty({ body, userCase: { id: caseId } });
+      req.session.repAboutYouCaseId = caseId;
       const res = mockResponse();
 
       await controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith('/claimant-rep-about-you/1234');
+      expect(res.redirect).toHaveBeenCalledWith(`/claimant-rep-about-you/${caseId}?lng=en`);
     });
 
     it('should save the address fields to userCase', async () => {

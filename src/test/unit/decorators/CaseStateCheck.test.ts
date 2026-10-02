@@ -24,9 +24,9 @@ describe('CaseStateCheck Decorator', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
     });
 
-    it('should redirect to citizen hub when userCase has id and state is not AWAITING_SUBMISSION_TO_HMCTS', () => {
+    it('should redirect to citizen hub when userCase id is a number from the API', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.SUBMITTED },
+        userCase: { id: 1786637776090539 as unknown as string, state: CaseState.SUBMITTED },
       });
       req.url = '/some-path';
       const res = mockResponse();
@@ -34,12 +34,25 @@ describe('CaseStateCheck Decorator', () => {
       const result = checkCaseStateAndRedirect(req, res);
 
       expect(result).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+    });
+
+    it('should redirect to CLAIMANT_APPLICATIONS when userCase id is not digit-only', () => {
+      const req = mockRequest({
+        userCase: { id: '1e10', state: CaseState.SUBMITTED },
+      });
+      req.url = '/some-path';
+      const res = mockResponse();
+
+      const result = checkCaseStateAndRedirect(req, res);
+
+      expect(result).toBe(true);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
     });
 
     it('should redirect to citizen hub with language param when userCase has id and state is not AWAITING_SUBMISSION_TO_HMCTS', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.ACCEPTED },
+        userCase: { id: '1786637776090539', state: CaseState.ACCEPTED },
       });
       req.url = '/some-path?lng=cy';
       const res = mockResponse();
@@ -47,7 +60,7 @@ describe('CaseStateCheck Decorator', () => {
       const result = checkCaseStateAndRedirect(req, res);
 
       expect(result).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=cy');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=cy');
     });
 
     it('should not redirect when editing from claimant rep about you flow', () => {
@@ -66,7 +79,7 @@ describe('CaseStateCheck Decorator', () => {
 
     it('should not redirect when case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+        userCase: { id: '1786637776090539', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       });
       const res = mockResponse();
 
@@ -126,7 +139,7 @@ describe('CaseStateCheck Decorator', () => {
 
     it('should execute the original method when case state is AWAITING_SUBMISSION_TO_HMCTS', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+        userCase: { id: '1786637776090539', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       });
       const res = mockResponse();
 
@@ -153,7 +166,7 @@ describe('CaseStateCheck Decorator', () => {
 
     it('should handle async methods correctly when case state is AWAITING_SUBMISSION_TO_HMCTS', async () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+        userCase: { id: '1786637776090539', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       });
       const res = mockResponse();
 
@@ -180,7 +193,7 @@ describe('CaseStateCheck Decorator', () => {
 
     it('should preserve method context (this binding)', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+        userCase: { id: '1786637776090539', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       });
       const res = mockResponse();
 
@@ -209,7 +222,7 @@ describe('CaseStateCheck Decorator', () => {
 
     it('should pass additional arguments to the original method', () => {
       const req = mockRequest({
-        userCase: { id: '12345', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
+        userCase: { id: '1786637776090539', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       });
       const res = mockResponse();
       const additionalArg = 'extra argument';
@@ -237,7 +250,7 @@ describe('CaseStateCheck Decorator', () => {
   describe('Edge cases', () => {
     it('should handle case when userCase state is undefined', () => {
       const req = mockRequest({
-        userCase: { id: '12345' }, // state is undefined
+        userCase: { id: '1786637776090539' }, // state is undefined
       });
       req.url = '/some-path';
       const res = mockResponse();
@@ -245,7 +258,7 @@ describe('CaseStateCheck Decorator', () => {
       const result = checkCaseStateAndRedirect(req, res);
 
       expect(result).toBe(true);
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
     });
 
     it('should handle case when userCase id is empty string', () => {
