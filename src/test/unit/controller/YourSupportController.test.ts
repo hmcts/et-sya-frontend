@@ -841,7 +841,7 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
   });
 
-  it('should return to the ET home page without saving flags when the CUI journey is cancelled', async () => {
+  it('should return to the claim steps list without saving flags when a draft CUI journey is cancelled', async () => {
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
     const getJourneyData = jest.fn().mockResolvedValue({
@@ -856,7 +856,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
-      session: { returnUrl: PageUrls.CLAIM_STEPS },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -872,7 +872,68 @@ describe('Your Support Controller', () => {
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.returnUrl).toBeUndefined();
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+  });
+
+  it('should return to the represented claimant list when a represented draft CUI journey is cancelled', async () => {
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockResolvedValue({
+      action: 'cancel',
+      correlationId: '1234',
+      replacementFlags: undefined,
+    });
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+
+    const controller = new YourSupportController({ getOneTimeToken, getToken });
+    const req = mockRequest({
+      userCase: {
+        id: '1234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        claimantRepresentedQuestion: YesOrNo.YES,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await controller.callback(req, res);
+
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS);
+  });
+
+  it('should return to the citizen hub without saving flags when a submitted CUI journey is cancelled', async () => {
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockResolvedValue({
+      action: 'cancel',
+      correlationId: '1234',
+      replacementFlags: undefined,
+    });
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+
+    const controller = new YourSupportController({ getOneTimeToken, getToken });
+    const req = mockRequest({
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+      userCase: {
+        id: '1234',
+        state: CaseState.SUBMITTED,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await controller.callback(req, res);
+
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
   });
 
   it('should redirect home when CUI journey correlation does not match the case', async () => {

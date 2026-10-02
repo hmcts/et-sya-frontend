@@ -27,7 +27,7 @@ import { handleUpdateDraftCase, handleUpdateSubmittedCaseFlags, setUserCase } fr
 import { buildCuiFlagDetails, mergeClaimantExternalFlags } from './helpers/CuiFlagHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageCode, returnValidUrl } from './helpers/RouterHelpers';
+import { getClaimStepsUrl, getLanguageCode, returnValidUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('YourSupportController');
 const CUI_MASTER_FLAG_CODE = 'RA0001';
@@ -147,9 +147,9 @@ export default class YourSupportController {
       this.validateJourneyCorrelationId(req, result);
 
       if (!this.isSubmittedJourney(result)) {
-        logger.info(`CUI journey completed with action "${result.action}", redirecting to the ET home page`);
+        logger.info(`CUI journey completed with action "${result.action}", redirecting to the case list page`);
         req.session.returnUrl = undefined;
-        res.redirect(PageUrls.HOME);
+        res.redirect(this.getListPageUrl(req));
         return;
       }
 
@@ -406,6 +406,19 @@ export default class YourSupportController {
 
     if (userCase?.id) {
       return setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
+    }
+
+    return setUrlLanguage(req, PageUrls.CLAIMANT_APPLICATIONS);
+  }
+
+  private getListPageUrl(req: AppRequest): string {
+    if (this.isDraftCase(req)) {
+      return setUrlLanguage(req, getClaimStepsUrl(req));
+    }
+
+    const caseId = req.session?.userCase?.id;
+    if (caseId) {
+      return setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', caseId));
     }
 
     return setUrlLanguage(req, PageUrls.CLAIMANT_APPLICATIONS);
