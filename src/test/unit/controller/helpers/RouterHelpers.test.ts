@@ -4,6 +4,7 @@ import {
   addParameterToUrl,
   conditionalRedirect,
   getClaimStepsUrl,
+  getLanguageCode,
   getLanguageParam,
   getParsedUrl,
   handleSaveAsDraft,
@@ -249,6 +250,22 @@ describe('Router Helpers - conditionalRedirect', () => {
     const request = mockRequest({ body: { otherField: 'yes' } });
     const formFields = { myField: {} } as any;
     expect(conditionalRedirect(request, formFields, 'yes')).toBeFalsy();
+  });
+});
+
+describe('Router Helpers - language helpers', () => {
+  it('should return the Welsh language code when the url has a Welsh language parameter', () => {
+    expect(getLanguageCode('/your-support?lng=cy')).toEqual(languages.WELSH);
+  });
+
+  it('should return the English language code when the url has no valid language parameter', () => {
+    expect(getLanguageCode('/your-support')).toEqual(languages.ENGLISH);
+    expect(getLanguageCode('/your-support?lng=fr')).toEqual(languages.ENGLISH);
+  });
+
+  it('should return the existing language url parameter format', () => {
+    expect(getLanguageParam('/your-support?lng=cy')).toEqual(languages.WELSH_URL_PARAMETER);
+    expect(getLanguageParam('/your-support')).toEqual(languages.ENGLISH_URL_PARAMETER);
   });
 });
 

@@ -3,13 +3,7 @@ import { Response } from 'express';
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
 import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../definitions/constants';
-import {
-  HubLinkNames,
-  HubLinkStatus,
-  HubLinksStatuses,
-  sectionIndexToLinkNames,
-  statusColorMap,
-} from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
@@ -29,6 +23,7 @@ import {
   getAcknowledgementAlert,
   getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
+  getSectionIndexToLinkNames,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
@@ -153,11 +148,13 @@ export default class CitizenHubController {
 
     await activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
 
-    updateHubLinkStatuses(userCase, hubLinksStatuses);
+    await updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
 
-    const sections = Array.from(new Array(sectionIndexToLinkNames.length))
+    const sectionIndexToLinkNames = await getSectionIndexToLinkNames(userCase.caseTypeId);
+
+    const sections = Array.from(Array(sectionIndexToLinkNames.length))
       .map((__ignored, index) => {
         return {
           title: (l: AnyRecord): string => l[`section${index + 1}`],
@@ -167,7 +164,6 @@ export default class CitizenHubController {
               linkTxt: (l: AnyRecord): string => l[linkName],
               status: (l: AnyRecord): string => l[status],
               shouldShow: shouldHubLinkBeClickable(status, linkName),
-              isVisible: () => true,
               url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
               statusColor: () => statusColorMap.get(status),
             };
