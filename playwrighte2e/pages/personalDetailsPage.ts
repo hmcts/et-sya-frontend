@@ -50,6 +50,7 @@ export class PersonDetailsPage extends BasePage {
     await this.webAction.verifyTextIsVisible('text=Would you be able to take part in hearings by video and phone?');
     await this.webAction.checkElementById('#hearingPreferences');
     await this.saveAndContinueButton();
+    await this.completeHearingPanelPreferenceIfEnabled();
 
     await this.webAction.verifyTextIsVisible(
       'text=Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?'
@@ -61,5 +62,18 @@ export class PersonDetailsPage extends BasePage {
     await this.webAction.checkElementById('#tasklist-check');
     await this.saveAndContinueButton();
     await this.delay(5000);
+  }
+
+  private async completeHearingPanelPreferenceIfEnabled(): Promise<void> {
+    await this.page.waitForURL(/\/(hearing-panel-preference|reasonable-adjustments)(?:\?.*)?$/);
+
+    if (new URL(this.page.url()).pathname !== '/hearing-panel-preference') {
+      return;
+    }
+
+    await this.page.getByRole('heading', { name: 'Preference for judge or panel', exact: true }).waitFor();
+    await this.page.getByLabel('I have no preference').check();
+    await this.saveAndContinueButton();
+    await this.page.waitForURL(/\/reasonable-adjustments(?:\?.*)?$/);
   }
 }

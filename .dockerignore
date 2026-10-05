@@ -6,12 +6,19 @@
 
 !package.json
 !yarn.lock
+!.yarn
+!.yarn/**
+!.yarnrc.yml
 
 !tsconfig.json
+!webpack
 !webpack/**
-!src/main/**
-!config/**
 !webpack.config.js
+!src
+!src/main
+!src/main/**
+!config
+!config/**
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
@@ -19,5 +26,3 @@
 !.yarn/versions
 !.eslintrc.js
 !.eslintignore
-!.yarnrc.yml
-!node_modules

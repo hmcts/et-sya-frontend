@@ -24,6 +24,12 @@ export const isContent2500CharsOrLess: Validator = value => {
   }
 };
 
+export const isContent500CharsOrLess: Validator = value => {
+  if (value && typeof value === 'string' && value.trim().length > 500) {
+    return 'tooLong';
+  }
+};
+
 export const isContent100CharsOrLess: Validator = value => {
   if (value && (value as string).trim().length > 100) {
     return 'tooLong';
@@ -50,6 +56,26 @@ export const isOptionSelected: Validator = value => {
 export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   if (!fields || (fields as []).length === 0) {
     return 'required';
+  }
+};
+
+const isEmailFormatValid = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+export const isValidEmailAddress: Validator = value => {
+  if (StringUtils.isBlank(value as string)) {
+    return 'required';
+  }
+  if (!isEmailFormatValid(value as string)) {
+    return 'invalid';
+  }
+};
+
+export const isValidEmailAddressWhenProvided: Validator = value => {
+  if (StringUtils.isBlank(value as string)) {
+    return;
+  }
+  if (!isEmailFormatValid(value as string)) {
+    return 'invalid';
   }
 };
 

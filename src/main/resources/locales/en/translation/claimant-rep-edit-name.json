@@ -1,0 +1,11 @@
+{
+  "title": "Your name",
+  "h1": "Your name",
+  "representativeName": "Your name",
+  "submitBtn": "Submit",
+  "errors": {
+    "representativeName": {
+      "required": "Enter your name"
+    }
+  }
+}

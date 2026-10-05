@@ -29,6 +29,7 @@ describe('Test task List check controller', () => {
     const userCase: Record<string, any> = {
       respondents: [
         {
+          respondentName: 'Acme Ltd',
           respondentAddress1: '123 Street',
           respondentAddressTown: 'Town',
           respondentAddressCountry: 'Country',

@@ -86,6 +86,7 @@ export interface Case {
   jobTitle?: string;
   typeOfClaim?: string[];
   pastEmployer?: YesOrNo;
+  claimantWrittenContract?: YesOrNo;
   noticeEnds?: CaseDate;
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
@@ -113,6 +114,7 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
+  dateOfLastEvent?: CaseDate;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -125,6 +127,7 @@ export interface Case {
   whistleblowingEntityName?: string;
   linkedCases?: YesOrNo;
   linkedCasesDetail?: string;
+  representativeDetailsCheck?: YesOrNo;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
@@ -143,6 +146,8 @@ export interface Case {
   reasonableAdjustmentsDetail?: string;
   hearingPreferences?: HearingPreference[];
   hearingAssistance?: string;
+  claimantHearingPanelPreference?: string;
+  claimantHearingPanelPreferenceWhy?: string;
   claimJurisdiction?: string;
   respondentName?: string;
   claimantSex?: Sex;
@@ -223,6 +228,37 @@ export interface Case {
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
   claimantName?: string;
+  // non-MyHMCTS Claimant rep
+  representativeType?: string;
+  representativeOrgName?: string;
+  representativeName?: string;
+  representedClaimantName?: string;
+  representedClaimantFirstName?: string;
+  representedClaimantLastName?: string;
+  representedClaimantNameProvided?: YesOrNo;
+  representativeEnterPostcode?: string;
+  representativeAddresses?: Record<string, string>[];
+  representativeAddressTypes?: AddressType[];
+  repAddress1?: string;
+  repAddress2?: string;
+  repAddressTown?: string;
+  repAddressCountry?: string;
+  repAddressPostcode?: string;
+  representativePhoneNumber?: string;
+  claimantRepEmail?: string;
+  // Represented Claimant
+  representedClaimantDateOfBirth?: CaseDate;
+  representedClaimantEnterPostcode?: string;
+  representedClaimantAddresses?: Record<string, string>[];
+  representedClaimantAddressTypes?: AddressType[];
+  representedClaimantAddress1?: string;
+  representedClaimantAddress2?: string;
+  representedClaimantAddressTown?: string;
+  representedClaimantAddressCountry?: string;
+  representedClaimantAddressPostcode?: string;
+  representedClaimantEmail?: string;
+  representedClaimantEmailProvided?: YesOrNo;
+  representedClaimantDetailsCheck?: YesOrNo;
 }
 
 export const enum StillWorking {
@@ -241,6 +277,7 @@ export const enum NoAcasNumberReason {
 export interface CaseWithId extends Case {
   id: string;
   state: CaseState;
+  caseUserRole?: string;
 }
 
 export const enum YesOrNo {
@@ -342,6 +379,7 @@ export interface Document {
 }
 
 export interface Representative {
+  ccdId?: string;
   respondentId?: string;
   hasMyHMCTSAccount?: YesOrNo;
   nameOfRepresentative?: string;

@@ -1,0 +1,20 @@
+{
+  "title": "Dechrau swydd newydd",
+  "h1": "Dechrau swydd newydd",
+  "legend": "Pryd ddechreuodd yr hawlydd eu swydd newydd? (dewisol)",
+  "p1": "Dywedwch wrthym am swydd newydd yr hawlydd. Os nad ydych yn gwybod yr union ddyddiad, yna nodwch amcangyfrif gorau yr hawlydd.",
+  "hint": "Er enghraifft, 27 3 2007",
+  "errors": {
+    "newJobStartDate": {
+      "dayRequired": "Nodwch ddiwrnod ar gyfer dyddiad dechrau swydd newydd yr hawlydd. Er enghraifft, 23",
+      "monthRequired": "Nodwch fis ar gyfer dyddiad dechrau swydd newydd yr hawlydd. Er enghraifft, 08",
+      "yearRequired": "Nodwch flwyddyn ar gyfer dyddiad dechrau swydd newydd yr hawlydd. Er enghraifft, 2022",
+      "invalidDateInPast": "Ni ddylai’r dyddiad fod yn y gorffennol",
+      "invalidDateMoreThanTenYearsInFuture": "Rhowch ddyddiad rhwng nawr a 10 mlynedd yn y dyfodol",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 2022",
+      "invalidDate": "Rhaid i ddyddiad dechrau’r swydd newydd fod yn ddyddiad go iawn."
+    }
+  }
+}

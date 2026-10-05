@@ -13,6 +13,7 @@ jest.mock('../../../main/controllers/helpers/CaseHelpers', () => ({
 }));
 jest.mock('../../../main/controllers/helpers/RouterHelpers', () => ({
   getLanguageParam: jest.fn(() => ''),
+  getClaimStepsUrl: jest.fn(() => '/steps-to-making-your-claim'),
 }));
 
 jest.mock('axios');

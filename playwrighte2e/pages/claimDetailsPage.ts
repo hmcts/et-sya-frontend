@@ -34,6 +34,7 @@ export class ClaimDetailsPage extends BasePage {
       await this.webAction.checkElementById('#sex');
       await this.webAction.checkElementById('#sexualOrientation');
       await this.clickSaveAndContinue();
+      await this.completeDateOfLastEventIfEnabled();
 
       await this.webAction.verifyTextIsVisible('text=Describe what happened to you');
       await this.webAction.verifyTextIsVisible('text=What to write for discrimination claims');
@@ -324,5 +325,36 @@ export class ClaimDetailsPage extends BasePage {
       await this.clickSaveAndContinue();
       await this.delay(5000);
     }
+  }
+
+  private async completeDateOfLastEventIfEnabled(): Promise<void> {
+    await this.page.waitForURL(/\/(date-of-last-event|describe-what-happened)(?:\?.*)?$/);
+
+    if (new URL(this.page.url()).pathname !== '/date-of-last-event') {
+      return;
+    }
+
+    await this.page
+      .getByRole('heading', {
+        name: 'What is the date of the most recent event you are complaining about?',
+        exact: true,
+      })
+      .waitFor();
+    const dateOfLastEvent = this.getDateFourMonthsAgo();
+    await this.webAction.fillField('#dateOfLastEvent-day', String(dateOfLastEvent.getDate()).padStart(2, '0'));
+    await this.webAction.fillField('#dateOfLastEvent-month', String(dateOfLastEvent.getMonth() + 1).padStart(2, '0'));
+    await this.webAction.fillField('#dateOfLastEvent-year', String(dateOfLastEvent.getFullYear()));
+    await this.clickSaveAndContinue();
+    await this.page.waitForURL(/\/describe-what-happened(?:\?.*)?$/);
+  }
+
+  private getDateFourMonthsAgo(): Date {
+    const date = new Date();
+    const day = date.getDate();
+    date.setDate(1);
+    date.setMonth(date.getMonth() - 4);
+    date.setDate(Math.min(day, new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()));
+
+    return date;
   }
 }

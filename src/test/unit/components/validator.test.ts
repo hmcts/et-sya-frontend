@@ -13,6 +13,8 @@ import {
   isPayIntervalNull,
   isRespondentNameValid,
   isValidAvgWeeklyHours,
+  isValidEmailAddress,
+  isValidEmailAddressWhenProvided,
   isValidNoticeLength,
   isValidTwoDigitInteger,
   isValidUKTelNumber,
@@ -139,6 +141,31 @@ describe('Validation', () => {
       { mockRef: '01234567B90', expected: 'nonnumeric' },
     ])('check telephone number validity when %o', ({ mockRef, expected }) => {
       expect(isValidUKTelNumber(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidEmailAddress()', () => {
+    it.each([
+      { mockRef: '', expected: 'required' },
+      { mockRef: '   ', expected: 'required' },
+      { mockRef: 'not-an-email', expected: 'invalid' },
+      { mockRef: 'missing@domain', expected: 'invalid' },
+      { mockRef: 'name@example.com', expected: undefined },
+      { mockRef: ' name@example.com ', expected: undefined },
+    ])('check email validity when %o', ({ mockRef, expected }) => {
+      expect(isValidEmailAddress(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidEmailAddressWhenProvided()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: null, expected: undefined },
+      { mockRef: '   ', expected: undefined },
+      { mockRef: 'not-an-email', expected: 'invalid' },
+      { mockRef: 'name@example.com', expected: undefined },
+    ])('check optional email validity when %o', ({ mockRef, expected }) => {
+      expect(isValidEmailAddressWhenProvided(mockRef)).toEqual(expected);
     });
   });
 

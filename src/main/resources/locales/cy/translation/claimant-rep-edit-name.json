@@ -1,0 +1,11 @@
+{
+  "title": "Eich enw",
+  "h1": "Eich enw",
+  "representativeName": "Eich enw",
+  "submitBtn": "Cyflwyno",
+  "errors": {
+    "representativeName": {
+      "required": "Nodwch eich enw"
+    }
+  }
+}

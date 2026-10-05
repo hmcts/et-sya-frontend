@@ -1,0 +1,13 @@
+{
+  "title": "Manylion cyflogaeth",
+  "h1": "Manylion cyflogaeth",
+  "p1": "Rhowch fanylion i ni am yr hawlydd yn gweithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn.",
+  "p2": "Fe ddefnyddir y manylion hyn i symud yr hawliad yn ei flaen.",
+  "hint": "Dywedwch wrthym pa rôl oedd gan yr hawlydd adeg yr anghydfod",
+  "jobTitle": "Teitl swydd (dewisol)",
+  "errors": {
+    "jobTitle": {
+      "invalid-length": "Rhaid i'r teitl swydd fod rhwng 2 a 100 o nodau"
+    }
+  }
+}

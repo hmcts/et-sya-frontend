@@ -1,0 +1,48 @@
+{
+  "title": "Hawliad mewn perthynas â gwahaniaethu",
+  "h1": "Hawliad mewn perthynas â gwahaniaethu",
+  "legend": "Pa fath o wahaniaethu mae'r hawlydd yn ei hawlio?",
+  "hint": "Dewiswch bob un sy'n berthnasol.",
+  "detailsSummary": "Beth yw gwahaniaethu?",
+  "detailsText": {
+    "p1": "Gwahaniaethu yw pan fydd rhywun yn cael eu trin yn annheg ac mae’r driniaeth yn gysylltiedig ag unrhyw un o’r nodweddion gwarchodedig a nodir yn Neddf Cydraddoldeb 2010. Mae gan yr hawlydd hawliau yn y gwaith os ydynt wedi profi gwahaniaethu.<br><br>",
+    "p2": "Gweler y",
+    "govukLinkText": "cyfarwyddyd ar GOV.UK (agor mewn ffenestr newydd)",
+    "govukLinkUrl": "https://www.gov.uk/guidance/equality-act-2010-guidance",
+    "p2Suffix": "am ragor o wybodaeth ynghylch nodweddion gwarchodedig a’ch hawliau yn y gweithle."
+  },
+  "age": {
+    "checkbox": "Oedran"
+  },
+  "disability": {
+    "checkbox": "Anabledd"
+  },
+  "genderReassignment": {
+    "checkbox": "Ailbennu rhywedd"
+  },
+  "marriageOrCivilPartnership": {
+    "checkbox": "Priodas neu bartneriaeth sifil"
+  },
+  "pregnancyOrMaternity": {
+    "checkbox": "Beichiogrwydd neu famolaeth"
+  },
+  "race": {
+    "checkbox": "Hil",
+    "hint": "gan gynnwys lliw, cenedligrwydd a tharddiad ethnig neu genedlaethol"
+  },
+  "religionOrBelief": {
+    "checkbox": "Crefydd neu gred"
+  },
+  "sex": {
+    "checkbox": "Rhywedd",
+    "hint": "gan gynnwys cyflog cyfartal"
+  },
+  "sexualOrientation": {
+    "checkbox": "Cyfeiriadedd rhywiol"
+  },
+  "errors": {
+    "claimTypeDiscrimination": {
+      "required": "Dewiswch o leiaf un math o wahaniaethu."
+    }
+  }
+}

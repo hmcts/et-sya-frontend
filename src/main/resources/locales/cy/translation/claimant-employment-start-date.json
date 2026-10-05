@@ -1,0 +1,26 @@
+{
+  "title": "Dyddiad cychwyn y gyflogaeth",
+  "label": "Pa bryd gychwynnodd eu cyflogaeth?",
+  "legend": "Pa bryd gychwynnodd eu cyflogaeth? (dewisol)",
+  "h1": "Dyddiad cychwyn y gyflogaeth",
+  "p1": "Dywedwch wrthym pryd wnaeth yr hawlydd ddechrau gweithio i’r atebydd.",
+  "p2": "Os nad ydych yn gwybod yr union ddyddiad, yna nodwch eu hamcangyfrif gorau.",
+  "hint": "Er enghraifft, 27 3 2007",
+  "errors": {
+    "startDate": {
+      "required": "Dywedwch wrthym pryd ddechreuodd yr hawlydd weithio. Er enghraifft, 23 04 2014",
+      "dayRequired": "Nodwch ddiwrnod ar gyfer dyddiad dechrau yr hawlydd. Er enghraifft, 23",
+      "monthRequired": "Nodwch fis ar gyfer dyddiad dechrau yr hawlydd. Er enghraifft, 04",
+      "yearRequired": "Nodwch flwyddyn ar gyfer dyddiad dechrau yr hawlydd. Er enghraifft, 2014",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i'r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i'r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 2014",
+      "dayInvalid": "Rhaid i'r diwrnod fod rhwng 1 a 31",
+      "monthInvalid": "Rhaid i'r mis fod rhwng 1 a 12",
+      "invalidDate": "Rydych wedi nodi dyddiad annilys. Nodwch y dyddiad gan ddefnyddio'r fformat canlynol: 22 04 2014",
+      "yearInvalid": "Rydych wedi nodi'r flwyddyn mewn fformat annilys. Nodwch y flwyddyn gyfan, er enghraifft 2014",
+      "invalidDateInFuture": "Rhaid i'r dyddiad a nodwyd fod yn y gorffennol",
+      "invalidDateTooFarInPast": "Rydych wedi nodi blwyddyn sydd rhy bell yn y gorffennol"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% block errorSummary %}
+        {% include "./error-summary.njk" %}
+      {% endblock %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ pageHeader }}</h1>
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

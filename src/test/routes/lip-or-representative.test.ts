@@ -25,15 +25,13 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
       });
   });
 
-  test("should return the legacy ET1 service when (yes) the 'making a claim for someone else' option is selected", async () => {
+  test("should return the Single or Multiple claims page when (yes) the 'making a claim for someone else' option is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
       .send({ claimantRepresentedQuestion: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(
-          'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number'
-        );
+        expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
       });
   });
 });

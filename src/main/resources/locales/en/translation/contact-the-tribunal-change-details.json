@@ -1,7 +1,11 @@
 {
   "title": "Change my personal details",
   "applicationType": "Change my personal details",
+  "applicationTypeRep": "Change the claimant’s personal details",
   "applicationTitle": "I want to change my personal details",
+  "applicationTitleRep": "The claimant wants to change their personal details",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",
@@ -16,6 +20,25 @@
       "text": "If you change your telephone number, we’ll contact you using the new number if we have questions about your claim."
     },
     { "type": "bold-paragraph", "text": "Details you can apply to change:" },
+    {
+      "type": "list",
+      "items": ["name", "sex and preferred title", "contact or home address", "telephone number", "email address"]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Use this form to apply to change the personal details the claimant gave when making their claim."
+    },
+    {
+      "type": "paragraph",
+      "text": "If the claimant changes their postal or email address, we’ll send any letters to the new address if they become unrepresented."
+    },
+    {
+      "type": "paragraph",
+      "text": "If they change their telephone number, we’ll contact them using the new number if they become unrepresented."
+    },
+    { "type": "bold-paragraph", "text": "Details the claimant can apply to change:" },
     {
       "type": "list",
       "items": ["name", "sex and preferred title", "contact or home address", "telephone number", "email address"]

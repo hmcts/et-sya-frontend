@@ -1,0 +1,26 @@
+{
+  "title": "Compensation",
+  "h1": "Compensation (optional)",
+  "label": "What compensation is the claimant seeking?",
+  "hint": "Try to set out all compensation the claimant is seeking and provide a total if possible.",
+  "amountLabel": "Enter the total compensation amount you are requesting",
+  "description": ["Try to set out all compensation the claimant is seeking and provide a total if possible."],
+  "detailsSummaryComp": "Compensation - what can a tribunal award?",
+  "detailsTextComp": {
+    "p1": "If a tribunal decides the claimant has been unfairly dismissed, they'll normally receive compensation which is made up of:",
+    "li1": "a basic award - fixed sum worked out using a standard formula",
+    "li2": "a compensatory award - compensation for the actual money lost due to dismissal, or which the claimant expects to lose in future because of their dismissal",
+    "p2": "Compensation can be reduced for various reasons and a tribunal will tell you more about this if it applies in the specific circumstances.",
+    "p3": "In disciplinary or grievance cases, the claimant may be entitled to an increased award if an employer fails to follow the guidance set out in the",
+    "p4": "Similarly, awards can be reduced if a tribunal decides the claimant failed to follow the guidance set out in the",
+    "acasLinkText": "Acas Code of Practice on disciplinary and grievance procedures (opens in new tab).",
+    "acasLinkUrl": "https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures",
+    "p5": "In certain claims, such as those involving discrimination, a tribunal may compensate the claimant for 'injury to feelings' (individual hurt and distress the claimant may have suffered) in addition to compensation for financial loss."
+  },
+  "errors": {
+    "totalCompensationAmount": {
+      "invalidCurrency": "Enter compensation in the correct format, for example £600 or £193.54",
+      "tooHighCurrency": "Compensation must be £9,999,999.99 or less"
+    }
+  }
+}

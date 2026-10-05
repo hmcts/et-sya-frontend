@@ -12,7 +12,10 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
-import { isClaimantRepresentedByOrganisation } from './helpers/ContactTheTribunalHelper';
+import {
+  isClaimantRepresentedByNonHmctsRepresentative,
+  isClaimantRepresentedByOrganisation,
+} from './helpers/ContactTheTribunalHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
@@ -172,6 +175,11 @@ export default class ContactTheTribunalSelectedController {
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
 
+    // Non-MyHMCTS claimant representatives see wording that refers to 'the claimant' rather than 'you'.
+    if (isClaimantRepresentedByNonHmctsRepresentative(userCase)) {
+      applyClaimantRepContent(content);
+    }
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
     };
@@ -187,4 +195,19 @@ export default class ContactTheTribunalSelectedController {
       welshEnabled,
     });
   };
+}
+
+/**
+ * Replace the default 'you'/'your' wording with the claimant-representative variants where they exist.
+ * Only keys that have a matching `...Rep` variant are overridden, so applications without a rep
+ * variant fall back to their default content.
+ */
+function applyClaimantRepContent(content: AnyRecord): void {
+  const repKeys = ['applicationType', 'applicationTitle', 'content', 'genericGuidance', 'contactApplicationText'];
+  repKeys.forEach(key => {
+    const repValue = content[key + 'Rep'];
+    if (repValue !== undefined) {
+      content[key] = repValue;
+    }
+  });
 }

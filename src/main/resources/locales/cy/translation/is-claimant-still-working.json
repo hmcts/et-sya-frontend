@@ -1,0 +1,12 @@
+{
+  "title": "A yw'r hawlydd yn dal i weithio i’r sefydliad neu’r unigolyn y maent yn gwneud hawliad yn ei erbyn?",
+  "legend": "A yw'r hawlydd yn dal i weithio i’r sefydliad neu’r unigolyn y maent yn gwneud hawliad yn ei erbyn? (dewisol)",
+  "optionText1": "Ydyn, maen nhw dal i weithio i’r atebydd",
+  "optionText2": "Ydyn, maen nhw’n gweithio cyfnod rhybudd i’r atebydd",
+  "optionText3": "Nac ydyn, tydi nhw ddim yn gweithio mwyach i’r atebydd",
+  "errors": {
+    "isStillWorking": {
+      "required": "Dywedwch wrthym a yw'r hawlydd yn gweithio o hyd i’r sefydliad neu’r unigolyn"
+    }
+  }
+}

@@ -2,6 +2,8 @@
   "title": "Strike out the response",
   "applicationType": "Strike out the response",
   "applicationTitle": "Strike out all or part of the response",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     { "type": "paragraph", "text": "You can request that the tribunal strike out all or parts of the response." },
     {
@@ -35,6 +37,46 @@
       "items": [
         "why you think the response should be struck out",
         "which ground or grounds in Rule 38 you say applies in your case",
+        "if you are referring to numbered points or paragraphs in a respondent's response, include these numbers or other references"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "The claimant can request that the tribunal strike out all or parts of the response."
+    },
+    {
+      "type": "paragraph",
+      "text": "If something is ‘struck out’ it is removed from the claim or response and cannot be relied upon."
+    },
+    {
+      "type": "paragraph",
+      "text": "The tribunal can strike out all or parts of the other party's response on their own initiative or after a request from the claimant."
+    },
+    {
+      "type": "paragraph",
+      "text": "A strike out request must be based on at least one of the grounds of Rule 38 of the Employment Tribunals Rules of Procedure, which is when:"
+    },
+
+    {
+      "type": "list",
+      "items": [
+        "the response is scandalous, vexatious or has no reasonable prospect of success",
+        "the proceedings have been conducted in a way that is scandalous, unreasonable or vexatious",
+        "the other party has not complied with tribunal orders or the Rules of Procedure",
+        "the response has not been actively pursued",
+        "it is no longer possible to have a fair hearing"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Details to include in the application:" },
+
+    {
+      "type": "list",
+      "items": [
+        "why the claimant thinks the response should be struck out",
+        "which ground or grounds in Rule 38 you say applies in the case",
         "if you are referring to numbered points or paragraphs in a respondent's response, include these numbers or other references"
       ]
     }

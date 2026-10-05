@@ -2,14 +2,17 @@
   "title": "Gorchymyn y parti arall",
   "applicationType": "Gorchymyn y parti arall",
   "applicationTitle": "Gorchymyn bod y parti arall yn gwneud rhywbeth",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
       "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys orchymyn bod y parti arall yn gwneud neu’n darparu rhywbeth."
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -17,6 +20,25 @@
         "pam fod hyn yn berthnasol i’ch hawliad",
         "os ydych eisoes wedi gofyn i’r parti arall wneud neu ddarparu'r peth hwn. Os ydych wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch chi ofyn a beth oedd ei ymateb",
         "os nad ydych wedi gofyn i’r parti arall wneud neu ddarparu’r peth hwn, esboniwch pam"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys orchymyn bod y parti arall yn gwneud neu’n darparu rhywbeth."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "beth mae'r hawlydd eisiau i’r parti arall ei wneud. Er enghraifft: efallai y bydd yr hawlydd eisiau i'r parti arall ddarparu gwybodaeth, dogfennau, neu fanylion pellach am eu hymateb",
+        "pam ei fod yn berthnasol i hawliad yr hawlydd",
+        "os ydy'r hawlydd eisoes wedi gofyn i’r hawlydd wneud neu ddarparu'r peth hwn. Os ydynt wedi gwneud hynny, dywedwch wrthym pryd y gwnaethant ofyn a beth oedd ymateb y parti arall",
+        "os nad ydy'r hawlydd wedi gofyn i’r parti arall wneud neu ddarparu'r peth hwn eto, esboniwch pam"
       ]
     }
   ]

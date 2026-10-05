@@ -1,0 +1,17 @@
+{
+  "title": "Claimant name",
+  "h1": "Claimant's name",
+  "p1": "Enter the claimant's full name.",
+  "representedClaimantFirstName": "Claimant's first name",
+  "representedClaimantLastName": "Claimant's last name",
+  "errors": {
+    "representedClaimantFirstName": {
+      "required": "Enter the claimant's name",
+      "invalid": "Enter the claimant's first name"
+    },
+    "representedClaimantLastName": {
+      "required": "Enter the claimant's name",
+      "invalid": "Enter the claimant's last name"
+    }
+  }
+}
