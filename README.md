@@ -1,6 +1,6 @@
 # et-sya-frontend
 
-Employment Tribunals Self-Assign (claimant) frontend service — a Node.js/Express web application that enables citizens and representatives to submit and manage Employment Tribunal claims.
+Employment Tribunals Citizen Submit Your Appeal frontend service — a Node.js/Express web application that enables citizens and representatives to submit and manage Employment Tribunal claims.
 
 Part of the HMCTS Reform programme, integrating with `et-cos` (Java backend), IDAM (OAuth2 / OpenID Connect), Redis (sessions / pre-login cache), and CCD (case management).
 
@@ -38,10 +38,10 @@ Part of the HMCTS Reform programme, integrating with `et-cos` (Java backend), ID
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) `>= 20.8.0`
+- [Node.js](https://nodejs.org/) `22.18.0` (see `.nvmrc`; engine supports `>= 20.8.0`)
 - [Yarn](https://yarnpkg.com/) v4 (`4.12.0`)
 - [Docker](https://www.docker.com/) & Docker Compose (optional, for containerised run)
-- [Redis](https://redis.io/) (optional, for Redis session/cache in dev)
+- [Redis](https://redis.io/) (runs on port 6379 for local session/cache)
 
 ### Quick Start
 
@@ -49,20 +49,22 @@ Part of the HMCTS Reform programme, integrating with `et-cos` (Java backend), ID
 # Install dependencies (also sets up Husky and compiles assets)
 yarn install
 
-# Start development server with file-store sessions (no Redis required)
-yarn start:dev
+# Start local redis-server and development server with nodemon
+yarn start:dev-red
 ```
 
 The application will be available at `https://localhost:3002`.
 
 ### Running the Application
 
-| Command              | Description                                                                                     |
-| -------------------- | ----------------------------------------------------------------------------------------------- |
-| `yarn start:dev`     | Runs with `nodemon` using file-store sessions (recommended for local development without Redis) |
-| `yarn start:dev-red` | Starts local `redis-server` and runs with `nodemon` using Redis sessions                        |
-| `yarn start:debug`   | Starts local `redis-server` and runs `src/main/server.ts` with Node inspect on port `9229`      |
-| `yarn start`         | Production mode (`NODE_ENV=production`)                                                         |
+| Command              | Description                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `yarn start:dev-red` | Starts a local `redis-server` in the background and runs `nodemon`                                                  |
+| `yarn start:dev`     | Runs with `nodemon` (expects Redis already running on `127.0.0.1:6379`, as configured in `config/development.json`) |
+| `yarn start:debug`   | Starts a local `redis-server` and runs `src/main/server.ts` with Node inspect on port `9229`                        |
+| `yarn start`         | Production mode (`NODE_ENV=production`)                                                                             |
+
+> **Note on Session Store:** In `config/development.json`, `session.redis.host` defaults to `127.0.0.1:6379`. File-store sessions (`/tmp`) are only used as a fallback if `session.redis.host` is cleared or unset.
 
 ### Running with Docker
 
@@ -93,47 +95,35 @@ Replace `<PORT>` with the port exposed by CFTLIB for IDAM (typically `5062`).
 
 The application consumes configuration and secrets via [node-config](https://github.com/node-config/node-config).
 
-In deployed Kubernetes environments (AAT, Perftest, Prod), secrets are mounted from Azure Key Vault into container volumes and loaded via `@hmcts/properties-volume`. In local development, you can provide them as environment variables or override them in `config/local.json` (gitignored).
+In deployed Kubernetes environments (AAT, Perftest, Prod), secrets are mounted from Azure Key Vault into container volumes and loaded via `@hmcts/properties-volume` into the configuration tree.
+
+In local development, mapped environment variables (defined in `config/custom-environment-variables.json`) and specific environment variables read directly by the codebase can be supplied. Alternatively, local overrides can be placed in `config/development.json` (note: `config/development.json` is tracked by git, so ensure you do not commit confidential credentials).
 
 Key secrets and configurations include:
 
-| Configuration Path             | Environment Variable                    | Key Vault Secret Name            | Description                                                                                                           |
-| ------------------------------ | --------------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `services.launchDarkly.key`    | `LAUNCH_DARKLY_SDK_KEY`                 | `launch-darkly-sdk-key`          | LaunchDarkly server SDK key for feature toggling (e.g. `welsh-language`, `bundles`, `ecc`, `MUL2`, `eraOctober2026`). |
-| `services.addressLookup.token` | `ADDRESS_LOOKUP_TOKEN`                  | `os-places-token`                | Ordnance Survey Places API token used for postcode and address lookup.                                                |
-| `services.addressLookup.url`   | `ADDRESS_LOOK_UP_URL`                   | —                                | Address lookup API base URL (defaults to `https://api.os.uk/search/places/v1/postcode`).                              |
-| `services.idam.clientSecret`   | `IDAM_CLIENT_SECRET`                    | `idam-secret`                    | IDAM OAuth2 client secret for token authentication callbacks.                                                         |
-| `services.idam.clientID`       | —                                       | —                                | IDAM OAuth2 client ID (defaults to `et-sya`).                                                                         |
-| `services.s2s.secret`          | `S2S_SECRET`                            | `s2s-secret-sya`                 | Service-to-service authentication secret for inter-service communication with `et-sya-api`.                           |
-| `services.s2s.url`             | `S2S_URL`                               | —                                | Service-to-service auth provider endpoint.                                                                            |
-| `csrf.secret`                  | `CSRF_SECRET`                           | `csrf-token-secret`              | Double-CSRF token secret used by `csrf-csrf`.                                                                         |
-| `session.secret`               | `SESSION_SECRET`                        | `et-session-secret`              | Express session signing secret.                                                                                       |
-| `session.redis.key`            | `REDIS_KEY`                             | `et-managed-redis-access-key`    | Azure Managed Redis access key for session storage and pre-login cache.                                               |
-| `services.pcq.token`           | `PCQ_TOKEN`                             | `pcq-token-key`                  | Token key for Protected Characteristics Questionnaire (PCQ) service.                                                  |
-| `appInsights.connectionString` | `APPLICATIONINSIGHTS_CONNECTION_STRING` | `app-insights-connection-string` | Azure Application Insights telemetry connection string.                                                               |
+| Configuration Path             | Environment Variable / Direct Code Read          | Key Vault Secret (Properties Volume)        | Description                                                                                                                                                           |
+| ------------------------------ | ------------------------------------------------ | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `services.launchDarkly.key`    | `LAUNCH_DARKLY_SDK_KEY`                          | `secrets.et.launch-darkly-sdk-key`          | LaunchDarkly server SDK key for feature toggling (e.g. `welsh-language`, `bundles`, `ecc`, `MUL2`, `eraOctober2026`). Mapped via `custom-environment-variables.json`. |
+| `services.addressLookup.token` | `ADDRESS_LOOKUP_TOKEN`                           | `secrets.et.os-places-token`                | Ordnance Survey Places API token used for postcode and address lookup. Mapped via `custom-environment-variables.json`.                                                |
+| `services.addressLookup.url`   | `ADDRESS_LOOK_UP_URL`                            | —                                           | Address lookup API base URL (defaults to `https://api.os.uk/search/places/v1/postcode`). Mapped via `custom-environment-variables.json`.                              |
+| `services.idam.clientID`       | `IDAM_CLIENT_ID`                                 | —                                           | IDAM OAuth2 client ID (read directly in `src/main/auth/index.ts`; defaults to `et-sya`).                                                                              |
+| `services.idam.clientSecret`   | — (`config.get('services.idam.clientSecret')`)   | `secrets.et.idam-secret`                    | IDAM OAuth2 client secret for token authentication callbacks.                                                                                                         |
+| `services.s2s.url`             | `S2S_URL`                                        | —                                           | Service-to-service auth provider endpoint. Mapped via `custom-environment-variables.json`.                                                                            |
+| `services.s2s.secret`          | — (`config.get('services.s2s.secret')`)          | `secrets.et.s2s-secret-sya`                 | Service-to-service authentication secret for inter-service communication with backend services.                                                                       |
+| `csrf.secret`                  | `CSRF_SECRET`                                    | `secrets.et.csrf-token-secret`              | Double-CSRF token signing secret (read directly in `src/main/modules/csrf/index.ts` or via config).                                                                   |
+| `session.secret`               | — (`config.get('session.secret')`)               | `secrets.et.et-session-secret`              | Express session signing secret.                                                                                                                                       |
+| `session.redis.host`           | `REDIS_HOST`                                     | —                                           | Redis hostname (defaults to `127.0.0.1` in development).                                                                                                              |
+| `session.redis.key`            | — (`config.get('session.redis.key')`)            | `secrets.et.et-managed-redis-access-key`    | Azure Managed Redis access key.                                                                                                                                       |
+| `services.pcq.token`           | — (`config.get('services.pcq.token')`)           | `secrets.et.pcq-token-key`                  | Token key for Protected Characteristics Questionnaire (PCQ) service. Related env vars: `PCQ_URL`, `PCQ_HEALTH_URL`, `PCQ_ENABLED`.                                    |
+| `appInsights.connectionString` | — (`config.get('appInsights.connectionString')`) | `secrets.et.app-insights-connection-string` | Azure Application Insights telemetry connection string.                                                                                                               |
 
 #### Local Development Secrets Example
 
-To run features locally that require external services (such as address lookup or LaunchDarkly), you can set environment variables in your terminal:
+To run features locally that require external services (such as address lookup or LaunchDarkly), set the mapped environment variables in your environment:
 
 ```bash
 export LAUNCH_DARKLY_SDK_KEY="<your-launchdarkly-key>"
 export ADDRESS_LOOKUP_TOKEN="<your-os-places-token>"
-```
-
-Or create a local configuration override file `config/local.json`:
-
-```json
-{
-  "services": {
-    "launchDarkly": {
-      "key": "<your-launchdarkly-key>"
-    },
-    "addressLookup": {
-      "token": "<your-os-places-token>"
-    }
-  }
-}
 ```
 
 ---
@@ -145,11 +135,11 @@ Or create a local configuration override file `config/local.json`:
 The project uses [ESLint](https://github.com/typescript-eslint/typescript-eslint), [Prettier](https://github.com/prettier/prettier), [Stylelint](https://stylelint.io/), and [sass-lint](https://github.com/sasstools/sass-lint). [Husky](https://github.com/typicode/husky) and `lint-staged` run pre-commit checks automatically.
 
 ```bash
-# Run all linters (sass-lint, ESLint with --fix, and Prettier check)
+# Run all linters (sass-lint, ESLint with --fix, and Prettier formatting check)
 yarn lint
 
-# Auto-fix linting and formatting issues
-yarn lint --fix
+# Auto-format files with Prettier
+yarn prettier --write ./src/
 ```
 
 ### Building Assets
@@ -197,13 +187,13 @@ yarn test:mutation
 
 ### Contract (Pact) Tests
 
-Pact contract tests verify contracts against `et-sya-api`:
+Pact contract tests verify contracts against the `Idam_api` provider:
 
 ```bash
-# Run pact tests
+# Run pact contract tests
 yarn test:pact
 
-# Run and publish pact verification
+# Run tests and publish the consumer pact to the Pact Broker
 yarn test:pact:run-and-publish
 ```
 
@@ -269,14 +259,15 @@ This runs dependency installation, build, linting, unit tests, and accessibility
 This service implements strict Content Security Policy (CSP) nonce tokens for Google Tag Manager (GTM) script loading and dataLayer initialization:
 
 - **Data Layer & Nonces**: A per-request nonce (`globals.nonce`) is generated by Express middleware and supplied in the CSP `script-src` directive as `'nonce-<token>'`.
-- **GTM Injection**: `<meta name="gtm-one-time" content="{{ globals.nonce }}">> tag and `<script nonce="{{ globals.nonce }}">> tags are injected into page `<head>`.
+- **GTM Injection**: `<meta name="gtm-one-time" content="{{ globals.nonce }}">` and `<script nonce="{{ globals.nonce }}">` tags are injected into the page `<head>`.
 - **Cookie Preferences**: User cookie consent preferences are managed via `@hmcts/cookie-manager` and synchronized with Google Tag Manager dataLayer (`cm-user-preferences`).
 
 ### Vulnerability Management
 
-- Dependency audits are managed through Yarn resolutions (`package.json` `resolutions` block) and `yarn npm audit`.
-- Nightly OWASP ZAP security scan alerts are suppressed or filtered via `audit.json` (matching alert fingerprints).
-- Suppressed known advisories with no upstream release are documented in `yarn-audit-known-issues`.
+- **Dependency Audits**: Dependency vulnerabilities are audited with `yarn npm audit` and resolved using Yarn package resolutions in `package.json`. Known issues with no upstream fix are tracked in `yarn-audit-known-issues`.
+- **OWASP ZAP Scans (Nightly)**: Dynamic security testing runs nightly via OWASP ZAP. Alert filtering uses two mechanisms:
+  - `audit.json`: Ignores a specific alert instance matching its unique `fingerprint`.
+  - `ALERT_FILTERS` in `Jenkinsfile_nightly`: Downgrades the severity for all instances of a specific alert rule ID across the scan.
 
 ---
 
