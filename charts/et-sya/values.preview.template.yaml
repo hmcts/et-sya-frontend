@@ -13,7 +13,8 @@ nodejs:
       secrets:
         - app-insights-connection-string
         - idam-secret
-        - et-redis-access-key
+        - et-managed-redis-access-key
+        - et-session-secret
         - os-places-token
         - pcq-token-key
         - launch-darkly-sdk-key

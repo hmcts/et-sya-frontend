@@ -1,7 +1,8 @@
 import ClaimantClaimTypeDiscriminationController from '../../../main/controllers/ClaimantClaimTypeDiscriminationController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TypesOfClaim } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,6 +13,14 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
     'claimant-claim-type-discrimination': {},
     common: {},
   };
+
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   describe('get()', () => {
     it('should render the claimant claim type discrimination page', () => {
@@ -55,6 +64,21 @@ describe('ClaimantClaimTypeDiscriminationController', () => {
       await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
+    });
+
+    it('should redirect to date of last event when ERA is enabled and pay is not selected', async () => {
+      jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+      const controller = new ClaimantClaimTypeDiscriminationController();
+      const req = mockRequestEmpty({
+        body: { claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE] },
+        userCase: { typeOfClaim: [TypesOfClaim.DISCRIMINATION] },
+      });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(LaunchDarkly.getFlagValue).toHaveBeenCalledWith(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DATE_OF_LAST_EVENT);
     });
 
     it('should allow multiple discrimination types to be selected (AC2)', async () => {
