@@ -1,0 +1,97 @@
+{% extends "template.njk" %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">{{ h1 }}</h1>
+      <p class="govuk-body">{{ readYourLetter }}</p>
+
+      <p class="govuk-body govuk-!-font-weight-bold">{{ contentsHeading }}</p>
+      <ul class="govuk-list">
+        <li>&mdash; <a href="#what-a-group-claim-is" class="govuk-link">{{ contentsLink1 }}</a></li>
+        <li>&mdash; <a href="#if-the-tribunal-added-you" class="govuk-link">{{ contentsLink2 }}</a></li>
+        <li>&mdash; <a href="#if-you-or-someone-else" class="govuk-link">{{ contentsLink3 }}</a></li>
+        <li>&mdash; <a href="#legal-representation" class="govuk-link">{{ contentsLink4 }}</a></li>
+        <li>&mdash; <a href="#leaving-or-withdrawing-your-claim" class="govuk-link">{{ contentsLink5 }}</a></li>
+      </ul>
+
+      <h2 id="what-a-group-claim-is" class="govuk-heading-m">{{ whatIsGroupClaimHeading }}</h2>
+      <p class="govuk-body">{{ whatIsGroupClaimP1 }}</p>
+      {{ govukInsetText({
+        text: whatIsGroupClaimInsetText
+      }) }}
+      <p class="govuk-body">{{ whatIsGroupClaimP2 }}</p>
+      <p class="govuk-body">{{ whatIsGroupClaimP3 }}</p>
+      <p class="govuk-body">{{ whatIsGroupClaimP4 }}</p>
+
+      <h2 id="if-the-tribunal-added-you" class="govuk-heading-m">{{ addedToGroupHeading }}</h2>
+      <p class="govuk-body">{{ addedToGroupP1 }}</p>
+      <p class="govuk-body">{{ addedToGroupP2 }}</p>
+      <p class="govuk-body">{{ addedToGroupP3 }}</p>
+
+      <h2 id="if-you-or-someone-else" class="govuk-heading-m">{{ madeGroupClaimHeading }}</h2>
+      <p class="govuk-body">{{ madeGroupClaimP1 }}</p>
+
+      <h3 class="govuk-heading-s">{{ asGroupRepHeading }}</h3>
+      <p class="govuk-body">{{ asGroupRepP1 }}</p>
+      <p class="govuk-body">{{ asGroupRepP2 }}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ asGroupRepBullet1 }}</li>
+        <li>{{ asGroupRepBullet2 }}</li>
+        <li>{{ asGroupRepBullet3 }}</li>
+      </ul>
+      <p class="govuk-body">{{ asGroupRepP3 }}</p>
+
+      <h3 class="govuk-heading-s">{{ notGroupRepHeading }}</h3>
+      <p class="govuk-body">{{ notGroupRepP1 }}</p>
+      <p class="govuk-body">{{ notGroupRepP2 }}</p>
+      {{ govukInsetText({
+        text: notGroupRepInsetText
+      }) }}
+
+      <h2 id="legal-representation" class="govuk-heading-m">{{ legalRepHeading }}</h2>
+      <h3 class="govuk-heading-s">{{ legalRepAddedSubHeading }}</h3>
+      <p class="govuk-body">{{ legalRepAddedP1 }}</p>
+      <h3 class="govuk-heading-s">{{ legalRepMadeSubHeading }}</h3>
+      <p class="govuk-body">{{ legalRepMadeP1 }}</p>
+      <p class="govuk-body">
+        <a href="https://www.gov.uk/find-legal-advice" target="_blank" class="govuk-link">{{ legalRepGuidanceLinkText }}</a>
+      </p>
+
+      <h2 id="leaving-or-withdrawing-your-claim" class="govuk-heading-m">{{ leavingHeading }}</h2>
+      <p class="govuk-body">{{ leavingP1 }}</p>
+      <p class="govuk-body">{{ leavingP2 }}</p>
+
+      <h2 class="govuk-heading-m">{{ howToUseOnlineAccountHeading }}</h2>
+      <p class="govuk-body">{{ howToUseOnlineAccountP1 }}</p>
+      <p class="govuk-body">{{ howToUseOnlineAccountP2 }}</p>
+      <p class="govuk-body">{{ howToUseOnlineAccountP3 }}</p>
+      <p class="govuk-body">{{ howToUseOnlineAccountP4 }}</p>
+
+      {{ govukButton({
+        text: returnButtonText,
+        href: returnUrl
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+      {% set sideBarContent %}
+        {% include "../citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: contact,
+        html: sideBarContent,
+        open: true
+      }) }}
+    </div>
+  </div>
+{% endblock %}

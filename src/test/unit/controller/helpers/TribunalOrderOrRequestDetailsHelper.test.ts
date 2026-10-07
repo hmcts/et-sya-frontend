@@ -1,9 +1,14 @@
+import dayjs from 'dayjs';
+
 import {
   activateTribunalOrdersAndRequestsLink,
+  anyResponseRequired,
   filterOutSpecialNotifications,
   getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
+  isConsideringClaimsTogether,
+  isGroupClaimsResponseExpired,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
@@ -68,7 +73,7 @@ describe('Tribunal order or request Details helper', () => {
     const responseContent = await getNotificationResponses(notificationWithResponses, translations, req);
     expect(pageContent[0].key).toEqual({ classes: summaryListClass, text: 'Hearing' });
     expect(pageContent[0].value).toEqual({ text: 'Hearing' });
-    expect(pageContent[1].key).toEqual({ classes: summaryListClass, text: 'Notification Subject' });
+    expect(pageContent[1].key).toEqual({ classes: summaryListClass, text: 'Notification subject' });
     expect(pageContent[1].value).toEqual({ text: 'Case management orders / requests' });
     expect(pageContent[2].key).toEqual({ classes: summaryListClass, text: 'Date sent' });
     expect(pageContent[2].value).toEqual({ text: '2 May 2019' });
@@ -253,6 +258,42 @@ describe('Tribunal order or request Details helper', () => {
       text: 'Request made by',
     });
     expect(pageContent[10].value).toEqual({ text: 'Legal officer' });
+  });
+
+  it('should return expected tribunal group claims details content with response required', () => {
+    const groupClaimsNotificationItem: SendNotificationTypeItem = {
+      id: '1',
+      value: {
+        date: '2 May 2019',
+        sendNotificationSubject: ['Group claims'],
+        sendNotificationGroupClaims: 'Considering claims together',
+        sendNotificationResponseTribunal: 'Yes - view document for details',
+        sendNotificationSelectParties: 'Both parties',
+        sendNotificationGroupClaimsMadeBy: 'Legal officer',
+        sendNotificationFullName3: 'Jane Doe',
+        sendNotificationNotify: 'Both parties',
+      },
+    };
+    const pageContent = getTribunalOrderOrRequestDetails(translations, groupClaimsNotificationItem, req.url);
+
+    expect(pageContent[0].key).toEqual({ classes: summaryListClass, text: 'Notification subject' });
+    expect(pageContent[0].value).toEqual({ text: 'Group claims' });
+    expect(pageContent[1].key).toEqual({ classes: summaryListClass, text: 'Notification type' });
+    expect(pageContent[1].value).toEqual({ text: 'Considering claims together' });
+    expect(pageContent[2].key).toEqual({ classes: summaryListClass, text: 'Date sent' });
+    expect(pageContent[2].value).toEqual({ text: '2 May 2019' });
+    expect(pageContent[3].key).toEqual({ classes: summaryListClass, text: 'Sent by' });
+    expect(pageContent[3].value).toEqual({ text: 'Tribunal' });
+    expect(pageContent[4].key).toEqual({ classes: summaryListClass, text: 'Response due' });
+    expect(pageContent[4].value).toEqual({ text: 'Yes - view document for details' });
+    expect(pageContent[5].key).toEqual({ classes: summaryListClass, text: 'Party or parties to respond' });
+    expect(pageContent[5].value).toEqual({ text: 'Both parties' });
+    expect(pageContent[6].key).toEqual({ classes: summaryListClass, text: 'Case management order made by' });
+    expect(pageContent[6].value).toEqual({ text: 'Legal officer' });
+    expect(pageContent[7].key).toEqual({ classes: summaryListClass, text: 'Name' });
+    expect(pageContent[7].value).toEqual({ text: 'Jane Doe' });
+    expect(pageContent[8].key).toEqual({ classes: summaryListClass, text: 'Sent to' });
+    expect(pageContent[8].value).toEqual({ text: 'Both parties' });
   });
 
   describe('getClaimantTribunalResponseBannerContent', () => {
@@ -442,6 +483,21 @@ describe('Tribunal order or request Details helper', () => {
       } as SendNotificationTypeItem;
       await activateTribunalOrdersAndRequestsLink([notificationSubmitted], userCase);
       expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.SUBMITTED);
+    });
+
+    it('tribunal orders and requests section should be responseOptional when a Group Claims Considering claims together notification has response optional', async () => {
+      const userCase = { ...mockUserCaseWithCitizenHubLinks };
+      const notificationGroupClaim = {
+        value: {
+          date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
+          sendNotificationGroupClaims: 'Considering claims together',
+          sendNotificationResponseTribunal: ResponseRequired.YES,
+          notificationState: HubLinkStatus.VIEWED,
+        } as SendNotificationType,
+      } as SendNotificationTypeItem;
+
+      await activateTribunalOrdersAndRequestsLink([notificationGroupClaim], userCase);
+      expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.RESPONSE_OPTIONAL);
     });
 
     it('tribunal orders and requests section should be not started when a response is required for any notification', async () => {
@@ -715,6 +771,21 @@ describe('Tribunal order or request Details helper', () => {
       expect(notification.showAlert).toBeTruthy();
       expect(notification.needsResponse).toBeTruthy();
     });
+
+    it('should not show viewed Group Claims notification in banner', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          sendNotificationGroupClaims: 'Considering claims together',
+          sendNotificationResponseTribunal: 'Yes - view document for details',
+          notificationState: 'viewed',
+          date: '13 August 2026',
+        },
+      };
+
+      setNotificationBannerData([notification], 'url');
+      expect(notification.showAlert).toBeFalsy();
+    });
   });
 
   describe('filterOutHearingOnlyNotifications', () => {
@@ -767,6 +838,91 @@ describe('Tribunal order or request Details helper', () => {
       expect(result[1].value.sendNotificationTitle).toEqual('2 Show');
       expect(result[2].value.sendNotificationTitle).toEqual('3 Show');
       expect(result[3].value.sendNotificationTitle).toEqual('5 Show');
+    });
+  });
+
+  describe('anyResponseRequired for Group Claims', () => {
+    it('should return true for Group Claims notification within 7 days when viewed and not responded', () => {
+      const item = {
+        id: '1',
+        value: {
+          sendNotificationGroupClaims: 'Considering claims together',
+          sendNotificationResponseTribunal: 'Yes - view document for details',
+          notificationState: 'viewed',
+          date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
+        },
+      };
+      expect(anyResponseRequired(item)).toBe(true);
+    });
+
+    it('should return false for Group Claims notification when expired (> 7 days)', () => {
+      const item = {
+        id: '1',
+        value: {
+          sendNotificationGroupClaims: 'Considering claims together',
+          sendNotificationResponseTribunal: 'Yes - view document for details',
+          notificationState: 'viewed',
+          date: dayjs().subtract(10, 'day').format('D MMMM YYYY'),
+        },
+      };
+      expect(anyResponseRequired(item)).toBe(false);
+    });
+  });
+
+  describe('isGroupClaimsResponseExpired', () => {
+    it('should return false when date is within 7 days', () => {
+      const item = {
+        id: '1',
+        value: {
+          date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
+        },
+      };
+      expect(isGroupClaimsResponseExpired(item)).toBe(false);
+    });
+
+    it('should return true when date is more than 7 days ago', () => {
+      const item = {
+        id: '1',
+        value: {
+          date: dayjs().subtract(10, 'day').format('D MMMM YYYY'),
+        },
+      };
+      expect(isGroupClaimsResponseExpired(item)).toBe(true);
+    });
+
+    it('should return false when date is missing or invalid', () => {
+      expect(isGroupClaimsResponseExpired({ id: '1', value: {} })).toBe(false);
+      expect(isGroupClaimsResponseExpired({ id: '1', value: { date: 'invalid-date' } })).toBe(false);
+    });
+  });
+
+  describe('isConsideringClaimsTogether', () => {
+    it('should return true when sendNotificationGroupClaims is Considering claims together', () => {
+      const item = {
+        value: {
+          sendNotificationGroupClaims: NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER,
+        },
+      };
+      expect(isConsideringClaimsTogether(item)).toBe(true);
+    });
+
+    it('should return true when sendNotificationSubject includes Considering claims together', () => {
+      const item = {
+        value: {
+          sendNotificationSubject: [NotificationSubjects.CONSIDERING_CLAIMS_TOGETHER],
+        },
+      };
+      expect(isConsideringClaimsTogether(item)).toBe(true);
+    });
+
+    it('should return false when notification is not Considering claims together', () => {
+      const item = {
+        value: {
+          sendNotificationGroupClaims: NotificationSubjects.PART_OF_GROUP_CLAIM,
+          sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+        },
+      };
+      expect(isConsideringClaimsTogether(item)).toBe(false);
     });
   });
 });

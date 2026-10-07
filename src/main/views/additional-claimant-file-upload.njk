@@ -1,0 +1,128 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/step-by-step-navigation.njk" import stepByStepNavigation %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  {% if uploadedFileName %}
+    {% set successHtml %}
+      <h3 class="govuk-notification-banner__heading">
+        {{ successHeading }}
+      </h3>
+      <p class="govuk-body">{{ uploadedFileName }} {{ successBody }}</p>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+      titleText: successTitle,
+      html: successHtml,
+      type: "success"
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ h1 }}</h1>
+
+      {% set section1ColumnNames %}
+        <p class="govuk-body">{{ section1.p3 }}</p>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for columns in section1.columnNames %}
+            <li>{{ columns }}</li>
+          {% endfor %}
+        </ul>
+      {% endset %}
+
+      {% set section2BodyHtml %}
+        <p class="govuk-body">{{ section2.p1 }}</p>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for step in section2.steps %}
+            <li>{{ step }}</li>
+          {% endfor %}
+        </ul>
+      {% endset %}
+
+      {% set section3FormHtml %}
+        {% include "form/fields.njk" %}
+
+        {% if userCase.additionalClaimantSpreadsheet %}
+          <h2 class="govuk-heading-m">{{ uploadedDocument }}</h2>
+
+          {{ govukSummaryList({
+            classes: 'govuk-!-width-two-thirds',
+            rows: [
+              {
+                key: {
+                html: '<a class="govuk-link" href="' + userCase.additionalClaimantSpreadsheet.document_binary_url + '">' + userCase.additionalClaimantSpreadsheet.document_filename + '</a>',
+                classes: 'govuk-!-width-one-half'
+              },
+                value: {
+                html: govukTag({
+                  text: uploadedTag,
+                  classes: 'govuk-tag--green'
+                })
+              },
+                actions: {
+                items: [
+                  {
+                    href: postAddress + "/remove",
+                    text: removeLink,
+                    visuallyHiddenText: userCase.additionalClaimantSpreadsheet.document_filename
+                  }
+                ]
+              }
+              }
+            ]
+          }) }}
+        {% endif %}
+      {% endset %}
+
+      <form class="form" id="main-form" method="post" action="{{postAddress}}?_csrf={{ csrfToken }}" novalidate="novalidate" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
+
+        {{ stepByStepNavigation({
+          steps: [
+            {
+              id: "section-1",
+              title: section1.heading,
+              bodyText: section1.p1,
+              collapsible: false,
+              links: [
+              {
+                href: section1.linkUrl,
+                text: section1.link,
+                download: true
+              }
+            ],
+              footer: section1ColumnNames | safe
+            },
+            {
+              id: "section-2",
+              title: section2.heading,
+              body: section2BodyHtml | safe,
+              collapsible: false
+            },
+            {
+              id: "section-3",
+              title: section3.heading,
+              body: section3FormHtml | safe,
+              collapsible: false
+            }
+          ]
+        }) }}
+
+        {% include "form/saveButtons.njk" %}
+      </form>
+    </div>
+  </div>
+{% endblock %}

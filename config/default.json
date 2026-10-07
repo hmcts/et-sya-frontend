@@ -11,6 +11,9 @@
   "featureFlags": {
     "welsh": "true"
   },
+  "limits": {
+    "groupClaimsFileUploadMaxRows": 50
+  },
   "csrf": {
     "secret": "TO BE PICKED UP FROM ENV"
   },

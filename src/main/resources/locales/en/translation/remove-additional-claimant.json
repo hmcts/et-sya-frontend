@@ -1,0 +1,12 @@
+{
+  "title": "Are you sure you want to remove this claimant?",
+  "h1": "Are you sure you want to remove this claimant?",
+  "legend": "Are you sure you want to remove",
+  "yes": "Yes",
+  "no": "No - I do not want to remove this claimant",
+  "errors": {
+    "removeAdditionalClaimant": {
+      "required": "Provide an answer, tell us if you want to remove this claimant"
+    }
+  }
+}

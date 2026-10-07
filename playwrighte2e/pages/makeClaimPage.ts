@@ -10,6 +10,10 @@ export class MakeClaimPage extends BasePage {
     await this.webAction.verifyTextIsVisible('Contact details');
     await this.webAction.verifyTextIsVisible('Your preferences');
 
+    //Group claims details
+    await this.webAction.verifyTextIsVisible('Other people in your claim');
+    await this.webAction.verifyTextIsVisible('Claiming on your own or with others');
+
     //Employment details
     await this.webAction.verifyTextIsVisible('Employment and respondent details');
     await this.webAction.verifyTextIsVisible('Employment status');

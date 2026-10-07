@@ -16,6 +16,7 @@ import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 
 import { getDocumentDetails } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
+import { isResponseOptionalNotification } from './TribunalOrderOrRequestDetailsHelper';
 
 export async function getSendNotifications(req: AppRequest): Promise<TribunalNotification[]> {
   const { userCase, user } = req.session;
@@ -89,12 +90,20 @@ const buildSendNotification = (
   translations: AnyRecord,
   languageParam: string
 ): TribunalNotification => {
+  let displayStatus = translations[item.value.notificationState];
+  let statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
+
+  if (isResponseOptionalNotification(item)) {
+    displayStatus = translations.responseOptional;
+    statusColor = displayStatusColorMap.get(HubLinkStatus.RESPONSE_OPTIONAL);
+  }
+
   return {
     date: item.value.date,
     redirectUrl: getRedirectUrl(item, languageParam),
     sendNotificationTitle: item.value.sendNotificationTitle,
-    displayStatus: translations[item.value.notificationState],
-    statusColor: displayStatusColorMap.get(item.value.notificationState as HubLinkStatus),
+    displayStatus,
+    statusColor,
   };
 };
 

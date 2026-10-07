@@ -38,6 +38,7 @@ export default class ClaimantApplicationsController {
     };
     //reset return url to prevent redirect loop after deleting a draft claim
     req.session.returnUrl = undefined;
+    req.session.additionalClaimantsRedirectCheckAnswer = undefined;
 
     // A single /user-cases call returns the user's own claims ([CREATOR]) and the claims they are
     // representing someone else on ([CLAIMANTNONLEGALREPRESENTATIVE]) — the backend auto-expands the

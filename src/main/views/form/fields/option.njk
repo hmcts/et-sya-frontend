@@ -10,6 +10,9 @@
     classes: "hidden" if field.labelHidden else labelClasses,
     isPageHeading: field.isPageHeading
   },
+  hint: {
+    html: getContent(field.hint)
+  },
   items: formItems(field.values, userCase[fieldName]),
   errorMessage: getError(fieldName),
   formGroup: {

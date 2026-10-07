@@ -3,6 +3,7 @@ import { Page } from '@playwright/test';
 import { ClaimDetailsPage } from '../pages/claimDetailsPage';
 import { ClaimStartPage } from '../pages/claimStartPage';
 import { EmploymentDetailsPage } from '../pages/employmentDetailsPage';
+import { GroupClaimsDetailsPage } from '../pages/groupClaimsDetailsPage';
 import { LoginPage } from '../pages/loginPage';
 import { MakeClaimPage } from '../pages/makeClaimPage';
 import { PersonDetailsPage } from '../pages/personalDetailsPage';
@@ -15,6 +16,7 @@ export type PageFixtures = {
   saveCardPage: SaveCardPage;
   makeClaimPage: MakeClaimPage;
   personalDetailsPage: PersonDetailsPage;
+  groupClaimsDetailsPage: GroupClaimsDetailsPage;
   employmentDetailsPage: EmploymentDetailsPage;
   claimDetailsPage: ClaimDetailsPage;
   submitPage: SubmitPage;
@@ -42,6 +44,13 @@ export const pageFixtures = {
     use: (page: PersonDetailsPage) => Promise<void>
   ): Promise<void> => {
     await use(new PersonDetailsPage(page));
+  },
+
+  groupClaimsDetailsPage: async (
+    { page }: { page: Page },
+    use: (page: GroupClaimsDetailsPage) => Promise<void>
+  ): Promise<void> => {
+    await use(new GroupClaimsDetailsPage(page));
   },
 
   employmentDetailsPage: async (
