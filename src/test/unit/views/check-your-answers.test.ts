@@ -12,7 +12,6 @@ import {
   TellUsWhatYouWant,
   TypesOfClaim,
 } from '../../../main/definitions/definition';
-import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
@@ -31,33 +30,33 @@ describe('Check your answers confirmation page', () => {
   beforeAll(async () => {
     const app = mockApp({
       userCase: {
-          caseTypeId: CaseTypeId.ENGLAND_WALES,
-          typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
-          claimantWorkAddressQuestion: YesOrNo.NO,
-          pastEmployer: YesOrNo.YES,
-          noticePeriod: YesOrNo.YES,
-          isStillWorking: StillWorking.WORKING,
-          caseType: CaseType.SINGLE,
-          address1: '10 Test Street',
-          addressTown: 'Test Town',
-          addressCountry: 'United Kingdom',
-          addressPostcode: 'AB1 2CD',
-          claimSummaryText: 'This is what happened.',
-          respondents: [
-            {
-              respondentNumber: 1,
-              respondentName: 'John Does',
-              respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
-              respondentAddressTown: 'London',
-              respondentAddressCountry: 'United Kingdom',
-              acasCert: YesOrNo.NO,
-              acasCertNum: '12345',
-              noAcasReason: NoAcasNumberReason.ANOTHER,
-            },
-          ],
-          claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
-          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
-        },
+        caseTypeId: CaseTypeId.ENGLAND_WALES,
+        typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
+        claimantWorkAddressQuestion: YesOrNo.NO,
+        pastEmployer: YesOrNo.YES,
+        noticePeriod: YesOrNo.YES,
+        isStillWorking: StillWorking.WORKING,
+        caseType: CaseType.SINGLE,
+        address1: '10 Test Street',
+        addressTown: 'Test Town',
+        addressCountry: 'United Kingdom',
+        addressPostcode: 'AB1 2CD',
+        claimSummaryText: 'This is what happened.',
+        respondents: [
+          {
+            respondentNumber: 1,
+            respondentName: 'John Does',
+            respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+            respondentAddressTown: 'London',
+            respondentAddressCountry: 'United Kingdom',
+            acasCert: YesOrNo.NO,
+            acasCertNum: '12345',
+            noAcasReason: NoAcasNumberReason.ANOTHER,
+          },
+        ],
+        claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+        tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
+      },
     });
     jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
 
@@ -386,8 +385,8 @@ describe('Check your answers confirmation page - New Job with start date', () =>
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[26].innerHTML).contains('New job start date', '21-04-2020');
+    expect(allKeys[26].innerHTML).contains('Have you got a new job?');
+    expect(allKeys[27].innerHTML).contains('New job start date');
   });
 });
 
@@ -435,8 +434,8 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[25].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[26].innerHTML).contains('New job start date', '');
+    expect(allKeys[26].innerHTML).contains('Have you got a new job?');
+    expect(allKeys[27].innerHTML).contains('New job start date');
   });
 });
 
@@ -484,7 +483,7 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
 
   it('should show Discrimination and Pay types of claim', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[35].innerHTML).contains('What type of discrimination claim are you making?', 'Not provided');
-    expect(allKeys[36].innerHTML).contains('What type of pay claim are you making?', 'Not provided');
+    expect(allKeys[36].innerHTML).contains('What type of discrimination claim are you making?');
+    expect(allKeys[37].innerHTML).contains('What type of pay claim are you making?');
   });
 });

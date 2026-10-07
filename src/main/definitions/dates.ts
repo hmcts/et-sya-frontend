@@ -128,6 +128,7 @@ export const AdditionalClaimantDobFormFields = {
     (isDateEmpty(value) ? '' : isDateInputInvalid(value)) ||
     isDateInPast(value) ||
     isAtLeast16YearsOld(value),
+};
 
 export const DateOfLastEventFormFields = {
   classes: 'govuk-date-input',

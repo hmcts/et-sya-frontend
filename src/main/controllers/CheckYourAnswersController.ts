@@ -18,18 +18,12 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 export default class CheckYourAnswersController {
   @CaseStateCheck()
   @CheckAnswersValidationCheck()
-  public get = async (req: AppRequest, res: Response): Promise<void> => {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
     const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
-    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim?.length === 0) {
-      if (req.session.errors === undefined) {
-        req.session.errors = [];
-      }
-      req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
-    }
     req.session.respondentRedirectCheckAnswer = undefined;
 
     const translations: AnyRecord = {
@@ -60,7 +54,6 @@ export default class CheckYourAnswersController {
       groupClaimMetaRows,
       groupClaimCardsHtml,
       groupClaimPostRows,
-      translations,
       yourDetails: getYourDetails(userCase, translations, eraOctober2026Enabled),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
