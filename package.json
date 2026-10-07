@@ -81,7 +81,7 @@
     "i18next-http-middleware": "^3.3.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.23",
-    "multer": "2.4.0",    
+    "multer": "2.4.0",
     "nunjucks": "^3.2.4",
     "postcode": "^5.1.0",
     "prettier": "^2.8.7",
@@ -182,7 +182,7 @@
     "formidable": "^3.5.4",
     "immutable": "^5.1.8",
     "lodash": "^4.17.23",
-    "multer": "2.4.0",
+    "multer": "2.2.0",
     "editorconfig/minimatch": "^10.0.0",
     "puppeteer": "^25.0.0",
     "ws": "^8.21.0",
@@ -206,8 +206,6 @@
     "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.1": "npm:js-yaml@4.3.2"
-    "multer": "2.2.0",
-    "immutable": "^5.1.8"
   },
   "packageManager": "yarn@4.12.0"
 }
