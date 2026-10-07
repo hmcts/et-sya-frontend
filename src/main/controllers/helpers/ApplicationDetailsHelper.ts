@@ -32,11 +32,18 @@ export const getTseApplicationDetails = (
     rows.push(addSummaryRow(translations.requestDate, applicationDate));
   }
 
+  const copyToOtherPartyValue =
+    application.copyToOtherPartyYesOrNo === YesOrNo.YES
+      ? translations.yes || translations.Yes
+      : application.copyToOtherPartyYesOrNo === YesOrNo.NO
+      ? translations.no || translations.No
+      : translations[application.copyToOtherPartyYesOrNo];
+
   rows.push(
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
-    addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
+    addSummaryHtmlRow(translations.supportingMaterial, downloadLink || translations.notProvided),
+    addSummaryRow(translations.copyCorrespondence, copyToOtherPartyValue)
   );
 
   if (application.copyToOtherPartyText) {

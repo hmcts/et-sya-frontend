@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
@@ -63,7 +64,10 @@ export default class StoredToSubmitController {
     try {
       putSelectedAppToUserCase(userCase);
       await getCaseApi(req.session.user?.accessToken).storedToSubmitClaimantTse(req.session.userCase);
-      clearTseFields(userCase);
+      if (userCase) {
+        userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
+        clearTseFields(userCase);
+      }
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);

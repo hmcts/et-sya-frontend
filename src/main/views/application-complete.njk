@@ -10,32 +10,28 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {{ govukPanel({
-            titleText: titleText
-        }) 
-      }}
-      <br>
-        <h2 class="govuk-heading-m">{{ pHead }}</h2>
-        {% if rule92 %}
-            <div class="govuk-body">
-                <p>{{ pYes.p1 }} <b>{{ applicationDate }}</b> {{ pYes.p1a }}</p>
-                <p>{{ pYes.p2 }}</p>
-                <p>{{ pYes.p3 }}</p>
-            </div>
-        {% else %}
-            <p class="govuk-body">{{ pNo }}</p>
-        {% endif %}
-    </div>
-  </div>
-{% endblock %}
-
-{% block footer %}
-  <div class="govuk-width-container">
-    <div class="govuk-button-group">
-      {{ govukButton({
-        text: button,
-        href: redirectUrl
+        titleText: titleText
       }) }}
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-6">{{ pHead }}</h2>
+      {% if rule92 %}
+        <p class="govuk-body">{{ pYes.p1 }}<b>{{ applicationDate }}</b>{{ pYes.p1a }}</p>
+        {% if isGroupClaim %}
+          <p class="govuk-body">{{ pYes.p2 }}</p>
+        {% endif %}
+        <p class="govuk-body">{{ pYes.p3 }}</p>
+        <p class="govuk-body">{{ viewAppPrefix }}<a href="{{ yourApplicationsUrl }}" class="govuk-link">{% if isGroupClaim %}{{ viewAppLink }}{% else %}{{ viewAppLinkSingle if viewAppLinkSingle else "your applications" }}{% endif %}</a>{{ viewAppSuffix }}</p>
+      {% else %}
+        <p class="govuk-body">{{ pNo }}</p>
+        <p class="govuk-body">{{ viewAppPrefixNo }}<a href="{{ yourApplicationsUrl }}" class="govuk-link">{% if isGroupClaim %}{{ viewAppLink }}{% else %}{{ viewAppLinkSingle if viewAppLinkSingle else "your applications" }}{% endif %}</a>{{ viewAppSuffix }}</p>
+      {% endif %}
+
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        {{ govukButton({
+          text: button,
+          href: redirectUrl
+        }) }}
+      </div>
     </div>
   </div>
-  {{ super() }}
 {% endblock %}

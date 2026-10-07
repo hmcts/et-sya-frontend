@@ -14,6 +14,9 @@ export default class SubmitTseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       const userCase = req.session?.userCase;
+      if (!userCase?.hubLinksStatuses) {
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
       await handleUpdateHubLinksStatuses(req, logger);
       await submitClaimantTse(req, logger);

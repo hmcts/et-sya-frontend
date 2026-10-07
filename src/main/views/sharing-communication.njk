@@ -1,0 +1,49 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-hint">{{ applicationType }}</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+
+      <h2 class="govuk-heading-m">{{ rule90Header }}</h2>
+      <p class="govuk-body">{{ p1 }}</p>
+      <p class="govuk-body">{{ p2 }}</p>
+      <p class="govuk-body">{{ p3 }}</p>
+
+      <h2 class="govuk-heading-m">{{ noShareHeader }}</h2>
+      <p class="govuk-body">{{ p4 }}</p>
+      <p class="govuk-body">{{ p5 }}</p>
+
+      <form method="post" action="{{ postUrl }}">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: continue,
+            preventDoubleClick: true
+          }) }}
+          <a class="govuk-link" href="{{ cancelUrl }}">{{ cancel }}</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      {% set sideBarContent %}
+        {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: contact if contact else "Contact",
+        html: sideBarContent
+      }) }}
+    </div>
+  </div>
+{% endblock %}

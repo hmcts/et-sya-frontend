@@ -73,14 +73,24 @@ describe('Application details', () => {
     expect(appContent[4].value).toEqual({ html: 'downloadLink' });
     expect(appContent[5].key).toEqual({
       classes: summaryListClass,
-      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+      text: 'Do you agree to the tribunal sharing this application to satisfy the rules of procedure?',
     });
-    expect(appContent[5].value).toEqual({ text: YesOrNo.NO });
+    expect(appContent[5].value).toEqual({ text: translations.no });
     expect(appContent[6].key).toEqual({
       classes: summaryListClass,
       text: 'Reason for not informing other party',
     });
     expect(appContent[6].value).toEqual({ text: 'test reason' });
+  });
+
+  it('should display "Not provided" when no download link is provided for supporting material', () => {
+    const appContentNoDoc = getTseApplicationDetails(
+      selectedApplication,
+      translations,
+      '',
+      genericTseApplicationType.date
+    );
+    expect(appContentNoDoc[4].value).toEqual({ html: translations.notProvided });
   });
 });
 

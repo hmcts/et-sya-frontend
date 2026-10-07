@@ -13,13 +13,16 @@ import { getPageContent } from './helpers/FormHelpers';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { updateStoredRedirectUrl } from './helpers/YourAppsToTheTribunalHelpers';
 
-export default class YourAppsToTheTribunalController {
+/**
+ * Controller for the group claim requests and applications page.
+ */
+export default class GroupClaimRequestsAndApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
     let tseGenericApps = getAllTseApplicationCollection(userCase);
 
     if (isGroupClaim(userCase)) {
-      tseGenericApps = tseGenericApps.filter(app => app.value?.copyToOtherPartyYesOrNo !== YesOrNo.YES);
+      tseGenericApps = tseGenericApps.filter(app => app.value?.copyToOtherPartyYesOrNo === YesOrNo.YES);
     }
 
     const translations: AnyRecord = {
@@ -35,9 +38,10 @@ export default class YourAppsToTheTribunalController {
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
       TranslationKeys.YOUR_APPLICATIONS,
+      TranslationKeys.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS,
     ]);
 
-    res.render(TranslationKeys.YOUR_APPLICATIONS, {
+    res.render(TranslationKeys.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS, {
       ...content,
       tseGenericApps,
       translations,

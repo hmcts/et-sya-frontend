@@ -37,11 +37,23 @@ describe('Contact Application Controller', () => {
   });
 
   describe('GET - application names', () => {
-    it('should render contact application page', async () => {
+    it('should redirect to sharing-communication page if not confirmed', async () => {
       const controller = new ContactTheTribunalSelectedController();
       const response = mockResponse();
       const request = mockRequestWithTranslation({ t }, translationJsons);
       request.params.selectedOption = 'withdraw';
+
+      await controller.get(request, response);
+      expect(response.redirect).toHaveBeenCalledWith(PageUrls.SHARING_COMMUNICATION + languages.ENGLISH_URL_PARAMETER);
+    });
+
+    it('should render contact application page when sharing-communication is confirmed', async () => {
+      const controller = new ContactTheTribunalSelectedController();
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ t }, translationJsons);
+      request.params.selectedOption = 'withdraw';
+      request.session.userCase.contactApplicationType = 'withdraw';
+      request.session.contactTribunalSharingCommunicationConfirmed = true;
 
       await controller.get(request, response);
       expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
@@ -50,6 +62,8 @@ describe('Contact Application Controller', () => {
     it('allow white-listed application parameters', async () => {
       const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
       req.params.selectedOption = 'withdraw';
+      req.session.userCase.contactApplicationType = 'withdraw';
+      req.session.contactTribunalSharingCommunicationConfirmed = true;
       const res = mockResponse();
       await new ContactTheTribunalSelectedController().get(req, res);
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
@@ -63,6 +77,8 @@ describe('Contact Application Controller', () => {
         document_url: 'url',
       };
       req.params.selectedOption = 'withdraw';
+      req.session.userCase.contactApplicationType = 'withdraw';
+      req.session.contactTribunalSharingCommunicationConfirmed = true;
       const res = mockResponse();
       await new ContactTheTribunalSelectedController().get(req, res);
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
