@@ -1,5 +1,8 @@
 import { expect } from 'chai';
 import request from 'supertest';
+jest.mock('../../../main/modules/featureFlag/launchDarkly', () => ({
+  getFlagValue: jest.fn().mockResolvedValue(false),
+}));
 
 import { CaseType, CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
@@ -9,6 +12,8 @@ import {
   TellUsWhatYouWant,
   TypesOfClaim,
 } from '../../../main/definitions/definition';
+import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/check-your-answers';
@@ -24,9 +29,8 @@ let htmlRes: Document;
 
 describe('Check your answers confirmation page', () => {
   beforeAll(async () => {
-    await request(
-      mockApp({
-        userCase: {
+    const app = mockApp({
+      userCase: {
           caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
@@ -54,8 +58,10 @@ describe('Check your answers confirmation page', () => {
           claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
           tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
         },
-      })
-    )
+    });
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+
+    await request(app)
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -70,6 +76,19 @@ describe('Check your answers confirmation page', () => {
   it('should display submit claim button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[5].innerHTML).contains('Submit', 'Could not find the submit claim button');
+  });
+
+  it('should guard the submit claim button against repeat clicks', () => {
+    const submitButton = htmlRes.getElementById('main-form-submit');
+    expect(submitButton.tagName).equals('A', 'Submit claim button should be a link');
+    expect(submitButton.getAttribute('href')).contains(
+      InterceptPaths.SUBMIT_CASE,
+      'Submit claim button has wrong href'
+    );
+    expect(submitButton.hasAttribute('data-navigation-link')).equals(
+      true,
+      'Submit claim button should have the navigation link data attribute'
+    );
   });
 
   it('should display Save as draft button', () => {
@@ -98,7 +117,7 @@ describe('Check your answers confirmation page', () => {
     expect(typeOfClaimList.length).equals(1, 'Incorrect number of rows found');
   });
 
-  it('should display 10 rows in Your Details summary list', () => {
+  it('should display 10 rows in Your Details summary list when the ERA feature is disabled', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
@@ -122,7 +141,7 @@ describe('Check your answers confirmation page', () => {
     expect(respondentDetailsList.length).equals(6, 'Incorrect number of rows found');
   });
 
-  it('should display 6 rows in Claim Details summary list', () => {
+  it('should display 7 rows in Claim Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const claimDetailsList = summaryListSections[5].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(claimDetailsList.length).equals(7, 'Incorrect number of rows found');
@@ -316,10 +335,10 @@ describe('CYA for Scottish cases', () => {
       });
   });
 
-  it('should display 8 rows in Your Details summary list', () => {
+  it('should display 9 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(9, 'Incorrect number of rows found');
   });
 });
 
@@ -465,7 +484,7 @@ describe('Check your answers confirmation page - Discrimination and Pay with und
 
   it('should show Discrimination and Pay types of claim', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[35].innerHTML).contains('What type of discrimination claim are you making?');
-    expect(allKeys[36].innerHTML).contains('What type of pay claim are you making?');
+    expect(allKeys[35].innerHTML).contains('What type of discrimination claim are you making?', 'Not provided');
+    expect(allKeys[36].innerHTML).contains('What type of pay claim are you making?', 'Not provided');
   });
 });

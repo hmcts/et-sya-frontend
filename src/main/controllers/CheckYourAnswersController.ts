@@ -3,8 +3,9 @@ import { Response } from 'express';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { CheckAnswersValidationCheck } from '../decorators/CheckAnswersValidationCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getClaimDetails } from './helpers/ClaimDetailsAnswersHelper';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
@@ -17,11 +18,18 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 export default class CheckYourAnswersController {
   @CaseStateCheck()
   @CheckAnswersValidationCheck()
-  public get(req: AppRequest, res: Response): void {
-    if (!req.session?.userCase) {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
+    const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim?.length === 0) {
+      if (req.session.errors === undefined) {
+        req.session.errors = [];
+      }
+      req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
+    }
     req.session.respondentRedirectCheckAnswer = undefined;
 
     const translations: AnyRecord = {
@@ -49,10 +57,11 @@ export default class CheckYourAnswersController {
       respondents: req.session.userCase?.respondents,
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
-      yourDetails: getYourDetails(userCase, translations),
       groupClaimMetaRows,
       groupClaimCardsHtml,
       groupClaimPostRows,
+      translations,
+      yourDetails: getYourDetails(userCase, translations, eraOctober2026Enabled),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,
