@@ -22,6 +22,7 @@ export interface CreateCaseResponse {
 }
 
 export interface CaseApiDataResponse {
+  // CCD/API JSON may deserialize 16-digit case ids as numbers
   id: string | number;
   // Role the user holds on this case, injected by /user-cases (may be top-level or in case_data).
   caseUserRole?: string;

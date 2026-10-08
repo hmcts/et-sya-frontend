@@ -11,6 +11,8 @@ import {
   isReturnUrlIsCheckAnswers,
   returnNextPage,
   returnSafeCitizenHubUrl,
+  returnSafeClaimantRepAboutYouUrl,
+  returnSafeClaimantRepHubUrl,
   returnSafePageUrl,
   returnSafeRedirectUrl,
   returnSafeTransferredCaseUrl,
@@ -273,11 +275,12 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
     );
   });
 
-  it('should fall back to claimant applications when caseId is not numeric', () => {
+  it('should fall back to claimant applications when caseId is not a 16-digit CCD id', () => {
     const req = mockRequest({});
     req.url = PageUrls.CITIZEN_HUB.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeTransferredCaseUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeTransferredCaseUrl('20548', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
   });
 
   it('should build transferred-case url when caseId is a number from the API', () => {
@@ -300,7 +303,7 @@ describe('Router Helpers - returnSafeTransferredCaseUrl', () => {
 });
 
 describe('Router Helpers - returnSafeCitizenHubUrl', () => {
-  it('should build citizen-hub url for numeric caseId', () => {
+  it('should build citizen-hub url for a 16-digit caseId', () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', '1234567890123456') + languages.ENGLISH_URL_PARAMETER;
 
@@ -327,11 +330,49 @@ describe('Router Helpers - returnSafeCitizenHubUrl', () => {
     );
   });
 
-  it('should fall back to claimant applications when caseId is not numeric', () => {
+  it('should fall back to claimant applications when caseId is not a 16-digit CCD id', () => {
     const req = mockRequest({});
     req.url = PageUrls.SELECTED_APPLICATION.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
 
     expect(returnSafeCitizenHubUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeCitizenHubUrl('12234', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+  });
+});
+
+describe('Router Helpers - returnSafeClaimantRepAboutYouUrl / returnSafeClaimantRepHubUrl', () => {
+  it('should build claimant-rep about-you url for a 16-digit caseId', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', '1234567890123456') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeClaimantRepAboutYouUrl('1234567890123456', req)).toBe(
+      `${PageUrls.CLAIMANT_REP_ABOUT_YOU_BASE}1234567890123456${languages.ENGLISH_URL_PARAMETER}`
+    );
+  });
+
+  it('should build claimant-rep hub url for a 16-digit caseId', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIMANT_REP_HUB.replace(':caseId', '1234567890123456') + languages.WELSH_URL_PARAMETER;
+
+    expect(returnSafeClaimantRepHubUrl('1234567890123456', req)).toBe(
+      `${PageUrls.CLAIMANT_REP_HUB_BASE}1234567890123456${languages.WELSH_URL_PARAMETER}`
+    );
+  });
+
+  it('should fall back to claimant applications when caseId is not a 16-digit CCD id', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIMANT_REP_ABOUT_YOU.replace(':caseId', 'abc') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeClaimantRepAboutYouUrl('abc', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(returnSafeClaimantRepHubUrl('case-123', req)).toBe(PageUrls.CLAIMANT_APPLICATIONS);
+  });
+
+  it('should strip hyphenated CCD ids when building claimant-rep URLs', () => {
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIMANT_REP_HUB.replace(':caseId', '1111222233334444') + languages.ENGLISH_URL_PARAMETER;
+
+    expect(returnSafeClaimantRepHubUrl('1111-2222-3333-4444', req)).toBe(
+      `${PageUrls.CLAIMANT_REP_HUB_BASE}1111222233334444${languages.ENGLISH_URL_PARAMETER}`
+    );
   });
 
   it('should reject scientific notation and hex case ids', () => {

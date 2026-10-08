@@ -596,7 +596,7 @@ describe('Case Selection Service using Case Api', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('Failed to retrieve case'));
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
@@ -609,7 +609,7 @@ describe('Case Selection Service using Case Api', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockRejectedValue(new Error('Failed to retrieve case'));
     caseApi.getCaseTransferInfo = jest.fn().mockRejectedValue(new Error('not transferred'));
-    await selectUserCase(req, res, '12234');
+    await selectUserCase(req, res, '1786637776090539');
 
     expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER);
   });

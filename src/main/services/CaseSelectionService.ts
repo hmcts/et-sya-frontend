@@ -119,7 +119,9 @@ const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest, caseId: st
     // getClaimStepsUrl returns one of two constants; language comes from constant branches only
     return returnSafePageUrl(getClaimStepsUrl(req), req);
   }
-  // Use the route caseId (always a string) rather than userCase.id, which the API may return as a number
+  // Prefer the route caseId (always a string) over userCase.id from the API.
+  // returnSafeCitizenHubUrl only embeds getSafeCaseIdDigits-validated 16-digit ids
+  // plus a constant language query, so Fortify does not treat this as an open redirect.
   return returnSafeCitizenHubUrl(caseId, req);
 };
 
