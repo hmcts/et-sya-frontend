@@ -10,7 +10,7 @@ describe('FormSubmissionCheck Decorator', () => {
     describe('Direct URL access prevention', () => {
       it('should redirect to citizen hub when visitedContactTribunalSelection flag is false', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = false;
         req.url = '/contact-the-tribunal/withdraw';
@@ -20,12 +20,42 @@ describe('FormSubmissionCheck Decorator', () => {
         const result = checkFormSubmissionAndRedirect(req, res);
 
         expect(result).toBe(true);
-        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+      });
+
+      it('should redirect to citizen hub when userCase id is a number from the API', () => {
+        const req = mockRequest({
+          userCase: { id: 1786637776090539 as unknown as string },
+        });
+        req.session.visitedContactTribunalSelection = false;
+        req.url = '/contact-the-tribunal/withdraw';
+        req.get = jest.fn();
+        const res = mockResponse();
+
+        const result = checkFormSubmissionAndRedirect(req, res);
+
+        expect(result).toBe(true);
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
+      });
+
+      it('should not redirect when userCase id is not digit-only', () => {
+        const req = mockRequest({
+          userCase: { id: '1e10' },
+        });
+        req.session.visitedContactTribunalSelection = false;
+        req.url = '/contact-the-tribunal/withdraw';
+        req.get = jest.fn();
+        const res = mockResponse();
+
+        const result = checkFormSubmissionAndRedirect(req, res);
+
+        expect(result).toBe(false);
+        expect(res.redirect).not.toHaveBeenCalled();
       });
 
       it('should redirect to citizen hub when visitedContactTribunalSelection flag is undefined', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = undefined;
         req.url = '/contact-the-tribunal/withdraw';
@@ -35,12 +65,12 @@ describe('FormSubmissionCheck Decorator', () => {
         const result = checkFormSubmissionAndRedirect(req, res);
 
         expect(result).toBe(true);
-        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
       });
 
       it('should redirect with Welsh language parameter when URL contains lng=cy', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = false;
         req.url = '/contact-the-tribunal/withdraw?lng=cy';
@@ -50,12 +80,12 @@ describe('FormSubmissionCheck Decorator', () => {
         const result = checkFormSubmissionAndRedirect(req, res);
 
         expect(result).toBe(true);
-        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=cy');
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=cy');
       });
 
       it('should allow access when visitedContactTribunalSelection flag is true', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = true;
         req.url = '/contact-the-tribunal/withdraw';
@@ -72,7 +102,7 @@ describe('FormSubmissionCheck Decorator', () => {
     describe('Back button from completion pages prevention', () => {
       it('should redirect when coming from /application-complete', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = true;
         req.headers = { referer: 'https://localhost:3002/application-complete' };
@@ -83,12 +113,12 @@ describe('FormSubmissionCheck Decorator', () => {
         const result = checkFormSubmissionAndRedirect(req, res);
 
         expect(result).toBe(true);
-        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
       });
 
       it('should allow access when coming from non-completion page', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = true;
         req.headers = { referer: 'https://localhost:3002/contact-the-tribunal' };
@@ -104,7 +134,7 @@ describe('FormSubmissionCheck Decorator', () => {
 
       it('should allow access when referer is undefined', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = true;
         req.headers = {};
@@ -164,7 +194,7 @@ describe('FormSubmissionCheck Decorator', () => {
 
       it('should handle Referrer header as well as Referer', () => {
         const req = mockRequest({
-          userCase: { id: '12345' },
+          userCase: { id: '1786637776090539' },
         });
         req.session.visitedContactTribunalSelection = true;
         req.headers = { referrer: 'https://localhost:3002/application-complete' };
@@ -175,7 +205,7 @@ describe('FormSubmissionCheck Decorator', () => {
         const result = checkFormSubmissionAndRedirect(req, res);
 
         expect(result).toBe(true);
-        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+        expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
       });
     });
   });
@@ -207,7 +237,7 @@ describe('FormSubmissionCheck Decorator', () => {
 
     it('should execute the original method when form access is valid', () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = true;
       req.url = '/contact-the-tribunal/withdraw';
@@ -222,7 +252,7 @@ describe('FormSubmissionCheck Decorator', () => {
 
     it('should not execute the original method when redirect occurs due to missing flag', () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = false;
       req.url = '/contact-the-tribunal/withdraw';
@@ -232,12 +262,12 @@ describe('FormSubmissionCheck Decorator', () => {
       const result = controller.testMethod(req, res);
 
       expect(result).toBeUndefined();
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
     });
 
     it('should not execute the original method when redirect occurs due to completion page referer', () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = true;
       req.headers = { referer: 'https://localhost:3002/application-complete' };
@@ -248,12 +278,12 @@ describe('FormSubmissionCheck Decorator', () => {
       const result = controller.testMethod(req, res);
 
       expect(result).toBeUndefined();
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
     });
 
     it('should handle async methods correctly when form access is valid', async () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = true;
       req.url = '/contact-the-tribunal/withdraw';
@@ -268,7 +298,7 @@ describe('FormSubmissionCheck Decorator', () => {
 
     it('should handle async methods correctly when redirect occurs', async () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = false;
       req.url = '/contact-the-tribunal/withdraw';
@@ -278,12 +308,12 @@ describe('FormSubmissionCheck Decorator', () => {
       const result = await controller.testAsyncMethod(req, res);
 
       expect(result).toBeUndefined();
-      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/12345?lng=en');
+      expect(res.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
     });
 
     it('should preserve method context (this binding)', () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = true;
       req.url = '/contact-the-tribunal/withdraw';
@@ -315,7 +345,7 @@ describe('FormSubmissionCheck Decorator', () => {
 
     it('should pass additional arguments to the original method', () => {
       const req = mockRequest({
-        userCase: { id: '12345' },
+        userCase: { id: '1786637776090539' },
       });
       req.session.visitedContactTribunalSelection = true;
       req.url = '/contact-the-tribunal/withdraw';
