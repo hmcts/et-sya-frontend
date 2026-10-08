@@ -6,11 +6,11 @@ import {
   translateTypesOfClaims,
 } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { clearCaseTransferInfoIfStale, handleTransferredCaseRedirect } from '../controllers/helpers/CaseTransferHelper';
-import { getClaimStepsUrl, returnSafeCitizenHubUrl } from '../controllers/helpers/RouterHelpers';
+import { getClaimStepsUrl, returnSafeCitizenHubUrl, returnSafePageUrl } from '../controllers/helpers/RouterHelpers';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { ErrorPages, PageUrls, languages } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat } from '../helper/ApiFormatter';
@@ -114,53 +114,38 @@ export const getUserCasesByLastModified = async (req: AppRequest, caseUserRole?:
   }
 };
 
-const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest): string => {
+const getCaseDestinationUrl = (userCase: CaseWithId, req: AppRequest, caseId: string): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    // getClaimStepsUrl returns one of two constants, and the language comes from constant
-    // branches only, so the redirect URL is not treated as unvalidated
-    const claimStepsUrl = getClaimStepsUrl(req);
-    return req.url?.includes(languages.WELSH_URL_PARAMETER)
-      ? claimStepsUrl + languages.WELSH_URL_PARAMETER
-      : claimStepsUrl + languages.ENGLISH_URL_PARAMETER;
+    // getClaimStepsUrl returns one of two constants; language comes from constant branches only
+    return returnSafePageUrl(getClaimStepsUrl(req), req);
   }
-  return returnSafeCitizenHubUrl(userCase.id, req);
+  // Use the route caseId (always a string) rather than userCase.id, which the API may return as a number
+  return returnSafeCitizenHubUrl(caseId, req);
 };
 
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
     Reflect.deleteProperty(req.session, 'userCase');
-    // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-    const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
-      ? PageUrls.CHECKLIST + languages.WELSH_URL_PARAMETER
-      : PageUrls.CHECKLIST + languages.ENGLISH_URL_PARAMETER;
-    return res.redirect(redirectUrl);
+    return res.redirect(returnSafePageUrl(PageUrls.CHECKLIST, req));
   }
   try {
     const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     if (response.data === undefined || response.data === null) {
-      // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-      const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
-        ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
-        : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
-      return res.redirect(redirectUrl);
+      return res.redirect(returnSafePageUrl(PageUrls.LIP_OR_REPRESENTATIVE, req));
     }
 
     req.session.userCase = fromApiFormat(response.data);
     clearCaseTransferInfoIfStale(req, caseId);
 
     req.session.save();
-    return res.redirect(getCaseDestinationUrl(req.session.userCase, req));
+    return res.redirect(getCaseDestinationUrl(req.session.userCase, req, caseId));
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error(errorMessage);
     if (await handleTransferredCaseRedirect(req, res, caseId, err)) {
       return;
     }
-    // Language comes from constant branches only, so the redirect URL is not treated as unvalidated
-    const redirectUrl = req.url?.includes(languages.WELSH_URL_PARAMETER)
-      ? ErrorPages.NOT_FOUND + languages.WELSH_URL_PARAMETER
-      : ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER;
-    return res.redirect(redirectUrl);
+    return res.redirect(returnSafePageUrl(ErrorPages.NOT_FOUND, req));
   }
 };
 
