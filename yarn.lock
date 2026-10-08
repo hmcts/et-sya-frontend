@@ -7854,6 +7854,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie-signature@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "cookie-signature@npm:1.2.2"
+  checksum: 10/be44a3c9a56f3771aea3a8bd8ad8f0a8e2679bcb967478267f41a510b4eb5ec55085386ba79c706c4ac21605ca76f4251973444b90283e0eb3eeafe8a92c7708
+  languageName: node
+  linkType: hard
+
 "cookie-signature@npm:~1.0.6, cookie-signature@npm:~1.0.7":
   version: 1.0.7
   resolution: "cookie-signature@npm:1.0.7"
@@ -17172,9 +17179,9 @@ __metadata:
   linkType: hard
 
 "serialize-javascript@npm:^7.0.4":
-  version: 7.0.7
-  resolution: "serialize-javascript@npm:7.0.7"
-  checksum: 10/da427e5660c88c24020cae037883ac234127248c7f972d7e1eb3cea863d89d1816fa4bcf0ecd39f92082c346347ed312c46e50c8473060dcd723bd1891e98942
+  version: 7.1.2
+  resolution: "serialize-javascript@npm:7.1.2"
+  checksum: 10/e5550ef83b945196f563d33b3c80767e2f27f8c3856b4d19e515f5fd881273d80b9f7fced9247c8ed7cafff5c4de244cf93ed45fd6dc572c4aec303cd47f8dfc
   languageName: node
   linkType: hard
 
@@ -18008,30 +18015,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^10.2.3":
-  version: 10.2.3
-  resolution: "superagent@npm:10.2.3"
+"superagent@npm:^10.3.0":
+  version: 10.4.1
+  resolution: "superagent@npm:10.4.1"
   dependencies:
     component-emitter: "npm:^1.3.1"
     cookiejar: "npm:^2.1.4"
     debug: "npm:^4.3.7"
     fast-safe-stringify: "npm:^2.1.1"
-    form-data: "npm:^4.0.4"
+    form-data: "npm:^4.0.5"
     formidable: "npm:^3.5.4"
     methods: "npm:^1.1.2"
     mime: "npm:2.6.0"
-    qs: "npm:^6.11.2"
-  checksum: 10/377bf938e68927dd772169c5285be27872bf6e84fac01c52bcd9396bc5b348c9ded8f8be54649510ec09a67bc5096055847b37cb01b3bca0eb06ff1856170e35
+    qs: "npm:^6.14.1"
+  checksum: 10/ccf7c8f03b4b3c2cd5195deb9c637959ce654e5db7e8361420f3f8d1644d7a8689567943b57b2526fc2118f5718bab1532163df3f15ad69a5e4a8d7a8cb5be65
   languageName: node
   linkType: hard
 
 "supertest@npm:^7.0.0":
-  version: 7.1.4
-  resolution: "supertest@npm:7.1.4"
+  version: 7.3.1
+  resolution: "supertest@npm:7.3.1"
   dependencies:
+    cookie-signature: "npm:^1.2.2"
     methods: "npm:^1.1.2"
-    superagent: "npm:^10.2.3"
-  checksum: 10/ecb5d41f2b62b257dbdcabac245c32b8e8fb264fe2636dd85c2c883569d23dc14adc0a471abb84187cbdb49bc36ad870ad355b4a0b85973f510fd57fc229e6cc
+    superagent: "npm:^10.3.0"
+  checksum: 10/ea8ea4ec198d97d776d718274e17ec4e7f2ca9b2378215204fcc2f084daf791731553a00eebec96aa579911911aa685a782f948d94c64a96bb28507fb52a54d6
   languageName: node
   linkType: hard
 
