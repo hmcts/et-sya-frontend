@@ -33,7 +33,7 @@ command -v jq >/dev/null 2>&1 || { echo >&2 "jq is required but it's not install
 
 # Temporary files cleanup function
 cleanup() {
-rm -f new_vulnerabilities unneeded_suppressions yarn-audit-result sorted-yarn-audit-issues sorted-yarn-audit-known-issues active_suppressions unused_suppressions
+rm -f new_vulnerabilities unneeded_suppressions sorted-yarn-audit-issues sorted-yarn-audit-known-issues active_suppressions unused_suppressions yarn-audit-known-issues-result
 
 }
 
@@ -57,6 +57,22 @@ cat <<'EOF'
 EOF
 }
 
+# One advisory JSON object per line. Supports the npm audit report (an
+# "advisories" map) and Yarn 4 NDJSON ({ "value", "children" } per line).
+normalize_advisories() {
+  input="$1"
+  output="$2"
+  if [[ ! -s "$input" ]]; then
+    : > "$output"
+    return
+  fi
+  if jq -e 'type == "object" and has("advisories")' "$input" >/dev/null 2>&1; then
+    jq -cr '.advisories | to_entries[].value' "$input" | sort > "$output"
+  else
+    jq -c '.' "$input" | sort > "$output"
+  fi
+}
+
 # Function to check for unneeded suppressions
 check_for_unneeded_suppressions() {
   while IFS= read -r line; do
@@ -71,9 +87,15 @@ check_for_unneeded_suppressions() {
   fi
 }
 
-# Perform yarn audit and process the results
-yarn npm audit --recursive --environment production --json > yarn-audit-result
-jq -cr '.advisories | to_entries[].value' < yarn-audit-result | sort > sorted-yarn-audit-issues
+# Perform yarn audit and process the results.
+# yarn npm audit exits 1 when advisories are found. That is a report, not a crash.
+audit_status=0
+yarn npm audit --recursive --environment production --json > yarn-audit-result || audit_status=$?
+if [[ "$audit_status" -ne 0 && ! -s yarn-audit-result ]]; then
+  echo "yarn npm audit failed (exit ${audit_status}) and produced no report."
+  exit 1
+fi
+normalize_advisories yarn-audit-result sorted-yarn-audit-issues
 
 # Check if there were any vulnerabilities
 if [[ ! -s sorted-yarn-audit-issues ]];  then
@@ -81,9 +103,7 @@ if [[ ! -s sorted-yarn-audit-issues ]];  then
 
   # Check for unneeded suppressions when no vulnerabilities are present
   if [ -f yarn-audit-known-issues ]; then
-    # Convert JSON array into sorted list of suppressed issues
-    jq -cr '.advisories | to_entries[].value' yarn-audit-known-issues \
-    | sort > sorted-yarn-audit-known-issues
+    normalize_advisories yarn-audit-known-issues sorted-yarn-audit-known-issues
 
     # When no vulnerabilities are found, all suppressions are unneeded
     check_for_unneeded_suppressions
@@ -100,19 +120,19 @@ if [ ! -f yarn-audit-known-issues ]; then
   cleanup
   exit 1
 else
-  # Test for old format of yarn-audit-known-issues
-  if ! jq 'has("actions", "advisories", "metadata")' yarn-audit-known-issues | grep -q true; then
+  # Accept the npm audit report or Yarn 4 NDJSON. Anything else is unusable.
+  if ! jq -e 'type == "object" and (has("advisories") or has("children"))' yarn-audit-known-issues >/dev/null 2>&1; then
     print_borked_known_issues
     exit 1
   fi
 
   # Handle edge case for when audit returns in different orders for the two files
-  # Convert JSON array into sorted list of issues.
-  jq -cr '.advisories | to_entries[].value' yarn-audit-known-issues \
-  | sort > sorted-yarn-audit-known-issues
+  normalize_advisories yarn-audit-known-issues sorted-yarn-audit-known-issues
 
   # Retain old data ingestion style for cosmosDB
-  jq -cr '.advisories| to_entries[] | {"type": "auditAdvisory", "data": { "advisory": .value }}' yarn-audit-known-issues > yarn-audit-known-issues-result
+  if jq -e 'type == "object" and has("advisories")' yarn-audit-known-issues >/dev/null 2>&1; then
+    jq -cr '.advisories| to_entries[] | {"type": "auditAdvisory", "data": { "advisory": .value }}' yarn-audit-known-issues > yarn-audit-known-issues-result
+  fi
 
   # Check each issue in sorted-yarn-audit-result is also present in sorted-yarn-audit-known-issues
   while IFS= read -r line; do
