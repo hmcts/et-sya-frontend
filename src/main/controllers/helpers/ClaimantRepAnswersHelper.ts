@@ -388,7 +388,11 @@ export const getClaimantRepAboutYouDetails = (
   ];
 };
 
-export const getRepresentativeDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+export const getRepresentativeDetails = (
+  userCase: CaseWithId,
+  translations: AnyRecord,
+  eraOctober2026Enabled = false
+): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
 
   rows.push(
@@ -489,6 +493,36 @@ export const getRepresentativeDetails = (userCase: CaseWithId, translations: Any
       )
     )
   );
+
+  if (eraOctober2026Enabled) {
+    const panelRows = [
+      addSummaryRow(
+        translations.personalDetails.hearingPanelPreference,
+        userCase.claimantHearingPanelPreference ?? translations.notProvided,
+        createChangeAction(
+          PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.REP_ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.hearingPanelPreference
+        )
+      ),
+    ];
+
+    if (userCase.claimantHearingPanelPreferenceWhy) {
+      panelRows.push(
+        addSummaryRow(
+          translations.personalDetails.hearingPanelPreferenceWhy,
+          userCase.claimantHearingPanelPreferenceWhy,
+          createChangeAction(
+            PageUrls.HEARING_PANEL_PREFERENCE + InterceptPaths.REP_ANSWERS_CHANGE,
+            translations.change,
+            translations.personalDetails.hearingPanelPreferenceWhy
+          )
+        )
+      );
+    }
+
+    rows.splice(rows.length - 1, 0, ...panelRows);
+  }
 
   return rows;
 };
@@ -605,7 +639,11 @@ export const getClaimantRespondentSection = (respondent: Respondent, translation
   ),
 ];
 
-export const getClaimantClaimDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+export const getClaimantClaimDetails = (
+  userCase: CaseWithId,
+  translations: AnyRecord,
+  eraOctober2026Enabled = false
+): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
 
   if (userCase.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION)) {
@@ -637,6 +675,21 @@ export const getClaimantClaimDetails = (userCase: CaseWithId, translations: AnyR
     );
   }
 
+  if (eraOctober2026Enabled) {
+    rows.push(
+      addSummaryRow(
+        translations.claimDetails.dateOfLastEvent,
+        userCase.dateOfLastEvent
+          ? userCase.dateOfLastEvent.day + '-' + userCase.dateOfLastEvent.month + '-' + userCase.dateOfLastEvent.year
+          : translations.notProvided,
+        createChangeAction(
+          PageUrls.DATE_OF_LAST_EVENT + InterceptPaths.REP_ANSWERS_CHANGE,
+          translations.change,
+          translations.claimDetails.dateOfLastEvent
+        )
+      )
+    );
+  }
   rows.push(
     addSummaryRow(
       translations.claimDetails.describeWhatHappened,
