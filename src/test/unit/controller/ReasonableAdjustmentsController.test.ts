@@ -3,6 +3,7 @@ import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import * as FormHelpers from '../../../main/controllers/helpers/FormHelpers';
 import { CaseTypeId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseState } from '../../../main/definitions/definition';
 import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
@@ -48,6 +49,48 @@ describe('Reasonable Adjustments Controller', () => {
       await controller.get(request, response);
 
       expect(response.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT);
+    } finally {
+      featureMock.mockRestore();
+    }
+  });
+
+  it.each([
+    { caseTypeId: CaseTypeId.ENGLAND_WALES, represented: YesOrNo.NO },
+    { caseTypeId: CaseTypeId.ENGLAND_WALES, represented: YesOrNo.YES },
+    { caseTypeId: CaseTypeId.SCOTLAND, represented: YesOrNo.NO },
+    { caseTypeId: CaseTypeId.SCOTLAND, represented: YesOrNo.YES },
+  ])('should render and save the legacy support form with CUI disabled for %j', async caseData => {
+    const featureMock = jest
+      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+      .mockReturnValue(new CuiYourSupportFeature([]));
+    try {
+      const request = mockRequest({
+        body: {
+          reasonableAdjustments: YesOrNo.YES,
+          reasonableAdjustmentsDetail: 'Support with hearing documents',
+        },
+        userCase: {
+          caseTypeId: caseData.caseTypeId,
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          claimantRepresentedQuestion: caseData.represented,
+        },
+      });
+      const response = mockResponse();
+
+      await controller.get(request, response);
+
+      expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
+      expect(response.redirect).not.toHaveBeenCalled();
+
+      await controller.post(request, response);
+
+      expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalledWith(request, expect.anything());
+      expect(response.redirect).toHaveBeenCalledWith(
+        caseData.represented === YesOrNo.YES ? PageUrls.REPRESENTATIVE_DETAILS_CHECK : PageUrls.PERSONAL_DETAILS_CHECK
+      );
+      expect(request.session.userCase.reasonableAdjustments).toBe(YesOrNo.YES);
+      expect(request.session.userCase.reasonableAdjustmentsDetail).toBe('Support with hearing documents');
+      expect(request.session.yourSupportSaveError).toBeUndefined();
     } finally {
       featureMock.mockRestore();
     }

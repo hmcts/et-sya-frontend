@@ -138,6 +138,7 @@ export default class YourSupportController {
   };
 
   public callback = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.yourSupportSaveError = undefined;
     try {
       if (await this.redirectIfUnavailable(req, res)) {
         return;
@@ -168,7 +169,9 @@ export default class YourSupportController {
         await this.saveCuiFlagChanges(req, result);
       } catch (error) {
         req.session.returnUrl = undefined;
+        req.session.yourSupportSaveError = true;
         req.session.userCase.claimantExternalFlags = originalClaimantExternalFlags;
+        req.session.userCase.updateDraftCaseError = undefined;
         logger.error('Error saving CUI journey data', error);
         res.redirect(this.getListPageUrl(req));
         return;
@@ -177,6 +180,7 @@ export default class YourSupportController {
       res.redirect(this.getCuiCompletionUrl(req));
     } catch (error) {
       req.session.returnUrl = undefined;
+      req.session.yourSupportSaveError = true;
       logger.error('Error retrieving CUI journey data', error);
       res.redirect(this.getListPageUrl(req));
     }

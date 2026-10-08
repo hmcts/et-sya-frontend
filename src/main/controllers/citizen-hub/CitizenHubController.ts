@@ -42,6 +42,7 @@ import {
   isClaimantRepresentedByNonHmctsRepresentative,
   isClaimantRepresentedByOrganisation,
 } from '../helpers/ContactTheTribunalHelper';
+import { consumeYourSupportSaveError } from '../helpers/ErrorHelpers';
 import { shouldShowHearingBanner } from '../helpers/HearingHelpers';
 import {
   activateJudgmentsLink,
@@ -242,6 +243,7 @@ export default class CitizenHubController {
       showNoLongerRepresentedNotification,
       claimantRepresentedByOrganisation,
       isClaimantRepresentedByNonHmctsRepresentative: showAboutYouForNonHmctsRep,
+      yourSupportSaveError: consumeYourSupportSaveError(req),
     });
   }
 }

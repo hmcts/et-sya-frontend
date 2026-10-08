@@ -13,6 +13,7 @@ import { getPreloginCaseData } from '../services/CacheService';
 import { getCaseApi } from '../services/CaseService';
 
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
+import { consumeYourSupportSaveError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { addParameterToUrl, getLanguageParam } from './helpers/RouterHelpers';
@@ -160,6 +161,7 @@ export default class StepsToMakingYourClaimController {
       }redirect=claim-steps`,
       redirectUrl,
       updateDraftCaseError,
+      yourSupportSaveError: consumeYourSupportSaveError(req),
     });
   }
 }

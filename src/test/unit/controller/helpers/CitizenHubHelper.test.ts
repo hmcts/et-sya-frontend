@@ -703,13 +703,27 @@ describe('shouldShowRespondentApplicationReceived', () => {
 });
 
 describe('getHubLinksUrlMap', () => {
-  it('does not place the your support link under your claim by default', async () => {
-    const sectionIndexToLinkNames = await getSectionIndexToLinkNames(CaseTypeId.ENGLAND_WALES);
-    const yourClaimLinkNames = sectionIndexToLinkNames.find(linkNames => linkNames.includes(HubLinkNames.Et1ClaimForm));
+  it.each([CaseTypeId.ENGLAND_WALES, CaseTypeId.SCOTLAND])(
+    'does not place the your support link under your claim when CUI is disabled for %s',
+    async caseTypeId => {
+      const featureMock = jest
+        .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+        .mockReturnValue(new CuiYourSupportFeature([]));
+      try {
+        const sectionIndexToLinkNames = await getSectionIndexToLinkNames(caseTypeId);
+        const yourClaimLinkNames = sectionIndexToLinkNames.find(linkNames =>
+          linkNames.includes(HubLinkNames.Et1ClaimForm)
+        );
 
-    expect(yourClaimLinkNames).toStrictEqual([HubLinkNames.Et1ClaimForm]);
-    expect(sectionIndexToLinkNames.flat().filter(linkName => linkName === HubLinkNames.YourSupport)).toHaveLength(0);
-  });
+        expect(yourClaimLinkNames).toStrictEqual([HubLinkNames.Et1ClaimForm]);
+        expect(sectionIndexToLinkNames.flat().filter(linkName => linkName === HubLinkNames.YourSupport)).toHaveLength(
+          0
+        );
+      } finally {
+        featureMock.mockRestore();
+      }
+    }
+  );
 
   it('places the your support link under your claim when CUI your support is enabled for the case type', async () => {
     const featureMock = enableCuiYourSupportForScotland();

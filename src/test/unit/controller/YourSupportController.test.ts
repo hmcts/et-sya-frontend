@@ -1,9 +1,10 @@
 import YourSupportController from '../../../main/controllers/YourSupportController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { CaseFlags, YesOrNo } from '../../../main/definitions/case';
+import { CaseFlags, CaseTypeId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import * as CuiService from '../../../main/services/CuiService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -107,6 +108,100 @@ describe('Your Support Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.REASONABLE_ADJUSTMENTS);
   });
+
+  describe.each(['get', 'post', 'redirectToCuiJourney', 'callback', 'confirmation', 'submittedConfirmation'] as const)(
+    '%s with CUI your support disabled',
+    handler => {
+      it.each([
+        {
+          name: 'England and Wales draft claim',
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
+          id: '1234',
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          represented: YesOrNo.NO,
+          languageParam: languages.ENGLISH_URL_PARAMETER,
+          redirectUrl: PageUrls.REASONABLE_ADJUSTMENTS,
+        },
+        {
+          name: 'represented Scotland draft claim in Welsh',
+          caseTypeId: CaseTypeId.SCOTLAND,
+          id: '1234',
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          represented: YesOrNo.YES,
+          languageParam: languages.WELSH_URL_PARAMETER,
+          redirectUrl: PageUrls.REASONABLE_ADJUSTMENTS,
+        },
+        {
+          name: 'England and Wales submitted case',
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
+          id: '1234',
+          state: CaseState.SUBMITTED,
+          represented: YesOrNo.NO,
+          languageParam: languages.ENGLISH_URL_PARAMETER,
+          redirectUrl: PageUrls.CITIZEN_HUB.replace(':caseId', '1234'),
+        },
+        {
+          name: 'Scotland submitted case in Welsh',
+          caseTypeId: CaseTypeId.SCOTLAND,
+          id: '1234',
+          state: CaseState.SUBMITTED,
+          represented: YesOrNo.YES,
+          languageParam: languages.WELSH_URL_PARAMETER,
+          redirectUrl: PageUrls.CITIZEN_HUB.replace(':caseId', '1234'),
+        },
+        {
+          name: 'missing case',
+          caseTypeId: undefined,
+          id: undefined,
+          state: undefined,
+          represented: YesOrNo.NO,
+          languageParam: '',
+          redirectUrl: PageUrls.CLAIMANT_APPLICATIONS,
+        },
+      ])('should preserve the existing redirect for a $name without fetching or saving CUI data', async caseData => {
+        const flagMock = jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+        try {
+          jest
+            .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+            .mockReturnValue(new CuiYourSupportFeatureModule.CuiYourSupportFeature());
+          const getCuiServiceMock = jest.spyOn(CuiService, 'getCuiService');
+          const getOneTimeToken = jest.fn();
+          const getToken = jest.fn();
+          const controller = new YourSupportController({ getOneTimeToken, getToken });
+          const req = mockRequest({
+            body: { reasonableAdjustments: YesOrNo.YES },
+            userCase: {
+              id: caseData.id,
+              caseTypeId: caseData.caseTypeId,
+              state: caseData.state,
+              claimantRepresentedQuestion: caseData.represented,
+              reasonableAdjustments: YesOrNo.NO,
+              updateDraftCaseError: 'Existing draft save error',
+              claimantExternalFlags: { details: [getCcdSupportFlag()] },
+            },
+          });
+          const originalUserCase = { ...req.session.userCase };
+          req.url = PageUrls.YOUR_SUPPORT + caseData.languageParam;
+          const res = mockResponse();
+
+          await controller[handler](req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl + caseData.languageParam);
+          expect(res.render).not.toHaveBeenCalled();
+          expect(getCuiServiceMock).not.toHaveBeenCalled();
+          expect(getToken).not.toHaveBeenCalled();
+          expect(getOneTimeToken).not.toHaveBeenCalled();
+          expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+          expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+          expect(req.session.userCase).toEqual(originalUserCase);
+          expect(req.session.errors).toBeUndefined();
+          expect(req.session.yourSupportSaveError).toBeUndefined();
+        } finally {
+          flagMock.mockRestore();
+        }
+      });
+    }
+  );
 
   it('should set the return url when your support is opened from claim steps', async () => {
     const controller = new YourSupportController();
@@ -447,6 +542,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
+      session: { yourSupportSaveError: true },
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -466,6 +562,7 @@ describe('Your Support Controller', () => {
       details: [getCcdSupportFlag()],
     });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_CONFIRMATION);
+    expect(req.session.yourSupportSaveError).toBeUndefined();
   });
 
   it('should update submitted case flags after a submitted CUI journey is submitted', async () => {
@@ -485,6 +582,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
+      session: { yourSupportSaveError: true },
       userCase: {
         id: '1234',
         state: CaseState.SUBMITTED,
@@ -504,6 +602,7 @@ describe('Your Support Controller', () => {
       details: [getCcdSupportFlag()],
     });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT_SUBMITTED_CONFIRMATION);
+    expect(req.session.yourSupportSaveError).toBeUndefined();
   });
 
   it('should redirect back without saving when a submitted CUI callback has no returned flag changes', async () => {
@@ -856,7 +955,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
-      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS, yourSupportSaveError: true },
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -872,6 +971,7 @@ describe('Your Support Controller', () => {
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.yourSupportSaveError).toBeUndefined();
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 
@@ -887,6 +987,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
+      session: { yourSupportSaveError: true },
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -902,6 +1003,7 @@ describe('Your Support Controller', () => {
 
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(req.session.yourSupportSaveError).toBeUndefined();
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS_NON_HMCTS);
   });
 
@@ -917,7 +1019,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
-      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS, yourSupportSaveError: true },
       userCase: {
         id: '1234',
         state: CaseState.SUBMITTED,
@@ -933,6 +1035,7 @@ describe('Your Support Controller', () => {
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.yourSupportSaveError).toBeUndefined();
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
   });
 
@@ -967,6 +1070,7 @@ describe('Your Support Controller', () => {
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.yourSupportSaveError).toBe(true);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 
@@ -1019,6 +1123,7 @@ describe('Your Support Controller', () => {
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.userCase.claimantExternalFlags).toEqual(originalFlags);
     expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.yourSupportSaveError).toBe(true);
     expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl);
   });
 
@@ -1048,6 +1153,7 @@ describe('Your Support Controller', () => {
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
     expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.yourSupportSaveError).toBe(true);
     expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl);
   });
 
@@ -1063,6 +1169,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
+      session: { yourSupportSaveError: true },
       userCase: {
         id: '1234',
         state: CaseState.SUBMITTED,
@@ -1077,6 +1184,7 @@ describe('Your Support Controller', () => {
 
     expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
     expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(req.session.yourSupportSaveError).toBeUndefined();
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
   });
 
@@ -1118,7 +1226,8 @@ describe('Your Support Controller', () => {
     await controller.callback(req, res);
 
     expect(req.session.returnUrl).toBeUndefined();
-    expect(req.session.userCase.updateDraftCaseError).toBe('Unable to save draft');
+    expect(req.session.yourSupportSaveError).toBe(true);
+    expect(req.session.userCase.updateDraftCaseError).toBeUndefined();
     expect(req.session.userCase.claimantExternalFlags?.details).toEqual([]);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER);
   });
@@ -1150,7 +1259,7 @@ describe('Your Support Controller', () => {
       replacementFlags: { roleOnCase: 'Claimant', details: [getSupportFlag()] },
     });
     jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
-    const originalFlags = { roleOnCase: 'Claimant', details: [] };
+    const originalFlags: CaseFlags = { roleOnCase: 'Claimant', details: [] };
     const req = mockRequest({
       session: { returnUrl: PageUrls.CHECK_ANSWERS },
       userCase: {
@@ -1170,6 +1279,7 @@ describe('Your Support Controller', () => {
     expect(updateCaseMock).toHaveBeenCalledTimes(1);
     expect(req.session.userCase.claimantExternalFlags).toEqual(originalFlags);
     expect(req.session.returnUrl).toBeUndefined();
+    expect(req.session.yourSupportSaveError).toBe(true);
     expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl);
   });
 

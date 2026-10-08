@@ -6,7 +6,7 @@ import CitizenHubController from '../../../../main/controllers/citizen-hub/Citiz
 import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { CaseTransferInfoResponse } from '../../../../main/definitions/api/caseTransferInfoResponse';
-import { Applicant, ErrorPages, PageUrls } from '../../../../main/definitions/constants';
+import { Applicant, ErrorPages, PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../../main/services/CaseService';
 import * as CaseService from '../../../../main/services/CaseService';
@@ -41,6 +41,37 @@ describe('Citizen Hub Controller', () => {
   });
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
+
+  it('should display a support save error once even when the case is reloaded', async () => {
+    caseApi.getUserCase = jest.fn().mockResolvedValue({
+      data: {
+        id: '1234',
+        created_date: '2022-08-19T09:19:25.79202',
+        last_modified: '2022-08-19T09:19:25.817549',
+      },
+    });
+    const controller = new CitizenHubController();
+    const req = mockRequest({ session: { yourSupportSaveError: true } });
+    const originalUserCase = req.session.userCase;
+    req.params.caseId = '1234';
+    const res = mockResponse();
+
+    await controller.get(req, res);
+
+    expect(req.session.userCase).not.toBe(originalUserCase);
+    expect(req.session.yourSupportSaveError).toBeUndefined();
+    expect(res.render).toHaveBeenLastCalledWith(
+      TranslationKeys.CITIZEN_HUB,
+      expect.objectContaining({ yourSupportSaveError: true })
+    );
+
+    await controller.get(req, res);
+
+    expect(res.render).toHaveBeenLastCalledWith(
+      TranslationKeys.CITIZEN_HUB,
+      expect.objectContaining({ yourSupportSaveError: false })
+    );
+  });
 
   it('should redirect to not found with request.url when case api fails', async () => {
     const controller = new CitizenHubController();

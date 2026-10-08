@@ -29,6 +29,28 @@ const enableCuiYourSupportForScotland = (): jest.SpyInstance =>
 // response.redirect
 
 describe('Steps to Making your claim Controller', () => {
+  it('should display a support save error once', async () => {
+    const request = mockRequest({
+      session: { ...mockSession([], [], []), yourSupportSaveError: true },
+    });
+    const response = mockResponse();
+
+    await stepsToMakingYourClaimController.get(request, response);
+
+    expect(response.render).toHaveBeenLastCalledWith(
+      TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
+      expect.objectContaining({ yourSupportSaveError: true })
+    );
+    expect(request.session.yourSupportSaveError).toBeUndefined();
+
+    await stepsToMakingYourClaimController.get(request, response);
+
+    expect(response.render).toHaveBeenLastCalledWith(
+      TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
+      expect.objectContaining({ yourSupportSaveError: false })
+    );
+  });
+
   it('should render single or multiple claim page', async () => {
     const response = mockResponse();
     const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
@@ -66,6 +88,37 @@ describe('Steps to Making your claim Controller', () => {
     const renderData = (response.render as jest.Mock).mock.calls[0][1];
     expect(renderData.sections[0].links).toHaveLength(3);
   });
+
+  it.each([CaseTypeId.ENGLAND_WALES, CaseTypeId.SCOTLAND])(
+    'should preserve ordinary draft-save errors without adding CUI support when disabled for %s',
+    async caseTypeId => {
+      const featureMock = jest
+        .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+        .mockReturnValue(new CuiYourSupportFeature([]));
+      try {
+        const request = mockRequest({
+          session: mockSession([], [], []),
+        });
+        request.session.userCase.caseTypeId = caseTypeId;
+        request.session.userCase.updateDraftCaseError = 'Existing draft save error';
+        request.session.userCase.reasonableAdjustments = YesOrNo.YES;
+        request.session.userCase.reasonableAdjustmentsDetail = 'Existing support details';
+        const response = mockResponse();
+
+        await stepsToMakingYourClaimController.get(request, response);
+
+        const renderData = (response.render as jest.Mock).mock.calls[0][1];
+        expect(renderData.sections[0].links).toHaveLength(3);
+        expect(renderData.updateDraftCaseError).toBe('Existing draft save error');
+        expect(renderData.yourSupportSaveError).toBe(false);
+        expect(request.session.userCase.updateDraftCaseError).toBeUndefined();
+        expect(request.session.userCase.reasonableAdjustmentsDetail).toBe('Existing support details');
+        expect(request.session.yourSupportSaveError).toBeUndefined();
+      } finally {
+        featureMock.mockRestore();
+      }
+    }
+  );
 
   it('should link to your support with a return marker for enabled claim steps', async () => {
     const featureMock = enableCuiYourSupportForScotland();
