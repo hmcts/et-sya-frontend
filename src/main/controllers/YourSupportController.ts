@@ -138,11 +138,11 @@ export default class YourSupportController {
   };
 
   public callback = async (req: AppRequest, res: Response): Promise<void> => {
-    if (await this.redirectIfUnavailable(req, res)) {
-      return;
-    }
-
     try {
+      if (await this.redirectIfUnavailable(req, res)) {
+        return;
+      }
+
       const result = await this.getCuiJourneyData(req);
       this.validateJourneyCorrelationId(req, result);
 
@@ -162,24 +162,23 @@ export default class YourSupportController {
         return;
       }
 
-      const originalReturnUrl = req.session.returnUrl;
       const originalClaimantExternalFlags = cloneDeep(req.session.userCase?.claimantExternalFlags);
 
       try {
         await this.saveCuiFlagChanges(req, result);
       } catch (error) {
-        req.session.returnUrl = originalReturnUrl;
+        req.session.returnUrl = undefined;
         req.session.userCase.claimantExternalFlags = originalClaimantExternalFlags;
-        const redirectUrl = this.getExitUrl(req, true);
         logger.error('Error saving CUI journey data', error);
-        res.redirect(redirectUrl);
+        res.redirect(this.getListPageUrl(req));
         return;
       }
 
       res.redirect(this.getCuiCompletionUrl(req));
     } catch (error) {
+      req.session.returnUrl = undefined;
       logger.error('Error retrieving CUI journey data', error);
-      res.redirect(PageUrls.HOME);
+      res.redirect(this.getListPageUrl(req));
     }
   };
 

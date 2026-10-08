@@ -936,7 +936,7 @@ describe('Your Support Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CITIZEN_HUB.replace(':caseId', '1234'));
   });
 
-  it('should redirect home when CUI journey correlation does not match the case', async () => {
+  it('should return to claim steps when CUI journey correlation does not match the case', async () => {
     const getOneTimeToken = jest.fn();
     const getToken = jest.fn().mockResolvedValue('s2s-token');
     const getJourneyData = jest.fn().mockResolvedValue({
@@ -951,6 +951,7 @@ describe('Your Support Controller', () => {
 
     const controller = new YourSupportController({ getOneTimeToken, getToken });
     const req = mockRequest({
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
       userCase: {
         id: '1234',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -963,7 +964,91 @@ describe('Your Support Controller', () => {
 
     await controller.callback(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+  });
+
+  it.each([
+    {
+      name: 'draft claim',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      represented: YesOrNo.NO,
+      languageParam: '',
+      redirectUrl: PageUrls.CLAIM_STEPS,
+    },
+    {
+      name: 'represented draft claim in Welsh',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      represented: YesOrNo.YES,
+      languageParam: languages.WELSH_URL_PARAMETER,
+      redirectUrl: PageUrls.CLAIM_STEPS_NON_HMCTS + languages.WELSH_URL_PARAMETER,
+    },
+    {
+      name: 'submitted case',
+      state: CaseState.SUBMITTED,
+      represented: YesOrNo.NO,
+      languageParam: '',
+      redirectUrl: PageUrls.CITIZEN_HUB.replace(':caseId', '1234'),
+    },
+  ])('should return to the list page for a $name when CUI data retrieval fails', async caseData => {
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockRejectedValue(new Error('CUI unavailable'));
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+    const originalFlags = { roleOnCase: 'Claimant', details: [getCcdSupportFlag()] };
+    const req = mockRequest({
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+      userCase: {
+        id: '1234',
+        state: caseData.state,
+        claimantRepresentedQuestion: caseData.represented,
+        claimantExternalFlags: originalFlags,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.url = '/your-support/journey-id' + caseData.languageParam;
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await new YourSupportController({ getOneTimeToken, getToken }).callback(req, res);
+
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(req.session.userCase.claimantExternalFlags).toEqual(originalFlags);
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl);
+  });
+
+  it.each([
+    {
+      name: 'draft claim',
+      id: '1234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      redirectUrl: PageUrls.CLAIM_STEPS,
+    },
+    { name: 'missing case', id: undefined, state: undefined, redirectUrl: PageUrls.CLAIMANT_APPLICATIONS },
+  ])('should return to the list page for a $name when the feature check throws', async caseData => {
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue({
+      isEnabled: jest.fn().mockRejectedValue(new Error('Feature check unavailable')),
+    } as unknown as CuiYourSupportFeatureModule.CuiYourSupportFeature);
+    const getJourneyData = jest.fn();
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+    const req = mockRequest({
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+      userCase: { id: caseData.id, state: caseData.state },
+    });
+    const res = mockResponse();
+
+    await new YourSupportController().callback(req, res);
+
+    expect(getJourneyData).not.toHaveBeenCalled();
+    expect(handleUpdateDraftCaseMock).not.toHaveBeenCalled();
+    expect(handleUpdateSubmittedCaseFlagsMock).not.toHaveBeenCalled();
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl);
   });
 
   it('should redirect back without saving when a submitted CUI journey has no replacement flags', async () => {
@@ -1022,9 +1107,10 @@ describe('Your Support Controller', () => {
           details: [],
         },
       },
-      session: { returnUrl: PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER },
+      session: { returnUrl: PageUrls.CHECK_ANSWERS + languages.ENGLISH_URL_PARAMETER },
     });
     req.params = { id: 'journey-id' };
+    req.url = '/your-support/journey-id' + languages.ENGLISH_URL_PARAMETER;
     req.headers = { 'x-forwarded-host': 'localhost:3002' };
     req.app = { locals: {} } as typeof req.app;
     const res = mockResponse();
@@ -1035,6 +1121,56 @@ describe('Your Support Controller', () => {
     expect(req.session.userCase.updateDraftCaseError).toBe('Unable to save draft');
     expect(req.session.userCase.claimantExternalFlags?.details).toEqual([]);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  it.each([
+    {
+      name: 'represented draft claim',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      represented: YesOrNo.YES,
+      redirectUrl: PageUrls.CLAIM_STEPS_NON_HMCTS,
+    },
+    {
+      name: 'submitted case',
+      state: CaseState.SUBMITTED,
+      represented: YesOrNo.NO,
+      redirectUrl: PageUrls.CITIZEN_HUB.replace(':caseId', '1234'),
+    },
+  ])('should restore support flags and return to the list page for a $name when saving throws', async caseData => {
+    const updateCaseMock =
+      caseData.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS
+        ? handleUpdateDraftCaseMock
+        : handleUpdateSubmittedCaseFlagsMock;
+    updateCaseMock.mockRejectedValueOnce(new Error('Unable to save support flags'));
+    const getOneTimeToken = jest.fn();
+    const getToken = jest.fn().mockResolvedValue('s2s-token');
+    const getJourneyData = jest.fn().mockResolvedValue({
+      action: 'submit',
+      correlationId: '1234',
+      replacementFlags: { roleOnCase: 'Claimant', details: [getSupportFlag()] },
+    });
+    jest.spyOn(CuiService, 'getCuiService').mockReturnValue({ getJourneyData } as unknown as CuiService.CUIClient);
+    const originalFlags = { roleOnCase: 'Claimant', details: [] };
+    const req = mockRequest({
+      session: { returnUrl: PageUrls.CHECK_ANSWERS },
+      userCase: {
+        id: '1234',
+        state: caseData.state,
+        claimantRepresentedQuestion: caseData.represented,
+        claimantExternalFlags: originalFlags,
+      },
+    });
+    req.params = { id: 'journey-id' };
+    req.headers = { 'x-forwarded-host': 'localhost:3002' };
+    req.app = { locals: {} } as typeof req.app;
+    const res = mockResponse();
+
+    await new YourSupportController({ getOneTimeToken, getToken }).callback(req, res);
+
+    expect(updateCaseMock).toHaveBeenCalledTimes(1);
+    expect(req.session.userCase.claimantExternalFlags).toEqual(originalFlags);
+    expect(req.session.returnUrl).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(caseData.redirectUrl);
   });
 
   it('should render the draft support confirmation page', async () => {
