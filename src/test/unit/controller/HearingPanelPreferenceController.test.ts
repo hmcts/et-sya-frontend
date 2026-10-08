@@ -74,6 +74,18 @@ describe('Hearing Panel Preference Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT);
   });
 
+  it('should redirect to reasonable adjustments when nothing is selected as the question is optional', async () => {
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    const req = mockRequestEmpty({ body: {} });
+    const res = mockResponse();
+
+    await new HearingPanelPreferenceController().post(req, res);
+
+    expect(req.session.errors).toEqual([]);
+    expect(req.session.userCase.claimantHearingPanelPreference).toBeUndefined();
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.REASONABLE_ADJUSTMENTS);
+  });
+
   it('should not save a hearing-panel preference when the ERA feature is disabled', async () => {
     jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
     const req = mockRequestEmpty({

@@ -1,237 +1,283 @@
-# et-sya
+# et-sya-frontend
+
+Employment Tribunals Citizen Submit Your Appeal frontend service — a Node.js/Express web application that enables citizens and representatives to submit and manage Employment Tribunal claims.
+
+Part of the HMCTS Reform programme, integrating with `et-cos` (Java backend), IDAM (OAuth2 / OpenID Connect), Redis (sessions / pre-login cache), and CCD (case management).
+
+---
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start](#quick-start)
+  - [Running the Application](#running-the-application)
+  - [Running with Docker](#running-with-docker)
+  - [Running with CFTLIB](#running-with-cftlib)
+  - [Environment Variables & Secrets](#environment-variables--secrets)
+- [Developing](#developing)
+  - [Code Style & Linting](#code-style--linting)
+  - [Building Assets](#building-assets)
+- [Testing](#testing)
+  - [Unit & Route Tests](#unit--route-tests)
+  - [Contract (Pact) Tests](#contract-pact-tests)
+  - [Accessibility (a11y) Tests](#accessibility-a11y-tests)
+  - [Functional & E2E Tests (Playwright)](#functional--e2e-tests-playwright)
+  - [CI Checks](#ci-checks)
+- [Security](#security)
+  - [CSRF Prevention](#csrf-prevention)
+  - [Helmet & Security Headers](#helmet--security-headers)
+  - [Google Tag Manager & Cookie Manager](#google-tag-manager--cookie-manager)
+  - [Vulnerability Management](#vulnerability-management)
+- [Healthcheck](#healthcheck)
+- [Team & License](#team--license)
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-Running the application requires the following tools to be installed in your environment:
+- [Node.js](https://nodejs.org/) `22.18.0` (see `.nvmrc`; engine supports `>= 20.8.0`)
+- [Yarn](https://yarnpkg.com/) v4 (`4.12.0`)
+- [Docker](https://www.docker.com/) & Docker Compose (optional, for containerised run)
+- [Redis](https://redis.io/) (runs on port 6379 for local session/cache)
 
-- [Node.js](https://nodejs.org/) v18.6.0 or later
-- [yarn](https://yarnpkg.com/)
-- [Docker](https://www.docker.com)
-
-### Running the application
-
-Install dependencies by executing the following command:
+### Quick Start
 
 ```bash
-$ yarn install
+# Install dependencies (also sets up Husky and compiles assets)
+yarn install
+
+# Start local redis-server and development server with nodemon
+yarn start:dev-red
 ```
 
-Bundle:
+The application will be available at `https://localhost:3002`.
 
-```bash
-$ yarn webpack
-```
+### Running the Application
 
-Run:
+| Command              | Description                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `yarn start:dev-red` | Starts a local `redis-server` in the background and runs `nodemon`                                                  |
+| `yarn start:dev`     | Runs with `nodemon` (expects Redis already running on `127.0.0.1:6379`, as configured in `config/development.json`) |
+| `yarn start:debug`   | Starts a local `redis-server` and runs `src/main/server.ts` with Node inspect on port `9229`                        |
+| `yarn start`         | Production mode (`NODE_ENV=production`)                                                                             |
 
-```bash
-$ yarn start
-```
-
-Run Dev Mode:
-
-```bash
-$ yarn start:dev
-```
-
-Run Dev Mode With Redis server:
-
-```bash
-$ yarn start:dev-red
-```
-
-The applications's home page will be available at https://localhost:3002
+> **Note on Session Store:** In `config/development.json`, `session.redis.host` defaults to `127.0.0.1:6379`. File-store sessions (`/tmp`) are only used as a fallback if `session.redis.host` is cleared or unset.
 
 ### Running with Docker
 
-Create docker image:
+Build and run using Docker Compose:
 
 ```bash
-  docker-compose build
+# Build Docker image
+docker-compose build
+
+# Start container
+docker-compose up
 ```
 
-Run the application by executing the following command:
-
-```bash
-  docker-compose up
-```
-
-This will start the frontend container exposing the application's port
-(set to `3002` in this template app).
-
-In order to test if the application is up, you can visit https://localhost:3002 in your browser.
-You should get a very basic home page (no styles, etc.).
+The container exposes port `3002`. Access the application at `https://localhost:3002`.
 
 ### Running with CFTLIB
 
-As CFTLIB may have different ports for IDAM API we need to have the following environment variables defined
+When running against CFTLIB / local IDAM, configure the IDAM endpoints in your environment or override config:
 
-IDAM_WEB_URL=http://localhost:XXXX/login
+```bash
+IDAM_WEB_URL=http://localhost:<PORT>/login
+IDAM_API_URL=http://localhost:<PORT>/o/token
+```
 
-IDAM_API_URL=http://localhost:XXXX/o/token
+Replace `<PORT>` with the port exposed by CFTLIB for IDAM (typically `5062`).
 
-XXXX is the port which CFTLIB uses for IDAM
+### Environment Variables & Secrets
+
+The application consumes configuration and secrets via [node-config](https://github.com/node-config/node-config).
+
+In deployed Kubernetes environments (AAT, Perftest, Prod), secrets are mounted from Azure Key Vault into container volumes and loaded via `@hmcts/properties-volume` into the configuration tree.
+
+In local development, mapped environment variables (defined in `config/custom-environment-variables.json`) and specific environment variables read directly by the codebase can be supplied. Alternatively, local overrides can be placed in `config/development.json` (note: `config/development.json` is tracked by git, so ensure you do not commit confidential credentials).
+
+Key secrets and configurations include:
+
+| Configuration Path             | Environment Variable / Direct Code Read          | Key Vault Secret (Properties Volume)        | Description                                                                                                                                                           |
+| ------------------------------ | ------------------------------------------------ | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `services.launchDarkly.key`    | `LAUNCH_DARKLY_SDK_KEY`                          | `secrets.et.launch-darkly-sdk-key`          | LaunchDarkly server SDK key for feature toggling (e.g. `welsh-language`, `bundles`, `ecc`, `MUL2`, `eraOctober2026`). Mapped via `custom-environment-variables.json`. |
+| `services.addressLookup.token` | `ADDRESS_LOOKUP_TOKEN`                           | `secrets.et.os-places-token`                | Ordnance Survey Places API token used for postcode and address lookup. Mapped via `custom-environment-variables.json`.                                                |
+| `services.addressLookup.url`   | `ADDRESS_LOOK_UP_URL`                            | —                                           | Address lookup API base URL (defaults to `https://api.os.uk/search/places/v1/postcode`). Mapped via `custom-environment-variables.json`.                              |
+| `services.idam.clientID`       | `IDAM_CLIENT_ID`                                 | —                                           | IDAM OAuth2 client ID (read directly in `src/main/auth/index.ts`; defaults to `et-sya`).                                                                              |
+| `services.idam.clientSecret`   | — (`config.get('services.idam.clientSecret')`)   | `secrets.et.idam-secret`                    | IDAM OAuth2 client secret for token authentication callbacks.                                                                                                         |
+| `services.s2s.url`             | `S2S_URL`                                        | —                                           | Service-to-service auth provider endpoint. Mapped via `custom-environment-variables.json`.                                                                            |
+| `services.s2s.secret`          | — (`config.get('services.s2s.secret')`)          | `secrets.et.s2s-secret-sya`                 | Service-to-service authentication secret for inter-service communication with backend services.                                                                       |
+| `csrf.secret`                  | `CSRF_SECRET`                                    | `secrets.et.csrf-token-secret`              | Double-CSRF token signing secret (read directly in `src/main/modules/csrf/index.ts` or via config).                                                                   |
+| `session.secret`               | — (`config.get('session.secret')`)               | `secrets.et.et-session-secret`              | Express session signing secret.                                                                                                                                       |
+| `session.redis.host`           | `REDIS_HOST`                                     | —                                           | Redis hostname (defaults to `127.0.0.1` in development).                                                                                                              |
+| `session.redis.key`            | — (`config.get('session.redis.key')`)            | `secrets.et.et-managed-redis-access-key`    | Azure Managed Redis access key.                                                                                                                                       |
+| `services.pcq.token`           | — (`config.get('services.pcq.token')`)           | `secrets.et.pcq-token-key`                  | Token key for Protected Characteristics Questionnaire (PCQ) service. Related env vars: `PCQ_URL`, `PCQ_HEALTH_URL`, `PCQ_ENABLED`.                                    |
+| `appInsights.connectionString` | — (`config.get('appInsights.connectionString')`) | `secrets.et.app-insights-connection-string` | Azure Application Insights telemetry connection string.                                                                                                               |
+
+#### Local Development Secrets Example
+
+To run features locally that require external services (such as address lookup or LaunchDarkly), set the mapped environment variables in your environment:
+
+```bash
+export LAUNCH_DARKLY_SDK_KEY="<your-launchdarkly-key>"
+export ADDRESS_LOOKUP_TOKEN="<your-os-places-token>"
+```
+
+---
 
 ## Developing
 
-### Code style
+### Code Style & Linting
 
-We use [ESLint](https://github.com/typescript-eslint/typescript-eslint)
-with [Prettier](https://github.com/prettier/prettier)
-alongside [sass-lint](https://github.com/sasstools/sass-lint)
-[Husky] Pre-Commit Hooks are enabled which makes sure all your files are formatted
-before commiting (https://github.com/typicode/husky)
-
-Running the linting with ES auto fix and Prettier check:
+The project uses [ESLint](https://github.com/typescript-eslint/typescript-eslint), [Prettier](https://github.com/prettier/prettier), [Stylelint](https://stylelint.io/), and [sass-lint](https://github.com/sasstools/sass-lint). [Husky](https://github.com/typicode/husky) and `lint-staged` run pre-commit checks automatically.
 
 ```bash
-$ yarn lint --fix
+# Run all linters (sass-lint, ESLint with --fix, and Prettier formatting check)
+yarn lint
+
+# Auto-format files with Prettier
+yarn prettier --write ./src/
 ```
 
-Running the linting with Prettier auto fix:
+### Building Assets
+
+Assets (SCSS, JS, static files) are compiled using Webpack:
 
 ```bash
-$ yarn prettier src/* --write
+# Development build
+yarn build
+
+# Production build
+yarn build:prod
+
+# Compile TypeScript to JS in ./src/main
+yarn build:ts
 ```
 
-### Running the tests
+---
 
-This template app uses [Jest](https://jestjs.io//) as the test engine. You can run unit tests by executing
-the following command:
+## Testing
+
+### Unit & Route Tests
+
+Unit and route tests are executed via [Jest](https://jestjs.io/) and compiled fast using `@swc/jest`:
 
 ```bash
-$ yarn test
+# Run unit tests
+yarn test:unit
+
+# Run a single test file or pattern
+yarn test:unit -- --testPathPattern="TypeOfClaimController"
+
+# Run route integration tests
+yarn test:routes
+
+# Run unit tests with code coverage
+yarn test:coverage
+
+# Validate translation keys (English vs Welsh)
+yarn test:translations
+
+# Run mutation testing (Stryker)
+yarn test:mutation
 ```
 
-Here's how to run functional tests (the template contains just one sample test):
+### Contract (Pact) Tests
+
+Pact contract tests verify contracts against the `Idam_api` provider:
 
 ```bash
-$ yarn test:routes
+# Run pact contract tests
+yarn test:pact
+
+# Run tests and publish the consumer pact to the Pact Broker
+yarn test:pact:run-and-publish
 ```
 
-Running accessibility tests:
+### Accessibility (a11y) Tests
+
+Accessibility auditing is performed using Pa11y and Playwright / Axe-core:
 
 ```bash
-$ yarn test:a11y
+# Run Pa11y accessibility suite
+yarn tests:a11y
+
+# Run Playwright accessibility tests
+yarn test:accessibility
 ```
 
-Make sure all the paths in your application are covered by accessibility tests (see [a11y.ts](src/test/a11y/a11y.ts)).
+### Functional & E2E Tests (Playwright)
 
-Running all continuous integration tests:
+End-to-end acceptance tests are powered by [Playwright](https://playwright.dev/):
 
 ```bash
-$ yarn cichecks
+# Run smoke tests
+yarn test:smoke
+
+# Run full functional test suite (Chromium / @RET-BAT)
+yarn test:functional
+
+# Cross-browser test runs
+yarn test:functional-firefox
+yarn test:functional-webkit
 ```
 
-### Security
+### CI Checks
 
-#### CSRF prevention
+Run the full CI pipeline check locally before pushing:
 
-[Cross-Site Request Forgery](https://github.com/pillarjs/understanding-csrf) prevention has already been
-set up in this template, at the application level. However, you need to make sure that CSRF token
-is present in every HTML form that requires it. For that purpose you can use the `csrfProtection` macro,
-included in this template app. Your njk file would look like this:
-
+```bash
+yarn cichecks
 ```
-...
-<form ...>
-  ...
-    <input type="hidden" name="_csrf" value={{ csrfToken }}>
+
+This runs dependency installation, build, linting, unit tests, and accessibility tests.
+
+---
+
+## Security
+
+### CSRF Prevention
+
+[Cross-Site Request Forgery](https://github.com/pillarjs/understanding-csrf) prevention is enforced globally via `csrf-csrf` middleware. Every HTML form must include the CSRF token:
+
+```html
+<form method="post" action="">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
   ...
 </form>
-...
 ```
 
-#### Helmet
+### Helmet & Security Headers
 
-This application uses [Helmet](https://helmetjs.github.io/), which adds various security-related HTTP headers
-to the responses. Apart from default Helmet functions, following headers are set:
+[Helmet](https://helmetjs.github.io/) adds security-related HTTP headers to all responses (including `Content-Security-Policy` with per-request nonces, `Referrer-Policy`, and standard security protections).
 
-- [Referrer-Policy](https://helmetjs.github.io/docs/referrer-policy/)
-- [Content-Security-Policy](https://helmetjs.github.io/docs/csp/)
+### Google Tag Manager & Cookie Manager
 
-There is a configuration section related with those headers, where you can specify:
-
-- `referrerPolicy` - value of the `Referrer-Policy` header.
-
-Here's an example setup:
-
-```json
-{
-  "security": {
-    "referrerPolicy": "origin"
-  }
-}
-```
-
-Make sure you have those values set correctly for your application.
-
-#### Google Tag Manager & Cookie Manager (DTSPB-5550)
-
-This service implements Content Security Policy (CSP) nonce tokens for Google Tag Manager (GTM) script loading and dataLayer initialization:
+This service implements strict Content Security Policy (CSP) nonce tokens for Google Tag Manager (GTM) script loading and dataLayer initialization:
 
 - **Data Layer & Nonces**: A per-request nonce (`globals.nonce`) is generated by Express middleware and supplied in the CSP `script-src` directive as `'nonce-<token>'`.
-- **GTM Injection**: `<meta name="gtm-one-time" content="{{globals.nonce}}">` tag and `<script nonce="{{globals.nonce}}">` tags are injected into the `<head>` of all rendered pages.
-- **Cookie Preferences**: User cookie consent preferences managed by `@hmcts/cookie-manager` are written to `cm-user-preferences` and pushed to the GTM `dataLayer` on initial script execution and preference submission.
-- **Security Guidance & Sign-off**: Rollout follows the HMCTS Probate service security pattern ([DTSPB-5550](https://tools.hmcts.net/jira/browse/DTSPB-5550)) and aligns with Google Tag Manager Data Protection Impact Assessment (DPIA).
+- **GTM Injection**: `<meta name="gtm-one-time" content="{{ globals.nonce }}">` and `<script nonce="{{ globals.nonce }}">` tags are injected into the page `<head>`.
+- **Cookie Preferences**: User cookie consent preferences are managed via `@hmcts/cookie-manager` and synchronized with Google Tag Manager dataLayer (`cm-user-preferences`).
 
-### Healthcheck
+### Vulnerability Management
 
-The application exposes a health endpoint (https://localhost:3002/health), created with the use of
-[Nodejs Healthcheck](https://github.com/hmcts/nodejs-healthcheck) library. This endpoint is defined
-in [health.ts](src/main/modules/health/index.ts) file. Make sure you adjust it correctly in your application.
-In particular, remember to replace the sample check with checks specific to your frontend app,
-e.g. the ones verifying the state of each service it depends on.
+- **Dependency Audits**: Dependency vulnerabilities are audited with `yarn npm audit` and resolved using Yarn package resolutions in `package.json`. Known issues with no upstream fix are tracked in `yarn-audit-known-issues`.
+- **OWASP ZAP Scans (Nightly)**: Dynamic security testing runs nightly via OWASP ZAP. Alert filtering uses two mechanisms:
+  - `audit.json`: Ignores a specific alert instance matching its unique `fingerprint`.
+  - `ALERT_FILTERS` in `Jenkinsfile_nightly`: Downgrades the severity for all instances of a specific alert rule ID across the scan.
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+## Healthcheck
 
-## Functional tests
+The service exposes a health endpoint at `/health` (`https://localhost:3002/health`) using [@hmcts/nodejs-healthcheck](https://github.com/hmcts/nodejs-healthcheck). Health definitions are configured in `src/main/modules/health/index.ts`.
 
-### Technology Stack
+---
 
-| Technology       | Description                                                                                                                                                                                      |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Nodejs & Yarn    | [Node.js](https://nodejs.org/) & [yarn](https://yarnpkg.com/)                                                                                                                                    |
-| Codecept 3.2.3   | CodeceptJS allows to run several browser sessions inside a test. This can be useful for testing communication between users inside a chat or other systems.                                      |
-| Puppeteer 13.2.0 | Puppeteer framework is one such framework that offers Headless Browser Testing for Google Chrome. It allows the tester to perform the actions on the Chrome browser using commands in JavaScript |
-| JavaScript       | Using java script to implement features & scenarios                                                                                                                                              |
+## Team & License
 
-### Running functional tests
-
-```bash
-$ yarn test:functional
-```
-
-## Non-functional tests
-
-### Security tests
-
-The security tests are run using the [OWASP ZAP](https://www.zaproxy.org/) tool. The tests are run nightly and the
-results can be found in the `functional-output` folder of the nightly build.
-
-There are five severity levels of the alerts, the lower severity (False Positives) are ignored, any higher severity fails
-the build.
-
-#### Suppressing alerts
-
-In order to suppress the High, Medium and Low level alerts, check the console output of the nightly build and look for
-"Running base report...". Below that there will be a JSON output of the alerts, for each of the alerts copy the
-`fingerprint` value and paste it into the `audit.json` file in this repository.
-
-To suppress the Informational level alerts, add them to the `ALERT_FILTERS` parameter in the `Jenkinsfile_nightly` file.
-
-The difference between these two methods is that, the `ALERT_FILTERS` will downgrade severity of all instances of an
-alert. The `audit.json` file will not downgrade the severity but will ignore the specific instance of the alert.
-
-This way any High, Medium or Low alerts are still visible in the report but are not failing the build. The Informational
-alerts are visible in the report as False Positives and also not failing the build.
-
-### Responsible Team
-
-## Team
-
-Employment Tribunals
+- **Responsible Team**: Employment Tribunals Reform Team
+- **License**: This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
