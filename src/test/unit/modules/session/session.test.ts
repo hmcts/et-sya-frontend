@@ -67,6 +67,8 @@ describe('Session', () => {
     mockConfigValues['session.redis.key'] = 'primary-key';
     mockConfigValues['session.redis.secondaryKey'] = 'secondary-key';
 
+    delete process.env.SESSION_SECRET;
+    delete process.env.SESSION_PREVIOUS_SECRET;
     delete process.env.REDIS_PORT;
     delete process.env.REDIS_SECONDARY_HOST;
     delete process.env.REDIS_SECONDARY_PORT;
@@ -230,6 +232,48 @@ describe('Session', () => {
       new Session().enableFor(buildApp());
 
       expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'current-secret' }));
+    });
+
+    it('prefers the mounted secret over SESSION_SECRET', () => {
+      process.env.SESSION_SECRET = 'env-secret';
+
+      new Session().enableFor(buildApp());
+
+      expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'current-secret' }));
+    });
+
+    it('uses SESSION_SECRET when no secret is mounted', () => {
+      delete mockConfigValues['session.secret'];
+      process.env.SESSION_SECRET = 'env-secret';
+
+      new Session().enableFor(buildApp());
+
+      expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'env-secret' }));
+    });
+
+    it('uses SESSION_SECRET when the mounted secret is empty', () => {
+      mockConfigValues['session.secret'] = '';
+      process.env.SESSION_SECRET = 'env-secret';
+
+      new Session().enableFor(buildApp());
+
+      expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'env-secret' }));
+    });
+
+    it('still verifies cookies signed with SESSION_PREVIOUS_SECRET', () => {
+      process.env.SESSION_PREVIOUS_SECRET = 'env-previous';
+
+      new Session().enableFor(buildApp());
+
+      expect(mockSessionOptions).toHaveBeenCalledWith(
+        expect.objectContaining({ secret: ['current-secret', 'env-previous'] })
+      );
+    });
+
+    it('throws when no session secret is configured', () => {
+      delete mockConfigValues['session.secret'];
+
+      expect(() => new Session().enableFor(buildApp())).toThrow('Session secret is not configured');
     });
   });
 });

@@ -2,5 +2,5 @@
   "watch": ["src/main"],
   "ext": "ts,js,json,njk",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "./bin/generate-ssl-options.sh && ts-node ./src/main/server.ts"
+  "exec": "./bin/generate-ssl-options.sh && SESSION_SECRET=\"${SESSION_SECRET:-local}\" ts-node ./src/main/server.ts"
 }
