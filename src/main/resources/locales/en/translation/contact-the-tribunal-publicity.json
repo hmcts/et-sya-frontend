@@ -2,6 +2,8 @@
   "title": "Restrict publicity",
   "applicationType": "Restrict publicity",
   "applicationTitle": "Apply to restrict publicity",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     { "type": "paragraph", "text": "Use this form to apply to prevent or restrict publicity in your case." },
     {
@@ -36,6 +38,39 @@
         "how the tribunal should prevent or restrict publicity in your case. For example, tell us which parts or aspects of the case we should not publicise",
         "why the restrictions you want are needed. The tribunal must make the least restrictive order possible. Tell us why fewer restrictions would not be enough",
         "any media interest in your case. Include names of media organisations or journalists that are interested. The tribunal might seek their comments before making a decision"
+      ]
+    }
+  ],
+  "contentRep": [
+    { "type": "paragraph", "text": "Use this form to apply to prevent or restrict publicity in this case." },
+    {
+      "type": "paragraph",
+      "text": "It is an important principle that justice should normally be delivered in public. However, the tribunal has the power to prevent or restrict the public disclosure of any aspect of this case, if necessary, in the interests of justice or to protect the Convention rights of any person. Convention rights are the rights and fundamental freedoms as set out in the Human Rights Act 1998."
+    },
+    {
+      "type": "paragraph",
+      "text": "The tribunal also has certain other powers to sit in private or to restrict publicity in accordance with sections 10A, 10B, 11 and 12 of the Employment Tribunals Act 1996."
+    },
+    { "type": "paragraph", "text": "The tribunal may issue an order:" },
+
+    {
+      "type": "list",
+      "items": [
+        "that a hearing that would otherwise be in public be conducted, in whole or in part, in private",
+        "that the identities of specified parties, witnesses or other persons referred to in the proceedings should not be disclosed to the public, by the use of anonymisation or otherwise",
+        "for measures preventing witnesses at a public hearing being identifiable by members of the public",
+        "restricting the reporting of the case in the media"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Details to include in this application:" },
+
+    {
+      "type": "list",
+      "items": [
+        "how the tribunal should prevent or restrict publicity in this case. For example, tell us which parts or aspects of the case we should not publicise",
+        "why the restrictions the claimant wants are needed. The tribunal must make the least restrictive order possible. Tell us why fewer restrictions would not be enough",
+        "any media interest in the case. Include names of media organisations or journalists that are interested. The tribunal might seek their comments before making a decision"
       ]
     }
   ]
