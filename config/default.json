@@ -16,8 +16,7 @@
   },
   "session": {
     "maxAgeInMs": "3600000",
-    "secret": "local",
-    "previousSecret": "",
+    "secret": "TO BE PICKED UP FROM ENV",
     "redis": {
       "host": "",
       "key": "",
