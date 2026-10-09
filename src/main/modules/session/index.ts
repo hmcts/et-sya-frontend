@@ -53,13 +53,29 @@ export class Session {
   /**
    * Cookies are signed with the first secret and verified against all of them, so
    * mounting the secret that was previously in use keeps people signed in across
-   * a rotation.
+   * a rotation. Deployed environments receive it from Key Vault. Local and test
+   * runs use SESSION_SECRET. The value is not stored in default config.
    */
   private getSecret(): string | string[] {
-    const secret = config.get('session.secret') as string;
-    const previousSecret = config.has('session.previousSecret') ? (config.get('session.previousSecret') as string) : '';
+    const secret = this.lookupSecret('session.secret', process.env.SESSION_SECRET);
+    const previousSecret = this.lookupSecret('session.previousSecret', process.env.SESSION_PREVIOUS_SECRET);
+
+    if (!secret) {
+      throw new Error('Session secret is not configured');
+    }
 
     return previousSecret && previousSecret !== secret ? [secret, previousSecret] : secret;
+  }
+
+  private lookupSecret(configPath: string, envValue: string | undefined): string {
+    if (config.has(configPath)) {
+      const configured = config.get(configPath) as string;
+      if (configured) {
+        return configured;
+      }
+    }
+
+    return envValue || '';
   }
 
   private getStore(app: Application) {

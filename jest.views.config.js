@@ -2,7 +2,7 @@ module.exports = {
   displayName: 'views',
   cache: true,
   roots: ['<rootDir>/src/test/unit/views'],
-  setupFiles: ['<rootDir>/jest.setup.views.js'],
+  setupFiles: ['<rootDir>/jest.setup.env.js', '<rootDir>/jest.setup.views.js'],
   testRegex: '(/src/test/.*|\\.(test|spec))\\.(ts|js)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   modulePathIgnorePatterns: ['<rootDir>/src/test/unit/mocks', '<rootDir>/src/test/unit/test-helpers'],
