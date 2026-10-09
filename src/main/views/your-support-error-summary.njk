@@ -1,0 +1,6 @@
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{{ govukErrorSummary({
+  titleText: errorSummaryTitle,
+  errorList: [{ text: yourSupportSaveErrorMessage }]
+}) if yourSupportSaveError }}

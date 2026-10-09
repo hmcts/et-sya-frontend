@@ -23,7 +23,8 @@ $lightgrey-panel: #d3d3d3;
   padding: govuk-spacing(6);
 
   .govuk-panel__title {
-    @include govuk-font($size: 24, $weight: bold);
+    @include govuk-font($size: 48, $weight: bold);
+    text-align: center;
   }
 
   .govuk-panel__body {

@@ -23,6 +23,29 @@ describe('Claimant Applications Controller', () => {
     },
   ];
 
+  it('should display a support save error once', async () => {
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue([]);
+    const controller = new ClaimantApplicationsController();
+    const request = mockRequest({ session: { yourSupportSaveError: true } });
+    const response = mockResponse();
+
+    await controller.get(request, response);
+
+    expect(response.render).toHaveBeenLastCalledWith(
+      TranslationKeys.CLAIMANT_APPLICATIONS,
+      expect.objectContaining({ yourSupportSaveError: true })
+    );
+    expect(request.session.yourSupportSaveError).toBeUndefined();
+
+    await controller.get(request, response);
+
+    expect(response.render).toHaveBeenLastCalledWith(
+      TranslationKeys.CLAIMANT_APPLICATIONS,
+      expect.objectContaining({ yourSupportSaveError: false })
+    );
+  });
+
   it('should render home page if no user cases', async () => {
     getUserCasesMock.mockResolvedValue([]);
     const claimantApplicationsController = new ClaimantApplicationsController();
