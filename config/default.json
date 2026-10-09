@@ -11,9 +11,6 @@
   "featureFlags": {
     "welsh": "true"
   },
-  "csrf": {
-    "secret": "TO BE PICKED UP FROM ENV"
-  },
   "session": {
     "maxAgeInMs": "3600000",
     "previousSecret": "",
