@@ -2,7 +2,7 @@ import { Response as ExpressResponse } from 'express';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn, isValidCaseReferenceId, isValidEthosCaseReference } from '../components/form/validator';
-import { AssignClaimCheck } from '../decorators/AssignClaimCheck';
+import { AssignClaimCheck, checkAssignClaimAndRedirect } from '../decorators/AssignClaimCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -58,8 +58,13 @@ export default class YourDetailsFormController {
   }
 
   public post = async (req: AppRequest, res: ExpressResponse): Promise<void> => {
+    if (checkAssignClaimAndRedirect(req, res)) {
+      return;
+    }
+
     const formData = this.form.getParsedBody<CaseWithId>(req.body, this.form.getFormFields());
     req.session.errors = [];
+    req.session.yourDetailsVerified = false;
 
     if (!req.session.caseAssignmentFields) {
       req.session.caseAssignmentFields = {};
@@ -90,6 +95,9 @@ export default class YourDetailsFormController {
         return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_CYA)));
       } else {
         logger.warn(`Invalid case details. Submission reference: ${formData.id}`);
+        req.session.caseAssignmentFields = {};
+        delete req.session.respondentNames;
+        delete req.session.respondentName;
         req.session.errors.push({ propertyName: 'hiddenErrorField', errorType: 'invalidCaseDetails' });
         return res.redirect(returnValidUrl(setUrlLanguage(req, PageUrls.YOUR_DETAILS_FORM)));
       }
