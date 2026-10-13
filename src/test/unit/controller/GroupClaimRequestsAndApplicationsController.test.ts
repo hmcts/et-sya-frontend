@@ -1,4 +1,5 @@
 import GroupClaimRequestsAndApplicationsController from '../../../main/controllers/GroupClaimRequestsAndApplicationsController';
+import { AppRequest } from '../../../main/definitions/appRequest';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
@@ -43,5 +44,20 @@ describe('Group Claim Requests And Applications Controller', () => {
     const renderCall = (response.render as jest.Mock).mock.calls[0][1];
     expect(renderCall.tseGenericApps).toHaveLength(1);
     expect(renderCall.tseGenericApps[0].id).toBe('1');
+  });
+
+  it('should render the group claim requests and applications page when session is undefined', async () => {
+    const controller = new GroupClaimRequestsAndApplicationsController();
+    const response = mockResponse();
+    const request = {
+      t: jest.fn().mockReturnValue({}),
+      url: '/group-claim-requests-and-applications',
+      session: undefined,
+    } as unknown as AppRequest;
+    await controller.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS,
+      expect.anything()
+    );
   });
 });

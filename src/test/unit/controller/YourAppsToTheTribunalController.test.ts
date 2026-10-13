@@ -1,4 +1,5 @@
 import YourAppsToTheTribunalController from '../../../main/controllers/YourAppsToTheTribunalController';
+import { AppRequest } from '../../../main/definitions/appRequest';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
@@ -66,5 +67,17 @@ describe('Apps To The Tribunal Controller', () => {
     await controller.get(request, response);
     const renderCall = (response.render as jest.Mock).mock.calls[0][1];
     expect(renderCall.tseGenericApps).toHaveLength(2);
+  });
+
+  it('should render the applications page when session is undefined', async () => {
+    const controller = new YourAppsToTheTribunalController();
+    const response = mockResponse();
+    const request = {
+      t: jest.fn().mockReturnValue({}),
+      url: '/your-applications',
+      session: undefined,
+    } as unknown as AppRequest;
+    await controller.get(request, response);
+    expect(response.render).toHaveBeenCalledWith('your-applications', expect.anything());
   });
 });

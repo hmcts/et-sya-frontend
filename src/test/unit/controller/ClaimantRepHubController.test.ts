@@ -5,7 +5,8 @@ import * as CaseHelpers from '../../../main/controllers/helpers/CaseHelpers';
 import * as CitizenHubHelper from '../../../main/controllers/helpers/CitizenHubHelper';
 import * as TribunalHelper from '../../../main/controllers/helpers/TribunalOrderOrRequestDetailsHelper';
 import * as MultiplePanelHelper from '../../../main/controllers/helpers/multiples/MultiplePanelHelper';
-import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { CaseType, YesOrNo } from '../../../main/definitions/case';
+import { Applicant, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
@@ -255,6 +256,87 @@ describe('ClaimantRepHubController', () => {
 
       const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
       expect(renderArgs.showEmailChangedNote).toBe(false);
+    });
+
+    it('should filter out application links when no applications exist', async () => {
+      const req = mockRequest({});
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({
+        id: 'case-123',
+        caseType: CaseType.SINGLE,
+        genericTseApplicationCollection: [],
+      } as any);
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      const applicationsSection = renderArgs.sections[4];
+      const l = {
+        requestsAndApplications: 'Your requests and applications',
+        respondentApplications: "Respondent's applications",
+        groupClaimRequestsAndApplications: 'Group claim requests and applications',
+        contactTribunalRep: 'Contact the tribunal about something else',
+      };
+      const linkTitles = applicationsSection.links.map((link: { linkTxt: (l: object) => string }) => link.linkTxt(l));
+      expect(linkTitles).not.toContain('Your requests and applications');
+      expect(linkTitles).not.toContain("Respondent's applications");
+      expect(linkTitles).not.toContain('Group claim requests and applications');
+      expect(linkTitles).toContain('Contact the tribunal about something else');
+    });
+
+    it('should show application links when respective applications exist', async () => {
+      const req = mockRequest({});
+      const res = mockResponse();
+      req.params = { caseId: 'case-123' };
+      jest.spyOn(ApiFormatter, 'fromApiFormat').mockReturnValue({
+        id: 'case-123',
+        caseType: CaseType.MULTIPLE,
+        genericTseApplicationCollection: [
+          {
+            id: '1',
+            value: {
+              type: 'Amend claim',
+              applicant: Applicant.CLAIMANT,
+              copyToOtherPartyYesOrNo: YesOrNo.NO,
+            },
+          },
+          {
+            id: '2',
+            value: {
+              type: 'Amend claim',
+              applicant: Applicant.CLAIMANT,
+              copyToOtherPartyYesOrNo: YesOrNo.YES,
+            },
+          },
+          {
+            id: '3',
+            value: {
+              type: 'Amend response',
+              applicant: Applicant.RESPONDENT,
+              copyToOtherPartyYesOrNo: YesOrNo.YES,
+            },
+          },
+        ],
+      } as any);
+      (caseApi.getUserCase as jest.Mock).mockResolvedValue({ data: {} });
+
+      await controller.get(req, res);
+
+      const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+      const applicationsSection = renderArgs.sections[4];
+      const l = {
+        requestsAndApplications: 'Your requests and applications',
+        respondentApplications: "Respondent's applications",
+        groupClaimRequestsAndApplications: 'Group claim requests and applications',
+        contactTribunalRep: 'Contact the tribunal about something else',
+      };
+      const linkTitles = applicationsSection.links.map((link: { linkTxt: (l: object) => string }) => link.linkTxt(l));
+      expect(linkTitles).toContain('Your requests and applications');
+      expect(linkTitles).toContain("Respondent's applications");
+      expect(linkTitles).toContain('Group claim requests and applications');
+      expect(linkTitles).toContain('Contact the tribunal about something else');
     });
   });
 });
