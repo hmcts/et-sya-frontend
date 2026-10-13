@@ -3,10 +3,14 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getAcknowledgementAlert,
+  getClaimantAppsAndUpdateStatusTag,
+  getGroupClaimApplications,
   getHubLinksUrlMap,
   getStoredPendingBannerList,
+  getYourApplications,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowHubLink,
   shouldShowPartOfGroupClaimAlert,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
@@ -14,7 +18,7 @@ import {
   updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
-import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
+import { CaseType, CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
@@ -332,7 +336,6 @@ describe('updateYourApplicationsStatusTag', () => {
   ])('set hub status for claimant applications based on the following application statuses ([%s, %s])', (a, b) => {
     updateYourApplicationsStatusTag([{ value: { applicationState: a } }, { value: { applicationState: b } }], userCase);
     expect(userCase?.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(a);
-    expect(userCase?.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(a);
   });
 
   it('Hublink status should be not avaliable yet if no claimant applications exist', () => {
@@ -342,11 +345,170 @@ describe('updateYourApplicationsStatusTag', () => {
     );
   });
 
-  it('should mirror the requests and applications status onto the group claim requests and applications link', () => {
-    updateYourApplicationsStatusTag([{ value: { applicationState: StatusesInOrderOfUrgency[0] } }], userCase);
-    expect(userCase?.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(
-      userCase?.hubLinksStatuses[HubLinkNames.RequestsAndApplications]
+  it('should set the group claim requests and applications status when specified', () => {
+    updateYourApplicationsStatusTag(
+      [{ value: { applicationState: StatusesInOrderOfUrgency[0] } }],
+      userCase,
+      HubLinkNames.GroupClaimRequestsAndApplications
     );
+    expect(userCase?.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(
+      StatusesInOrderOfUrgency[0]
+    );
+  });
+});
+
+describe('getClaimantAppsAndUpdateStatusTag', () => {
+  it('should update requestsAndApplications and groupClaimRequestsAndApplications independently', () => {
+    const userCase: CaseWithId = {
+      ...clone(mockUserCase),
+      caseType: CaseType.MULTIPLE,
+      hubLinksStatuses: new HubLinksStatuses(),
+      genericTseApplicationCollection: [
+        {
+          id: '1',
+          value: {
+            applicant: Applicant.CLAIMANT,
+            copyToOtherPartyYesOrNo: YesOrNo.NO,
+            applicationState: HubLinkStatus.NOT_STARTED_YET,
+          },
+        },
+        {
+          id: '2',
+          value: {
+            applicant: Applicant.CLAIMANT,
+            copyToOtherPartyYesOrNo: YesOrNo.YES,
+            applicationState: HubLinkStatus.IN_PROGRESS,
+          },
+        },
+      ],
+    };
+
+    getClaimantAppsAndUpdateStatusTag(userCase);
+
+    expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.NOT_STARTED_YET);
+    expect(userCase.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(HubLinkStatus.IN_PROGRESS);
+  });
+
+  it('should set NOT_YET_AVAILABLE when no applications exist', () => {
+    const userCase: CaseWithId = {
+      ...clone(mockUserCase),
+      hubLinksStatuses: new HubLinksStatuses(),
+      genericTseApplicationCollection: [],
+    };
+
+    getClaimantAppsAndUpdateStatusTag(userCase);
+
+    expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.NOT_YET_AVAILABLE);
+    expect(userCase.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications]).toBe(
+      HubLinkStatus.NOT_YET_AVAILABLE
+    );
+  });
+});
+
+describe('getYourApplications and getGroupClaimApplications', () => {
+  it('should return all non-respondent applications when not a group claim', () => {
+    const userCase: CaseWithId = {
+      ...clone(mockUserCase),
+      caseType: CaseType.SINGLE,
+      genericTseApplicationCollection: [
+        { id: '1', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.YES } },
+        { id: '2', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.NO } },
+        { id: '3', value: { applicant: Applicant.RESPONDENT, copyToOtherPartyYesOrNo: YesOrNo.YES } },
+      ],
+    };
+
+    const yourApps = getYourApplications(userCase);
+    const groupApps = getGroupClaimApplications(userCase);
+
+    expect(yourApps).toHaveLength(2);
+    expect(groupApps).toHaveLength(0);
+  });
+
+  it('should split applications between yourApplications and groupClaimApplications when a group claim', () => {
+    const userCase: CaseWithId = {
+      ...clone(mockUserCase),
+      caseType: CaseType.MULTIPLE,
+      genericTseApplicationCollection: [
+        { id: '1', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.YES } },
+        { id: '2', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.NO } },
+        { id: '3', value: { applicant: Applicant.RESPONDENT, copyToOtherPartyYesOrNo: YesOrNo.YES } },
+      ],
+    };
+
+    const yourApps = getYourApplications(userCase);
+    const groupApps = getGroupClaimApplications(userCase);
+
+    expect(yourApps).toHaveLength(1);
+    expect(yourApps[0].id).toBe('2');
+    expect(groupApps).toHaveLength(1);
+    expect(groupApps[0].id).toBe('1');
+  });
+});
+
+describe('shouldShowHubLink', () => {
+  it('should show RequestsAndApplications only when applications exist', () => {
+    const userCaseWithApps: CaseWithId = {
+      ...clone(mockUserCase),
+      caseType: CaseType.SINGLE,
+      genericTseApplicationCollection: [
+        { id: '1', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.NO } },
+      ],
+    };
+    const userCaseWithoutApps: CaseWithId = {
+      ...clone(mockUserCase),
+      genericTseApplicationCollection: [],
+    };
+
+    expect(shouldShowHubLink(HubLinkNames.RequestsAndApplications, userCaseWithApps)).toBe(true);
+    expect(shouldShowHubLink(HubLinkNames.RequestsAndApplications, userCaseWithoutApps)).toBe(false);
+  });
+
+  it('should show GroupClaimRequestsAndApplications only when group claim and applications exist', () => {
+    const groupCaseWithApps: CaseWithId = {
+      ...clone(mockUserCase),
+      caseType: CaseType.MULTIPLE,
+      genericTseApplicationCollection: [
+        { id: '1', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.YES } },
+      ],
+    };
+    const singleCaseWithApps: CaseWithId = {
+      ...clone(mockUserCase),
+      caseType: CaseType.SINGLE,
+      genericTseApplicationCollection: [
+        { id: '1', value: { applicant: Applicant.CLAIMANT, copyToOtherPartyYesOrNo: YesOrNo.YES } },
+      ],
+    };
+
+    expect(shouldShowHubLink(HubLinkNames.GroupClaimRequestsAndApplications, groupCaseWithApps)).toBe(true);
+    expect(shouldShowHubLink(HubLinkNames.GroupClaimRequestsAndApplications, singleCaseWithApps)).toBe(false);
+  });
+
+  it('should show RespondentApplications only when respondent applications exist', () => {
+    const userCaseWithRespApps: CaseWithId = {
+      ...clone(mockUserCase),
+      genericTseApplicationCollection: [
+        {
+          id: '1',
+          value: {
+            applicant: Applicant.RESPONDENT,
+            type: 'Amend response',
+            copyToOtherPartyYesOrNo: YesOrNo.YES,
+          },
+        },
+      ],
+    };
+    const userCaseWithoutRespApps: CaseWithId = {
+      ...clone(mockUserCase),
+      genericTseApplicationCollection: [],
+    };
+
+    expect(shouldShowHubLink(HubLinkNames.RespondentApplications, userCaseWithRespApps)).toBe(true);
+    expect(shouldShowHubLink(HubLinkNames.RespondentApplications, userCaseWithoutRespApps)).toBe(false);
+  });
+
+  it('should return true for other hub links', () => {
+    expect(shouldShowHubLink(HubLinkNames.ContactTribunal, clone(mockUserCase))).toBe(true);
+    expect(shouldShowHubLink(HubLinkNames.Et1ClaimForm, clone(mockUserCase))).toBe(true);
   });
 });
 

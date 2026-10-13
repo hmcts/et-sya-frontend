@@ -34,6 +34,7 @@ import {
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
   shouldShowConsideringClaimsTogetherAlert,
+  shouldShowHubLink,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknowledgement,
@@ -165,7 +166,7 @@ export default class CitizenHubController {
         return {
           title: (l: AnyRecord): string => l[`section${index + 1}`],
           links: sectionIndexToLinkNames[index]
-            .filter(linkName => linkName !== HubLinkNames.GroupClaimRequestsAndApplications || isPartOfGroupClaim)
+            .filter(linkName => shouldShowHubLink(linkName, userCase))
             .map(linkName => {
               const status = hubLinksStatuses[linkName];
               return {

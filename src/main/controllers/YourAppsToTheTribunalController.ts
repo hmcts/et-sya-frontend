@@ -1,14 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { getAllTseApplicationCollection } from './helpers/ApplicationDetailsHelper';
-import { isGroupClaim } from './helpers/CaseHelpers';
+import { getYourApplications } from './helpers/CitizenHubHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { updateStoredRedirectUrl } from './helpers/YourAppsToTheTribunalHelpers';
@@ -16,11 +14,7 @@ import { updateStoredRedirectUrl } from './helpers/YourAppsToTheTribunalHelpers'
 export default class YourAppsToTheTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    let tseGenericApps = getAllTseApplicationCollection(userCase);
-
-    if (isGroupClaim(userCase)) {
-      tseGenericApps = tseGenericApps.filter(app => app.value?.copyToOtherPartyYesOrNo !== YesOrNo.YES);
-    }
+    const tseGenericApps = getYourApplications(userCase);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),

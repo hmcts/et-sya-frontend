@@ -13,9 +13,12 @@ import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
+import { getAllTseApplicationCollection } from './ApplicationDetailsHelper';
+import { isGroupClaim } from './CaseHelpers';
 import { isHearingExist } from './HearingHelpers';
 import { shouldShowViewRespondentContactDetails } from './RespondentContactDetailsHelper';
 import { isConsideringClaimsTogether } from './TribunalOrderOrRequestDetailsHelper';
+import { getRespondentApplications } from './TseRespondentApplicationHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (isHearingExist(userCase.hearingCollection)) {
@@ -228,18 +231,72 @@ export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseAppl
   );
 };
 
-export const getClaimantAppsAndUpdateStatusTag = (userCase: CaseWithId): void => {
-  const allClaimantApplications = getAllClaimantApplications(userCase);
+export const getYourApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+  if (!userCase) {
+    return [];
+  }
+  let tseGenericApps = getAllTseApplicationCollection(userCase)?.filter(
+    app => !app.value?.applicant?.includes(Applicant.RESPONDENT)
+  );
 
-  if (allClaimantApplications?.length) {
-    updateYourApplicationsStatusTag(allClaimantApplications, userCase);
+  if (isGroupClaim(userCase)) {
+    tseGenericApps = tseGenericApps.filter(app => app.value?.copyToOtherPartyYesOrNo !== YesOrNo.YES);
+  }
+
+  return tseGenericApps || [];
+};
+
+export const getGroupClaimApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+  if (!userCase || !isGroupClaim(userCase)) {
+    return [];
+  }
+  let tseGenericApps = getAllTseApplicationCollection(userCase)?.filter(
+    app => !app.value?.applicant?.includes(Applicant.RESPONDENT)
+  );
+
+  tseGenericApps = tseGenericApps.filter(app => app.value?.copyToOtherPartyYesOrNo === YesOrNo.YES);
+
+  return tseGenericApps || [];
+};
+
+export const shouldShowHubLink = (linkName: HubLinkNames, userCase: CaseWithId): boolean => {
+  switch (linkName) {
+    case HubLinkNames.RequestsAndApplications:
+      return getYourApplications(userCase).length > 0;
+    case HubLinkNames.RespondentApplications:
+      return (getRespondentApplications(userCase)?.length ?? 0) > 0;
+    case HubLinkNames.GroupClaimRequestsAndApplications:
+      return isGroupClaim(userCase) && getGroupClaimApplications(userCase).length > 0;
+    default:
+      return true;
+  }
+};
+
+export const getClaimantAppsAndUpdateStatusTag = (userCase: CaseWithId): void => {
+  const yourApplications = getYourApplications(userCase);
+  if (yourApplications?.length) {
+    updateYourApplicationsStatusTag(yourApplications, userCase, HubLinkNames.RequestsAndApplications);
+  } else if (userCase.hubLinksStatuses) {
+    userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.NOT_YET_AVAILABLE;
+  }
+
+  const groupClaimApplications = getGroupClaimApplications(userCase);
+  if (groupClaimApplications?.length) {
+    updateYourApplicationsStatusTag(groupClaimApplications, userCase, HubLinkNames.GroupClaimRequestsAndApplications);
+  } else if (userCase.hubLinksStatuses) {
+    userCase.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications] = HubLinkStatus.NOT_YET_AVAILABLE;
   }
 };
 
 export const updateYourApplicationsStatusTag = (
   allClaimantApplications: GenericTseApplicationTypeItem[],
-  userCase: CaseWithId
+  userCase: CaseWithId,
+  linkName: HubLinkNames = HubLinkNames.RequestsAndApplications
 ): void => {
+  if (!allClaimantApplications?.length) {
+    return;
+  }
+
   // Filter apps with 'waiting for tribunal' status as these may have a different citizen hub status
   const claimantAppsWaitingForTribunal = allClaimantApplications.filter(
     it => it.value.applicationState === HubLinkStatus.WAITING_FOR_TRIBUNAL
@@ -293,13 +350,7 @@ export const updateYourApplicationsStatusTag = (
       .flat()
   );
 
-  userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = StatusesInOrderOfUrgency[
-    mostUrgentStatus
-  ] as HubLinkStatus;
-  // The group claim requests and applications link currently mirrors the same status as
-  // 'Your requests and applications' as it shows the same content for now.
-  userCase.hubLinksStatuses[HubLinkNames.GroupClaimRequestsAndApplications] =
-    userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications];
+  userCase.hubLinksStatuses[linkName] = StatusesInOrderOfUrgency[mostUrgentStatus] as HubLinkStatus;
 };
 
 export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam: string): Map<string, string> => {

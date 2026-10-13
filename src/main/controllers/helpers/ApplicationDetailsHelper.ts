@@ -304,10 +304,10 @@ export const getResponseDisplay = async (
 
 export const getAllTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
   const returnCollection: GenericTseApplicationTypeItem[] = [];
-  if (userCase.genericTseApplicationCollection !== undefined) {
+  if (userCase?.genericTseApplicationCollection !== undefined) {
     returnCollection.push(...userCase.genericTseApplicationCollection);
   }
-  if (userCase.tseApplicationStoredCollection !== undefined) {
+  if (userCase?.tseApplicationStoredCollection !== undefined) {
     returnCollection.push(...userCase.tseApplicationStoredCollection);
   }
   return returnCollection;

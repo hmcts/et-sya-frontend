@@ -30,6 +30,7 @@ import {
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowClaimantTribunalResponseReceived,
+  shouldShowHubLink,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknowledgement,
@@ -150,17 +151,19 @@ export default class ClaimantRepHubController {
 
     const sections = repSectionIndexToLinkNames.map((linkNames, index) => ({
       title: (l: AnyRecord): string => l[`section${index + 1}`],
-      links: linkNames.map(linkName => {
-        const status = hubLinksStatuses[linkName];
-        return {
-          linkTxt: (l: AnyRecord): string =>
-            linkName === HubLinkNames.ContactTribunal ? l.contactTribunalRep : l[linkName],
-          status: (l: AnyRecord): string => l[status],
-          shouldShow: shouldHubLinkBeClickable(status, linkName),
-          url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
-          statusColor: () => statusColorMap.get(status),
-        };
-      }),
+      links: linkNames
+        .filter(linkName => shouldShowHubLink(linkName, userCase))
+        .map(linkName => {
+          const status = hubLinksStatuses[linkName];
+          return {
+            linkTxt: (l: AnyRecord): string =>
+              linkName === HubLinkNames.ContactTribunal ? l.contactTribunalRep : l[linkName],
+            status: (l: AnyRecord): string => l[status],
+            shouldShow: shouldHubLinkBeClickable(status, linkName),
+            url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
+            statusColor: () => statusColorMap.get(status),
+          };
+        }),
     }));
 
     const aboutYouSection = {

@@ -6,6 +6,7 @@ import CitizenHubController from '../../../../main/controllers/citizen-hub/Citiz
 import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { CaseTransferInfoResponse } from '../../../../main/definitions/api/caseTransferInfoResponse';
+import { YesOrNo } from '../../../../main/definitions/case';
 import { Applicant, ErrorPages, PageUrls } from '../../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -217,14 +218,27 @@ describe('Citizen Hub Controller', () => {
     expect(req.session.userCase).toBeDefined();
   });
 
-  it('should include the group claim requests and applications link when the case is a group claim', async () => {
+  it('should include the group claim requests and applications link when the case is a group claim and has group claim applications', async () => {
     const controller = new CitizenHubController();
     caseApi.getUserCase = jest.fn().mockResolvedValueOnce({
       data: {
         id: '1234',
         created_date: '2022-08-19T09:19:25.79202',
         last_modified: '2022-08-19T09:19:25.817549',
-        case_data: { caseType: 'Multiple' },
+        case_data: {
+          caseType: 'Multiple',
+          genericTseApplicationCollection: [
+            {
+              id: '1',
+              value: {
+                type: 'Amend response',
+                applicant: Applicant.CLAIMANT,
+                copyToOtherPartyYesOrNo: YesOrNo.YES,
+                applicationState: 'inProgress',
+              },
+            },
+          ],
+        },
       },
     } as AxiosResponse<CaseApiDataResponse>);
     const res = mockResponse();
@@ -248,6 +262,30 @@ describe('Citizen Hub Controller', () => {
         id: '1234',
         created_date: '2022-08-19T09:19:25.79202',
         last_modified: '2022-08-19T09:19:25.817549',
+      },
+    } as AxiosResponse<CaseApiDataResponse>);
+    const res = mockResponse();
+    const req = mockRequest({});
+    req.params.caseId = '1234';
+    req.url = PageUrls.CITIZEN_HUB.replace(':caseId', '1234');
+    controller.get(req, res);
+    await new Promise(nextTick);
+    const renderArgs = (res.render as jest.Mock).mock.calls[0][1];
+    const applicationsSection = renderArgs.sections[3];
+    const linkNames = applicationsSection.links.map((link: { linkTxt: (l: object) => string }) =>
+      link.linkTxt({ groupClaimRequestsAndApplications: 'Group claim requests and applications' })
+    );
+    expect(linkNames).not.toContain('Group claim requests and applications');
+  });
+
+  it('should not include the group claim requests and applications link when the case is a group claim but has no group claim applications', async () => {
+    const controller = new CitizenHubController();
+    caseApi.getUserCase = jest.fn().mockResolvedValueOnce({
+      data: {
+        id: '1234',
+        created_date: '2022-08-19T09:19:25.79202',
+        last_modified: '2022-08-19T09:19:25.817549',
+        case_data: { caseType: 'Multiple' },
       },
     } as AxiosResponse<CaseApiDataResponse>);
     const res = mockResponse();
