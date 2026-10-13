@@ -196,16 +196,71 @@ describe('Citizen hub page', () => {
 
     it.each([
       { selector: greenTagSelector, expectedText: 'Completed', expectedCount: 1 },
-      { selector: tealTagSelector, expectedText: 'Viewed', expectedCount: 1 },
       { selector: tealTagSelector, expectedText: 'Submitted', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Not available yet', expectedCount: 2 },
       { selector: greyTagSelector, expectedText: 'Waiting for the tribunal', expectedCount: 1 },
-      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 5 },
+      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 3 },
     ])('should have the correct statuses: %o', ({ selector, expectedText, expectedCount }) => {
       const elements = htmlRes.querySelectorAll(selector);
 
       expect(Array.from(elements).filter(el => el.textContent.trim() === expectedText)).toHaveLength(expectedCount);
     });
+
+    it('should show application task links and correct statuses when applications exist', async () => {
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        ...mockUserCaseWithCitizenHubLinks,
+        genericTseApplicationCollection: [
+          {
+            id: '1',
+            value: {
+              applicant: Applicant.CLAIMANT,
+              copyToOtherPartyYesOrNo: YesOrNo.NO,
+              type: 'Amend claim',
+              applicationState: HubLinkStatus.VIEWED,
+            },
+          },
+          {
+            id: '2',
+            value: {
+              applicant: Applicant.RESPONDENT,
+              copyToOtherPartyYesOrNo: YesOrNo.YES,
+              type: 'Amend response',
+              applicationState: HubLinkStatus.NOT_STARTED_YET,
+            },
+          },
+          {
+            id: '3',
+            value: {
+              applicant: Applicant.CLAIMANT,
+              copyToOtherPartyYesOrNo: YesOrNo.YES,
+              type: 'Amend claim',
+              applicationState: HubLinkStatus.IN_PROGRESS,
+            },
+          },
+        ],
+      });
+
+      let resDoc: Document;
+      await request(mockApp({ userCase: {} as Partial<CaseWithId> }))
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          resDoc = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      const viewedElements = resDoc.querySelectorAll(tealTagSelector);
+      expect(Array.from(viewedElements).filter(el => el.textContent.trim() === 'Viewed')).toHaveLength(1);
+
+      const notStartedYetElements = resDoc.querySelectorAll('.govuk-tag.app-task-list__tag.govuk-tag--red');
+      expect(Array.from(notStartedYetElements).filter(el => el.textContent.trim() === 'Not started yet')).toHaveLength(
+        1
+      );
+
+      const inProgressElements = resDoc.querySelectorAll('.govuk-tag.app-task-list__tag.govuk-tag--yellow');
+      expect(Array.from(inProgressElements).filter(el => el.textContent.trim() === 'In progress')).toHaveLength(1);
+    });
+
     it.each([
       { selector: greyTagSelector, tagText: 'Not available yet', showLink: false },
       { selector: greyTagSelector, tagText: 'Waiting for the tribunal', showLink: false },
