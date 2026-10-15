@@ -14,11 +14,10 @@ const copyToOtherPartyJsonRaw = fs.readFileSync(
 );
 
 const copyToOtherPartyJson = JSON.parse(copyToOtherPartyJsonRaw);
+const insetText = 'govuk-inset-text';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = copyToOtherPartyJson.title;
-const expectedP1 = copyToOtherPartyJson.p1;
 const buttonClass = 'govuk-button';
-const detailsClass = 'govuk-body';
 const radios = 'govuk-radios';
 const cancelLink = 'govuk-link';
 const captionClass = 'govuk-caption-l';
@@ -41,9 +40,11 @@ describe('Copy to the other party page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display first paragraph', () => {
-    const p1 = htmlRes.getElementsByClassName(detailsClass);
-    expect(p1[6].innerHTML).contains(expectedP1, 'First paragraph does not exist');
+  it('should display inset text', () => {
+    const inset = htmlRes.getElementsByClassName(insetText);
+    expect(inset[0].innerHTML).contains(copyToOtherPartyJson.p1, 'Inset text does not exist');
+    expect(inset[0].innerHTML).contains(copyToOtherPartyJson.p2, 'Inset text does not exist');
+    expect(inset[0].innerHTML).contains(copyToOtherPartyJson.p3, 'Inset text does not exist');
   });
 
   it('should display radio buttons', () => {

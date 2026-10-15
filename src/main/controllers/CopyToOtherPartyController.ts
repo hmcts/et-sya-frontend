@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { FormSubmissionCheck } from '../decorators/FormSubmissionCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
@@ -26,7 +27,7 @@ export default class CopyToOtherPartyController {
         type: 'radios',
         label: (l: AnyRecord): string => l.legend,
         labelHidden: false,
-        labelSize: 'l',
+        labelSize: 'm',
         values: [
           {
             name: 'copyToOtherPartyYesOrNo',
@@ -35,17 +36,26 @@ export default class CopyToOtherPartyController {
           },
           {
             name: 'copyToOtherPartyYesOrNo',
-            label: (l: AnyRecord): string => l.no,
+            label: (l: AnyRecord): string =>
+              '<p class="govuk-body">' +
+              l.no +
+              '</p><p class="govuk-body"><strong>' +
+              l.important +
+              ':</strong> ' +
+              l.youMustTellTheTribunal +
+              '</p>',
             value: YesOrNo.NO,
             subFields: {
               copyToOtherPartyText: {
                 id: 'copyToOtherPartyText',
                 name: 'copyToOtherPartyText',
                 type: 'textarea',
-                label: (l: AnyRecord): string => l.hintText,
-                labelSize: 'm',
-                isPageHeading: true,
+                label: (l: AnyRecord): string => l.tellUsWhy,
+                labelSize: 's',
+                isPageHeading: false,
                 classes: 'govuk-textarea',
+                maxlength: 2500,
+                validator: isContent2500CharsOrLess,
               },
             },
           },
