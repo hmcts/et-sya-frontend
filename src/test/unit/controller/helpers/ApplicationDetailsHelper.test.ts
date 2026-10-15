@@ -1,5 +1,8 @@
-import { getTseApplicationDetails } from '../../../../main/controllers/helpers/ApplicationDetailsHelper';
-import { YesOrNo } from '../../../../main/definitions/case';
+import {
+  getAllTseApplicationCollection,
+  getTseApplicationDetails,
+} from '../../../../main/controllers/helpers/ApplicationDetailsHelper';
+import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
@@ -73,14 +76,24 @@ describe('Application details', () => {
     expect(appContent[4].value).toEqual({ html: 'downloadLink' });
     expect(appContent[5].key).toEqual({
       classes: summaryListClass,
-      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+      text: 'Do you agree to the tribunal sharing this application to satisfy the rules of procedure?',
     });
-    expect(appContent[5].value).toEqual({ text: YesOrNo.NO });
+    expect(appContent[5].value).toEqual({ text: translations.no });
     expect(appContent[6].key).toEqual({
       classes: summaryListClass,
       text: 'Reason for not informing other party',
     });
     expect(appContent[6].value).toEqual({ text: 'test reason' });
+  });
+
+  it('should display "Not provided" when no download link is provided for supporting material', () => {
+    const appContentNoDoc = getTseApplicationDetails(
+      selectedApplication,
+      translations,
+      '',
+      genericTseApplicationType.date
+    );
+    expect(appContentNoDoc[4].value).toEqual({ html: translations.notProvided });
   });
 });
 
@@ -115,5 +128,47 @@ describe('Application details with Stored status', () => {
     );
 
     expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application stored date' });
+  });
+});
+
+describe('getAllTseApplicationCollection', () => {
+  it('should return empty array when userCase is undefined', () => {
+    expect(getAllTseApplicationCollection(undefined)).toEqual([]);
+  });
+
+  it('should return empty array when collections are undefined', () => {
+    expect(getAllTseApplicationCollection({} as CaseWithId)).toEqual([]);
+  });
+
+  it('should return combined collection when both generic and stored collections exist', () => {
+    const userCase = {
+      genericTseApplicationCollection: [{ id: '1' } as GenericTseApplicationTypeItem],
+      tseApplicationStoredCollection: [{ id: '2' } as GenericTseApplicationTypeItem],
+    } as CaseWithId;
+
+    const result = getAllTseApplicationCollection(userCase);
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe('1');
+    expect(result[1].id).toBe('2');
+  });
+
+  it('should return only generic collection when stored collection is undefined', () => {
+    const userCase = {
+      genericTseApplicationCollection: [{ id: '1' } as GenericTseApplicationTypeItem],
+    } as CaseWithId;
+
+    const result = getAllTseApplicationCollection(userCase);
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('1');
+  });
+
+  it('should return only stored collection when generic collection is undefined', () => {
+    const userCase = {
+      tseApplicationStoredCollection: [{ id: '2' } as GenericTseApplicationTypeItem],
+    } as CaseWithId;
+
+    const result = getAllTseApplicationCollection(userCase);
+    expect(result).toHaveLength(1);
+    expect(result[1 - 1].id).toBe('2');
   });
 });

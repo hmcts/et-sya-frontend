@@ -1,10 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
+import { isGroupClaim } from './helpers/CaseHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ApplicationCompleteController {
@@ -23,12 +25,20 @@ export default class ApplicationCompleteController {
       month: 'long',
       day: 'numeric',
     });
+
+    const isGroup = isGroupClaim(userCase);
+
     res.render(TranslationKeys.APPLICATION_COMPLETE, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_COMPLETE, { returnObjects: true }),
       applicationDate: dateString,
-      rule92: userCase.rule92state,
+      rule92: userCase?.rule92state,
+      isGroupClaim: isGroup,
       redirectUrl,
+      yourApplicationsUrl: setUrlLanguage(
+        req,
+        isGroup ? PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS : PageUrls.YOUR_APPLICATIONS
+      ),
       welshEnabled,
     });
   };

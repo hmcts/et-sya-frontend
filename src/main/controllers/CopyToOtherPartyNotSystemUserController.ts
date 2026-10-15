@@ -26,29 +26,20 @@ export default class CopyToOtherPartyNotSystemUserController {
         classes: 'govuk-radios',
         id: 'copyToOtherPartyYesOrNo',
         type: 'radios',
-        label: (l: AnyRecord): string => l.doYouWantToCopy,
+        label: (l: AnyRecord): string => l.doYouAgree,
         labelHidden: false,
         labelSize: 'm',
         values: [
           {
             name: 'copyToOtherPartyYesOrNo',
-            label: (l: AnyRecord): string =>
-              '<p class="govuk-body">' +
-              l.yesIConfirmIWill +
-              '</p><p class="govuk-body"><strong>' +
-              l.important +
-              ':</strong> ' +
-              l.doNotSubmitYourApplication +
-              '</p><p class="govuk-body">' +
-              l.youShouldAlsoNotify +
-              '</p>',
+            label: (l: AnyRecord): string => l.yesIAgree,
             value: YesOrNo.YES,
           },
           {
             name: 'copyToOtherPartyYesOrNo',
             label: (l: AnyRecord): string =>
               '<p class="govuk-body">' +
-              l.noIDoNotWantTo +
+              l.noIDoNotAgree +
               '</p><p class="govuk-body"><strong>' +
               l.important +
               ':</strong> ' +
@@ -60,9 +51,9 @@ export default class CopyToOtherPartyNotSystemUserController {
                 id: 'copyToOtherPartyText',
                 name: 'copyToOtherPartyText',
                 type: 'textarea',
-                label: (l: AnyRecord): string => l.giveDetails,
+                label: (l: AnyRecord): string => l.tellUsWhy,
                 labelSize: 's',
-                isPageHeading: true,
+                isPageHeading: false,
                 classes: 'govuk-textarea',
                 maxlength: 2500,
                 validator: isContent2500CharsOrLess,

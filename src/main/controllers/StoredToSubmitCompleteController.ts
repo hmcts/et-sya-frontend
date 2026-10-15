@@ -2,8 +2,9 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getCancelLink } from './helpers/LinkHelpers';
 
 export default class StoredToSubmitCompleteController {
@@ -14,6 +15,7 @@ export default class StoredToSubmitCompleteController {
       applicationDate: '',
       rule92: YesOrNo.NO,
       redirectUrl: getCancelLink(req),
+      yourApplicationsUrl: setUrlLanguage(req, PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS),
     });
   }
 }

@@ -1,13 +1,18 @@
 {
   "title": "Cais wedi’i gwblhau",
   "titleText": "Rydych wedi anfon eich cais i’r tribiwnlys",
-  "pHead": "Beth fydd yn digwydd nesaf ",
-  "pNo": "Bydd y tribiwnlys yn ystyried pob gohebiaeth ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf. ",
+  "pHead": "Beth fydd yn digwydd nesaf",
+  "pNo": "[W]The tribunal will review your application and your reasons for not wanting to share it.",
   "pYes": {
-    "p1": "Rydych wedi anfon copi o’ch cais at y parti arall. Bydd ganddynt tan ",
-    "p1a": " i ymateb.",
-    "p2": "Os byddant yn ymateb, mae disgwyl iddynt anfon yr ymateb atoch chi.",
-    "p3": "Efallai y gofynnir ichi ddarparu rhagor o wybodaeth. Bydd y tribiwnlys yn ystyried pob gohebiaeth ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf."
+    "p1": "[W]You have shared your application or request with the respondent. The respondent has until ",
+    "p1a": " [W]to respond.",
+    "p2": "[W]The tribunal might also decide that your application needs to be shared with some or all claimants in your group claim.",
+    "p3": "[W]If they do respond, they are expected to share their response with you. The tribunal will consider all communication and tell you what happens next."
   },
-  "button": "Cau a dychwelyd i’r trosolwg o’r achos "
+  "viewAppPrefix": "[W]You can view your application or request in ",
+  "viewAppPrefixNo": "[W]You can view your application in ",
+  "viewAppLink": "[W]Group claim requests and applications",
+  "viewAppLinkSingle": "[W]your applications",
+  "viewAppSuffix": " [W]in your case overview.",
+  "button": "Cau a dychwelyd i’r trosolwg o’r achos"
 }

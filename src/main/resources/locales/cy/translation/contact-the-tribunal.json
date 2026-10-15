@@ -102,6 +102,11 @@
       "link": "Cyflwyno dogfennau ar gyfer gwrandawiad"
     }
   },
+  "respondToOtherParty": {
+    "heading": "[W] Respond to communication from another party",
+    "body": "[W] Respond to communication from a respondent or another claimant in your group claim. This could be applications, requests, or general communication.",
+    "link": "[W] Respond to communication from another party in your group"
+  },
   "call": {
     "h1": "Ffonio canolfan gyswllt cwsmeriaid y Tribiwnlys Cyflogaeth",
     "p1": "Ffoniwch os oes gennych unrhyw gwestiynau ynglŷn â’ch hawliad. Ni allant roi cyngor cyfreithiol i chi na phrosesu unrhyw ddiweddariadau i'ch achos.",

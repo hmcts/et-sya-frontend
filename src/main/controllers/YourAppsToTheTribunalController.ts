@@ -6,7 +6,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { getAllTseApplicationCollection } from './helpers/ApplicationDetailsHelper';
+import { getYourApplications } from './helpers/CitizenHubHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { updateStoredRedirectUrl } from './helpers/YourAppsToTheTribunalHelpers';
@@ -14,7 +14,7 @@ import { updateStoredRedirectUrl } from './helpers/YourAppsToTheTribunalHelpers'
 export default class YourAppsToTheTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const tseGenericApps = getAllTseApplicationCollection(userCase);
+    const tseGenericApps = getYourApplications(userCase);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),

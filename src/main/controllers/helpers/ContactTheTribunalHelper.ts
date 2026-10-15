@@ -9,6 +9,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import ObjectUtils from '../../utils/ObjectUtils';
 import StringUtils from '../../utils/StringUtils';
 
+import { isGroupClaim } from './CaseHelpers';
 import { createRadioBtnsForHearings } from './FormHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
@@ -51,15 +52,16 @@ export const isClaimantRepresentedByNonHmctsRepresentative = (userCase: CaseWith
 export const getApplicationsAccordionItems = (
   req: AppRequest,
   bundlesEnabled: LaunchDarkly.LDFlagValue,
-  claimantRepresentedByOrganisation: boolean,
-  claimantRepresentedByNonHmctsRepresentative = false
+  claimantRepresentedByOrganisation: boolean
 ): AccordionItem[] => {
   const { userCase } = req.session;
   if (!claimantRepresentedByOrganisation) {
     const applicationsToDisplay = getApplicationsToDisplay(bundlesEnabled, userCase);
-    return applicationsToDisplay.map(application =>
-      getApplicationsAccordionItem(req, application, claimantRepresentedByNonHmctsRepresentative)
-    );
+    const accordionItems = applicationsToDisplay.map(application => getApplicationsAccordionItem(req, application));
+    if (isGroupClaim(userCase)) {
+      accordionItems.push(getRespondToOtherPartyAccordionItem(req));
+    }
+    return accordionItems;
   } else {
     return [];
   }
@@ -110,6 +112,38 @@ const getApplicationsAccordionItem = (
   return {
     heading: {
       text: label,
+    },
+    content: {
+      html,
+    },
+  };
+};
+
+/**
+ * Get the accordion item for responding to communication from another party in a group claim.
+ * @param req
+ */
+const getRespondToOtherPartyAccordionItem = (req: AppRequest): AccordionItem => {
+  const translations: AnyRecord = {
+    ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+  };
+  const languageParam = getLanguageParam(req.url);
+  const { heading, body, link } = translations.respondToOtherParty;
+
+  const html =
+    '<p class="govuk-body">' +
+    body +
+    '</p>' +
+    '<p class="govuk-body"><a class="govuk-link" href="' +
+    PageUrls.GROUP_CLAIM_REQUESTS_AND_APPLICATIONS +
+    languageParam +
+    '">' +
+    link +
+    '</a></p>';
+
+  return {
+    heading: {
+      text: heading,
     },
     content: {
       html,

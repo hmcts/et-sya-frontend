@@ -18,7 +18,12 @@
         rows: cyaContent
       }) }}
 
-      <p class="govuk-body">{{ youCannotMakeFurtherChanges }}</p>
+      {% if userCase and userCase.copyToOtherPartyYesOrNo == 'no' %}
+        <h2 class="govuk-heading-m">{{ chosenNotToShareHeading if chosenNotToShareHeading else "You have chosen not to share your application" }}</h2>
+        <p class="govuk-body govuk-!-margin-bottom-6">{{ chosenNotToShareBody if chosenNotToShareBody else "The tribunal will consider your reasons and decide if your threshold is met to not share your application." }}</p>
+      {% else %}
+        <p class="govuk-body">{{ youCannotMakeFurtherChanges }}</p>
+      {% endif %}
 
       <div class="govuk-button-group">
         {{ govukButton({
