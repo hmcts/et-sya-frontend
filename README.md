@@ -74,8 +74,8 @@ Build and run using Docker Compose:
 # Build Docker image
 docker-compose build
 
-# Start container
-docker-compose up
+# Start container. These sign the local session cookie and CSRF token.
+SESSION_SECRET=local CSRF_SECRET=local docker-compose up
 ```
 
 The container exposes port `3002`. Access the application at `https://localhost:3002`.
@@ -110,8 +110,8 @@ Key secrets and configurations include:
 | `services.idam.clientSecret`   | — (`config.get('services.idam.clientSecret')`)   | `secrets.et.idam-secret`                    | IDAM OAuth2 client secret for token authentication callbacks.                                                                                                         |
 | `services.s2s.url`             | `S2S_URL`                                        | —                                           | Service-to-service auth provider endpoint. Mapped via `custom-environment-variables.json`.                                                                            |
 | `services.s2s.secret`          | — (`config.get('services.s2s.secret')`)          | `secrets.et.s2s-secret-sya`                 | Service-to-service authentication secret for inter-service communication with backend services.                                                                       |
-| `csrf.secret`                  | `CSRF_SECRET`                                    | `secrets.et.csrf-token-secret`              | Double-CSRF token signing secret (read directly in `src/main/modules/csrf/index.ts` or via config).                                                                   |
-| `session.secret`               | — (`config.get('session.secret')`)               | `secrets.et.et-session-secret`              | Express session signing secret.                                                                                                                                       |
+| `csrf.secret`                  | `CSRF_SECRET`                                    | `secrets.et.csrf-token-secret`              | Double-CSRF token signing secret. Key Vault sets it in deployed environments. It is not committed in `config/default.json`. `yarn start:dev` defaults it when unset.  |
+| `session.secret`               | `SESSION_SECRET`                                 | `secrets.et.et-session-secret`              | Express session signing secret. Key Vault sets it in deployed environments. It is not committed in `config/default.json`. `yarn start:dev` defaults it when unset.    |
 | `session.redis.host`           | `REDIS_HOST`                                     | —                                           | Redis hostname (defaults to `127.0.0.1` in development).                                                                                                              |
 | `session.redis.key`            | — (`config.get('session.redis.key')`)            | `secrets.et.et-managed-redis-access-key`    | Azure Managed Redis access key.                                                                                                                                       |
 | `services.pcq.token`           | — (`config.get('services.pcq.token')`)           | `secrets.et.pcq-token-key`                  | Token key for Protected Characteristics Questionnaire (PCQ) service. Related env vars: `PCQ_URL`, `PCQ_HEALTH_URL`, `PCQ_ENABLED`.                                    |
