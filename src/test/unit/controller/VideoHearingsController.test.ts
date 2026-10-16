@@ -1,6 +1,9 @@
 import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -52,5 +55,38 @@ describe('Hearing Preferences Controller', () => {
     await new VideoHearingsController().post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.REASONABLE_ADJUSTMENTS);
+  });
+
+  it('should show hearing panel preference when ERA and CUI your support are both enabled', async () => {
+    jest
+      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+      .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    const req = mockRequestEmpty({
+      body: { hearingPreferences: 'Phone' },
+      userCase: { caseTypeId: CaseTypeId.SCOTLAND },
+    });
+    const res = mockResponse();
+
+    await new VideoHearingsController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HEARING_PANEL_PREFERENCE);
+  });
+
+  it('should go directly to your support when CUI is enabled and ERA is disabled', async () => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+    jest
+      .spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature')
+      .mockReturnValue(new CuiYourSupportFeature([CaseTypeId.SCOTLAND]));
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    const req = mockRequestEmpty({
+      body: { hearingPreferences: 'Phone' },
+      userCase: { caseTypeId: CaseTypeId.SCOTLAND },
+    });
+    const res = mockResponse();
+
+    await new VideoHearingsController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.YOUR_SUPPORT);
   });
 });

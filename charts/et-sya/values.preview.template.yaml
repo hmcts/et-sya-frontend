@@ -7,6 +7,7 @@ nodejs:
   environment:
     ET_SYA_API_HOST: http://et-cos-aat.service.core-compute-aat.internal
     HMCTS_ACCESS: 'true'
+    CUI_URL: 'https://cui-ra.{{ .Values.global.environment }}.platform.hmcts.net'
   keyVaults:
     et:
       resourceGroup: et

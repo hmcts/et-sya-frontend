@@ -1,4 +1,5 @@
 import {
+  consumeYourSupportSaveError,
   getACASCertificateNumberError,
   getClaimSummaryError,
   getCopyToOtherPartyError,
@@ -24,6 +25,20 @@ import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
 import { mockRequest, mockRequestWithSaveException, mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
+
+describe('consumeYourSupportSaveError', () => {
+  it('should return a support save error once and clear it from the session', () => {
+    const req = mockRequest({ session: { yourSupportSaveError: true } });
+
+    expect(consumeYourSupportSaveError(req)).toBe(true);
+    expect(req.session.yourSupportSaveError).toBeUndefined();
+    expect(consumeYourSupportSaveError(req)).toBe(false);
+  });
+
+  it('should return false when there is no support save error', () => {
+    expect(consumeYourSupportSaveError(mockRequest({}))).toBe(false);
+  });
+});
 
 describe('getCustomStartDateError', () => {
   it("should not raise an error if one of the dates isn't provided", () => {

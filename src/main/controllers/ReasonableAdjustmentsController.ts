@@ -10,9 +10,11 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getCuiYourSupportFeature } from '../modules/featureFlag/CuiYourSupportFeature';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const logger = getLogger('ReasonableAdjustmentsController');
 
@@ -64,23 +66,42 @@ export default class ReasonableAdjustmentsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (await this.isCuiYourSupportEnabled(req)) {
+      res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
+      return;
+    }
+
     const nextPage =
       req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
         ? PageUrls.REPRESENTATIVE_DETAILS_CHECK
         : PageUrls.PERSONAL_DETAILS_CHECK;
+
     await handlePostLogic(req, res, this.form, logger, nextPage);
   };
 
   @CaseStateCheck()
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    if (await this.isCuiYourSupportEnabled(req)) {
+      res.redirect(setUrlLanguage(req, PageUrls.YOUR_SUPPORT));
+      return;
+    }
+
     const isRepresented = req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES;
+
     const translationKey = isRepresented
       ? TranslationKeys.REASONABLE_ADJUSTMENTS_NON_HMCTS
       : TranslationKeys.REASONABLE_ADJUSTMENTS;
+
     const content = getPageContent(req, this.reasonableAdjustmentsContent, [TranslationKeys.COMMON, translationKey]);
+
     assignFormData(req.session.userCase, this.form.getFormFields());
+
     res.render('reasonable-adjustments', {
       ...content,
     });
   };
+
+  private async isCuiYourSupportEnabled(req: AppRequest): Promise<boolean> {
+    return getCuiYourSupportFeature().isEnabled(req.session.userCase?.caseTypeId);
+  }
 }
