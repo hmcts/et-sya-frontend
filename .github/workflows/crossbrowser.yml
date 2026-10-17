@@ -1,0 +1,86 @@
+name: Playwright Cross Browser Tests
+
+on:
+  push:
+
+  pull_request:
+    branches:
+      - master
+    schedule:
+      # Every day at 10:00 UTC
+      - cron: '0 10 * * 1-5'
+
+  workflow_dispatch:
+
+jobs:
+  playwright-tests:
+    name: ${{ matrix.os }} - ${{ matrix.browser }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+        browser:
+          - chromium
+          - firefox
+          - webkit
+
+    timeout-minutes: 300
+    steps:
+      # Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      # Setup Node.js
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      # Install npm dependencies
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps --ignore-scripts
+
+      # Install Playwright browsers
+
+      - name: Install Playwright browser - Linux
+        if: runner.os == 'Linux'
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Install Playwright browser - macOS / Windows
+        if: runner.os != 'Linux'
+        run: npx playwright install ${{ matrix.browser }}
+
+      # Run Playwright tests
+      - name: Run Playwright tests
+        run: npx playwright test --project=${{ matrix.browser }} --grep "@Smoke"
+
+        env:
+          CI: true
+          TEST_CASE_USERNAME: ${{ secrets.TEST_CASE_USERNAME }}
+          TEST_CASE_PASSWORD: ${{ secrets.TEST_CASE_PASSWORD }}
+
+      # Upload Playwright HTML report
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.os }}-${{ matrix.browser }}
+          path: playwright-report/
+          retention-days: 7
+
+      # Upload screenshots / videos / traces
+      - name: Upload test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results-${{ matrix.os }}-${{ matrix.browser }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
