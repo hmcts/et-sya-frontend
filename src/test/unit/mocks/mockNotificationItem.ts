@@ -312,3 +312,19 @@ export const mockNotificationWithViewedResponses: SendNotificationTypeItem = {
   id: '6423be5b-0b82-462a-af1d-5f1df39686ab',
   value: notificationWithViewedResponses,
 };
+
+export const mockGroupClaimsNotificationItem: SendNotificationTypeItem = {
+  id: '6423be5b-0b82-462a-af1d-5f1df39686ac',
+  value: {
+    number: '2',
+    date: '2019-05-02',
+    sentBy: 'Tribunal',
+    sendNotificationGroupClaims: 'Considering claims together',
+    sendNotificationGroupClaimsMadeBy: 'Legal officer',
+    sendNotificationFullName3: 'Jane Doe',
+    sendNotificationNotify: 'Both parties',
+    notificationState: 'notViewedYet',
+    sendNotificationSubjectString: 'Group claims',
+    sendNotificationSubject: ['Group claims'],
+  },
+};

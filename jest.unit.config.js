@@ -11,6 +11,9 @@ module.exports = {
     '<rootDir>/src/test/unit/test-helpers',
     '<rootDir>/src/test/unit/views',
   ],
+  moduleNameMapper: {
+    '^uuid$': '<rootDir>/node_modules/uuid/dist/cjs/index.js',
+  },
   transform: {
     '^.+\\.(ts|tsx)$': '@swc/jest',
   },

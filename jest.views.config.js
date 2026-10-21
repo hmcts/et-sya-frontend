@@ -7,6 +7,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   modulePathIgnorePatterns: ['<rootDir>/src/test/unit/mocks', '<rootDir>/src/test/unit/test-helpers'],
   testEnvironment: '<rootDir>/jest.environment.jsdom.js',
+  moduleNameMapper: {
+    '^uuid$': '<rootDir>/node_modules/uuid/dist/cjs/index.js',
+  },
   // View tests boot Express + Nunjucks; under maxWorkers this can exceed Jest's 5s default
   testTimeout: 15000,
   transform: {

@@ -622,6 +622,7 @@ describe('get User applications', () => {
         id: '12345',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
         personalDetailsCheck: YesOrNo.YES,
+        groupClaimsCheck: YesOrNo.NO,
         employmentAndRespondentCheck: YesOrNo.YES,
         claimDetailsCheck: YesOrNo.YES,
         createdDate: 'September 1, 2022',
@@ -640,6 +641,7 @@ describe('get User applications', () => {
       {
         id: '123456',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        groupClaimsCheck: YesOrNo.NO,
         typeOfClaim: ['discrimination'],
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',

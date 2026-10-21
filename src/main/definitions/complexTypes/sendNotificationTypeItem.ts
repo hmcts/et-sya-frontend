@@ -13,6 +13,7 @@ export interface SendNotificationTypeItem {
   linkText?: string;
   needsResponse?: boolean;
   showAlert?: boolean;
+  isConsideringClaimsTogether?: boolean;
 }
 
 export interface SendNotificationType {
@@ -60,6 +61,10 @@ export interface SendNotificationType {
 
   //Full name who made the judgment
   sendNotificationFullName2?: string;
+
+  sendNotificationGroupClaims?: string;
+  sendNotificationGroupClaimsMadeBy?: string;
+  sendNotificationFullName3?: string;
 
   //Notification sent to Both parties, Claimant only or Respondent only
   sendNotificationNotify?: string;
