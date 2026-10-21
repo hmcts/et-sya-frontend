@@ -147,8 +147,18 @@ export const isDateNotInPast: DateValidator = date => {
   }
 };
 
+export const isDateNotInFuture: DateValidator = date => {
+  if (!isDateEmpty(date) && isFirstDateAfterSecond(date, convertDateToCaseDate(new Date()))) {
+    return { error: 'invalidDateInFuture', fieldName: 'day' };
+  }
+};
+
 export const isFirstDateBeforeSecond = (date1: CaseDate, date2: CaseDate): boolean => {
   return convertCaseDateToDate(date1) < convertCaseDateToDate(date2);
+};
+
+export const isFirstDateAfterSecond = (date1: CaseDate, date2: CaseDate): boolean => {
+  return convertCaseDateToDate(date1) > convertCaseDateToDate(date2);
 };
 
 export const isDateEmpty = (date: CaseDate): boolean => {

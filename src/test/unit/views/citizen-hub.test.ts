@@ -139,11 +139,11 @@ describe('Citizen hub page', () => {
         caseApiDataResponse: caseApiDataResponses[0],
       },
       {
-        expectedCurrStep: hubJson.responseDue,
+        expectedCurrStep: hubJson.accepted,
         caseApiDataResponse: caseApiDataResponses[1],
       },
       {
-        expectedCurrStep: hubJson.details,
+        expectedCurrStep: hubJson.received,
         caseApiDataResponse: caseApiDataResponses[2],
       },
     ])('should show correct current progress bar task: %o', async ({ expectedCurrStep, caseApiDataResponse }) => {

@@ -33,6 +33,8 @@ const translations = {
     video: 'Video',
     phone: 'Phone',
     neither: 'Neither',
+    hearingPanelPreference: 'How do you prefer your case to be heard?',
+    hearingPanelPreferenceWhy: 'Reason for Judge or Panel preference',
     male: 'Male',
     female: 'Female',
     preferNotToSay: 'Prefer not to say',
@@ -70,6 +72,7 @@ const translations = {
   claimDetails: {
     claimTypeDiscrimination: 'What type of discrimination claim are you making?',
     claimTypePay: 'What type of pay claim are you making?',
+    dateOfLastEvent: 'What is the date of the most recent event you are complaining about?',
     describeWhatHappened: 'Describe what happened to you',
     ifClaimSuccessful: 'What do you want if your claim is successful',
     linkedCases: 'Linked cases',
@@ -335,6 +338,21 @@ describe('ClaimantRepAnswersHelper', () => {
       const rows = getRepresentativeDetails({ ...baseCase, reasonableAdjustments: undefined }, translations);
       expect(rows[9].value.text).toBe('Not provided');
     });
+
+    it('should include hearing panel preference and reason when ERA is enabled', () => {
+      const rows = getRepresentativeDetails(
+        {
+          ...baseCase,
+          claimantHearingPanelPreference: 'Judge',
+          claimantHearingPanelPreferenceWhy: 'Complex legal issues',
+        },
+        translations,
+        true
+      );
+
+      expect(rows.some(r => r.key.text === 'How do you prefer your case to be heard?')).toBe(true);
+      expect(rows.some(r => r.key.text === 'Reason for Judge or Panel preference')).toBe(true);
+    });
   });
 
   describe('getClaimantPersonalDetails', () => {
@@ -431,6 +449,20 @@ describe('ClaimantRepAnswersHelper', () => {
       const rows = getClaimantClaimDetails(baseCase, translations);
       expect(rows.some(r => r.key.text === 'Describe what happened to you')).toBe(true);
       expect(rows.some(r => r.key.text === 'Linked cases')).toBe(true);
+    });
+
+    it('should include date of last event when ERA is enabled', () => {
+      const rows = getClaimantClaimDetails(
+        { ...baseCase, dateOfLastEvent: { day: '01', month: '10', year: '2026' } },
+        translations,
+        true
+      );
+      const dateRow = rows.find(
+        r => r.key.text === 'What is the date of the most recent event you are complaining about?'
+      );
+
+      expect(dateRow.value.text).toBe('01-10-2026');
+      expect(dateRow.actions.items[0].href).toBe(PageUrls.DATE_OF_LAST_EVENT + InterceptPaths.REP_ANSWERS_CHANGE);
     });
 
     it('should return Yes for linkedCases YES', () => {

@@ -1,8 +1,9 @@
 import ClaimDetailsCheckController from '../../../main/controllers/ClaimDetailsCheckController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { ClaimTypePay, TypesOfClaim } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -13,6 +14,13 @@ describe('Test claim details check controller', () => {
     claimDetailsCheck: {},
     common: {},
   };
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should render the task list check page', () => {
     const controller = new ClaimDetailsCheckController();
@@ -99,6 +107,25 @@ describe('Test claim details check controller', () => {
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
     await controller.post(req, res);
+    expect(req.session.errors).toEqual([{ propertyName: 'claimDetailsCheck', errorType: 'invalid' }]);
+    expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_DETAILS_CHECK, expect.anything());
+  });
+
+  it('should show error when ERA is enabled and date of last event is missing', async () => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+    const body = { claimDetailsCheck: YesOrNo.YES };
+    const userCase: Partial<CaseWithId> = {
+      typeOfClaim: [TypesOfClaim.PAY_RELATED_CLAIM],
+      claimTypePay: [ClaimTypePay.ARREARS],
+      claimSummaryText: 'test',
+    };
+    const controller = new ClaimDetailsCheckController();
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(LaunchDarkly.getFlagValue).toHaveBeenCalledWith(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
     expect(req.session.errors).toEqual([{ propertyName: 'claimDetailsCheck', errorType: 'invalid' }]);
     expect(res.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_DETAILS_CHECK, expect.anything());
   });

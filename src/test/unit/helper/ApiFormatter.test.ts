@@ -337,6 +337,8 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: undefined,
       claimantContactLanguagePreference: undefined,
       claimantHearingLanguagePreference: undefined,
+      claimantHearingPanelPreference: undefined,
+      claimantHearingPanelPreferenceWhy: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       representativeDetailsCheck: undefined,
@@ -378,6 +380,7 @@ describe('Format Case Data to Frontend Model', () => {
       responseRejectionDocumentDetail: undefined,
       responseEt3FormDocumentDetail: [],
       otherClaim: undefined,
+      dateOfLastEvent: undefined,
       sendNotificationCollection: undefined,
       hearingCollection: undefined,
       documentCollection: undefined,
@@ -388,6 +391,34 @@ describe('Format Case Data to Frontend Model', () => {
       caseStayed: undefined,
       claimantRepresentativeOrganisationPolicy: undefined,
     });
+  });
+
+  it('should stringify numeric case ids returned by the API', () => {
+    const mockedApiDataNumericId: CaseApiDataResponse = {
+      id: 1786637776090539,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {
+        claimantRepresentedQuestion: YesOrNo.YES,
+      },
+    };
+
+    expect(fromApiFormat(mockedApiDataNumericId).id).toBe('1786637776090539');
+  });
+
+  it('should keep string case ids as strings', () => {
+    const mockedApiDataStringId: CaseApiDataResponse = {
+      id: '1786637776090539',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {
+        claimantRepresentedQuestion: YesOrNo.YES,
+      },
+    };
+
+    expect(fromApiFormat(mockedApiDataStringId).id).toBe('1786637776090539');
   });
 
   it('should return document collection for welsh`', () => {

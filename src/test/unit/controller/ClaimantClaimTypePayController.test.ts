@@ -1,7 +1,8 @@
 import ClaimantClaimTypePayController from '../../../main/controllers/ClaimantClaimTypePayController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { ClaimTypePay } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,6 +13,14 @@ describe('ClaimantClaimTypePayController', () => {
     'claimant-claim-type-pay': {},
     common: {},
   };
+
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   describe('get()', () => {
     it('should render the claimant claim type pay page', () => {
@@ -46,6 +55,18 @@ describe('ClaimantClaimTypePayController', () => {
       await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
+    });
+
+    it('should redirect to date of last event when ERA is enabled', async () => {
+      jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+      const controller = new ClaimantClaimTypePayController();
+      const req = mockRequestEmpty({ body: { claimTypePay: [ClaimTypePay.ARREARS] } });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(LaunchDarkly.getFlagValue).toHaveBeenCalledWith(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DATE_OF_LAST_EVENT);
     });
 
     it('should allow multiple selections and redirect to CLAIMANT_DESCRIBE_WHAT_HAPPENED (AC2)', async () => {

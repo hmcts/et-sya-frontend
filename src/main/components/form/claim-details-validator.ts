@@ -4,9 +4,9 @@ export const validatePersonalDetails = (userCase: Record<string, any>): boolean 
   if (!userCase) {
     return false;
   }
-  const { address1, addressTown, addressPostcode, addressCountry } = userCase;
+  const { address1, addressTown, addressCountry } = userCase;
 
-  return !(!address1 || !addressTown || !addressPostcode || !addressCountry);
+  return !(!address1 || !addressTown || !addressCountry);
 };
 
 export const validateEmploymentAndRespondentDetails = (userCase: Record<string, any>): boolean => {
@@ -56,12 +56,13 @@ export const validateClaimantRepAboutYou = (userCase: Record<string, any>): bool
   return StringUtils.isNotBlank(claimantRepEmail);
 };
 
-export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
+export const validateClaimCheckDetails = (userCase: Record<string, any>, eraOctober2026Enabled = false): boolean => {
   if (!userCase) {
     return false;
   }
 
-  const { typeOfClaim, claimSummaryFile, claimSummaryText, claimTypeDiscrimination, claimTypePay } = userCase;
+  const { typeOfClaim, claimSummaryFile, claimSummaryText, claimTypeDiscrimination, claimTypePay, dateOfLastEvent } =
+    userCase;
 
   if (!typeOfClaim || !Array.isArray(typeOfClaim) || typeOfClaim.length === 0) {
     return false;
@@ -72,6 +73,9 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
   }
 
   if (typeOfClaim.includes('payRelated') && (!claimTypePay || claimTypePay.length === 0)) {
+    return false;
+  }
+  if (eraOctober2026Enabled && (!dateOfLastEvent?.day || !dateOfLastEvent?.month || !dateOfLastEvent?.year)) {
     return false;
   }
 

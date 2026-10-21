@@ -1,5 +1,7 @@
 import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { PageUrls } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -8,6 +10,14 @@ describe('Hearing Preferences Controller', () => {
     'video-hearings': {},
     common: {},
   };
+
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it('should render the video hearings choice page', () => {
     const controller = new VideoHearingsController();
@@ -30,5 +40,17 @@ describe('Hearing Preferences Controller', () => {
     await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({ hearingPreferences: ['Phone'] });
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HEARING_PANEL_PREFERENCE);
+  });
+
+  it('should skip hearing panel preference when the ERA feature is disabled', async () => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    const req = mockRequestEmpty({ body: { hearingPreferences: 'Phone' } });
+    const res = mockResponse();
+
+    await new VideoHearingsController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.REASONABLE_ADJUSTMENTS);
   });
 });

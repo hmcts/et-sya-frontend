@@ -4,11 +4,12 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -85,9 +86,11 @@ export default class ClaimTypeDiscriminationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    let redirectUrl = PageUrls.DATE_OF_LAST_EVENT.toString();
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
+    } else if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
+      redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED;
     }
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };

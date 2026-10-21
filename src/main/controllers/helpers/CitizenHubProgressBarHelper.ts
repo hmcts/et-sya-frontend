@@ -6,61 +6,32 @@ import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { isHearingExist } from './HearingHelpers';
 
-const enum ActiveState {
-  ACCEPTED = 'accepted',
-  RECEIVED = 'received',
-  HEARING = 'details',
-  DECISION = 'decision',
-}
-
 export const getProgressBarItems = (
   userCase: Partial<CaseWithId>,
   translations: AnyRecord,
   url: string
 ): ProgressBarItem[] => {
-  const progressBarItem: ProgressBarItem[] = [];
+  const progressBarItems: ProgressBarItem[] = [
+    addProgressBarItem(translations.accepted, userCase.state === CaseState.ACCEPTED, false),
+    addProgressBarItem(getResponseReceivedText(userCase, translations, url), userCase.et3ResponseReceived, false),
+    addProgressBarItem(translations.details, isHearingExist(userCase.hearingCollection), false),
+    addProgressBarItem(translations.decision, false, false),
+  ];
 
-  const activeState = getActiveState(userCase);
+  setCurrentStage(progressBarItems);
 
-  progressBarItem.push(
-    addProgressBarItem(
-      translations.accepted,
-      userCase.state === CaseState.ACCEPTED,
-      activeState === ActiveState.ACCEPTED
-    )
-  );
-
-  progressBarItem.push(
-    addProgressBarItem(
-      getResponseReceivedText(userCase, translations, url),
-      userCase.et3ResponseReceived,
-      activeState === ActiveState.RECEIVED
-    )
-  );
-
-  progressBarItem.push(
-    addProgressBarItem(
-      translations.details,
-      isHearingExist(userCase.hearingCollection),
-      activeState === ActiveState.HEARING
-    )
-  );
-
-  progressBarItem.push(addProgressBarItem(translations.decision, false, activeState === ActiveState.DECISION));
-
-  return progressBarItem;
+  return progressBarItems;
 };
 
-const getActiveState = (userCase: Partial<CaseWithId>): string => {
-  if (isHearingExist(userCase.hearingCollection)) {
-    return userCase.et3ResponseReceived ? ActiveState.DECISION : ActiveState.RECEIVED;
-  } else if (userCase.et3ResponseReceived) {
-    return ActiveState.HEARING;
-  } else if (userCase.state === CaseState.ACCEPTED) {
-    return ActiveState.RECEIVED;
-  } else {
-    return ActiveState.ACCEPTED;
-  }
+/**
+ * The case is at the furthest stage it has reached, so the last completed spot is the current one:
+ * shown green and in bold, with the spots before it staying green in standard text. A stage the case
+ * has passed without completing - a hearing listed before the response is received - stays empty.
+ */
+const setCurrentStage = (progressBarItems: ProgressBarItem[]): void => {
+  const lastCompleteIndex = progressBarItems.map(item => !!item.complete).lastIndexOf(true);
+  // Nothing is complete until the claim is accepted, so the first stage is the one being worked towards
+  progressBarItems[lastCompleteIndex === -1 ? 0 : lastCompleteIndex].active = true;
 };
 
 const getResponseReceivedText = (userCase: Partial<CaseWithId>, translations: AnyRecord, url: string): string => {

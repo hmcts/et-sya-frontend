@@ -10,8 +10,10 @@ export class PropertiesVolume {
 
       this.setSecret('secrets.et.app-insights-connection-string', 'appInsights.connectionString');
       this.setSecret('secrets.et.idam-secret', 'services.idam.clientSecret');
-      this.setSecret('secrets.et.et-redis-access-key', 'session.redis.key');
-      this.setSecret('secrets.et.et-redis-access-key', 'session.secret');
+      // Azure Managed Redis is the only cache; et-redis-access-key belonged to the
+      // classic cache and is no longer mounted.
+      this.setSecret('secrets.et.et-managed-redis-access-key', 'session.redis.key');
+      this.setSecret('secrets.et.et-session-secret', 'session.secret');
       this.setSecret('secrets.et.os-places-token', 'services.addressLookup.token');
       this.setSecret('secrets.et.pcq-token-key', 'services.pcq.token');
       this.setSecret('secrets.et.launch-darkly-sdk-key', 'services.launchDarkly.key');

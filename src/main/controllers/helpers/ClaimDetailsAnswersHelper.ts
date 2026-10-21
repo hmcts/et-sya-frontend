@@ -75,6 +75,20 @@ export const getClaimDetails = (userCase: CaseWithId, translations: AnyRecord): 
     );
   }
 
+  if (userCase.dateOfLastEvent) {
+    claimDetails.push(
+      addSummaryRow(
+        translations.claimDetails.dateOfLastEvent,
+        userCase.dateOfLastEvent.day + '-' + userCase.dateOfLastEvent.month + '-' + userCase.dateOfLastEvent.year,
+        createChangeAction(
+          PageUrls.DATE_OF_LAST_EVENT + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.claimDetails.dateOfLastEvent
+        )
+      )
+    );
+  }
+
   claimDetails.push(
     addSummaryRow(
       translations.claimDetails.describeWhatHappened,

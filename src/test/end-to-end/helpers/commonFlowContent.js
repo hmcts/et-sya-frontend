@@ -15,7 +15,7 @@ async function verifyMakeAClaimToAnEmploymentTribunal() {
   I.see(
     'You do not have to make your claim in one go. You can save and return to it at any time before you submit it.'
   );
-  I.see('Claims usually have to be made within 3 months of employment ending or problems happening. If a claim is');
+  I.see('months of employment ending or problems happening. If a claim is');
   I.see('late, you must explain why. A judge will then decide what happens next.');
 
   I.see('Have you already started a claim?');

@@ -1,7 +1,8 @@
 import ClaimantTypeOfClaimController from '../../../main/controllers/ClaimantTypeOfClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,6 +13,14 @@ describe('ClaimantTypeOfClaimController', () => {
     'claimant-type-of-claim': {},
     common: {},
   };
+
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   describe('get()', () => {
     it('should render the claimant type of claim page (AC1)', () => {
@@ -68,6 +77,18 @@ describe('ClaimantTypeOfClaimController', () => {
       await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_DESCRIBE_WHAT_HAPPENED);
+    });
+
+    it('should redirect to date of last event when ERA is enabled', async () => {
+      jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+      const controller = new ClaimantTypeOfClaimController();
+      const req = mockRequestEmpty({ body: { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL] } });
+      const res = mockResponse();
+
+      await controller.post(req, res);
+
+      expect(LaunchDarkly.getFlagValue).toHaveBeenCalledWith(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.DATE_OF_LAST_EVENT);
     });
 
     it('should redirect to DESCRIBE_WHAT_HAPPENED when only whistleblowing is selected (AC2)', async () => {
