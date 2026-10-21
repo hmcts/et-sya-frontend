@@ -10,6 +10,8 @@ module.exports = {
   moduleNameMapper: {
     '^uuid$': '<rootDir>/node_modules/uuid/dist/cjs/index.js',
   },
+  // View tests boot Express + Nunjucks; under maxWorkers this can exceed Jest's 5s default
+  testTimeout: 15000,
   transform: {
     '^.+\\.(ts|tsx)$': '@swc/jest',
   },
