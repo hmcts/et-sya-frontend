@@ -6,6 +6,8 @@ import CheckYourAnswersController from '../../../main/controllers/CheckYourAnswe
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
+import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
+import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import checkAnswersJsonRaw from '../../../main/resources/locales/en/translation/check-your-answers.json';
 import et1DetailsJsonRaw from '../../../main/resources/locales/en/translation/et1-details.json';
 import { mockRequestEmpty, mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -13,6 +15,9 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Check Your answers Controller', () => {
   const translationJsons = { ...checkAnswersJsonRaw, ...et1DetailsJsonRaw };
+  beforeEach(() =>
+    jest.spyOn(CuiYourSupportFeatureModule, 'getCuiYourSupportFeature').mockReturnValue(new CuiYourSupportFeature([]))
+  );
 
   it('should render the Check your answers page', async () => {
     const controller = new CheckYourAnswersController();
@@ -66,7 +71,6 @@ describe('Check Your answers Controller', () => {
     request.session.userCase.claimTypePay = null;
 
     await controller.get(request, response);
-
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
   });
 });

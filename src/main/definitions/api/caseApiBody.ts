@@ -1,3 +1,4 @@
+import { CaseFlags } from '../case';
 import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
@@ -33,6 +34,7 @@ interface CaseDataApiBody {
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
   claimantTse?: ClaimantTse;
+  claimantExternalFlags?: CaseFlags;
   representativeClaimantType?: ClaimantRepresentative;
   repCollection?: RepresentativeRequestBody[];
 }
@@ -51,6 +53,14 @@ export interface UpdateCaseBody {
   case_id: string;
   case_type_id: string;
   case_data: CaseDataApiBody;
+}
+
+export interface UpdateSubmittedCaseFlagsBody {
+  case_id: string;
+  case_type_id: string;
+  case_data: {
+    claimantExternalFlags: CaseFlags;
+  };
 }
 
 export interface RespondentRequestBody {

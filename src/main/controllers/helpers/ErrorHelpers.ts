@@ -20,6 +20,12 @@ import { FormError } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { Logger } from '../../logger';
 
+export const consumeYourSupportSaveError = (req: AppRequest): boolean => {
+  const yourSupportSaveError = req.session.yourSupportSaveError === true;
+  req.session.yourSupportSaveError = undefined;
+  return yourSupportSaveError;
+};
+
 export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
   return getSessionErrors(req, form, formData);

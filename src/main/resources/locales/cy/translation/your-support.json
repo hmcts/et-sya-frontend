@@ -1,0 +1,78 @@
+{
+  "title": "Dywedwch wrthym os oes arnoch angen cymorth",
+  "h1": "Dywedwch wrthym os oes arnoch angen cymorth",
+  "legend": "Eich Cymorth",
+  "p": "Mae rhai pobl angen cymorth i gael mynediad at wybodaeth ac i ddefnyddio ein gwasanaethau. Gelwir hyn yn aml yn addasiad rhesymol.",
+  "detailsSummary": {
+    "subheading": "Dyma enghreifftiau o addasiadau rhesymol:",
+    "p": "Gallwch wneud cais am addasiad rhesymol nawr drwy ddewis 'Ymlaen i'r cwestiynau', neu ar unrhyw adeg ar ôl i chi gyflwyno’ch hawliad. Byddwn yn dweud wrthych sut i wneud hyn.",
+    "bullet1": "mynediad di-risiau os yw'ch achos yn mynd i wrandawiad ac mae'n cael ei gynnal wyneb yn wyneb",
+    "bullet2": "dod â chymorth gyda chi i'r gwrandawiad, fel rhywun rydych chi'n ei adnabod neu gi cymorth",
+    "bullet3": "dogfennau mewn fformat amgen, fel print bras",
+    "bullet4": "seibiannau rheolaidd yn ystod gwrandawiad"
+  },
+  "details": [
+    {
+      "header": "Cymorth cyn gwrandawiad tribiwnlys",
+      "blocks": [
+        {
+          "paragraph": "Os oes angen cymorth arnoch cyn eich gwrandawiad, er enghraifft addasiad rhesymol ar gyfer fformatau amgen fel print bras, gallwch ofyn am gymorth ar unrhyw adeg yn ystod eich achos."
+        }
+      ]
+    },
+    {
+      "header": "Cymorth mewn gwrandawiad",
+      "blocks": [
+        {
+          "paragraph": "Nid oes rhaid i bawb fynychu gwrandawiad. Byddwn yn rhoi gwybod i chi os oes angen i chi fynychu gwrandawiad - yna gallwch ddweud wrthym pa gymorth y bydd ei angen arnoch. Ystyriwch wrandawiadau o bell a rhai wyneb yn wyneb, rhag ofn bod y math o wrandawiad o’ch dewis ddim yn bosibl."
+        }
+      ]
+    },
+    {
+      "header": "Cymorth i rywun arall",
+      "blocks": [
+        {
+          "paragraph": "Os oes angen cymorth ar rywun sy'n dod gyda chi i'r gwrandawiad, cysylltwch â'r tribiwnlys ar ôl i chi gyflwyno'ch hawliad."
+        }
+      ]
+    },
+    {
+      "header": "Gwneud cais am rywbeth arall",
+      "blocks": [
+        {
+          "paragraph": "Rhaid i chi gysylltu â'r tribiwnlys yn uniongyrchol i wneud cais am rywbeth arall ar eich cyfer chi neu rywun arall sy'n dod i'r llys i'ch cefnogi."
+        },
+        {
+          "paragraph": "Dyma enghreifftiau o gymorth arall:"
+        },
+        {
+          "bulletList": [
+            "cyfathrebu a dogfennau yn y Gymraeg neu i siarad yn y Gymraeg yn eich gwrandawiad",
+            "cyfieithydd",
+            "mesurau arbennig, fel rhoi tystiolaeth yn breifat, oherwydd eich bod yn agored i niwed"
+          ]
+        },
+        {
+          "paragraph": "Ar ôl i chi gyflwyno eich hawliad, gallwch gysylltu â'r tribiwnlys sy'n delio â'ch hawliad i ofyn am rywbeth arall."
+        }
+      ]
+    }
+  ],
+  "yes": "Oes",
+  "continueToQuestions": "Ymlaen i'r cwestiynau",
+  "noSupport": "Nid oes arnaf angen unrhyw gymorth ar hyn o bryd",
+  "adjustmentDetailTextLabel": "Dywedwch wrthym pa gymorth rydych angen gofyn amdano",
+  "textAreaHint": "Gallwch ddisgrifio beth sydd ei angen arnoch",
+  "startNow": "Dechrau",
+  "errors": {
+    "reasonableAdjustments": {
+      "required": "Dewiswch a oes arnoch angen cymorth"
+    },
+    "yourSupportRedirect": {
+      "required": "Roedd problem wrth ddechrau eich cais am gymorth. Ceisiwch eto yn nes ymlaen."
+    },
+    "reasonableAdjustmentsDetail": {
+      "required": "Rhowch fanylion am y cymorth sydd ei angen arnoch"
+    }
+  }
+}

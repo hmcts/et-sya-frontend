@@ -8,6 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getUserApplications, getUserCasesByLastModified } from '../services/CaseSelectionService';
 
+import { consumeYourSupportSaveError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -66,6 +67,7 @@ export default class ClaimantApplicationsController {
         representingApplications,
         showTabs,
         currentUrl: PageUrls.CLAIMANT_APPLICATIONS,
+        yourSupportSaveError: consumeYourSupportSaveError(req),
       });
     }
   };
