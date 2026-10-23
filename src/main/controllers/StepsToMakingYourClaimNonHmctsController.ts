@@ -26,18 +26,17 @@ export default class StepsToMakingYourClaimNonHmctsController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS,
     ]);
-    const { userCase } = req.session;
-
-    if (req.app?.locals?.redisClient && req.session.guid) {
+    if (req.session.userCase?.id === undefined && req.app?.locals?.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
-      if (userCase?.id === undefined) {
-        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
-        logger.info(`Created Draft Case - ${newCase.data.id}`);
-        req.session.userCase = fromApiFormat(newCase.data);
-      }
+      const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
+      logger.info(`Created Draft Case - ${newCase.data.id}`);
+      req.session.userCase = fromApiFormat(newCase.data);
       setUserCaseWithRedisData(req, caseData);
+      req.session.guid = undefined;
     }
+
+    const { userCase } = req.session;
 
     const allSectionsCompleted = !!(
       userCase?.representativeDetailsCheck === YesOrNo.YES &&

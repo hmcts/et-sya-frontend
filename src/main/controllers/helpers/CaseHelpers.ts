@@ -55,7 +55,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   }
   const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
   const claimJurisdiction = userDataMap.get(CaseDataCacheKey.CLAIM_JURISDICTION);
-  if (claimJurisdiction) {
+  if (req.session.userCase.caseTypeId === undefined && claimJurisdiction) {
     req.session.userCase.caseTypeId = claimJurisdiction as CaseTypeId;
   }
   req.session.userCase.claimantRepresentedQuestion =
