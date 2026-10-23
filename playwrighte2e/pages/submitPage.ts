@@ -150,5 +150,22 @@ export class SubmitPage extends BasePage {
     await this.webAction.verifyTextIsVisible(formattedDate);
     await this.webAction.verifyTextIsVisible('text=Download your claim');
     await this.webAction.verifyTextIsVisible('text=Save a copy of your claim');
+    const caselink = await this.page.locator(
+      '#main-content > div:nth-child(1) > div > div.govuk-button-group > a:text("Close and return to case overview")'
+    );
+    const href = await caselink.getAttribute('href');
+    const number = href?.match(/\/citizen-hub\/(\d+)/)?.[1];
+    console.log('case number is....', number);
+    await this.webAction.clickElementByCss(
+      '#main-content > div:nth-child(1) > div > div.govuk-button-group > a:text("Close and return to case overview")'
+    );
+  }
+  //Temporary method until all these tests are migrated to new Playwright POM approach.
+  async caseOverview(): Promise<void> {
+    await this.webAction.verifyTextIsVisible('text=Case overview');
+    await this.webAction.verifyTextIsVisible('text=You have submitted your claim to the tribunal');
+    await this.webAction.clickElementByCss(
+      '#main-content > div > div > div > div.govuk-grid-column-one-third-from-desktop > div > p:nth-child(2) > a'
+    );
   }
 }
