@@ -22,7 +22,7 @@ export interface CreateCaseResponse {
 }
 
 export interface CaseApiDataResponse {
-  id: string;
+  id: string | number;
   // Role the user holds on this case, injected by /user-cases (may be top-level or in case_data).
   caseUserRole?: string;
   created_date: string;

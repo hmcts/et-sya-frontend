@@ -90,6 +90,7 @@ export const mockEmptyApp = (): Express => {
     next();
   });
   mock.use(app);
+  app.locals.CSRF_DISABLED = true;
   return mock;
 };
 
