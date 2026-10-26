@@ -59,7 +59,8 @@ app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use((req: Request, res: Response, next: NextFunction) => {
   const contentEncoding = req.headers['content-encoding'];
   if (contentEncoding && /\b(br|brotli)\b/i.test(contentEncoding)) {
-    return res.status(415).send('Unsupported Media Type: Brotli encoding is not supported');
+    res.status(415).send('Unsupported Media Type: Brotli encoding is not supported');
+    return;
   }
   next();
 });
