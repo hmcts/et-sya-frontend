@@ -66,6 +66,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req, _res, next) => {
+  req.body = req.body ?? {};
+  next();
+});
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1y', immutable: true }));
 app.use((req, res, next) => {
