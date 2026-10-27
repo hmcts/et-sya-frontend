@@ -76,6 +76,12 @@ describe('Notice period - still working or notice', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitleWorkingOrNotice, 'Page title does not exist');
   });
+
+  it('should display the question as the h1', () => {
+    const h1 = htmlRes.getElementsByTagName('h1');
+    expect(h1.length).equal(1);
+    expect(h1[0].textContent.trim()).equal(expectedTitleWorkingOrNotice);
+  });
 });
 
 describe('Notice period - no longer working', () => {
@@ -96,5 +102,11 @@ describe('Notice period - no longer working', () => {
   it('should display correct title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitleNoLongerWorking, 'Page title does not exist');
+  });
+
+  it('should display the question as the h1', () => {
+    const h1 = htmlRes.getElementsByTagName('h1');
+    expect(h1.length).equal(1);
+    expect(h1[0].textContent.trim()).equal(expectedTitleNoLongerWorking);
   });
 });
