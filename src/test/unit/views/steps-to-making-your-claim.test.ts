@@ -56,6 +56,17 @@ describe('Steps to making your claim page', () => {
       });
   });
 
+  it('should render delete as a warning button with the button role', () => {
+    const deleteButton = htmlRes.querySelector('a.govuk-button--warning');
+    expect(deleteButton, 'Delete button does not exist').to.not.equal(null);
+    expect(deleteButton.getAttribute('role')).to.equal('button');
+    expect(deleteButton.getAttribute('data-module')).to.equal('govuk-button');
+    expect(deleteButton.textContent.trim()).to.equal('Delete');
+    expect(deleteButton.getAttribute('href')).to.match(
+      /^\/claimant-application\/.+\/delete\?lng=en&redirect=claim-steps$/
+    );
+  });
+
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
