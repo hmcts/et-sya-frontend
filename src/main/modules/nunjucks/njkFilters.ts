@@ -20,6 +20,25 @@ function createFilters(env: nunjucks.Environment): void {
       return titleCaseArray;
     }
   });
+
+  // Give each radio a fixed position and set size so screen readers don't count conditionally
+  // revealed fields as extra options (WCAG 4.1.2). Dividers ("or") are not radios, so skip them.
+  env.addFilter('radioPositions', function (items: RadioItem[]) {
+    const setSize = items.filter(item => !item.divider).length;
+    let position = 0;
+    return items.map(item => {
+      if (item.divider) {
+        return item;
+      }
+      position++;
+      return {
+        ...item,
+        attributes: { ...item.attributes, 'aria-posinset': position, 'aria-setsize': setSize },
+      };
+    });
+  });
 }
+
+type RadioItem = { divider?: string; attributes?: Record<string, unknown> };
 
 export default createFilters;
