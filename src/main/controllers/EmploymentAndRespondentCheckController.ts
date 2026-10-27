@@ -53,6 +53,7 @@ export default class EmploymentAndRespondentCheckController {
         ]);
         return res.render(TranslationKeys.TASK_LIST_CHECK, {
           ...content,
+          title: content.employmentAndRespondentTitle,
         });
       }
     }
@@ -69,6 +70,7 @@ export default class EmploymentAndRespondentCheckController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.TASK_LIST_CHECK, {
       ...content,
+      title: content.employmentAndRespondentTitle,
     });
   };
 }
