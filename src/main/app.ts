@@ -2,6 +2,7 @@ import * as path from 'path';
 
 // eslint-disable-next-line import/no-unresolved
 import { HTTPError } from 'HttpError';
+import axios from 'axios';
 import * as bodyParser from 'body-parser';
 import config from 'config';
 import cookieParser from 'cookie-parser';
@@ -29,6 +30,10 @@ export const app = express();
 app.locals.ENV = env;
 app.locals.developmentMode = developmentMode;
 
+// Defense-in-depth against CVE-2026-111497 (Brotli decoder memory corruption):
+// Prevent Axios outbound requests from requesting Brotli compression
+axios.defaults.headers.common['Accept-Encoding'] = 'gzip, deflate';
+
 new PropertiesVolume().enableFor(app);
 new AppInsights().enable();
 new Nunjucks(developmentMode).enableFor(app);
@@ -51,8 +56,21 @@ app.use((req, res, next) => {
 new HealthCheck().enableFor(app);
 app.enable('trust proxy');
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
+// Reject Brotli-encoded incoming requests before body parsing (CVE-2026-111497)
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const contentEncoding = req.headers['content-encoding'];
+  if (contentEncoding && /\b(br|brotli)\b/i.test(contentEncoding)) {
+    res.status(415).send('Unsupported Media Type: Brotli encoding is not supported');
+    return;
+  }
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req, _res, next) => {
+  req.body = req.body ?? {};
+  next();
+});
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1y', immutable: true }));
 app.use((req, res, next) => {
