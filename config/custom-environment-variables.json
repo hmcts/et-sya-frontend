@@ -3,6 +3,9 @@
     "s2s": {
       "url": "S2S_URL"
     },
+    "cui": {
+      "endpoint": "CUI_URL"
+    },
     "addressLookup": {
       "url": "ADDRESS_LOOK_UP_URL",
       "token": "ADDRESS_LOOKUP_TOKEN"

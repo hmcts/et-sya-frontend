@@ -30,6 +30,7 @@ export interface AppSession extends Session {
   >;
   lang: string | undefined;
   errors: FormError[] | undefined;
+  yourSupportSaveError?: boolean;
   userCase: CaseWithId;
   userCases: CaseWithId[];
   hasUserCases?: boolean;
