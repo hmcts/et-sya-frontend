@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'unit',
   testEnvironment: 'node',
+  setupFiles: ['<rootDir>/jest.setup.env.js'],
   cache: true,
   coveragePathIgnorePatterns: ['<rootDir>/src/main/assets'],
   roots: ['<rootDir>/src/test/unit', '<rootDir>/src/test/routes'],

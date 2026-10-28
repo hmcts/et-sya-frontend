@@ -9,8 +9,25 @@ import { AppRequest } from '../../definitions/appRequest';
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('CSRF');
 
+const csrfSecret = (): string => {
+  if (config.has('csrf.secret')) {
+    const configured = config.get('csrf.secret') as string;
+    if (configured) {
+      return configured;
+    }
+  }
+
+  return process.env.CSRF_SECRET || '';
+};
+
 const { invalidCsrfTokenError, doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
-  getSecret: () => process.env.CSRF_SECRET || config.get('csrf.secret'),
+  getSecret: () => {
+    const secret = csrfSecret();
+    if (!secret) {
+      throw new Error('CSRF secret is not configured');
+    }
+    return secret;
+  },
   getSessionIdentifier: (req: Request) => {
     return (req as AppRequest).sessionID || 'no-session';
   },
@@ -30,6 +47,10 @@ const { invalidCsrfTokenError, doubleCsrfProtection, generateCsrfToken } = doubl
 
 export default class CSRFToken {
   public enableFor(app: Application): void {
+    if (!csrfSecret()) {
+      throw new Error('CSRF secret is not configured');
+    }
+
     // Middleware to generate and store CSRF token for all requests
     app.use((req: AppRequest, res, next) => {
       if (req.session) {
