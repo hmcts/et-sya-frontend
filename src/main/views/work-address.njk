@@ -42,7 +42,7 @@
           hint: {
             text: hintText
           },
-          items: formItems(field.values, userCase.claimantWorkAddressQuestion),
+          items: formItems(field.values, userCase.claimantWorkAddressQuestion) | radioPositions,
           errorMessage: getError("claimantWorkAddressQuestion"),
           formGroup: {
             classes: field.id
