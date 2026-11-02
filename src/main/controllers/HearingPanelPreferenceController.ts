@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isContent500CharsOrLess, isFieldFilledIn } from '../components/form/validator';
+import { isContent500CharsOrLess } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
 import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
@@ -28,7 +28,6 @@ export default class HearingPanelPreferenceController {
         label: (l: AnyRecord): string => l.legend,
         labelSize: 'l',
         labelHidden: false,
-        validator: isFieldFilledIn,
         values: [
           {
             name: 'claimantHearingPanelPreference',

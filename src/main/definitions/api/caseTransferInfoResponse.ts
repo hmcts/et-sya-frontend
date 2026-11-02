@@ -4,7 +4,7 @@ export interface CaseTransferInfoResponse {
   transferred: boolean;
   transferType: CaseTransferType;
   caseState?: string;
-  originalCaseId?: string;
+  originalCaseId?: string | number;
   originalEthosCaseReference?: string;
   newEthosCaseReference?: string;
   newCaseId?: string;
