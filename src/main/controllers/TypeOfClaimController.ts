@@ -4,14 +4,15 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { assignFormData, getPageContent, getTypeOfClaimFormValues } from './helpers/FormHelpers';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -29,33 +30,7 @@ export default class TypeOfClaimController {
         hint: l => l.hint,
         validator: atLeastOneFieldIsChecked,
         values: [
-          {
-            id: 'discrimination',
-            name: 'typeOfClaim',
-            label: l => l.discrimination.checkbox,
-            value: TypesOfClaim.DISCRIMINATION,
-            hint: h => h.discrimination.hint,
-          },
-          {
-            id: 'payRelatedClaim',
-            name: 'typeOfClaim',
-            label: l => l.payRelated.checkbox,
-            value: TypesOfClaim.PAY_RELATED_CLAIM,
-          },
-          {
-            id: 'unfairDismissal',
-            name: 'typeOfClaim',
-            label: l => l.unfairDismissal.checkbox,
-            value: TypesOfClaim.UNFAIR_DISMISSAL,
-            hint: h => h.unfairDismissal.hint,
-          },
-          {
-            id: 'whistleBlowing',
-            name: 'typeOfClaim',
-            label: l => l.whistleBlowing.checkbox,
-            value: TypesOfClaim.WHISTLE_BLOWING,
-            hint: h => h.whistleBlowing.hint,
-          },
+          ...getTypeOfClaimFormValues(),
           {
             id: 'otherTypes',
             name: 'typeOfClaim',
@@ -85,7 +60,8 @@ export default class TypeOfClaimController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    const eraOctober2026Enabled = await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+    let redirectUrl = eraOctober2026Enabled ? PageUrls.DATE_OF_LAST_EVENT.toString() : PageUrls.DESCRIBE_WHAT_HAPPENED;
     const formData = this.form.getParsedBody(req.body);
     const typeOfClaim = formData.typeOfClaim;
     if (typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {

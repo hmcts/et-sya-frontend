@@ -3,8 +3,9 @@ import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
@@ -26,6 +27,13 @@ describe('Type Of Claim Controller', () => {
     'type-of-claim': {},
     common: {},
   };
+  beforeEach(() => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(true);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should render the Type Of Claim controller page', () => {
     const typeOfController = new TypeOfClaimController();
@@ -111,6 +119,19 @@ describe('Type Of Claim Controller', () => {
     });
   });
 
+  it('should bypass date of last event when the ERA feature is disabled', async () => {
+    jest.spyOn(LaunchDarkly, 'getFlagValue').mockResolvedValue(false);
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    const res = mockResponse();
+
+    await new TypeOfClaimController().post(
+      mockRequestEmpty({ body: { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL] } }),
+      res
+    );
+
+    expect(LaunchDarkly.getFlagValue).toHaveBeenCalledWith(FEATURE_FLAGS.ERA_OCTOBER_2026, null);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.DESCRIBE_WHAT_HAPPENED);
+  });
   describe('Updating draft case', () => {
     jest.mock('axios');
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);

@@ -139,11 +139,11 @@ describe('Citizen hub page', () => {
         caseApiDataResponse: caseApiDataResponses[0],
       },
       {
-        expectedCurrStep: hubJson.responseDue,
+        expectedCurrStep: hubJson.accepted,
         caseApiDataResponse: caseApiDataResponses[1],
       },
       {
-        expectedCurrStep: hubJson.details,
+        expectedCurrStep: hubJson.received,
         caseApiDataResponse: caseApiDataResponses[2],
       },
     ])('should show correct current progress bar task: %o', async ({ expectedCurrStep, caseApiDataResponse }) => {
@@ -230,6 +230,66 @@ describe('Citizen hub page', () => {
       mockLdClient.mockResolvedValue(false);
       const panel = htmlRes.getElementsByClassName(multiplePanel);
       expect(panel[0].innerHTML).toContain('LEAD CLAIM');
+    });
+
+    it('should not show the About you task link when claimant is not represented by an organisation', () => {
+      const aboutYouLink = Array.from(htmlRes.querySelectorAll('a')).find(
+        link => link.textContent.trim() === 'About you'
+      );
+      expect(aboutYouLink).toBeUndefined();
+    });
+
+    it('should not show the About you task link for non-HMCTS represented claimants', async () => {
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        ...mockUserCaseWithCitizenHubLinks,
+        claimantRepresentedQuestion: YesOrNo.YES,
+      });
+
+      await request(
+        mockApp({
+          userCase: {} as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      const aboutYouLink = Array.from(htmlRes.querySelectorAll('a')).find(
+        link => link.textContent.trim() === 'About you'
+      );
+      expect(aboutYouLink).toBeUndefined();
+    });
+
+    it('should not show the About you task link for HMCTS represented claimants', async () => {
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        ...mockUserCaseWithCitizenHubLinks,
+        claimantRepresentedQuestion: YesOrNo.YES,
+        claimantRepresentativeOrganisationPolicy: {
+          Organisation: {
+            OrganisationID: 'ORG123',
+          },
+        },
+      });
+
+      await request(
+        mockApp({
+          userCase: {} as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      const aboutYouLink = Array.from(htmlRes.querySelectorAll('a')).find(
+        link => link.textContent.trim() === 'About you'
+      );
+      expect(aboutYouLink).toBeUndefined();
     });
   });
 

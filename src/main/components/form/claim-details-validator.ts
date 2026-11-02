@@ -1,10 +1,12 @@
+import StringUtils from '../../utils/StringUtils';
+
 export const validatePersonalDetails = (userCase: Record<string, any>): boolean => {
   if (!userCase) {
     return false;
   }
-  const { address1, addressTown, addressPostcode, addressCountry } = userCase;
+  const { address1, addressTown, addressCountry } = userCase;
 
-  return !(!address1 || !addressTown || !addressPostcode || !addressCountry);
+  return !(!address1 || !addressTown || !addressCountry);
 };
 
 export const validateEmploymentAndRespondentDetails = (userCase: Record<string, any>): boolean => {
@@ -16,6 +18,7 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
 
   for (const respondent of respondents) {
     if (
+      !respondent.respondentName ||
       !respondent.respondentAddress1 ||
       !respondent.respondentAddressTown ||
       !respondent.respondentAddressCountry ||
@@ -36,14 +39,43 @@ export const validateEmploymentAndRespondentDetails = (userCase: Record<string, 
   return true;
 };
 
-export const validateClaimCheckDetails = (userCase: Record<string, any>): boolean => {
+export const validateRepresentativeDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const { representativeName, repAddress1 } = userCase;
+  return StringUtils.isNotBlank(representativeName) && StringUtils.isNotBlank(repAddress1);
+};
+
+export const validateClaimantRepAboutYou = (userCase: Record<string, any>): boolean => {
+  const isValidRepresentative: boolean = validateRepresentativeDetails(userCase);
+  if (!isValidRepresentative) {
+    return false;
+  }
+  const { claimantRepEmail } = userCase;
+  return StringUtils.isNotBlank(claimantRepEmail);
+};
+
+export const validateClaimCheckDetails = (userCase: Record<string, any>, eraOctober2026Enabled = false): boolean => {
   if (!userCase) {
     return false;
   }
 
-  const { typeOfClaim, claimSummaryFile, claimSummaryText } = userCase;
+  const { typeOfClaim, claimSummaryFile, claimSummaryText, claimTypeDiscrimination, claimTypePay, dateOfLastEvent } =
+    userCase;
 
   if (!typeOfClaim || !Array.isArray(typeOfClaim) || typeOfClaim.length === 0) {
+    return false;
+  }
+
+  if (typeOfClaim.includes('discrimination') && (!claimTypeDiscrimination || claimTypeDiscrimination.length === 0)) {
+    return false;
+  }
+
+  if (typeOfClaim.includes('payRelated') && (!claimTypePay || claimTypePay.length === 0)) {
+    return false;
+  }
+  if (eraOctober2026Enabled && (!dateOfLastEvent?.day || !dateOfLastEvent?.month || !dateOfLastEvent?.year)) {
     return false;
   }
 
@@ -54,4 +86,24 @@ export const validateClaimCheckDetails = (userCase: Record<string, any>): boolea
     claimSummaryText && typeof claimSummaryText === 'string' && claimSummaryText.trim() !== '';
 
   return !(!hasClaimSummaryFile && !hasClaimSummaryText);
+};
+
+export const validateRepresentedClaimantDetails = (userCase: Record<string, any>): boolean => {
+  if (!userCase) {
+    return false;
+  }
+  const {
+    representedClaimantFirstName,
+    representedClaimantLastName,
+    representedClaimantAddress1,
+    representedClaimantAddressTown,
+    representedClaimantAddressCountry,
+  } = userCase;
+  return (
+    StringUtils.isNotBlank(representedClaimantFirstName) &&
+    StringUtils.isNotBlank(representedClaimantLastName) &&
+    StringUtils.isNotBlank(representedClaimantAddress1) &&
+    StringUtils.isNotBlank(representedClaimantAddressTown) &&
+    StringUtils.isNotBlank(representedClaimantAddressCountry)
+  );
 };

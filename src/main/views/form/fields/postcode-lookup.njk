@@ -1,0 +1,30 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{{ govukInput({
+  id: field.id if field.id else fieldName,
+  name: fieldName,
+  type: "text",
+  classes: field.classes,
+  label: {
+    text: getContent(field.label),
+    classes: "govuk-visually-hidden" if field.labelHidden else labelClasses
+  },
+  hint: {
+    html: getContent(field.hint)
+  } if field.hint else undefined,
+  value: userCase[fieldName],
+  attributes: field.attributes,
+  errorMessage: getError(fieldName)
+}) }}
+
+{{ govukButton({
+  text: findAddress,
+  classes: "govuk-button--secondary",
+  preventDoubleClick: true,
+  name: "findAddress",
+  value: "true",
+  attributes: {
+    id: "find-address"
+  }
+}) }}

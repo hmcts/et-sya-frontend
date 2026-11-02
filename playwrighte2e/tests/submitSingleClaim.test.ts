@@ -1,7 +1,7 @@
 import { test } from '../fixtures/common.fixture';
 
 test.describe('Submit a single claim for myself without the Complete PCQ/Equality', () => {
-  test('SYA-Smoke test', { tag: '@Smoke' }, async ({ claimStartPage, loginPage, saveCardPage }) => {
+  test('SYA-Smoke test', async ({ claimStartPage, loginPage, saveCardPage }) => {
     await claimStartPage.createSingleMyselfCase();
     await loginPage.signIn();
     await saveCardPage.doNotHaveToCompleteCard();
@@ -9,7 +9,7 @@ test.describe('Submit a single claim for myself without the Complete PCQ/Equalit
 
   test(
     'should submit a single claim',
-    { tag: ['@RET-BAT', '@RET-PR'] },
+    { tag: ['@RET-BAT', '@RET-PR', '@Smoke'] },
     async ({
       page,
       claimStartPage,
@@ -36,6 +36,7 @@ test.describe('Submit a single claim for myself without the Complete PCQ/Equalit
       await submitPage.submitClaim(false);
       await submitPage.checkYourAnswers();
       await submitPage.claimSubmitted();
+      await submitPage.caseOverview();
     }
   );
 });

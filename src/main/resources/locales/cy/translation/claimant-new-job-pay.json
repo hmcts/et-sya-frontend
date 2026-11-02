@@ -1,0 +1,18 @@
+{
+  "title": "Cyflog y swydd newydd",
+  "h1": "Beth yw tâl y swydd newydd? (dewisol)",
+  "p1": "Mae'r dudalen hon yn ddewisol ond os dewiswch ddweud wrthym y cyflog yna bydd yn rhaid i chi ddweud wrthym a yw'r hawlydd yn cael ei dalu'n wythnosol, yn fisol neu'n flynyddol.",
+  "p2": "Dywedwch beth yw y cyflog gros - cyn treth a didyniadau eraill. Fe welwch hyn ar slipiau cyflog newydd yr hawlydd neu gofynnwch i'w cyflogwr am fanylion.",
+  "payBeforeTax": "Nodwch y cyflog CYN treth ac Yswiriant Gwladol mewn punnoedd",
+  "weeklyMonthlyAnnual": "Ai dyma'r cyflog wythnosol, misol neu flynyddol?",
+  "errors": {
+    "newJobPay": {
+      "required": "Dywedwch beth yw'r cyflog cyn treth ac YG",
+      "invalidCurrency": "Rhowch Cyflog cyn treth ac Yswiriant Gwladol yn y fformat cywir, er enghraifft £600 neu £193.54",
+      "tooHighCurrency": "Rhaid i Cyflog cyn treth ac Yswiriant Gwladol fod yn £9,999,999.99 neu lai"
+    },
+    "newJobPayInterval": {
+      "required": "Dywedwch wrthym pa mor aml oedd y tâl"
+    }
+  }
+}

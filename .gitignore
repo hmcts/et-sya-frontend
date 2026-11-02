@@ -47,3 +47,4 @@ src/test/end-to-end/functional-output/*
 # stryker temp files
 .stryker-tmp
 /reports/*
+config/development.json

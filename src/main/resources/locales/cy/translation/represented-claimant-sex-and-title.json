@@ -1,0 +1,16 @@
+{
+  "title": "Rhyw a theitl dewisol yr hawlydd",
+  "h1": "Rhyw a theitl dewisol yr hawlydd",
+  "male": "Gwryw",
+  "female": "Benyw",
+  "sex": "Beth yw rhyw yr hawlydd? (dewisol)",
+  "preferNotToSay": "Mae’n well gen i beidio dweud",
+  "preferredTitle": "Beth yw eu teitl dewisol? (dewisol)",
+  "errors": {
+    "preferredTitle": {
+      "required": "Dewiswch opsiwn o'r gwymplen \"Beth yw teitl dewisol yr hawlydd\"",
+      "lengthError": "Rhaid i deitl dewisol yr hawlydd fod yn ddim llai na 2 nod",
+      "numberError": "Dywedwch wrthym beth yw teitl dewisol yr hawlydd. Ni ddylai gynnwys rhifau"
+    }
+  }
+}

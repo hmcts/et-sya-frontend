@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { isClaimantRepAboutYouFlow } from '../controllers/helpers/ClaimantRepAboutYouHelper';
 import { returnSafeCitizenHubUrl } from '../controllers/helpers/RouterHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
@@ -21,13 +22,16 @@ export function CaseStateCheck() {
 }
 
 export const checkCaseStateAndRedirect = (req: AppRequest, res: Response): boolean => {
+  if (isClaimantRepAboutYouFlow(req)) {
+    return false;
+  }
+
   const userCase = req.session?.userCase;
   let redirectUrl: string | null = null;
 
   if (userCase?.state !== CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    redirectUrl = NumberUtils.isNumericValue(userCase?.id)
-      ? returnSafeCitizenHubUrl(userCase.id, req)
-      : PageUrls.CLAIMANT_APPLICATIONS;
+    const safeCaseId = NumberUtils.getSafeCaseIdDigits(userCase?.id);
+    redirectUrl = safeCaseId ? returnSafeCitizenHubUrl(safeCaseId, req) : PageUrls.CLAIMANT_APPLICATIONS;
   }
   if (redirectUrl) {
     res.redirect(redirectUrl);

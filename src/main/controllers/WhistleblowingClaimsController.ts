@@ -57,7 +57,11 @@ export default class WhistleblowingClaimsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(this.checkWhistleBlowingClaimYesNo(req), res, this.form, logger, PageUrls.LINKED_CASES);
+    const redirectUrl =
+      req.session.userCase?.claimantRepresentedQuestion === YesOrNo.YES
+        ? PageUrls.CLAIMANT_LINKED_CASES
+        : PageUrls.LINKED_CASES;
+    await handlePostLogic(this.checkWhistleBlowingClaimYesNo(req), res, this.form, logger, redirectUrl);
   };
 
   @CaseStateCheck()

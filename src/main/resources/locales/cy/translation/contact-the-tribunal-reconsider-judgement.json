@@ -2,6 +2,8 @@
   "title": "Ailystyried dyfarniad",
   "applicationType": "Ailystyried dyfarniad",
   "applicationTitle": "Gwneud cais i ddyfarniad gael ei ailystyried",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -27,15 +29,57 @@
       "type": "paragraph",
       "text": "Nid yw cais i ailystyried yn effeithio ar y terfyn amser ar gyfer apelio i’r Tribiwnlys Apeliadau Cyflogaeth."
     },
-
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
-
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
         "y dyfarniad rydych eisiau iddo gael ei ailystyried",
         "y dyddiad y cyhoeddodd y tribiwnlys y dyfarniad",
         "eich rheswm dros anfon eich cais yn hwyr os anfonwyd y dyfarniad dros 14 diwrnod yn ôl",
+        "pam ei fod er budd cyfiawnder i ailystyried y dyfarniad hwn",
+        "os dylai’r tribiwnlys amrywio neu ddirymu’r dyfarniad",
+        "unrhyw wybodaeth ychwanegol neu ddeunydd nad oes gan y tribiwnlys yn barod i gefnogi eich cais"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i ddyfarniad a wnaed gan dribiwnlys gael ei ailystyried. Gall hyn fod yn ddyfarniad a wnaed gan farnwr yn unig neu gan farnwr yn eistedd gydag aelodau nad ydynt yn gweithio yn y proffesiwn cyfreithiol."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os yw ailystyried dyfarniad er budd cyfiawnder, gall yr hawlydd ofyn i'r tribiwnlys edrych ar y dyfarniad eto."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dim ond dyfarniad sy’n penderfynu ar fater terfynol yn achos yr hawlydd y gellir ei ailystyried. Mae hyn felly yn eithrio unrhyw benderfyniad nad yw'n cynnwys penderfyniad terfynol ar yr hawliad, neu ran o hawliad. Os yw'r hawlydd am ofyn i orchymyn rheoli achos gael ei amrywio neu ei ddirymu, defnyddiwch y ffurflen gais ar gyfer amrywio neu ddirymu gorchymyn."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dim ond o fewn 14 diwrnod i’r dyddiad y cafodd y dyfarniad ei anfon atynt neu eu cynrychiolydd y gall yr hawlydd  ofyn i’r tribiwnlys ei ailystyried."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os ydy'r hawlydd am i'r tribiwnlys ailystyried dyfarniad a anfonwyd atynt dros 14 diwrnod yn ôl rhaid iddynt egluro pam bod eu cais yn hwyr."
+    },
+    {
+      "type": "paragraph",
+      "text": "Nid yw cais i ailystyried yn effeithio ar y terfyn amser ar gyfer apelio i’r Tribiwnlys Apeliadau Cyflogaeth."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "y dyfarniad mae'r hawlydd yn dymuno iddo gael ei ailystyried",
+        "y dyddiad y cyhoeddodd y tribiwnlys y dyfarniad",
+        "y rheswm dros gais hwyr os anfonwyd y dyfarniad dros 14 diwrnod yn ôl",
         "pam ei fod er budd cyfiawnder i ailystyried y dyfarniad hwn",
         "os dylai’r tribiwnlys amrywio neu ddirymu’r dyfarniad",
         "unrhyw wybodaeth ychwanegol neu ddeunydd nad oes gan y tribiwnlys yn barod i gefnogi eich cais"

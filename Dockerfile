@@ -1,5 +1,5 @@
 # ---- Base image ----
-FROM hmctsprod.azurecr.io/base/node:20-alpine as base
+FROM hmctsprod.azurecr.io/base/node:22-alpine as base
 USER root
 RUN corepack enable
 COPY --chown=hmcts:hmcts . .
@@ -11,8 +11,7 @@ FROM base as build
 RUN PUPPETEER_SKIP_DOWNLOAD=true yarn install && yarn build:prod
 
 # ---- Runtime image ----
-FROM base as runtime
+FROM build as runtime
 RUN rm -rf webpack/ webpack.config.js
-COPY --from=build $WORKDIR/src/main ./src/main
-RUN yarn build:ts
+RUN yarn tsc -P . --outDir ./src
 EXPOSE 3002

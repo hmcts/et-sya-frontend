@@ -33,22 +33,24 @@
                   </h2>
                   <ul class="app-task-list__items">
                     {% for link in section.links %}
-                      <li class="app-task-list__item">
-                        <span class="app-task-list__task-name">
-                          {% if link.shouldShow %}
-                            <a href="{{ getContent(link.url) }}" class="govuk-link">
+                      {% if getContent(link.isVisible) %}
+                        <li class="app-task-list__item">
+                          <span class="app-task-list__task-name">
+                            {% if link.shouldShow %}
+                              <a href="{{ getContent(link.url) }}" class="govuk-link">
+                                {{ getContent(link.linkTxt) }}
+                              </a>
+                            {% else %}
                               {{ getContent(link.linkTxt) }}
-                            </a>
-                          {% else %}
-                            {{ getContent(link.linkTxt) }}
-                          {% endif %}
-                        </span>
+                            {% endif %}
+                          </span>
 
-                        {{ govukTag({
-                      text: getContent(link.status),
-                      classes: "no-text-transform app-task-list__tag govuk-tag" + getContent(link.statusColor)
-                    }) }}
-                      </li>
+                          {{ govukTag({
+                        text: getContent(link.status),
+                        classes: "no-text-transform app-task-list__tag govuk-tag" + getContent(link.statusColor)
+                      }) }}
+                        </li>
+                      {% endif %}
                     {% endfor %}
                   </ul>
                 </li>
@@ -63,13 +65,13 @@
             </h2>
             <p class="govuk-body">
                 <a href="{{PageUrls.CLAIMANT_APPLICATIONS + languageParam ~ "&src=side-bar-link"}}">
-                {{viewEt1Claims}}
+                {{ viewEt1ClaimsRep if isClaimantRepresentedByNonHmctsRepresentative else viewEt1Claims }}
               </a>
             </p>
 
             <p class="govuk-body">
               <a href="{{PageUrls.CONTACT_THE_TRIBUNAL + languageParam}}">
-                {{contactTribunalMyCase}}
+                {{ contactTribunalMyCase }}
               </a>
             </p>
 

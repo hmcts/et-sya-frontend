@@ -1,0 +1,29 @@
+import request from 'supertest';
+
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
+import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
+
+describe(`GET ${PageUrls.REPRESENTED_CLAIMANT_NAME}`, () => {
+  it('should return the represented claimant name page', async () => {
+    const res = await request(mockApp({})).get(PageUrls.REPRESENTED_CLAIMANT_NAME);
+    expect(res.type).toStrictEqual('text/html');
+    expect(res.status).toStrictEqual(200);
+  });
+});
+
+describe(`on POST ${PageUrls.REPRESENTED_CLAIMANT_NAME}`, () => {
+  test('should redirect to represented claimant date of birth when name is given', async () => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    await request(mockApp({}))
+      .post(PageUrls.REPRESENTED_CLAIMANT_NAME)
+      .send({
+        representedClaimantFirstName: 'Jane',
+        representedClaimantLastName: 'Doe',
+      })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.REPRESENTED_CLAIMANT_DATE_OF_BIRTH);
+      });
+  });
+});

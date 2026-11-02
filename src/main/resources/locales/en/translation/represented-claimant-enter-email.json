@@ -1,0 +1,10 @@
+{
+  "title": "Represented Claimant's email",
+  "h1": "Claimant’s email address",
+  "label": "Enter the claimant’s email address (optional)",
+  "errors": {
+    "representedClaimantEmail": {
+      "invalid": "Enter an email address in the correct format, for example name@example.com"
+    }
+  }
+}

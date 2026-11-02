@@ -115,7 +115,7 @@ describe('YourDetailsCYAController', () => {
 
     it('should redirect to claimant applications when yourDetailsCya value is Yes', async () => {
       const body = { yourDetailsCya: YesOrNo.YES };
-      const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
+      const userCase = { id: '1786637776090539', claimantName: 'Test User', respondentName: 'Test Company' };
       const controller = new YourDetailsCYAController();
       const request = mockRequest({ body, session: verifiedSession() });
       request.session.caseAssignmentFields = userCase;
@@ -190,7 +190,7 @@ describe('YourDetailsCYAController', () => {
         assignCaseUserRole: jest.fn().mockResolvedValue(caseAssignmentResponse),
       });
       const body = { yourDetailsCya: YesOrNo.YES };
-      const userCase = { id: '1234', claimantName: 'Test User', respondentName: 'Test Company' };
+      const userCase = { id: '1786637776090539', claimantName: 'Test User', respondentName: 'Test Company' };
       const controller = new YourDetailsCYAController();
       const request = mockRequest({ body, session: verifiedSession() });
       request.session.caseAssignmentFields = userCase;
@@ -199,7 +199,7 @@ describe('YourDetailsCYAController', () => {
       request.url = PageUrls.YOUR_DETAILS_CYA;
       const response = mockResponse();
       await controller.post(request, response);
-      expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1234?lng=en');
+      expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1786637776090539?lng=en');
     });
 
     it('should redirect with generic api error when assignCaseUserRole throws an unrecognised error', async () => {

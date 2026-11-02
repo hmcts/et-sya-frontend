@@ -2,6 +2,8 @@
   "title": "Consider a decision afresh",
   "applicationType": "Consider a decision afresh",
   "applicationTitle": "Apply to have a decision considered afresh",
+  "genericGuidanceRep": "Upload letters, photos or documents if they are relevant to the claimant’s application. Do not upload any other material.",
+  "contactApplicationTextRep": "Give details of the claimant’s application in the text box or upload a file",
   "content": [
     {
       "type": "paragraph",
@@ -23,6 +25,31 @@
         "the decision you want considered afresh",
         "the date the tribunal issued the decision",
         "why you want the decision considered afresh",
+        "any relevant additional information"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Use this form to have a judgment or order made by a legal officer considered afresh by an Employment Judge."
+    },
+    {
+      "type": "paragraph",
+      "text": "Considered afresh means that if the claimant disagrees with a judgment or order made by a legal officer in their case, they can ask an Employment Judge to look at that decision again."
+    },
+    {
+      "type": "paragraph",
+      "text": "The judge will take the decision afresh on the basis of the same information as was before the legal officer, unless either side chooses to supply additional information."
+    },
+
+    { "type": "bold-paragraph", "text": "Details to include in your application:" },
+    {
+      "type": "list",
+      "items": [
+        "the decision the claimant wants considered afresh",
+        "the date the tribunal issued the decision",
+        "why the claimant wants the decision considered afresh",
         "any relevant additional information"
       ]
     }

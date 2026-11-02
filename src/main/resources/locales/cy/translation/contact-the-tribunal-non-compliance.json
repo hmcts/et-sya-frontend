@@ -2,6 +2,8 @@
   "title": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio",
   "applicationType": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio",
   "applicationTitle": "Dweud wrth y tribiwnlys nad yw’r parti arall wedi cydymffurfio â gorchymyn",
+  "genericGuidanceRep": "Uwchlwytho llythyrau, lluniau neu ddogfennau os ydynt yn berthnasol i gais yr hawlydd. Peidiwch â uwchlwytho unrhyw ddeunydd arall.",
+  "contactApplicationTextRep": "Rhowch fanylion cais yr hawlydd yn y blwch testun neu uwchlwythwch ffeil",
   "content": [
     {
       "type": "paragraph",
@@ -11,7 +13,10 @@
       "type": "paragraph",
       "text": "Dylech geisio datrys eich cwyn gyda’r parti arall. Dylech ond defnyddio’r ffurflen hon os nad yw hynny’n bosibl."
     },
-    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn eich cais:"
+    },
     {
       "type": "list",
       "items": [
@@ -19,6 +24,29 @@
         "y dyddiad y cyhoeddodd y tribiwnlys y gorchymyn",
         "yr hyn nad yw’r parti arall wedi’i wneud",
         "beth ydych chi eisiau i’r tribiwnlys ei wneud nesaf"
+      ]
+    }
+  ],
+  "contentRep": [
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i ddweud wrthym nad yw’r parti arall wedi cydymffurfio â'r cyfan neu ran o orchymyn gan y tribiwnlys."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dylai'r hawlydd geisio datrys eu cwyn gyda'r parti arall.  Dylid ond defnyddio’r ffurflen hon os nad yw hynny’n bosibl."
+    },
+    {
+      "type": "bold-paragraph",
+      "text": "Manylion i’w cynnwys yn y cais:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "pa orchymyn nas cydymffurfiwyd ag ef",
+        "y dyddiad y cyhoeddodd y tribiwnlys y gorchymyn",
+        "yr hyn nad yw’r parti arall wedi’i wneud",
+        "beth mae'r hawlydd eisiau i’r tribiwnlys ei wneud nesaf"
       ]
     }
   ]

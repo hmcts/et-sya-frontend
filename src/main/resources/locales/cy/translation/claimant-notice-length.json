@@ -1,0 +1,11 @@
+{
+  "title": "Sawl wythnos neu sawl mis yw cyfnod rhybudd yr hawlydd?",
+  "h1Weeks": "Sawl wythnos yw cyfnod rhybudd yr hawlydd? (dewisol)",
+  "h1Months": "Sawl mis yw cyfnod rhybudd yr hawlydd? (dewisol)",
+  "hint": "Er enghraifft, 4",
+  "errors": {
+    "noticePeriodLength": {
+      "notANumber": "Rhaid i’r nifer o wythnosau neu fisoedd yn y cyfnod rhybudd fod yn rhif, fel 4 ayyb."
+    }
+  }
+}

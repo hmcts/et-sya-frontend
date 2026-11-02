@@ -1,0 +1,49 @@
+{
+  "title": "Gwiriwch eich atebion",
+  "h1": "Gwiriwch eich atebion",
+  "description": "Gwiriwch eich atebion cyn cyflwyno eich hawliad.",
+  "applicationDetails": {
+    "header": "Manylion y cais",
+    "typeOfClaim": "Math o hawliad"
+  },
+  "repDetails": {
+    "header": "Eich manylion fel y cynrychiolydd",
+    "typeOfRepresentative": "Math o gynrychiolydd",
+    "organisationName": "Enw sefydliad y cynrychiolydd",
+    "representativeName": "Enw’r cynrychiolydd",
+    "representativeAddress": "Cyfeiriad y cynrychiolydd",
+    "representativeTelephone": "Rhif ffôn y cynrychiolydd",
+    "howToBeContacted": "Sut hoffech i ni gysylltu â chi?",
+    "contactLanguage": "Pa iaith ydych chi eisiau i ni ei defnyddio pan fyddwn yn cysylltu â chi?",
+    "hearingLanguage": "Os bydd gwrandawiad, pa iaith ydych chi eisiau siarad yn y gwrandawiad?",
+    "hearingPreferences": "Allwch chi a'r hawlydd fynychu gwrandawiadau drwy fideo a ffôn?",
+    "disability": "A oes gan unrhyw un ym mharti'r hawlydd anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu eu bod angen cymorth yn ystod yr achos?"
+  },
+  "claimantDetails": {
+    "header": "Manylion yr hawlydd",
+    "firstName": "Enw cyntaf yr hawlydd",
+    "lastName": "Enw olaf yr hawlydd",
+    "dob": "Dyddiad geni",
+    "sex": "Rhywedd",
+    "preferredTitle": "Teitl o ddewis",
+    "address": "Cyfeiriad",
+    "email": "Cyfeiriad e-bost"
+  },
+  "respondentDetails": {
+    "header": "Manylion yr Atebydd",
+    "respondentName": "Enw'r atebydd",
+    "respondentAddress": "Cyfeiriad yr atebydd",
+    "acasNumber": "A oes gennych chi rif tystysgrif Acas?"
+  },
+  "claimDetails": {
+    "header": "Manylion yr hawliad",
+    "claimTypeDiscrimination": "Pa fath o hawliad yn ymwneud â gwahaniaethu ydych chi’n ei wneud?",
+    "claimTypePay": "Pa fath o hawliad sy’n ymwneud â thâl ydych chi’n ei wneud?",
+    "describeWhatHappened": "Disgrifiwch beth ddigwyddodd i chi",
+    "ifClaimSuccessful": "Beth ydych chi ei eisiau os yw eich hawliad yn llwyddiannus?",
+    "linkedCases": "Achosion cysylltiedig"
+  },
+  "submitBtn": "Cyflwyno",
+  "addAnotherRespondent": "Ychwanegu atebydd arall",
+  "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich cais. Rhowch gynnig arall arni ymhen ychydig o funudau."
+}

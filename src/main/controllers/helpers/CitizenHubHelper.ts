@@ -280,6 +280,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
     [languages.WELSH_URL_PARAMETER]: languages.WELSH_URL_PARAMETER,
   };
   return new Map<string, string>([
+    [HubLinkNames.AboutYou, PageUrls.REPRESENTATIVE_DETAILS_CHECK + baseUrls[languageParam]],
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.HearingDetails, PageUrls.HEARING_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],

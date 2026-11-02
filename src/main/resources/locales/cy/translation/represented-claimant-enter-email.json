@@ -1,0 +1,10 @@
+{
+  "title": "E-bost Hawlydd a Gynrychiolir",
+  "h1": "Cyfeiriad e-bost yr hawlydd",
+  "label": "Rhowch gyfeiriad e-bost yr hawlydd (dewisol)",
+  "errors": {
+    "representedClaimantEmail": {
+      "invalid": "Rhowch gyfeiriad e-bost yn y fformat cywir, er enghraifft enw@enghraifft.com"
+    }
+  }
+}

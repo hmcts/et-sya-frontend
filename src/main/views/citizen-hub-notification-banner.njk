@@ -1,12 +1,12 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% include "citizen-hub-notification-banner/notifications-claimant-represented.njk"%}
-<!-- No need for claimantRepresented control as it is always not represented cuz that field is always null -->
-{% if not claimantRepresented %}
+<!-- On the representative's own hub, bypass the claimant-represented gate so the rep still sees case notifications (e.g. the claim submitted banner). -->
+{% if isClaimantRepHub or not claimantRepresented %}
   {% set htmlForSubmittedAlert %}
 
     {% if showSubmittedAlert %}
       <h3 class="govuk-notification-banner__heading">
-        {{ submittedAlert }}
+        {{ submittedAlertRep if isClaimantRepHub else submittedAlert }}
       </h3>
 
       <p class="govuk-body">
