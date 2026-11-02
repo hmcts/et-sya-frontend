@@ -20,9 +20,6 @@
   "radioPanel": "I prefer my case to be heard by a panel including non-legal members",
   "reasonLabel": "Give reason",
   "errors": {
-    "claimantHearingPanelPreference": {
-      "required": "Select how you prefer your case to be heard"
-    },
     "claimantHearingPanelPreferenceWhy": {
       "required": "Explain why you prefer your case to be heard by a judge or a panel",
       "tooLong": "Explanation must be 500 characters or less"

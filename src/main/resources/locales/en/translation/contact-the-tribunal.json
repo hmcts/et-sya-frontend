@@ -76,7 +76,8 @@
     "publicity": {
       "caption": "Restrict publicity",
       "label": "Apply to restrict publicity",
-      "body": "Apply to prevent or restrict publicity in your case. The tribunal may conduct hearings in private or anonymise specific parties and witnesses if necessary."
+      "body": "Apply to prevent or restrict publicity in your case. The tribunal may conduct hearings in private or anonymise specific parties and witnesses if necessary.",
+      "bodyRep": "Apply to prevent or restrict publicity in the claimant's case. The tribunal may conduct hearings in private or anonymise specific parties and witnesses if necessary."
     },
     "strike": {
       "caption": "Strike out the response",
