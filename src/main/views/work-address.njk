@@ -43,10 +43,7 @@
             text: hintText
           },
           items: formItems(field.values, userCase.claimantWorkAddressQuestion),
-          errorMessage: getError("claimantWorkAddressQuestion"),
-          formGroup: {
-            classes: field.id
-          }
+          errorMessage: getError("claimantWorkAddressQuestion")
         }) }}
         {% include "form/saveButtons.njk" %}
       </form>
