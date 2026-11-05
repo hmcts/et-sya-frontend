@@ -42,11 +42,8 @@
           hint: {
             text: hintText
           },
-          items: formItems(field.values, userCase.claimantWorkAddressQuestion) | radioPositions,
-          errorMessage: getError("claimantWorkAddressQuestion"),
-          formGroup: {
-            classes: field.id
-          }
+          items: formItems(field.values, userCase.claimantWorkAddressQuestion),
+          errorMessage: getError("claimantWorkAddressQuestion")
         }) }}
         {% include "form/saveButtons.njk" %}
       </form>

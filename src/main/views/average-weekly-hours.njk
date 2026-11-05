@@ -1,5 +1,9 @@
 {% extends "template.njk" %}
 
+{% block pageTitle %}
+  {{ h1.noLongerWorking if employmentStatus === notWorking else h1.workingOrNotice }} - {{ serviceName }} - {{ govUk }}
+{% endblock %}
+
 {% block beforeContent %}
   {{ super() }}
   {% include "back-link.njk"%}

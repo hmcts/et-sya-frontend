@@ -1,5 +1,6 @@
 {
-  "title": "Is this section completed?",
+  "title": "Have you completed this section? (Your details)",
+  "employmentAndRespondentTitle": "Have you completed this section? (Employment and respondent details)",
   "heading": "Have you completed this section?",
   "legend": "Have you completed this section?",
   "yes": "Yes, I've completed this section",
