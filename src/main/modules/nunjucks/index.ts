@@ -10,6 +10,14 @@ import { dateInLocale, dateTimeInLocale, datesStringToDateInLocale } from '../..
 
 import createFilters from './njkFilters';
 
+export const getErrorTargetId = (field: FormField): string | undefined => {
+  if ('type' in field && (field.type === 'checkboxes' || field.type === 'radios') && Array.isArray(field.values)) {
+    const firstInput = (field.values as FormInput[]).find(value => !value.divider);
+    return firstInput?.id ?? field.id;
+  }
+  return field.id;
+};
+
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
     this.developmentMode = developmentMode;
@@ -90,7 +98,7 @@ export class Nunjucks {
           if (error && error?.text) {
             errors.push({
               text: error.text,
-              href: `#${field.id}`,
+              href: `#${getErrorTargetId(field)}`,
             });
           }
           return errors;
