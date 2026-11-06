@@ -80,7 +80,11 @@
       href: PageUrls.CLAIM_SAVED
     }) }}
 
-    <a href="{{ deleteDraftUrl }}" class="govuk-button govuk-button--warning">{{ delete }}</a>
+    {{ govukButton({
+      text: delete,
+      classes: "govuk-button--warning",
+      href: deleteDraftUrl
+    }) }}
   </div>
 
 {% endblock %}
