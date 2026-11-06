@@ -49,7 +49,7 @@ export default class CheckYourAnswersController {
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
       translations,
-      yourDetails: getYourDetails(userCase, translations, eraOctober2026Enabled),
+      yourDetails: await getYourDetails(userCase, translations, eraOctober2026Enabled),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

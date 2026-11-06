@@ -13,6 +13,7 @@
   "notAnswered": "Nid ydych wedi ateb y cwestiwn.",
   "errorSaving": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau.",
   "errorSummaryTitle": "Mae yna broblem",
+  "yourSupportSaveErrorMessage": "Roedd problem wrth gadw eich cais am gymorth. Rhowch gynnig arall arni yn nes ymlaen",
   "days": ["Dydd Sul", "Dydd Llun", "Dydd Mawrth", "Dydd Mercher", "Dydd Iau", "Dydd Gwener", "Dydd Sadwrn"],
   "months": [
     "Ionawr",
