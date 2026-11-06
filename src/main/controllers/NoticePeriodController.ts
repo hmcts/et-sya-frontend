@@ -25,6 +25,7 @@ export default class NoticePeriodController {
         label: (l: AnyRecord): string => l.legend,
         labelSize: 'xl',
         labelHidden: false,
+        isPageHeading: true,
         classes: 'govuk-radios--inline',
         values: [
           {

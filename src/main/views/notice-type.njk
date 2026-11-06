@@ -4,6 +4,10 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
+{% block pageTitle %}
+  {{ h1.workingOrNotice if (employmentStatus === 'Working' or employmentStatus === 'Notice') else h1.noLongerWorking }} - {{ serviceName }} - {{ govUk }}
+{% endblock %}
+
 {% block beforeContent %}
   {{ super() }}
   {% include "back-link.njk"%}
