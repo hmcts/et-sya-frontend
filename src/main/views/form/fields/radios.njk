@@ -15,7 +15,7 @@
     hint: {
       html: getContent(field.hint)
     },
-    items: formItems(field.values, userCase[fieldName]),
+    items: formItems(field.values, userCase[fieldName]) | radioPositions,
     errorMessage: getError(fieldName),
     formGroup: {
       classes: "hidden " + field.id if field.hidden else field.id
