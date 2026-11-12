@@ -4,11 +4,12 @@ import { Form } from '../components/form/form';
 import { isContent500CharsOrLess } from '../components/form/validator';
 import { CaseStateCheck } from '../decorators/CaseStateCheck';
 import { AppRequest } from '../definitions/appRequest';
-import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getCuiYourSupportFeature } from '../modules/featureFlag/CuiYourSupportFeature';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
@@ -81,7 +82,7 @@ export default class HearingPanelPreferenceController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
-      res.redirect(PageUrls.REASONABLE_ADJUSTMENTS);
+      res.redirect(await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId));
       return;
     }
     if (Array.isArray(req.body.claimantHearingPanelPreferenceWhy)) {
@@ -91,13 +92,14 @@ export default class HearingPanelPreferenceController {
     if (req.body.claimantHearingPanelPreference === 'No preference') {
       req.body.claimantHearingPanelPreferenceWhy = undefined;
     }
-    await handlePostLogic(req, res, this.form, logger, PageUrls.REASONABLE_ADJUSTMENTS);
+    const supportPageUrl = await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId);
+    await handlePostLogic(req, res, this.form, logger, supportPageUrl);
   };
 
   @CaseStateCheck()
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     if (!(await getFlagValue(FEATURE_FLAGS.ERA_OCTOBER_2026, null))) {
-      res.redirect(PageUrls.REASONABLE_ADJUSTMENTS);
+      res.redirect(await getCuiYourSupportFeature().getSupportPageUrl(req.session.userCase?.caseTypeId));
       return;
     }
     const content = getPageContent(req, this.hearingPanelPreferenceContent, [
