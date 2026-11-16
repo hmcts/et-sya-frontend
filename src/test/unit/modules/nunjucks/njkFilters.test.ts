@@ -43,4 +43,27 @@ describe('njkFilters', () => {
       expect(titleCaseFilter(input)).toEqual(expectedOutput);
     });
   });
+
+  describe('radioPositions filter', () => {
+    test('should add a fixed position and set size to each radio', () => {
+      const radioPositions = env.getFilter('radioPositions');
+      const input = [{ value: 'Yes', attributes: { maxLength: 14 } }, { value: 'No' }];
+
+      expect(radioPositions(input)).toEqual([
+        { value: 'Yes', attributes: { maxLength: 14, 'aria-posinset': 1, 'aria-setsize': 2 } },
+        { value: 'No', attributes: { 'aria-posinset': 2, 'aria-setsize': 2 } },
+      ]);
+    });
+
+    test('should not count or number dividers', () => {
+      const radioPositions = env.getFilter('radioPositions');
+      const input = [{ value: 'A' }, { divider: 'or' }, { value: 'B' }];
+
+      expect(radioPositions(input)).toEqual([
+        { value: 'A', attributes: { 'aria-posinset': 1, 'aria-setsize': 2 } },
+        { divider: 'or' },
+        { value: 'B', attributes: { 'aria-posinset': 2, 'aria-setsize': 2 } },
+      ]);
+    });
+  });
 });
