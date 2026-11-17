@@ -207,7 +207,8 @@
     "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.1": "npm:js-yaml@4.3.2",
-    "zod": "4.6.7"
+    "zod": "4.6.7",
+    "follow-redirects": "^1.16.0"
   },
   "packageManager": "yarn@4.17.0"
 }
