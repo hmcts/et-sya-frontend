@@ -105,7 +105,7 @@ export class ClaimStartPage extends BasePage {
     await this.webAction.verifyTextPresentOnPage('text=trade unions (if one is available to you)');
     await this.webAction.verifyTextPresentOnPage('text=Citizens Advice advisers');
     await this.webAction.verifyTextPresentOnPage('text=advisers from law clinics or law centres');
-    await this.webAction.verifyTextPresentOnPage('text=Paid representation be through legal professionals, including:');
+    await this.webAction.verifyTextPresentOnPage('text=Paid representation through legal professionals, including:');
     await this.webAction.verifyTextPresentOnPage("text=barristers (called 'advocates' in Scotland)");
     await this.webAction.verifyTextPresentOnPage('text=legal executives');
     await this.webAction.verifyTextPresentOnPage(
