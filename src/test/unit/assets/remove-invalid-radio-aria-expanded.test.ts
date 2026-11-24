@@ -54,10 +54,13 @@ describe('preventInvalidRadioAriaExpanded', () => {
     const yes = document.getElementById('pension');
     const no = document.getElementById('pension-2');
     const conditional = document.getElementById('conditional-pension');
+    if (!(no instanceof HTMLInputElement)) {
+      throw new Error('radio missing');
+    }
 
-    no?.click();
+    no.click();
 
-    expect(no?.checked).toBe(true);
+    expect(no.checked).toBe(true);
     expect(yes?.getAttribute('aria-expanded')).toBeNull();
     expect(no?.getAttribute('aria-expanded')).toBeNull();
     expect(yes?.getAttribute('aria-controls')).toBe('conditional-pension');

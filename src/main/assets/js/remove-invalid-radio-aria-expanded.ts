@@ -1,9 +1,3 @@
-declare module 'govuk-frontend' {
-  export class Radios {
-    syncConditionalRevealWithInputState(input: Element): void;
-  }
-}
-
 import { Radios } from 'govuk-frontend';
 
 const patchedFlag = Symbol('preventInvalidRadioAriaExpanded');
