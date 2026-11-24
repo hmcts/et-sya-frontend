@@ -1,2 +1,2 @@
-import { globalSetup as sharedGlobalSetup } from '@hmcts/et-shared-test-library/config/global/global-setup';
+import { globalSetup as sharedGlobalSetup } from '@hmcts/et-shared-test-library';
 export default sharedGlobalSetup;
