@@ -60,6 +60,12 @@ describe('Copy to the other party page', () => {
     const cancel = htmlRes.getElementsByClassName(cancelLink);
     expect(cancel[5].innerHTML).contains('Cancel', 'Could not find the link');
   });
+
+  it('should give the find legal advice link discernible text', () => {
+    const legalAdviceLink = htmlRes.querySelector('a[href="https://www.gov.uk/find-legal-advice"]');
+    expect(legalAdviceLink, 'Find legal advice link does not exist').to.not.equal(null);
+    expect(legalAdviceLink.textContent.trim()).to.equal('Find legal advice (opens in new tab)');
+  });
 });
 
 describe('Copy to the other party page - navigating from the Respond to an Application page', () => {
