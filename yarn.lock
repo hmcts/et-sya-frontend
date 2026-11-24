@@ -2752,9 +2752,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hmcts/et-shared-test-library@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@hmcts/et-shared-test-library@npm:1.0.1"
+"@hmcts/et-shared-test-library@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@hmcts/et-shared-test-library@npm:1.0.2"
   dependencies:
     axios: "npm:1.20.0"
     dotenv: "npm:^17.2.3"
@@ -2770,7 +2770,7 @@ __metadata:
     "@hmcts/playwright-common": 1.1.7
     "@playwright/test": 1.64.0
     playwright-core: 1.64.0
-  checksum: 10/1b79c1e1d899eaa7f8e404806fdc9d089d08e1c45295497a26813fd32e037d539e0c7031d2b691fbac19076499632283befb1009e0cfb4084b972fa99354d63a
+  checksum: 10/0e57ea5e8a25df3c36cd8f58ba509ebaa3f1416476ec612d0b25515facf47cf16a757026234a0f50f0c69a2dbc7513d8061f8f49a2df456137937e3b8aab8e36
   languageName: node
   linkType: hard
 
@@ -10823,7 +10823,7 @@ __metadata:
     "@codeceptjs/allure-legacy": "npm:^1.0.2"
     "@faker-js/faker": "npm:^10.5.0"
     "@hmcts/cookie-manager": "npm:^1.0.0"
-    "@hmcts/et-shared-test-library": "npm:^1.0.1"
+    "@hmcts/et-shared-test-library": "npm:1.0.2"
     "@hmcts/info-provider": "npm:^1.0.0"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.0"
     "@hmcts/nodejs-logging": "npm:^4.0.4"

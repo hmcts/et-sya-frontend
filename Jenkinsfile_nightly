@@ -9,6 +9,7 @@ parameters([
           defaultValue: 'https://et-sya.aat.platform.hmcts.net',
           description: 'The URL you want to run tests against'
         ),
+        string(name: 'ENVIRONMENT', defaultValue: 'aat', description: 'Environment to test'),
         string(
           name: 'ZAP_URL_EXCLUSIONS',
           defaultValue:
@@ -77,7 +78,16 @@ def secrets = [
     'et-aat': [
         secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
         secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
-    ]
+    ],
+    "s2s-${params.ENVIRONMENT}":  [
+      secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW')
+    ],
+    "et-cos-${params.ENVIRONMENT}": [
+      secret('et-caseworker-5-username', 'ET_CASEWORKER_USER_NAME'),
+      secret('et-caseworker-5-password', 'ET_CASEWORKER_PASSWORD'),
+      secret('et-ccd-api-user-name','ET_CCD_API_USER_NAME'),
+      secret('et-ccd-api-password','ET_CCD_API_PASSWORD')
+    ],
 ]
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
@@ -122,6 +132,21 @@ withNightlyPipeline(type, product, component) {
     }
 
     afterAlways('fortify-scan') {
+      env.RUNNING_ENV = params.ENVIRONMENT
+      stage('Accessibility') {
+        withEnv(['ENABLE_ACCESSIBILITY_AUDIT=true']) {
+          yarnBuilder.yarn('test:accessibility')
+        }
+        publishHTML([
+          allowMissing         : true,
+          alwaysLinkToLastBuild: true,
+          keepAll              : true,
+          reportDir            : 'playwright-report',
+          reportFiles          : 'index.html',
+          reportName           : 'Accessibility results'
+        ])
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'playwright-report/**'
+      }
         stage('Functional SYA UI tests chromium') {
             try {
                 yarnBuilder.yarn('test:functional-chromium')

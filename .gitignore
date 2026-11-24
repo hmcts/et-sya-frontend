@@ -51,3 +51,6 @@ config/development.json
 /.env
 /.yalc/
 yalc.lock
+/.sessions/
+/.tmp/
+/yarn-audit-result

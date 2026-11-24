@@ -23,6 +23,7 @@ Part of the HMCTS Reform programme, integrating with `et-cos` (Java backend), ID
   - [Contract (Pact) Tests](#contract-pact-tests)
   - [Accessibility (a11y) Tests](#accessibility-a11y-tests)
   - [Functional & E2E Tests (Playwright)](#functional--e2e-tests-playwright)
+  - [Using local et-shared-test-library changes (yalc)](#using-local-et-shared-test-library-changes-yalc)
   - [CI Checks](#ci-checks)
 - [Security](#security)
   - [CSRF Prevention](#csrf-prevention)
@@ -217,12 +218,53 @@ End-to-end acceptance tests are powered by [Playwright](https://playwright.dev/)
 # Run smoke tests
 yarn test:smoke
 
-# Run full functional test suite (Chromium / @RET-BAT)
+# Run full functional test suite (Chromium)
 yarn test:functional
 
 # Cross-browser test runs
 yarn test:functional-firefox
 yarn test:functional-webkit
+```
+
+### Using local et-shared-test-library changes (yalc)
+
+If you are updating `et-shared-test-library` in `et-ccd-callbacks` and want to verify accessibility/functional tests in this repo against those local changes, use `yalc`.
+
+#### 1. Install yalc (once)
+
+```bash
+npm install -g yalc
+```
+
+#### 2. Publish local changes to yalc
+
+```bash
+cd <path-to>/et-ccd-callbacks/et-shared-test-library
+yarn install
+yalc publish
+```
+
+#### 3. Add the local package to this repo
+
+```bash
+cd <path-to>/et-sya-frontend
+yalc add @hmcts/et-shared-test-library
+```
+
+#### 4. After each further framework change
+
+In `et-ccd-callbacks/et-shared-test-library`:
+
+```bash
+yarn build
+yalc publish
+```
+
+In `et-sya-frontend`:
+
+```bash
+yalc update @hmcts/et-shared-test-library
+yarn install
 ```
 
 ### CI Checks

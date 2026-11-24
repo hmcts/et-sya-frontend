@@ -11,7 +11,7 @@ test.describe('Submit a single claim for myself without the Complete PCQ/Equalit
   test(
     'Create a claim for still working for organisation, submit and process within manage cases',
     {
-      tag: ['@RET-BAT', '@RET-PR', '@cx', '@smoke', '@ccd-callback-tests'],
+      tag: ['@RET-BAT', '@RET-PR', '@cx', '@smoke', '@ccd-callback-tests', '@accessibility'],
     },
     async ({
       page,
