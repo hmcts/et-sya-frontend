@@ -42,4 +42,9 @@ describe('Linked Cases page', () => {
     const radios = htmlRes.getElementsByClassName(inputs);
     expect(radios.length).equal(2, `only ${radios.length} found`);
   });
+  it('should give each radio a fixed position and set size', () => {
+    const radioInputs = Array.from(htmlRes.querySelectorAll('input[type="radio"]'));
+    expect(radioInputs.map(input => input.getAttribute('aria-posinset'))).to.deep.equal(['1', '2']);
+    expect(radioInputs.map(input => input.getAttribute('aria-setsize'))).to.deep.equal(['2', '2']);
+  });
 });

@@ -41,4 +41,9 @@ describe('Do you have an Acas cert num Page', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
+  it('should give each radio a fixed position and set size', () => {
+    const radioInputs = Array.from(htmlRes.querySelectorAll('input[type="radio"]'));
+    expect(radioInputs.map(input => input.getAttribute('aria-posinset'))).to.deep.equal(['1', '2']);
+    expect(radioInputs.map(input => input.getAttribute('aria-setsize'))).to.deep.equal(['2', '2']);
+  });
 });

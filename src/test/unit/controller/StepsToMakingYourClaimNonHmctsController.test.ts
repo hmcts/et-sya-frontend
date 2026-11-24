@@ -16,6 +16,27 @@ describe('StepsToMakingYourClaimNonHmctsController', () => {
   };
 
   describe('get()', () => {
+    it('should display a support save error once', async () => {
+      const controller = new StepsToMakingYourClaimNonHmctsController();
+      const request = mockRequest({ session: { yourSupportSaveError: true } });
+      const response = mockResponse();
+
+      await controller.get(request, response);
+
+      expect(response.render).toHaveBeenLastCalledWith(
+        TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS,
+        expect.objectContaining({ yourSupportSaveError: true })
+      );
+      expect(request.session.yourSupportSaveError).toBeUndefined();
+
+      await controller.get(request, response);
+
+      expect(response.render).toHaveBeenLastCalledWith(
+        TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM_NON_HMCTS,
+        expect.objectContaining({ yourSupportSaveError: false })
+      );
+    });
+
     it('should render the steps to making your claim non-hmcts page', () => {
       const controller = new StepsToMakingYourClaimNonHmctsController();
       const response = mockResponse();

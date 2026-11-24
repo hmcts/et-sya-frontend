@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 {% from "govuk/components/task-list/macro.njk" import govukTaskList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
@@ -11,7 +12,23 @@
 
 {% block content %}
 
-  <div class="govuk-grid-row">
+{% include "your-support-error-summary.njk" %}
+
+{% if updateDraftCaseError %}
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: [
+        {
+          text: updateDraftCaseError,
+          href: '#task-list-1'
+        }
+      ]
+    })
+  }}
+{% endif %}
+
+<div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl"> {{h1}} </h1>
 
@@ -94,6 +111,20 @@
       </div>
 
     </div>
+  </div>
+
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: saveForLater,
+      classes: "govuk-button--secondary",
+      href: PageUrls.CLAIM_SAVED
+    }) }}
+
+    {{ govukButton({
+      text: delete,
+      classes: "govuk-button--warning",
+      href: deleteDraftUrl
+    }) }}
   </div>
 
 {% endblock %}

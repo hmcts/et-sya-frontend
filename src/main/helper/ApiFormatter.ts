@@ -286,6 +286,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     additionalClaimants: mapAdditionalClaimants(fromApiCaseData.case_data?.additionalClaimants),
     addClaimantMethod: fromApiCaseData.case_data?.addClaimantMethod,
     additionalClaimantSpreadsheet: fromApiCaseData.case_data?.additionalClaimantSpreadsheet,
+    ...(fromApiCaseData.case_data?.claimantExternalFlags !== undefined
+      ? { claimantExternalFlags: fromApiCaseData.case_data.claimantExternalFlags }
+      : {}),
   };
   populateClaimantRepDetailsFromCase(userCase);
   return userCase;
@@ -321,7 +324,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 }
 export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
   const isRepresentedClaimant = caseItem.claimantRepresentedQuestion === YesOrNo.YES;
-  return {
+  const updateCaseBody: UpdateCaseBody = {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
     case_data: {
@@ -445,6 +448,12 @@ export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
       representativeClaimantType: setClaimantRepApiFormat(caseItem),
     },
   };
+
+  if (caseItem.claimantExternalFlags !== undefined) {
+    updateCaseBody.case_data.claimantExternalFlags = caseItem.claimantExternalFlags;
+  }
+
+  return updateCaseBody;
 }
 
 /**

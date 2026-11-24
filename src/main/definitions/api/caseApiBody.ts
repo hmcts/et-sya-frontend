@@ -1,4 +1,5 @@
 import { Document } from '../case';
+import { CaseFlags } from '../case';
 import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';
@@ -39,6 +40,7 @@ interface CaseDataApiBody {
   additionalClaimants?: AdditionalClaimantRequestBody[];
   addClaimantMethod?: string;
   additionalClaimantSpreadsheet?: Document;
+  claimantExternalFlags?: CaseFlags;
   representativeClaimantType?: ClaimantRepresentative;
   repCollection?: RepresentativeRequestBody[];
 }
@@ -57,6 +59,14 @@ export interface UpdateCaseBody {
   case_id: string;
   case_type_id: string;
   case_data: CaseDataApiBody;
+}
+
+export interface UpdateSubmittedCaseFlagsBody {
+  case_id: string;
+  case_type_id: string;
+  case_data: {
+    claimantExternalFlags: CaseFlags;
+  };
 }
 
 export interface RespondentRequestBody {

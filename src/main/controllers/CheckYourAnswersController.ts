@@ -54,7 +54,7 @@ export default class CheckYourAnswersController {
       groupClaimMetaRows,
       groupClaimCardsHtml,
       groupClaimPostRows,
-      yourDetails: getYourDetails(userCase, translations, eraOctober2026Enabled),
+      yourDetails: await getYourDetails(userCase, translations, eraOctober2026Enabled),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       respondentTitle,

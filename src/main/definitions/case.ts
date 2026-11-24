@@ -257,6 +257,7 @@ export interface Case {
   // Claimant Organisation Policy
   claimantRepresentativeOrganisationPolicy?: OrganisationPolicy;
   claimantName?: string;
+  claimantExternalFlags?: CaseFlags;
   // non-MyHMCTS Claimant rep
   representativeType?: string;
   representativeOrgName?: string;
@@ -436,4 +437,32 @@ export const enum ReturnToExistingOption {
 export const enum AddAdditionalClaimant {
   MANUAL = 'manually',
   SPREADSHEET = 'spreadsheet',
+}
+
+export interface CaseFlags {
+  partyName?: string;
+  roleOnCase?: string;
+  groupId?: string;
+  visibility?: 'Internal' | 'External' | string;
+  details?: TypeItem<FlagDetail>[];
+}
+
+export interface FlagDetail {
+  name?: string;
+  name_cy?: string;
+  subTypeValue?: string;
+  subTypeValue_cy?: string;
+  subTypeKey?: string;
+  otherDescription?: string;
+  otherDescription_cy?: string;
+  flagComment?: string;
+  flagComment_cy?: string;
+  dateTimeModified?: string;
+  dateTimeCreated?: string;
+  path?: TypeItem<string>[];
+  hearingRelevant?: string;
+  flagCode?: string;
+  status?: 'Active' | 'Inactive' | string;
+  requestReason?: string;
+  availableExternally?: string;
 }

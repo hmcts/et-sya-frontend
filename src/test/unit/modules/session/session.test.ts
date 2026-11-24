@@ -6,8 +6,7 @@ const mockCreateClient = jest.fn();
 const mockSessionOptions = jest.fn();
 const mockConfigValues: Record<string, string> = {};
 
-const primaryHost = 'et-session-storage.redis.cache.windows.net';
-const secondaryHost = 'et-managed-redis.uksouth.redis.azure.net';
+const redisHost = 'et-managed-redis.uksouth.redis.azure.net';
 
 jest.mock('redis', () => ({
   createClient: (options: Record<string, unknown>) => mockCreateClient(options),
@@ -38,13 +37,6 @@ jest.mock('config', () => ({
   has: (key: string) => mockConfigValues[key] !== undefined,
 }));
 
-const createFakeClient = (name: string) => ({
-  name,
-  on: jest.fn(),
-  get: jest.fn(),
-  set: jest.fn(),
-});
-
 const buildApp = () =>
   ({
     use: jest.fn(),
@@ -53,8 +45,7 @@ const buildApp = () =>
   } as unknown as Application);
 
 describe('Session', () => {
-  let primaryClient: ReturnType<typeof createFakeClient>;
-  let secondaryClient: ReturnType<typeof createFakeClient>;
+  const redisClient = { on: jest.fn() };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -64,172 +55,55 @@ describe('Session', () => {
     }
     mockConfigValues['session.secret'] = 'current-secret';
     mockConfigValues['session.redis.host'] = '';
-    mockConfigValues['session.redis.key'] = 'primary-key';
-    mockConfigValues['session.redis.secondaryKey'] = 'secondary-key';
+    mockConfigValues['session.redis.key'] = 'redis-key';
 
     delete process.env.REDIS_PORT;
-    delete process.env.REDIS_SECONDARY_HOST;
-    delete process.env.REDIS_SECONDARY_PORT;
-    delete process.env.REDIS_READ_FROM;
-    delete process.env.REDIS_DUAL_WRITE_ENABLED;
-    process.env.REDIS_HOST = primaryHost;
+    process.env.REDIS_HOST = redisHost;
 
-    primaryClient = createFakeClient('primary');
-    secondaryClient = createFakeClient('secondary');
     mockCreateClient.mockReset();
-    mockCreateClient.mockImplementation((options: { host: string }) =>
-      options.host === secondaryHost ? secondaryClient : primaryClient
-    );
+    mockCreateClient.mockReturnValue(redisClient);
   });
 
   afterAll(() => {
     delete process.env.REDIS_HOST;
   });
 
-  describe('without a secondary instance', () => {
-    it('connects to the primary on 6380 and does not wrap the client', () => {
-      const app = buildApp();
+  it('connects to Redis on 10000 over TLS by default', () => {
+    const app = buildApp();
 
-      new Session().enableFor(app);
+    new Session().enableFor(app);
 
-      expect(mockCreateClient).toHaveBeenCalledTimes(1);
-      expect(mockCreateClient).toHaveBeenCalledWith(
-        expect.objectContaining({
-          host: primaryHost,
-          port: 6380,
-          tls: true,
-          password: 'primary-key',
-        })
-      );
-      expect(app.locals.redisClient).toBe(primaryClient);
-    });
-
-    it('honours REDIS_PORT when it is set', () => {
-      process.env.REDIS_PORT = '10000';
-
-      new Session().enableFor(buildApp());
-
-      expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ port: 10000 }));
-    });
-
-    it.each(['', '   ', 'not-a-port', '0', '70000'])('falls back to 6380 when REDIS_PORT is %p', value => {
-      process.env.REDIS_PORT = value;
-
-      new Session().enableFor(buildApp());
-
-      expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ port: 6380 }));
-    });
-  });
-
-  describe('when dual-write is not enabled', () => {
-    it.each([undefined, '', 'false', 'TRUE'])(
-      'ignores the secondary host when REDIS_DUAL_WRITE_ENABLED is %p',
-      value => {
-        process.env.REDIS_SECONDARY_HOST = secondaryHost;
-        process.env.REDIS_READ_FROM = 'secondary';
-        if (value !== undefined) {
-          process.env.REDIS_DUAL_WRITE_ENABLED = value;
-        }
-        const app = buildApp();
-
-        new Session().enableFor(app);
-
-        expect(mockCreateClient).toHaveBeenCalledTimes(1);
-        expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ host: primaryHost }));
-        expect(app.locals.redisClient).toBe(primaryClient);
-      }
+    expect(mockCreateClient).toHaveBeenCalledTimes(1);
+    expect(mockCreateClient).toHaveBeenCalledWith(
+      expect.objectContaining({
+        host: redisHost,
+        port: 10000,
+        tls: true,
+        password: 'redis-key',
+      })
     );
+    expect(app.locals.redisClient).toBe(redisClient);
   });
 
-  describe('with dual-write enabled', () => {
-    beforeEach(() => {
-      process.env.REDIS_DUAL_WRITE_ENABLED = 'true';
-      process.env.REDIS_SECONDARY_HOST = secondaryHost;
-    });
+  it('honours REDIS_PORT when it is set', () => {
+    process.env.REDIS_PORT = '6380';
 
-    it('connects to the secondary on 10000 by default', () => {
-      new Session().enableFor(buildApp());
+    new Session().enableFor(buildApp());
 
-      expect(mockCreateClient).toHaveBeenCalledTimes(2);
-      expect(mockCreateClient).toHaveBeenLastCalledWith(
-        expect.objectContaining({
-          host: secondaryHost,
-          port: 10000,
-          password: 'secondary-key',
-        })
-      );
-    });
-
-    it('relies on the flag alone, so still creates a secondary client when no secondary host is set', () => {
-      delete process.env.REDIS_SECONDARY_HOST;
-      const app = buildApp();
-
-      new Session().enableFor(app);
-
-      expect(mockCreateClient).toHaveBeenCalledTimes(2);
-      expect(mockCreateClient).toHaveBeenLastCalledWith(expect.objectContaining({ host: undefined, port: 10000 }));
-      expect(app.locals.redisClient).not.toBe(primaryClient);
-    });
-
-    it.each(['', '   ', 'not-a-port', '0'])('falls back to 10000 when REDIS_SECONDARY_PORT is %p', value => {
-      process.env.REDIS_SECONDARY_PORT = value;
-
-      new Session().enableFor(buildApp());
-
-      expect(mockCreateClient).toHaveBeenLastCalledWith(expect.objectContaining({ port: 10000 }));
-    });
-
-    it('reads from the primary and mirrors writes to the secondary', () => {
-      const app = buildApp();
-
-      new Session().enableFor(app);
-      app.locals.redisClient.set('key', 'value');
-      app.locals.redisClient.get('key');
-
-      expect(primaryClient.set).toHaveBeenCalledTimes(1);
-      expect(secondaryClient.set).toHaveBeenCalledTimes(1);
-      expect(primaryClient.get).toHaveBeenCalledTimes(1);
-      expect(secondaryClient.get).not.toHaveBeenCalled();
-    });
-
-    it('reads from the secondary once REDIS_READ_FROM is flipped, still mirroring writes', () => {
-      process.env.REDIS_READ_FROM = 'secondary';
-      const app = buildApp();
-
-      new Session().enableFor(app);
-      app.locals.redisClient.set('key', 'value');
-      app.locals.redisClient.get('key');
-
-      expect(secondaryClient.get).toHaveBeenCalledTimes(1);
-      expect(primaryClient.get).not.toHaveBeenCalled();
-      expect(secondaryClient.set).toHaveBeenCalledTimes(1);
-      expect(primaryClient.set).toHaveBeenCalledTimes(1);
-    });
+    expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ port: 6380 }));
   });
 
-  describe('cookie signing secret', () => {
-    it('signs with the single secret when no previous secret is mounted', () => {
-      new Session().enableFor(buildApp());
+  it.each(['', '   ', 'not-a-port', '0', '70000'])('falls back to 10000 when REDIS_PORT is %p', value => {
+    process.env.REDIS_PORT = value;
 
-      expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'current-secret' }));
-    });
+    new Session().enableFor(buildApp());
 
-    it('still verifies cookies signed with the previous secret', () => {
-      mockConfigValues['session.previousSecret'] = 'old-secret';
+    expect(mockCreateClient).toHaveBeenCalledWith(expect.objectContaining({ port: 10000 }));
+  });
 
-      new Session().enableFor(buildApp());
+  it('signs cookies with the session secret', () => {
+    new Session().enableFor(buildApp());
 
-      expect(mockSessionOptions).toHaveBeenCalledWith(
-        expect.objectContaining({ secret: ['current-secret', 'old-secret'] })
-      );
-    });
-
-    it('does not repeat the secret when it has not been rotated', () => {
-      mockConfigValues['session.previousSecret'] = 'current-secret';
-
-      new Session().enableFor(buildApp());
-
-      expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'current-secret' }));
-    });
+    expect(mockSessionOptions).toHaveBeenCalledWith(expect.objectContaining({ secret: 'current-secret' }));
   });
 });

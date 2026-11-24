@@ -9,6 +9,8 @@
 
 {% block content %}
 
+{% include "your-support-error-summary.njk" %}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl"> {{h1}} </h1>
@@ -80,7 +82,11 @@
       href: PageUrls.CLAIM_SAVED
     }) }}
 
-    <a href="{{ deleteDraftUrl }}" class="govuk-button govuk-button--warning">{{ delete }}</a>
+    {{ govukButton({
+      text: delete,
+      classes: "govuk-button--warning",
+      href: deleteDraftUrl
+    }) }}
   </div>
 
 {% endblock %}

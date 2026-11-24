@@ -3,19 +3,17 @@ import ConnectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
-import { ClientOpts, RedisClient, createClient } from 'redis';
+import { ClientOpts, createClient } from 'redis';
 import FileStoreFactory from 'session-file-store';
 
 import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
-import { createDualWriteRedisClient } from '../../utils/DualWriteRedisClient';
 
 const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
 
 const cookieMaxAge = 60 * (60 * 1000); // 60 minutes
 const sessionPrefix = 'et-sya-session:';
-const defaultRedisPort = 6380;
-const defaultSecondaryRedisPort = 10000; // Azure Managed Redis
+const defaultRedisPort = 10000; // Azure Managed Redis
 
 /**
  * Falls back when the variable is unset, empty or not a usable port, so that a
@@ -37,7 +35,7 @@ export class Session {
         name: 'et-sya-session',
         resave: false,
         saveUninitialized: false,
-        secret: this.getSecret(),
+        secret: config.get('session.secret') as string,
         cookie: {
           httpOnly: true,
           maxAge: cookieMaxAge,
@@ -48,18 +46,6 @@ export class Session {
         store: this.getStore(app),
       })
     );
-  }
-
-  /**
-   * Cookies are signed with the first secret and verified against all of them, so
-   * mounting the secret that was previously in use keeps people signed in across
-   * a rotation.
-   */
-  private getSecret(): string | string[] {
-    const secret = config.get('session.secret') as string;
-    const previousSecret = config.has('session.previousSecret') ? (config.get('session.previousSecret') as string) : '';
-
-    return previousSecret && previousSecret !== secret ? [secret, previousSecret] : secret;
   }
 
   private getStore(app: Application) {
@@ -73,56 +59,26 @@ export class Session {
       return new FileStore({ path: '/tmp', reapInterval: -1 });
     }
 
-    const primary = this.createRedisClient(
-      redisHost,
-      parsePort(process.env.REDIS_PORT, defaultRedisPort),
-      config.get('session.redis.key') as string
-    );
-
-    // While the move to Azure Managed Redis is in flight both instances are live:
-    // writes reach both, and REDIS_READ_FROM decides which one answers reads. The
-    // chart always sets the secondary host, so REDIS_DUAL_WRITE_ENABLED is what
-    // turns this on for an environment.
-    if (process.env.REDIS_DUAL_WRITE_ENABLED !== 'true') {
-      app.locals.redisClient = primary;
-      return new RedisStore({ client: primary });
-    }
-
-    const secondaryHost = process.env.REDIS_SECONDARY_HOST;
-    const secondary = this.createRedisClient(
-      secondaryHost,
-      parsePort(process.env.REDIS_SECONDARY_PORT, defaultSecondaryRedisPort),
-      config.has('session.redis.secondaryKey') ? (config.get('session.redis.secondaryKey') as string) : ''
-    );
-
-    const client =
-      process.env.REDIS_READ_FROM === 'secondary'
-        ? createDualWriteRedisClient(secondary, primary)
-        : createDualWriteRedisClient(primary, secondary);
-
-    app.locals.redisClient = client;
-    return new RedisStore({ client });
-  }
-
-  private createRedisClient(host: string, port: number, password: string): RedisClient {
     const clientOptions: ClientOpts =
-      host === LOCAL_REDIS_SERVER
+      redisHost === LOCAL_REDIS_SERVER
         ? {
-            host,
+            host: redisHost,
             port: 6379,
             tls: false,
             connect_timeout: 15000,
             prefix: sessionPrefix,
           }
         : {
-            host,
-            port,
+            host: redisHost,
+            port: parsePort(process.env.REDIS_PORT, defaultRedisPort),
             tls: true,
             connect_timeout: 15000,
-            password,
+            password: config.get('session.redis.key') as string,
             prefix: sessionPrefix,
           };
 
-    return createClient(clientOptions);
+    const client = createClient(clientOptions);
+    app.locals.redisClient = client;
+    return new RedisStore({ client });
   }
 }
