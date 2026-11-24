@@ -13,7 +13,7 @@
     "setup:husky": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
     "postinstall": "yarn setup:husky && yarn build",
     "start": "NODE_ENV=production yarn node src/main/server.js",
-    "start:dev": "nodemon --config nodemon.json",
+    "start:dev": "NODE_ENV=development nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
     "start:debug": "redis-server 2>&1 & node --require ts-node/register --inspect=9229 ./src/main/server.ts",
     "lint": "sass-lint -v -q && eslint . --ext .js,.jsx,.ts,.tsx --fix && prettier --check ./src/",
@@ -47,6 +47,7 @@
   "dependencies": {
     "@faker-js/faker": "^10.5.0",
     "@hmcts/cookie-manager": "^1.0.0",
+    "@hmcts/cui-client": "^1.0.1",
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.8.0",
     "@hmcts/nodejs-logging": "^4.0.4",
@@ -76,12 +77,13 @@
     "express-session": "^1.18.2",
     "govuk-frontend": "^6.0.0",
     "helmet": "^8.0.0",
-    "i18next": "^25.0.0",
+    "i18next": "^26.0.0",
     "i18next-http-middleware": "^3.3.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.23",
     "multer": "2.5.0",
     "nunjucks": "^3.2.4",
+    "otplib": "^13.4.0",
     "postcode": "^5.1.0",
     "prettier": "^2.8.7",
     "puppeteer": "^25.0.0",
@@ -199,7 +201,7 @@
     "underscore": "^1.13.8",
     "yauzl": "3.2.1",
     "picomatch": "^4.0.4",
-    "ip-address": "10.7.5",
+    "ip-address": "10.7.6",
     "undici": "7.30.1",
     "body-parser": "2.4.0",
     "multer@npm:2.4.0": "2.5.0",
@@ -209,7 +211,8 @@
     "js-yaml@npm:^4.0.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.0": "npm:js-yaml@4.3.2",
     "js-yaml@npm:^4.1.1": "npm:js-yaml@4.3.2",
-    "zod": "4.6.7"
+    "zod": "4.6.7",
+    "follow-redirects": "^1.16.0"
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "yarn@4.17.0"
 }
