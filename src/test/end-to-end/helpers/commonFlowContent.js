@@ -73,7 +73,7 @@ async function verifyWhoCanActAsARepresentativeGuidanceText() {
   I.see('trade unions (if one is available to you)');
   I.see('Citizens Advice advisers');
   I.see('advisers from law clinics or law centres');
-  I.see('Paid representation be through legal professionals, including:');
+  I.see('Paid representation through legal professionals, including:');
   I.see('solicitors');
   I.see("barristers (called 'advocates' in Scotland)");
   I.see('legal executives');
@@ -90,7 +90,7 @@ async function verifyHowToFindARepresentativeGuidanceText() {
   I.see(
     '– charity providing legal advice, case preparation and advocacy for people not eligible for legal aid or who cannot afford lawyers (this service is not available in Scotland)'
   );
-  I.see('In Scotland, some university law clinics can provide advice and represenation. You can find a list at');
+  I.see('In Scotland, some university law clinics can provide advice and representation. You can find a list at');
   I.seeElement("//a[.='The Scottish University Law Clinic Network (SULCN)(opens in new tab)']");
   I.see(
     'local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford lawyers.'
