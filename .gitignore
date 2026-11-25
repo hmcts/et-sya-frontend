@@ -54,4 +54,3 @@ config/development.json
 yalc.lock
 /.sessions/
 /.tmp/
-/yarn-audit-result
