@@ -30,5 +30,10 @@
   "date": "Date sent",
   "additionalInfo": "Additional information",
   "No": "No",
-  "notificationSubject": "Notification Subject"
+  "notificationSubject": "Notification subject",
+  "notificationType": "Notification type",
+  "Considering claims together": "Considering claims together",
+  "partOfGroupClaim": "You're now part of a group claim",
+  "groupClaims": "Group claims",
+  "groupClaimMadeBy": "Group claim notification made by"
 }

@@ -1,0 +1,63 @@
+{
+  "title": "[W]Add claimants using a spreadsheet",
+  "h1": "[W]Add claimants using a spreadsheet",
+  "section1": {
+    "heading": "[W]Download and complete the spreadsheet template",
+    "p1": "[W]Download the spreadsheet template or use you own if it follows the same format.",
+    "link": "[W]Group claims template (xlsx, 12KB)",
+    "linkUrl": "[W]/resources/xlsx/group-claims-template.xlsx",
+    "p3": "[W]If you are uploading your own file, you must include all of the following mandatory columns in your header row, using the exact spelling shown:",
+    "columnNames": ["First name", "Last name", "Address line 1", "Town or city", "Country"]
+  },
+  "section2": {
+    "heading": "[W]Save in Excel format",
+    "p1": "[W]Follow these steps:",
+    "steps": ["select 'File'", "select 'Save as' or 'Export to'", "save as the format 'Excel (.xlsx or .xls)'"]
+  },
+  "section3": {
+    "heading": "[W]Upload spreadsheet",
+    "p1": "[W]Select 'Choose file', browse to your saved spreadsheet and select it.",
+    "buttonLabel": "[W]Choose file"
+  },
+  "fileUpload": {
+    "chooseFiles": "[W]Choose file",
+    "dropInstruction": "[W]or drop file",
+    "noFileChosen": "[W]No file chosen"
+  },
+  "errors": {
+    "additionalClaimantSpreadsheetName": {
+      "required": "[W]Please upload a spreadsheet",
+      "invalidFileSize": "[W]The file size must be less than 5MB",
+      "invalidFileFormat": "[W]The selected file must be an Excel spreadsheet (.xlsx or .xls)",
+      "invalidRowData": "[W]The following rows contain invalid data: {{errorValue}}.",
+      "backEndError": "[W]Backend error occurred while processing the file. Please try again later.",
+      "fileEmpty": "[W]The uploaded file is empty. Upload a file with data.",
+      "noDataRows": "[W]The uploaded file does not contain any data rows. Please upload a file with data.",
+      "dataRowsExceedsMax": "[W]The uploaded file has exceeded the maximum of {{errorValue}} rows.",
+      "missingMandatory": "[W]There's mandatory data missing for rows {{errorValue}}",
+      "invalidFieldSingleRow": "[W]{{errorValue}} is invalid for row {{errorValue2}}",
+      "invalidFieldMultipleRows": "[W]{{errorValue}} is invalid for rows {{errorValue2}}",
+      "missingMandatoryTooManyRows": "[W]Mandatory data is missing on {{errorValue}} rows.",
+      "invalidFieldTooManyRows": "[W]{{errorValue}} is invalid on {{errorValue2}} rows.",
+      "invalidFieldLabels": {
+        "title": "[W]Title",
+        "firstName": "[W]First name",
+        "lastName": "[W]Last name",
+        "addressLine1": "[W]Address line 1",
+        "addressLine2": "[W]Address line 2",
+        "townOrCity": "[W]Town or city",
+        "country": "[W]Country",
+        "dateOfBirth": "[W]Date of birth",
+        "emailAddress": "[W]Email address",
+        "postcode": "[W]Postcode"
+      },
+      "multipleErrorTypesSummary": "[W]There are {{errorValue}} errors over {{errorValue2}} rows within the uploaded file."
+    }
+  },
+  "successTitle": "[W]Success",
+  "successHeading": "[W]Document upload successful",
+  "successBody": "[W]has been uploaded.",
+  "uploadedDocument": "[W]Uploaded document",
+  "uploadedTag": "[W]Uploaded",
+  "removeLink": "[W]Remove"
+}

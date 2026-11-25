@@ -69,7 +69,12 @@ export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord):
           userCase?.employmentAndRespondentCheck,
           userCase?.claimDetailsCheck,
         ]
-      : [userCase?.personalDetailsCheck, userCase?.employmentAndRespondentCheck, userCase?.claimDetailsCheck];
+      : [
+          userCase?.personalDetailsCheck,
+          ...(userCase?.groupClaimsCheck !== undefined ? [userCase.groupClaimsCheck] : []),
+          userCase?.employmentAndRespondentCheck,
+          userCase?.claimDetailsCheck,
+        ];
 
   // The final task is submitting the claim, which only opens once every section is complete
   const totalSections = sectionChecks.length + 1;

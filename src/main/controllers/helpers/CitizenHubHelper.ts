@@ -5,6 +5,7 @@ import {
   Applicant,
   NotificationSubjects,
   PageUrls,
+  Parties,
   acknowledgementOfClaimDocTypes,
   languages,
 } from '../../definitions/constants';
@@ -15,6 +16,7 @@ import { getCuiYourSupportFeature } from '../../modules/featureFlag/CuiYourSuppo
 
 import { isHearingExist } from './HearingHelpers';
 import { shouldShowViewRespondentContactDetails } from './RespondentContactDetailsHelper';
+import { isConsideringClaimsTogether } from './TribunalOrderOrRequestDetailsHelper';
 
 export const updateHubLinkStatuses = async (
   userCase: CaseWithId,
@@ -160,6 +162,27 @@ export const shouldShowJudgmentReceived = (userCase: CaseWithId, hubLinksStatuse
 export const userCaseContainsGeneralCorrespondence = (notifications: SendNotificationTypeItem[]): boolean => {
   return notifications?.some(it =>
     it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
+  );
+};
+
+export const shouldShowConsideringClaimsTogetherAlert = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(
+    it =>
+      isConsideringClaimsTogether(it) &&
+      it.value?.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+      it.value?.notificationState !== HubLinkStatus.VIEWED &&
+      it.value?.notificationState !== HubLinkStatus.SUBMITTED
+  );
+};
+
+export const shouldShowPartOfGroupClaimAlert = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(
+    it =>
+      (it.value?.sendNotificationGroupClaims === NotificationSubjects.PART_OF_GROUP_CLAIM ||
+        it.value?.sendNotificationSubject?.includes(NotificationSubjects.PART_OF_GROUP_CLAIM)) &&
+      it.value?.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+      it.value?.notificationState !== HubLinkStatus.VIEWED &&
+      it.value?.notificationState !== HubLinkStatus.SUBMITTED
   );
 };
 

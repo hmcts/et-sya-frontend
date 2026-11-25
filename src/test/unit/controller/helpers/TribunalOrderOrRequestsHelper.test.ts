@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import dayjs from 'dayjs';
 
 import { getSendNotifications } from '../../../../main/controllers/helpers/TribunalOrderOrRequestsHelper';
 import { HubLinkStatus } from '../../../../main/definitions/hub';
@@ -204,6 +205,46 @@ describe('Tribunal Notifications Helper', () => {
           statusColor: '--blue',
         },
       ]);
+    });
+
+    it('should populate Group Claims Considering claims together notification as Response optional when within response window', async () => {
+      const req = mockRequestWithTranslation({}, translationJsons);
+      req.session.userCase.sendNotificationCollection = [
+        {
+          id: 'group-claim-1',
+          value: {
+            date: dayjs().subtract(2, 'day').format('D MMMM YYYY'),
+            sendNotificationTitle: 'Considering claims together',
+            sendNotificationGroupClaims: 'Considering claims together',
+            sendNotificationResponseTribunal: 'Yes - view document for details',
+            sendNotificationNotify: 'Both parties',
+            notificationState: 'viewed',
+          },
+        },
+      ];
+      const populatedNotification = await getSendNotifications(req);
+      expect(populatedNotification[0].displayStatus).toEqual('Response optional');
+      expect(populatedNotification[0].statusColor).toEqual('--blue');
+    });
+
+    it('should populate Group Claims Considering claims together notification with standard status when expired', async () => {
+      const req = mockRequestWithTranslation({}, translationJsons);
+      req.session.userCase.sendNotificationCollection = [
+        {
+          id: 'group-claim-1',
+          value: {
+            date: dayjs().subtract(10, 'day').format('D MMMM YYYY'),
+            sendNotificationTitle: 'Considering claims together',
+            sendNotificationGroupClaims: 'Considering claims together',
+            sendNotificationResponseTribunal: 'Yes - view document for details',
+            sendNotificationNotify: 'Both parties',
+            notificationState: 'viewed',
+          },
+        },
+      ];
+      const populatedNotification = await getSendNotifications(req);
+      expect(populatedNotification[0].displayStatus).toEqual('Viewed');
+      expect(populatedNotification[0].statusColor).toEqual('--green');
     });
 
     it('should populate page with all empty', async () => {

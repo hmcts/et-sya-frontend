@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { handleClaimStepsRedirect } from './helpers/RedirectHelpers';
-import { conditionalRedirect, getClaimStepsUrl } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('ValidNoAcasReasonController');
 
@@ -64,11 +64,10 @@ export default class ValidNoAcasReasonController {
   };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const claimStepsUrl = getClaimStepsUrl(req);
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? claimStepsUrl
+      ? PageUrls.NEW_ACCOUNT_LANDING
       : PageUrls.CONTACT_ACAS;
-    if (claimStepsUrl === redirectUrl) {
+    if (PageUrls.NEW_ACCOUNT_LANDING === redirectUrl) {
       await handleClaimStepsRedirect(req, res, this.form, redirectUrl, logger);
     } else {
       handlePostLogicPreLogin(req, res, this.form, redirectUrl);

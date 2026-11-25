@@ -6,18 +6,10 @@ import { LoggerInstance } from 'winston';
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import {
-  CaseDataCacheKey,
-  CaseDate,
-  CaseType,
-  CaseTypeId,
-  CaseWithId,
-  StillWorking,
-  YesOrNo,
-} from '../../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseTypeId, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, languages } from '../../definitions/constants';
+import { NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -60,8 +52,6 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   }
   req.session.userCase.claimantRepresentedQuestion =
     userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED) === YesOrNo.YES.toString() ? YesOrNo.YES : YesOrNo.NO;
-  req.session.userCase.caseType =
-    userDataMap.get(CaseDataCacheKey.CASE_TYPE) === CaseType.MULTIPLE.toString() ? CaseType.MULTIPLE : CaseType.SINGLE;
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
@@ -71,6 +61,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       setClaimantRepEmailFromLoginEmail(req.session.userCase, req.session.user?.email);
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
       logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      const caseType = req.session.userCase.caseType;
       const workEnterPostcode = req.session.userCase.workEnterPostcode;
       const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
       const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
@@ -84,6 +75,25 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workAddressTypes = req.session.userCase.workAddressTypes;
       const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
       const addressAddressTypes = req.session.userCase.addressAddressTypes;
+      const additionalClaimants = req.session.userCase.additionalClaimants;
+      const currentAdditionalClaimantIndex = req.session.userCase.currentAdditionalClaimantIndex;
+      const additionalClaimantTitle = req.session.userCase.additionalClaimantTitle;
+      const additionalClaimantFirstName = req.session.userCase.additionalClaimantFirstName;
+      const additionalClaimantLastName = req.session.userCase.additionalClaimantLastName;
+      const additionalClaimantEmail = req.session.userCase.additionalClaimantEmail;
+      const additionalClaimantDob = req.session.userCase.additionalClaimantDob;
+      const additionalClaimantAddress1 = req.session.userCase.additionalClaimantAddress1;
+      const additionalClaimantAddress2 = req.session.userCase.additionalClaimantAddress2;
+      const additionalClaimantAddressTown = req.session.userCase.additionalClaimantAddressTown;
+      const additionalClaimantAddressCountry = req.session.userCase.additionalClaimantAddressCountry;
+      const additionalClaimantAddressPostcode = req.session.userCase.additionalClaimantAddressPostcode;
+      const additionalClaimantEnterPostcode = req.session.userCase.additionalClaimantEnterPostcode;
+      const additionalClaimantAddresses = req.session.userCase.additionalClaimantAddresses;
+      const additionalClaimantAddressTypes = req.session.userCase.additionalClaimantAddressTypes;
+      const addClaimantMethod = req.session.userCase.addClaimantMethod;
+      const addAdditionalClaimant = req.session.userCase.addAdditionalClaimant;
+      const leadClaimant = req.session.userCase.leadClaimant;
+      const additionalClaimantSpreadsheet = req.session.userCase.additionalClaimantSpreadsheet;
       const caseTypeId = req.session.userCase.caseTypeId;
       const representativeAddressTypes = req.session.userCase.representativeAddressTypes;
       const representedClaimantAddressTypes = req.session.userCase.representedClaimantAddressTypes;
@@ -112,6 +122,9 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const representedClaimantDetailsCheck = req.session.userCase.representedClaimantDetailsCheck;
       const claimantWrittenContract = req.session.userCase.claimantWrittenContract;
       req.session.userCase = fromApiFormat(response.data);
+      if (caseType !== undefined) {
+        req.session.userCase.caseType = caseType;
+      }
       if (req.session.userCase.caseTypeId === undefined) {
         req.session.userCase.caseTypeId = caseTypeId;
       }
@@ -128,6 +141,25 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.workAddressTypes = workAddressTypes;
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
+      req.session.userCase.additionalClaimants = additionalClaimants;
+      req.session.userCase.currentAdditionalClaimantIndex = currentAdditionalClaimantIndex;
+      req.session.userCase.additionalClaimantTitle = additionalClaimantTitle;
+      req.session.userCase.additionalClaimantFirstName = additionalClaimantFirstName;
+      req.session.userCase.additionalClaimantLastName = additionalClaimantLastName;
+      req.session.userCase.additionalClaimantEmail = additionalClaimantEmail;
+      req.session.userCase.additionalClaimantDob = additionalClaimantDob;
+      req.session.userCase.additionalClaimantAddress1 = additionalClaimantAddress1;
+      req.session.userCase.additionalClaimantAddress2 = additionalClaimantAddress2;
+      req.session.userCase.additionalClaimantAddressTown = additionalClaimantAddressTown;
+      req.session.userCase.additionalClaimantAddressCountry = additionalClaimantAddressCountry;
+      req.session.userCase.additionalClaimantAddressPostcode = additionalClaimantAddressPostcode;
+      req.session.userCase.additionalClaimantEnterPostcode = additionalClaimantEnterPostcode;
+      req.session.userCase.additionalClaimantAddresses = additionalClaimantAddresses;
+      req.session.userCase.additionalClaimantAddressTypes = additionalClaimantAddressTypes;
+      req.session.userCase.addClaimantMethod = addClaimantMethod;
+      req.session.userCase.addAdditionalClaimant = addAdditionalClaimant;
+      req.session.userCase.leadClaimant = leadClaimant;
+      req.session.userCase.additionalClaimantSpreadsheet = additionalClaimantSpreadsheet;
       req.session.userCase.representativeAddressTypes = representativeAddressTypes;
       req.session.userCase.representedClaimantAddressTypes = representedClaimantAddressTypes;
       req.session.userCase.representativeType ??= representativeType;
@@ -262,6 +294,13 @@ export const respondToApplication = async (req: AppRequest, logger: Logger): Pro
 
 export const updateSendNotificationState = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
+    const selected = req.session.userCase?.selectedRequestOrOrder;
+    if (selected?.value) {
+      const isGroupClaims = selected.value.sendNotificationSubject?.includes(NotificationSubjects.GROUP_CLAIMS);
+      if (selected.value.notificationState === HubLinkStatus.NOT_VIEWED || isGroupClaims) {
+        selected.value.notificationState = HubLinkStatus.VIEWED;
+      }
+    }
     await getCaseApi(req.session.user?.accessToken).updateSendNotificationState(req.session.userCase);
     logger.info(`Updated state for selectedRequestOrOrder: ${req.session.userCase.selectedRequestOrOrder.id}`);
   } catch (error) {

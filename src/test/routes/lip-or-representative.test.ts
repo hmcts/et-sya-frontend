@@ -21,7 +21,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
       .send({ claimantRepresentedQuestion: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_JURISDICTION_SELECTION);
       });
   });
 
@@ -31,7 +31,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
       .send({ claimantRepresentedQuestion: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
+        expect(res.header['location']).toStrictEqual(PageUrls.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE);
       });
   });
 });
