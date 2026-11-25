@@ -1,5 +1,6 @@
+import { config, createCaseViaCitizenUI, resolveResourceJson, users } from '@hmcts/et-shared-test-library';
+
 import { test } from '../fixtures/et.sya.test.fixture';
-import { createCaseViaCitizenUI, resolveResourceJson, users, config } from '@hmcts/et-shared-test-library';
 
 let userDetailsData: any;
 

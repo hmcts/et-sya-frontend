@@ -2,8 +2,8 @@ import {
   CaseTypeLocation,
   CitizenClaimantFactory,
   CitizenHubLoginPage,
-  cuiApi,
   Et1ClaimsListPage,
+  cuiApi,
   users,
 } from '@hmcts/et-shared-test-library';
 import { test } from '../fixtures/et.sya.test.fixture';

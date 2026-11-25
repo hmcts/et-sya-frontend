@@ -215,15 +215,15 @@ yarn test:accessibility
 For local/basic Playwright execution, create a `.env` file in the repo root with:
 
 ```env
-ENABLE_ACCESSIBILITY_AUDIT=true
-ET_CASEWORKER_USER_NAME=
-ET_CASEWORKER_PASSWORD=
-ET_CCD_API_USER_NAME=
-ET_CCD_API_PASSWORD=
-MICROSERVICE_CCD_GW=
-RUNNING_ENV=aat
+export ENABLE_ACCESSIBILITY_AUDIT=true
+export ET_CASEWORKER_USER_NAME=
+export ET_CASEWORKER_PASSWORD=
+export ET_CCD_API_USER_NAME=
+export ET_CCD_API_PASSWORD=
+export MICROSERVICE_CCD_GW=
+export RUNNING_ENV=aat
 # Optional: only set this when you want to run against a PR/custom Citizen UI URL
-# TEST_URL_CITIZEN_UI=https://et-sya.aat.platform.hmcts.net/
+# export TEST_URL_CITIZEN_UI=https://et-sya.aat.platform.hmcts.net/
 ```
 
 ### Functional & E2E Tests (Playwright)
