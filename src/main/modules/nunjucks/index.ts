@@ -129,31 +129,20 @@ export class Nunjucks {
               if (value.subFields) {
                 Object.entries(value.subFields).forEach(([subFieldName, subField]) => {
                   resolveFieldErrorMessages(sessionErrors, errors, subFieldName, defaultErrorValue).forEach(message => {
-                    fieldErrors.push({ text: message, href: `#${subField.id}` });
+                    fieldErrors.push({ text: message, href: `#${getErrorTargetId(subField)}` });
                   });
                 });
               }
             }
           }
+
           resolveFieldErrorMessages(sessionErrors, errors, fieldName, defaultErrorValue).forEach(message => {
-            fieldErrors.push({ text: message, href: `#${field.id}` });
+            fieldErrors.push({ text: message, href: `#${getErrorTargetId(field)}` });
           });
 
-        //
           return fieldErrors;
-          const error = this.env.globals.getError.call(this, fieldName) as {
-            text?: string;
-            fieldName?: string;
-          };
-          if (error && error?.text) {
-            errors.push({
-              text: error.text,
-              href: `#${getErrorTargetId(field)}`,
-            });
-          }
-          return errors;
         })
-        .filter(Boolean); //
+        .filter(Boolean);
     });
 
     nunEnv.addGlobal(
