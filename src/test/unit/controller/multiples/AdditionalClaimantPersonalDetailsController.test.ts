@@ -129,6 +129,48 @@ describe('AdditionalClaimantPersonalDetailsController', () => {
     );
   });
 
+  it('should allow adding a new claimant when optional email address is left blank', async () => {
+    const response = mockResponse();
+    const request = mockRequest({
+      body: {
+        additionalClaimantTitle: '',
+        additionalClaimantFirstName: 'First',
+        additionalClaimantLastName: 'Claimant',
+        additionalClaimantEmail: '',
+      },
+    });
+    request.session.userCase.additionalClaimants = [];
+
+    await new AdditionalClaimantPersonalDetailsController().post(request, response);
+
+    expect(request.session.errors).toEqual([]);
+    expect(request.session.userCase.additionalClaimants).toHaveLength(1);
+    expect(request.session.userCase.additionalClaimants[0].firstName).toBe('First');
+    expect(request.session.userCase.additionalClaimants[0].lastName).toBe('Claimant');
+    expect(CaseHelper.handleUpdateDraftCase).toHaveBeenCalledWith(request, expect.anything());
+    expect(response.redirect).toHaveBeenCalledWith(
+      `${PageUrls.ADDITIONAL_CLAIMANT_POSTCODE_ENTER}?additionalClaimant=new-claimant`
+    );
+  });
+
+  it('should reject an invalid email address when provided', async () => {
+    const response = mockResponse();
+    const request = mockRequest({
+      body: {
+        additionalClaimantFirstName: 'First',
+        additionalClaimantLastName: 'Claimant',
+        additionalClaimantEmail: 'not-an-email',
+      },
+    });
+    request.url = `${PageUrls.ADDITIONAL_CLAIMANT_PERSONAL_DETAILS}?additionalClaimant=new-claimant`;
+
+    await new AdditionalClaimantPersonalDetailsController().post(request, response);
+
+    expect(request.session.errors).toEqual([{ propertyName: 'additionalClaimantEmail', errorType: 'invalid' }]);
+    expect(CaseHelper.handleUpdateDraftCase).not.toHaveBeenCalled();
+    expect(response.redirect).toHaveBeenCalledWith(request.url);
+  });
+
   it('should update an existing claimant and preserve address fields', async () => {
     const response = mockResponse();
     const request = mockRequest({

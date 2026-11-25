@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../../../components/form/form';
 import { convertToDateObject } from '../../../components/form/parser';
-import { isFieldFilledIn, isValidEmailAddress } from '../../../components/form/validator';
+import { isFieldFilledIn, isValidEmailAddressWhenProvided } from '../../../components/form/validator';
 import { AdditionalClaimantCheck } from '../../../decorators/AdditionalClaimantEditCheck';
 import { CaseStateCheck } from '../../../decorators/CaseStateCheck';
 import { AppRequest } from '../../../definitions/appRequest';
@@ -65,7 +65,7 @@ export default class AdditionalClaimantPersonalDetailsController {
         hint: (l: AnyRecord): string => l.emailHint,
         classes: 'govuk-!-width-one-half',
         attributes: { maxLength: 100 },
-        validator: isValidEmailAddress,
+        validator: isValidEmailAddressWhenProvided,
       },
       additionalClaimantDob: dob_date,
     },
