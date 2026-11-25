@@ -6,7 +6,12 @@ jest.mock('../../../main/modules/featureFlag/launchDarkly', () => ({
 
 import { CaseType, CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
-import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import {
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  TellUsWhatYouWant,
+  TypesOfClaim,
+} from '../../../main/definitions/definition';
 import { CuiYourSupportFeature } from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import * as CuiYourSupportFeatureModule from '../../../main/modules/featureFlag/CuiYourSupportFeature';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
@@ -145,10 +150,10 @@ describe('Check your answers confirmation page', () => {
     }
   });
 
-  it('should display 13 rows in Employment Details summary list', () => {
+  it('should display 1 row in Other people in your claim summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
-    const employmentDetailsList = summaryListSections[2].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(employmentDetailsList.length).equals(1, 'Incorrect number of rows found');
+    const otherPeopleList = summaryListSections[2].querySelectorAll(summaryListKeyExcludeHeadingClass);
+    expect(otherPeopleList.length).equals(1, 'Incorrect number of rows found');
   });
 
   it('should display 13 rows in Employment Details summary list', () => {

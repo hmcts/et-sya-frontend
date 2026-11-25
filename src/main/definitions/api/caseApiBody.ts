@@ -1,5 +1,4 @@
-import { Document } from '../case';
-import { CaseFlags } from '../case';
+import { CaseFlags, Document } from '../case';
 import { ClaimantRepresentative } from '../complexTypes/ClaimantRepresentative';
 import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { AdditionalClaimantType } from '../complexTypes/additionalClaimant';

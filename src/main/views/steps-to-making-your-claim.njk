@@ -107,24 +107,14 @@
           href: PageUrls.CLAIM_SAVED
         }) }}
 
-        <a href="{{ deleteDraftUrl }}" class="govuk-button govuk-button--warning">{{ delete }}</a>
+        {{ govukButton({
+          text: delete,
+          classes: "govuk-button--warning",
+          href: deleteDraftUrl
+        }) }}
       </div>
 
     </div>
-  </div>
-
-  <div class="govuk-button-group">
-    {{ govukButton({
-      text: saveForLater,
-      classes: "govuk-button--secondary",
-      href: PageUrls.CLAIM_SAVED
-    }) }}
-
-    {{ govukButton({
-      text: delete,
-      classes: "govuk-button--warning",
-      href: deleteDraftUrl
-    }) }}
   </div>
 
 {% endblock %}

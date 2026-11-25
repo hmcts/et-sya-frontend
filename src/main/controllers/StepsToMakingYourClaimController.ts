@@ -63,7 +63,7 @@ export default class StepsToMakingYourClaimController {
 
       return userCase?.additionalClaimants?.length || -1;
     };
-    
+
     const yourDetailsLinks = [
       {
         url: setUrlLanguage(req, PageUrls.DOB_DETAILS.toString()),

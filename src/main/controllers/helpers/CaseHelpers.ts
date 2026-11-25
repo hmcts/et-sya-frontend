@@ -6,15 +6,7 @@ import { LoggerInstance } from 'winston';
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
-import {
-  CaseDataCacheKey,
-  CaseDate,
-  CaseType,
-  CaseTypeId,
-  CaseWithId,
-  StillWorking,
-  YesOrNo,
-} from '../../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseTypeId, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
@@ -130,6 +122,9 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const representedClaimantDetailsCheck = req.session.userCase.representedClaimantDetailsCheck;
       const claimantWrittenContract = req.session.userCase.claimantWrittenContract;
       req.session.userCase = fromApiFormat(response.data);
+      if (caseType !== undefined) {
+        req.session.userCase.caseType = caseType;
+      }
       if (req.session.userCase.caseTypeId === undefined) {
         req.session.userCase.caseTypeId = caseTypeId;
       }

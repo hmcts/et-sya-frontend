@@ -38,7 +38,7 @@ const expectedHeader5 = stepsToMakingYourClaimJSON.section5.title;
 
 const taskListStatusClass = 'govuk-task-list__status';
 const notStartedTaskTagClass = 'govuk-tag govuk-tag--grey';
-const expectedTaskCount = 8;
+const expectedTaskCount = 9;
 const checkYourAnswersTaskIndex = expectedTaskCount - 1;
 
 let htmlRes: Document;
@@ -229,7 +229,7 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTagClass);
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
-    expect(notStartedTags.length).equal(4, 'number of not started yet tags found is not 4');
+    expect(notStartedTags.length).equal(5, 'number of not started yet tags found is not 5');
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
     expect(taskListStatus[0].innerHTML).contains('Completed');
     expect(taskListStatus[1].innerHTML).contains('Completed');
@@ -274,10 +274,10 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTagClass);
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
-    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
+    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
-    expect(taskListStatus[3].innerHTML).contains('Completed');
     expect(taskListStatus[4].innerHTML).contains('Completed');
+    expect(taskListStatus[5].innerHTML).contains('Completed');
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');
   });
 
@@ -317,10 +317,10 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTagClass);
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
-    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
+    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
     expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
-    expect(taskListStatus[5].innerHTML).contains('Completed');
     expect(taskListStatus[6].innerHTML).contains('Completed');
+    expect(taskListStatus[7].innerHTML).contains('Completed');
     expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Cannot start yet');
   });
 
@@ -430,11 +430,18 @@ describe('Steps to making your claim page tags', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
     const taskListStatus = htmlRes.getElementsByClassName(taskListStatusClass);
-    expect(taskListStatus.length).equal(expectedTaskCount, 'number of tags found is not correct');
-    for (let index = 0; index < taskListStatus.length - 2; index++) {
-      expect(taskListStatus[index].innerHTML).contains('Completed');
-    }
-    expect(taskListStatus[checkYourAnswersTaskIndex].innerHTML).contains('Not started yet');
+    expect(taskListStatus.length).equal(11, 'number of tags found is not 11');
+    expect(taskListStatus[0].innerHTML).contains('Not started yet');
+    expect(taskListStatus[1].innerHTML).contains('Not started yet');
+    expect(taskListStatus[2].innerHTML).contains('Not started yet');
+    expect(taskListStatus[3].innerHTML).contains('In progress'); // when multiple this is 'In progress'
+    expect(taskListStatus[4].innerHTML).contains('Not started yet');
+    expect(taskListStatus[5].innerHTML).contains('Not started yet');
+    expect(taskListStatus[6].innerHTML).contains('Not started yet');
+    expect(taskListStatus[7].innerHTML).contains('Not started yet');
+    expect(taskListStatus[8].innerHTML).contains('Not started yet');
+    expect(taskListStatus[9].innerHTML).contains('Not started yet');
+    expect(taskListStatus[10].innerHTML).contains('Cannot start yet');
   });
 
   it('should show section as in progress', async () => {

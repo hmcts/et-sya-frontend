@@ -215,7 +215,7 @@ describe('Should return data in api format', () => {
       PostCode: undefined,
     });
   });
-  
+
   it('should include claimant external flags in api update format', () => {
     const claimantExternalFlags: CaseFlags = {
       partyName: 'John Doe',
