@@ -32,7 +32,7 @@ describe('preventInvalidRadioAriaExpanded', () => {
   beforeEach(() => {
     document.body.classList.add('govuk-frontend-supported');
     document.body.innerHTML = radiosMarkup;
-    preventInvalidRadioAriaExpanded();
+    preventInvalidRadioAriaExpanded(Radios);
     const radios = document.querySelector('.govuk-radios');
     if (!radios) {
       throw new Error('radios root missing');
