@@ -49,3 +49,8 @@ src/test/end-to-end/functional-output/*
 /reports/*
 config/local-development.json
 config/development.json
+/.env
+/.yalc/
+yalc.lock
+/.sessions/
+/.tmp/

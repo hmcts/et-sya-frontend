@@ -1,42 +1,52 @@
-import { test } from '../fixtures/common.fixture';
+import { config, createCaseViaCitizenUI, resolveResourceJson, users } from '@hmcts/et-shared-test-library';
+
+import { test } from '../fixtures/et.sya.test.fixture';
+
+let userDetailsData: any;
 
 test.describe('Submit a single claim for myself without the Complete PCQ/Equality', () => {
-  test('SYA-Smoke test', async ({ claimStartPage, loginPage, saveCardPage }) => {
-    await claimStartPage.createSingleMyselfCase();
-    await loginPage.signIn();
-    await saveCardPage.doNotHaveToCompleteCard();
+  test.beforeAll(async () => {
+    userDetailsData = resolveResourceJson('resources/payload/user-details.json');
   });
 
   test(
-    'should submit a single claim',
-    { tag: ['@RET-BAT', '@RET-PR', '@Smoke'] },
+    'Create a claim for still working for organisation, submit and process within manage cases',
+    {
+      tag: ['@RET-BAT', '@RET-PR', '@cx', '@smoke', '@ccd-callback-tests', '@accessibility'],
+    },
     async ({
       page,
-      claimStartPage,
       loginPage,
-      saveCardPage,
-      makeClaimPage,
+      citizenPreLoginPage,
+      citizenPostLoginPage,
       personalDetailsPage,
-      employmentDetailsPage,
+      employmentAndRespondentDetailsPage,
       claimDetailsPage,
-      submitPage,
+      submitClaimPage,
+      singleOrMultipleClaimPage,
     }) => {
-      await claimStartPage.createSingleMyselfCase();
-      await loginPage.signIn();
-      await saveCardPage.doNotHaveToCompleteCard();
-      await makeClaimPage.stepsToMakingYourClaim(false);
-      await personalDetailsPage.enterPersonalDetails();
-      await employmentDetailsPage.didYouWorkForOrg('Yes');
-      await employmentDetailsPage.areYouStillWorkingForOrg('Still working for respondent');
-      await employmentDetailsPage.stillWorkingForRespondentJourney('Yes written contract with notice period', 'Months');
-      await employmentDetailsPage.enterRespondantDetailsJourney('No', 'No');
-      await page.click("//a[contains(.,'Tell us about your claim')]");
-      await claimDetailsPage.claimDet();
-      await makeClaimPage.stepsToMakingYourClaim(true);
-      await submitPage.submitClaim(false);
-      await submitPage.checkYourAnswers();
-      await submitPage.claimSubmitted();
-      await submitPage.caseOverview();
+      await createCaseViaCitizenUI(
+        page,
+        citizenPreLoginPage,
+        citizenPostLoginPage,
+        personalDetailsPage,
+        employmentAndRespondentDetailsPage,
+        claimDetailsPage,
+        submitClaimPage,
+        singleOrMultipleClaimPage,
+        'EnglandWales',
+        'Claiming for myself',
+        false,
+        async () => {
+          await loginPage.processLogin(users.etClaimant, config.etSyaUiUrl);
+        },
+        employmentAndRespondentDetailsPage =>
+          employmentAndRespondentDetailsPage.processStillWorkingJourney(
+            userDetailsData.workPostcode,
+            userDetailsData.selectedWorkAddress,
+            userDetailsData.firstLineOfAddress
+          )
+      );
     }
   );
 });
